@@ -1,0 +1,27 @@
+# ----- Editor / OS -----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# ----- Vercel -----
+.vercel/
+
+# ----- Python (generador) -----
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# ----- Artefactos intermedios del generador -----
+# wp_parsed.json SÍ se versiona: permite regenerar el sitio con
+# `python3 tools/build.py` sin necesitar el XML original.
+tools/raw/
+
+# ----- Logs / temporales -----
+*.log
+.cache/

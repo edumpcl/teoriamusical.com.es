@@ -1,0 +1,177 @@
+<div class="tm-metronomo-wrap">
+
+  <!-- HEADER -->
+  <div class="met-header">
+    <div class="met-logo"></div>
+    <div>
+      <div class="met-title">Metrónomo</div>
+      <div class="met-subtitle">teoriamusical.com.es</div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="met-grid">
+
+    <!-- BPM + SLIDER -->
+    <div class="ctrl-box full accent-box">
+      <div class="box-label">Tempo</div>
+      <div class="bpm-display">
+        <button class="bpm-btn" id="btn-minus" aria-label="Menos BPM">−</button>
+        <div class="bpm-num" id="bpm-num">120</div>
+        <button class="bpm-btn" id="btn-plus" aria-label="Más BPM">+</button>
+      </div>
+      <div class="tempo-name" id="tempo-name">Moderato</div>
+      <input type="range" class="bpm-slider" id="bpm-slider" min="15" max="300" value="120">
+      <div class="bpm-range-labels"><span>15</span><span>300</span></div>
+    </div>
+
+    <!-- PENDULUM + BEAT DOTS + PLAY -->
+    <div class="ctrl-box pendulum-box">
+      <div class="box-label">Péndulo</div>
+      <div class="pendulum-svg-wrap">
+        <svg id="pendulum-svg" viewBox="-50 0 200 135" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="pendulum-g" style="transform-origin: 50px 10px;">
+            <line id="pend-rod" x1="50" y1="10" x2="50" y2="95" class="pend-rod"/>
+            <circle id="pend-ball" cx="50" cy="98" r="12" class="pend-ball"/>
+          </g>
+          <circle cx="50" cy="10" r="5" class="pend-pivot"/>
+        </svg>
+      </div>
+      <div class="beat-dots" id="beat-dots"></div>
+    </div>
+
+    <!-- PLAY + TAP -->
+    <div class="ctrl-box" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+      <div class="box-label" style="text-align:center;">Control</div>
+      <div class="play-row">
+        <button class="btn-play" id="btn-play" aria-label="Play/Stop">
+          <svg id="play-icon" width="26" height="26" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>
+        </button>
+      </div>
+      <button class="btn-tap" id="btn-tap">TAP (T)</button>
+      <button class="btn-reset" id="btn-reset">RESET</button>
+    </div>
+
+    <!-- COMPÁS -->
+    <div class="ctrl-box full">
+      <div class="box-label">Compás</div>
+      <div style="margin-bottom:8px;">
+        <div style="font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1.5px;">Simples</div>
+        <div class="pill-group" id="simple-meters">
+          <span class="pill meter-pill" data-meter="1/4">1/4</span>
+          <span class="pill meter-pill active" data-meter="2/4">2/4</span>
+          <span class="pill meter-pill" data-meter="3/4">3/4</span>
+          <span class="pill meter-pill" data-meter="4/4">4/4</span>
+          <span class="pill meter-pill" data-meter="5/4">5/4</span>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;">
+        <div style="font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1.5px;">Compuestos</div>
+        <div class="pill-group" id="compound-meters">
+          <span class="pill meter-pill" data-meter="3/8">3/8</span>
+          <span class="pill meter-pill" data-meter="6/8">6/8</span>
+          <span class="pill meter-pill" data-meter="9/8">9/8</span>
+          <span class="pill meter-pill" data-meter="12/8">12/8</span>
+          <span class="pill meter-pill" data-meter="15/8">15/8</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:1.5px;">Libre</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+          <button class="bpm-btn" id="free-add1" style="width:40px;height:36px;font-size:12px;">+1</button>
+          <button class="bpm-btn" id="free-add2" style="width:40px;height:36px;font-size:12px;">+2</button>
+          <button class="bpm-btn" id="free-add3" style="width:40px;height:36px;font-size:12px;">+3</button>
+          <button class="bpm-btn" id="free-undo" style="width:40px;height:36px;font-size:16px;" title="Deshacer último grupo">←</button>
+          <button class="btn-tap" id="free-apply" style="padding:8px 16px;">APLICAR</button>
+          <button class="btn-reset" id="free-clear" style="padding:8px 12px;">BORRAR</button>
+        </div>
+        <div id="free-groups-display" style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;min-height:32px;">
+          <span style="font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted);">Sin grupos</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBDIVISIÓN -->
+    <div class="ctrl-box full">
+      <div class="box-label">Subdivisión</div>
+      <div class="subdiv-grid" id="subdiv-grid">
+        <button class="subdiv-btn active" data-div="1"><span class="subdiv-icon">♩</span><span class="subdiv-label">Negra</span></button>
+        <button class="subdiv-btn" data-div="2"><span class="subdiv-icon">♪♪</span><span class="subdiv-label">Corchea</span></button>
+        <button class="subdiv-btn" data-div="3"><span class="subdiv-icon">♪♪♪</span><span class="subdiv-label">Tresillo</span></button>
+        <button class="subdiv-btn" data-div="4"><span class="subdiv-icon">𝅘𝅥𝅯</span><span class="subdiv-label">Semicorch.</span></button>
+        <button class="subdiv-btn" data-div="6"><span class="subdiv-icon">6</span><span class="subdiv-label">Sextillo</span></button>
+        <button class="subdiv-btn" data-div="5"><span class="subdiv-icon">5</span><span class="subdiv-label">Quintillo</span></button>
+        <button class="subdiv-btn" data-div="7"><span class="subdiv-icon">7</span><span class="subdiv-label">Septillo</span></button>
+        <button class="subdiv-btn" data-div="8"><span class="subdiv-icon">×8</span><span class="subdiv-label">×8</span></button>
+      </div>
+    </div>
+
+    <!-- VOLÚMENES -->
+    <div class="ctrl-box">
+      <div class="box-label">Volúmenes</div>
+      <div class="vol-row">
+        <span class="vol-label">Click</span>
+        <input type="range" class="vol-slider" id="vol-click" min="0" max="100" value="80">
+        <span class="vol-num" id="vol-click-num">80</span>
+      </div>
+      <div class="vol-row" style="margin-bottom:14px;">
+        <span class="vol-label">Acento</span>
+        <input type="range" class="vol-slider" id="vol-accent" min="0" max="100" value="100">
+        <span class="vol-num" id="vol-accent-num">100</span>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="ctrl-box">
+      <div class="box-label">Stats</div>
+      <div class="stats-grid">
+        <div class="stat-item"><span class="stat-val" id="st-beat">—</span><span class="stat-lbl">Beat</span></div>
+        <div class="stat-item"><span class="stat-val" id="st-measure">—</span><span class="stat-lbl">Compás</span></div>
+        <div class="stat-item"><span class="stat-val" id="st-ms">—</span><span class="stat-lbl">ms/beat</span></div>
+        <div class="stat-item"><span class="stat-val" id="st-total">0</span><span class="stat-lbl">Total</span></div>
+      </div>
+    </div>
+
+    <!-- MODO ENSAYO -->
+    <div class="ctrl-box full">
+      <div class="box-label">Modo Ensayo</div>
+      <div class="practice-row">
+        <div class="prac-field">
+          <label>Compases</label>
+          <input type="number" id="prac-measures" value="8" min="1" max="999">
+        </div>
+        <div class="prac-field">
+          <label>BPM inicio</label>
+          <input type="number" id="prac-bpm-start" value="60" min="20" max="300">
+        </div>
+        <div class="prac-field">
+          <label>BPM final</label>
+          <input type="number" id="prac-bpm-end" value="120" min="20" max="300">
+        </div>
+      </div>
+      <div class="prac-progress-wrap"><div class="prac-progress-bar" id="prac-bar"></div></div>
+      <button class="btn-prac-start" id="btn-prac">INICIAR ENSAYO</button>
+    </div>
+
+    <!-- CAJA DE RITMOS -->
+    <div class="ctrl-box full">
+      <div class="box-label">Caja de Ritmos</div>
+      <div class="dr-patterns" id="dr-patterns"></div>
+      <div class="dr-instruments" id="dr-instruments"></div>
+    </div>
+
+    <!-- ATAJOS -->
+    <div class="ctrl-box full">
+      <div class="box-label">Atajos de teclado</div>
+      <div class="shortcuts-grid">
+        <div class="shortcut-item"><span class="key-badge">Space</span><span>Play / Stop</span></div>
+        <div class="shortcut-item"><span class="key-badge">T</span><span>Tap tempo</span></div>
+        <div class="shortcut-item"><span class="key-badge">↑</span> / <span class="key-badge">↓</span><span>±1 BPM</span></div>
+        <div class="shortcut-item"><span class="key-badge">⇧↑</span> / <span class="key-badge">⇧↓</span><span>±5 BPM</span></div>
+        <div class="shortcut-item"><span class="key-badge">Ctrl ⇧↑</span> <span style="color:var(--muted);font-size:10px;">Win</span> / <span class="key-badge">⌘⇧↑</span> <span style="color:var(--muted);font-size:10px;">Mac</span><span>+10 BPM</span></div>
+        <div class="shortcut-item"><span class="key-badge">Ctrl ⇧↓</span> <span style="color:var(--muted);font-size:10px;">Win</span> / <span class="key-badge">⌘⇧↓</span> <span style="color:var(--muted);font-size:10px;">Mac</span><span>−10 BPM</span></div>
+      </div>
+    </div>
+
+  </div><!-- /met-grid -->
+</div><!-- /wrap -->

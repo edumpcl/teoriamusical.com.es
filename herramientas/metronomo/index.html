@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metrónomo Online | Teoría Musical</title>
+<meta name="description" content="Metrónomo teoriamusical.com.es Tempo − 120 + Moderato 15 300 Péndulo Control TAP (T) RESET Compás Simples 1/4 2/4 3/4 4/4 5/4 Compuestos 3/8 6/8 9/8 12/8 15/8 Libre +1 +2 +3 ← APLI">
+<link rel="canonical" href="https://www.teoriamusical.com.es/herramientas/metronomo/">
+<meta property="og:title" content="Metrónomo Online | Teoría Musical">
+<meta property="og:description" content="Metrónomo teoriamusical.com.es Tempo − 120 + Moderato 15 300 Péndulo Control TAP (T) RESET Compás Simples 1/4 2/4 3/4 4/4 5/4 Compuestos 3/8 6/8 9/8 12/8 15/8 Libre +1 +2 +3 ← APLI">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.teoriamusical.com.es/herramientas/metronomo/">
+<link rel="icon" href="/assets/img/favicon.png" type="image/png">
+
+<!-- Google Search Console verification -->
+<meta name="google-site-verification" content="-bWygyA80PPsmSsmf6FQ_oZs6YeGjN95HzprqD07fos">
+
+<!-- Google Consent Mode v2 — defaults to denied until the user consents -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage':            'denied',
+    'ad_user_data':          'denied',
+    'ad_personalization':    'denied',
+    'analytics_storage':     'denied',
+    'functionality_storage': 'granted',
+    'security_storage':      'granted',
+    'wait_for_update':       500
+  });
+  try {
+    var s = localStorage.getItem('tm_consent');
+    if (s) { gtag('consent', 'update', JSON.parse(s)); }
+  } catch (e) {}
+</script>
+
+<!-- Google Analytics 4 (gtag) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XT1ZZ4H9N5"></script>
+<script>
+  gtag('js', new Date());
+  gtag('config', 'G-XT1ZZ4H9N5', { 'anonymize_ip': true });
+</script>
+
+<!-- Google AdSense (Auto Ads). Controlled via Consent Mode above. -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1186627650857489"
+        crossorigin="anonymous"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+
+</head>
+<body class="tm-page">
+<a class="tm-skip" href="#main">Saltar al contenido</a>
+
+<!-- Consent banner (RGPD). Hidden by default; shown by /assets/js/consent.js if no decision stored. -->
+<div id="tm-consent" class="tm-consent" role="dialog" aria-labelledby="tm-consent-title" hidden>
+  <div class="tm-consent-body">
+    <h2 id="tm-consent-title">Usamos cookies</h2>
+    <p>Este sitio usa cookies propias y de terceros (Google Analytics y Google AdSense) para medir el tráfico y mostrar anuncios relevantes. Puedes aceptar, rechazar o ajustar tu elección en cualquier momento desde la <a href="/politica-de-cookies/">política de cookies</a>.</p>
+    <div class="tm-consent-buttons">
+      <button type="button" class="tm-btn tm-btn-outline" data-consent="reject">Rechazar</button>
+      <button type="button" class="tm-btn tm-btn-outline" data-consent="customize">Personalizar</button>
+      <button type="button" class="tm-btn tm-btn-dorado" data-consent="accept">Aceptar todo</button>
+    </div>
+    <div class="tm-consent-custom" hidden>
+      <label><input type="checkbox" name="analytics" checked> Medición (Google Analytics)</label>
+      <label><input type="checkbox" name="ads" checked> Anuncios personalizados (Google AdSense)</label>
+      <button type="button" class="tm-btn tm-btn-dorado" data-consent="save">Guardar preferencias</button>
+    </div>
+  </div>
+</div>
+<script src="/assets/js/consent.js" defer></script>
+
+<header class="tm-site-header">
+  <div class="tm-container tm-header-inner">
+    <a class="tm-brand" href="/">
+      <span class="tm-brand-mark">♪</span>
+      <span class="tm-brand-text">Teoría Musical</span>
+    </a>
+    <button class="tm-nav-toggle" aria-label="Menú" aria-expanded="false" aria-controls="tm-nav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="tm-nav" class="tm-nav" aria-label="Principal">
+      <ul class="tm-nav-list">
+        <li><a href="/" class="">Inicio</a></li>
+        <li><a href="/diccionario-musical/" class="">Diccionario Musical</a></li>
+        <li><a href="/ejercicios/" class="">Ejercicios</a></li>
+        <li><a href="/herramientas/" class="is-active">Herramientas</a></li>
+        <li><a href="/blog/" class="">Blog</a></li>
+        <li><a href="/test-tecnico-de-laboratorio/" class="">Test Laboratorio</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="tm-main">
+  
+  <nav class="tm-breadcrumb" aria-label="Migas">
+    <div class="tm-container">
+      <a href="/">Inicio</a><span class="tm-crumb-sep">›</span><a href="/herramientas/">Herramientas</a><span class="tm-crumb-sep">›</span><span aria-current="page">Metrónomo Online</span>
+    </div>
+  </nav>
+  
+<header class="tm-page-header"><div class="tm-container"><h1>Metrónomo Online</h1></div></header>
+<div class="tm-container tm-article-wrap">
+  <article class="tm-article">
+    
+<link rel="stylesheet" href="/assets/tools/tools.css">
+<div class="tm-metronomo-wrap">
+
+  <!-- HEADER -->
+  <div class="met-header">
+    <div class="met-logo"></div>
+    <div>
+      <div class="met-title">Metrónomo</div>
+      <div class="met-subtitle">teoriamusical.com.es</div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="met-grid">
+
+    <!-- BPM + SLIDER -->
+    <div class="ctrl-box full accent-box">
+      <div class="box-label">Tempo</div>
+      <div class="bpm-display">
+        <button class="bpm-btn" id="btn-minus" aria-label="Menos BPM">−</button>
+        <div class="bpm-num" id="bpm-num">120</div>
+        <button class="bpm-btn" id="btn-plus" aria-label="Más BPM">+</button>
+      </div>
+      <div class="tempo-name" id="tempo-name">Moderato</div>
+      <input type="range" class="bpm-slider" id="bpm-slider" min="15" max="300" value="120">
+      <div class="bpm-range-labels"><span>15</span><span>300</span></div>
+    </div>
+
+    <!-- PENDULUM + BEAT DOTS + PLAY -->
+    <div class="ctrl-box pendulum-box">
+      <div class="box-label">Péndulo</div>
+      <div class="pendulum-svg-wrap">
+        <svg id="pendulum-svg" viewBox="-50 0 200 135" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="pendulum-g" style="transform-origin: 50px 10px;">
+            <line id="pend-rod" x1="50" y1="10" x2="50" y2="95" class="pend-rod"/>
+            <circle id="pend-ball" cx="50" cy="98" r="12" class="pend-ball"/>
+          </g>
+          <circle cx="50" cy="10" r="5" class="pend-pivot"/>
+        </svg>
+      </div>
+      <div class="beat-dots" id="beat-dots"></div>
+    </div>
+
+    <!-- PLAY + TAP -->
+    <div class="ctrl-box" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+      <div class="box-label" style="text-align:center;">Control</div>
+      <div class="play-row">
+        <button class="btn-play" id="btn-play" aria-label="Play/Stop">
+          <svg id="play-icon" width="26" height="26" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>
+        </button>
+      </div>
+      <button class="btn-tap" id="btn-tap">TAP (T)</button>
+      <button class="btn-reset" id="btn-reset">RESET</button>
+    </div>
+
+    <!-- COMPÁS -->
+    <div class="ctrl-box full">
+      <div class="box-label">Compás</div>
+      <div style="margin-bottom:8px;">
+        <div style="font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1.5px;">Simples</div>
+        <div class="pill-group" id="simple-meters">
+          <span class="pill meter-pill" data-meter="1/4">1/4</span>
+          <span class="pill meter-pill active" data-meter="2/4">2/4</span>
+          <span class="pill meter-pill" data-meter="3/4">3/4</span>
+          <span class="pill meter-pill" data-meter="4/4">4/4</span>
+          <span class="pill meter-pill" data-meter="5/4">5/4</span>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;">
+        <div style="font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1.5px;">Compuestos</div>
+        <div class="pill-group" id="compound-meters">
+          <span class="pill meter-pill" data-meter="3/8">3/8</span>
+          <span class="pill meter-pill" data-meter="6/8">6/8</span>
+          <span class="pill meter-pill" data-meter="9/8">9/8</span>
+          <span class="pill meter-pill" data-meter="12/8">12/8</span>
+          <span class="pill meter-pill" data-meter="15/8">15/8</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:1.5px;">Libre</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+          <button class="bpm-btn" id="free-add1" style="width:40px;height:36px;font-size:12px;">+1</button>
+          <button class="bpm-btn" id="free-add2" style="width:40px;height:36px;font-size:12px;">+2</button>
+          <button class="bpm-btn" id="free-add3" style="width:40px;height:36px;font-size:12px;">+3</button>
+          <button class="bpm-btn" id="free-undo" style="width:40px;height:36px;font-size:16px;" title="Deshacer último grupo">←</button>
+          <button class="btn-tap" id="free-apply" style="padding:8px 16px;">APLICAR</button>
+          <button class="btn-reset" id="free-clear" style="padding:8px 12px;">BORRAR</button>
+        </div>
+        <div id="free-groups-display" style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;min-height:32px;">
+          <span style="font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted);">Sin grupos</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBDIVISIÓN -->
+    <div class="ctrl-box full">
+      <div class="box-label">Subdivisión</div>
+      <div class="subdiv-grid" id="subdiv-grid">
+        <button class="subdiv-btn active" data-div="1"><span class="subdiv-icon">♩</span><span class="subdiv-label">Negra</span></button>
+        <button class="subdiv-btn" data-div="2"><span class="subdiv-icon">♪♪</span><span class="subdiv-label">Corchea</span></button>
+        <button class="subdiv-btn" data-div="3"><span class="subdiv-icon">♪♪♪</span><span class="subdiv-label">Tresillo</span></button>
+        <button class="subdiv-btn" data-div="4"><span class="subdiv-icon">𝅘𝅥𝅯</span><span class="subdiv-label">Semicorch.</span></button>
+        <button class="subdiv-btn" data-div="6"><span class="subdiv-icon">6</span><span class="subdiv-label">Sextillo</span></button>
+        <button class="subdiv-btn" data-div="5"><span class="subdiv-icon">5</span><span class="subdiv-label">Quintillo</span></button>
+        <button class="subdiv-btn" data-div="7"><span class="subdiv-icon">7</span><span class="subdiv-label">Septillo</span></button>
+        <button class="subdiv-btn" data-div="8"><span class="subdiv-icon">×8</span><span class="subdiv-label">×8</span></button>
+      </div>
+    </div>
+
+    <!-- VOLÚMENES -->
+    <div class="ctrl-box">
+      <div class="box-label">Volúmenes</div>
+      <div class="vol-row">
+        <span class="vol-label">Click</span>
+        <input type="range" class="vol-slider" id="vol-click" min="0" max="100" value="80">
+        <span class="vol-num" id="vol-click-num">80</span>
+      </div>
+      <div class="vol-row" style="margin-bottom:14px;">
+        <span class="vol-label">Acento</span>
+        <input type="range" class="vol-slider" id="vol-accent" min="0" max="100" value="100">
+        <span class="vol-num" id="vol-accent-num">100</span>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="ctrl-box">
+      <div class="box-label">Stats</div>
+      <div class="stats-grid">
+        <div class="stat-item"><span class="stat-val" id="st-beat">—</span><span class="stat-lbl">Beat</span></div>
+        <div class="stat-item"><span class="stat-val" id="st-measure">—</span><span class="stat-lbl">Compás</span></div>
+        <div class="stat-item"><span class="stat-val" id="st-ms">—</span><span class="stat-lbl">ms/beat</span></div>
+        <div class="stat-item"><span class="stat-val" id="st-total">0</span><span class="stat-lbl">Total</span></div>
+      </div>
+    </div>
+
+    <!-- MODO ENSAYO -->
+    <div class="ctrl-box full">
+      <div class="box-label">Modo Ensayo</div>
+      <div class="practice-row">
+        <div class="prac-field">
+          <label>Compases</label>
+          <input type="number" id="prac-measures" value="8" min="1" max="999">
+        </div>
+        <div class="prac-field">
+          <label>BPM inicio</label>
+          <input type="number" id="prac-bpm-start" value="60" min="20" max="300">
+        </div>
+        <div class="prac-field">
+          <label>BPM final</label>
+          <input type="number" id="prac-bpm-end" value="120" min="20" max="300">
+        </div>
+      </div>
+      <div class="prac-progress-wrap"><div class="prac-progress-bar" id="prac-bar"></div></div>
+      <button class="btn-prac-start" id="btn-prac">INICIAR ENSAYO</button>
+    </div>
+
+    <!-- CAJA DE RITMOS -->
+    <div class="ctrl-box full">
+      <div class="box-label">Caja de Ritmos</div>
+      <div class="dr-patterns" id="dr-patterns"></div>
+      <div class="dr-instruments" id="dr-instruments"></div>
+    </div>
+
+    <!-- ATAJOS -->
+    <div class="ctrl-box full">
+      <div class="box-label">Atajos de teclado</div>
+      <div class="shortcuts-grid">
+        <div class="shortcut-item"><span class="key-badge">Space</span><span>Play / Stop</span></div>
+        <div class="shortcut-item"><span class="key-badge">T</span><span>Tap tempo</span></div>
+        <div class="shortcut-item"><span class="key-badge">↑</span> / <span class="key-badge">↓</span><span>±1 BPM</span></div>
+        <div class="shortcut-item"><span class="key-badge">⇧↑</span> / <span class="key-badge">⇧↓</span><span>±5 BPM</span></div>
+        <div class="shortcut-item"><span class="key-badge">Ctrl ⇧↑</span> <span style="color:var(--muted);font-size:10px;">Win</span> / <span class="key-badge">⌘⇧↑</span> <span style="color:var(--muted);font-size:10px;">Mac</span><span>+10 BPM</span></div>
+        <div class="shortcut-item"><span class="key-badge">Ctrl ⇧↓</span> <span style="color:var(--muted);font-size:10px;">Win</span> / <span class="key-badge">⌘⇧↓</span> <span style="color:var(--muted);font-size:10px;">Mac</span><span>−10 BPM</span></div>
+      </div>
+    </div>
+
+  </div><!-- /met-grid -->
+</div><!-- /wrap -->
+<script src="/assets/tools/metronomo.js" defer></script>
+
+
+
+<p>Pocas habilidades separan a un músico aficionado de un profesional tanto como la capacidad de mantener un <em>tempo</em> firme y estable. Ya sea que estés practicando escalas en el piano, rasgueos complejos en la guitarra, o secuencias largas en el violín, nuestro <strong>metrónomo online</strong> está diseñado para ser tu acompañante ideal, directo desde tu navegador y sin instalaciones.</p>
+
+
+
+<p>A continuación, hemos preparado una guía completa sobre qué es, por qué deberías usarlo siempre, y cómo nuestra herramienta te ayudará a llevar tu sentido del ritmo al siguiente nivel.</p>
+
+
+
+<h2 id="h-que-es-un-metronomo-y-por-que-es-fundamental" class="wp-block-heading">¿Qué es un metrónomo y por qué es fundamental?</h2>
+
+
+
+<p>Un metrónomo es un dispositivo (o en este caso, una herramienta web) que produce una señal visual y acústica a intervalos de tiempo perfectamente regulares. Estos intervalos se miden en&nbsp;<strong>BPM</strong>&nbsp;(del inglés,&nbsp;<em>Beats Per Minute</em>&nbsp;o Pulsos Por Minuto).</p>
+
+
+
+<p>Por ejemplo, si configuras un metrónomo a 60 BPM, escucharás exactamente un pulso por segundo (como el segundero de un reloj). Si lo subes a 120 BPM, el ritmo será el doble de rápido, con dos pulsos por segundo.</p>
+
+
+
+<p>Practicar con una herramienta base como esta te aporta tres beneficios imprescindibles:</p>
+
+
+
+<ol class="wp-block-list">
+<li><strong>Precisión rítmica implacable:</strong> Elimina la tendencia natural del ser humano a acelerarse en las partes fáciles de una partitura y a frenarse en los compases más difíciles.</li>
+
+
+
+<li><strong>Medición del progreso:</strong> Te permite saber exactamente si estás mejorando en velocidad al tocar ese pasaje técnico que tanto te cuesta.</li>
+
+
+
+<li><strong>Conciencia del <em>groove</em>:</strong> Especialmente en estilos contemporáneos, tocar "en el bolsillo" (exactamente en el tiempo correcto) hace que la música suene profesional.</li>
+</ol>
+
+
+
+<h2 id="h-como-usar-nuestro-metronomo-virtual-guia-paso-a-paso" class="wp-block-heading">Cómo usar nuestro Metrónomo Virtual (Guía Paso a Paso)</h2>
+
+
+
+<p>Usar el metrónomo de Teoría Musical es extremadamente sencillo:</p>
+
+
+
+<ol class="wp-block-list">
+<li><strong>Ajusta el Tempo (BPM):</strong> Usa los controles deslizantes o los botones de "+" y "-" para buscar la velocidad deseada. Si es tu primera vez practicando una canción, te sugerimos empezar entre 60 y 70 BPM.</li>
+
+
+
+<li><strong>Selecciona la Subdivisión (opcional):</strong> Dependiendo de la herramienta, podrás elegir si quieres escuchar cada pulso principal (negras) o si quieres subdivisiones (corcheas, semicorcheas o tresillos).</li>
+
+
+
+<li><strong>Establece el Compás:</strong> Si tu partitura está en 4/4 (compás cuaternario), ajústalo a 4. El metrónomo hará un sonido distinto (a menudo más agudo o llamado "campana") en el primer pulso de cada compás, ayudándote a saber siempre dónde estás.</li>
+
+
+
+<li><strong>¡Dale al Play!</strong></li>
+</ol>
+
+
+
+<h2 id="h-3-ejercicios-ritmicos-para-empezar-hoy-mismo" class="wp-block-heading">3 Ejercicios Rítmicos para Empezar Hoy Mismo</h2>
+
+
+
+<p>Si no sabes por dónde comenzar, prueba estos tres ejercicios:</p>
+
+
+
+<h3 id="h-1-la-regla-del-50" class="wp-block-heading">1. La Regla del 50%</h3>
+
+
+
+<p>Encuentra la velocidad máxima a la que puedes tocar correctamente una canción sin equivocarte en ninguna nota (supongamos que es 100 BPM). Ahora, baja el metrónomo a exactamente la mitad (50 BPM) y tócalo completo 3 veces seguidas sin errores. Esto cimentará tu memoria muscular.</p>
+
+
+
+<h3 id="h-2-el-juego-del-pulso-desaparecido" class="wp-block-heading">2. El Juego del Pulso Desaparecido</h3>
+
+
+
+<p>Pon el metrónomo a una velocidad cómoda (ej. 80 BPM). Toca una escala o ejercicio de calentamiento durante 4 compases. Luego, la prueba real: silencia mentalmente o baja el volumen del metrónomo durante los siguientes dos compases, e intenta mantener el ritmo exacto. Cuando vuelvas a prestar atención a la herramienta, verifica si te habías adelantado o retrasado.</p>
+
+
+
+<h3 id="h-3-acentos-de-compas" class="wp-block-heading">3. Acentos de Compás</h3>
+
+
+
+<p>Ajusta la herramienta en compás de 4/4 a 60 BPM. Golpea sobre tu mesa o toca una nota en tu instrumento. Primero, asegúrate de tocar exactamente a la vez que el "clic". Luego, intenta poner tu acento (la nota más fuerte) intencionadamente en el pulso 2 y 4, a la manera del jazz y el reggae tradicional.</p>
+
+
+
+<h2 class="wp-block-heading">Preguntas Frecuentes (FAQ) sobre el uso del Metrónomo</h2>
+
+
+
+<p><strong>¿Debo usar el metrónomo todo el tiempo que practico?</strong>&nbsp;No necesariamente. Es ideal usarlo durante el calentamiento de técnica (escalas o arpegios) o cuando estás trabajando un pasaje difícil para mantener el rigor. Sin embargo, también debes dedicar tiempo a tocar "libre" (rubato) para desarrollar tu expresividad musical.</p>
+
+
+
+<p><strong>¿Qué significan términos italianos como&nbsp;<em>Allegro</em>&nbsp;o&nbsp;<em>Andante</em>&nbsp;en número de BPM?</strong>&nbsp;Aunque las asignaciones pueden variar según el compositor, generalmente&nbsp;<em>Andante</em>&nbsp;(paso de caminata) suele rondar los 76-108 BPM, mientras que&nbsp;<em>Allegro</em>&nbsp;(rápido y alegre) indica un rango entre 120-156 BPM.</p>
+
+
+
+<p><strong>Practicar tan lento me aburre, ¿qué hago?</strong>&nbsp;La velocidad no es más que la consecuencia inevitable de la precisión. Al tocar lento, programa tu cerebro de forma correcta. Para no aburrirte, concéntrate de forma casi obsesiva en la calidad del tono de tu instrumento, la postura de tus manos y tu respiración. Cuando subas la velocidad, te asombrará la facilidad.</p>
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "¿Debo usar el metrónomo todo el tiempo que practico?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No necesariamente. Es ideal usarlo durante el calentamiento de técnica (escalas o arpegios) o cuando estás trabajando un pasaje difícil para mantener el rigor. Sin embargo, también debes dedicar tiempo a tocar 'libre' para desarrollar expresividad."
+    }
+  }, {
+    "@type": "Question",
+    "name": "¿Qué significan términos italianos como Allegro o Andante en número de BPM?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Andante (paso de caminata) suele rondar los 76-108 BPM, mientras que Allegro (rápido y alegre) indica un rango entre 120-156 BPM."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Practicar tan lento me aburre, ¿qué hago?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "La velocidad es consecuencia de la precisión. Al tocar lento, concéntrate en la calidad del tono de tu instrumento, la postura de tus manos y tu respiración."
+    }
+  }]
+}
+</script>
+
+
+  </article>
+  
+</div>
+
+</main>
+
+<footer class="tm-site-footer">
+  <div class="tm-container tm-footer-inner">
+    <div class="tm-footer-col">
+      <h3>Teoría Musical</h3>
+      <p>Aprende música desde sus fundamentos: diccionario, ejercicios interactivos y herramientas gratuitas.</p>
+    </div>
+    <div class="tm-footer-col">
+      <h3>Secciones</h3>
+      <ul>
+        <li><a href="/diccionario-musical/">Diccionario Musical</a></li>
+        <li><a href="/ejercicios/">Ejercicios Musicales</a></li>
+        <li><a href="/herramientas/">Herramientas</a></li>
+        <li><a href="/blog/">Blog</a></li>
+      </ul>
+    </div>
+    <div class="tm-footer-col">
+      <h3>Información</h3>
+      <ul>
+        <li><a href="/contacto/">Contacto</a></li>
+        <li><a href="/aviso-legal/">Aviso legal</a></li>
+        <li><a href="/politica-de-privacidad/">Política de privacidad</a></li>
+        <li><a href="/politica-de-cookies/">Política de cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="tm-footer-bottom">
+    <p>© <span id="tm-year"></span> Teoría Musical — Eduardo Escrig Zomeño. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js" defer></script>
+</body>
+</html>

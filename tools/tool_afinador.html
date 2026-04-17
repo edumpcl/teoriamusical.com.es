@@ -1,0 +1,136 @@
+<div class="tm-afinador-wrap">
+
+  <!-- HEADER -->
+  <div class="afin-header">
+    <div class="afin-logo">♩</div>
+    <div>
+      <div class="afin-title">Afinador</div>
+      <div class="afin-subtitle">teoriamusical.com.es</div>
+    </div>
+  </div>
+
+  <!-- NOTA PRINCIPAL + GAUGE -->
+  <div class="ctrl-box accent-box">
+    <div class="box-label">Afinación</div>
+
+    <div class="note-display no-transp" id="note-display">
+      <!-- Nota real -->
+      <div class="note-col">
+        <div class="note-col-label">Nota real</div>
+        <div class="note-name silent" id="note-name">—</div>
+        <div class="note-octave" id="note-octave"></div>
+        <div class="note-freq" id="note-freq"></div>
+      </div>
+      <!-- Nota escrita (transpositores) -->
+      <div class="note-col">
+        <div class="note-col-label">Nota escrita</div>
+        <div class="note-name written" id="note-written">—</div>
+        <div class="note-octave" id="note-written-oct"></div>
+      </div>
+    </div>
+
+    <!-- Gauge SVG -->
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+        <!-- Track arc: centre (150,150), radius 110 -->
+        <path class="gauge-track"
+          d="M 40 150 A 110 110 0 0 1 260 150"
+          fill="none"/>
+        <!-- Fill arc (cents) -->
+        <path class="gauge-fill" id="gauge-fill"
+          d="M 150 40 A 110 110 0 0 1 150 40"
+          fill="none" stroke="var(--border)"/>
+        <!-- Center dashed line -->
+        <line class="gauge-center-line" x1="150" y1="45" x2="150" y2="143"/>
+        <!-- Tick marks at -50, -25, +25, +50 cents -->
+        <g stroke="var(--border)" stroke-width="1.5" opacity="0.6">
+          <line x1="40"  y1="150" x2="50"  y2="150"/>
+          <line x1="260" y1="150" x2="250" y2="150"/>
+          <line x1="91"  y1="46"  x2="95"  y2="53"/>
+          <line x1="209" y1="46"  x2="205" y2="53"/>
+        </g>
+        <!-- Needle -->
+        <line class="gauge-needle" id="gauge-needle"
+          x1="150" y1="148" x2="150" y2="45"
+          stroke="var(--border)"/>
+        <!-- Needle pivot dot -->
+        <circle class="gauge-needle-dot" id="gauge-dot"
+          cx="150" cy="150" r="7"
+          fill="var(--border)"/>
+      </svg>
+    </div>
+
+    <div class="cents-display" id="cents-display">— ¢</div>
+    <div class="cents-labels">
+      <span>−50¢</span><span>−25¢</span><span>0</span><span>+25¢</span><span>+50¢</span>
+    </div>
+
+    <!-- Mic button -->
+    <div class="mic-row" style="margin-top:20px;">
+      <button class="btn-mic" id="btn-mic">
+        <span class="mic-icon">🎙</span>
+        <span id="mic-label">Activar</span>
+      </button>
+    </div>
+    <div id="debug-panel" style="
+      margin-top:12px;
+      padding:8px 12px;
+      background:#f0e8d8;
+      border:1px solid var(--border);
+      border-radius:6px;
+      font-family:'Roboto Mono',monospace;
+      font-size:11px;
+      color:var(--rust);
+      display:none;
+      word-break:break-all;
+    "></div>
+  </div>
+
+  <!-- REFERENCIA A4 -->
+  <div class="ctrl-box">
+    <div class="box-label">Referencia A4</div>
+    <div class="ref-row">
+      <span class="ref-label">La4 =</span>
+      <button class="ref-btn" id="ref-minus">−</button>
+      <span class="ref-value" id="ref-value">442 Hz</span>
+      <button class="ref-btn" id="ref-plus">+</button>
+    </div>
+  </div>
+
+  <!-- TRANSPOSICIÓN -->
+  <div class="ctrl-box">
+    <div class="box-label">Instrumento transpositor</div>
+    <div class="transp-instruments" id="transp-instruments"></div>
+    <div class="transp-semitones">
+      <button class="ref-btn" id="transp-minus">−</button>
+      <span class="transp-val" id="transp-val">0 st</span>
+      <button class="ref-btn" id="transp-plus">+</button>
+    </div>
+  </div>
+
+  <!-- NOTAS DE REFERENCIA -->
+  <div class="ctrl-box">
+    <div class="box-label">Notas de referencia — pulsa para escuchar</div>
+    <div class="ref-notes-grid" id="ref-notes-grid"></div>
+  </div>
+
+  <!-- STATS -->
+  <div class="ctrl-box">
+    <div class="box-label">Información</div>
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-val" id="stat-note">—</span>
+        <span class="stat-lbl">Nota</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-val" id="stat-freq">—</span>
+        <span class="stat-lbl">Hz</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-val" id="stat-cents">—</span>
+        <span class="stat-lbl">Cents</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
