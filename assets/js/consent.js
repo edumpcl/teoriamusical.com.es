@@ -1,83 +1,142 @@
-/* ---------------------------------------------------------------
- * Teoría Musical — Banner de consentimiento (RGPD)
- * Trabaja con Google Consent Mode v2 configurado en el <head>.
- *
- * Estados almacenados en localStorage bajo la clave 'tm_consent':
- *   { ad_storage, ad_user_data, ad_personalization, analytics_storage }
- * Cada valor: 'granted' | 'denied'.
- * Si no hay nada guardado se muestra el banner.
- * --------------------------------------------------------------- */
 (function () {
   'use strict';
 
-  var KEY = 'tm_consent';
-  var banner = document.getElementById('tm-consent');
-  if (!banner) return;
+  var COOKIE_NAME = 'tm_cookie_consent';
+  var COOKIE_DAYS = 182;
+  var GA4_ID      = 'G-XT1ZZ4H9N5';
+  var ADSENSE_ID  = 'ca-pub-1186627650857489';
 
   function gtag() { (window.dataLayer = window.dataLayer || []).push(arguments); }
 
-  function load() {
-    try {
-      var raw = localStorage.getItem(KEY);
-      return raw ? JSON.parse(raw) : null;
-    } catch (e) { return null; }
+  function setCookie(val, days) {
+    var d = new Date();
+    d.setTime(d.getTime() + days * 864e5);
+    document.cookie = COOKIE_NAME + '=' + encodeURIComponent(JSON.stringify(val))
+      + '; expires=' + d.toUTCString()
+      + '; path=/; SameSite=Lax';
   }
 
-  function save(state) {
-    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
-    gtag('consent', 'update', state);
+  function getCookie() {
+    var m = document.cookie.match('(?:^|; )' + COOKIE_NAME + '=([^;]*)');
+    if (!m) return null;
+    try { return JSON.parse(decodeURIComponent(m[1])); } catch (e) { return null; }
   }
 
-  function stateFrom(accept) {
-    var v = accept ? 'granted' : 'denied';
-    return {
-      ad_storage:         v,
-      ad_user_data:       v,
-      ad_personalization: v,
-      analytics_storage:  v
-    };
+  function loadGA4() {
+    if (document.getElementById('tm-ga4-script')) return;
+    var s = document.createElement('script');
+    s.id = 'tm-ga4-script';
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA4_ID;
+    s.async = true;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function () { dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', GA4_ID);
   }
 
-  function stateFromCustom() {
-    var analytics = banner.querySelector('input[name="analytics"]').checked;
-    var ads       = banner.querySelector('input[name="ads"]').checked;
-    return {
-      analytics_storage:  analytics ? 'granted' : 'denied',
-      ad_storage:         ads       ? 'granted' : 'denied',
-      ad_user_data:       ads       ? 'granted' : 'denied',
-      ad_personalization: ads       ? 'granted' : 'denied'
-    };
+  function loadAdSense() {
+    if (document.getElementById('tm-adsense-script')) return;
+    var s = document.createElement('script');
+    s.id = 'tm-adsense-script';
+    s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + ADSENSE_ID;
+    s.async = true;
+    s.crossOrigin = 'anonymous';
+    document.head.appendChild(s);
   }
 
-  function show() { banner.hidden = false; document.body.classList.add('has-consent-banner'); }
-  function hide() { banner.hidden = true;  document.body.classList.remove('has-consent-banner'); }
+  function applyConsent(prefs) {
+    var av = prefs.analytics   ? 'granted' : 'denied';
+    var dv = prefs.advertising ? 'granted' : 'denied';
+    gtag('consent', 'update', {
+      analytics_storage:  av,
+      ad_storage:         dv,
+      ad_user_data:       dv,
+      ad_personalization: dv
+    });
+    if (prefs.analytics)   loadGA4();
+    if (prefs.advertising) loadAdSense();
+  }
 
-  // Show banner only if no decision stored yet.
-  if (!load()) show();
+  var overlay, panel, btnAccept, btnNecessary, btnConfigure, btnSave;
+  var chkAnalytics, chkAdvertising, trigger;
 
-  banner.addEventListener('click', function (e) {
-    var target = e.target.closest('[data-consent]');
-    if (!target) return;
-    var action = target.getAttribute('data-consent');
+  function show() {
+    overlay.classList.add('tm-show');
+    trigger.hidden = true;
+    document.body.style.overflow = 'hidden';
+    btnAccept.focus();
+  }
 
-    if (action === 'accept') { save(stateFrom(true));  hide(); return; }
-    if (action === 'reject') { save(stateFrom(false)); hide(); return; }
-    if (action === 'customize') {
-      banner.querySelector('.tm-consent-custom').hidden = false;
-      return;
-    }
-    if (action === 'save') { save(stateFromCustom()); hide(); return; }
-  });
+  function hide() {
+    overlay.classList.remove('tm-show');
+    trigger.hidden = false;
+    document.body.style.overflow = '';
+  }
 
-  // Public API so the cookies-policy page can reopen the banner:
-  //   window.tmConsent.open()    — vuelve a mostrarlo
-  //   window.tmConsent.revoke()  — borra la decisión y lo muestra
-  window.tmConsent = {
-    open: show,
-    revoke: function () {
-      try { localStorage.removeItem(KEY); } catch (e) {}
-      save(stateFrom(false));
+  function saveAndClose(prefs) {
+    setCookie(prefs, COOKIE_DAYS);
+    applyConsent(prefs);
+    hide();
+  }
+
+  function init() {
+    overlay        = document.getElementById('tm-cookie-overlay');
+    panel          = document.getElementById('tm-cookie-panel');
+    btnAccept      = document.getElementById('tm-btn-accept');
+    btnNecessary   = document.getElementById('tm-btn-necessary');
+    btnConfigure   = document.getElementById('tm-btn-configure');
+    btnSave        = document.getElementById('tm-btn-save');
+    trigger        = document.getElementById('tm-cookie-trigger');
+    chkAnalytics   = document.getElementById('tm-chk-analytics');
+    chkAdvertising = document.getElementById('tm-chk-advertising');
+
+    if (!overlay) return;
+
+    btnAccept.addEventListener('click', function () {
+      saveAndClose({ analytics: true, advertising: true });
+    });
+    btnNecessary.addEventListener('click', function () {
+      saveAndClose({ analytics: false, advertising: false });
+    });
+    btnConfigure.addEventListener('click', function () {
+      panel.hidden = false;
+      btnConfigure.hidden = true;
+      btnSave.hidden = false;
+    });
+    btnSave.addEventListener('click', function () {
+      saveAndClose({ analytics: chkAnalytics.checked, advertising: chkAdvertising.checked });
+    });
+    trigger.addEventListener('click', show);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay.classList.contains('tm-show') && getCookie()) hide();
+    });
+
+    var existing = getCookie();
+    if (existing && typeof existing.analytics !== 'undefined') {
+      applyConsent(existing);
+      trigger.hidden = false;
+    } else {
       show();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  window.tmConsent = {
+    open: function () { if (overlay) show(); },
+    revoke: function () {
+      document.cookie = COOKIE_NAME + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      gtag('consent', 'update', {
+        analytics_storage: 'denied', ad_storage: 'denied',
+        ad_user_data: 'denied', ad_personalization: 'denied'
+      });
+      if (overlay) show();
     }
   };
 })();
