@@ -47,6 +47,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/style.css">
 
+<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
+<script src="/assets/js/intervalos-engine.js" defer></script>
 </head>
 <body class="tm-page">
 <a class="tm-skip" href="#main">Saltar al contenido</a>
@@ -230,12 +232,12 @@
   <!-- BLOQUE DEL TEST -->
   <div style="margin: 40px 0; padding: 20px; background: white; border: 1px solid #e8e0cc; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
     
-<aside class="tm-quiz-placeholder" data-shortcode="tm_intervalos_sextas">
-  <div class="tm-quiz-icon">🎼</div>
-  <h3 class="tm-quiz-title">Ejercicio: Sextas</h3>
-  <p class="tm-quiz-desc">Identifica menor, mayor, disminuida o aumentada.</p>
-  <p class="tm-quiz-note"><strong>Ejercicio interactivo</strong> — requiere la versión con JavaScript del plugin original para funcionar. El código de backend (PHP) está en <code>plugins/</code>.</p>
-</aside>
+<div id="tmg6"></div>
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    tmIvEngine("tmg6", {test:"grupo",val:"6"});
+  });
+</script>
 
   </div>
 

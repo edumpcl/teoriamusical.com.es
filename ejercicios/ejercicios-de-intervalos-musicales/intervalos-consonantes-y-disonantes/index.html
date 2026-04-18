@@ -47,6 +47,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/style.css">
 
+<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
+<script src="/assets/js/intervalos-engine.js" defer></script>
 </head>
 <body class="tm-page">
 <a class="tm-skip" href="#main">Saltar al contenido</a>
@@ -183,12 +185,12 @@
   <div style="text-align: center; padding: 40px; background: #fff; border: 2px solid #b8860b; border-radius: 20px; margin-bottom: 50px;">
     <h3 style="color: #8b6914; margin-top:0;">Test de Clasificación Armónica</h3>
     
-<aside class="tm-quiz-placeholder" data-shortcode="tm_intervalos_consonancias">
-  <div class="tm-quiz-icon">🎼</div>
-  <h3 class="tm-quiz-title">Ejercicio: Consonancias</h3>
-  <p class="tm-quiz-desc">Intervalos consonantes y disonantes.</p>
-  <p class="tm-quiz-note"><strong>Ejercicio interactivo</strong> — requiere la versión con JavaScript del plugin original para funcionar. El código de backend (PHP) está en <code>plugins/</code>.</p>
-</aside>
+<div id="tmcons"></div>
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    tmIvEngine("tmcons", {test:"consonancia"});
+  });
+</script>
 
   </div>
   <div style="text-align: center; padding: 30px; background: #fdfcf9; border-radius: 15px; border: 1px solid #e8e0cc;">

@@ -47,6 +47,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/style.css">
 
+<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
+<script src="/assets/js/intervalos-engine.js" defer></script>
 </head>
 <body class="tm-page">
 <a class="tm-skip" href="#main">Saltar al contenido</a>
@@ -181,12 +183,12 @@
   <div style="text-align: center; padding: 40px; background: #fafafa; border: 2px dashed #e8e0cc; border-radius: 20px; margin-bottom: 50px;">
     <h2 style="color: #8b6914; margin-top: 0;">Análisis Visual de Disposición</h2>
     
-<aside class="tm-quiz-placeholder" data-shortcode="tm_intervalos_armonicos_melodicos">
-  <div class="tm-quiz-icon">🎼</div>
-  <h3 class="tm-quiz-title">Ejercicio: Armónicos y Melódicos</h3>
-  <p class="tm-quiz-desc">Distingue intervalos verticales y horizontales.</p>
-  <p class="tm-quiz-note"><strong>Ejercicio interactivo</strong> — requiere la versión con JavaScript del plugin original para funcionar. El código de backend (PHP) está en <code>plugins/</code>.</p>
-</aside>
+<div id="tmam"></div>
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    tmIvEngine("tmam", {test:"arm_mel"});
+  });
+</script>
 
   </div>
   <div style="text-align: center; padding: 30px; background: #fdfcf9; border-radius: 15px; border: 1px solid #e8e0cc;">
