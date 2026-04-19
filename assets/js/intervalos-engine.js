@@ -9,6 +9,8 @@
     "4A":[3,6,"4","Aum"],   "5d":[4,6,"5","Dis"],  "5j":[4,7,"5","Justa"],
     "5A":[4,8,"5","Aum"],   "6m":[5,8,"6","menor"],"6M":[5,9,"6","Mayor"],
     "7m":[6,10,"7","menor"],"7M":[6,11,"7","Mayor"],"8j":[7,12,"8","Justa"],
+    /* unísono aumentado (semitono cromático) */
+    "1A":[0,1,"1","Aum"],
     /* dobles aumentadas */
     "2AA":[1,4,"2","DblAum"],"3AA":[2,6,"3","DblAum"],"4AA":[3,7,"4","DblAum"],
     "5AA":[4,9,"5","DblAum"],"6AA":[5,11,"6","DblAum"],
@@ -139,8 +141,44 @@
       return k;
     }
 
+    var SEMITIPO_LABEL = {
+      'unisono':     'Un\xedsono',
+      'diaton':      'Semitono diat\xf3nico',
+      'cromatico':   'Semitono crom\xe1tico',
+      'enarmonicas': 'Enarm\xf3nicas'
+    };
+
     /* Genera pregunta con tipo válido para la dificultad y |a2| <= maxAlt. */
     function genQ() {
+      /* Semitono: 4 categorías a partes iguales */
+      if (config.test === 'semitono') {
+        var tipos = ['unisono','diaton','cromatico','enarmonicas'];
+        var tipo  = tipos[Math.floor(Math.random() * tipos.length)];
+        var n1s, n2s, a2s, ks, defs, nds;
+        if (tipo === 'unisono') {
+          ks = '1j'; defs = DEFS['1j'];
+          n1s = Math.floor(Math.random() * 7); n2s = n1s; a2s = 0;
+        } else if (tipo === 'diaton') {
+          ks = '2m'; defs = DEFS['2m'];
+          n1s = Math.floor(Math.random() * 7);
+          n2s = (n1s + 1) % 7;
+          nds = NS[n2s] - NS[n1s]; if (nds < 0) nds += 12;
+          a2s = 1 - nds;
+        } else if (tipo === 'cromatico') {
+          ks = '1A'; defs = DEFS['1A'];
+          n1s = Math.floor(Math.random() * 7); n2s = n1s; a2s = 1;
+        } else {
+          /* Enarmónicas: E-Fb o B-Cb (2ª disminuida, a2=-1) */
+          ks = '2d'; defs = DEFS['2d'];
+          n1s = [2, 6][Math.floor(Math.random() * 2)];
+          n2s = (n1s + 1) % 7;
+          nds = NS[n2s] - NS[n1s]; if (nds < 0) nds += 12;
+          a2s = 0 - nds;
+        }
+        cQ = { k: ks, def: defs, n1: n1s, n2: n2s, a2: a2s, semitipo: tipo,
+               harmonic: true, ascending: true, conjunto: false };
+        return;
+      }
       var keys = keysForDiff();
       /* Con/dis: balancear 50/50 conjunto (2ª) vs disjunto (>2ª) */
       if (config.test === 'con_dis') {
@@ -263,6 +301,11 @@
           ['Ascendente','Descendente'].map(function(t){
             return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
           }).join('') + '</div>';
+      } else if (config.test === 'semitono') {
+        h += '<div class="tm-grid">' +
+          ['Un\xedsono','Semitono diat\xf3nico','Semitono crom\xe1tico','Enarm\xf3nicas'].map(function(t){
+            return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
+          }).join('') + '</div>';
       } else if (config.test === 'con_dis') {
         h += '<div class="tm-grid">' +
           ['Conjunto','Disjunto'].map(function(t){
@@ -361,6 +404,7 @@
       if (config.test === 'consonancia') return sel.ans === (CONSONANCIA_MAP[cQ.k] || '');
       if (config.test === 'arm_mel')     return sel.ans === (cQ.harmonic  ? 'Arm\xf3nico'   : 'Mel\xf3dico');
       if (config.test === 'asc_des')     return sel.ans === (cQ.ascending ? 'Ascendente'    : 'Descendente');
+      if (config.test === 'semitono')    return sel.ans === (SEMITIPO_LABEL[cQ.semitipo] || '');
       if (config.test === 'con_dis')     return sel.ans === (cQ.conjunto  ? 'Conjunto'      : 'Disjunto');
       return sel.ans === correctTipo();
     }
@@ -371,6 +415,7 @@
       if (config.test === 'consonancia') return CONSONANCIA_MAP[cQ.k] || '\u2014';
       if (config.test === 'arm_mel')     return cQ.harmonic  ? 'Arm\xf3nico'  : 'Mel\xf3dico';
       if (config.test === 'asc_des')     return cQ.ascending ? 'Ascendente'   : 'Descendente';
+      if (config.test === 'semitono')    return SEMITIPO_LABEL[cQ.semitipo] || '\u2014';
       if (config.test === 'con_dis')     return cQ.conjunto  ? 'Conjunto'     : 'Disjunto';
       return cQ.def[2] + '\xaa ' + correctTipo();
     }
@@ -441,13 +486,13 @@
         '</div>'
       ].join('');
       document.getElementById(uid + '_restart').addEventListener('click', function() {
-        if (config.test === 'arm_mel' || config.test === 'asc_des' || config.test === 'con_dis') { currentQ = 0; score = 0; startQuiz(); }
+        if (config.test === 'arm_mel' || config.test === 'asc_des' || config.test === 'con_dis' || config.test === 'semitono') { currentQ = 0; score = 0; startQuiz(); }
         else showModeScreen();
       });
     }
 
     function init() {
-      if (config.test === 'arm_mel' || config.test === 'asc_des' || config.test === 'con_dis') {
+      if (config.test === 'arm_mel' || config.test === 'asc_des' || config.test === 'con_dis' || config.test === 'semitono') {
         maxAlt = 1; currentDiff = 'medium';
         currentQ = 0; score = 0;
         startQuiz();
