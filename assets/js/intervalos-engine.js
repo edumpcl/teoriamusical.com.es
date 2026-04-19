@@ -309,24 +309,24 @@
         if (acc) chord.addModifier(new V.Accidental(acc), 1);
         voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([chord]);
       } else if (config.test === 'arm_mel' && !cQ.harmonic) {
-        /* Melódico: dos blancas consecutivas */
-        var sn1 = new V.StaveNote({ keys: [key1], duration: 'h' });
-        var sn2 = new V.StaveNote({ keys: [key2], duration: 'h' });
+        /* Melódico: dos redondas consecutivas */
+        var sn1 = new V.StaveNote({ keys: [key1], duration: 'w' });
+        var sn2 = new V.StaveNote({ keys: [key2], duration: 'w' });
         if (acc) sn2.addModifier(new V.Accidental(acc), 0);
         voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1, sn2]);
       } else if (config.test === 'asc_des') {
-        /* Ascendente: nota1/4 → nota2 más alta | Descendente: nota1/5 → nota2/4 */
-        var hiKey, loKey, accIdx;
+        /* Ascendente: key1(bajo) → key2(alto) | Descendente: key2(alto) → key1(bajo)
+           Mismo rango visual, solo cambia el orden izquierda→derecha               */
+        var first, second;
         if (cQ.ascending) {
-          hiKey = key2; loKey = key1; accIdx = 1; /* nota alta es key2 */
+          first  = new V.StaveNote({ keys: [key1], duration: 'w' });
+          second = new V.StaveNote({ keys: [key2], duration: 'w' });
+          if (acc) second.addModifier(new V.Accidental(acc), 0);
         } else {
-          hiKey = VF_NAMES[cQ.n1] + '/5';
-          loKey = VF_NAMES[cQ.n2] + '/4';
-          accIdx = 0; /* acorde no aplica; la alt. va en nota2=loKey */
+          first  = new V.StaveNote({ keys: [key2], duration: 'w' });
+          second = new V.StaveNote({ keys: [key1], duration: 'w' });
+          if (acc) first.addModifier(new V.Accidental(acc), 0);
         }
-        var first  = new V.StaveNote({ keys: [cQ.ascending ? key1 : hiKey], duration: 'h' });
-        var second = new V.StaveNote({ keys: [cQ.ascending ? key2 : loKey], duration: 'h' });
-        if (acc) second.addModifier(new V.Accidental(acc), 0);
         voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([first, second]);
       } else {
         /* Resto de tests: dos redondas lado a lado */
