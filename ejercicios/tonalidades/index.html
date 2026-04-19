@@ -46,7 +46,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/style.css">
-
+<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
+<script src="/assets/js/armaduras-engine.js" defer></script>
 </head>
 <body class="tm-page">
 <a class="tm-skip" href="#main">Saltar al contenido</a>
@@ -268,23 +269,23 @@
 
 
 
-<aside class="tm-quiz-placeholder" data-shortcode="tm_armaduras_identificar">
-  <div class="tm-quiz-icon">🎼</div>
-  <h3 class="tm-quiz-title">Ejercicio: Identificar Armaduras</h3>
-  <p class="tm-quiz-desc">Identifica la tonalidad a partir de la armadura.</p>
-  <p class="tm-quiz-note"><strong>Ejercicio interactivo</strong> — requiere la versión con JavaScript del plugin original para funcionar. El código de backend (PHP) está en <code>plugins/</code>.</p>
-</aside>
+<div id="tmar_identificar"></div>
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    tmArIdentificar("tmar_identificar");
+  });
+</script>
 
 
 
 
 
-<aside class="tm-quiz-placeholder" data-shortcode="tm_armaduras_dibujar">
-  <div class="tm-quiz-icon">🎼</div>
-  <h3 class="tm-quiz-title">Ejercicio: Dibujar Armaduras</h3>
-  <p class="tm-quiz-desc">Dibuja la armadura correcta para una tonalidad.</p>
-  <p class="tm-quiz-note"><strong>Ejercicio interactivo</strong> — requiere la versión con JavaScript del plugin original para funcionar. El código de backend (PHP) está en <code>plugins/</code>.</p>
-</aside>
+<div id="tmdib_dibujar"></div>
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    tmArDibujar("tmdib_dibujar");
+  });
+</script>
 
 
   </article>
