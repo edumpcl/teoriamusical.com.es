@@ -1,4 +1,4 @@
-/* Motor de ejercicios de intervalos — equivalente al plugin WP tm_iv_engine */
+/* Motor de ejercicios de intervalos — v2 con dificultades */
 (function () {
   'use strict';
 
@@ -13,6 +13,20 @@
   var NS = [0,2,4,5,7,9,11];
   var VF_NAMES = ["c","d","e","f","g","a","b"];
 
+  var EASY_KEYS = ["1j","3m","3M","5j","6m","6M","8j"];
+
+  var CONSONANCIA_MAP = {
+    "1j":"Consonancia Perfecta","5j":"Consonancia Perfecta","8j":"Consonancia Perfecta",
+    "4j":"Semiconsonancia",
+    "3m":"Consonancia Imperfecta","3M":"Consonancia Imperfecta",
+    "6m":"Consonancia Imperfecta","6M":"Consonancia Imperfecta",
+    "2m":"Disonancia Absoluta","2M":"Disonancia Absoluta",
+    "7m":"Disonancia Absoluta","7M":"Disonancia Absoluta",
+    "4A":"Disonancia Condicional","5d":"Disonancia Condicional",
+    "2d":"Disonancia Condicional","3d":"Disonancia Condicional",
+    "4d":"Disonancia Condicional","5A":"Disonancia Condicional"
+  };
+
   var CSS = [
     '.tm-iv-wrap .tm-card{background:#fff;border:1px solid #d8d0b8;border-radius:12px;padding:24px;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.05);}',
     '.tm-iv-wrap .tm-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:#8b6914;border-radius:12px 12px 0 0;}',
@@ -20,16 +34,37 @@
     '.tm-iv-wrap .tm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:10px;margin-top:10px;}',
     '.tm-iv-wrap .tm-opt{font-size:.85rem;font-weight:700;padding:12px;border:1px solid #d8d0b8;background:#f5f2ea;cursor:pointer;border-radius:6px;transition:0.2s;text-align:center;}',
     '.tm-iv-wrap .tm-opt.tm-sel{background:#8b6914!important;color:#fff!important;border-color:#8b6914!important;box-shadow:0 4px 10px rgba(139,105,20,0.3);}',
-    '.tm-iv-wrap .tm-opt.tm-ok{background:#27ae60!important;color:#fff!important;}',
-    '.tm-iv-wrap .tm-opt.tm-ko{background:#c0392b!important;color:#fff!important;}',
-    '.tm-iv-wrap .tm-submit{width:100%;margin-top:20px;padding:15px;background:#d8d0b8;color:#fff;border:none;border-radius:6px;font-weight:800;cursor:not-allowed;}',
+    '.tm-iv-wrap .tm-opt.tm-ok{background:#27ae60!important;color:#fff!important;border-color:#27ae60!important;}',
+    '.tm-iv-wrap .tm-opt.tm-ko{background:#c0392b!important;color:#fff!important;border-color:#c0392b!important;}',
+    '.tm-iv-wrap .tm-submit{width:100%;margin-top:20px;padding:15px;background:#d8d0b8;color:#fff;border:none;border-radius:6px;font-weight:800;cursor:not-allowed;font-family:inherit;}',
     '.tm-iv-wrap .tm-submit.tm-ready{background:#8b6914;cursor:pointer;}',
     '.tm-iv-wrap .tm-fb{display:none;margin-top:15px;padding:15px;border-radius:6px;font-weight:600;}',
     '.tm-iv-wrap .tm-fb.tm-show{display:block;}',
     '.tm-iv-wrap .tm-fb.tm-ok{background:#e8f5e9;color:#2e7d32;}',
     '.tm-iv-wrap .tm-fb.tm-ko{background:#ffebee;color:#c62828;}',
-    '.tm-iv-wrap .tm-nxt{display:none;width:100%;margin-top:10px;padding:15px;background:#1a1a1a;color:#fff;border:none;border-radius:6px;cursor:pointer;}',
-    '.tm-iv-wrap .tm-nxt.tm-show{display:block;}'
+    '.tm-iv-wrap .tm-nxt{display:none;width:100%;margin-top:10px;padding:15px;background:#1a1a1a;color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:inherit;}',
+    '.tm-iv-wrap .tm-nxt.tm-show{display:block;}',
+    /* mode screen */
+    '.tm-iv-wrap .tm-iv-mode-screen{text-align:center;padding:.5rem 0 1rem;}',
+    '.tm-iv-wrap .tm-iv-title{font-size:1.35rem;font-weight:700;margin:0 0 .3rem;color:#1a1a2e;}',
+    '.tm-iv-wrap .tm-iv-subtitle{color:#666;margin:0 0 1.5rem;font-size:.92rem;}',
+    '.tm-iv-wrap .tm-iv-modes{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}',
+    '.tm-iv-wrap .tm-iv-mode-btn{background:#fff;border:2px solid #d8d0b8;border-radius:12px;padding:1.4rem 2rem;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:.3rem;min-width:110px;font-family:inherit;}',
+    '.tm-iv-wrap .tm-iv-mode-btn:hover{border-color:#8b6914;background:#fdf8ee;}',
+    '.tm-iv-wrap .tm-iv-mode-num{font-size:2.2rem;font-weight:800;color:#8b6914;line-height:1;display:block;}',
+    '.tm-iv-wrap .tm-iv-mode-lbl{font-size:.78rem;color:#666;font-weight:500;text-transform:uppercase;letter-spacing:.05em;display:block;}',
+    /* progress header */
+    '.tm-iv-wrap .tm-iv-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;}',
+    '.tm-iv-wrap .tm-iv-progress-wrap{flex:1;display:flex;flex-direction:column;gap:.3rem;min-width:0;}',
+    '.tm-iv-wrap .tm-iv-bar{height:6px;background:#e4e9f2;border-radius:3px;overflow:hidden;}',
+    '.tm-iv-wrap .tm-iv-fill{height:100%;background:#8b6914;border-radius:3px;transition:width .4s ease;width:0%;}',
+    '.tm-iv-wrap .tm-iv-counter{font-size:.82rem;color:#666;font-weight:500;}',
+    '.tm-iv-wrap .tm-iv-badge{font-size:.92rem;font-weight:700;color:#8b6914;background:#fdf8ee;padding:.2rem .7rem;border-radius:8px;white-space:nowrap;}',
+    /* results */
+    '.tm-iv-wrap .tm-iv-score-box{text-align:center;padding:2rem;background:linear-gradient(135deg,#8b6914,#6b5010);border-radius:16px;color:#fff;margin-bottom:1.5rem;}',
+    '.tm-iv-wrap .tm-iv-score-num{font-size:3rem;font-weight:800;line-height:1;}',
+    '.tm-iv-wrap .tm-iv-score-pct{font-size:1.3rem;font-weight:600;opacity:.9;margin:.3rem 0;}',
+    '@media(max-width:500px){.tm-iv-wrap .tm-iv-modes{flex-direction:column;align-items:center;}.tm-iv-wrap .tm-iv-mode-btn{width:100%;max-width:200px;}}'
   ].join('');
 
   function injectCSS() {
@@ -45,40 +80,93 @@
     var wrap = document.getElementById(containerId);
     if (!wrap) return;
     wrap.className = 'tm-iv-wrap';
-
     var uid = containerId;
-    wrap.innerHTML = [
-      '<div class="tm-card">',
-        '<div class="tm-staff"><div id="' + uid + '_not"></div></div>',
-        '<div id="' + uid + '_content"></div>',
-        '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>',
-        '<div id="' + uid + '_fb" class="tm-fb"></div>',
-        '<button id="' + uid + '_nxt" class="tm-nxt">Siguiente →</button>',
-      '</div>'
-    ].join('');
 
-    var st = { ans: false };
-    var sel = {};
-    var cQ = null;
+    var totalQ, currentQ, score, cQ, sel, answered, activeKeys;
 
-    var elNot  = document.getElementById(uid + '_not');
-    var elCont = document.getElementById(uid + '_content');
-    var elBtn  = document.getElementById(uid + '_btn');
-    var elFb   = document.getElementById(uid + '_fb');
-    var elNxt  = document.getElementById(uid + '_nxt');
+    var TITULOS = {
+      'grupo':      'Intervalos de ' + (config.val || '') + 'ª',
+      'completo':   'Análisis completo de intervalos',
+      'numero':     'Número del intervalo',
+      'consonancia':'Consonancia y disonancia',
+      'arm_mel':    'Armónicos y melódicos',
+      'asc_des':    'Ascendentes y descendentes',
+      'con_dis':    'Conjuntos y disjuntos'
+    };
 
-    function selOpt(g, v, btn) {
-      if (st.ans) return;
-      btn.parentElement.querySelectorAll('.tm-opt').forEach(function (x) { x.classList.remove('tm-sel'); });
-      btn.classList.add('tm-sel');
-      sel[g] = v;
-      elBtn.classList.add('tm-ready');
+    function baseKeys() {
+      var k = Object.keys(DEFS);
+      if (config.test === 'grupo') return k.filter(function(x){ return DEFS[x][2] === config.val; });
+      return k;
+    }
+
+    function keysForDifficulty(diff) {
+      var k = baseKeys();
+      if (config.test === 'grupo') return k;
+      if (diff === 'easy') return k.filter(function(x){ return EASY_KEYS.indexOf(x) !== -1; });
+      return k;
+    }
+
+    function showModeScreen() {
+      wrap.innerHTML = [
+        '<div class="tm-card">',
+          '<div class="tm-iv-mode-screen">',
+            '<h2 class="tm-iv-title">Test de ' + (TITULOS[config.test] || 'Intervalos') + '</h2>',
+            '<p class="tm-iv-subtitle">Elige el nivel de dificultad</p>',
+            '<div class="tm-iv-modes">',
+              '<button class="tm-iv-mode-btn" data-n="5" data-d="easy">',
+                '<span class="tm-iv-mode-num">5</span>',
+                '<span class="tm-iv-mode-lbl">Básico</span>',
+              '</button>',
+              '<button class="tm-iv-mode-btn" data-n="10" data-d="medium">',
+                '<span class="tm-iv-mode-num">10</span>',
+                '<span class="tm-iv-mode-lbl">Intermedio</span>',
+              '</button>',
+              '<button class="tm-iv-mode-btn" data-n="20" data-d="hard">',
+                '<span class="tm-iv-mode-num">20</span>',
+                '<span class="tm-iv-mode-lbl">Avanzado</span>',
+              '</button>',
+            '</div>',
+          '</div>',
+        '</div>'
+      ].join('');
+
+      wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          totalQ = parseInt(btn.dataset.n, 10);
+          activeKeys = keysForDifficulty(btn.dataset.d);
+          currentQ = 0;
+          score = 0;
+          startQuiz();
+        });
+      });
+    }
+
+    function startQuiz() {
+      wrap.innerHTML = [
+        '<div class="tm-card">',
+          '<div class="tm-iv-header">',
+            '<div class="tm-iv-progress-wrap">',
+              '<div class="tm-iv-bar"><div class="tm-iv-fill" id="' + uid + '_fill"></div></div>',
+              '<span class="tm-iv-counter" id="' + uid + '_counter">1 / ' + totalQ + '</span>',
+            '</div>',
+            '<span class="tm-iv-badge" id="' + uid + '_badge">\u2713 0</span>',
+          '</div>',
+          '<div class="tm-staff"><div id="' + uid + '_not"></div></div>',
+          '<div id="' + uid + '_content"></div>',
+          '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>',
+          '<div id="' + uid + '_fb" class="tm-fb"></div>',
+          '<button id="' + uid + '_nxt" class="tm-nxt">Siguiente \u2192</button>',
+        '</div>'
+      ].join('');
+
+      document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
+      document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
+      nextQ();
     }
 
     function genQ() {
-      var keys = Object.keys(DEFS);
-      if (config.test === 'grupo') keys = keys.filter(function (k) { return DEFS[k][2] === config.val; });
-      var k   = keys[Math.floor(Math.random() * keys.length)];
+      var k   = activeKeys[Math.floor(Math.random() * activeKeys.length)];
       var def = DEFS[k];
       var n1  = Math.floor(Math.random() * 7);
       var n2  = (n1 + def[0]) % 7;
@@ -87,34 +175,54 @@
     }
 
     function renderContent() {
+      var elCont = document.getElementById(uid + '_content');
       var h = '';
       if (config.test === 'completo') {
         h += '<div><div class="tm-grid">' +
-          ['2','3','4','5','6','7','8'].map(function (n) {
-            return '<button class="tm-opt" data-g="num" data-v="' + n + '">' + n + 'ª</button>';
+          ['2','3','4','5','6','7','8'].map(function(n){
+            return '<button class="tm-opt" data-g="num" data-v="' + n + '">' + n + '\xaa</button>';
           }).join('') + '</div></div>';
         h += '<div style="margin-top:10px"><div class="tm-grid">' +
-          ['Mayor','menor','Justa','Aumentada','Disminuida'].map(function (t) {
+          ['Mayor','menor','Justa','Aumentada','Disminuida'].map(function(t){
             return '<button class="tm-opt" data-g="tipo" data-v="' + t + '">' + t + '</button>';
           }).join('') + '</div></div>';
       } else if (config.test === 'consonancia') {
         h += '<div class="tm-grid">' +
-          ['Consonancia Perfecta','Consonancia Imperfecta','Semiconsonancia','Disonancia Absoluta','Disonancia Condicional'].map(function (t) {
+          ['Consonancia Perfecta','Consonancia Imperfecta','Semiconsonancia','Disonancia Absoluta','Disonancia Condicional'].map(function(t){
             return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
+          }).join('') + '</div>';
+      } else if (config.test === 'numero') {
+        h += '<div class="tm-grid">' +
+          ['1','2','3','4','5','6','7','8'].map(function(n){
+            return '<button class="tm-opt" data-g="ans" data-v="' + n + '">' + n + '\xaa</button>';
           }).join('') + '</div>';
       } else {
         h += '<div class="tm-grid">' +
-          ['Mayor','menor','Justa','Aumentada','Disminuida'].map(function (t) {
+          ['Mayor','menor','Justa','Aumentada','Disminuida'].map(function(t){
             return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
           }).join('') + '</div>';
       }
       elCont.innerHTML = h;
-      elCont.querySelectorAll('.tm-opt').forEach(function (btn) {
-        btn.addEventListener('click', function () { selOpt(btn.dataset.g, btn.dataset.v, btn); });
+      sel = {};
+      document.getElementById(uid + '_btn').classList.remove('tm-ready');
+      elCont.querySelectorAll('.tm-opt').forEach(function(btn) {
+        btn.addEventListener('click', function() { selOpt(btn.dataset.g, btn.dataset.v, btn); });
       });
     }
 
+    function selOpt(g, v, btn) {
+      if (answered) return;
+      var elCont = document.getElementById(uid + '_content');
+      elCont.querySelectorAll('.tm-opt[data-g="' + g + '"]').forEach(function(x){ x.classList.remove('tm-sel'); });
+      btn.classList.add('tm-sel');
+      sel[g] = v;
+      var elBtn = document.getElementById(uid + '_btn');
+      var ready = config.test === 'completo' ? (sel.num && sel.tipo) : !!sel.ans;
+      if (ready) elBtn.classList.add('tm-ready');
+    }
+
     function drawStaff() {
+      var elNot = document.getElementById(uid + '_not');
       elNot.innerHTML = '';
       var V = Vex.Flow;
       var r = new V.Renderer(elNot, V.Renderer.Backends.SVG);
@@ -122,42 +230,100 @@
       var ctx = r.getContext();
       var stave = new V.Stave(10, 10, 280);
       stave.addClef('treble').setContext(ctx).draw();
-      var sn1 = new V.StaveNote({ keys: [VF_NAMES[cQ.n1] + '/4'], duration: 'h' });
-      var sn2 = new V.StaveNote({ keys: [VF_NAMES[cQ.n2] + '/' + (cQ.n2 < cQ.n1 ? 5 : 4)], duration: 'h' });
+      var sn1 = new V.StaveNote({ keys: [VF_NAMES[cQ.n1] + '/4'], duration: 'w' });
+      var sn2 = new V.StaveNote({ keys: [VF_NAMES[cQ.n2] + '/' + (cQ.n2 < cQ.n1 ? 5 : 4)], duration: 'w' });
       if (cQ.a2 !== 0) sn2.addModifier(new V.Accidental(cQ.a2 === 1 ? '#' : 'b'), 0);
       var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1, sn2]);
       new V.Formatter().joinVoices([voice]).format([voice], 180);
       voice.draw(ctx, stave);
     }
 
-    function nextQ() {
-      st.ans = false; sel = {};
-      elFb.className = 'tm-fb';
-      elNxt.className = 'tm-nxt';
-      elBtn.style.display = 'block';
-      elBtn.classList.remove('tm-ready');
-      genQ(); renderContent(); drawStaff();
+    function isCorrect() {
+      if (config.test === 'completo')    return sel.num === cQ.def[2] && sel.tipo === cQ.def[3];
+      if (config.test === 'numero')      return sel.ans === cQ.def[2];
+      if (config.test === 'consonancia') return sel.ans === (CONSONANCIA_MAP[cQ.k] || '');
+      return sel.ans === cQ.def[3];
     }
 
-    elBtn.addEventListener('click', function () {
-      if (!elBtn.classList.contains('tm-ready')) return;
-      st.ans = true;
-      elBtn.style.display = 'none';
-      elNxt.className = 'tm-nxt tm-show';
-      elFb.className = 'tm-fb tm-show tm-ok';
-      elFb.textContent = '¡Hecho! Respuesta registrada.';
-      elCont.querySelectorAll('.tm-opt').forEach(function (b) {
-        if (b.classList.contains('tm-sel')) b.classList.add('tm-ok');
-        b.disabled = true;
-      });
-    });
+    function correctLabel() {
+      if (config.test === 'completo')    return cQ.def[2] + '\xaa ' + cQ.def[3];
+      if (config.test === 'numero')      return cQ.def[2] + '\xaa';
+      if (config.test === 'consonancia') return CONSONANCIA_MAP[cQ.k] || '—';
+      return cQ.def[2] + '\xaa ' + cQ.def[3];
+    }
 
-    elNxt.addEventListener('click', nextQ);
+    function checkAnswer() {
+      var elBtn = document.getElementById(uid + '_btn');
+      if (!elBtn.classList.contains('tm-ready')) return;
+      answered = true;
+      elBtn.style.display = 'none';
+      document.getElementById(uid + '_nxt').className = 'tm-nxt tm-show';
+
+      var correct = isCorrect();
+      if (correct) score++;
+
+      var elFb = document.getElementById(uid + '_fb');
+      elFb.className = 'tm-fb tm-show ' + (correct ? 'tm-ok' : 'tm-ko');
+      elFb.textContent = correct
+        ? '\u00a1Correcto!'
+        : 'Incorrecto. La respuesta es: ' + correctLabel() + '.';
+
+      document.getElementById(uid + '_badge').textContent = '\u2713 ' + score;
+
+      document.getElementById(uid + '_content').querySelectorAll('.tm-opt').forEach(function(b) {
+        b.disabled = true;
+        var isCorrectOpt = false;
+        if (config.test === 'completo') {
+          isCorrectOpt = (b.dataset.g === 'num' && b.dataset.v === cQ.def[2]) ||
+                         (b.dataset.g === 'tipo' && b.dataset.v === cQ.def[3]);
+        } else if (config.test === 'numero') {
+          isCorrectOpt = b.dataset.v === cQ.def[2];
+        } else if (config.test === 'consonancia') {
+          isCorrectOpt = b.dataset.v === (CONSONANCIA_MAP[cQ.k] || '');
+        } else {
+          isCorrectOpt = b.dataset.v === cQ.def[3];
+        }
+        if (isCorrectOpt) b.classList.add('tm-ok');
+        else if (b.classList.contains('tm-sel')) b.classList.add('tm-ko');
+      });
+    }
+
+    function nextQ() {
+      if (currentQ >= totalQ) { showResults(); return; }
+      currentQ++;
+      answered = false;
+
+      document.getElementById(uid + '_fill').style.width = ((currentQ - 1) / totalQ * 100) + '%';
+      document.getElementById(uid + '_counter').textContent = currentQ + ' / ' + totalQ;
+      var elBtn = document.getElementById(uid + '_btn');
+      elBtn.style.display = '';
+      elBtn.classList.remove('tm-ready');
+      document.getElementById(uid + '_fb').className = 'tm-fb';
+      document.getElementById(uid + '_nxt').className = 'tm-nxt';
+
+      genQ();
+      renderContent();
+      drawStaff();
+    }
+
+    function showResults() {
+      var pct = Math.round(score / totalQ * 100);
+      wrap.innerHTML = [
+        '<div class="tm-card">',
+          '<div class="tm-iv-score-box">',
+            '<div class="tm-iv-score-num">' + score + '/' + totalQ + '</div>',
+            '<div class="tm-iv-score-pct">' + pct + '%</div>',
+          '</div>',
+          '<button class="tm-submit tm-ready" id="' + uid + '_restart">Hacer otro test</button>',
+        '</div>'
+      ].join('');
+      document.getElementById(uid + '_restart').addEventListener('click', showModeScreen);
+    }
 
     if (typeof Vex !== 'undefined') {
-      nextQ();
+      showModeScreen();
     } else {
-      window.addEventListener('vexflow-ready', nextQ, { once: true });
+      window.addEventListener('vexflow-ready', showModeScreen, { once: true });
     }
   }
 
