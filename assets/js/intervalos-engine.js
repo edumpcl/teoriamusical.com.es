@@ -8,13 +8,20 @@
     "3M":[2,4,"3","Mayor"], "4d":[3,4,"4","Dis"],  "4j":[3,5,"4","Justa"],
     "4A":[3,6,"4","Aum"],   "5d":[4,6,"5","Dis"],  "5j":[4,7,"5","Justa"],
     "5A":[4,8,"5","Aum"],   "6m":[5,8,"6","menor"],"6M":[5,9,"6","Mayor"],
-    "7m":[6,10,"7","menor"],"7M":[6,11,"7","Mayor"],"8j":[7,12,"8","Justa"]
+    "7m":[6,10,"7","menor"],"7M":[6,11,"7","Mayor"],"8j":[7,12,"8","Justa"],
+    /* dobles aumentadas */
+    "2AA":[1,4,"2","DblAum"],"3AA":[2,6,"3","DblAum"],"4AA":[3,7,"4","DblAum"],
+    "5AA":[4,9,"5","DblAum"],"6AA":[5,11,"6","DblAum"],
+    /* dobles disminuidas */
+    "3dd":[2,1,"3","DblDis"],"4dd":[3,3,"4","DblDis"],"5dd":[4,5,"5","DblDis"],
+    "6dd":[5,7,"6","DblDis"],"7dd":[6,8,"7","DblDis"]
   };
   var NS = [0,2,4,5,7,9,11];
   var VF_NAMES = ["c","d","e","f","g","a","b"];
 
   /* Normaliza abreviaturas de DEFS a los textos que muestran los botones */
-  var TIPO_LABEL = { "Dis":"Disminuida", "Aum":"Aumentada", "menor":"menor", "Mayor":"Mayor", "Justa":"Justa" };
+  var TIPO_LABEL = { "Dis":"Disminuida", "Aum":"Aumentada", "menor":"menor", "Mayor":"Mayor", "Justa":"Justa",
+                     "DblAum":"Doble Aumentada", "DblDis":"Doble Disminuida" };
 
   var CONSONANCIA_MAP = {
     "1j":"Consonancia Perfecta","5j":"Consonancia Perfecta","8j":"Consonancia Perfecta",
@@ -25,7 +32,11 @@
     "7m":"Disonancia Absoluta","7M":"Disonancia Absoluta",
     "4A":"Disonancia Condicional","5d":"Disonancia Condicional",
     "2d":"Disonancia Condicional","3d":"Disonancia Condicional",
-    "4d":"Disonancia Condicional","5A":"Disonancia Condicional"
+    "4d":"Disonancia Condicional","5A":"Disonancia Condicional",
+    "2AA":"Disonancia Condicional","3AA":"Disonancia Condicional",
+    "4AA":"Disonancia Condicional","5AA":"Disonancia Condicional","6AA":"Disonancia Condicional",
+    "3dd":"Disonancia Condicional","4dd":"Disonancia Condicional","5dd":"Disonancia Condicional",
+    "6dd":"Disonancia Condicional","7dd":"Disonancia Condicional"
   };
 
   /*
@@ -35,9 +46,9 @@
    *   Difícil:   |a2| ≤ 2  → hasta dobles aumentados/disminuidos (## / bb)
    */
   var DIFICULTADES = [
-    { lbl: "F\xe1cil",      maxAlt: 0 },
-    { lbl: "Medio",         maxAlt: 1 },
-    { lbl: "Dif\xedcil",   maxAlt: 2 }
+    { lbl: "F\xe1cil",     maxAlt: 0, id: 'easy'   },
+    { lbl: "Medio",        maxAlt: 1, id: 'medium' },
+    { lbl: "Dif\xedcil",  maxAlt: 2, id: 'hard'   }
   ];
   var PREGUNTAS_POR_TEST = 10;
 
@@ -98,7 +109,7 @@
     var uid = containerId;
 
     var totalQ = PREGUNTAS_POR_TEST;
-    var currentQ, score, cQ, sel, answered, maxAlt;
+    var currentQ, score, cQ, sel, answered, maxAlt, currentDiff;
 
     var TITULOS = {
       'grupo':      'Intervalos de ' + (config.val || '') + '\xaa',
@@ -117,15 +128,20 @@
       'Con dobles alteraciones'
     ];
 
-    function baseKeys() {
+    function keysForDiff() {
       var k = Object.keys(DEFS);
-      if (config.test === 'grupo') return k.filter(function(x){ return DEFS[x][2] === config.val; });
+      if (config.test === 'grupo') k = k.filter(function(x){ return DEFS[x][2] === config.val; });
+      if (currentDiff === 'easy') {
+        k = k.filter(function(x){ var t = DEFS[x][3]; return t==='Mayor'||t==='menor'||t==='Justa'; });
+      } else if (currentDiff === 'medium') {
+        k = k.filter(function(x){ var t = DEFS[x][3]; return t!=='DblAum'&&t!=='DblDis'; });
+      }
       return k;
     }
 
-    /* Genera pregunta cumpliendo |a2| <= maxAlt. Reintenta hasta 100 veces. */
+    /* Genera pregunta con tipo válido para la dificultad y |a2| <= maxAlt. */
     function genQ() {
-      var keys = baseKeys();
+      var keys = keysForDiff();
       var attempts = 0, k, def, n1, n2, nd, a2;
       do {
         k   = keys[Math.floor(Math.random() * keys.length)];
@@ -175,7 +191,9 @@
 
       wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
-          maxAlt   = DIFICULTADES[parseInt(btn.dataset.i, 10)].maxAlt;
+          var d    = DIFICULTADES[parseInt(btn.dataset.i, 10)];
+          maxAlt      = d.maxAlt;
+          currentDiff = d.id;
           currentQ = 0;
           score    = 0;
           startQuiz();
@@ -215,8 +233,10 @@
           ['2','3','4','5','6','7','8'].map(function(n){
             return '<button class="tm-opt" data-g="num" data-v="' + n + '">' + n + '\xaa</button>';
           }).join('') + '</div></div>';
+        var tiposCompleto = ['Mayor','menor','Justa','Aumentada','Disminuida'];
+        if (currentDiff === 'hard') tiposCompleto = tiposCompleto.concat(['Doble Aumentada','Doble Disminuida']);
         h += '<div style="margin-top:10px"><div class="tm-grid">' +
-          ['Mayor','menor','Justa','Aumentada','Disminuida'].map(function(t){
+          tiposCompleto.map(function(t){
             return '<button class="tm-opt" data-g="tipo" data-v="' + t + '">' + t + '</button>';
           }).join('') + '</div></div>';
       } else if (config.test === 'consonancia') {
@@ -234,6 +254,7 @@
         var tiposGrupo = PERFECTAS.indexOf(config.val) !== -1
           ? ['Justa','Aumentada','Disminuida']
           : ['Mayor','menor','Aumentada','Disminuida'];
+        if (currentDiff === 'hard') tiposGrupo = tiposGrupo.concat(['Doble Aumentada','Doble Disminuida']);
         h += '<div class="tm-grid">' +
           tiposGrupo.map(function(t){
             return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
