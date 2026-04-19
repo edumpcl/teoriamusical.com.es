@@ -142,6 +142,12 @@
     /* Genera pregunta con tipo válido para la dificultad y |a2| <= maxAlt. */
     function genQ() {
       var keys = keysForDiff();
+      /* Con/dis: balancear 50/50 conjunto (2ª) vs disjunto (>2ª) */
+      if (config.test === 'con_dis') {
+        var wantConj = Math.random() < 0.5;
+        var sub = keys.filter(function(x){ return wantConj ? DEFS[x][0] === 1 : DEFS[x][0] > 1; });
+        if (sub.length) keys = sub;
+      }
       var attempts = 0, k, def, n1, n2, nd, a2;
       do {
         k   = keys[Math.floor(Math.random() * keys.length)];
@@ -154,7 +160,8 @@
       } while (Math.abs(a2) > maxAlt && attempts < 100);
       cQ = { k: k, def: def, n1: n1, n2: n2, a2: a2,
              harmonic:   config.test === 'arm_mel'  ? Math.random() < 0.5 : true,
-             ascending:  config.test === 'asc_des'  ? Math.random() < 0.5 : true };
+             ascending:  config.test === 'asc_des'  ? Math.random() < 0.5 : true,
+             conjunto:   config.test === 'con_dis'  ? def[0] === 1         : false };
     }
 
     function accidental(a2) {
@@ -256,6 +263,11 @@
           ['Ascendente','Descendente'].map(function(t){
             return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
           }).join('') + '</div>';
+      } else if (config.test === 'con_dis') {
+        h += '<div class="tm-grid">' +
+          ['Conjunto','Disjunto'].map(function(t){
+            return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
+          }).join('') + '</div>';
       } else if (config.test === 'numero') {
         h += '<div class="tm-grid">' +
           ['1','2','3','4','5','6','7','8'].map(function(n){
@@ -349,6 +361,7 @@
       if (config.test === 'consonancia') return sel.ans === (CONSONANCIA_MAP[cQ.k] || '');
       if (config.test === 'arm_mel')     return sel.ans === (cQ.harmonic  ? 'Arm\xf3nico'   : 'Mel\xf3dico');
       if (config.test === 'asc_des')     return sel.ans === (cQ.ascending ? 'Ascendente'    : 'Descendente');
+      if (config.test === 'con_dis')     return sel.ans === (cQ.conjunto  ? 'Conjunto'      : 'Disjunto');
       return sel.ans === correctTipo();
     }
 
@@ -358,6 +371,7 @@
       if (config.test === 'consonancia') return CONSONANCIA_MAP[cQ.k] || '\u2014';
       if (config.test === 'arm_mel')     return cQ.harmonic  ? 'Arm\xf3nico'  : 'Mel\xf3dico';
       if (config.test === 'asc_des')     return cQ.ascending ? 'Ascendente'   : 'Descendente';
+      if (config.test === 'con_dis')     return cQ.conjunto  ? 'Conjunto'     : 'Disjunto';
       return cQ.def[2] + '\xaa ' + correctTipo();
     }
 
@@ -427,13 +441,13 @@
         '</div>'
       ].join('');
       document.getElementById(uid + '_restart').addEventListener('click', function() {
-        if (config.test === 'arm_mel' || config.test === 'asc_des') { currentQ = 0; score = 0; startQuiz(); }
+        if (config.test === 'arm_mel' || config.test === 'asc_des' || config.test === 'con_dis') { currentQ = 0; score = 0; startQuiz(); }
         else showModeScreen();
       });
     }
 
     function init() {
-      if (config.test === 'arm_mel' || config.test === 'asc_des') {
+      if (config.test === 'arm_mel' || config.test === 'asc_des' || config.test === 'con_dis') {
         maxAlt = 1; currentDiff = 'medium';
         currentQ = 0; score = 0;
         startQuiz();
