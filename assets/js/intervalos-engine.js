@@ -152,7 +152,8 @@
         a2  = def[1] - nd;
         attempts++;
       } while (Math.abs(a2) > maxAlt && attempts < 100);
-      cQ = { k: k, def: def, n1: n1, n2: n2, a2: a2 };
+      cQ = { k: k, def: def, n1: n1, n2: n2, a2: a2,
+             harmonic: config.test === 'arm_mel' ? Math.random() < 0.5 : true };
     }
 
     function accidental(a2) {
@@ -244,6 +245,11 @@
           ['Consonancia Perfecta','Consonancia Imperfecta','Semiconsonancia','Disonancia Absoluta','Disonancia Condicional'].map(function(t){
             return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
           }).join('') + '</div>';
+      } else if (config.test === 'arm_mel') {
+        h += '<div class="tm-grid">' +
+          ['Arm\xf3nico','Mel\xf3dico'].map(function(t){
+            return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
+          }).join('') + '</div>';
       } else if (config.test === 'numero') {
         h += '<div class="tm-grid">' +
           ['1','2','3','4','5','6','7','8'].map(function(n){
@@ -287,11 +293,28 @@
       var ctx = r.getContext();
       var stave = new V.Stave(10, 10, 280);
       stave.addClef('treble').setContext(ctx).draw();
-      var sn1 = new V.StaveNote({ keys: [VF_NAMES[cQ.n1] + '/4'], duration: 'w' });
-      var sn2 = new V.StaveNote({ keys: [VF_NAMES[cQ.n2] + '/' + (cQ.n2 < cQ.n1 ? 5 : 4)], duration: 'w' });
+      var key1 = VF_NAMES[cQ.n1] + '/4';
+      var key2 = VF_NAMES[cQ.n2] + '/' + (cQ.n2 < cQ.n1 ? 5 : 4);
       var acc = accidental(cQ.a2);
-      if (acc) sn2.addModifier(new V.Accidental(acc), 0);
-      var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1, sn2]);
+      var voice;
+      if (config.test === 'arm_mel' && cQ.harmonic) {
+        /* Armónico: acorde — ambas notas en el mismo StaveNote */
+        var chord = new V.StaveNote({ keys: [key1, key2], duration: 'w' });
+        if (acc) chord.addModifier(new V.Accidental(acc), 1);
+        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([chord]);
+      } else if (config.test === 'arm_mel' && !cQ.harmonic) {
+        /* Melódico: dos blancas consecutivas */
+        var sn1 = new V.StaveNote({ keys: [key1], duration: 'h' });
+        var sn2 = new V.StaveNote({ keys: [key2], duration: 'h' });
+        if (acc) sn2.addModifier(new V.Accidental(acc), 0);
+        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1, sn2]);
+      } else {
+        /* Resto de tests: dos redondas lado a lado */
+        var sn1 = new V.StaveNote({ keys: [key1], duration: 'w' });
+        var sn2 = new V.StaveNote({ keys: [key2], duration: 'w' });
+        if (acc) sn2.addModifier(new V.Accidental(acc), 0);
+        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1, sn2]);
+      }
       new V.Formatter().joinVoices([voice]).format([voice], 180);
       voice.draw(ctx, stave);
     }
@@ -304,6 +327,7 @@
       if (config.test === 'completo')    return sel.num === cQ.def[2] && sel.tipo === correctTipo();
       if (config.test === 'numero')      return sel.ans === cQ.def[2];
       if (config.test === 'consonancia') return sel.ans === (CONSONANCIA_MAP[cQ.k] || '');
+      if (config.test === 'arm_mel')     return sel.ans === (cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico');
       return sel.ans === correctTipo();
     }
 
@@ -311,6 +335,7 @@
       if (config.test === 'completo')    return cQ.def[2] + '\xaa ' + correctTipo();
       if (config.test === 'numero')      return cQ.def[2] + '\xaa';
       if (config.test === 'consonancia') return CONSONANCIA_MAP[cQ.k] || '\u2014';
+      if (config.test === 'arm_mel')     return cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico';
       return cQ.def[2] + '\xaa ' + correctTipo();
     }
 
