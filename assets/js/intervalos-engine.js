@@ -230,8 +230,12 @@
             return '<button class="tm-opt" data-g="ans" data-v="' + n + '">' + n + '\xaa</button>';
           }).join('') + '</div>';
       } else {
+        var PERFECTAS = ['1','4','5','8'];
+        var tiposGrupo = PERFECTAS.indexOf(config.val) !== -1
+          ? ['Justa','Aumentada','Disminuida']
+          : ['Mayor','menor','Aumentada','Disminuida'];
         h += '<div class="tm-grid">' +
-          ['Mayor','menor','Justa','Aumentada','Disminuida'].map(function(t){
+          tiposGrupo.map(function(t){
             return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
           }).join('') + '</div>';
       }
