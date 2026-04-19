@@ -404,13 +404,26 @@
           '<button class="tm-submit tm-ready" id="' + uid + '_restart">Hacer otro test</button>',
         '</div>'
       ].join('');
-      document.getElementById(uid + '_restart').addEventListener('click', showModeScreen);
+      document.getElementById(uid + '_restart').addEventListener('click', function() {
+        if (config.test === 'arm_mel') { currentQ = 0; score = 0; startQuiz(); }
+        else showModeScreen();
+      });
+    }
+
+    function init() {
+      if (config.test === 'arm_mel') {
+        maxAlt = 1; currentDiff = 'medium';
+        currentQ = 0; score = 0;
+        startQuiz();
+      } else {
+        showModeScreen();
+      }
     }
 
     if (typeof Vex !== 'undefined') {
-      showModeScreen();
+      init();
     } else {
-      window.addEventListener('vexflow-ready', showModeScreen, { once: true });
+      window.addEventListener('vexflow-ready', init, { once: true });
     }
   }
 
