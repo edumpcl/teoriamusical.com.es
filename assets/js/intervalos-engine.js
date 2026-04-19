@@ -157,7 +157,10 @@
         var n1s, n2s, a2s, ks, defs, nds;
         if (tipo === 'unisono') {
           ks = '1j'; defs = DEFS['1j'];
-          n1s = Math.floor(Math.random() * 7); n2s = n1s; a2s = 0;
+          n1s = Math.floor(Math.random() * 7); n2s = n1s;
+          /* Ambas notas pueden estar alteradas (do#-do#, reb-reb…) */
+          var altOpts = [-1, 0, 0, 1]; /* natural más probable */
+          a2s = altOpts[Math.floor(Math.random() * altOpts.length)];
         } else if (tipo === 'diaton') {
           ks = '2m'; defs = DEFS['2m'];
           n1s = Math.floor(Math.random() * 7);
@@ -175,7 +178,9 @@
           nds = NS[n2s] - NS[n1s]; if (nds < 0) nds += 12;
           a2s = 0 - nds;
         }
-        cQ = { k: ks, def: defs, n1: n1s, n2: n2s, a2: a2s, semitipo: tipo,
+        /* a1: alteración en nota1 (solo unísono la usa) */
+        var a1s = (tipo === 'unisono') ? a2s : 0;
+        cQ = { k: ks, def: defs, n1: n1s, n2: n2s, a1: a1s, a2: a2s, semitipo: tipo,
                harmonic: true, ascending: true, conjunto: false };
         return;
       }
@@ -387,7 +392,9 @@
         /* Resto de tests: dos redondas lado a lado */
         var sn1 = new V.StaveNote({ keys: [key1], duration: 'w' });
         var sn2 = new V.StaveNote({ keys: [key2], duration: 'w' });
-        if (acc) sn2.addModifier(new V.Accidental(acc), 0);
+        var acc1 = cQ.a1 ? accidental(cQ.a1) : null;
+        if (acc1) sn1.addModifier(new V.Accidental(acc1), 0);
+        if (acc)  sn2.addModifier(new V.Accidental(acc), 0);
         voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1, sn2]);
       }
       new V.Formatter().joinVoices([voice]).format([voice], 180);
