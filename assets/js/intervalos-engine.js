@@ -153,7 +153,8 @@
         attempts++;
       } while (Math.abs(a2) > maxAlt && attempts < 100);
       cQ = { k: k, def: def, n1: n1, n2: n2, a2: a2,
-             harmonic: config.test === 'arm_mel' ? Math.random() < 0.5 : true };
+             harmonic:   config.test === 'arm_mel'  ? Math.random() < 0.5 : true,
+             ascending:  config.test === 'asc_des'  ? Math.random() < 0.5 : true };
     }
 
     function accidental(a2) {
@@ -250,6 +251,11 @@
           ['Arm\xf3nico','Mel\xf3dico'].map(function(t){
             return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
           }).join('') + '</div>';
+      } else if (config.test === 'asc_des') {
+        h += '<div class="tm-grid">' +
+          ['Ascendente','Descendente'].map(function(t){
+            return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
+          }).join('') + '</div>';
       } else if (config.test === 'numero') {
         h += '<div class="tm-grid">' +
           ['1','2','3','4','5','6','7','8'].map(function(n){
@@ -308,6 +314,20 @@
         var sn2 = new V.StaveNote({ keys: [key2], duration: 'h' });
         if (acc) sn2.addModifier(new V.Accidental(acc), 0);
         voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1, sn2]);
+      } else if (config.test === 'asc_des') {
+        /* Ascendente: nota1/4 → nota2 más alta | Descendente: nota1/5 → nota2/4 */
+        var hiKey, loKey, accIdx;
+        if (cQ.ascending) {
+          hiKey = key2; loKey = key1; accIdx = 1; /* nota alta es key2 */
+        } else {
+          hiKey = VF_NAMES[cQ.n1] + '/5';
+          loKey = VF_NAMES[cQ.n2] + '/4';
+          accIdx = 0; /* acorde no aplica; la alt. va en nota2=loKey */
+        }
+        var first  = new V.StaveNote({ keys: [cQ.ascending ? key1 : hiKey], duration: 'h' });
+        var second = new V.StaveNote({ keys: [cQ.ascending ? key2 : loKey], duration: 'h' });
+        if (acc) second.addModifier(new V.Accidental(acc), 0);
+        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([first, second]);
       } else {
         /* Resto de tests: dos redondas lado a lado */
         var sn1 = new V.StaveNote({ keys: [key1], duration: 'w' });
@@ -327,7 +347,8 @@
       if (config.test === 'completo')    return sel.num === cQ.def[2] && sel.tipo === correctTipo();
       if (config.test === 'numero')      return sel.ans === cQ.def[2];
       if (config.test === 'consonancia') return sel.ans === (CONSONANCIA_MAP[cQ.k] || '');
-      if (config.test === 'arm_mel')     return sel.ans === (cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico');
+      if (config.test === 'arm_mel')     return sel.ans === (cQ.harmonic  ? 'Arm\xf3nico'   : 'Mel\xf3dico');
+      if (config.test === 'asc_des')     return sel.ans === (cQ.ascending ? 'Ascendente'    : 'Descendente');
       return sel.ans === correctTipo();
     }
 
@@ -335,7 +356,8 @@
       if (config.test === 'completo')    return cQ.def[2] + '\xaa ' + correctTipo();
       if (config.test === 'numero')      return cQ.def[2] + '\xaa';
       if (config.test === 'consonancia') return CONSONANCIA_MAP[cQ.k] || '\u2014';
-      if (config.test === 'arm_mel')     return cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico';
+      if (config.test === 'arm_mel')     return cQ.harmonic  ? 'Arm\xf3nico'  : 'Mel\xf3dico';
+      if (config.test === 'asc_des')     return cQ.ascending ? 'Ascendente'   : 'Descendente';
       return cQ.def[2] + '\xaa ' + correctTipo();
     }
 
@@ -405,13 +427,13 @@
         '</div>'
       ].join('');
       document.getElementById(uid + '_restart').addEventListener('click', function() {
-        if (config.test === 'arm_mel') { currentQ = 0; score = 0; startQuiz(); }
+        if (config.test === 'arm_mel' || config.test === 'asc_des') { currentQ = 0; score = 0; startQuiz(); }
         else showModeScreen();
       });
     }
 
     function init() {
-      if (config.test === 'arm_mel') {
+      if (config.test === 'arm_mel' || config.test === 'asc_des') {
         maxAlt = 1; currentDiff = 'medium';
         currentQ = 0; score = 0;
         startQuiz();
