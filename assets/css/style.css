@@ -135,6 +135,32 @@ figcaption { font-size: .9em; color: var(--text-muted); margin-top: .4em; text-a
   .tm-nav-list a.is-active::after { display: none; }
 }
 
+/* ---------- Subnav dropdown ---------- */
+.tm-has-sub { position: relative; }
+.tm-subnav {
+  list-style: none; margin: 0; padding: .4rem 0;
+  position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+  background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+  box-shadow: var(--shadow); min-width: 150px;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .15s, visibility .15s;
+  z-index: 200;
+}
+.tm-has-sub:hover .tm-subnav,
+.tm-has-sub:focus-within .tm-subnav { opacity: 1; visibility: visible; pointer-events: auto; }
+.tm-subnav a { display: block; padding: .5rem 1.1rem; white-space: nowrap; font-weight: 500; }
+.tm-has-sub > a::after { content: ' ▾'; font-size: .7em; opacity: .6; }
+
+@media (max-width: 860px) {
+  .tm-subnav {
+    position: static; transform: none; box-shadow: none;
+    border: 0; border-radius: 0; opacity: 1; visibility: visible; pointer-events: auto;
+    padding: 0 0 .3rem 1rem; background: transparent;
+  }
+  .tm-subnav li { border-bottom: 0 !important; }
+  .tm-subnav a { padding: .55rem 0; font-size: .92rem; }
+}
+
 /* ---------- Breadcrumb ---------- */
 .tm-breadcrumb {
   background: var(--bg-alt);
