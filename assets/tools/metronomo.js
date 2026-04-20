@@ -806,6 +806,9 @@
     loadDrumSamples();
   }
 
-  document.addEventListener('DOMContentLoaded', init);
-  if (document.readyState !== 'loading') init();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();

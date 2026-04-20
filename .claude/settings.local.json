@@ -8,7 +8,8 @@
       "Bash(python *)",
       "Bash(sed 's/-[0-9]*\\\\.wav$//')",
       "Bash(python3 *)",
-      "Bash(xargs sed *)"
+      "Bash(xargs sed *)",
+      "WebFetch(domain:www.teoriamusical.com.es)"
     ]
   }
 }
