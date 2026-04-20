@@ -639,34 +639,10 @@
 
   // ── LONG PRESS BPM ────────────────────────────────────────────────────────
   function setupBpmBtn(btn, delta) {
-    let interval = null;
-    let timeout = null;
-    const start = () => {
-      stop(); // limpiar cualquier estado anterior
+    btn.addEventListener('click', () => {
       _applyBpm(bpm + delta);
       if (isPlaying) nextBeatTime = audioCtx ? audioCtx.currentTime + 0.05 : nextBeatTime;
-      timeout = setTimeout(() => {
-        interval = setInterval(() => {
-          _applyBpm(bpm + delta);
-          if (isPlaying) nextBeatTime = audioCtx ? audioCtx.currentTime + 0.05 : nextBeatTime;
-        }, 80);
-      }, 400);
-    };
-    const stop = () => {
-      clearTimeout(timeout);
-      clearInterval(interval);
-      timeout = null;
-      interval = null;
-    };
-    btn.addEventListener('mousedown', start);
-    btn.addEventListener('mouseup', stop);
-    btn.addEventListener('mouseleave', stop);
-    btn.addEventListener('touchstart', e => { e.preventDefault(); start(); });
-    btn.addEventListener('touchend', e => { e.preventDefault(); stop(); });
-    btn.addEventListener('touchcancel', stop);
-    // Safety net: si el dedo se levanta fuera del botón
-    window.addEventListener('mouseup', stop);
-    window.addEventListener('touchend', stop);
+    });
   }
 
   // ── INIT ──────────────────────────────────────────────────────────────────
