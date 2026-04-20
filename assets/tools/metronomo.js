@@ -30,43 +30,43 @@
   // Drum machine
   let drEnabled = false;
   const DR_INSTS = ['KICK', 'SNARE', 'HH-C', 'HH-O'];
-  const DR_STEPS = 16;
-  let drPattern = DR_INSTS.map(() => new Array(DR_STEPS).fill(false));
+  let drSteps = 16;
+  let drPattern = DR_INSTS.map(() => new Array(drSteps).fill(false));
   let drVolumes = [0.8, 0.7, 0.6, 0.5];
-  let drCurrentStep = 0;
 
   // ── PATRONES POR COMPÁS ────────────────────────────────────────────────────
+  // Cada compás usa su número natural de pasos: x/4 → x×4 dieciseisavos, x/8 → x×2
   const METER_PATTERNS = {
-    '2/4': [
+    '2/4': [  // 8 pasos
       { name: 'Marcha',
-        kick:  [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
-        snare: [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-        hhc:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
-        hho:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+        kick:  [1,0,0,0,1,0,0,0],
+        snare: [0,0,0,0,1,0,0,0],
+        hhc:   [1,0,1,0,1,0,1,0],
+        hho:   [0,0,0,0,0,0,0,0] },
       { name: 'Polka',
-        kick:  [1,0,1,0,0,0,1,0,1,0,1,0,0,0,1,0],
-        snare: [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-        hhc:   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        hho:   [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1] },
+        kick:  [1,0,1,0,0,0,1,0],
+        snare: [0,0,0,0,1,0,0,0],
+        hhc:   [1,1,1,1,1,1,1,1],
+        hho:   [0,0,0,0,0,0,0,1] },
     ],
-    '3/4': [
+    '3/4': [  // 12 pasos
       { name: 'Vals',
-        kick:  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        snare: [0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0],
-        hhc:   [1,0,1,0,1,0,1,0,1,0,1,0,0,0,0,0],
-        hho:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+        kick:  [1,0,0,0,0,0,0,0,0,0,0,0],
+        snare: [0,0,0,0,0,1,0,0,0,0,1,0],
+        hhc:   [1,0,1,0,1,0,1,0,1,0,1,0],
+        hho:   [0,0,0,0,0,0,0,0,0,0,0,0] },
       { name: 'Bolero',
-        kick:  [1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0],
-        snare: [0,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0],
-        hhc:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,0,0],
-        hho:   [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0] },
+        kick:  [1,0,0,0,1,0,0,0,0,0,1,0],
+        snare: [0,0,1,0,0,0,0,0,1,0,0,0],
+        hhc:   [1,0,1,0,1,0,1,0,1,0,1,0],
+        hho:   [0,0,0,0,0,0,0,1,0,0,0,0] },
       { name: 'Mazurca',
-        kick:  [1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0],
-        snare: [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-        hhc:   [1,0,1,0,1,0,1,0,1,0,1,0,0,0,0,0],
-        hho:   [0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0] },
+        kick:  [1,0,0,0,0,0,1,0,0,0,1,0],
+        snare: [0,0,0,0,1,0,0,0,0,0,0,0],
+        hhc:   [1,0,1,0,1,0,1,0,1,0,1,0],
+        hho:   [0,0,0,0,0,0,0,0,0,1,0,0] },
     ],
-    '4/4': [
+    '4/4': [  // 16 pasos
       { name: 'Rock',
         kick:  [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
         snare: [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
@@ -98,28 +98,24 @@
         hhc:   [1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1],
         hho:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
     ],
-    '6/8': [
+    '6/8': [  // 12 pasos
       { name: 'Balada',
-        kick:  [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-        snare: [0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0],
-        hhc:   [1,0,1,0,1,0,1,0,1,0,1,0,0,0,0,0],
-        hho:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+        kick:  [1,0,0,0,0,0,1,0,0,0,0,0],
+        snare: [0,0,0,1,0,0,0,0,0,1,0,0],
+        hhc:   [1,0,1,0,1,0,1,0,1,0,1,0],
+        hho:   [0,0,0,0,0,0,0,0,0,0,0,0] },
       { name: 'Jig',
-        kick:  [1,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0],
-        snare: [0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,0],
-        hhc:   [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0],
-        hho:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+        kick:  [1,0,0,1,0,0,1,0,0,1,0,0],
+        snare: [0,0,1,0,0,1,0,0,1,0,0,1],
+        hhc:   [1,1,1,1,1,1,1,1,1,1,1,1],
+        hho:   [0,0,0,0,0,0,0,0,0,0,0,0] },
       { name: 'Siciliana',
-        kick:  [1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0],
-        snare: [0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0],
-        hhc:   [1,0,1,1,0,1,1,0,1,1,0,1,0,0,0,0],
-        hho:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+        kick:  [1,0,0,0,1,0,1,0,0,0,1,0],
+        snare: [0,0,1,0,0,0,0,0,1,0,0,0],
+        hhc:   [1,0,1,1,0,1,1,0,1,1,0,1],
+        hho:   [0,0,0,0,0,0,0,0,0,0,0,0] },
     ],
   };
-
-  const EMPTY_PATTERN = { name: 'Custom',
-    kick: new Array(16).fill(0), snare: new Array(16).fill(0),
-    hhc:  new Array(16).fill(0), hho:   new Array(16).fill(0) };
 
   let currentPatternIdx = -1; // -1 = Off, 0..n = patrón del compás actual
   let currentMeterPatterns = [];
@@ -133,8 +129,17 @@
     return METER_PATTERNS['4/4'];
   }
 
+  // Número de pasos según el compás: x/4 → x×4 (dieciseisavos), x/8 → x×2
+  function getDrSteps(m) {
+    if (m.endsWith('/8')) return parseInt(m) * 2;
+    return parseInt(m) * 4;
+  }
+
+  // Escala un array de patrón al tamaño actual de drSteps (repite o trunca)
   function patternToArrays(p) {
-    return [p.kick.map(Boolean), p.snare.map(Boolean), p.hhc.map(Boolean), p.hho.map(Boolean)];
+    return [p.kick, p.snare, p.hhc, p.hho].map(arr =>
+      Array.from({length: drSteps}, (_, i) => Boolean(arr[i % arr.length]))
+    );
   }
 
 
@@ -293,15 +298,11 @@
 
       // drum machine
       if (drEnabled) {
-        // In compound meters each beat = 3 eighth notes; DR_STEPS covers the full measure
-        const totalBeatsInMeasure = beatsPerMeasure;
-        const stepsPerBeat = DR_STEPS / totalBeatsInMeasure;
-        const startStep = Math.round(beat * stepsPerBeat) % DR_STEPS;
-        // For compound meters the step duration is an eighth note (beatInterval/3)
-        const stepDuration = isCompound(meter) ? beatInterval / 3 : beatInterval / stepsPerBeat;
-        const totalStepsThisBeat = isCompound(meter) ? 3 : stepsPerBeat;
-        for (let s = 0; s < totalStepsThisBeat; s++) {
-          const stepIdx = (startStep + s) % DR_STEPS;
+        const stepsPerBeat = drSteps / beatsPerMeasure;
+        const startStep = (beat * stepsPerBeat) % drSteps;
+        const stepDuration = beatInterval / stepsPerBeat;
+        for (let s = 0; s < stepsPerBeat; s++) {
+          const stepIdx = (startStep + s) % drSteps;
           const stepTime = nextBeatTime + s * stepDuration;
           DR_INSTS.forEach((_, i) => {
             if (drPattern[i][stepIdx]) playDrum(i, drVolumes[i], stepTime);
@@ -315,7 +316,7 @@
       const delay = Math.max(0, (timeCapture - now) * 1000);
       const gen = _metGeneration;
       // capture dr step for highlight
-      const drStepCapture = drEnabled ? Math.round(beat * (DR_STEPS / beatsPerMeasure)) % DR_STEPS : -1;
+      const drStepCapture = drEnabled ? (beat * (drSteps / beatsPerMeasure)) % drSteps : -1;
       setTimeout(() => {
         if (_metGeneration !== gen) return;
         visualBeat(beatCapture);
@@ -572,7 +573,7 @@
       row.appendChild(label);
       const steps = document.createElement('div');
       steps.className = 'dr-steps';
-      for (let s = 0; s < DR_STEPS; s++) {
+      for (let s = 0; s < drSteps; s++) {
         const step = document.createElement('div');
         step.className = 'dr-step inst-' + name.toLowerCase().replace('-','') + (drPattern[instIdx][s] ? ' on' : '');
         step.dataset.inst = instIdx;
@@ -597,26 +598,25 @@
   }
 
   function setDrPattern(idx, rebuild = true) {
-    const customIdx = currentMeterPatterns.length;
     currentPatternIdx = idx;
     drEnabled = idx !== -1;
     if (idx === -1) {
-      drPattern = DR_INSTS.map(() => new Array(DR_STEPS).fill(false));
+      drPattern = DR_INSTS.map(() => new Array(drSteps).fill(false));
     } else if (idx < currentMeterPatterns.length) {
       drPattern = patternToArrays(currentMeterPatterns[idx]);
-    } else {
-      // Custom — keep existing drPattern
     }
+    // Custom — keep existing drPattern
     buildDrPatternPills();
     if (rebuild) buildDrumGrid();
   }
 
   function loadMeterPatterns(m) {
+    drSteps = getDrSteps(m);
     currentMeterPatterns = getPatternsForMeter(m);
     // Reset to Off when meter changes
     currentPatternIdx = -1;
     drEnabled = false;
-    drPattern = DR_INSTS.map(() => new Array(DR_STEPS).fill(false));
+    drPattern = DR_INSTS.map(() => new Array(drSteps).fill(false));
     buildDrPatternPills();
     buildDrumGrid();
   }
@@ -734,6 +734,7 @@
       meter = freeGroups.reduce((a,b)=>a+b,0) + '/8';
       mutedBeats = mutedBeats.filter(b => b < beatsPerMeasure);
       buildBeatDots();
+      loadMeterPatterns(meter);
       if (isPlaying) { stopMet(); startMet(); }
     });
 
