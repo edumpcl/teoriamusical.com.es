@@ -455,6 +455,14 @@
           isCorrectOpt = b.dataset.v === cQ.def[2];
         } else if (config.test === 'consonancia') {
           isCorrectOpt = b.dataset.v === (CONSONANCIA_MAP[cQ.k] || '');
+        } else if (config.test === 'arm_mel') {
+          isCorrectOpt = b.dataset.v === (cQ.harmonic ? 'Armónico' : 'Melódico');
+        } else if (config.test === 'asc_des') {
+          isCorrectOpt = b.dataset.v === (cQ.ascending ? 'Ascendente' : 'Descendente');
+        } else if (config.test === 'con_dis') {
+          isCorrectOpt = b.dataset.v === (cQ.conjunto ? 'Conjunto' : 'Disjunto');
+        } else if (config.test === 'semitono') {
+          isCorrectOpt = b.dataset.v === (SEMITIPO_LABEL[cQ.semitipo] || '');
         } else {
           isCorrectOpt = b.dataset.v === correctTipo();
         }

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(python tools/migrate_consent.py)",
+      "Bash(python tools/migrate_intervalos.py)",
+      "Bash(xargs grep *)",
+      "Bash(python *)",
+      "Bash(sed 's/-[0-9]*\\\\.wav$//')"
+    ]
+  }
+}
