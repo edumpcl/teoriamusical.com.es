@@ -16,6 +16,7 @@
   let _drGeneration = 0;
   let _pendulumDir = 1;
   let tapTimes = [];
+  let freeGroupSizes = []; // corcheas por pulso en compás libre, vacío = compás normal
 
   // DOM cache
   let _domBpmNum, _domTempoName, _domBpmSlider, _domBeatDots, _domStBeat, _domStMeasure, _domStInterval, _domStTotal, _domPlayIcon, _domPracBar, _domPendG, _domPendBall;
@@ -288,12 +289,15 @@
     if (!audioCtx) return;
     const lookAhead = 0.1;
     const now = audioCtx.currentTime;
-    // Compound meters: BPM refers to the dotted-quarter (group of 3 eighth notes)
-    // Simple meters: BPM refers to the quarter note
-    const beatInterval = isCompound(meter) ? (60 / bpm) : (60 / bpm);
+    const quarterNote = 60 / bpm;
+    const eighthNote  = quarterNote / 2;
 
     while (nextBeatTime < now + lookAhead) {
       const beat = currentBeat;
+      // En compás libre cada pulso dura tantas corcheas como indica su grupo
+      const beatInterval = freeGroupSizes.length > 0
+        ? freeGroupSizes[beat] * eighthNote
+        : isCompound(meter) ? quarterNote * 1.5 : quarterNote;
       const accentLevel = beatAccents[beat] || 'weak';
       const isAccent = accentLevel === 'strong';
       const isMedium = accentLevel === 'medium';
@@ -514,6 +518,7 @@
   }
 
   function setMeter(m) {
+    freeGroupSizes = [];
     meter = m;
     beatsPerMeasure = parseMeter(m);
     mutedBeats = mutedBeats.filter(b => b < beatsPerMeasure);
@@ -722,6 +727,7 @@
     document.getElementById('free-apply').addEventListener('click', () => {
       if (freeGroups.length === 0) return;
       document.querySelectorAll('.meter-pill').forEach(p => p.classList.remove('active'));
+      freeGroupSizes = [...freeGroups];
       beatsPerMeasure = freeGroups.length;
       meter = freeGroups.reduce((a,b)=>a+b,0) + '/8';
       mutedBeats = mutedBeats.filter(b => b < beatsPerMeasure);
