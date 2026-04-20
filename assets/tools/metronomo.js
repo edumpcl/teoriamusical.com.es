@@ -210,52 +210,68 @@
     osc.stop(when + duration + 0.01);
   }
 
+  // ── SAMPLES (AVL RedZeppelin) ─────────────────────────────────────────────
+  const DR_SAMPLE_FILES = [
+    ['/assets/audio/drums/36-Ludwig-26-Kick-1.wav',      '/assets/audio/drums/36-Ludwig-26-Kick-2.wav',      '/assets/audio/drums/36-Ludwig-26-Kick-3.wav'],
+    ['/assets/audio/drums/38-Ludwig-14-Snare-1.wav',     '/assets/audio/drums/38-Ludwig-14-Snare-2.wav',     '/assets/audio/drums/38-Ludwig-14-Snare-3.wav'],
+    ['/assets/audio/drums/42-Sabian-13-HatClosed-1.wav', '/assets/audio/drums/42-Sabian-13-HatClosed-2.wav', '/assets/audio/drums/42-Sabian-13-HatClosed-3.wav'],
+    ['/assets/audio/drums/48-Sabian-13-HatSwish-1.wav',  '/assets/audio/drums/48-Sabian-13-HatSwish-2.wav',  '/assets/audio/drums/48-Sabian-13-HatSwish-3.wav'],
+  ];
+  // drBuffers[instIdx][velocityLayer] = AudioBuffer | null
+  const drBuffers = DR_SAMPLE_FILES.map(arr => arr.map(() => null));
+  let drSamplesLoaded = false;
+
+  async function loadDrumSamples() {
+    const ctx = getAudioCtx();
+    const promises = DR_SAMPLE_FILES.map((layers, i) =>
+      Promise.all(layers.map((url, v) =>
+        fetch(url)
+          .then(r => r.arrayBuffer())
+          .then(ab => ctx.decodeAudioData(ab))
+          .then(buf => { drBuffers[i][v] = buf; })
+          .catch(() => {})
+      ))
+    );
+    await Promise.all(promises);
+    drSamplesLoaded = true;
+  }
+
   function playDrum(instIdx, vol, when) {
     const ctx = getAudioCtx();
     const gainNode = ctx.createGain();
     gainNode.connect(compressor);
     gainNode.gain.setValueAtTime(vol, when);
 
-    if (instIdx === 0) { // KICK
+    const bufs = drBuffers[instIdx];
+    const available = bufs.filter(Boolean);
+    if (drSamplesLoaded && available.length > 0) {
+      const buf = available[Math.floor(Math.random() * available.length)];
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+      src.connect(gainNode);
+      src.start(when);
+      return;
+    }
+
+    // Fallback sintético mientras cargan los samples
+    if (instIdx === 0) {
       const osc = ctx.createOscillator();
       osc.connect(gainNode);
       osc.frequency.setValueAtTime(150, when);
       osc.frequency.exponentialRampToValueAtTime(45, when + 0.15);
       gainNode.gain.exponentialRampToValueAtTime(0.001, when + 0.3);
       osc.start(when); osc.stop(when + 0.35);
-    } else if (instIdx === 1) { // SNARE
+    } else {
       const noise = ctx.createBufferSource();
-      const buf = ctx.createBuffer(1, ctx.sampleRate * 0.15, ctx.sampleRate);
-      const d = buf.getChannelData(0);
-      for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-      noise.buffer = buf;
-      const hp = ctx.createBiquadFilter();
-      hp.type = 'highpass'; hp.frequency.value = 1000;
-      noise.connect(hp); hp.connect(gainNode);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, when + 0.15);
-      noise.start(when); noise.stop(when + 0.2);
-    } else if (instIdx === 2) { // HH-C
-      const noise = ctx.createBufferSource();
-      const buf = ctx.createBuffer(1, ctx.sampleRate * 0.05, ctx.sampleRate);
+      const buf = ctx.createBuffer(1, ctx.sampleRate * 0.1, ctx.sampleRate);
       const d = buf.getChannelData(0);
       for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
       noise.buffer = buf;
       const bp = ctx.createBiquadFilter();
-      bp.type = 'bandpass'; bp.frequency.value = 8000; bp.Q.value = 1.5;
+      bp.type = 'bandpass'; bp.frequency.value = instIdx === 2 ? 8000 : 6000;
       noise.connect(bp); bp.connect(gainNode);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, when + 0.05);
-      noise.start(when); noise.stop(when + 0.08);
-    } else { // HH-O
-      const noise = ctx.createBufferSource();
-      const buf = ctx.createBuffer(1, ctx.sampleRate * 0.2, ctx.sampleRate);
-      const d = buf.getChannelData(0);
-      for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-      noise.buffer = buf;
-      const bp = ctx.createBiquadFilter();
-      bp.type = 'bandpass'; bp.frequency.value = 6000; bp.Q.value = 0.8;
-      noise.connect(bp); bp.connect(gainNode);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, when + 0.25);
-      noise.start(when); noise.stop(when + 0.3);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, when + 0.1);
+      noise.start(when); noise.stop(when + 0.15);
     }
   }
 
@@ -805,6 +821,7 @@
     loadMeterPatterns(meter); // carga patrones del compás inicial (2/4)
     updateBpmDisplay();
     updateStats(null);
+    loadDrumSamples();
   }
 
   document.addEventListener('DOMContentLoaded', init);
