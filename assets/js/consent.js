@@ -116,10 +116,8 @@
     var existing = getCookie();
     if (existing && typeof existing.analytics !== 'undefined') {
       applyConsent(existing);
-      trigger.hidden = false;
-    } else {
-      show();
     }
+    trigger.hidden = false;
   }
 
   if (document.readyState === 'loading') {
