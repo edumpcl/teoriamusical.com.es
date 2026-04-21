@@ -18,6 +18,8 @@
 
 <!-- Google Consent Mode v2 — defaults denied until user consents -->
 <script>
+  window['googlefc'] = window['googlefc'] || {};
+  window['googlefc'].controlledMessagingFunction = function(m){ m.proceed(false); };
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('consent', 'default', {
