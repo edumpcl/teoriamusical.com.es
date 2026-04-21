@@ -62,6 +62,14 @@
   var chkAnalytics, chkAdvertising, trigger;
 
   function show() {
+    var existing = getCookie();
+    if (existing && typeof existing.analytics !== 'undefined') {
+      chkAnalytics.checked   = !!existing.analytics;
+      chkAdvertising.checked = !!existing.advertising;
+      panel.hidden      = false;
+      btnConfigure.hidden = true;
+      btnSave.hidden    = false;
+    }
     overlay.classList.add('tm-show');
     trigger.hidden = true;
     document.body.style.overflow = 'hidden';
