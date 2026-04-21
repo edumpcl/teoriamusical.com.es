@@ -483,6 +483,8 @@ figcaption { font-size: .9em; color: var(--text-muted); margin-top: .4em; text-a
 }
 .wp-block-column > *:first-child { margin-top: 0; }
 .wp-block-column > *:last-child { margin-bottom: 0; }
+.wp-block-column figure { float: none; margin-left: 0; margin-right: 0; }
+.wp-block-column .wp-block-image img { max-width: 100%; height: auto; background: #fff; border-radius: var(--radius-sm); border: 1px solid var(--border); }
 
 .wp-block-gallery {
   display: grid;
