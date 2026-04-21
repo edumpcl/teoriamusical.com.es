@@ -183,7 +183,7 @@
       compressor.threshold.value = -24;
       compressor.ratio.value = 4;
       masterGain = audioCtx.createGain();
-      masterGain.gain.value = 1.4;
+      masterGain.gain.value = 1.0;
       compressor.connect(masterGain);
       masterGain.connect(audioCtx.destination);
     }
@@ -246,11 +246,18 @@
     const bufs = drBuffers[instIdx];
     const available = bufs.filter(Boolean);
     if (drSamplesLoaded && available.length > 0) {
-      const buf = available[Math.floor(Math.random() * available.length)];
+      // Selección de capa por volumen: bajo→suave, medio→medio, alto→fuerte
+      const layerIdx = vol < 0.4 ? 0 : vol < 0.75 ? 1 : 2;
+      const buf = bufs[layerIdx] || available[0];
       const src = ctx.createBufferSource();
       src.buffer = buf;
       src.connect(gainNode);
       src.start(when);
+      // Envelope para recortar la cola del sample (evita que el bombo se acumule)
+      const tail = instIdx === 0 ? 0.45 : instIdx === 1 ? 0.35 : 0.2;
+      gainNode.gain.setValueAtTime(vol, when);
+      gainNode.gain.setValueAtTime(vol, when + tail * 0.6);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, when + tail);
       return;
     }
 
