@@ -621,7 +621,6 @@ figcaption { font-size: .9em; color: var(--text-muted); margin-top: .4em; text-a
   border-radius: 50%;
   color: #b8860b;
   cursor: pointer;
-  display: flex;
   align-items: center;
   justify-content: center;
   z-index: 99998;
