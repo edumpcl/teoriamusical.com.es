@@ -18,8 +18,13 @@
     "3dd":[2,1,"3","DblDis"],"4dd":[3,3,"4","DblDis"],"5dd":[4,5,"5","DblDis"],
     "6dd":[5,7,"6","DblDis"],"7dd":[6,8,"7","DblDis"],
     /* intervalos compuestos (def[0] >= 8) — para el test completo */
-    "9m":[8,13,"9","menor"],"9M":[8,14,"9","Mayor"],
-    "10m":[9,15,"10","menor"],"10M":[9,16,"10","Mayor"]
+    "9m":[8,13,"9","menor"], "9M":[8,14,"9","Mayor"],
+    "10m":[9,15,"10","menor"],"10M":[9,16,"10","Mayor"],
+    "11j":[10,17,"11","Justa"],
+    "12j":[11,19,"12","Justa"],
+    "13m":[12,20,"13","menor"],"13M":[12,21,"13","Mayor"],
+    "14m":[13,22,"14","menor"],"14M":[13,23,"14","Mayor"],
+    "15j":[14,24,"15","Justa"]
   };
   var NS = [0,2,4,5,7,9,11];
   var VF_NAMES = ["c","d","e","f","g","a","b"];
@@ -137,7 +142,11 @@
       var k = Object.keys(DEFS);
       if (config.test === 'grupo') k = k.filter(function(x){ return DEFS[x][2] === config.val; });
       /* completo: excluir unísonos (1ª) — no aparecen en las opciones de número */
-      if (config.test === 'completo') k = k.filter(function(x){ return DEFS[x][0] > 0; });
+      if (config.test === 'completo') {
+        k = k.filter(function(x){ return DEFS[x][0] > 0; });
+        /* en fácil solo intervalos simples (hasta 8ª) */
+        if (currentDiff === 'easy') k = k.filter(function(x){ return DEFS[x][0] < 8; });
+      }
       if (currentDiff === 'easy') {
         k = k.filter(function(x){ var t = DEFS[x][3]; return t==='Mayor'||t==='menor'||t==='Justa'; });
       } else if (currentDiff === 'medium') {
@@ -293,8 +302,11 @@
       var elCont = document.getElementById(uid + '_content');
       var h = '';
       if (config.test === 'completo') {
+        var numOpts = currentDiff === 'easy'
+          ? ['2','3','4','5','6','7','8']
+          : ['2','3','4','5','6','7','8','9','10','11','12','13','14','15'];
         h += '<div><div class="tm-grid">' +
-          ['2','3','4','5','6','7','8','9','10'].map(function(n){
+          numOpts.map(function(n){
             return '<button class="tm-opt" data-g="num" data-v="' + n + '">' + n + '\xaa</button>';
           }).join('') + '</div></div>';
         var tiposCompleto = ['Mayor','menor','Justa','Aumentada','Disminuida'];
@@ -407,8 +419,8 @@
       var stave = new V.Stave(10, 10, 280);
       stave.addClef('treble').setContext(ctx).draw();
       var key1 = VF_NAMES[cQ.n1] + '/4';
-      /* compuesto: key2 siempre en octava 5; simple: octava 5 solo si n2 < n1 */
-      var oct2 = (cQ.def[0] >= 8) ? 5 : (cQ.n2 < cQ.n1 ? 5 : 4);
+      /* compuesto: oct 6 si n2<=n1 (wrap, ej. 15ª), oct 5 si n2>n1; simple: 5 si n2<n1, 4 si no */
+      var oct2 = (cQ.def[0] >= 8) ? (cQ.n2 <= cQ.n1 ? 6 : 5) : (cQ.n2 < cQ.n1 ? 5 : 4);
       var key2 = VF_NAMES[cQ.n2] + '/' + oct2;
       var acc = accidental(cQ.a2);
       var voice;
