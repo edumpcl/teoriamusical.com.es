@@ -198,7 +198,8 @@ figcaption { font-size: .9em; color: var(--text-muted); margin-top: .4em; text-a
 .tm-article h2 { scroll-margin-top: 5rem; }
 .tm-article h3 { scroll-margin-top: 5rem; }
 
-.is-home .tm-article { max-width: 100%; }
+.is-home .tm-article,
+.tm-article--wide { max-width: 100%; }
 
 @media (max-width: 900px) {
   .tm-article-wrap:has(.tm-related) { grid-template-columns: 1fr; }
@@ -326,6 +327,26 @@ figcaption { font-size: .9em; color: var(--text-muted); margin-top: .4em; text-a
   display: grid; gap: 1.25rem;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
+.tm-card-dic {
+  display: flex; flex-direction: column; gap: .4rem;
+  padding: 1.4rem 1.25rem;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: var(--text);
+  transition: box-shadow .2s, border-color .2s, transform .2s;
+}
+.tm-card-dic:hover {
+  border-color: var(--brand);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+.tm-card-dic-icono { font-size: 1.8rem; line-height: 1; }
+.tm-card-dic-titulo { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--heading); }
+.tm-card-dic-desc { font-size: .88rem; color: var(--text-muted); }
 
 /* ---------- Contact form ---------- */
 .tm-contact-form {
