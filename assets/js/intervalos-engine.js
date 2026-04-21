@@ -16,7 +16,10 @@
     "5AA":[4,9,"5","DblAum"],"6AA":[5,11,"6","DblAum"],
     /* dobles disminuidas */
     "3dd":[2,1,"3","DblDis"],"4dd":[3,3,"4","DblDis"],"5dd":[4,5,"5","DblDis"],
-    "6dd":[5,7,"6","DblDis"],"7dd":[6,8,"7","DblDis"]
+    "6dd":[5,7,"6","DblDis"],"7dd":[6,8,"7","DblDis"],
+    /* intervalos compuestos (def[0] >= 8) — para el test completo */
+    "9m":[8,13,"9","menor"],"9M":[8,14,"9","Mayor"],
+    "10m":[9,15,"10","menor"],"10M":[9,16,"10","Mayor"]
   };
   var NS = [0,2,4,5,7,9,11];
   var VF_NAMES = ["c","d","e","f","g","a","b"];
@@ -193,6 +196,12 @@
         var sub = keys.filter(function(x){ return wantConj ? DEFS[x][0] === 1 : DEFS[x][0] > 1; });
         if (sub.length) keys = sub;
       }
+      /* completo: balancear 50/50 simple vs compuesto */
+      if (config.test === 'completo') {
+        var wantComp = Math.random() < 0.5;
+        var sub2 = keys.filter(function(x){ return wantComp ? DEFS[x][0] >= 8 : DEFS[x][0] < 8; });
+        if (sub2.length) keys = sub2;
+      }
       var attempts = 0, k, def, n1, n2, nd, a2;
       do {
         k   = keys[Math.floor(Math.random() * keys.length)];
@@ -200,7 +209,8 @@
         n1  = Math.floor(Math.random() * 7);
         n2  = (n1 + def[0]) % 7;
         nd  = NS[n2] - NS[n1]; if (nd < 0) nd += 12;
-        a2  = def[1] - nd;
+        /* intervalos compuestos: la distancia en semitonos se compara sin la octava base */
+        a2  = def[0] >= 8 ? (def[1] - 12) - nd : def[1] - nd;
         attempts++;
       } while (Math.abs(a2) > maxAlt && attempts < 100);
       cQ = { k: k, def: def, n1: n1, n2: n2, a2: a2,
@@ -284,7 +294,7 @@
       var h = '';
       if (config.test === 'completo') {
         h += '<div><div class="tm-grid">' +
-          ['2','3','4','5','6','7','8'].map(function(n){
+          ['2','3','4','5','6','7','8','9','10'].map(function(n){
             return '<button class="tm-opt" data-g="num" data-v="' + n + '">' + n + '\xaa</button>';
           }).join('') + '</div></div>';
         var tiposCompleto = ['Mayor','menor','Justa','Aumentada','Disminuida'];
@@ -292,6 +302,14 @@
         h += '<div style="margin-top:10px"><div class="tm-grid">' +
           tiposCompleto.map(function(t){
             return '<button class="tm-opt" data-g="tipo" data-v="' + t + '">' + t + '</button>';
+          }).join('') + '</div></div>';
+        h += '<div style="margin-top:10px"><div class="tm-grid">' +
+          ['Simple','Compuesto'].map(function(t){
+            return '<button class="tm-opt" data-g="simcomp" data-v="' + t + '">' + t + '</button>';
+          }).join('') + '</div></div>';
+        h += '<div style="margin-top:10px"><div class="tm-grid">' +
+          ['Conjunto','Disjunto'].map(function(t){
+            return '<button class="tm-opt" data-g="conjdis" data-v="' + t + '">' + t + '</button>';
           }).join('') + '</div></div>';
         h += '<div style="margin-top:10px"><div class="tm-grid">' +
           ['Arm\xf3nico','Mel\xf3dico'].map(function(t){
@@ -370,7 +388,7 @@
       }
       var ready;
       if (config.test === 'completo') {
-        var baseOk = !!(sel.num && sel.tipo && sel.arm_mel);
+        var baseOk = !!(sel.num && sel.tipo && sel.simcomp && sel.conjdis && sel.arm_mel);
         var asdOk  = sel.arm_mel === 'Arm\xf3nico' || !!sel.asc_des;
         ready = baseOk && asdOk;
       } else {
@@ -389,7 +407,9 @@
       var stave = new V.Stave(10, 10, 280);
       stave.addClef('treble').setContext(ctx).draw();
       var key1 = VF_NAMES[cQ.n1] + '/4';
-      var key2 = VF_NAMES[cQ.n2] + '/' + (cQ.n2 < cQ.n1 ? 5 : 4);
+      /* compuesto: key2 siempre en octava 5; simple: octava 5 solo si n2 < n1 */
+      var oct2 = (cQ.def[0] >= 8) ? 5 : (cQ.n2 < cQ.n1 ? 5 : 4);
+      var key2 = VF_NAMES[cQ.n2] + '/' + oct2;
       var acc = accidental(cQ.a2);
       var voice;
       if (config.test === 'arm_mel' && cQ.harmonic) {
@@ -440,11 +460,13 @@
 
     function isCorrect() {
       if (config.test === 'completo') {
-        var numOk    = sel.num     === cQ.def[2];
-        var tipoOk   = sel.tipo    === correctTipo();
-        var armMelOk = sel.arm_mel === (cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico');
-        var ascDesOk = cQ.harmonic || sel.asc_des === (cQ.ascending ? 'Ascendente' : 'Descendente');
-        return numOk && tipoOk && armMelOk && ascDesOk;
+        var numOk     = sel.num     === cQ.def[2];
+        var tipoOk    = sel.tipo    === correctTipo();
+        var simcompOk = sel.simcomp === (cQ.def[0] >= 8 ? 'Compuesto' : 'Simple');
+        var conjdisOk = sel.conjdis === (cQ.def[0] === 1 ? 'Conjunto' : 'Disjunto');
+        var armMelOk  = sel.arm_mel === (cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico');
+        var ascDesOk  = cQ.harmonic || sel.asc_des === (cQ.ascending ? 'Ascendente' : 'Descendente');
+        return numOk && tipoOk && simcompOk && conjdisOk && armMelOk && ascDesOk;
       }
       if (config.test === 'numero')      return sel.ans === cQ.def[2];
       if (config.test === 'consonancia') return sel.ans === (CONSONANCIA_MAP[cQ.k] || '');
@@ -457,7 +479,10 @@
 
     function correctLabel() {
       if (config.test === 'completo') {
-        var lbl = cQ.def[2] + '\xaa ' + correctTipo() + ' — ' + (cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico');
+        var lbl = cQ.def[2] + '\xaa ' + correctTipo();
+        lbl += ' — ' + (cQ.def[0] >= 8 ? 'Compuesto' : 'Simple');
+        lbl += ' — ' + (cQ.def[0] === 1 ? 'Conjunto' : 'Disjunto');
+        lbl += ' — ' + (cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico');
         if (!cQ.harmonic) lbl += ' — ' + (cQ.ascending ? 'Ascendente' : 'Descendente');
         return lbl;
       }
@@ -494,6 +519,8 @@
         if (config.test === 'completo') {
           isCorrectOpt = (b.dataset.g === 'num'     && b.dataset.v === cQ.def[2]) ||
                          (b.dataset.g === 'tipo'    && b.dataset.v === correctTipo()) ||
+                         (b.dataset.g === 'simcomp' && b.dataset.v === (cQ.def[0] >= 8 ? 'Compuesto' : 'Simple')) ||
+                         (b.dataset.g === 'conjdis' && b.dataset.v === (cQ.def[0] === 1 ? 'Conjunto' : 'Disjunto')) ||
                          (b.dataset.g === 'arm_mel' && b.dataset.v === (cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico')) ||
                          (!cQ.harmonic && b.dataset.g === 'asc_des' && b.dataset.v === (cQ.ascending ? 'Ascendente' : 'Descendente'));
         } else if (config.test === 'numero') {
