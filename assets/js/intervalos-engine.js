@@ -133,6 +133,8 @@
     function keysForDiff() {
       var k = Object.keys(DEFS);
       if (config.test === 'grupo') k = k.filter(function(x){ return DEFS[x][2] === config.val; });
+      /* completo: excluir unísonos (1ª) — no aparecen en las opciones de número */
+      if (config.test === 'completo') k = k.filter(function(x){ return DEFS[x][0] > 0; });
       if (currentDiff === 'easy') {
         k = k.filter(function(x){ var t = DEFS[x][3]; return t==='Mayor'||t==='menor'||t==='Justa'; });
       } else if (currentDiff === 'medium') {
@@ -202,8 +204,8 @@
         attempts++;
       } while (Math.abs(a2) > maxAlt && attempts < 100);
       cQ = { k: k, def: def, n1: n1, n2: n2, a2: a2,
-             harmonic:   config.test === 'arm_mel'  ? Math.random() < 0.5 : true,
-             ascending:  config.test === 'asc_des'  ? Math.random() < 0.5 : true,
+             harmonic:   (config.test === 'arm_mel' || config.test === 'completo') ? Math.random() < 0.5 : true,
+             ascending:  (config.test === 'asc_des' || config.test === 'completo') ? Math.random() < 0.5 : true,
              conjunto:   config.test === 'con_dis'  ? def[0] === 1         : false };
     }
 
@@ -291,6 +293,14 @@
           tiposCompleto.map(function(t){
             return '<button class="tm-opt" data-g="tipo" data-v="' + t + '">' + t + '</button>';
           }).join('') + '</div></div>';
+        h += '<div style="margin-top:10px"><div class="tm-grid">' +
+          ['Arm\xf3nico','Mel\xf3dico'].map(function(t){
+            return '<button class="tm-opt" data-g="arm_mel" data-v="' + t + '">' + t + '</button>';
+          }).join('') + '</div></div>';
+        h += '<div id="' + uid + '_asdrow" style="margin-top:10px;display:none"><div class="tm-grid">' +
+          ['Ascendente','Descendente'].map(function(t){
+            return '<button class="tm-opt" data-g="asc_des" data-v="' + t + '">' + t + '</button>';
+          }).join('') + '</div></div>';
       } else if (config.test === 'consonancia') {
         h += '<div class="tm-grid">' +
           ['Consonancia Perfecta','Consonancia Imperfecta','Semiconsonancia','Disonancia Absoluta','Disonancia Condicional'].map(function(t){
@@ -346,7 +356,26 @@
       elCont.querySelectorAll('.tm-opt[data-g="' + g + '"]').forEach(function(x){ x.classList.remove('tm-sel'); });
       btn.classList.add('tm-sel');
       sel[g] = v;
-      var ready = config.test === 'completo' ? (sel.num && sel.tipo) : !!sel.ans;
+      /* completo: mostrar/ocultar fila asc/des según arm_mel */
+      if (config.test === 'completo' && g === 'arm_mel') {
+        var row = document.getElementById(uid + '_asdrow');
+        if (v === 'Mel\xf3dico') {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+          /* limpiar selección previa de asc_des */
+          elCont.querySelectorAll('.tm-opt[data-g="asc_des"]').forEach(function(x){ x.classList.remove('tm-sel'); });
+          delete sel.asc_des;
+        }
+      }
+      var ready;
+      if (config.test === 'completo') {
+        var baseOk = !!(sel.num && sel.tipo && sel.arm_mel);
+        var asdOk  = sel.arm_mel === 'Arm\xf3nico' || !!sel.asc_des;
+        ready = baseOk && asdOk;
+      } else {
+        ready = !!sel.ans;
+      }
       if (ready) document.getElementById(uid + '_btn').classList.add('tm-ready');
     }
 
@@ -374,9 +403,8 @@
         var sn2 = new V.StaveNote({ keys: [key2], duration: 'w' });
         if (acc) sn2.addModifier(new V.Accidental(acc), 0);
         voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1, sn2]);
-      } else if (config.test === 'asc_des') {
-        /* Ascendente: key1(bajo) → key2(alto) | Descendente: key2(alto) → key1(bajo)
-           Mismo rango visual, solo cambia el orden izquierda→derecha               */
+      } else if (config.test === 'asc_des' || (config.test === 'completo' && !cQ.harmonic)) {
+        /* Melódico: Ascendente key1→key2 | Descendente key2→key1 */
         var first, second;
         if (cQ.ascending) {
           first  = new V.StaveNote({ keys: [key1], duration: 'w' });
@@ -388,6 +416,11 @@
           if (acc) first.addModifier(new V.Accidental(acc), 0);
         }
         voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([first, second]);
+      } else if (config.test === 'completo' && cQ.harmonic) {
+        /* Armónico en completo: acorde */
+        var chord = new V.StaveNote({ keys: [key1, key2], duration: 'w' });
+        if (acc) chord.addModifier(new V.Accidental(acc), 1);
+        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([chord]);
       } else {
         /* Resto de tests: dos redondas lado a lado */
         var sn1 = new V.StaveNote({ keys: [key1], duration: 'w' });
@@ -406,7 +439,13 @@
     }
 
     function isCorrect() {
-      if (config.test === 'completo')    return sel.num === cQ.def[2] && sel.tipo === correctTipo();
+      if (config.test === 'completo') {
+        var numOk    = sel.num     === cQ.def[2];
+        var tipoOk   = sel.tipo    === correctTipo();
+        var armMelOk = sel.arm_mel === (cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico');
+        var ascDesOk = cQ.harmonic || sel.asc_des === (cQ.ascending ? 'Ascendente' : 'Descendente');
+        return numOk && tipoOk && armMelOk && ascDesOk;
+      }
       if (config.test === 'numero')      return sel.ans === cQ.def[2];
       if (config.test === 'consonancia') return sel.ans === (CONSONANCIA_MAP[cQ.k] || '');
       if (config.test === 'arm_mel')     return sel.ans === (cQ.harmonic  ? 'Arm\xf3nico'   : 'Mel\xf3dico');
@@ -417,7 +456,11 @@
     }
 
     function correctLabel() {
-      if (config.test === 'completo')    return cQ.def[2] + '\xaa ' + correctTipo();
+      if (config.test === 'completo') {
+        var lbl = cQ.def[2] + '\xaa ' + correctTipo() + ' — ' + (cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico');
+        if (!cQ.harmonic) lbl += ' — ' + (cQ.ascending ? 'Ascendente' : 'Descendente');
+        return lbl;
+      }
       if (config.test === 'numero')      return cQ.def[2] + '\xaa';
       if (config.test === 'consonancia') return CONSONANCIA_MAP[cQ.k] || '\u2014';
       if (config.test === 'arm_mel')     return cQ.harmonic  ? 'Arm\xf3nico'  : 'Mel\xf3dico';
@@ -449,8 +492,10 @@
         b.disabled = true;
         var isCorrectOpt = false;
         if (config.test === 'completo') {
-          isCorrectOpt = (b.dataset.g === 'num'  && b.dataset.v === cQ.def[2]) ||
-                         (b.dataset.g === 'tipo' && b.dataset.v === correctTipo());
+          isCorrectOpt = (b.dataset.g === 'num'     && b.dataset.v === cQ.def[2]) ||
+                         (b.dataset.g === 'tipo'    && b.dataset.v === correctTipo()) ||
+                         (b.dataset.g === 'arm_mel' && b.dataset.v === (cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico')) ||
+                         (!cQ.harmonic && b.dataset.g === 'asc_des' && b.dataset.v === (cQ.ascending ? 'Ascendente' : 'Descendente'));
         } else if (config.test === 'numero') {
           isCorrectOpt = b.dataset.v === cQ.def[2];
         } else if (config.test === 'consonancia') {
