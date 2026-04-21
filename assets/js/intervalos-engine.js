@@ -309,8 +309,9 @@
           numOpts.map(function(n){
             return '<button class="tm-opt" data-g="num" data-v="' + n + '">' + n + '\xaa</button>';
           }).join('') + '</div></div>';
-        var tiposCompleto = ['Mayor','menor','Justa','Aumentada','Disminuida'];
-        if (currentDiff === 'hard') tiposCompleto = tiposCompleto.concat(['Doble Aumentada','Doble Disminuida']);
+        var tiposCompleto = currentDiff === 'hard'
+          ? ['Doble Disminuida','Disminuida','menor','Justa','Mayor','Aumentada','Doble Aumentada']
+          : ['Disminuida','menor','Justa','Mayor','Aumentada'];
         h += '<div style="margin-top:10px"><div class="tm-grid">' +
           tiposCompleto.map(function(t){
             return '<button class="tm-opt" data-g="tipo" data-v="' + t + '">' + t + '</button>';
@@ -363,10 +364,16 @@
           }).join('') + '</div>';
       } else {
         var PERFECTAS = ['1','4','5','8'];
-        var tiposGrupo = PERFECTAS.indexOf(config.val) !== -1
-          ? ['Justa','Aumentada','Disminuida']
-          : ['Mayor','menor','Aumentada','Disminuida'];
-        if (currentDiff === 'hard') tiposGrupo = tiposGrupo.concat(['Doble Aumentada','Doble Disminuida']);
+        var esPerfecta = PERFECTAS.indexOf(config.val) !== -1;
+        if (currentDiff === 'hard') {
+          var tiposGrupo = esPerfecta
+            ? ['Doble Disminuida','Disminuida','Justa','Aumentada','Doble Aumentada']
+            : ['Doble Disminuida','Disminuida','menor','Mayor','Aumentada','Doble Aumentada'];
+        } else {
+          var tiposGrupo = esPerfecta
+            ? ['Disminuida','Justa','Aumentada']
+            : ['Disminuida','menor','Mayor','Aumentada'];
+        }
         h += '<div class="tm-grid">' +
           tiposGrupo.map(function(t){
             return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
