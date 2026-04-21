@@ -9,7 +9,9 @@
       "Bash(sed 's/-[0-9]*\\\\.wav$//')",
       "Bash(python3 *)",
       "Bash(xargs sed *)",
-      "WebFetch(domain:www.teoriamusical.com.es)"
+      "WebFetch(domain:www.teoriamusical.com.es)",
+      "Bash(node -e \"require\\('c:/Users/edues/Documents/Claude/Projects/teoriamusical.com.es/assets/js/intervalos-engine.js'\\); console.log\\('OK'\\);\")",
+      "Bash(node -e \"var window={}; eval\\(require\\('fs'\\).readFileSync\\('c:/Users/edues/Documents/Claude/Projects/teoriamusical.com.es/assets/js/intervalos-engine.js','utf8'\\)\\); console.log\\('OK - tmIvEngine:', typeof window.tmIvEngine\\);\")"
     ]
   }
 }
