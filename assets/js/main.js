@@ -66,6 +66,64 @@
     }
   }
 
+  // Lightbox for article images
+  (function () {
+    var imgs = document.querySelectorAll('.tm-article img');
+    if (!imgs.length) return;
+
+    var overlay = document.createElement('div');
+    overlay.id = 'tm-lightbox';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', 'Imagen ampliada');
+    overlay.innerHTML =
+      '<button class="tm-lb-close" aria-label="Cerrar">&times;</button>' +
+      '<img class="tm-lb-img" src="" alt="">' +
+      '<p class="tm-lb-caption"></p>';
+    document.body.appendChild(overlay);
+
+    var lbImg     = overlay.querySelector('.tm-lb-img');
+    var lbCaption = overlay.querySelector('.tm-lb-caption');
+
+    function open(src, alt) {
+      lbImg.src = src;
+      lbImg.alt = alt || '';
+      lbCaption.textContent = alt || '';
+      lbCaption.hidden = !alt;
+      overlay.classList.add('tm-lb-open');
+      document.body.style.overflow = 'hidden';
+      overlay.querySelector('.tm-lb-close').focus();
+    }
+
+    function close() {
+      overlay.classList.remove('tm-lb-open');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
+
+    imgs.forEach(function (img) {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', function (e) {
+        e.preventDefault();
+        open(img.src, img.alt);
+      });
+      var parent = img.closest('a');
+      if (parent) {
+        parent.addEventListener('click', function (e) {
+          e.preventDefault();
+        });
+      }
+    });
+
+    overlay.querySelector('.tm-lb-close').addEventListener('click', close);
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay.classList.contains('tm-lb-open')) close();
+    });
+  })();
+
   // External links open in new tab (optional usability)
   document.querySelectorAll('a[href^="http"]:not([href*="teoriamusical.com.es"])').forEach(function (a) {
     if (!a.hasAttribute('target')) {
