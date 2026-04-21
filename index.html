@@ -50,9 +50,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/style.css">
 
-<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
-<script src="/assets/js/intervalos-engine.js" defer></script>
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -251,39 +248,67 @@
       <h2 class="tm-seccion-titulo">Ejercicios <span>Interactivos</span></h2>
       <a href="/ejercicios/" class="tm-btn tm-btn-outline">Ver todos →</a>
     </div>
-    <div class="tm-ejercicios-grid">
-      <ul class="tm-ejercicios-lista">
-        <li><a href="/ejercicios/ejercicios-de-intervalos-musicales/segundas/">Segundas <span class="tm-badge tm-badge-popular">Básico</span></a></li>
-        <li><a href="/ejercicios/ejercicios-de-intervalos-musicales/terceras/">Terceras <span class="tm-badge tm-badge-popular">Popular</span></a></li>
-        <li><a href="/ejercicios/ejercicios-de-intervalos-musicales/cuartas/">Cuartas</a></li>
-        <li><a href="/ejercicios/ejercicios-de-intervalos-musicales/quintas/">Quintas</a></li>
-        <li><a href="/ejercicios/ejercicios-de-intervalos-musicales/sextas/">Sextas</a></li>
-        <li><a href="/ejercicios/ejercicios-de-intervalos-musicales/septimas/">Séptimas</a></li>
-        <li><a href="/ejercicios/ejercicios-de-intervalos-musicales/octavas/">Octavas</a></li>
-        <li><a href="/ejercicios/ejercicios-de-intervalos-musicales/armonicos-y-melodicos/">Armónicos y Melódicos <span class="tm-badge tm-badge-nuevo">Extra</span></a></li>
-        <li><a href="/ejercicios/ejercicios-de-intervalos-musicales/ascendentes-y-descendentes/">Ascendentes y Descendentes</a></li>
-        <li><a href="/ejercicios/ejercicios-de-intervalos-musicales/conjuntos-y-disjuntos/">Conjuntos y Disjuntos</a></li>
-        <li><a href="/ejercicios/ejercicios-de-intervalos-musicales/distancia/">Distancia entre intervalos</a></li>
-        <li><a href="/ejercicios/ejercicios-de-intervalos-musicales/intervalos-consonantes-y-disonantes/">Consonantes y Disonantes</a></li>
-      </ul>
-      <div class="tm-quiz-preview">
-        
-<div id="tm_intervalos_terceras"></div>
-<script>
-  document.addEventListener("DOMContentLoaded", function(){
-    tmIvEngine("tm_intervalos_terceras", {test:"grupo", val:"3"});
-  });
-</script>
-
-
-<div id="tm_intervalos_numero"></div>
-<script>
-  document.addEventListener("DOMContentLoaded", function(){
-    tmIvEngine("tm_intervalos_numero", {test:"numero"});
-  });
-</script>
-
-      </div>
+    <div class="tm-grid-diccionario">
+      <a href="/ejercicios/ejercicios-de-intervalos-musicales/segundas/" class="tm-card-dic">
+        <div class="tm-card-dic-icono">♩</div>
+        <div class="tm-card-dic-titulo">Segundas <span class="tm-badge">Básico</span></div>
+        <div class="tm-card-dic-desc">Mayor y menor segunda. El paso más pequeño entre notas de la escala.</div>
+      </a>
+      <a href="/ejercicios/ejercicios-de-intervalos-musicales/terceras/" class="tm-card-dic">
+        <div class="tm-card-dic-icono">♬</div>
+        <div class="tm-card-dic-titulo">Terceras <span class="tm-badge tm-badge-popular">Popular</span></div>
+        <div class="tm-card-dic-desc">Mayores y menores. La base de la construcción de acordes.</div>
+      </a>
+      <a href="/ejercicios/ejercicios-de-intervalos-musicales/cuartas/" class="tm-card-dic">
+        <div class="tm-card-dic-icono">𝄽</div>
+        <div class="tm-card-dic-titulo">Cuartas</div>
+        <div class="tm-card-dic-desc">Justa y aumentada. Incluye el tritono, el intervalo más tenso.</div>
+      </a>
+      <a href="/ejercicios/ejercicios-de-intervalos-musicales/quintas/" class="tm-card-dic">
+        <div class="tm-card-dic-icono">♯</div>
+        <div class="tm-card-dic-titulo">Quintas</div>
+        <div class="tm-card-dic-desc">Justa, disminuida y aumentada. El intervalo más estable de la armonía.</div>
+      </a>
+      <a href="/ejercicios/ejercicios-de-intervalos-musicales/sextas/" class="tm-card-dic">
+        <div class="tm-card-dic-icono">♮</div>
+        <div class="tm-card-dic-titulo">Sextas</div>
+        <div class="tm-card-dic-desc">Mayor y menor. Inversas de las terceras, muy usadas en melodías vocales.</div>
+      </a>
+      <a href="/ejercicios/ejercicios-de-intervalos-musicales/septimas/" class="tm-card-dic">
+        <div class="tm-card-dic-icono">𝄻</div>
+        <div class="tm-card-dic-titulo">Séptimas</div>
+        <div class="tm-card-dic-desc">Mayor, menor y disminuida. La tensión de los acordes con séptima.</div>
+      </a>
+      <a href="/ejercicios/ejercicios-de-intervalos-musicales/octavas/" class="tm-card-dic">
+        <div class="tm-card-dic-icono">𝄞</div>
+        <div class="tm-card-dic-titulo">Octavas</div>
+        <div class="tm-card-dic-desc">El intervalo perfecto que completa el ciclo de la escala.</div>
+      </a>
+      <a href="/ejercicios/ejercicios-de-intervalos-musicales/armonicos-y-melodicos/" class="tm-card-dic">
+        <div class="tm-card-dic-icono">🎼</div>
+        <div class="tm-card-dic-titulo">Armónicos y Melódicos <span class="tm-badge tm-badge-nuevo">Extra</span></div>
+        <div class="tm-card-dic-desc">¿Suenan las notas juntas o en secuencia?</div>
+      </a>
+      <a href="/ejercicios/ejercicios-de-intervalos-musicales/ascendentes-y-descendentes/" class="tm-card-dic">
+        <div class="tm-card-dic-icono">↕</div>
+        <div class="tm-card-dic-titulo">Ascendentes y Descendentes</div>
+        <div class="tm-card-dic-desc">La dirección del intervalo melódico: hacia arriba o hacia abajo.</div>
+      </a>
+      <a href="/ejercicios/ejercicios-de-intervalos-musicales/conjuntos-y-disjuntos/" class="tm-card-dic">
+        <div class="tm-card-dic-icono">〰</div>
+        <div class="tm-card-dic-titulo">Conjuntos y Disjuntos</div>
+        <div class="tm-card-dic-desc">¿Las notas son vecinas (paso conjunto) o saltan más de un grado?</div>
+      </a>
+      <a href="/ejercicios/ejercicios-de-intervalos-musicales/distancia/" class="tm-card-dic">
+        <div class="tm-card-dic-icono">↔</div>
+        <div class="tm-card-dic-titulo">Distancia</div>
+        <div class="tm-card-dic-desc">Cuenta los semitonos entre dos notas y calcula la distancia exacta.</div>
+      </a>
+      <a href="/ejercicios/ejercicios-de-intervalos-musicales/intervalos-consonantes-y-disonantes/" class="tm-card-dic">
+        <div class="tm-card-dic-icono">⚖</div>
+        <div class="tm-card-dic-titulo">Consonantes y Disonantes</div>
+        <div class="tm-card-dic-desc">Intervalos que reposan o que generan tensión armónica.</div>
+      </a>
     </div>
   </div>
 </section>
