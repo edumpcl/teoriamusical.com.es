@@ -100,7 +100,10 @@
     '.tm-iv-wrap .tm-iv-score-box{text-align:center;padding:2rem;background:linear-gradient(135deg,#8b6914,#6b5010);border-radius:16px;color:#fff;margin-bottom:1.5rem;}',
     '.tm-iv-wrap .tm-iv-score-num{font-size:3rem;font-weight:800;line-height:1;}',
     '.tm-iv-wrap .tm-iv-score-pct{font-size:1.3rem;font-weight:600;opacity:.9;margin:.3rem 0;}',
-    '@media(max-width:500px){.tm-iv-wrap .tm-iv-modes{flex-direction:column;align-items:center;}.tm-iv-wrap .tm-iv-mode-btn{width:100%;max-width:220px;}}'
+    '@media(max-width:500px){.tm-iv-wrap .tm-iv-modes{flex-direction:column;align-items:center;}.tm-iv-wrap .tm-iv-mode-btn{width:100%;max-width:220px;}}',
+    '.tm-iv-wrap .tm-grid-construir{grid-template-columns:repeat(3,1fr);}',
+    '.tm-iv-wrap .tm-construir-label{text-align:center;margin:12px 0 10px;font-size:1.05rem;color:#555;}',
+    '.tm-iv-wrap .tm-construir-opt{font-size:1.15rem!important;padding:14px 6px!important;min-height:56px;touch-action:manipulation;}'
   ].join('');
 
   function injectCSS() {
@@ -128,7 +131,8 @@
       'consonancia':'Consonancia y disonancia',
       'arm_mel':    'Arm\xf3nicos y mel\xf3dicos',
       'asc_des':    'Ascendentes y descendentes',
-      'con_dis':    'Conjuntos y disjuntos'
+      'con_dis':    'Conjuntos y disjuntos',
+      'construir':  'Construir intervalos'
     };
 
     var ICONOS_DIFICULTAD = ['\u2600\ufe0f', '\u26a1', '\ud83d\udd25'];
@@ -137,6 +141,10 @@
       'Con sostenidos y bemoles',
       'Con dobles alteraciones'
     ];
+
+    var NOTE_NAMES_ES = ['Do','Re','Mi','Fa','Sol','La','Si'];
+    var ACC_DISPLAY = {'-2':'bb','-1':'♭','0':'','1':'♯','2':'×'};
+    function noteLabel(n, a) { return NOTE_NAMES_ES[n] + (ACC_DISPLAY[String(a)] || ''); }
 
     function keysForDiff() {
       var k = Object.keys(DEFS);
@@ -147,9 +155,13 @@
         /* en fácil solo intervalos simples (hasta 8ª) */
         if (currentDiff === 'easy') k = k.filter(function(x){ return DEFS[x][0] < 8; });
       }
-      /* consonancia: solo intervalos simples (hasta 8ª) */
-      if (config.test === 'consonancia') {
+      /* consonancia/construir: solo intervalos simples (hasta 8ª) */
+      if (config.test === 'consonancia' || config.test === 'construir') {
         k = k.filter(function(x){ return DEFS[x][0] <= 7; });
+      }
+      /* construir: sin unísonos */
+      if (config.test === 'construir') {
+        k = k.filter(function(x){ return DEFS[x][0] > 0; });
       }
       if (currentDiff === 'easy') {
         k = k.filter(function(x){ var t = DEFS[x][3]; return t==='Mayor'||t==='menor'||t==='Justa'; });
@@ -242,6 +254,28 @@
 
     function tipoLabel(abrev) {
       return TIPO_LABEL[abrev] || abrev;
+    }
+
+    function buildConstruirOptions() {
+      var correct = cQ.n2 + '_' + cQ.a2;
+      var pool = [];
+      for (var ni = 0; ni < 7; ni++) {
+        for (var ai = -maxAlt; ai <= maxAlt; ai++) {
+          if (ni + '_' + ai !== correct) pool.push({n: ni, a: ai});
+        }
+      }
+      pool.sort(function(a, b) {
+        var da = Math.min(Math.abs(a.n - cQ.n2), 7 - Math.abs(a.n - cQ.n2));
+        var db = Math.min(Math.abs(b.n - cQ.n2), 7 - Math.abs(b.n - cQ.n2));
+        if (da === db) return Math.random() - 0.5;
+        return da - db;
+      });
+      var opts = pool.slice(0, 4).concat([{n: cQ.n2, a: cQ.a2}]);
+      for (var oi = opts.length - 1; oi > 0; oi--) {
+        var oj = Math.floor(Math.random() * (oi + 1));
+        var tmp = opts[oi]; opts[oi] = opts[oj]; opts[oj] = tmp;
+      }
+      return opts;
     }
 
     /* -------- pantalla de selección de dificultad -------- */
@@ -366,6 +400,14 @@
           ['1','2','3','4','5','6','7','8'].map(function(n){
             return '<button class="tm-opt" data-g="ans" data-v="' + n + '">' + n + '\xaa</button>';
           }).join('') + '</div>';
+      } else if (config.test === 'construir') {
+        var intLbl = cQ.def[2] + '\xaa ' + tipoLabel(cQ.def[3]);
+        h += '<p class="tm-construir-label">' + noteLabel(cQ.n1, 0) + ' + <strong>' + intLbl + '</strong> = ?</p>';
+        h += '<div class="tm-grid tm-grid-construir">';
+        buildConstruirOptions().forEach(function(opt) {
+          h += '<button class="tm-opt tm-construir-opt" data-g="ans" data-v="' + opt.n + '_' + opt.a + '">' + noteLabel(opt.n, opt.a) + '</button>';
+        });
+        h += '</div>';
       } else {
         var PERFECTAS = ['1','4','5','8'];
         var esPerfecta = PERFECTAS.indexOf(config.val) !== -1;
@@ -469,6 +511,10 @@
         var chord = new V.StaveNote({ keys: [key1, key2], duration: 'w' });
         if (acc) chord.addModifier(new V.Accidental(acc), 1);
         voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([chord]);
+      } else if (config.test === 'construir') {
+        /* Construir: solo nota raíz */
+        var sn1c = new V.StaveNote({ keys: [key1], duration: 'w' });
+        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1c]);
       } else {
         /* Resto de tests: dos redondas lado a lado */
         var sn1 = new V.StaveNote({ keys: [key1], duration: 'w' });
@@ -502,6 +548,7 @@
       if (config.test === 'asc_des')     return sel.ans === (cQ.ascending ? 'Ascendente'    : 'Descendente');
       if (config.test === 'semitono')    return sel.ans === (SEMITIPO_LABEL[cQ.semitipo] || '');
       if (config.test === 'con_dis')     return sel.ans === (cQ.conjunto  ? 'Conjunto'      : 'Disjunto');
+      if (config.test === 'construir')   return sel.ans === (cQ.n2 + '_' + cQ.a2);
       return sel.ans === correctTipo();
     }
 
@@ -520,6 +567,7 @@
       if (config.test === 'asc_des')     return cQ.ascending ? 'Ascendente'   : 'Descendente';
       if (config.test === 'semitono')    return SEMITIPO_LABEL[cQ.semitipo] || '\u2014';
       if (config.test === 'con_dis')     return cQ.conjunto  ? 'Conjunto'     : 'Disjunto';
+      if (config.test === 'construir')   return noteLabel(cQ.n2, cQ.a2);
       return cQ.def[2] + '\xaa ' + correctTipo();
     }
 
@@ -563,6 +611,8 @@
           isCorrectOpt = b.dataset.v === (cQ.conjunto ? 'Conjunto' : 'Disjunto');
         } else if (config.test === 'semitono') {
           isCorrectOpt = b.dataset.v === (SEMITIPO_LABEL[cQ.semitipo] || '');
+        } else if (config.test === 'construir') {
+          isCorrectOpt = b.dataset.v === (cQ.n2 + '_' + cQ.a2);
         } else {
           isCorrectOpt = b.dataset.v === correctTipo();
         }
