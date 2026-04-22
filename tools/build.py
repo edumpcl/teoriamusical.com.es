@@ -522,10 +522,6 @@ LAYOUT = Template(r'''<!DOCTYPE html>
   gtag('config', 'G-XT1ZZ4H9N5', { 'anonymize_ip': true });
 </script>
 
-<!-- Google AdSense (Auto Ads). Controlled via Consent Mode above. -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1186627650857489"
-        crossorigin="anonymous"></script>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
