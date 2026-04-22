@@ -147,6 +147,10 @@
         /* en fácil solo intervalos simples (hasta 8ª) */
         if (currentDiff === 'easy') k = k.filter(function(x){ return DEFS[x][0] < 8; });
       }
+      /* consonancia: solo intervalos simples (hasta 8ª) */
+      if (config.test === 'consonancia') {
+        k = k.filter(function(x){ return DEFS[x][0] <= 7; });
+      }
       if (currentDiff === 'easy') {
         k = k.filter(function(x){ var t = DEFS[x][3]; return t==='Mayor'||t==='menor'||t==='Justa'; });
       } else if (currentDiff === 'medium') {
