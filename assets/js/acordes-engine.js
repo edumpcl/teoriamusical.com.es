@@ -1,16 +1,10 @@
-/* Motor de ejercicios de acordes tríada — v1 */
+/* Motor de ejercicios de acordes tríada — v2 con inversiones */
 (function () {
   'use strict';
 
-  /* Semitonos desde C para cada nota diatónica */
   var NS = [0, 2, 4, 5, 7, 9, 11]; /* C D E F G A B */
   var VF_NAMES = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
 
-  /*
-   * Definición de los 4 tipos de tríada:
-   *   third = semitonos de la 3ª sobre la fundamental
-   *   fifth = semitonos de la 5ª sobre la fundamental
-   */
   var TRIADS = [
     { id: 'mayor', third: 4, fifth: 7, label: 'Perfecta Mayor' },
     { id: 'menor', third: 3, fifth: 7, label: 'Perfecta menor' },
@@ -18,24 +12,25 @@
     { id: 'aum',   third: 4, fifth: 8, label: '5\xaa Aumentada'   }
   ];
 
-  /*
-   * Dificultades — maxAlt controla el máximo de alteraciones
-   * permitidas en cualquiera de las tres notas del acorde:
-   *   Fácil:    |a| = 0 → solo notas naturales
-   *   Medio:    |a| ≤ 1 → hasta # / b
-   *   Difícil:  |a| ≤ 2 → hasta ## / bb
-   */
   var DIFICULTADES = [
     { lbl: 'F\xe1cil',    maxAlt: 0, id: 'easy'   },
     { lbl: 'Medio',       maxAlt: 1, id: 'medium' },
     { lbl: 'Dif\xedcil', maxAlt: 2, id: 'hard'   }
   ];
 
+  var INV_LABEL = ['Fundamental', '1\xaa inversi\xf3n', '2\xaa inversi\xf3n'];
+
+  var INV_TITLES = {
+    'fundamental': 'Tr\xedadas en Fundamental',
+    '1a':          'Tr\xedadas en 1\xaa Inversi\xf3n',
+    '2a':          'Tr\xedadas en 2\xaa Inversi\xf3n',
+    'todas':       'Tr\xedadas — Las tres posiciones'
+  };
+
   var PREGUNTAS_POR_TEST = 10;
   var ICONOS = ['☀️', '⚡', '🔥'];
   var DESCS  = ['Solo acordes con notas naturales', 'Con sostenidos y bemoles', 'Con dobles alteraciones'];
 
-  /* ---- CSS (reutiliza clases tm-iv-* del motor de intervalos) ---- */
   var CSS = [
     '.tm-iv-wrap .tm-card{background:#fff;border:1px solid #d8d0b8;border-radius:12px;padding:24px;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.05);}',
     '.tm-iv-wrap .tm-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:#8b6914;border-radius:12px 12px 0 0;}',
@@ -82,7 +77,6 @@
     document.head.appendChild(s);
   }
 
-  /* ---- Convierte alteración numérica a cadena VexFlow ---- */
   function accStr(a) {
     if (a ===  2) return '##';
     if (a ===  1) return '#';
@@ -91,18 +85,15 @@
     return null;
   }
 
-  /* ---- Convierte alteración a texto legible ---- */
-  function accLabel(a) {
-    if (a ===  2) return '×';
-    if (a ===  1) return '#';
-    if (a === -1) return '♭';
-    if (a === -2) return '\ud83d';
-    return '';
-  }
-
-  /* ---- Motor principal ---- */
-  function tmAcEngine(containerId) {
+  /* ================================================================
+     Motor principal
+     config.inversion: 'fundamental' | '1a' | '2a' | 'todas'
+     ================================================================ */
+  function tmAcEngine(containerId, config) {
     injectCSS();
+    config = config || {};
+    var invType = config.inversion || 'fundamental';
+
     var wrap = document.getElementById(containerId);
     if (!wrap) return;
     wrap.className = 'tm-iv-wrap';
@@ -126,7 +117,7 @@
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-iv-mode-screen">',
-            '<h2 class="tm-iv-title">Test de Tr\xedadas en Fundamental</h2>',
+            '<h2 class="tm-iv-title">Test &mdash; ' + (INV_TITLES[invType] || 'Tr\xedadas') + '</h2>',
             '<p class="tm-iv-subtitle">Elige el nivel de dificultad &mdash; ' + totalQ + ' preguntas</p>',
             '<div class="tm-iv-modes">' + btns + '</div>',
           '</div>',
@@ -175,33 +166,32 @@
 
       do {
         n1    = Math.floor(Math.random() * 7);
-        /* Para easy solo naturales; medio ±1; difícil ±2 */
-        var maxA1 = maxAlt;
-        a1    = Math.floor(Math.random() * (2 * maxA1 + 1)) - maxA1;
+        a1    = Math.floor(Math.random() * (2 * maxAlt + 1)) - maxAlt;
         triad = TRIADS[Math.floor(Math.random() * TRIADS.length)];
 
         n2 = (n1 + 2) % 7;
         n3 = (n1 + 4) % 7;
 
-        /* Distancia natural en semitonos desde la fundamental */
         nd3 = NS[n2] - NS[n1]; if (nd3 < 0) nd3 += 12;
         nd5 = NS[n3] - NS[n1]; if (nd5 < 0) nd5 += 12;
 
-        /*
-         * Alteraciones necesarias en la 3ª y 5ª:
-         * pitch(n2) + a2 - (pitch(n1) + a1) = triad.third
-         * => a2 = triad.third - nd3 + a1
-         */
         a2 = triad.third - nd3 + a1;
-        a3 = triad.fifth - nd5 + a1;
+        a3 = triad.fifth  - nd5 + a1;
 
         attempts++;
       } while ((Math.abs(a1) > maxAlt || Math.abs(a2) > maxAlt || Math.abs(a3) > maxAlt) && attempts < 300);
 
-      cQ = { n1: n1, a1: a1, n2: n2, a2: a2, n3: n3, a3: a3, triad: triad };
+      /* Inversión para esta pregunta */
+      var inv;
+      if      (invType === 'fundamental') inv = 0;
+      else if (invType === '1a')          inv = 1;
+      else if (invType === '2a')          inv = 2;
+      else                                inv = Math.floor(Math.random() * 3);
+
+      cQ = { n1: n1, a1: a1, n2: n2, a2: a2, n3: n3, a3: a3, triad: triad, inv: inv };
     }
 
-    /* ---- Dibuja el acorde en el pentagrama con VexFlow ---- */
+    /* ---- Dibuja el acorde con la inversión correcta ---- */
     function drawStaff() {
       var elNot = document.getElementById(uid + '_not');
       elNot.innerHTML = '';
@@ -212,19 +202,33 @@
       var stave = new V.Stave(10, 10, 280);
       stave.addClef('treble').setContext(ctx).draw();
 
-      var n1 = cQ.n1, n2 = cQ.n2, n3 = cQ.n3;
+      /*
+       * Orden de notas según inversión:
+       *   Fundamental (0): [fundamental, 3ª, 5ª]
+       *   1ª inversión (1): [3ª, 5ª, fundamental]
+       *   2ª inversión (2): [5ª, fundamental, 3ª]
+       */
+      var order = [
+        [cQ.n1, cQ.a1, cQ.n2, cQ.a2, cQ.n3, cQ.a3],
+        [cQ.n2, cQ.a2, cQ.n3, cQ.a3, cQ.n1, cQ.a1],
+        [cQ.n3, cQ.a3, cQ.n1, cQ.a1, cQ.n2, cQ.a2]
+      ][cQ.inv];
 
-      /* Cálculo de octavas — apilamos el acorde ascendentemente desde oct 4 */
-      var oct1 = 4;
-      var oct2 = (n2 > n1) ? 4 : 5;
-      var oct3 = (n3 > n2) ? oct2 : (oct2 + 1);
+      var bn  = order[0], ba  = order[1];
+      var mn  = order[2], ma  = order[3];
+      var tn  = order[4], ta  = order[5];
 
-      var key1 = VF_NAMES[n1] + '/' + oct1;
-      var key2 = VF_NAMES[n2] + '/' + oct2;
-      var key3 = VF_NAMES[n3] + '/' + oct3;
+      /* Octavas — cada nota debe estar por encima de la anterior */
+      var boct = 4;
+      var moct = (mn > bn) ? boct : boct + 1;
+      var toct = (tn > mn) ? moct : moct + 1;
+
+      var key1 = VF_NAMES[bn] + '/' + boct;
+      var key2 = VF_NAMES[mn] + '/' + moct;
+      var key3 = VF_NAMES[tn] + '/' + toct;
 
       var chord = new V.StaveNote({ keys: [key1, key2, key3], duration: 'w' });
-      var acc1 = accStr(cQ.a1), acc2 = accStr(cQ.a2), acc3 = accStr(cQ.a3);
+      var acc1 = accStr(ba), acc2 = accStr(ma), acc3 = accStr(ta);
       if (acc1) chord.addModifier(new V.Accidental(acc1), 0);
       if (acc2) chord.addModifier(new V.Accidental(acc2), 1);
       if (acc3) chord.addModifier(new V.Accidental(acc3), 2);
@@ -234,10 +238,9 @@
       voice.draw(ctx, stave);
     }
 
-    /* ---- Renderiza los 4 botones de opción ---- */
+    /* ---- Renderiza los 4 botones de opción (orden aleatorio) ---- */
     function renderOptions() {
       var elOpts = document.getElementById(uid + '_opts');
-      /* Mezcla las opciones para que no siempre estén en el mismo orden */
       var shuffled = TRIADS.slice().sort(function () { return Math.random() - 0.5; });
       elOpts.innerHTML = shuffled.map(function (t) {
         return '<button class="tm-opt" data-v="' + t.id + '">' + t.label + '</button>';
@@ -271,9 +274,14 @@
 
       var elFb = document.getElementById(uid + '_fb');
       elFb.className = 'tm-fb tm-show ' + (correct ? 'tm-ok' : 'tm-ko');
-      elFb.textContent = correct
-        ? '¡Correcto!'
-        : 'Incorrecto. La respuesta es: ' + cQ.triad.label + '.';
+
+      if (correct) {
+        elFb.textContent = '¡Correcto!';
+      } else {
+        /* En el ejercicio combinado, también se indica la inversión */
+        var extra = invType === 'todas' ? ' (' + INV_LABEL[cQ.inv] + ')' : '';
+        elFb.textContent = 'Incorrecto. La respuesta es: ' + cQ.triad.label + extra + '.';
+      }
 
       document.getElementById(uid + '_badge').textContent = '✓ ' + score;
 
@@ -319,9 +327,7 @@
       });
     }
 
-    function init() {
-      showModeScreen();
-    }
+    function init() { showModeScreen(); }
 
     if (typeof Vex !== 'undefined') {
       init();
