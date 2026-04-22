@@ -464,6 +464,11 @@
         var chord = new V.StaveNote({ keys: [key1, key2], duration: 'w' });
         if (acc) chord.addModifier(new V.Accidental(acc), 1);
         voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([chord]);
+      } else if (config.test === 'consonancia') {
+        /* Consonancia: siempre armónico — acorde */
+        var chord = new V.StaveNote({ keys: [key1, key2], duration: 'w' });
+        if (acc) chord.addModifier(new V.Accidental(acc), 1);
+        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([chord]);
       } else {
         /* Resto de tests: dos redondas lado a lado */
         var sn1 = new V.StaveNote({ keys: [key1], duration: 'w' });
