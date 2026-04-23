@@ -321,6 +321,8 @@
       var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables(notes);
       new V.Formatter().joinVoices([voice]).format([voice], 180);
       voice.draw(ctx, stave);
+      var svg = elNot.querySelector('svg');
+      if (svg) svg.style.cursor = 'crosshair';
     }
 
     /* -------- pantalla de selección de dificultad -------- */
@@ -398,6 +400,8 @@
           sel.ans = rd.n + '_' + rd.oct + '_' + sel.acc;
           drawConstruirPreview(rd.vfn, rd.oct, sel.acc);
           document.getElementById(uid + '_btn').classList.add('tm-ready');
+          var hintEl = document.getElementById(uid + '_content').querySelector('.tm-construir-hint');
+          if (hintEl) hintEl.textContent = 'Pulsa de nuevo para cambiar la nota';
         };
         elNotDiv.addEventListener('click', onConstruirStaffInteract);
         elNotDiv.addEventListener('touchend', function(e) {
