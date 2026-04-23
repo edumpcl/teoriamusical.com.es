@@ -120,7 +120,9 @@
     '.tm-iv-wrap .tm-cs-acc-btn.tm-sel{background:#8b6914!important;color:#fff!important;border-color:#8b6914!important;}',
     '.tm-iv-wrap .tm-cs-acc-btn.tm-ok{background:#27ae60!important;color:#fff!important;border-color:#27ae60!important;}',
     '.tm-iv-wrap .tm-cs-acc-btn.tm-ko{background:#c0392b!important;color:#fff!important;border-color:#c0392b!important;}',
-    '.tm-iv-wrap .tm-construir-dir{font-size:.88rem;color:#555;text-align:center;margin:4px 0 8px;padding:5px 10px;background:#f5f2ea;border-radius:6px;font-weight:600;}'
+    '.tm-iv-wrap .tm-construir-dir{font-size:.88rem;color:#555;text-align:center;margin:4px 0 8px;padding:5px 10px;background:#f5f2ea;border-radius:6px;font-weight:600;}',
+    '.tm-iv-wrap .tm-construir-hint{font-size:.78rem;color:#999;text-align:center;margin:0 0 4px;font-style:italic;}',
+    '.tm-iv-wrap .tm-staff[data-construir]{cursor:crosshair;}'
   ].join('');
 
   function injectCSS() {
@@ -371,6 +373,34 @@
 
       document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
       document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
+
+      if (config.test === 'construir') {
+        var elNotDiv = document.getElementById(uid + '_not');
+        elNotDiv.style.cursor = 'crosshair';
+        var onConstruirStaffInteract = function(e) {
+          if (answered) return;
+          var rect = elNotDiv.getBoundingClientRect();
+          var clientY = (e.changedTouches || e.touches)
+            ? (e.changedTouches || e.touches)[0].clientY
+            : e.clientY;
+          var clickY = clientY - rect.top;
+          /* space_above_staff_ln=4 × spacing=10 → top line (F5) at px=50
+             cada medio paso = 5px: noteStep 0=F5, -1=G5, …, 10=C4 */
+          var noteStep = Math.round((clickY - 50) / 5);
+          noteStep = Math.max(-1, Math.min(10, noteStep));
+          var rd = CS_ROWS[noteStep + 1];
+          sel.construirNote = rd;
+          sel.ans = rd.n + '_' + sel.acc;
+          drawConstruirPreview(rd.vfn, rd.oct, sel.acc);
+          document.getElementById(uid + '_btn').classList.add('tm-ready');
+        };
+        elNotDiv.addEventListener('click', onConstruirStaffInteract);
+        elNotDiv.addEventListener('touchend', function(e) {
+          e.preventDefault();
+          onConstruirStaffInteract(e);
+        }, {passive: false});
+      }
+
       nextQ();
     }
 
@@ -442,15 +472,7 @@
         var intLbl = cQ.def[2] + '\xaa ' + tipoLabel(cQ.def[3]);
         var dirTxt = cQ.ascending ? 'Ascendente ↑' : 'Descendente ↓';
         h += '<div class="tm-construir-dir">' + noteLabel(cQ.n1, 0) + ' &mdash; <strong>' + intLbl + '</strong> &mdash; ' + dirTxt + '</div>';
-        h += '<div class="tm-cs-wrap">';
-        CS_ROWS.forEach(function(row, ci) {
-          var cls = 'tm-cs-row' + (row.ln ? ' is-line' : '') + (row.ldg ? ' is-ledger' : '');
-          h += '<div class="' + cls + '" data-ci="' + ci + '">';
-          h += '<span class="tm-cs-dot"></span>';
-          h += '<span class="tm-cs-lbl">' + row.lbl + '</span>';
-          h += '</div>';
-        });
-        h += '</div>';
+        h += '<p class="tm-construir-hint">Pulsa en el pentagrama para colocar la segunda nota</p>';
         var accOpts;
         if (maxAlt >= 2) {
           accOpts = [{v:-2,t:'bb'},{v:-1,t:'♭'},{v:0,t:'♮'},{v:1,t:'♯'},{v:2,t:'×'}];
@@ -489,18 +511,6 @@
         sel.acc = 0;
         sel.construirNote = null;
         var accBtns = elCont.querySelectorAll('.tm-cs-acc-btn');
-        elCont.querySelectorAll('.tm-cs-row').forEach(function(row) {
-          row.addEventListener('click', function() {
-            if (answered) return;
-            elCont.querySelectorAll('.tm-cs-row').forEach(function(r){ r.classList.remove('tm-cs-sel'); });
-            row.classList.add('tm-cs-sel');
-            var rd = CS_ROWS[parseInt(row.dataset.ci, 10)];
-            sel.construirNote = rd;
-            sel.ans = rd.n + '_' + sel.acc;
-            drawConstruirPreview(rd.vfn, rd.oct, sel.acc);
-            document.getElementById(uid + '_btn').classList.add('tm-ready');
-          });
-        });
         accBtns.forEach(function(btn) {
           btn.addEventListener('click', function() {
             if (answered) return;
@@ -678,19 +688,12 @@
 
       var elCnt = document.getElementById(uid + '_content');
       if (config.test === 'construir') {
-        elCnt.querySelectorAll('.tm-cs-acc-btn').forEach(function(b){ b.disabled = true; });
-        elCnt.querySelectorAll('.tm-cs-row').forEach(function(r){
-          var rd = CS_ROWS[parseInt(r.dataset.ci, 10)];
-          if (rd.n === cQ.n2 && rd.oct === cQ.oct2) {
-            r.classList.add('tm-ok');
-          } else if (r.classList.contains('tm-cs-sel') && !correct) {
-            r.classList.add('tm-ko');
-          }
-        });
         elCnt.querySelectorAll('.tm-cs-acc-btn').forEach(function(b){
+          b.disabled = true;
           if (parseInt(b.dataset.acc, 10) === cQ.a2) b.classList.add('tm-ok');
           else if (b.classList.contains('tm-sel') && !correct) b.classList.add('tm-ko');
         });
+        /* Siempre mostrar la respuesta correcta en el pentagrama */
         drawConstruirPreview(VF_NAMES[cQ.n2], cQ.oct2, cQ.a2);
       } else {
         elCnt.querySelectorAll('.tm-opt').forEach(function(b) {
