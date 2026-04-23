@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Construir Intervalos de Cuarta | Ejercicios Online | Teoría Musical</title>
+<meta name="description" content="Ejercicios para construir intervalos de cuarta: dada una nota raíz, coloca en el pentagrama la nota que forma una cuarta justa, aumentada o disminuida. Practica online.">
+<link rel="canonical" href="https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/cuartas/">
+<meta property="og:title" content="Construir Intervalos de Cuarta | Ejercicios Online | Teoría Musical">
+<meta property="og:description" content="Ejercicios para construir intervalos de cuarta sobre el pentagrama.">
+<meta property="og:image" content="https://www.teoriamusical.com.es/assets/img/2026/04/bach_favicon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/cuartas/">
+<link rel="icon" href="/assets/img/favicon.png" type="image/png">
+<meta name="google-site-verification" content="-bWygyA80PPsmSsmf6FQ_oZs6YeGjN95HzprqD07fos">
+<script>
+  window['googlefc'] = window['googlefc'] || {};
+  window['googlefc'].controlledMessagingFunction = function(m){ m.proceed(false); };
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});
+  try { var m=document.cookie.match('(?:^|; )tm_cookie_consent=([^;]*)'); if(m){var p=JSON.parse(decodeURIComponent(m[1]));gtag('consent','update',{analytics_storage:p.analytics?'granted':'denied',ad_storage:p.advertising?'granted':'denied',ad_user_data:p.advertising?'granted':'denied',ad_personalization:p.advertising?'granted':'denied'});}} catch(e){}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
+<script src="/assets/js/intervalos-engine.js" defer></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LearningResource","name":"Construir Intervalos de Cuarta","description":"Ejercicios para construir intervalos de cuarta sobre el pentagrama.","url":"https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/cuartas/","educationalLevel":"beginner","inLanguage":"es","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"Teoria Musical","url":"https://www.teoriamusical.com.es"}}
+</script>
+</head>
+<body class="tm-page">
+<a class="tm-skip" href="#main">Saltar al contenido</a>
+<div id="tm-cookie-overlay" role="dialog" aria-modal="true" aria-labelledby="tm-cookie-title">
+  <div id="tm-cookie-modal">
+    <div id="tm-cookie-icon" aria-hidden="true"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="18.5" stroke="#b8860b" stroke-width="1.5" fill="#faf8f4"/><circle cx="14" cy="15" r="2.2" fill="#b8860b"/><circle cx="24" cy="13" r="1.7" fill="#b8860b"/><circle cx="27" cy="24" r="2.2" fill="#b8860b"/><circle cx="16" cy="26" r="1.7" fill="#b8860b"/><circle cx="21" cy="20" r="1.1" fill="#b8860b"/></svg></div>
+    <h2 id="tm-cookie-title">Usamos cookies</h2>
+    <p id="tm-cookie-desc">Utilizamos cookies propias —necesarias para el funcionamiento del sitio— y de terceros para análisis del tráfico y publicidad. Puedes aceptarlas, rechazar las opcionales o configurarlas según tus preferencias. <a href="/politica-de-cookies/" id="tm-privacy-link" rel="noopener noreferrer">Política de cookies</a>.</p>
+    <div id="tm-cookie-panel" hidden>
+      <div class="tm-toggle-row"><div class="tm-toggle-info"><strong>Necesarias</strong><span>Imprescindibles para el funcionamiento del sitio. No se pueden desactivar.</span></div><div class="tm-toggle-wrap tm-toggle-forced"><input type="checkbox" id="tm-chk-necessary" checked disabled><label for="tm-chk-necessary" class="tm-switch-label"></label></div></div>
+      <div class="tm-toggle-row"><div class="tm-toggle-info"><strong>Analíticas</strong><span>Miden el tráfico y el comportamiento de navegación (Google Analytics 4).</span></div><div class="tm-toggle-wrap"><input type="checkbox" id="tm-chk-analytics"><label for="tm-chk-analytics" class="tm-switch-label"></label></div></div>
+      <div class="tm-toggle-row"><div class="tm-toggle-info"><strong>Publicitarias</strong><span>Permiten mostrar anuncios relevantes según tus intereses (Google AdSense).</span></div><div class="tm-toggle-wrap"><input type="checkbox" id="tm-chk-advertising"><label for="tm-chk-advertising" class="tm-switch-label"></label></div></div>
+    </div>
+    <div id="tm-cookie-actions">
+      <button id="tm-btn-accept" class="tm-btn tm-btn-primary">Aceptar todo</button>
+      <button id="tm-btn-necessary" class="tm-btn tm-btn-secondary">Solo necesarias</button>
+      <button id="tm-btn-configure" class="tm-btn tm-btn-link">Configurar</button>
+      <button id="tm-btn-save" class="tm-btn tm-btn-primary" hidden>Guardar preferencias</button>
+    </div>
+  </div>
+</div>
+<button id="tm-cookie-trigger" aria-label="Gestionar cookies" title="Gestionar cookies" hidden>
+  <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="18.5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="14" cy="15" r="2.2" fill="currentColor"/><circle cx="24" cy="13" r="1.7" fill="currentColor"/><circle cx="27" cy="24" r="2.2" fill="currentColor"/><circle cx="16" cy="26" r="1.7" fill="currentColor"/><circle cx="21" cy="20" r="1.1" fill="currentColor"/></svg>
+</button>
+<script src="/assets/js/consent.js" defer></script>
+<header class="tm-site-header">
+  <div class="tm-container tm-header-inner">
+    <a class="tm-brand" href="/"><span class="tm-brand-mark"><img src="/assets/img/favicon.png" alt="Teoría Musical"></span><span class="tm-brand-text">Teoría Musical</span></a>
+    <button class="tm-nav-toggle" aria-label="Menú" aria-expanded="false" aria-controls="tm-nav"><span></span><span></span><span></span></button>
+    <nav id="tm-nav" class="tm-nav" aria-label="Principal">
+      <ul class="tm-nav-list">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/diccionario-musical/">Diccionario Musical</a></li>
+        <li><a href="/ejercicios/" class="is-active">Ejercicios</a></li>
+        <li class="tm-has-sub"><a href="/herramientas/">Herramientas</a><ul class="tm-subnav"><li><a href="/herramientas/metronomo/">Metrónomo</a></li><li><a href="/herramientas/afinador/">Afinador</a></li></ul></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/test-tecnico-de-laboratorio/">Test Laboratorio</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main" class="tm-main">
+  <nav class="tm-breadcrumb" aria-label="Migas">
+    <div class="tm-container">
+      <a href="/">Inicio</a><span class="tm-crumb-sep">›</span><a href="/ejercicios/">Ejercicios Musicales</a><span class="tm-crumb-sep">›</span><a href="/ejercicios/ejercicios-de-intervalos-musicales/">Intervalos</a><span class="tm-crumb-sep">›</span><a href="/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/">Construir Intervalos</a><span class="tm-crumb-sep">›</span><span aria-current="page">Cuartas</span>
+    </div>
+  </nav>
+<div class="tm-container tm-article-wrap">
+  <article class="tm-article">
+<h1>Construir Intervalos de Cuarta</h1>
+<p>Se muestra una nota en el pentagrama. Pulsa la nota que forma una cuarta (justa, aumentada o disminuida) en la dirección indicada.</p>
+<div id="tmconstruir4"></div>
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    tmIvEngine("tmconstruir4", {test:"construir", val:"4"});
+  });
+</script>
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:30px;">
+  <a href="/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/quintas/" style="background:#2a7a6e;color:#fff;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:700;">Quintas →</a>
+  <a href="/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/terceras/" style="background:#2a7a6e;color:#fff;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:700;">← Terceras</a>
+  <a href="/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/" style="background:#555;color:#fff;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:700;">Construir intervalos</a>
+</div>
+  </article>
+</div>
+</main>
+<footer class="tm-site-footer">
+  <div class="tm-container tm-footer-inner">
+    <div class="tm-footer-col"><h3>Teoría Musical</h3><p>Aprende música desde sus fundamentos: diccionario, ejercicios interactivos y herramientas gratuitas.</p></div>
+    <div class="tm-footer-col"><h3>Secciones</h3><ul><li><a href="/diccionario-musical/">Diccionario Musical</a></li><li><a href="/ejercicios/">Ejercicios Musicales</a></li><li><a href="/herramientas/">Herramientas</a></li><li><a href="/blog/">Blog</a></li></ul></div>
+    <div class="tm-footer-col"><h3>Información</h3><ul><li><a href="/contacto/">Contacto</a></li><li><a href="/aviso-legal/">Aviso legal</a></li><li><a href="/politica-de-privacidad/">Política de privacidad</a></li><li><a href="/politica-de-cookies/">Política de cookies</a></li></ul></div>
+  </div>
+  <div class="tm-footer-bottom"><p>© <span id="tm-year"></span> Teoría Musical — Eduardo Escrig Zomeño. Todos los derechos reservados.</p></div>
+</footer>
+<script src="/assets/js/main.js" defer></script>
+</body>
+</html>

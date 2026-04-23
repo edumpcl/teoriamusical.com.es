@@ -151,7 +151,7 @@
       'arm_mel':    'Arm\xf3nicos y mel\xf3dicos',
       'asc_des':    'Ascendentes y descendentes',
       'con_dis':    'Conjuntos y disjuntos',
-      'construir':  'Construir intervalos'
+      'construir':  config.val ? 'Construir ' + ({'2':'Segundas','3':'Terceras','4':'Cuartas','5':'Quintas','6':'Sextas','7':'S\xe9ptimas','8':'Octavas'}[config.val] || config.val + '\xaa') : 'Construir intervalos'
     };
 
     var ICONOS_DIFICULTAD = ['\u2600\ufe0f', '\u26a1', '\ud83d\udd25'];
@@ -198,9 +198,10 @@
       if (config.test === 'consonancia' || config.test === 'construir') {
         k = k.filter(function(x){ return DEFS[x][0] <= 7; });
       }
-      /* construir: sin unísonos */
+      /* construir: sin unísonos; filtro por número si config.val */
       if (config.test === 'construir') {
         k = k.filter(function(x){ return DEFS[x][0] > 0; });
+        if (config.val) k = k.filter(function(x){ return DEFS[x][2] === config.val; });
       }
       if (currentDiff === 'easy') {
         k = k.filter(function(x){ var t = DEFS[x][3]; return t==='Mayor'||t==='menor'||t==='Justa'; });
