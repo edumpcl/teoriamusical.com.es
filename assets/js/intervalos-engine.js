@@ -167,6 +167,8 @@
 
     /* Posiciones del pentagrama de Do4 (grave) a Sol5 (agudo) */
     var CS_ROWS = [
+      {vfn:'b',n:6,oct:5,lbl:'Si⁵', ln:false,ldg:true},
+      {vfn:'a',n:5,oct:5,lbl:'La⁵', ln:true, ldg:true},
       {vfn:'g',n:4,oct:5,lbl:'Sol⁵',ln:false,ldg:false},
       {vfn:'f',n:3,oct:5,lbl:'Fa⁵', ln:true, ldg:false},
       {vfn:'e',n:2,oct:5,lbl:'Mi⁵', ln:false,ldg:false},
@@ -178,7 +180,9 @@
       {vfn:'f',n:3,oct:4,lbl:'Fa⁴', ln:false,ldg:false},
       {vfn:'e',n:2,oct:4,lbl:'Mi⁴', ln:true, ldg:false},
       {vfn:'d',n:1,oct:4,lbl:'Re⁴', ln:false,ldg:false},
-      {vfn:'c',n:0,oct:4,lbl:'Do⁴', ln:false,ldg:true}
+      {vfn:'c',n:0,oct:4,lbl:'Do⁴', ln:false,ldg:true},
+      {vfn:'b',n:6,oct:3,lbl:'Si³', ln:false,ldg:false},
+      {vfn:'a',n:5,oct:3,lbl:'La³', ln:true, ldg:true}
     ];
 
     function keysForDiff() {
@@ -269,10 +273,15 @@
         def = DEFS[k];
         n1  = Math.floor(Math.random() * 7);
         if (config.test === 'construir' && !construirAsc) {
-          /* Descendente: n2 está POR DEBAJO de n1 */
+          /* Descendente: n2 < n1 → oct4; n2 >= n1 → oct3 */
           n2 = (n1 - def[0] + 70) % 7;
-          /* Rechazar si n2 > n1 (bajaría a oct3, fuera del pentagrama visible) */
-          a2 = (n2 > n1) ? 999 : (NS[n1] - NS[n2] - def[1]);
+          a2 = (n2 < n1) ? NS[n1] - NS[n2] - def[1]
+                         : NS[n1] - NS[n2] + 12 - def[1];
+        } else if (config.test === 'construir') {
+          /* Construir ascendente: corrige 8ª (def[0]=7 → n2==n1, nd=0, a2 debe ser 0) */
+          n2  = (n1 + def[0]) % 7;
+          nd  = NS[n2] - NS[n1]; if (nd < 0) nd += 12;
+          a2  = def[0] >= 7 ? (def[1] - 12) - nd : def[1] - nd;
         } else {
           n2  = (n1 + def[0]) % 7;
           nd  = NS[n2] - NS[n1]; if (nd < 0) nd += 12;
@@ -285,8 +294,13 @@
              ascending:  (config.test === 'asc_des' || config.test === 'completo') ? Math.random() < 0.5 : (config.test === 'construir' ? construirAsc : true),
              conjunto:   config.test === 'con_dis'  ? def[0] === 1         : false };
       if (config.test === 'construir') {
-        /* oct2: ascendente → n2 < n1 sube a oct5; descendente → siempre oct4 */
-        cQ.oct2 = cQ.ascending ? (cQ.n2 < cQ.n1 ? 5 : 4) : 4;
+        if (cQ.ascending) {
+          /* n2 < n1 → sube a oct5; 8ª (def[0]=7, n2==n1) → también oct5 */
+          cQ.oct2 = (cQ.n2 < cQ.n1 || cQ.def[0] === 7) ? 5 : 4;
+        } else {
+          /* n2 >= n1 (incluye 8ª descendente) → baja a oct3; n2 < n1 → oct4 */
+          cQ.oct2 = (cQ.n2 >= cQ.n1) ? 3 : 4;
+        }
       }
     }
 
@@ -307,9 +321,9 @@
       elNot.innerHTML = '';
       var V = Vex.Flow;
       var r = new V.Renderer(elNot, V.Renderer.Backends.SVG);
-      r.resize(300, 130);
+      r.resize(300, 160);
       var ctx = r.getContext();
-      var stave = new V.Stave(10, 10, 280);
+      var stave = new V.Stave(10, 20, 280);
       stave.addClef('treble').setContext(ctx).draw();
       var key1 = VF_NAMES[cQ.n1] + '/4';
       var key2 = vfn + '/' + oct;
@@ -391,11 +405,11 @@
             ? (e.changedTouches || e.touches)[0].clientY
             : e.clientY;
           var clickY = clientY - rect.top;
-          /* space_above_staff_ln=4 × spacing=10 → top line (F5) at px=50
-             cada medio paso = 5px: noteStep 0=F5, -1=G5, …, 10=C4 */
-          var noteStep = Math.round((clickY - 50) / 5);
-          noteStep = Math.max(-1, Math.min(10, noteStep));
-          var rd = CS_ROWS[noteStep + 1];
+          /* staveY=20 → top line (F5) at px=60; cada paso = 5px
+             noteStep -3=Si5, -2=La5, -1=Sol5, 0=Fa5, …, 12=La3 */
+          var noteStep = Math.round((clickY - 60) / 5);
+          noteStep = Math.max(-3, Math.min(12, noteStep));
+          var rd = CS_ROWS[noteStep + 3];
           sel.construirNote = rd;
           sel.ans = rd.n + '_' + rd.oct + '_' + sel.acc;
           drawConstruirPreview(rd.vfn, rd.oct, sel.acc);
@@ -573,9 +587,11 @@
       elNot.innerHTML = '';
       var V = Vex.Flow;
       var r = new V.Renderer(elNot, V.Renderer.Backends.SVG);
-      r.resize(300, 130);
+      var staveH = config.test === 'construir' ? 160 : 130;
+      var staveY = config.test === 'construir' ? 20 : 10;
+      r.resize(300, staveH);
       var ctx = r.getContext();
-      var stave = new V.Stave(10, 10, 280);
+      var stave = new V.Stave(10, staveY, 280);
       stave.addClef('treble').setContext(ctx).draw();
       var key1 = VF_NAMES[cQ.n1] + '/4';
       /* compuesto: oct 6 si n2<=n1 (wrap, ej. 15ª), oct 5 si n2>n1; simple: 5 si n2<n1, 4 si no */
