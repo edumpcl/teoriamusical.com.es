@@ -475,7 +475,7 @@
           }).join('') + '</div>';
       } else if (config.test === 'construir') {
         var intLbl = cQ.def[2] + '\xaa ' + tipoLabel(cQ.def[3]);
-        var dirTxt = cQ.ascending ? 'Ascendente ↑' : 'Descendente ↓';
+        var dirTxt = cQ.ascending ? '↑' : '↓';
         h += '<div class="tm-construir-dir">' + noteLabel(cQ.n1, 0) + ' &mdash; <strong>' + intLbl + '</strong> &mdash; ' + dirTxt + '</div>';
         h += '<p class="tm-construir-hint">Pulsa en el pentagrama para colocar la segunda nota</p>';
         var accOpts;
