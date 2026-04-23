@@ -268,19 +268,24 @@
         k   = keys[Math.floor(Math.random() * keys.length)];
         def = DEFS[k];
         n1  = Math.floor(Math.random() * 7);
-        n2  = (n1 + def[0]) % 7;
-        nd  = NS[n2] - NS[n1]; if (nd < 0) nd += 12;
-        /* intervalos compuestos: la distancia en semitonos se compara sin la octava base */
-        a2  = def[0] >= 8 ? (def[1] - 12) - nd : def[1] - nd;
+        if (config.test === 'construir' && !construirAsc) {
+          /* Descendente: n2 está POR DEBAJO de n1 */
+          n2 = (n1 - def[0] + 70) % 7;
+          /* Rechazar si n2 > n1 (bajaría a oct3, fuera del pentagrama visible) */
+          a2 = (n2 > n1) ? 999 : (NS[n1] - NS[n2] - def[1]);
+        } else {
+          n2  = (n1 + def[0]) % 7;
+          nd  = NS[n2] - NS[n1]; if (nd < 0) nd += 12;
+          a2  = def[0] >= 8 ? (def[1] - 12) - nd : def[1] - nd;
+        }
         attempts++;
-        /* construir descendente: rechazar si n2 saldría al oct3 (n2 > n1) */
-      } while ((Math.abs(a2) > maxAlt || (config.test === 'construir' && !construirAsc && n2 > n1)) && attempts < 100);
+      } while (Math.abs(a2) > maxAlt && attempts < 100);
       cQ = { k: k, def: def, n1: n1, n2: n2, a2: a2,
              harmonic:   (config.test === 'arm_mel' || config.test === 'completo') ? Math.random() < 0.5 : true,
              ascending:  (config.test === 'asc_des' || config.test === 'completo') ? Math.random() < 0.5 : (config.test === 'construir' ? construirAsc : true),
              conjunto:   config.test === 'con_dis'  ? def[0] === 1         : false };
       if (config.test === 'construir') {
-        /* oct2: ascendente → n2 < n1 sube a oct5; descendente → siempre oct4 (n2 <= n1 garantizado) */
+        /* oct2: ascendente → n2 < n1 sube a oct5; descendente → siempre oct4 */
         cQ.oct2 = cQ.ascending ? (cQ.n2 < cQ.n1 ? 5 : 4) : 4;
       }
     }
@@ -312,7 +317,7 @@
       var sn1 = new V.StaveNote({ keys: [key1], duration: 'w' });
       var sn2 = new V.StaveNote({ keys: [key2], duration: 'w' });
       if (acc2str) sn2.addModifier(new V.Accidental(acc2str), 0);
-      var notes = cQ.ascending ? [sn1, sn2] : [sn2, sn1];
+      var notes = [sn1, sn2];
       var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables(notes);
       new V.Formatter().joinVoices([voice]).format([voice], 180);
       voice.draw(ctx, stave);
@@ -390,7 +395,7 @@
           noteStep = Math.max(-1, Math.min(10, noteStep));
           var rd = CS_ROWS[noteStep + 1];
           sel.construirNote = rd;
-          sel.ans = rd.n + '_' + sel.acc;
+          sel.ans = rd.n + '_' + rd.oct + '_' + sel.acc;
           drawConstruirPreview(rd.vfn, rd.oct, sel.acc);
           document.getElementById(uid + '_btn').classList.add('tm-ready');
         };
@@ -518,7 +523,7 @@
             btn.classList.add('tm-sel');
             sel.acc = parseInt(btn.dataset.acc, 10);
             if (sel.construirNote) {
-              sel.ans = sel.construirNote.n + '_' + sel.acc;
+              sel.ans = sel.construirNote.n + '_' + sel.construirNote.oct + '_' + sel.acc;
               drawConstruirPreview(sel.construirNote.vfn, sel.construirNote.oct, sel.acc);
             }
           });
@@ -645,7 +650,7 @@
       if (config.test === 'asc_des')     return sel.ans === (cQ.ascending ? 'Ascendente'    : 'Descendente');
       if (config.test === 'semitono')    return sel.ans === (SEMITIPO_LABEL[cQ.semitipo] || '');
       if (config.test === 'con_dis')     return sel.ans === (cQ.conjunto  ? 'Conjunto'      : 'Disjunto');
-      if (config.test === 'construir')   return sel.ans === (cQ.n2 + '_' + cQ.a2);
+      if (config.test === 'construir')   return sel.ans === (cQ.n2 + '_' + cQ.oct2 + '_' + cQ.a2);
       return sel.ans === correctTipo();
     }
 
