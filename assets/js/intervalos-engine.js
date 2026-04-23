@@ -101,9 +101,26 @@
     '.tm-iv-wrap .tm-iv-score-num{font-size:3rem;font-weight:800;line-height:1;}',
     '.tm-iv-wrap .tm-iv-score-pct{font-size:1.3rem;font-weight:600;opacity:.9;margin:.3rem 0;}',
     '@media(max-width:500px){.tm-iv-wrap .tm-iv-modes{flex-direction:column;align-items:center;}.tm-iv-wrap .tm-iv-mode-btn{width:100%;max-width:220px;}}',
-    '.tm-iv-wrap .tm-grid-construir{grid-template-columns:repeat(3,1fr);}',
-    '.tm-iv-wrap .tm-construir-label{text-align:center;margin:12px 0 10px;font-size:1.05rem;color:#555;}',
-    '.tm-iv-wrap .tm-construir-opt{font-size:1.15rem!important;padding:14px 6px!important;min-height:56px;touch-action:manipulation;}'
+    '.tm-iv-wrap .tm-cs-wrap{background:#fff;border:1px solid #e8e0cc;border-radius:8px;margin:8px 0;-webkit-user-select:none;user-select:none;overflow:hidden;}',
+    '.tm-iv-wrap .tm-cs-row{position:relative;height:32px;display:flex;align-items:center;padding:0 8px;cursor:pointer;box-sizing:border-box;touch-action:manipulation;}',
+    '.tm-iv-wrap .tm-cs-row:active{background:#fdfcf9;}',
+    '.tm-iv-wrap .tm-cs-row.tm-cs-sel{background:#fdf8ee;}',
+    '.tm-iv-wrap .tm-cs-row.is-line::after{content:"";position:absolute;left:0;right:0;top:50%;height:1.5px;background:#444;pointer-events:none;}',
+    '.tm-iv-wrap .tm-cs-row.is-ledger::after{content:"";position:absolute;left:22%;right:22%;top:50%;height:1.5px;background:#444;pointer-events:none;}',
+    '.tm-iv-wrap .tm-cs-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;background:transparent;margin-right:6px;position:relative;z-index:2;}',
+    '.tm-iv-wrap .tm-cs-row.tm-cs-sel .tm-cs-dot{background:#8b6914;}',
+    '.tm-iv-wrap .tm-cs-row.tm-ok .tm-cs-dot{background:#27ae60;}',
+    '.tm-iv-wrap .tm-cs-row.tm-ko .tm-cs-dot{background:#c0392b;}',
+    '.tm-iv-wrap .tm-cs-lbl{font-size:.7rem;font-weight:700;color:#aaa;position:relative;z-index:2;background:#fff;padding:0 3px;border-radius:2px;margin-left:auto;}',
+    '.tm-iv-wrap .tm-cs-row.tm-cs-sel .tm-cs-lbl{color:#8b6914;background:#fdf8ee;}',
+    '.tm-iv-wrap .tm-cs-row.tm-ok{background:#e8f5e9!important;}.tm-iv-wrap .tm-cs-row.tm-ok .tm-cs-lbl{color:#2e7d32;background:#e8f5e9;}',
+    '.tm-iv-wrap .tm-cs-row.tm-ko{background:#ffebee!important;}.tm-iv-wrap .tm-cs-row.tm-ko .tm-cs-lbl{color:#c62828;background:#ffebee;}',
+    '.tm-iv-wrap .tm-cs-acc{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;justify-content:center;}',
+    '.tm-iv-wrap .tm-cs-acc-btn{font-size:1.1rem;font-weight:700;padding:9px 14px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;cursor:pointer;min-width:44px;min-height:44px;touch-action:manipulation;font-family:inherit;}',
+    '.tm-iv-wrap .tm-cs-acc-btn.tm-sel{background:#8b6914!important;color:#fff!important;border-color:#8b6914!important;}',
+    '.tm-iv-wrap .tm-cs-acc-btn.tm-ok{background:#27ae60!important;color:#fff!important;border-color:#27ae60!important;}',
+    '.tm-iv-wrap .tm-cs-acc-btn.tm-ko{background:#c0392b!important;color:#fff!important;border-color:#c0392b!important;}',
+    '.tm-iv-wrap .tm-construir-dir{font-size:.88rem;color:#555;text-align:center;margin:4px 0 8px;padding:5px 10px;background:#f5f2ea;border-radius:6px;font-weight:600;}'
   ].join('');
 
   function injectCSS() {
@@ -145,6 +162,22 @@
     var NOTE_NAMES_ES = ['Do','Re','Mi','Fa','Sol','La','Si'];
     var ACC_DISPLAY = {'-2':'bb','-1':'♭','0':'','1':'♯','2':'×'};
     function noteLabel(n, a) { return NOTE_NAMES_ES[n] + (ACC_DISPLAY[String(a)] || ''); }
+
+    /* Posiciones del pentagrama de Do4 (grave) a Sol5 (agudo) */
+    var CS_ROWS = [
+      {vfn:'g',n:4,oct:5,lbl:'Sol⁵',ln:false,ldg:false},
+      {vfn:'f',n:3,oct:5,lbl:'Fa⁵', ln:true, ldg:false},
+      {vfn:'e',n:2,oct:5,lbl:'Mi⁵', ln:false,ldg:false},
+      {vfn:'d',n:1,oct:5,lbl:'Re⁵', ln:true, ldg:false},
+      {vfn:'c',n:0,oct:5,lbl:'Do⁵', ln:false,ldg:false},
+      {vfn:'b',n:6,oct:4,lbl:'Si⁴', ln:true, ldg:false},
+      {vfn:'a',n:5,oct:4,lbl:'La⁴', ln:false,ldg:false},
+      {vfn:'g',n:4,oct:4,lbl:'Sol⁴',ln:true, ldg:false},
+      {vfn:'f',n:3,oct:4,lbl:'Fa⁴', ln:false,ldg:false},
+      {vfn:'e',n:2,oct:4,lbl:'Mi⁴', ln:true, ldg:false},
+      {vfn:'d',n:1,oct:4,lbl:'Re⁴', ln:false,ldg:false},
+      {vfn:'c',n:0,oct:4,lbl:'Do⁴', ln:false,ldg:true}
+    ];
 
     function keysForDiff() {
       var k = Object.keys(DEFS);
@@ -227,6 +260,7 @@
         var sub2 = keys.filter(function(x){ return wantComp ? DEFS[x][0] >= 8 : DEFS[x][0] < 8; });
         if (sub2.length) keys = sub2;
       }
+      var construirAsc = config.test === 'construir' ? Math.random() < 0.5 : true;
       var attempts = 0, k, def, n1, n2, nd, a2;
       do {
         k   = keys[Math.floor(Math.random() * keys.length)];
@@ -237,11 +271,16 @@
         /* intervalos compuestos: la distancia en semitonos se compara sin la octava base */
         a2  = def[0] >= 8 ? (def[1] - 12) - nd : def[1] - nd;
         attempts++;
-      } while (Math.abs(a2) > maxAlt && attempts < 100);
+        /* construir descendente: rechazar si n2 saldría al oct3 (n2 > n1) */
+      } while ((Math.abs(a2) > maxAlt || (config.test === 'construir' && !construirAsc && n2 > n1)) && attempts < 100);
       cQ = { k: k, def: def, n1: n1, n2: n2, a2: a2,
              harmonic:   (config.test === 'arm_mel' || config.test === 'completo') ? Math.random() < 0.5 : true,
-             ascending:  (config.test === 'asc_des' || config.test === 'completo') ? Math.random() < 0.5 : true,
+             ascending:  (config.test === 'asc_des' || config.test === 'completo') ? Math.random() < 0.5 : (config.test === 'construir' ? construirAsc : true),
              conjunto:   config.test === 'con_dis'  ? def[0] === 1         : false };
+      if (config.test === 'construir') {
+        /* oct2: ascendente → n2 < n1 sube a oct5; descendente → siempre oct4 (n2 <= n1 garantizado) */
+        cQ.oct2 = cQ.ascending ? (cQ.n2 < cQ.n1 ? 5 : 4) : 4;
+      }
     }
 
     function accidental(a2) {
@@ -256,26 +295,25 @@
       return TIPO_LABEL[abrev] || abrev;
     }
 
-    function buildConstruirOptions() {
-      var correct = cQ.n2 + '_' + cQ.a2;
-      var pool = [];
-      for (var ni = 0; ni < 7; ni++) {
-        for (var ai = -maxAlt; ai <= maxAlt; ai++) {
-          if (ni + '_' + ai !== correct) pool.push({n: ni, a: ai});
-        }
-      }
-      pool.sort(function(a, b) {
-        var da = Math.min(Math.abs(a.n - cQ.n2), 7 - Math.abs(a.n - cQ.n2));
-        var db = Math.min(Math.abs(b.n - cQ.n2), 7 - Math.abs(b.n - cQ.n2));
-        if (da === db) return Math.random() - 0.5;
-        return da - db;
-      });
-      var opts = pool.slice(0, 4).concat([{n: cQ.n2, a: cQ.a2}]);
-      for (var oi = opts.length - 1; oi > 0; oi--) {
-        var oj = Math.floor(Math.random() * (oi + 1));
-        var tmp = opts[oi]; opts[oi] = opts[oj]; opts[oj] = tmp;
-      }
-      return opts;
+    function drawConstruirPreview(vfn, oct, acc) {
+      var elNot = document.getElementById(uid + '_not');
+      elNot.innerHTML = '';
+      var V = Vex.Flow;
+      var r = new V.Renderer(elNot, V.Renderer.Backends.SVG);
+      r.resize(300, 130);
+      var ctx = r.getContext();
+      var stave = new V.Stave(10, 10, 280);
+      stave.addClef('treble').setContext(ctx).draw();
+      var key1 = VF_NAMES[cQ.n1] + '/4';
+      var key2 = vfn + '/' + oct;
+      var acc2str = accidental(acc);
+      var sn1 = new V.StaveNote({ keys: [key1], duration: 'w' });
+      var sn2 = new V.StaveNote({ keys: [key2], duration: 'w' });
+      if (acc2str) sn2.addModifier(new V.Accidental(acc2str), 0);
+      var notes = cQ.ascending ? [sn1, sn2] : [sn2, sn1];
+      var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables(notes);
+      new V.Formatter().joinVoices([voice]).format([voice], 180);
+      voice.draw(ctx, stave);
     }
 
     /* -------- pantalla de selección de dificultad -------- */
@@ -402,10 +440,28 @@
           }).join('') + '</div>';
       } else if (config.test === 'construir') {
         var intLbl = cQ.def[2] + '\xaa ' + tipoLabel(cQ.def[3]);
-        h += '<p class="tm-construir-label">' + noteLabel(cQ.n1, 0) + ' + <strong>' + intLbl + '</strong> = ?</p>';
-        h += '<div class="tm-grid tm-grid-construir">';
-        buildConstruirOptions().forEach(function(opt) {
-          h += '<button class="tm-opt tm-construir-opt" data-g="ans" data-v="' + opt.n + '_' + opt.a + '">' + noteLabel(opt.n, opt.a) + '</button>';
+        var dirTxt = cQ.ascending ? 'Ascendente ↑' : 'Descendente ↓';
+        h += '<div class="tm-construir-dir">' + noteLabel(cQ.n1, 0) + ' &mdash; <strong>' + intLbl + '</strong> &mdash; ' + dirTxt + '</div>';
+        h += '<div class="tm-cs-wrap">';
+        CS_ROWS.forEach(function(row, ci) {
+          var cls = 'tm-cs-row' + (row.ln ? ' is-line' : '') + (row.ldg ? ' is-ledger' : '');
+          h += '<div class="' + cls + '" data-ci="' + ci + '">';
+          h += '<span class="tm-cs-dot"></span>';
+          h += '<span class="tm-cs-lbl">' + row.lbl + '</span>';
+          h += '</div>';
+        });
+        h += '</div>';
+        var accOpts;
+        if (maxAlt >= 2) {
+          accOpts = [{v:-2,t:'bb'},{v:-1,t:'♭'},{v:0,t:'♮'},{v:1,t:'♯'},{v:2,t:'×'}];
+        } else if (maxAlt >= 1) {
+          accOpts = [{v:-1,t:'♭'},{v:0,t:'♮'},{v:1,t:'♯'}];
+        } else {
+          accOpts = [{v:0,t:'♮'}];
+        }
+        h += '<div class="tm-cs-acc" id="' + uid + '_acc"' + (maxAlt === 0 ? ' style="display:none"' : '') + '>';
+        accOpts.forEach(function(o) {
+          h += '<button class="tm-cs-acc-btn' + (o.v === 0 ? ' tm-sel' : '') + '" data-acc="' + o.v + '">' + o.t + '</button>';
         });
         h += '</div>';
       } else {
@@ -428,9 +484,40 @@
       elCont.innerHTML = h;
       sel = {};
       document.getElementById(uid + '_btn').classList.remove('tm-ready');
-      elCont.querySelectorAll('.tm-opt').forEach(function(btn) {
-        btn.addEventListener('click', function() { selOpt(btn.dataset.g, btn.dataset.v, btn); });
-      });
+
+      if (config.test === 'construir') {
+        sel.acc = 0;
+        sel.construirNote = null;
+        var accBtns = elCont.querySelectorAll('.tm-cs-acc-btn');
+        elCont.querySelectorAll('.tm-cs-row').forEach(function(row) {
+          row.addEventListener('click', function() {
+            if (answered) return;
+            elCont.querySelectorAll('.tm-cs-row').forEach(function(r){ r.classList.remove('tm-cs-sel'); });
+            row.classList.add('tm-cs-sel');
+            var rd = CS_ROWS[parseInt(row.dataset.ci, 10)];
+            sel.construirNote = rd;
+            sel.ans = rd.n + '_' + sel.acc;
+            drawConstruirPreview(rd.vfn, rd.oct, sel.acc);
+            document.getElementById(uid + '_btn').classList.add('tm-ready');
+          });
+        });
+        accBtns.forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            if (answered) return;
+            accBtns.forEach(function(b){ b.classList.remove('tm-sel'); });
+            btn.classList.add('tm-sel');
+            sel.acc = parseInt(btn.dataset.acc, 10);
+            if (sel.construirNote) {
+              sel.ans = sel.construirNote.n + '_' + sel.acc;
+              drawConstruirPreview(sel.construirNote.vfn, sel.construirNote.oct, sel.acc);
+            }
+          });
+        });
+      } else {
+        elCont.querySelectorAll('.tm-opt').forEach(function(btn) {
+          btn.addEventListener('click', function() { selOpt(btn.dataset.g, btn.dataset.v, btn); });
+        });
+      }
     }
 
     function selOpt(g, v, btn) {
@@ -589,36 +676,52 @@
 
       document.getElementById(uid + '_badge').textContent = '\u2713 ' + score;
 
-      document.getElementById(uid + '_content').querySelectorAll('.tm-opt').forEach(function(b) {
-        b.disabled = true;
-        var isCorrectOpt = false;
-        if (config.test === 'completo') {
-          isCorrectOpt = (b.dataset.g === 'num'     && b.dataset.v === cQ.def[2]) ||
-                         (b.dataset.g === 'tipo'    && b.dataset.v === correctTipo()) ||
-                         (b.dataset.g === 'simcomp' && b.dataset.v === (cQ.def[0] >= 8 ? 'Compuesto' : 'Simple')) ||
-                         (b.dataset.g === 'conjdis' && b.dataset.v === (cQ.def[0] === 1 ? 'Conjunto' : 'Disjunto')) ||
-                         (b.dataset.g === 'arm_mel' && b.dataset.v === (cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico')) ||
-                         (!cQ.harmonic && b.dataset.g === 'asc_des' && b.dataset.v === (cQ.ascending ? 'Ascendente' : 'Descendente'));
-        } else if (config.test === 'numero') {
-          isCorrectOpt = b.dataset.v === cQ.def[2];
-        } else if (config.test === 'consonancia') {
-          isCorrectOpt = b.dataset.v === (CONSONANCIA_MAP[cQ.k] || '');
-        } else if (config.test === 'arm_mel') {
-          isCorrectOpt = b.dataset.v === (cQ.harmonic ? 'Armónico' : 'Melódico');
-        } else if (config.test === 'asc_des') {
-          isCorrectOpt = b.dataset.v === (cQ.ascending ? 'Ascendente' : 'Descendente');
-        } else if (config.test === 'con_dis') {
-          isCorrectOpt = b.dataset.v === (cQ.conjunto ? 'Conjunto' : 'Disjunto');
-        } else if (config.test === 'semitono') {
-          isCorrectOpt = b.dataset.v === (SEMITIPO_LABEL[cQ.semitipo] || '');
-        } else if (config.test === 'construir') {
-          isCorrectOpt = b.dataset.v === (cQ.n2 + '_' + cQ.a2);
-        } else {
-          isCorrectOpt = b.dataset.v === correctTipo();
-        }
-        if (isCorrectOpt) b.classList.add('tm-ok');
-        else if (b.classList.contains('tm-sel')) b.classList.add('tm-ko');
-      });
+      var elCnt = document.getElementById(uid + '_content');
+      if (config.test === 'construir') {
+        elCnt.querySelectorAll('.tm-cs-acc-btn').forEach(function(b){ b.disabled = true; });
+        elCnt.querySelectorAll('.tm-cs-row').forEach(function(r){
+          var rd = CS_ROWS[parseInt(r.dataset.ci, 10)];
+          if (rd.n === cQ.n2 && rd.oct === cQ.oct2) {
+            r.classList.add('tm-ok');
+          } else if (r.classList.contains('tm-cs-sel') && !correct) {
+            r.classList.add('tm-ko');
+          }
+        });
+        elCnt.querySelectorAll('.tm-cs-acc-btn').forEach(function(b){
+          if (parseInt(b.dataset.acc, 10) === cQ.a2) b.classList.add('tm-ok');
+          else if (b.classList.contains('tm-sel') && !correct) b.classList.add('tm-ko');
+        });
+        drawConstruirPreview(VF_NAMES[cQ.n2], cQ.oct2, cQ.a2);
+      } else {
+        elCnt.querySelectorAll('.tm-opt').forEach(function(b) {
+          b.disabled = true;
+          var isCorrectOpt = false;
+          if (config.test === 'completo') {
+            isCorrectOpt = (b.dataset.g === 'num'     && b.dataset.v === cQ.def[2]) ||
+                           (b.dataset.g === 'tipo'    && b.dataset.v === correctTipo()) ||
+                           (b.dataset.g === 'simcomp' && b.dataset.v === (cQ.def[0] >= 8 ? 'Compuesto' : 'Simple')) ||
+                           (b.dataset.g === 'conjdis' && b.dataset.v === (cQ.def[0] === 1 ? 'Conjunto' : 'Disjunto')) ||
+                           (b.dataset.g === 'arm_mel' && b.dataset.v === (cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico')) ||
+                           (!cQ.harmonic && b.dataset.g === 'asc_des' && b.dataset.v === (cQ.ascending ? 'Ascendente' : 'Descendente'));
+          } else if (config.test === 'numero') {
+            isCorrectOpt = b.dataset.v === cQ.def[2];
+          } else if (config.test === 'consonancia') {
+            isCorrectOpt = b.dataset.v === (CONSONANCIA_MAP[cQ.k] || '');
+          } else if (config.test === 'arm_mel') {
+            isCorrectOpt = b.dataset.v === (cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico');
+          } else if (config.test === 'asc_des') {
+            isCorrectOpt = b.dataset.v === (cQ.ascending ? 'Ascendente' : 'Descendente');
+          } else if (config.test === 'con_dis') {
+            isCorrectOpt = b.dataset.v === (cQ.conjunto ? 'Conjunto' : 'Disjunto');
+          } else if (config.test === 'semitono') {
+            isCorrectOpt = b.dataset.v === (SEMITIPO_LABEL[cQ.semitipo] || '');
+          } else {
+            isCorrectOpt = b.dataset.v === correctTipo();
+          }
+          if (isCorrectOpt) b.classList.add('tm-ok');
+          else if (b.classList.contains('tm-sel')) b.classList.add('tm-ko');
+        });
+      }
     }
 
     function nextQ() {
