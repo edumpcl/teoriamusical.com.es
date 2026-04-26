@@ -105,7 +105,7 @@
     '.tmdib-wrap .tm-tool.tm-active{background:rgba(139,105,20,0.1);border-color:#8b6914;color:#8b6914;transform:scale(1.02);}',
     '.tmdib-wrap .tm-staff-wrap{position:relative;margin-bottom:15px;background:#fdfcf9;border:1px solid #e8e0cc;border-radius:4px;padding:15px 0;min-height:160px;display:flex;justify-content:center;overflow:hidden;cursor:crosshair;user-select:none;touch-action:none;}',
     '.tmdib-wrap .tm-staff-wrap.tm-answered{cursor:default;}',
-    '.tmdib-wrap .tm-notacion{position:relative;width:500px;display:flex;justify-content:center;pointer-events:none;}',
+    '.tmdib-wrap .tm-notacion{position:relative;width:100%;display:flex;justify-content:center;pointer-events:none;}',
     '.tmdib-wrap .tm-ghost{position:absolute;pointer-events:none;opacity:0.5;font-size:36px;font-family:serif;font-weight:700;color:#1a1a1a;z-index:20;line-height:1;transform:translate(-50%,-50%);}',
     '.tmdib-wrap .tm-highlight{position:absolute;left:0;right:0;height:12px;background:rgba(139,105,20,0.1);pointer-events:none;z-index:5;border-top:1px dashed rgba(139,105,20,0.2);border-bottom:1px dashed rgba(139,105,20,0.2);}',
     '.tmdib-wrap .tm-actions{display:flex;gap:10px;margin-bottom:18px;}',
@@ -377,10 +377,13 @@
       if (typeof Vex === 'undefined') return;
       var VF = Vex.Flow;
       var rend = new VF.Renderer(elNotac, VF.Renderer.Backends.SVG);
-      rend.resize(500, 140);
+      var totalW = Math.min(elNotac.offsetWidth || elWrap.offsetWidth || 500, 500);
+      if (totalW < 200) totalW = 200;
+      var staveW = totalW - 20;
+      rend.resize(totalW, 140);
       var ctx = rend.getContext();
       ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new VF.Stave(10, 30, 480);
+      var stave = new VF.Stave(10, 30, staveW);
       stave.addClef('treble');
       stave.setContext(ctx).draw();
       currentStave = stave;
@@ -398,7 +401,7 @@
       });
       var voice = new VF.Voice({ num_beats: userDrawing.length, beat_value: 4 }).setStrict(false);
       voice.addTickables(tickables);
-      new VF.Formatter().joinVoices([voice]).format([voice], 380);
+      new VF.Formatter().joinVoices([voice]).format([voice], Math.max(staveW - 120, 80));
       voice.draw(ctx, stave);
     }
 
