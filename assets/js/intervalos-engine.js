@@ -268,7 +268,7 @@
         if (sub2.length) keys = sub2;
       }
       var construirAsc = config.test === 'construir' ? Math.random() < 0.5 : true;
-      var attempts = 0, k, def, n1, n2, nd, a2;
+      var attempts = 0, k, def, n1, n2, nd, a2, outOfRange;
       do {
         k   = keys[Math.floor(Math.random() * keys.length)];
         def = DEFS[k];
@@ -278,18 +278,22 @@
           n2 = (n1 - def[0] + 70) % 7;
           a2 = (n2 < n1) ? NS[n1] - NS[n2] - def[1]
                          : NS[n1] - NS[n2] + 12 - def[1];
+          /* CS_ROWS solo tiene La3(n=5) y Si3(n=6) en oct3 — rechazar el resto */
+          outOfRange = (n2 >= n1) && n2 < 5;
         } else if (config.test === 'construir') {
           /* Construir ascendente: corrige 8ª (def[0]=7 → n2==n1, nd=0, a2 debe ser 0) */
           n2  = (n1 + def[0]) % 7;
           nd  = NS[n2] - NS[n1]; if (nd < 0) nd += 12;
           a2  = def[0] >= 7 ? (def[1] - 12) - nd : def[1] - nd;
+          outOfRange = false;
         } else {
           n2  = (n1 + def[0]) % 7;
           nd  = NS[n2] - NS[n1]; if (nd < 0) nd += 12;
           a2  = def[0] >= 8 ? (def[1] - 12) - nd : def[1] - nd;
+          outOfRange = false;
         }
         attempts++;
-      } while (Math.abs(a2) > maxAlt && attempts < 100);
+      } while ((Math.abs(a2) > maxAlt || outOfRange) && attempts < 100);
       cQ = { k: k, def: def, n1: n1, n2: n2, a2: a2,
              harmonic:   (config.test === 'arm_mel' || config.test === 'completo') ? Math.random() < 0.5 : true,
              ascending:  (config.test === 'asc_des' || config.test === 'completo') ? Math.random() < 0.5 : (config.test === 'construir' ? construirAsc : true),

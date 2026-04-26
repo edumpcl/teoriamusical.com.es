@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -i 's|intervalos-engine\\\\.js?v=2|intervalos-engine.js?v=3|g' ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/segundas/index.html ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/terceras/index.html ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/cuartas/index.html ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/quintas/index.html ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/sextas/index.html ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/septimas/index.html ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/octavas/index.html)",
+      "Bash(sed -i 's|intervalos-engine\\\\.js\"|intervalos-engine.js?v=3\"|g' ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/index.html)"
+    ]
+  }
+}
