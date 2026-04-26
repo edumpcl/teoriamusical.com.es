@@ -315,9 +315,14 @@
       }
 
       // Manual subdivisions
-      if (subdivision > 1) {
-        const subInterval = beatInterval / subdivision;
-        for (let s = 1; s < subdivision; s++) {
+      // In free meter, "corchea" (subdivision=2) means one click per eighth note,
+      // so each beat gets freeGroupSizes[beat] equally-spaced clicks.
+      const effectiveSub = (freeGroupSizes.length > 0 && subdivision === 2)
+        ? freeGroupSizes[beat]
+        : subdivision;
+      if (effectiveSub > 1) {
+        const subInterval = beatInterval / effectiveSub;
+        for (let s = 1; s < effectiveSub; s++) {
           const subTime = nextBeatTime + s * subInterval;
           playClick(false, true, subTime);
         }
@@ -325,8 +330,14 @@
 
       // drum machine
       if (drEnabled) {
-        const stepsPerBeat = drSteps / beatsPerMeasure;
-        const startStep = (beat * stepsPerBeat) % drSteps;
+        // In free meter each beat covers freeGroupSizes[beat] eighth notes = *2 sixteenth steps.
+        // startStep is the cumulative sum of previous groups × 2.
+        const stepsPerBeat = freeGroupSizes.length > 0
+          ? freeGroupSizes[beat] * 2
+          : drSteps / beatsPerMeasure;
+        const startStep = freeGroupSizes.length > 0
+          ? freeGroupSizes.slice(0, beat).reduce((a, b) => a + b, 0) * 2
+          : (beat * (drSteps / beatsPerMeasure)) % drSteps;
         const stepDuration = beatInterval / stepsPerBeat;
         for (let s = 0; s < stepsPerBeat; s++) {
           const stepIdx = (startStep + s) % drSteps;
@@ -343,7 +354,9 @@
       const delay = Math.max(0, (timeCapture - now) * 1000);
       const gen = _metGeneration;
       // capture dr step for highlight
-      const drStepCapture = drEnabled ? (beat * (drSteps / beatsPerMeasure)) % drSteps : -1;
+      const drStepCapture = drEnabled ? (freeGroupSizes.length > 0
+        ? freeGroupSizes.slice(0, beat).reduce((a, b) => a + b, 0) * 2
+        : (beat * (drSteps / beatsPerMeasure)) % drSteps) : -1;
       setTimeout(() => {
         if (_metGeneration !== gen) return;
         visualBeat(beatCapture);
