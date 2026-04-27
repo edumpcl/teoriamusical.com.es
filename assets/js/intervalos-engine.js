@@ -152,7 +152,8 @@
       'asc_des':    'Ascendentes y descendentes',
       'con_dis':    'Conjuntos y disjuntos',
       'construir':  config.val ? 'Construir ' + ({'2':'Segundas','3':'Terceras','4':'Cuartas','5':'Quintas','6':'Sextas','7':'S\xe9ptimas','8':'Octavas'}[config.val] || config.val + '\xaa') : 'Construir intervalos',
-      'construir_semitono': 'Construir semitonos y enarm\xf3nicas'
+      'construir_semitono': 'Construir semitonos y enarm\xf3nicas',
+      'construir_numero':   'Construir por n\xfamero'
     };
 
     var ICONOS_DIFICULTAD = ['\u2600\ufe0f', '\u26a1', '\ud83d\udd25'];
@@ -308,6 +309,28 @@
         cQ = { n1: cs_n1, a1: cs_a1, n2: cs_n2, a2: cs_a2, oct2: cs_oct2, cs_tipo: cs_tipo };
         return;
       }
+      /* Construir por número: dada una nota y un número (2ª-8ª) escribir la nota correcta */
+      if (config.test === 'construir_numero') {
+        var cn_n1, cn_n2, cn_oct2, cn_asc, cn_d;
+        var cn_ok = false, cn_att = 0;
+        while (!cn_ok && cn_att < 200) {
+          cn_att++;
+          cn_n1 = Math.floor(Math.random() * 7);
+          cn_d   = 2 + Math.floor(Math.random() * 7); /* 2..8 */
+          cn_asc = Math.random() < 0.5;
+          if (cn_asc) {
+            cn_n2   = (cn_n1 + cn_d - 1) % 7;
+            cn_oct2 = (cn_n2 < cn_n1 || cn_d === 8) ? 5 : 4;
+            cn_ok = true;
+          } else {
+            cn_n2   = (cn_n1 - (cn_d - 1) + 70) % 7;
+            cn_oct2 = (cn_n2 > cn_n1 || cn_d === 8) ? 3 : 4;
+            cn_ok   = !(cn_oct2 === 3 && cn_n2 < 5);
+          }
+        }
+        cQ = { n1: cn_n1, n2: cn_n2, oct2: cn_oct2, a2: 0, cn_d: cn_d, ascending: cn_asc };
+        return;
+      }
       var keys = keysForDiff();
       /* Con/dis: balancear 50/50 conjunto (2ª) vs disjunto (>2ª) */
       if (config.test === 'con_dis') {
@@ -456,7 +479,7 @@
       document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
       document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
 
-      if (config.test === 'construir' || config.test === 'construir_semitono') {
+      if (config.test === 'construir' || config.test === 'construir_semitono' || config.test === 'construir_numero') {
         var elNotDiv = document.getElementById(uid + '_not');
         elNotDiv.style.cursor = 'crosshair';
         var onConstruirStaffInteract = function(e) {
@@ -594,6 +617,10 @@
           h += '<button class="tm-cs-acc-btn' + (o.v === 0 ? ' tm-sel' : '') + '" data-acc="' + o.v + '">' + o.t + '</button>';
         });
         h += '</div>';
+      } else if (config.test === 'construir_numero') {
+        var dirTxtN = cQ.ascending ? '↑' : '↓';
+        h += '<div class="tm-construir-dir">' + noteLabel(cQ.n1, 0) + ' &mdash; <strong>' + cQ.cn_d + '\xaa</strong> &mdash; ' + dirTxtN + '</div>';
+        h += '<p class="tm-construir-hint">Pulsa en el pentagrama para colocar la nota</p>';
       } else {
         var PERFECTAS = ['1','4','5','8'];
         var esPerfecta = PERFECTAS.indexOf(config.val) !== -1;
@@ -615,7 +642,7 @@
       sel = {};
       document.getElementById(uid + '_btn').classList.remove('tm-ready');
 
-      if (config.test === 'construir' || config.test === 'construir_semitono') {
+      if (config.test === 'construir' || config.test === 'construir_semitono' || config.test === 'construir_numero') {
         sel.acc = 0;
         sel.construirNote = null;
         var accBtns = elCont.querySelectorAll('.tm-cs-acc-btn');
@@ -672,8 +699,8 @@
       elNot.innerHTML = '';
       var V = Vex.Flow;
       var r = new V.Renderer(elNot, V.Renderer.Backends.SVG);
-      var staveH = (config.test === 'construir' || config.test === 'construir_semitono') ? 160 : 130;
-      var staveY = (config.test === 'construir' || config.test === 'construir_semitono') ? 20 : 10;
+      var staveH = (config.test === 'construir' || config.test === 'construir_semitono' || config.test === 'construir_numero') ? 160 : 130;
+      var staveY = (config.test === 'construir' || config.test === 'construir_semitono' || config.test === 'construir_numero') ? 20 : 10;
       r.resize(300, staveH);
       var ctx = r.getContext();
       var stave = new V.Stave(10, staveY, 280);
@@ -718,7 +745,7 @@
         var chord = new V.StaveNote({ keys: [key1, key2], duration: 'w' });
         if (acc) chord.addModifier(new V.Accidental(acc), 1);
         voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([chord]);
-      } else if (config.test === 'construir') {
+      } else if (config.test === 'construir' || config.test === 'construir_numero') {
         /* Construir: solo nota raíz */
         var sn1c = new V.StaveNote({ keys: [key1], duration: 'w' });
         voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1c]);
@@ -760,8 +787,9 @@
       if (config.test === 'asc_des')     return sel.ans === (cQ.ascending ? 'Ascendente'    : 'Descendente');
       if (config.test === 'semitono')    return sel.ans === (SEMITIPO_LABEL[cQ.semitipo] || '');
       if (config.test === 'con_dis')     return sel.ans === (cQ.conjunto  ? 'Conjunto'      : 'Disjunto');
-      if (config.test === 'construir')         return sel.ans === (cQ.n2 + '_' + cQ.oct2 + '_' + cQ.a2);
+      if (config.test === 'construir')          return sel.ans === (cQ.n2 + '_' + cQ.oct2 + '_' + cQ.a2);
       if (config.test === 'construir_semitono') return sel.ans === (cQ.n2 + '_' + cQ.oct2 + '_' + cQ.a2);
+      if (config.test === 'construir_numero')   return !!(sel.construirNote && sel.construirNote.n === cQ.n2 && sel.construirNote.oct === cQ.oct2);
       return sel.ans === correctTipo();
     }
 
@@ -782,6 +810,7 @@
       if (config.test === 'con_dis')     return cQ.conjunto  ? 'Conjunto'     : 'Disjunto';
       if (config.test === 'construir')          return noteLabel(cQ.n2, cQ.a2);
       if (config.test === 'construir_semitono') return noteLabel(cQ.n2, cQ.a2);
+      if (config.test === 'construir_numero')   return noteLabel(cQ.n2, 0);
       return cQ.def[2] + '\xaa ' + correctTipo();
     }
 
@@ -804,7 +833,7 @@
       document.getElementById(uid + '_badge').textContent = '\u2713 ' + score;
 
       var elCnt = document.getElementById(uid + '_content');
-      if (config.test === 'construir' || config.test === 'construir_semitono') {
+      if (config.test === 'construir' || config.test === 'construir_semitono' || config.test === 'construir_numero') {
         elCnt.querySelectorAll('.tm-cs-acc-btn').forEach(function(b){
           b.disabled = true;
           if (parseInt(b.dataset.acc, 10) === cQ.a2) b.classList.add('tm-ok');
@@ -874,13 +903,17 @@
         '</div>'
       ].join('');
       document.getElementById(uid + '_restart').addEventListener('click', function() {
-        if (config.test === 'arm_mel' || config.test === 'asc_des' || config.test === 'con_dis' || config.test === 'semitono') { currentQ = 0; score = 0; startQuiz(); }
+        if (config.test === 'arm_mel' || config.test === 'asc_des' || config.test === 'con_dis' || config.test === 'semitono' || config.test === 'construir_numero') { currentQ = 0; score = 0; startQuiz(); }
         else showModeScreen();
       });
     }
 
     function init() {
-      if (config.test === 'arm_mel' || config.test === 'asc_des' || config.test === 'con_dis' || config.test === 'semitono') {
+      if (config.test === 'construir_numero') {
+        maxAlt = 0; currentDiff = 'easy';
+        currentQ = 0; score = 0;
+        startQuiz();
+      } else if (config.test === 'arm_mel' || config.test === 'asc_des' || config.test === 'con_dis' || config.test === 'semitono') {
         maxAlt = 1; currentDiff = 'medium';
         currentQ = 0; score = 0;
         startQuiz();
