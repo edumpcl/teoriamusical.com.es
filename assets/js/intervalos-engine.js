@@ -680,8 +680,8 @@
       stave.addClef('treble').setContext(ctx).draw();
       var key1 = VF_NAMES[cQ.n1] + '/4';
       /* compuesto: oct 6 si n2<=n1 (wrap, ej. 15ª), oct 5 si n2>n1; simple: 5 si n2<n1, 4 si no */
-      var oct2 = (cQ.def[0] >= 8) ? (cQ.n2 <= cQ.n1 ? 6 : 5) : (cQ.n2 < cQ.n1 ? 5 : 4);
-      var key2 = VF_NAMES[cQ.n2] + '/' + oct2;
+      var oct2 = cQ.def ? ((cQ.def[0] >= 8) ? (cQ.n2 <= cQ.n1 ? 6 : 5) : (cQ.n2 < cQ.n1 ? 5 : 4)) : (cQ.oct2 || 4);
+      var key2 = VF_NAMES[cQ.n2 !== undefined ? cQ.n2 : 0] + '/' + oct2;
       var acc = accidental(cQ.a2);
       var voice;
       if (config.test === 'arm_mel' && cQ.harmonic) {
