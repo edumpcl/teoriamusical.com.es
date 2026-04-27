@@ -151,7 +151,8 @@
       'arm_mel':    'Arm\xf3nicos y mel\xf3dicos',
       'asc_des':    'Ascendentes y descendentes',
       'con_dis':    'Conjuntos y disjuntos',
-      'construir':  config.val ? 'Construir ' + ({'2':'Segundas','3':'Terceras','4':'Cuartas','5':'Quintas','6':'Sextas','7':'S\xe9ptimas','8':'Octavas'}[config.val] || config.val + '\xaa') : 'Construir intervalos'
+      'construir':  config.val ? 'Construir ' + ({'2':'Segundas','3':'Terceras','4':'Cuartas','5':'Quintas','6':'Sextas','7':'S\xe9ptimas','8':'Octavas'}[config.val] || config.val + '\xaa') : 'Construir intervalos',
+      'construir_semitono': 'Construir semitonos y enarm\xf3nicas'
     };
 
     var ICONOS_DIFICULTAD = ['\u2600\ufe0f', '\u26a1', '\ud83d\udd25'];
@@ -254,6 +255,59 @@
                harmonic: true, ascending: true, conjunto: false };
         return;
       }
+      /* Construir semitonos y enarmónicas */
+      if (config.test === 'construir_semitono') {
+        var cs_tipos = ['unisono','diaton_asc','diaton_desc','cromatico_asc','cromatico_desc','enarmonicas'];
+        var cs_tipo, cs_n1, cs_a1, cs_n2, cs_a2, cs_oct2;
+        var cs_ok = false, cs_att = 0;
+        while (!cs_ok && cs_att < 200) {
+          cs_att++;
+          cs_tipo = cs_tipos[Math.floor(Math.random() * cs_tipos.length)];
+          cs_n1 = Math.floor(Math.random() * 7);
+          var a1opts_cs = maxAlt === 0 ? [0] : (maxAlt === 1 ? [-1,0,0,0,1] : [-1,-1,0,0,0,1,1]);
+          cs_a1 = a1opts_cs[Math.floor(Math.random() * a1opts_cs.length)];
+          if (cs_tipo === 'unisono') {
+            cs_n2 = cs_n1; cs_a2 = cs_a1; cs_oct2 = 4; cs_ok = true;
+          } else if (cs_tipo === 'cromatico_asc') {
+            cs_n2 = cs_n1; cs_a2 = cs_a1 + 1; cs_oct2 = 4;
+            cs_ok = Math.abs(cs_a2) <= maxAlt;
+          } else if (cs_tipo === 'cromatico_desc') {
+            cs_n2 = cs_n1; cs_a2 = cs_a1 - 1; cs_oct2 = 4;
+            cs_ok = Math.abs(cs_a2) <= maxAlt;
+          } else if (cs_tipo === 'diaton_asc') {
+            cs_n2 = (cs_n1 + 1) % 7;
+            var nds_a = (NS[cs_n2] - NS[cs_n1] + 12) % 12;
+            cs_a2 = cs_a1 + 1 - nds_a;
+            cs_oct2 = (cs_n2 < cs_n1) ? 5 : 4;
+            cs_ok = Math.abs(cs_a2) <= maxAlt;
+          } else if (cs_tipo === 'diaton_desc') {
+            cs_n2 = (cs_n1 - 1 + 7) % 7;
+            var nds_d = (NS[cs_n1] - NS[cs_n2] + 12) % 12;
+            cs_a2 = cs_a1 - 1 + nds_d;
+            cs_oct2 = (cs_n2 > cs_n1) ? 3 : 4;
+            cs_ok = Math.abs(cs_a2) <= maxAlt;
+          } else { /* enarmonicas */
+            var n2_up = (cs_n1 + 1) % 7;
+            var a2_up = (NS[cs_n1] + cs_a1) - NS[n2_up];
+            var oct2_up = 4;
+            if (n2_up < cs_n1) { a2_up -= 12; oct2_up = 5; }
+            var n2_dn = (cs_n1 - 1 + 7) % 7;
+            var a2_dn = (NS[cs_n1] + cs_a1) - NS[n2_dn];
+            var oct2_dn = 4;
+            if (n2_dn > cs_n1) { a2_dn += 12; oct2_dn = 3; }
+            var up_ok = Math.abs(a2_up) <= maxAlt;
+            var dn_ok = Math.abs(a2_dn) <= maxAlt;
+            if (up_ok && dn_ok) {
+              if (Math.random() < 0.5) { cs_n2 = n2_up; cs_a2 = a2_up; cs_oct2 = oct2_up; }
+              else                     { cs_n2 = n2_dn; cs_a2 = a2_dn; cs_oct2 = oct2_dn; }
+              cs_ok = true;
+            } else if (up_ok) { cs_n2 = n2_up; cs_a2 = a2_up; cs_oct2 = oct2_up; cs_ok = true; }
+            else if (dn_ok)   { cs_n2 = n2_dn; cs_a2 = a2_dn; cs_oct2 = oct2_dn; cs_ok = true; }
+          }
+        }
+        cQ = { n1: cs_n1, a1: cs_a1, n2: cs_n2, a2: cs_a2, oct2: cs_oct2, cs_tipo: cs_tipo };
+        return;
+      }
       var keys = keysForDiff();
       /* Con/dis: balancear 50/50 conjunto (2ª) vs disjunto (>2ª) */
       if (config.test === 'con_dis') {
@@ -334,6 +388,8 @@
       var key2 = vfn + '/' + oct;
       var acc2str = accidental(acc);
       var sn1 = new V.StaveNote({ keys: [key1], duration: 'w' });
+      var acc1str = (cQ.a1 !== undefined && cQ.a1 !== 0) ? accidental(cQ.a1) : null;
+      if (acc1str) sn1.addModifier(new V.Accidental(acc1str), 0);
       var sn2 = new V.StaveNote({ keys: [key2], duration: 'w' });
       if (acc2str) sn2.addModifier(new V.Accidental(acc2str), 0);
       var notes = [sn1, sn2];
@@ -400,7 +456,7 @@
       document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
       document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
 
-      if (config.test === 'construir') {
+      if (config.test === 'construir' || config.test === 'construir_semitono') {
         var elNotDiv = document.getElementById(uid + '_not');
         elNotDiv.style.cursor = 'crosshair';
         var onConstruirStaffInteract = function(e) {
@@ -514,6 +570,30 @@
           h += '<button class="tm-cs-acc-btn' + (o.v === 0 ? ' tm-sel' : '') + '" data-acc="' + o.v + '">' + o.t + '</button>';
         });
         h += '</div>';
+      } else if (config.test === 'construir_semitono') {
+        var cs_lbl_map = {
+          'unisono':       'el Un\xedsono',
+          'diaton_asc':    'el Semitono diat\xf3nico ↑',
+          'diaton_desc':   'el Semitono diat\xf3nico ↓',
+          'cromatico_asc': 'el Semitono crom\xe1tico ↑',
+          'cromatico_desc':'el Semitono crom\xe1tico ↓',
+          'enarmonicas':   'la nota Enarm\xf3nica'
+        };
+        h += '<div class="tm-construir-dir">Escribe ' + (cs_lbl_map[cQ.cs_tipo] || '') + ' de <strong>' + noteLabel(cQ.n1, cQ.a1) + '</strong></div>';
+        h += '<p class="tm-construir-hint">Pulsa en el pentagrama para colocar la nota</p>';
+        var accOpts2;
+        if (maxAlt >= 2) {
+          accOpts2 = [{v:-2,t:'bb'},{v:-1,t:'♭'},{v:0,t:'♮'},{v:1,t:'♯'},{v:2,t:'×'}];
+        } else if (maxAlt >= 1) {
+          accOpts2 = [{v:-1,t:'♭'},{v:0,t:'♮'},{v:1,t:'♯'}];
+        } else {
+          accOpts2 = [{v:0,t:'♮'}];
+        }
+        h += '<div class="tm-cs-acc" id="' + uid + '_acc"' + (maxAlt === 0 ? ' style="display:none"' : '') + '>';
+        accOpts2.forEach(function(o) {
+          h += '<button class="tm-cs-acc-btn' + (o.v === 0 ? ' tm-sel' : '') + '" data-acc="' + o.v + '">' + o.t + '</button>';
+        });
+        h += '</div>';
       } else {
         var PERFECTAS = ['1','4','5','8'];
         var esPerfecta = PERFECTAS.indexOf(config.val) !== -1;
@@ -535,7 +615,7 @@
       sel = {};
       document.getElementById(uid + '_btn').classList.remove('tm-ready');
 
-      if (config.test === 'construir') {
+      if (config.test === 'construir' || config.test === 'construir_semitono') {
         sel.acc = 0;
         sel.construirNote = null;
         var accBtns = elCont.querySelectorAll('.tm-cs-acc-btn');
@@ -592,8 +672,8 @@
       elNot.innerHTML = '';
       var V = Vex.Flow;
       var r = new V.Renderer(elNot, V.Renderer.Backends.SVG);
-      var staveH = config.test === 'construir' ? 160 : 130;
-      var staveY = config.test === 'construir' ? 20 : 10;
+      var staveH = (config.test === 'construir' || config.test === 'construir_semitono') ? 160 : 130;
+      var staveY = (config.test === 'construir' || config.test === 'construir_semitono') ? 20 : 10;
       r.resize(300, staveH);
       var ctx = r.getContext();
       var stave = new V.Stave(10, staveY, 280);
@@ -642,6 +722,11 @@
         /* Construir: solo nota raíz */
         var sn1c = new V.StaveNote({ keys: [key1], duration: 'w' });
         voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1c]);
+      } else if (config.test === 'construir_semitono') {
+        /* Construir semitono: nota raíz con alteración */
+        var sn1cs = new V.StaveNote({ keys: [key1], duration: 'w' });
+        if (cQ.a1) { var acc1cs = accidental(cQ.a1); if (acc1cs) sn1cs.addModifier(new V.Accidental(acc1cs), 0); }
+        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1cs]);
       } else {
         /* Resto de tests: dos redondas lado a lado */
         var sn1 = new V.StaveNote({ keys: [key1], duration: 'w' });
@@ -675,7 +760,8 @@
       if (config.test === 'asc_des')     return sel.ans === (cQ.ascending ? 'Ascendente'    : 'Descendente');
       if (config.test === 'semitono')    return sel.ans === (SEMITIPO_LABEL[cQ.semitipo] || '');
       if (config.test === 'con_dis')     return sel.ans === (cQ.conjunto  ? 'Conjunto'      : 'Disjunto');
-      if (config.test === 'construir')   return sel.ans === (cQ.n2 + '_' + cQ.oct2 + '_' + cQ.a2);
+      if (config.test === 'construir')         return sel.ans === (cQ.n2 + '_' + cQ.oct2 + '_' + cQ.a2);
+      if (config.test === 'construir_semitono') return sel.ans === (cQ.n2 + '_' + cQ.oct2 + '_' + cQ.a2);
       return sel.ans === correctTipo();
     }
 
@@ -694,7 +780,8 @@
       if (config.test === 'asc_des')     return cQ.ascending ? 'Ascendente'   : 'Descendente';
       if (config.test === 'semitono')    return SEMITIPO_LABEL[cQ.semitipo] || '\u2014';
       if (config.test === 'con_dis')     return cQ.conjunto  ? 'Conjunto'     : 'Disjunto';
-      if (config.test === 'construir')   return noteLabel(cQ.n2, cQ.a2);
+      if (config.test === 'construir')          return noteLabel(cQ.n2, cQ.a2);
+      if (config.test === 'construir_semitono') return noteLabel(cQ.n2, cQ.a2);
       return cQ.def[2] + '\xaa ' + correctTipo();
     }
 
@@ -717,7 +804,7 @@
       document.getElementById(uid + '_badge').textContent = '\u2713 ' + score;
 
       var elCnt = document.getElementById(uid + '_content');
-      if (config.test === 'construir') {
+      if (config.test === 'construir' || config.test === 'construir_semitono') {
         elCnt.querySelectorAll('.tm-cs-acc-btn').forEach(function(b){
           b.disabled = true;
           if (parseInt(b.dataset.acc, 10) === cQ.a2) b.classList.add('tm-ok');
