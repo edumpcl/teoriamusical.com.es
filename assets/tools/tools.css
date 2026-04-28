@@ -447,6 +447,9 @@
     .ctrl-box.full { grid-column: span 1; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
     .subdiv-grid { grid-template-columns: repeat(4, 1fr); }
+    .subdiv-btn { padding: 10px 4px; }
+    .subdiv-icon { font-size: 18px; }
+    .subdiv-label { font-size: 10px; }
     .bpm-num { font-size: 72px; }
     .practice-row { grid-template-columns: 1fr 1fr; }
     .shortcuts-grid { grid-template-columns: 1fr; }
