@@ -6,7 +6,13 @@
       "Skill(update-config)",
       "Skill(update-config:*)",
       "Read(//c/Users/edues/.claude/**)",
-      "Bash(claude mcp *)"
+      "Bash(claude mcp *)",
+      "mcp__playwright__browser_resize",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "Bash(npx --yes serve -p 4321 .)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/ejercicios/tonalidades/tonalidades-vecinas/)",
+      "mcp__playwright__browser_evaluate"
     ]
   }
 }

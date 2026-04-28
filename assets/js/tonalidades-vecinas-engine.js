@@ -58,21 +58,21 @@
     var p = base.key.pos;
     if (base.mode === 'maj') {
       return [
-        { rel: 'Subdominante',      ton: getTon(p - 1, 'maj') },
+        { rel: 'IV',  ton: getTon(p - 1, 'maj') },
         null,
-        { rel: 'Dominante',         ton: getTon(p + 1, 'maj') },
-        { rel: 'Rel. subdominante', ton: getTon(p - 1, 'min') },
-        { rel: 'Relativa',          ton: getTon(p,     'min') },
-        { rel: 'Rel. dominante',    ton: getTon(p + 1, 'min') }
+        { rel: 'V',   ton: getTon(p + 1, 'maj') },
+        { rel: 'II',  ton: getTon(p - 1, 'min') },
+        { rel: 'VI',  ton: getTon(p,     'min') },
+        { rel: 'III', ton: getTon(p + 1, 'min') }
       ];
     } else {
       return [
-        { rel: 'Rel. subdominante', ton: getTon(p - 1, 'maj') },
-        { rel: 'Relativa',          ton: getTon(p,     'maj') },
-        { rel: 'Rel. dominante',    ton: getTon(p + 1, 'maj') },
-        { rel: 'Subdominante',      ton: getTon(p - 1, 'min') },
+        { rel: 'VI',  ton: getTon(p - 1, 'maj') },
+        { rel: 'III', ton: getTon(p,     'maj') },
+        { rel: 'VII', ton: getTon(p + 1, 'maj') },
+        { rel: 'IV',  ton: getTon(p - 1, 'min') },
         null,
-        { rel: 'Dominante',         ton: getTon(p + 1, 'min') }
+        { rel: 'V',   ton: getTon(p + 1, 'min') }
       ];
     }
   }
