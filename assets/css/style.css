@@ -200,6 +200,8 @@ figcaption { font-size: .9em; color: var(--text-muted); margin-top: .4em; text-a
 }
 .tm-article-wrap:has(.tm-related) { grid-template-columns: minmax(0, 1fr) 260px; }
 .tm-article { max-width: 78ch; width: 100%; }
+.tm-article p, .tm-article li, .tm-article td, .tm-article th, .tm-article a { overflow-wrap: break-word; }
+.tm-article table { display: block; overflow-x: auto; max-width: 100%; }
 .tm-article img { border-radius: var(--radius-sm); }
 .tm-article h2 { scroll-margin-top: 5rem; }
 .tm-article h3 { scroll-margin-top: 5rem; }

@@ -22,6 +22,12 @@ env/
 # `python3 tools/build.py` sin necesitar el XML original.
 tools/raw/
 
+# ----- Node / Playwright -----
+node_modules/
+package-lock.json
+audit-mobile.js
+.playwright-mcp/
+
 # ----- Logs / temporales -----
 *.log
 .cache/
