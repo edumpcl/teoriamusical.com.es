@@ -121,7 +121,8 @@
     '.tmdib-wrap .tm-nxt:hover{opacity:0.9;}',
     '.tmdib-wrap .tm-nxt.tm-show{display:block;}',
     '@keyframes tmdib-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}',
-    '.tmdib-wrap .tm-shake{animation:tmdib-shake 0.4s ease;}'
+    '.tmdib-wrap .tm-shake{animation:tmdib-shake 0.4s ease;}',
+    '@media(max-width:480px){.tmdib-wrap .tm-tool{font-size:.9rem;padding:10px 6px;white-space:nowrap;}}'
   ].join('');
 
   function injectCSS(id, css) {
@@ -309,8 +310,8 @@
           '<div id="' + uid + '_highlight" class="tm-highlight" style="display:none"></div>',
         '</div>',
         '<div class="tm-actions">',
-          '<button class="tm-btn-undo" id="' + uid + '_undo">↶ Deshacer Último</button>',
-          '<button class="tm-btn-undo" id="' + uid + '_clear">🧹 Borrar Todo</button>',
+          '<button class="tm-btn-undo" id="' + uid + '_undo">↶ Deshacer</button>',
+          '<button class="tm-btn-undo" id="' + uid + '_clear">🧹 Borrar todo</button>',
         '</div>',
         '<button class="tm-submit" id="' + uid + '_submit">Comprobar Dibujo</button>',
         '<div class="tm-fb" id="' + uid + '_fb"></div>',
