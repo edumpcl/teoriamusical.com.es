@@ -5,7 +5,8 @@
       "Bash(sed -i 's|intervalos-engine\\\\.js\"|intervalos-engine.js?v=3\"|g' ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/index.html)",
       "Skill(update-config)",
       "Skill(update-config:*)",
-      "Read(//c/Users/edues/.claude/**)"
+      "Read(//c/Users/edues/.claude/**)",
+      "Bash(claude mcp *)"
     ]
   }
 }
