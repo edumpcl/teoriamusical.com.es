@@ -443,7 +443,7 @@
         } else {
           html += '<div class="tmtab-cell">';
           html += '<div class="tmtab-cell-lbl">' + cell.rel + '</div>';
-          html += '<div class="tmtab-cell-val tm-empty" id="' + uid + '_val_' + inpIdx + '" data-idx="' + inpIdx + '">toca para rellenar</div>';
+          html += '<div class="tmtab-cell-val tm-empty" id="' + uid + '_val_' + inpIdx + '" data-idx="' + inpIdx + '">toca</div>';
           html += '<div class="tm-hint" id="' + uid + '_hint_' + inpIdx + '" style="display:none"></div>';
           html += '</div>';
           inputDefs.push({ inpIdx: inpIdx, cell: cell });
