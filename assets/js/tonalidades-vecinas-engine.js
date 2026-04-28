@@ -43,28 +43,38 @@
   }
 
   /*
-   * Cuadrícula 3×2 — fila superior: mismo modo que la base
-   *                   fila inferior: modo contrario
+   * Cuadrícula 3×2 — fila superior SIEMPRE Mayores, fila inferior SIEMPRE menores.
+   * La celda BASE (null) va en el centro de su fila correspondiente.
    *
-   *   [0] top-left  = Subdominante        (pos-1, m)   ← mismo modo
-   *   [1] top-center = BASE (null)
-   *   [2] top-right  = Dominante           (pos+1, m)   ← mismo modo
-   *   [3] bot-left   = Rel. subdominante   (pos-1, om)  ← modo contrario
-   *   [4] bot-center = Relativa            (pos,   om)  ← modo contrario
-   *   [5] bot-right  = Rel. dominante      (pos+1, om)  ← modo contrario
+   * Base Mayor → BASE en top-center [1]:
+   *   [0] Subdominante Mayor  [1] BASE Mayor      [2] Dominante Mayor
+   *   [3] Rel. subdominante   [4] Relativa menor  [5] Rel. dominante
+   *
+   * Base menor → BASE en bot-center [4]:
+   *   [0] Rel. subdominante   [1] Relativa Mayor  [2] Rel. dominante
+   *   [3] Subdominante menor  [4] BASE menor      [5] Dominante menor
    */
   function getGrid(base) {
-    var p  = base.key.pos;
-    var m  = base.mode;
-    var om = m === 'maj' ? 'min' : 'maj';
-    return [
-      { rel: 'Subdominante',      ton: getTon(p - 1, m)  },
-      null,
-      { rel: 'Dominante',         ton: getTon(p + 1, m)  },
-      { rel: 'Rel. subdominante', ton: getTon(p - 1, om) },
-      { rel: 'Relativa',          ton: getTon(p,     om) },
-      { rel: 'Rel. dominante',    ton: getTon(p + 1, om) }
-    ];
+    var p = base.key.pos;
+    if (base.mode === 'maj') {
+      return [
+        { rel: 'Subdominante',      ton: getTon(p - 1, 'maj') },
+        null,
+        { rel: 'Dominante',         ton: getTon(p + 1, 'maj') },
+        { rel: 'Rel. subdominante', ton: getTon(p - 1, 'min') },
+        { rel: 'Relativa',          ton: getTon(p,     'min') },
+        { rel: 'Rel. dominante',    ton: getTon(p + 1, 'min') }
+      ];
+    } else {
+      return [
+        { rel: 'Rel. subdominante', ton: getTon(p - 1, 'maj') },
+        { rel: 'Relativa',          ton: getTon(p,     'maj') },
+        { rel: 'Rel. dominante',    ton: getTon(p + 1, 'maj') },
+        { rel: 'Subdominante',      ton: getTon(p - 1, 'min') },
+        null,
+        { rel: 'Dominante',         ton: getTon(p + 1, 'min') }
+      ];
+    }
   }
 
   function normalize(s) {
