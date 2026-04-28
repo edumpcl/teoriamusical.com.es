@@ -15,7 +15,16 @@
       "mcp__playwright__browser_evaluate",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "mcp__playwright__browser_click"
+      "mcp__playwright__browser_click",
+      "Bash(node -e ' *)",
+      "Bash(node -e \"const {chromium} = require\\('playwright'\\); console.log\\('ok'\\);\")",
+      "Bash(npx playwright *)",
+      "Bash(where playwright *)",
+      "Bash(npx --yes @playwright/mcp@latest --version)",
+      "Bash(npm install *)",
+      "Bash(node -e \"require\\('playwright'\\); console.log\\('ok'\\)\")",
+      "Bash(node audit-mobile.js)",
+      "Bash(git reset *)"
     ]
   }
 }
