@@ -3,21 +3,21 @@
   'use strict';
 
   var KEYS = [
-    { pos: -7, maj: "Dob Mayor",  min: "Lab Menor"  },
-    { pos: -6, maj: "Solb Mayor", min: "Mib Menor"  },
-    { pos: -5, maj: "Reb Mayor",  min: "Sib Menor"  },
-    { pos: -4, maj: "Lab Mayor",  min: "Fa Menor"   },
-    { pos: -3, maj: "Mib Mayor",  min: "Do Menor"   },
-    { pos: -2, maj: "Sib Mayor",  min: "Sol Menor"  },
-    { pos: -1, maj: "Fa Mayor",   min: "Re Menor"   },
-    { pos:  0, maj: "Do Mayor",   min: "La Menor"   },
-    { pos:  1, maj: "Sol Mayor",  min: "Mi Menor"   },
-    { pos:  2, maj: "Re Mayor",   min: "Si Menor"   },
-    { pos:  3, maj: "La Mayor",   min: "Fa# Menor"  },
-    { pos:  4, maj: "Mi Mayor",   min: "Do# Menor"  },
-    { pos:  5, maj: "Si Mayor",   min: "Sol# Menor" },
-    { pos:  6, maj: "Fa# Mayor",  min: "Re# Menor"  },
-    { pos:  7, maj: "Do# Mayor",  min: "La# Menor"  }
+    { pos: -7, maj: "Dob Mayor",  min: "Lab menor"  },
+    { pos: -6, maj: "Solb Mayor", min: "Mib menor"  },
+    { pos: -5, maj: "Reb Mayor",  min: "Sib menor"  },
+    { pos: -4, maj: "Lab Mayor",  min: "Fa menor"   },
+    { pos: -3, maj: "Mib Mayor",  min: "Do menor"   },
+    { pos: -2, maj: "Sib Mayor",  min: "Sol menor"  },
+    { pos: -1, maj: "Fa Mayor",   min: "Re menor"   },
+    { pos:  0, maj: "Do Mayor",   min: "La menor"   },
+    { pos:  1, maj: "Sol Mayor",  min: "Mi menor"   },
+    { pos:  2, maj: "Re Mayor",   min: "Si menor"   },
+    { pos:  3, maj: "La Mayor",   min: "Fa# menor"  },
+    { pos:  4, maj: "Mi Mayor",   min: "Do# menor"  },
+    { pos:  5, maj: "Si Mayor",   min: "Sol# menor" },
+    { pos:  6, maj: "Fa# Mayor",  min: "Re# menor"  },
+    { pos:  7, maj: "Do# Mayor",  min: "La# menor"  }
   ];
 
   /* Excluye pos ±7 para garantizar que las 5 vecinas siempre existen */
@@ -43,25 +43,27 @@
   }
 
   /*
-   * Retorna 6 celdas para la cuadrícula 3×2:
-   *   [0] top-left  = Rel. subdominante   (pos-1, om)
-   *   [1] top-center = BASE (null → celda especial)
-   *   [2] top-right  = Rel. dominante      (pos+1, om)
-   *   [3] bot-left   = Subdominante        (pos-1, m)
-   *   [4] bot-center = Relativa            (pos,   om)
-   *   [5] bot-right  = Dominante           (pos+1, m)
+   * Cuadrícula 3×2 — fila superior: mismo modo que la base
+   *                   fila inferior: modo contrario
+   *
+   *   [0] top-left  = Subdominante        (pos-1, m)   ← mismo modo
+   *   [1] top-center = BASE (null)
+   *   [2] top-right  = Dominante           (pos+1, m)   ← mismo modo
+   *   [3] bot-left   = Rel. subdominante   (pos-1, om)  ← modo contrario
+   *   [4] bot-center = Relativa            (pos,   om)  ← modo contrario
+   *   [5] bot-right  = Rel. dominante      (pos+1, om)  ← modo contrario
    */
   function getGrid(base) {
     var p  = base.key.pos;
     var m  = base.mode;
     var om = m === 'maj' ? 'min' : 'maj';
     return [
-      { rel: 'Rel. subdominante', ton: getTon(p - 1, om) },
-      null,
-      { rel: 'Rel. dominante',    ton: getTon(p + 1, om) },
       { rel: 'Subdominante',      ton: getTon(p - 1, m)  },
+      null,
+      { rel: 'Dominante',         ton: getTon(p + 1, m)  },
+      { rel: 'Rel. subdominante', ton: getTon(p - 1, om) },
       { rel: 'Relativa',          ton: getTon(p,     om) },
-      { rel: 'Dominante',         ton: getTon(p + 1, m)  }
+      { rel: 'Rel. dominante',    ton: getTon(p + 1, om) }
     ];
   }
 
@@ -114,16 +116,36 @@
     '.tmtab-wrap .tm-qlbl{font-size:.68rem;color:#aaa;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;}',
     '.tmtab-wrap .tm-qnum{color:#8b6914;font-weight:700;}',
     '.tmtab-wrap .tm-qtxt{font-size:1.05rem;font-weight:600;margin-bottom:16px;line-height:1.4;}',
-    /* Grid 3×2 */
+    /* Grid */
     '.tmtab-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:18px;}',
-    '.tmtab-cell{border:1px solid #d8d0b8;border-radius:4px;padding:10px 8px 8px;background:#fff;display:flex;flex-direction:column;gap:5px;min-height:72px;}',
-    '.tmtab-cell-base{background:#1a1a2e;color:#d4a843;align-items:center;justify-content:center;font-weight:700;font-size:1rem;text-align:center;line-height:1.3;}',
-    '.tmtab-cell-lbl{font-size:.6rem;color:#999;text-transform:uppercase;letter-spacing:.05em;}',
-    '.tmtab-grid input[type=text]{width:100%;padding:6px 7px;border:1px solid #d8d0b8;border-radius:3px;font-size:.82rem;font-family:inherit;transition:border-color .15s;background:#fff;}',
-    '.tmtab-grid input[type=text]:focus{outline:none;border-color:#8b6914;box-shadow:0 0 0 2px rgba(139,105,20,.08);}',
-    '.tmtab-grid input[type=text].tm-ok{border-color:#27ae60;background:rgba(39,174,96,.05);color:#1e8449;font-weight:600;}',
-    '.tmtab-grid input[type=text].tm-ko{border-color:#c0392b;background:rgba(192,57,43,.05);color:#a93226;}',
-    '.tmtab-wrap .tm-hint{font-size:.72rem;color:#a93226;margin-top:2px;font-weight:600;}',
+    '.tmtab-cell{border:1px solid #d8d0b8;border-radius:4px;padding:8px 6px 7px;background:#fff;display:flex;flex-direction:column;gap:5px;min-height:72px;}',
+    '.tmtab-cell-base{background:#1a1a2e;color:#d4a843;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;text-align:center;line-height:1.3;cursor:default;}',
+    '.tmtab-cell-lbl{font-size:.58rem;color:#999;text-transform:uppercase;letter-spacing:.04em;}',
+    /* Valor clicable dentro de cada celda */
+    '.tmtab-cell-val{flex:1;display:flex;align-items:center;justify-content:center;min-height:34px;border:1px dashed #ccc4a8;border-radius:3px;font-size:.82rem;font-weight:600;color:#1a1a2e;cursor:pointer;background:#fafaf5;transition:all .15s;text-align:center;padding:3px 4px;line-height:1.2;}',
+    '.tmtab-cell-val:hover{border-color:#8b6914;background:#fff8e8;}',
+    '.tmtab-cell-val.tm-empty{color:#c0b898;font-weight:400;font-size:.72rem;font-style:italic;}',
+    '.tmtab-cell-val.tm-ok{border:1px solid #27ae60 !important;background:rgba(39,174,96,.07);color:#1e8449;cursor:default;}',
+    '.tmtab-cell-val.tm-ko{border:1px solid #c0392b !important;background:rgba(192,57,43,.05);color:#a93226;cursor:default;}',
+    '.tmtab-wrap .tm-hint{font-size:.7rem;color:#a93226;margin-top:1px;font-weight:600;}',
+    /* Overlay y builder */
+    '.tmtab-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:900;display:none;}',
+    '.tmtab-overlay.tm-show{display:block;}',
+    '.tmtab-bld{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:460px;background:#fff;border-radius:16px 16px 0 0;z-index:901;padding:22px 20px 32px;display:none;box-shadow:0 -4px 28px rgba(0,0,0,.18);}',
+    '@media(min-width:560px){.tmtab-bld{bottom:auto;top:50%;transform:translate(-50%,-50%);border-radius:10px;padding:24px 24px 20px;}}',
+    '.tmtab-bld.tm-show{display:block;}',
+    '.tmtab-bld-head{font-size:.65rem;color:#aaa;text-transform:uppercase;letter-spacing:.09em;margin-bottom:10px;}',
+    '.tmtab-bld-preview{font-size:1.3rem;font-weight:700;color:#1a1a2e;min-height:1.6em;margin-bottom:18px;text-align:center;padding:10px;background:#f5f0e8;border-radius:6px;}',
+    '.tmtab-bld-step{margin-bottom:14px;}',
+    '.tmtab-bld-slbl{font-size:.62rem;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}',
+    '.tmtab-bld-row{display:flex;gap:5px;flex-wrap:wrap;}',
+    '.tmtab-bld-btn{flex:1;min-width:36px;padding:11px 4px;border:1px solid #d8d0b8;background:#fdfcf9;color:#333;border-radius:4px;cursor:pointer;font-size:.9rem;font-family:inherit;font-weight:500;transition:all .12s;text-align:center;}',
+    '.tmtab-bld-btn:hover:not(:disabled){border-color:#8b6914;color:#8b6914;}',
+    '.tmtab-bld-btn.tm-on{background:#1a1a2e;color:#d4a843;border-color:#1a1a2e;font-weight:700;}',
+    '.tmtab-bld-btn:disabled{opacity:.28;cursor:default;}',
+    '.tmtab-bld-cancel{width:100%;margin-top:10px;padding:10px;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;background:transparent;color:#bbb;border:1px solid #e0d8c0;border-radius:4px;cursor:pointer;font-family:inherit;}',
+    '.tmtab-bld-cancel:hover{color:#888;border-color:#bbb;}',
+    /* Botones de acción */
     '.tmtab-wrap .tm-submit{width:100%;padding:11px;font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;background:#8b6914;color:#fff;border:none;border-radius:3px;cursor:pointer;font-weight:600;font-family:inherit;transition:opacity .15s;margin-bottom:8px;}',
     '.tmtab-wrap .tm-submit:hover{opacity:.87;}',
     '.tmtab-wrap .tm-fb{display:none;margin-top:10px;margin-bottom:10px;padding:11px 14px;border-radius:3px;font-size:.86rem;line-height:1.6;}',
@@ -175,7 +197,7 @@
   ].join('');
 
   /* ══════════════════════════════════════════════════════════════════════
-     tmVecinaTabla — Cuadrícula 3×2 de las 5 tonalidades vecinas
+     tmVecinaTabla — Cuadrícula 3×2 con constructor de tonalidad
   ══════════════════════════════════════════════════════════════════════ */
   function tmVecinaTabla(containerId) {
     injectCSS('tmtab-css', CSS_TAB);
@@ -183,6 +205,10 @@
     if (!wrap) return;
     wrap.className = 'tmtab-wrap';
     var uid = containerId;
+
+    var NOTES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
+    var ALTS  = [{ sym: '♭', val: 'b' }, { sym: '—', val: '' }, { sym: '♯', val: '#' }];
+    var MODES = ['Mayor', 'menor'];
 
     wrap.innerHTML = [
       '<div class="tm-controls">',
@@ -200,18 +226,40 @@
       '<div class="tm-pbar-wrap"><div class="tm-pbar" id="' + uid + '_pbar"></div></div>',
       '<div class="tm-card" id="' + uid + '_card">',
         '<div class="tm-qlbl">Tabla <span class="tm-qnum" id="' + uid + '_qnum">1</span></div>',
-        '<div class="tm-qtxt">Escribe las 5 tonalidades vecinas en las celdas correspondientes:</div>',
+        '<div class="tm-qtxt">Toca cada celda para escribir las 5 tonalidades vecinas:</div>',
         '<div id="' + uid + '_grid"></div>',
         '<button class="tm-submit" id="' + uid + '_submit">Comprobar →</button>',
         '<div class="tm-fb" id="' + uid + '_fb"></div>',
         '<button class="tm-nxt" id="' + uid + '_nxt">Siguiente tabla →</button>',
+      '</div>',
+      /* Overlay */
+      '<div class="tmtab-overlay" id="' + uid + '_ov"></div>',
+      /* Builder */
+      '<div class="tmtab-bld" id="' + uid + '_bld">',
+        '<div class="tmtab-bld-head">Constructor de tonalidad</div>',
+        '<div class="tmtab-bld-preview" id="' + uid + '_bld_prev">…</div>',
+        '<div class="tmtab-bld-step">',
+          '<div class="tmtab-bld-slbl">1 · Nota</div>',
+          '<div class="tmtab-bld-row" id="' + uid + '_bld_notes"></div>',
+        '</div>',
+        '<div class="tmtab-bld-step">',
+          '<div class="tmtab-bld-slbl">2 · Alteración</div>',
+          '<div class="tmtab-bld-row" id="' + uid + '_bld_alts"></div>',
+        '</div>',
+        '<div class="tmtab-bld-step">',
+          '<div class="tmtab-bld-slbl">3 · Modo</div>',
+          '<div class="tmtab-bld-row" id="' + uid + '_bld_modes"></div>',
+        '</div>',
+        '<button class="tmtab-bld-cancel" id="' + uid + '_bld_cancel">Cancelar</button>',
       '</div>'
     ].join('');
 
     var st = { total: 0, perfect: 0, points: 0, possible: 0, streak: 0, qnum: 0, answered: false, diff: 'easy' };
     var cQ = null;
-    var inputs = [];
-    var inputDefs = []; /* { inpIdx, cell } */
+    var inputDefs  = [];   /* { inpIdx, cell } */
+    var cellValues = [];   /* string por celda */
+    var activeCellIdx = -1;
+    var bldNote = '', bldAlt = null, bldMode = '';
 
     var elTot    = document.getElementById(uid + '_tot');
     var elPerf   = document.getElementById(uid + '_perf');
@@ -224,17 +272,128 @@
     var elFb     = document.getElementById(uid + '_fb');
     var elNxt    = document.getElementById(uid + '_nxt');
     var elCard   = document.getElementById(uid + '_card');
+    var elOv     = document.getElementById(uid + '_ov');
+    var elBld    = document.getElementById(uid + '_bld');
+    var elPrev   = document.getElementById(uid + '_bld_prev');
+    var elNotes  = document.getElementById(uid + '_bld_notes');
+    var elAlts   = document.getElementById(uid + '_bld_alts');
+    var elModes  = document.getElementById(uid + '_bld_modes');
 
+    /* ── Builder ────────────────────────────────────────────────────────── */
+    function buildPreviewLabel() {
+      if (!bldNote) return '…';
+      var alt = bldAlt === null ? '' : bldAlt;
+      var mode = bldMode || '';
+      return (bldNote + alt + (mode ? ' ' + mode : '')).trim() || '…';
+    }
+
+    function refreshBuilderUI() {
+      elPrev.textContent = buildPreviewLabel();
+      /* Notas */
+      Array.prototype.forEach.call(elNotes.querySelectorAll('button'), function (btn) {
+        btn.classList.toggle('tm-on', btn.dataset.note === bldNote);
+      });
+      /* Alteraciones */
+      Array.prototype.forEach.call(elAlts.querySelectorAll('button'), function (btn) {
+        var active = bldAlt !== null && btn.dataset.alt === bldAlt;
+        btn.classList.toggle('tm-on', active);
+        btn.disabled = !bldNote;
+      });
+      /* Modos */
+      Array.prototype.forEach.call(elModes.querySelectorAll('button'), function (btn) {
+        btn.classList.toggle('tm-on', btn.dataset.mode === bldMode);
+        btn.disabled = !bldNote || bldAlt === null;
+      });
+    }
+
+    /* Inicializa botones del builder (solo una vez) */
+    NOTES.forEach(function (n) {
+      var b = document.createElement('button');
+      b.className = 'tmtab-bld-btn'; b.textContent = n; b.dataset.note = n;
+      b.addEventListener('click', function () {
+        bldNote = n; bldAlt = null; bldMode = '';
+        refreshBuilderUI();
+      });
+      elNotes.appendChild(b);
+    });
+    ALTS.forEach(function (a) {
+      var b = document.createElement('button');
+      b.className = 'tmtab-bld-btn'; b.textContent = a.sym; b.dataset.alt = a.val;
+      b.disabled = true;
+      b.addEventListener('click', function () {
+        bldAlt = a.val; bldMode = '';
+        refreshBuilderUI();
+      });
+      elAlts.appendChild(b);
+    });
+    MODES.forEach(function (m) {
+      var b = document.createElement('button');
+      b.className = 'tmtab-bld-btn'; b.textContent = m; b.dataset.mode = m;
+      b.disabled = true;
+      b.addEventListener('click', function () {
+        bldMode = m;
+        refreshBuilderUI();
+        /* Confirma automáticamente al elegir el modo */
+        var label = bldNote + bldAlt + ' ' + m;
+        confirmCell(label);
+      });
+      elModes.appendChild(b);
+    });
+
+    function openBuilder(idx) {
+      activeCellIdx = idx;
+      /* Restaura selección previa si la hubiera */
+      var prev = cellValues[idx] || '';
+      bldNote = ''; bldAlt = null; bldMode = '';
+      if (prev) {
+        /* Intenta recuperar nota/alt/modo del valor guardado */
+        var parts = prev.split(' ');
+        var modeStr = parts[parts.length - 1];
+        if (modeStr === 'Mayor' || modeStr === 'menor') {
+          bldMode = modeStr;
+          var notePart = parts.slice(0, parts.length - 1).join(' ');
+          ALTS.forEach(function (a) {
+            if (a.val && notePart.slice(-a.val.length) === a.val) {
+              bldAlt = a.val;
+              bldNote = notePart.slice(0, notePart.length - a.val.length);
+            }
+          });
+          if (bldAlt === null) { bldAlt = ''; bldNote = notePart; }
+        }
+      }
+      refreshBuilderUI();
+      elOv.classList.add('tm-show');
+      elBld.classList.add('tm-show');
+    }
+
+    function closeBuilder() {
+      elOv.classList.remove('tm-show');
+      elBld.classList.remove('tm-show');
+      activeCellIdx = -1;
+    }
+
+    function confirmCell(label) {
+      cellValues[activeCellIdx] = label;
+      var valEl = document.getElementById(uid + '_val_' + activeCellIdx);
+      if (valEl) {
+        valEl.textContent = label;
+        valEl.classList.remove('tm-empty');
+      }
+      closeBuilder();
+    }
+
+    elOv.addEventListener('click', closeBuilder);
+    document.getElementById(uid + '_bld_cancel').addEventListener('click', closeBuilder);
+
+    /* ── Dificultad ─────────────────────────────────────────────────────── */
     function setDiff(d) {
       st.diff = d;
       ['easy', 'med', 'hard'].forEach(function (x) {
         document.getElementById(uid + '_d_' + x).className = 'tm-btn' + (x === d ? ' tm-on' : '');
       });
       st.total = 0; st.perfect = 0; st.points = 0; st.possible = 0; st.streak = 0; st.qnum = 0;
-      updateStats();
-      nextQ();
+      updateStats(); nextQ();
     }
-
     document.getElementById(uid + '_d_easy').addEventListener('click', function () { setDiff('easy'); });
     document.getElementById(uid + '_d_med').addEventListener('click', function () { setDiff('med'); });
     document.getElementById(uid + '_d_hard').addEventListener('click', function () { setDiff('hard'); });
@@ -256,15 +415,17 @@
       } else if (st.diff === 'med') {
         pool = ALL.filter(function (t) { return t.key.pos >= -3 && t.key.pos <= 3; });
       } else {
-        pool = ALL; /* ALL ya excluye ±7 */
+        pool = ALL;
       }
       return rand(pool);
     }
 
+    /* ── Renderiza la cuadrícula ─────────────────────────────────────────── */
     function renderGrid(grid, base) {
       var html = '<div class="tmtab-grid">';
       var inpIdx = 0;
-      inputDefs = [];
+      inputDefs  = [];
+      cellValues = [];
 
       grid.forEach(function (cell) {
         if (cell === null) {
@@ -272,10 +433,11 @@
         } else {
           html += '<div class="tmtab-cell">';
           html += '<div class="tmtab-cell-lbl">' + cell.rel + '</div>';
-          html += '<input type="text" id="' + uid + '_inp_' + inpIdx + '" placeholder="" autocomplete="off" autocorrect="off" spellcheck="false">';
+          html += '<div class="tmtab-cell-val tm-empty" id="' + uid + '_val_' + inpIdx + '" data-idx="' + inpIdx + '">toca para rellenar</div>';
           html += '<div class="tm-hint" id="' + uid + '_hint_' + inpIdx + '" style="display:none"></div>';
           html += '</div>';
           inputDefs.push({ inpIdx: inpIdx, cell: cell });
+          cellValues.push('');
           inpIdx++;
         }
       });
@@ -283,25 +445,16 @@
       html += '</div>';
       elGrid.innerHTML = html;
 
-      inputs = [];
       inputDefs.forEach(function (def) {
-        var inp = document.getElementById(uid + '_inp_' + def.inpIdx);
-        inputs.push(inp);
-        inp.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter') {
-            var next = def.inpIdx + 1;
-            if (next < inputs.length) {
-              inputs[next].focus();
-            } else {
-              checkAnswer();
-            }
-          }
+        var valEl = document.getElementById(uid + '_val_' + def.inpIdx);
+        valEl.addEventListener('click', function () {
+          if (st.answered) return;
+          openBuilder(def.inpIdx);
         });
       });
-
-      setTimeout(function () { if (inputs[0]) inputs[0].focus(); }, 50);
     }
 
+    /* ── Comprobación ────────────────────────────────────────────────────── */
     function checkAnswer() {
       if (st.answered) return;
       st.answered = true;
@@ -310,17 +463,17 @@
 
       var correct = 0;
       inputDefs.forEach(function (def) {
-        var inp  = inputs[def.inpIdx];
-        var hint = document.getElementById(uid + '_hint_' + def.inpIdx);
-        if (normalize(inp.value) === normalize(def.cell.ton.label)) {
+        var valEl = document.getElementById(uid + '_val_' + def.inpIdx);
+        var hint  = document.getElementById(uid + '_hint_' + def.inpIdx);
+        var given = cellValues[def.inpIdx] || '';
+        if (normalize(given) === normalize(def.cell.ton.label)) {
           correct++;
-          inp.classList.add('tm-ok');
+          valEl.classList.add('tm-ok');
         } else {
-          inp.classList.add('tm-ko');
+          valEl.classList.add('tm-ko');
           hint.innerHTML = '→ ' + def.cell.ton.label;
           hint.style.display = 'block';
         }
-        inp.readOnly = true;
       });
 
       st.points += correct;
@@ -331,10 +484,10 @@
       elSubmit.style.display = 'none';
       var cls = isPerfect ? 'tm-ok' : correct >= 3 ? 'tm-partial' : 'tm-ko';
       elFb.className = 'tm-fb ' + cls + ' tm-show';
-      if (isPerfect) {
-        elFb.innerHTML = '<strong>✓ ¡Tabla perfecta!</strong> Las 5 tonalidades vecinas son correctas.';
-      } else {
-        elFb.innerHTML = '<strong>' + correct + ' de 5 correctas.</strong> Las marcadas en rojo muestran la respuesta correcta debajo.';
+      elFb.innerHTML = isPerfect
+        ? '<strong>✓ ¡Tabla perfecta!</strong> Las 5 tonalidades vecinas son correctas.'
+        : '<strong>' + correct + ' de 5 correctas.</strong> Las marcadas en rojo muestran la respuesta correcta debajo.';
+      if (!isPerfect) {
         elCard.classList.add('tm-shake');
         setTimeout(function () { elCard.classList.remove('tm-shake'); }, 400);
       }
@@ -403,7 +556,6 @@
     var elYes  = document.getElementById(uid + '_yes');
     var elNo   = document.getElementById(uid + '_no');
 
-    /* ALL para son-vecinas puede incluir ±7 (solo comparamos posiciones) */
     var ALL_SV = [];
     KEYS.forEach(function (k) {
       ALL_SV.push({ key: k, mode: 'maj', label: k.maj });
