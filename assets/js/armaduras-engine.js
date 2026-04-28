@@ -3,21 +3,21 @@
   'use strict';
 
   var KEYS = [
-    { vex: "C",  maj: "Do Mayor",   min: "La Menor",   seq: [] },
-    { vex: "G",  maj: "Sol Mayor",  min: "Mi Menor",   seq: ["f/5/#"] },
-    { vex: "D",  maj: "Re Mayor",   min: "Si Menor",   seq: ["f/5/#","c/5/#"] },
-    { vex: "A",  maj: "La Mayor",   min: "Fa# Menor",  seq: ["f/5/#","c/5/#","g/5/#"] },
-    { vex: "E",  maj: "Mi Mayor",   min: "Do# Menor",  seq: ["f/5/#","c/5/#","g/5/#","d/5/#"] },
-    { vex: "B",  maj: "Si Mayor",   min: "Sol# Menor", seq: ["f/5/#","c/5/#","g/5/#","d/5/#","a/4/#"] },
-    { vex: "F#", maj: "Fa# Mayor",  min: "Re# Menor",  seq: ["f/5/#","c/5/#","g/5/#","d/5/#","a/4/#","e/5/#"] },
-    { vex: "C#", maj: "Do# Mayor",  min: "La# Menor",  seq: ["f/5/#","c/5/#","g/5/#","d/5/#","a/4/#","e/5/#","b/4/#"] },
-    { vex: "F",  maj: "Fa Mayor",   min: "Re Menor",   seq: ["b/4/b"] },
-    { vex: "Bb", maj: "Sib Mayor",  min: "Sol Menor",  seq: ["b/4/b","e/5/b"] },
-    { vex: "Eb", maj: "Mib Mayor",  min: "Do Menor",   seq: ["b/4/b","e/5/b","a/4/b"] },
-    { vex: "Ab", maj: "Lab Mayor",  min: "Fa Menor",   seq: ["b/4/b","e/5/b","a/4/b","d/5/b"] },
-    { vex: "Db", maj: "Reb Mayor",  min: "Sib Menor",  seq: ["b/4/b","e/5/b","a/4/b","d/5/b","g/4/b"] },
-    { vex: "Gb", maj: "Solb Mayor", min: "Mib Menor",  seq: ["b/4/b","e/5/b","a/4/b","d/5/b","g/4/b","c/5/b"] },
-    { vex: "Cb", maj: "Dob Mayor",  min: "Lab Menor",  seq: ["b/4/b","e/5/b","a/4/b","d/5/b","g/4/b","c/5/b","f/4/b"] }
+    { vex: "C",  maj: "Do Mayor",   min: "La menor",   seq: [] },
+    { vex: "G",  maj: "Sol Mayor",  min: "Mi menor",   seq: ["f/5/#"] },
+    { vex: "D",  maj: "Re Mayor",   min: "Si menor",   seq: ["f/5/#","c/5/#"] },
+    { vex: "A",  maj: "La Mayor",   min: "Fa# menor",  seq: ["f/5/#","c/5/#","g/5/#"] },
+    { vex: "E",  maj: "Mi Mayor",   min: "Do# menor",  seq: ["f/5/#","c/5/#","g/5/#","d/5/#"] },
+    { vex: "B",  maj: "Si Mayor",   min: "Sol# menor", seq: ["f/5/#","c/5/#","g/5/#","d/5/#","a/4/#"] },
+    { vex: "F#", maj: "Fa# Mayor",  min: "Re# menor",  seq: ["f/5/#","c/5/#","g/5/#","d/5/#","a/4/#","e/5/#"] },
+    { vex: "C#", maj: "Do# Mayor",  min: "La# menor",  seq: ["f/5/#","c/5/#","g/5/#","d/5/#","a/4/#","e/5/#","b/4/#"] },
+    { vex: "F",  maj: "Fa Mayor",   min: "Re menor",   seq: ["b/4/b"] },
+    { vex: "Bb", maj: "Sib Mayor",  min: "Sol menor",  seq: ["b/4/b","e/5/b"] },
+    { vex: "Eb", maj: "Mib Mayor",  min: "Do menor",   seq: ["b/4/b","e/5/b","a/4/b"] },
+    { vex: "Ab", maj: "Lab Mayor",  min: "Fa menor",   seq: ["b/4/b","e/5/b","a/4/b","d/5/b"] },
+    { vex: "Db", maj: "Reb Mayor",  min: "Sib menor",  seq: ["b/4/b","e/5/b","a/4/b","d/5/b","g/4/b"] },
+    { vex: "Gb", maj: "Solb Mayor", min: "Mib menor",  seq: ["b/4/b","e/5/b","a/4/b","d/5/b","g/4/b","c/5/b"] },
+    { vex: "Cb", maj: "Dob Mayor",  min: "Lab menor",  seq: ["b/4/b","e/5/b","a/4/b","d/5/b","g/4/b","c/5/b","f/4/b"] }
   ];
 
   var LANES = [
