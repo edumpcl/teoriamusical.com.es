@@ -20,10 +20,13 @@
     { pos:  7, maj: "Do# Mayor",  min: "La# Menor"  }
   ];
 
+  /* Excluye pos ±7 para garantizar que las 5 vecinas siempre existen */
   var ALL = [];
   KEYS.forEach(function (k) {
-    ALL.push({ key: k, mode: 'maj', label: k.maj });
-    ALL.push({ key: k, mode: 'min', label: k.min });
+    if (k.pos >= -6 && k.pos <= 6) {
+      ALL.push({ key: k, mode: 'maj', label: k.maj });
+      ALL.push({ key: k, mode: 'min', label: k.min });
+    }
   });
 
   function findKey(pos) {
@@ -39,16 +42,26 @@
     return { key: k, mode: mode, label: mode === 'maj' ? k.maj : k.min };
   }
 
-  function getRows(base) {
+  /*
+   * Retorna 6 celdas para la cuadrícula 3×2:
+   *   [0] top-left  = Rel. subdominante   (pos-1, om)
+   *   [1] top-center = BASE (null → celda especial)
+   *   [2] top-right  = Rel. dominante      (pos+1, om)
+   *   [3] bot-left   = Subdominante        (pos-1, m)
+   *   [4] bot-center = Relativa            (pos,   om)
+   *   [5] bot-right  = Dominante           (pos+1, m)
+   */
+  function getGrid(base) {
     var p  = base.key.pos;
     var m  = base.mode;
     var om = m === 'maj' ? 'min' : 'maj';
     return [
-      { rel: 'Relativa',                   ton: getTon(p,     om) },
-      { rel: 'Dominante (5ª superior)',     ton: getTon(p + 1, m)  },
-      { rel: 'Relativa de la dominante',    ton: getTon(p + 1, om) },
-      { rel: 'Subdominante (5ª inferior)',  ton: getTon(p - 1, m)  },
-      { rel: 'Relativa de la subdominante', ton: getTon(p - 1, om) }
+      { rel: 'Rel. subdominante', ton: getTon(p - 1, om) },
+      null,
+      { rel: 'Rel. dominante',    ton: getTon(p + 1, om) },
+      { rel: 'Subdominante',      ton: getTon(p - 1, m)  },
+      { rel: 'Relativa',          ton: getTon(p,     om) },
+      { rel: 'Dominante',         ton: getTon(p + 1, m)  }
     ];
   }
 
@@ -100,18 +113,17 @@
     '.tmtab-wrap .tm-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#8b6914,#2a7a6e);}',
     '.tmtab-wrap .tm-qlbl{font-size:.68rem;color:#aaa;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;}',
     '.tmtab-wrap .tm-qnum{color:#8b6914;font-weight:700;}',
-    '.tmtab-wrap .tm-qtxt{font-size:1.05rem;font-weight:600;margin-bottom:14px;line-height:1.4;}',
-    '.tmtab-wrap .tm-tonic{display:inline-block;background:#1a1a2e;color:#d4a843;font-size:1.2rem;font-weight:700;padding:8px 22px;border-radius:4px;margin-bottom:20px;}',
-    '.tmtab-wrap table{width:100%;border-collapse:collapse;margin-bottom:18px;}',
-    '.tmtab-wrap th{background:#1a1a2e;color:#d4a843;padding:9px 12px;text-align:left;font-size:.8rem;letter-spacing:.04em;}',
-    '.tmtab-wrap td{padding:7px 10px;border-bottom:1px solid #e8e0cc;vertical-align:middle;}',
-    '.tmtab-wrap td.tm-rel{font-size:.82rem;color:#555;background:#fafaf5;width:46%;font-weight:500;padding-right:14px;}',
-    '.tmtab-wrap td.tm-inp-cell{padding:5px 8px;}',
-    '.tmtab-wrap input[type=text]{width:100%;padding:8px 10px;border:1px solid #d8d0b8;border-radius:3px;font-size:.88rem;font-family:inherit;transition:border-color .15s;background:#fff;}',
-    '.tmtab-wrap input[type=text]:focus{outline:none;border-color:#8b6914;box-shadow:0 0 0 2px rgba(139,105,20,.08);}',
-    '.tmtab-wrap input[type=text].tm-ok{border-color:#27ae60;background:rgba(39,174,96,.05);color:#1e8449;font-weight:600;}',
-    '.tmtab-wrap input[type=text].tm-ko{border-color:#c0392b;background:rgba(192,57,43,.05);color:#a93226;}',
-    '.tmtab-wrap .tm-hint{font-size:.76rem;color:#a93226;margin-top:3px;font-weight:600;}',
+    '.tmtab-wrap .tm-qtxt{font-size:1.05rem;font-weight:600;margin-bottom:16px;line-height:1.4;}',
+    /* Grid 3×2 */
+    '.tmtab-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:18px;}',
+    '.tmtab-cell{border:1px solid #d8d0b8;border-radius:4px;padding:10px 8px 8px;background:#fff;display:flex;flex-direction:column;gap:5px;min-height:72px;}',
+    '.tmtab-cell-base{background:#1a1a2e;color:#d4a843;align-items:center;justify-content:center;font-weight:700;font-size:1rem;text-align:center;line-height:1.3;}',
+    '.tmtab-cell-lbl{font-size:.6rem;color:#999;text-transform:uppercase;letter-spacing:.05em;}',
+    '.tmtab-grid input[type=text]{width:100%;padding:6px 7px;border:1px solid #d8d0b8;border-radius:3px;font-size:.82rem;font-family:inherit;transition:border-color .15s;background:#fff;}',
+    '.tmtab-grid input[type=text]:focus{outline:none;border-color:#8b6914;box-shadow:0 0 0 2px rgba(139,105,20,.08);}',
+    '.tmtab-grid input[type=text].tm-ok{border-color:#27ae60;background:rgba(39,174,96,.05);color:#1e8449;font-weight:600;}',
+    '.tmtab-grid input[type=text].tm-ko{border-color:#c0392b;background:rgba(192,57,43,.05);color:#a93226;}',
+    '.tmtab-wrap .tm-hint{font-size:.72rem;color:#a93226;margin-top:2px;font-weight:600;}',
     '.tmtab-wrap .tm-submit{width:100%;padding:11px;font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;background:#8b6914;color:#fff;border:none;border-radius:3px;cursor:pointer;font-weight:600;font-family:inherit;transition:opacity .15s;margin-bottom:8px;}',
     '.tmtab-wrap .tm-submit:hover{opacity:.87;}',
     '.tmtab-wrap .tm-fb{display:none;margin-top:10px;margin-bottom:10px;padding:11px 14px;border-radius:3px;font-size:.86rem;line-height:1.6;}',
@@ -163,7 +175,7 @@
   ].join('');
 
   /* ══════════════════════════════════════════════════════════════════════
-     tmVecinaTabla — Tabla de las 5 tonalidades vecinas
+     tmVecinaTabla — Cuadrícula 3×2 de las 5 tonalidades vecinas
   ══════════════════════════════════════════════════════════════════════ */
   function tmVecinaTabla(containerId) {
     injectCSS('tmtab-css', CSS_TAB);
@@ -188,9 +200,8 @@
       '<div class="tm-pbar-wrap"><div class="tm-pbar" id="' + uid + '_pbar"></div></div>',
       '<div class="tm-card" id="' + uid + '_card">',
         '<div class="tm-qlbl">Tabla <span class="tm-qnum" id="' + uid + '_qnum">1</span></div>',
-        '<div class="tm-qtxt">Escribe las 5 tonalidades vecinas de:</div>',
-        '<div class="tm-tonic" id="' + uid + '_tonic"></div>',
-        '<div id="' + uid + '_table"></div>',
+        '<div class="tm-qtxt">Escribe las 5 tonalidades vecinas en las celdas correspondientes:</div>',
+        '<div id="' + uid + '_grid"></div>',
         '<button class="tm-submit" id="' + uid + '_submit">Comprobar →</button>',
         '<div class="tm-fb" id="' + uid + '_fb"></div>',
         '<button class="tm-nxt" id="' + uid + '_nxt">Siguiente tabla →</button>',
@@ -200,6 +211,7 @@
     var st = { total: 0, perfect: 0, points: 0, possible: 0, streak: 0, qnum: 0, answered: false, diff: 'easy' };
     var cQ = null;
     var inputs = [];
+    var inputDefs = []; /* { inpIdx, cell } */
 
     var elTot    = document.getElementById(uid + '_tot');
     var elPerf   = document.getElementById(uid + '_perf');
@@ -207,8 +219,7 @@
     var elStr    = document.getElementById(uid + '_str');
     var elPbar   = document.getElementById(uid + '_pbar');
     var elQnum   = document.getElementById(uid + '_qnum');
-    var elTonic  = document.getElementById(uid + '_tonic');
-    var elTable  = document.getElementById(uid + '_table');
+    var elGrid   = document.getElementById(uid + '_grid');
     var elSubmit = document.getElementById(uid + '_submit');
     var elFb     = document.getElementById(uid + '_fb');
     var elNxt    = document.getElementById(uid + '_nxt');
@@ -245,39 +256,49 @@
       } else if (st.diff === 'med') {
         pool = ALL.filter(function (t) { return t.key.pos >= -3 && t.key.pos <= 3; });
       } else {
-        pool = ALL;
+        pool = ALL; /* ALL ya excluye ±7 */
       }
       return rand(pool);
     }
 
-    function renderTable(rows) {
-      var html = '<table><thead><tr><th>Relación</th><th>Tonalidad vecina</th></tr></thead><tbody>';
-      rows.forEach(function (row, i) {
-        html += '<tr>';
-        html += '<td class="tm-rel">' + row.rel + '</td>';
-        html += '<td class="tm-inp-cell">';
-        html += '<input type="text" id="' + uid + '_inp_' + i + '" placeholder="Escribe la tonalidad..." autocomplete="off" autocorrect="off" spellcheck="false">';
-        html += '<div class="tm-hint" id="' + uid + '_hint_' + i + '" style="display:none"></div>';
-        html += '</td>';
-        html += '</tr>';
+    function renderGrid(grid, base) {
+      var html = '<div class="tmtab-grid">';
+      var inpIdx = 0;
+      inputDefs = [];
+
+      grid.forEach(function (cell) {
+        if (cell === null) {
+          html += '<div class="tmtab-cell tmtab-cell-base">' + base.label + '</div>';
+        } else {
+          html += '<div class="tmtab-cell">';
+          html += '<div class="tmtab-cell-lbl">' + cell.rel + '</div>';
+          html += '<input type="text" id="' + uid + '_inp_' + inpIdx + '" placeholder="" autocomplete="off" autocorrect="off" spellcheck="false">';
+          html += '<div class="tm-hint" id="' + uid + '_hint_' + inpIdx + '" style="display:none"></div>';
+          html += '</div>';
+          inputDefs.push({ inpIdx: inpIdx, cell: cell });
+          inpIdx++;
+        }
       });
-      html += '</tbody></table>';
-      elTable.innerHTML = html;
+
+      html += '</div>';
+      elGrid.innerHTML = html;
 
       inputs = [];
-      rows.forEach(function (_, i) {
-        var inp = document.getElementById(uid + '_inp_' + i);
+      inputDefs.forEach(function (def) {
+        var inp = document.getElementById(uid + '_inp_' + def.inpIdx);
         inputs.push(inp);
         inp.addEventListener('keydown', function (e) {
           if (e.key === 'Enter') {
-            if (i < inputs.length - 1) {
-              inputs[i + 1].focus();
+            var next = def.inpIdx + 1;
+            if (next < inputs.length) {
+              inputs[next].focus();
             } else {
               checkAnswer();
             }
           }
         });
       });
+
       setTimeout(function () { if (inputs[0]) inputs[0].focus(); }, 50);
     }
 
@@ -288,15 +309,15 @@
       st.possible += 5;
 
       var correct = 0;
-      cQ.rows.forEach(function (row, i) {
-        var inp  = inputs[i];
-        var hint = document.getElementById(uid + '_hint_' + i);
-        if (normalize(inp.value) === normalize(row.ton.label)) {
+      inputDefs.forEach(function (def) {
+        var inp  = inputs[def.inpIdx];
+        var hint = document.getElementById(uid + '_hint_' + def.inpIdx);
+        if (normalize(inp.value) === normalize(def.cell.ton.label)) {
           correct++;
           inp.classList.add('tm-ok');
         } else {
           inp.classList.add('tm-ko');
-          hint.innerHTML = '→ ' + row.ton.label;
+          hint.innerHTML = '→ ' + def.cell.ton.label;
           hint.style.display = 'block';
         }
         inp.readOnly = true;
@@ -324,13 +345,12 @@
       st.answered = false;
       st.qnum++;
       var base = pickBase();
-      cQ = { base: base, rows: getRows(base) };
-      elQnum.textContent  = st.qnum;
-      elTonic.textContent = base.label;
-      elFb.className      = 'tm-fb';
-      elNxt.className     = 'tm-nxt';
+      cQ = { base: base, grid: getGrid(base) };
+      elQnum.textContent     = st.qnum;
+      elFb.className         = 'tm-fb';
+      elNxt.className        = 'tm-nxt';
       elSubmit.style.display = 'block';
-      renderTable(cQ.rows);
+      renderGrid(cQ.grid, cQ.base);
     }
 
     nextQ();
@@ -383,6 +403,13 @@
     var elYes  = document.getElementById(uid + '_yes');
     var elNo   = document.getElementById(uid + '_no');
 
+    /* ALL para son-vecinas puede incluir ±7 (solo comparamos posiciones) */
+    var ALL_SV = [];
+    KEYS.forEach(function (k) {
+      ALL_SV.push({ key: k, mode: 'maj', label: k.maj });
+      ALL_SV.push({ key: k, mode: 'min', label: k.min });
+    });
+
     elYes.addEventListener('click', function () { answer(true); });
     elNo.addEventListener('click', function () { answer(false); });
     elNxt.addEventListener('click', nextQ);
@@ -396,9 +423,9 @@
     }
 
     function genQ() {
-      var a = rand(ALL);
-      var neighbors    = ALL.filter(function (x) { return isNeighbor(x, a); });
-      var nonNeighbors = ALL.filter(function (x) { return !isNeighbor(x, a) && x !== a; });
+      var a = rand(ALL_SV);
+      var neighbors    = ALL_SV.filter(function (x) { return isNeighbor(x, a); });
+      var nonNeighbors = ALL_SV.filter(function (x) { return !isNeighbor(x, a) && x !== a; });
       var useNeighbor  = Math.random() > 0.45;
       var b, areNeighbors;
       if (useNeighbor && neighbors.length > 0) {
