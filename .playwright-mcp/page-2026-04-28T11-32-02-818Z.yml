@@ -1,0 +1,212 @@
+- generic [active] [ref=e1]:
+  - link "Saltar al contenido" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - button "Gestionar cookies" [ref=e3] [cursor=pointer]:
+    - img [ref=e4]
+  - banner [ref=e11]:
+    - generic [ref=e12]:
+      - link "Teoría Musical Teoría Musical" [ref=e13] [cursor=pointer]:
+        - /url: /
+        - img "Teoría Musical" [ref=e15]
+        - generic [ref=e16]: Teoría Musical
+      - button "Menú" [ref=e17] [cursor=pointer]
+      - text: ▾
+  - main [ref=e21]:
+    - navigation "Migas" [ref=e22]:
+      - generic [ref=e23]:
+        - link "Inicio" [ref=e24] [cursor=pointer]:
+          - /url: /
+        - text: ›
+        - link "EJERCICIOS MUSICALES" [ref=e25] [cursor=pointer]:
+          - /url: /ejercicios/
+        - text: ›Tonalidades
+    - heading "Tonalidades" [level=1] [ref=e28]
+    - article [ref=e30]:
+      - heading "Aprende a reconocer cualquier tonalidad a simple vista" [level=2] [ref=e31]
+      - paragraph [ref=e32]:
+        - text: Saber identificar la tonalidad de una pieza musical con tan solo mirar los sostenidos o bemoles que aparecen al principio del pentagrama (la
+        - strong [ref=e33]: armadura musical
+        - text: ) es como tener un superpoder de descodificación masiva. Una vez te sabes el truco, no tendrás que adivinar ni una sola nota más.
+      - paragraph [ref=e34]:
+        - text: Este módulo de ejercicios está diseñado en base a trucos visuales para tu mente. Entrenarás tu visión periférica para captar la tonalidad en fracciones de segundo. A continuación te repasamos
+        - strong [ref=e35]: las dos reglas de oro
+        - text: "infalibles de los estudiantes de solfeo avanzado:"
+      - heading "El orden constante de las alteraciones" [level=2] [ref=e36]
+      - paragraph [ref=e37]: "Antes de aplicar cualquier truco visual a los ejercicios gráficos, debes memorizar a fuego como si fuera un solo bloque silábico esta secuencia imperturbable. Es el orden natural en el que siempre aparecen las alteraciones en el pentagrama:"
+      - list [ref=e38]:
+        - listitem [ref=e39]:
+          - strong [ref=e40]: "Orden de aparición de los Sostenidos (#):"
+          - text: Fa - Do - Sol - Re - La - Mi - Si
+        - listitem [ref=e41]:
+          - strong [ref=e42]: "Orden de aparición de los Bemoles (b):"
+          - text: Si - Mi - La - Re - Sol - Do - Fa
+          - emphasis [ref=e43]: (que es exactamente lo inverso a los sostenidos)
+      - heading "1. El truco visual para las Armaduras con Sostenidos" [level=2] [ref=e44]
+      - paragraph [ref=e45]: "Cuando te enfrentes a una partitura que contenga uno o varios sostenidos apilados en su armadura, el método resolutivo es casi automático:"
+      - list [ref=e46]:
+        - listitem [ref=e47]:
+          - text: Fija tu mirada gráficamente solo en el
+          - strong [ref=e48]: último sostenido
+          - text: (el que está dibujado más hacia la derecha en la partitura antes de que empiecen las notas reales).
+        - listitem [ref=e49]: Súbele virtualmente **medio tono (un semitono)** al nombre de esa nota.
+        - listitem [ref=e50]:
+          - text: ¡Et voilà! Esa nota a la que acabas de llegar saltando medio tono
+          - strong [ref=e51]: es el nombre de tu Tonalidad Mayor.
+      - paragraph [ref=e52]:
+        - strong [ref=e53]: "Ejemplo práctico:"
+        - text: Si la armadura tiene tres sostenidos (Fa#, Do#, Sol#). Tomamos el último que ves (Sol#). Si subes mentalmente solo medio tono arriba de esa nota en tu cabeza llegas instantáneamente a
+        - emphasis [ref=e54]: La
+        - text: . Por tanto, tu obra está en
+        - strong [ref=e55]: La Mayor
+        - text: .
+      - heading "2. El truco visual secreto para las Armaduras con Bemoles" [level=2] [ref=e56]
+      - paragraph [ref=e57]: "Con los bemoles (b) el truco es aún más rápido de realizar en tu cerebro, ya que no tienes casi ni que calcular notas musicales ni distancias en el teclado:"
+      - list [ref=e58]:
+        - listitem [ref=e59]:
+          - text: Revisa la armadura hasta localizar gráficamente el
+          - strong [ref=e60]: penúltimo bemol
+          - text: de la secuencia perimetral de alteraciones escrita.
+        - listitem [ref=e61]:
+          - text: Ese bemol que acabas de mirar, tal cual, con su nombre y apellido,
+          - strong [ref=e62]: le da el nombre exacto a tu Tonalidad Mayor.
+      - paragraph [ref=e63]:
+        - strong [ref=e64]: "Ejemplo práctico:"
+        - text: Tienes una partitura con la armadura atestada con cuatro bemoles ubicados en este orden (Sib, Mib, Lab, Reb). Te fijas en lectura visual solo en el penúltimo (hacia la izquierda del de la punta) y ves que es un Lab. Por tanto, la pieza de forma matemática está fijada en terreno de
+        - strong [ref=e65]: La bemol Mayor (Lab Mayor)
+        - text: .
+      - paragraph [ref=e66]:
+        - emphasis [ref=e67]: "Excepción Inamovible:"
+        - text: Este truco no sirve cuando solo hay un bemol en la pauta (ya que carece de penúltimo). Debes memorizar hoy mismo que
+        - strong [ref=e68]: 1 solo bemol (Sib) equivale a Fa Mayor
+        - text: siempre en cualquier compás.
+      - table [ref=e69]:
+        - rowgroup [ref=e70]:
+          - row "Símbolo de la Clave Foco de Atención Visual (El Truco) Cómo hallar la Tonalidad menor (Relativa)" [ref=e71]:
+            - columnheader "Símbolo de la Clave" [ref=e72]
+            - columnheader "Foco de Atención Visual (El Truco)" [ref=e73]
+            - columnheader "Cómo hallar la Tonalidad menor (Relativa)" [ref=e74]
+        - rowgroup [ref=e75]:
+          - row "Armadura con Sostenidos Buscar el último (derecha) y subir 1 semitono mentalmente. Bajar visualmente una tercera menor entera a la respuesta." [ref=e76]:
+            - cell "Armadura con Sostenidos" [ref=e77]:
+              - strong [ref=e78]: Armadura con Sostenidos
+            - cell "Buscar el último (derecha) y subir 1 semitono mentalmente." [ref=e79]
+            - cell "Bajar visualmente una tercera menor entera a la respuesta." [ref=e80]
+          - row "Armadura con Bemoles Mirar y leer directamente el penúltimo del pentagrama. Reducir igual una tercera menor acústica." [ref=e81]:
+            - cell "Armadura con Bemoles" [ref=e82]:
+              - strong [ref=e83]: Armadura con Bemoles
+            - cell "Mirar y leer directamente el penúltimo del pentagrama." [ref=e84]
+            - cell "Reducir igual una tercera menor acústica." [ref=e85]
+      - paragraph [ref=e86]:
+        - text: 💡
+        - strong [ref=e87]: "Dato de solfeo curioso:"
+        - text: Las tonalidades mayores nunca viajan solas, siempre llevan una compañera gemela de la mano, con sus mismas notas e idéntica armadura de clave pero sonando triste. Se denominan Tonalidades Relativas. Cuando hayas hallado la Mayor con tus supertrucos, sencillamente baja acústicamente o gráficamente una
+        - strong [ref=e88]: Tercera menor
+        - text: entera (1 tono y un semitono juntos de distancia) para descubrir cómo se llama su versión menor hermanada oculta.
+      - generic [ref=e89]:
+        - generic [ref=e90]:
+          - generic [ref=e91]: "Dificultad:"
+          - button "Fácil" [ref=e92] [cursor=pointer]
+          - button "Medio" [ref=e93] [cursor=pointer]
+          - button "Difícil" [ref=e94] [cursor=pointer]
+        - generic [ref=e95]:
+          - generic [ref=e96]:
+            - generic [ref=e97]: "0"
+            - generic [ref=e98]: Preguntas
+          - generic [ref=e99]:
+            - generic [ref=e100]: "0"
+            - generic [ref=e101]: Correctas
+          - generic [ref=e102]:
+            - generic [ref=e103]: —
+            - generic [ref=e104]: Acierto
+          - generic [ref=e105]:
+            - generic [ref=e106]: "0"
+            - generic [ref=e107]: Racha
+        - generic [ref=e109]:
+          - generic [ref=e110]: Pregunta 1
+          - generic [ref=e111]: ¿Cuál es la Tonalidad MAYOR?
+          - img [ref=e114]
+          - generic [ref=e130]:
+            - button "Lab Mayor" [ref=e131] [cursor=pointer]
+            - button "Mi Mayor" [ref=e132] [cursor=pointer]
+            - button "Do# Mayor" [ref=e133] [cursor=pointer]
+            - button "Re Mayor" [ref=e134] [cursor=pointer]
+      - generic [ref=e135]:
+        - generic [ref=e136]:
+          - generic [ref=e137]:
+            - generic [ref=e138]: "0"
+            - generic [ref=e139]: Total
+          - generic [ref=e140]:
+            - generic [ref=e141]: "0"
+            - generic [ref=e142]: Correctas
+          - generic [ref=e143]:
+            - generic [ref=e144]: "0"
+            - generic [ref=e145]: Racha
+        - generic [ref=e147]:
+          - generic [ref=e148]: Ejercicio 1
+          - generic [ref=e149]:
+            - text: "Dibuja la armadura de:"
+            - strong [ref=e150]: Lab Mayor
+          - generic [ref=e151]:
+            - strong [ref=e152]: "Instrucciones:"
+            - text: Elige qué añadir (sostenido o bemol) y luego
+            - strong [ref=e153]: toca la línea o espacio del pentagrama
+            - text: para colocarlo. ¡Recuerda seguir el orden horizontal estricto!
+          - generic [ref=e154]:
+            - 'button "Sostenidos ( # )" [ref=e155] [cursor=pointer]'
+            - button "Bemoles ( b )" [ref=e156] [cursor=pointer]
+          - generic [ref=e157]:
+            - generic:
+              - img
+          - generic [ref=e158]:
+            - button "↶ Deshacer Último" [ref=e159] [cursor=pointer]
+            - button "🧹 Borrar Todo" [ref=e160] [cursor=pointer]
+          - button "Comprobar Dibujo" [ref=e161] [cursor=pointer]
+      - paragraph [ref=e163]:
+        - text: ¿Ya dominas las armaduras? El siguiente paso es practicar con las
+        - link "tonalidades vecinas" [ref=e164] [cursor=pointer]:
+          - /url: /ejercicios/tonalidades/tonalidades-vecinas/
+          - strong [ref=e165]: tonalidades vecinas
+        - text: ": identifica qué tonalidades se pueden modular fácilmente entre sí."
+  - contentinfo [ref=e166]:
+    - generic [ref=e167]:
+      - generic [ref=e168]:
+        - heading "Teoría Musical" [level=3] [ref=e169]
+        - paragraph [ref=e170]: "Aprende música desde sus fundamentos: diccionario, ejercicios interactivos y herramientas gratuitas."
+      - generic [ref=e171]:
+        - heading "Secciones" [level=3] [ref=e172]
+        - list [ref=e173]:
+          - listitem [ref=e174]:
+            - link "Diccionario Musical" [ref=e175] [cursor=pointer]:
+              - /url: /diccionario-musical/
+          - listitem [ref=e176]:
+            - link "Ejercicios Musicales" [ref=e177] [cursor=pointer]:
+              - /url: /ejercicios/
+          - listitem [ref=e178]:
+            - link "Herramientas ▾" [ref=e179] [cursor=pointer]:
+              - /url: /herramientas/
+            - list [ref=e180]:
+              - listitem [ref=e181]:
+                - link "Metrónomo" [ref=e182] [cursor=pointer]:
+                  - /url: /herramientas/metronomo/
+              - listitem [ref=e183]:
+                - link "Afinador" [ref=e184] [cursor=pointer]:
+                  - /url: /herramientas/afinador/
+          - listitem [ref=e185]:
+            - link "Blog" [ref=e186] [cursor=pointer]:
+              - /url: /blog/
+      - generic [ref=e187]:
+        - heading "Información" [level=3] [ref=e188]
+        - list [ref=e189]:
+          - listitem [ref=e190]:
+            - link "Contacto" [ref=e191] [cursor=pointer]:
+              - /url: /contacto/
+          - listitem [ref=e192]:
+            - link "Aviso legal" [ref=e193] [cursor=pointer]:
+              - /url: /aviso-legal/
+          - listitem [ref=e194]:
+            - link "Política de privacidad" [ref=e195] [cursor=pointer]:
+              - /url: /politica-de-privacidad/
+          - listitem [ref=e196]:
+            - link "Política de cookies" [ref=e197] [cursor=pointer]:
+              - /url: /politica-de-cookies/
+    - paragraph [ref=e199]: © 2026 Teoría Musical — Eduardo Escrig Zomeño. Todos los derechos reservados.

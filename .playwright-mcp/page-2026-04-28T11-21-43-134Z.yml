@@ -1,0 +1,112 @@
+- generic [active] [ref=e1]:
+  - link "Saltar al contenido" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - button "Gestionar cookies" [ref=e3] [cursor=pointer]:
+    - img [ref=e4]
+  - banner [ref=e11]:
+    - generic [ref=e12]:
+      - link "Teoría Musical Teoría Musical" [ref=e13] [cursor=pointer]:
+        - /url: /
+        - img "Teoría Musical" [ref=e15]
+        - generic [ref=e16]: Teoría Musical
+      - button "Menú" [ref=e17] [cursor=pointer]
+      - text: ▾
+  - main [ref=e21]:
+    - navigation "Migas" [ref=e22]:
+      - generic [ref=e23]:
+        - link "Inicio" [ref=e24] [cursor=pointer]:
+          - /url: /
+        - text: ›Diccionario Musical
+    - heading "Diccionario Musical" [level=1] [ref=e27]
+    - article [ref=e29]:
+      - paragraph [ref=e30]:
+        - text: El lenguaje de la música es universal, pero para dominarlo y comprender en profundidad cómo interactúan los sonidos, es fundamental conocer sus bases. Bienvenido al
+        - strong [ref=e31]: Diccionario Musical
+        - text: ", el punto de partida perfecto para estudiantes, músicos y curiosos que deseen asimilar la teoría de la música desde sus fundamentos más elementales."
+      - paragraph [ref=e32]: En el aprendizaje musical, cada detalle importa. Desde saber cómo colocar e identificar correctamente las notas en el pentagrama de acuerdo a las distintas claves, hasta entender de forma precisa cómo se construye el ritmo o cómo se entrelazan diferentes sonidos armónicos. A menudo, aprender solfeo y teoría puede parecer árido o demasiado estricto, pero el objetivo de esta biblioteca de conocimientos es simplificar cada término —como compás, tono o inversión— para que puedas trasladarlo directamente a tu piano, guitarra o instrumento de viento.
+      - paragraph [ref=e33]: Navega a través de las diferentes secciones de este manual para descubrir la base real de las partituras. Tanto si estás preparando una prueba de acceso al conservatorio, buscas componer tus propias melodías o simplemente tienes curiosidad por entender por qué una canción suena bien, en nuestro diccionario musical encontrarás todas las respuestas e ilustraciones paso a paso.
+      - heading "Conceptos" [level=2] [ref=e34]
+      - generic [ref=e35]:
+        - link "𝄞 Pentagramas Líneas, espacios, clave de sol y clave de fa. La base de la escritura musical." [ref=e36] [cursor=pointer]:
+          - /url: /diccionario-musical/pentagramas/
+          - generic [ref=e37]: 𝄞
+          - generic [ref=e38]: Pentagramas
+          - generic [ref=e39]: Líneas, espacios, clave de sol y clave de fa. La base de la escritura musical.
+        - link "♩ Notas Musicales Nombres, altura y su representación en el pentagrama." [ref=e40] [cursor=pointer]:
+          - /url: /diccionario-musical/nombres-de-las-notas-musicales/
+          - generic [ref=e41]: ♩
+          - generic [ref=e42]: Notas Musicales
+          - generic [ref=e43]: Nombres, altura y su representación en el pentagrama.
+        - link "𝄢 Claves Musicales Clave de sol, fa y do. Cómo leer notas según la clave." [ref=e44] [cursor=pointer]:
+          - /url: /diccionario-musical/claves-musicales/
+          - generic [ref=e45]: 𝄢
+          - generic [ref=e46]: Claves Musicales
+          - generic [ref=e47]: Clave de sol, fa y do. Cómo leer notas según la clave.
+        - link "𝄵 Compases Binario, ternario, cuaternario. Pulso, tiempo fuerte y subdivisión." [ref=e48] [cursor=pointer]:
+          - /url: /diccionario-musical/compases/
+          - generic [ref=e49]: 𝄵
+          - generic [ref=e50]: Compases
+          - generic [ref=e51]: Binario, ternario, cuaternario. Pulso, tiempo fuerte y subdivisión.
+        - link "♬ Intervalos La distancia entre dos notas. Clasificación, inversión y uso armónico." [ref=e52] [cursor=pointer]:
+          - /url: /diccionario-musical/intervalos/
+          - generic [ref=e53]: ♬
+          - generic [ref=e54]: Intervalos
+          - generic [ref=e55]: La distancia entre dos notas. Clasificación, inversión y uso armónico.
+        - link "🎵 Acordes Tríadas, séptimas, inversiones y funciones armónicas básicas." [ref=e56] [cursor=pointer]:
+          - /url: /diccionario-musical/acordes/
+          - generic [ref=e57]: 🎵
+          - generic [ref=e58]: Acordes
+          - generic [ref=e59]: Tríadas, séptimas, inversiones y funciones armónicas básicas.
+        - link "♯ Tonalidades Escalas mayores y menores, armaduras y el círculo de quintas." [ref=e60] [cursor=pointer]:
+          - /url: /diccionario-musical/tonalidades/
+          - generic [ref=e61]: ♯
+          - generic [ref=e62]: Tonalidades
+          - generic [ref=e63]: Escalas mayores y menores, armaduras y el círculo de quintas.
+        - 'link "𝄐 Grados de la Escala Nombres y funciones de los siete grados: tónica, dominante, sensible y más." [ref=e64] [cursor=pointer]':
+          - /url: /diccionario-musical/nombres-de-los-grados-de-la-escala/
+          - generic [ref=e65]: 𝄐
+          - generic [ref=e66]: Grados de la Escala
+          - generic [ref=e67]: "Nombres y funciones de los siete grados: tónica, dominante, sensible y más."
+  - contentinfo [ref=e68]:
+    - generic [ref=e69]:
+      - generic [ref=e70]:
+        - heading "Teoría Musical" [level=3] [ref=e71]
+        - paragraph [ref=e72]: "Aprende música desde sus fundamentos: diccionario, ejercicios interactivos y herramientas gratuitas."
+      - generic [ref=e73]:
+        - heading "Secciones" [level=3] [ref=e74]
+        - list [ref=e75]:
+          - listitem [ref=e76]:
+            - link "Diccionario Musical" [ref=e77] [cursor=pointer]:
+              - /url: /diccionario-musical/
+          - listitem [ref=e78]:
+            - link "Ejercicios Musicales" [ref=e79] [cursor=pointer]:
+              - /url: /ejercicios/
+          - listitem [ref=e80]:
+            - link "Herramientas ▾" [ref=e81] [cursor=pointer]:
+              - /url: /herramientas/
+            - list [ref=e82]:
+              - listitem [ref=e83]:
+                - link "Metrónomo" [ref=e84] [cursor=pointer]:
+                  - /url: /herramientas/metronomo/
+              - listitem [ref=e85]:
+                - link "Afinador" [ref=e86] [cursor=pointer]:
+                  - /url: /herramientas/afinador/
+          - listitem [ref=e87]:
+            - link "Blog" [ref=e88] [cursor=pointer]:
+              - /url: /blog/
+      - generic [ref=e89]:
+        - heading "Información" [level=3] [ref=e90]
+        - list [ref=e91]:
+          - listitem [ref=e92]:
+            - link "Contacto" [ref=e93] [cursor=pointer]:
+              - /url: /contacto/
+          - listitem [ref=e94]:
+            - link "Aviso legal" [ref=e95] [cursor=pointer]:
+              - /url: /aviso-legal/
+          - listitem [ref=e96]:
+            - link "Política de privacidad" [ref=e97] [cursor=pointer]:
+              - /url: /politica-de-privacidad/
+          - listitem [ref=e98]:
+            - link "Política de cookies" [ref=e99] [cursor=pointer]:
+              - /url: /politica-de-cookies/
+    - paragraph [ref=e101]: © 2026 Teoría Musical — Eduardo Escrig Zomeño. Todos los derechos reservados.
