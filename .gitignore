@@ -24,6 +24,7 @@ tools/raw/
 
 # ----- Node / Playwright -----
 node_modules/
+package.json
 package-lock.json
 audit-mobile.js
 .playwright-mcp/
