@@ -40,7 +40,7 @@
     "6m":"Consonancia Imperfecta","6M":"Consonancia Imperfecta",
     "2m":"Disonancia Absoluta","2M":"Disonancia Absoluta",
     "7m":"Disonancia Absoluta","7M":"Disonancia Absoluta",
-    "4A":"Disonancia Condicional","5d":"Disonancia Condicional",
+    "4A":"Semiconsonancia","5d":"Semiconsonancia",
     "2d":"Disonancia Condicional","3d":"Disonancia Condicional",
     "4d":"Disonancia Condicional","5A":"Disonancia Condicional",
     "2AA":"Disonancia Condicional","3AA":"Disonancia Condicional",
@@ -141,7 +141,7 @@
     var uid = containerId;
 
     var totalQ = PREGUNTAS_POR_TEST;
-    var currentQ, score, cQ, sel, answered, maxAlt, currentDiff;
+    var currentQ, score, cQ, sel, answered, maxAlt, currentDiff, usedFingerprints;
 
     var TITULOS = {
       'grupo':      'Intervalos de ' + (config.val || '') + '\xaa',
@@ -386,6 +386,16 @@
       }
     }
 
+    function getFingerprint() {
+      if (config.test === 'semitono')           return cQ.semitipo;
+      if (config.test === 'construir_semitono') return cQ.cs_tipo;
+      if (config.test === 'construir_numero')   return cQ.cn_d + '_' + (cQ.ascending ? 'a' : 'd');
+      if (config.test === 'asc_des')            return cQ.k + '_' + (cQ.ascending ? 'a' : 'd');
+      if (config.test === 'arm_mel')            return cQ.k + '_' + (cQ.harmonic ? 'h' : 'm');
+      if (config.test === 'completo')           return cQ.k + '_' + (cQ.harmonic ? 'h' : 'm') + '_' + (cQ.ascending ? 'a' : 'd');
+      return cQ.k;
+    }
+
     function accidental(a2) {
       if (a2 ===  2) return '##';
       if (a2 ===  1) return '#';
@@ -448,10 +458,11 @@
       wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
           var d    = DIFICULTADES[parseInt(btn.dataset.i, 10)];
-          maxAlt      = d.maxAlt;
-          currentDiff = d.id;
-          currentQ = 0;
-          score    = 0;
+          maxAlt           = d.maxAlt;
+          currentDiff      = d.id;
+          currentQ         = 0;
+          score            = 0;
+          usedFingerprints = [];
           startQuiz();
         });
       });
@@ -886,7 +897,11 @@
       document.getElementById(uid + '_fb').className = 'tm-fb';
       document.getElementById(uid + '_nxt').className = 'tm-nxt';
 
-      genQ();
+      var fp, tries = 0;
+      do { genQ(); fp = getFingerprint(); tries++; }
+      while (usedFingerprints.indexOf(fp) !== -1 && tries < 50);
+      usedFingerprints.push(fp);
+
       renderContent();
       drawStaff();
     }
@@ -903,12 +918,14 @@
         '</div>'
       ].join('');
       document.getElementById(uid + '_restart').addEventListener('click', function() {
+        usedFingerprints = [];
         if (config.test === 'arm_mel' || config.test === 'asc_des' || config.test === 'con_dis' || config.test === 'semitono' || config.test === 'construir_numero') { currentQ = 0; score = 0; startQuiz(); }
         else showModeScreen();
       });
     }
 
     function init() {
+      usedFingerprints = [];
       if (config.test === 'construir_numero') {
         maxAlt = 0; currentDiff = 'easy';
         currentQ = 0; score = 0;
