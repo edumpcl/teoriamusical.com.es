@@ -1,42 +1,47 @@
-/* Motor de ejercicios — Identificar Escalas Mayores */
+/* Motor de ejercicios — Escalas Mayores Mixtas (principal y secundaria) */
 (function () {
   'use strict';
 
-  var SCALES = [
-    { name: 'Do Mayor',   vex: 'C',  notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {} },
-    { name: 'Sol Mayor',  vex: 'G',  notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'f/5':'#'} },
-    { name: 'Re Mayor',   vex: 'D',  notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'f/4':'#','c/5':'#'} },
-    { name: 'La Mayor',   vex: 'A',  notes: ['a/4','b/4','c/5','d/5','e/5','f/5','g/5','a/5'], acc: {'c/5':'#','f/5':'#','g/5':'#'} },
-    { name: 'Mi Mayor',   vex: 'E',  notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'f/4':'#','g/4':'#','c/5':'#','d/5':'#'} },
-    { name: 'Si Mayor',   vex: 'B',  notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'c/4':'#','d/4':'#','f/4':'#','g/4':'#','a/4':'#'} },
-    { name: 'Fa# Mayor',  vex: 'F#', notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'f/4':'#','g/4':'#','a/4':'#','c/5':'#','d/5':'#','e/5':'#','f/5':'#'} },
-    { name: 'Do# Mayor',  vex: 'C#', notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'#','d/4':'#','e/4':'#','f/4':'#','g/4':'#','a/4':'#','b/4':'#','c/5':'#'} },
-    { name: 'Fa Mayor',   vex: 'F',  notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'b/4':'b'} },
-    { name: 'Sib Mayor',  vex: 'Bb', notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'b/3':'b','e/4':'b','b/4':'b'} },
-    { name: 'Mib Mayor',  vex: 'Eb', notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'e/4':'b','a/4':'b','b/4':'b','e/5':'b'} },
-    { name: 'Lab Mayor',  vex: 'Ab', notes: ['a/3','b/3','c/4','d/4','e/4','f/4','g/4','a/4'], acc: {'a/3':'b','b/3':'b','d/4':'b','e/4':'b','a/4':'b'} },
-    { name: 'Reb Mayor',  vex: 'Db', notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'d/4':'b','e/4':'b','g/4':'b','a/4':'b','b/4':'b','d/5':'b'} },
-    { name: 'Solb Mayor', vex: 'Gb', notes: ['g/3','a/3','b/3','c/4','d/4','e/4','f/4','g/4'], acc: {'g/3':'b','a/3':'b','b/3':'b','c/4':'b','d/4':'b','e/4':'b','g/4':'b'} },
-    { name: 'Dob Mayor',  vex: 'Cb', notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'b','d/4':'b','e/4':'b','f/4':'b','g/4':'b','a/4':'b','b/4':'b','c/5':'b'} }
+  /* ── Mixta principal (b6) ────────────────────────────────────────────────
+     acc     : alteraciones nota a nota (modo sin armadura)
+     vex     : armadura del mayor natural padre
+     accOnKey: alteraciones extra sobre la armadura (solo grado/s modificados) */
+  var SCALES_PRINCIPAL = [
+    { name: 'Do Mayor mixta principal',   vex: 'C',  notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'a/4':'b'},                                                                          accOnKey: {'a/4':'b'} },
+    { name: 'Sol Mayor mixta principal',  vex: 'G',  notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'e/5':'b','f/5':'#'},                                                                accOnKey: {'e/5':'b'} },
+    { name: 'Re Mayor mixta principal',   vex: 'D',  notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'f/4':'#','b/4':'b','c/5':'#'},                                                      accOnKey: {'b/4':'b'} },
+    { name: 'La Mayor mixta principal',   vex: 'A',  notes: ['a/4','b/4','c/5','d/5','e/5','f/5','g/5','a/5'], acc: {'c/5':'#','g/5':'#'},                                                                accOnKey: {'f/5':'n'} },
+    { name: 'Mi Mayor mixta principal',   vex: 'E',  notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'f/4':'#','g/4':'#','d/5':'#'},                                                      accOnKey: {'c/5':'n'} },
+    { name: 'Si Mayor mixta principal',   vex: 'B',  notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'c/4':'#','d/4':'#','f/4':'#','a/4':'#'},                                            accOnKey: {'g/4':'n'} },
+    { name: 'Fa# Mayor mixta principal',  vex: 'F#', notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'f/4':'#','g/4':'#','a/4':'#','c/5':'#','e/5':'#','f/5':'#'},                        accOnKey: {'d/5':'n'} },
+    { name: 'Do# Mayor mixta principal',  vex: 'C#', notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'#','d/4':'#','e/4':'#','f/4':'#','g/4':'#','b/4':'#','c/5':'#'},              accOnKey: {'a/4':'n'} },
+    { name: 'Fa Mayor mixta principal',   vex: 'F',  notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'b/4':'b','d/5':'b'},                                                                accOnKey: {'d/5':'b'} },
+    { name: 'Sib Mayor mixta principal',  vex: 'Bb', notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'b/3':'b','e/4':'b','g/4':'b','b/4':'b'},                                            accOnKey: {'g/4':'b'} },
+    { name: 'Mib Mayor mixta principal',  vex: 'Eb', notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'e/4':'b','a/4':'b','b/4':'b','c/5':'b','e/5':'b'},                                  accOnKey: {'c/5':'b'} },
+    { name: 'Lab Mayor mixta principal',  vex: 'Ab', notes: ['a/3','b/3','c/4','d/4','e/4','f/4','g/4','a/4'], acc: {'a/3':'b','b/3':'b','d/4':'b','e/4':'b','f/4':'b','a/4':'b'},                        accOnKey: {'f/4':'b'} },
+    { name: 'Reb Mayor mixta principal',  vex: 'Db', notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'d/4':'b','e/4':'b','g/4':'b','a/4':'b','b/4':'bb','d/5':'b'},                       accOnKey: {'b/4':'bb'} },
+    { name: 'Solb Mayor mixta principal', vex: 'Gb', notes: ['g/3','a/3','b/3','c/4','d/4','e/4','f/4','g/4'], acc: {'g/3':'b','a/3':'b','b/3':'b','c/4':'b','d/4':'b','e/4':'bb','g/4':'b'},             accOnKey: {'e/4':'bb'} },
+    { name: 'Dob Mayor mixta principal',  vex: 'Cb', notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'b','d/4':'b','e/4':'b','f/4':'b','g/4':'b','a/4':'bb','b/4':'b','c/5':'b'},   accOnKey: {'a/4':'bb'} }
   ];
 
-  var SCALE_PARTS = {
-    'Do Mayor':   { root: 'Do',  acc: '' },
-    'Sol Mayor':  { root: 'Sol', acc: '' },
-    'Re Mayor':   { root: 'Re',  acc: '' },
-    'La Mayor':   { root: 'La',  acc: '' },
-    'Mi Mayor':   { root: 'Mi',  acc: '' },
-    'Si Mayor':   { root: 'Si',  acc: '' },
-    'Fa# Mayor':  { root: 'Fa',  acc: '#' },
-    'Do# Mayor':  { root: 'Do',  acc: '#' },
-    'Fa Mayor':   { root: 'Fa',  acc: '' },
-    'Sib Mayor':  { root: 'Si',  acc: 'b' },
-    'Mib Mayor':  { root: 'Mi',  acc: 'b' },
-    'Lab Mayor':  { root: 'La',  acc: 'b' },
-    'Reb Mayor':  { root: 'Re',  acc: 'b' },
-    'Solb Mayor': { root: 'Sol', acc: 'b' },
-    'Dob Mayor':  { root: 'Do',  acc: 'b' }
-  };
+  /* ── Mixta secundaria (b6 + b7) ─────────────────────────────────────── */
+  var SCALES_SECUNDARIA = [
+    { name: 'Do Mayor mixta secundaria',   vex: 'C',  notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'a/4':'b','b/4':'b'},                                                                         accOnKey: {'a/4':'b','b/4':'b'} },
+    { name: 'Sol Mayor mixta secundaria',  vex: 'G',  notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'e/5':'b'},                                                                                    accOnKey: {'e/5':'b','f/5':'n'} },
+    { name: 'Re Mayor mixta secundaria',   vex: 'D',  notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'f/4':'#','b/4':'b'},                                                                          accOnKey: {'b/4':'b','c/5':'n'} },
+    { name: 'La Mayor mixta secundaria',   vex: 'A',  notes: ['a/4','b/4','c/5','d/5','e/5','f/5','g/5','a/5'], acc: {'c/5':'#'},                                                                                    accOnKey: {'f/5':'n','g/5':'n'} },
+    { name: 'Mi Mayor mixta secundaria',   vex: 'E',  notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'f/4':'#','g/4':'#'},                                                                          accOnKey: {'c/5':'n','d/5':'n'} },
+    { name: 'Si Mayor mixta secundaria',   vex: 'B',  notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'c/4':'#','d/4':'#','f/4':'#'},                                                               accOnKey: {'g/4':'n','a/4':'n'} },
+    { name: 'Fa# Mayor mixta secundaria',  vex: 'F#', notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'f/4':'#','g/4':'#','a/4':'#','c/5':'#','f/5':'#'},                                           accOnKey: {'d/5':'n','e/5':'n'} },
+    { name: 'Do# Mayor mixta secundaria',  vex: 'C#', notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'#','d/4':'#','e/4':'#','f/4':'#','g/4':'#','c/5':'#'},                                 accOnKey: {'a/4':'n','b/4':'n'} },
+    { name: 'Fa Mayor mixta secundaria',   vex: 'F',  notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'b/4':'b','d/5':'b','e/5':'b'},                                                               accOnKey: {'d/5':'b','e/5':'b'} },
+    { name: 'Sib Mayor mixta secundaria',  vex: 'Bb', notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'b/3':'b','e/4':'b','g/4':'b','a/4':'b','b/4':'b'},                                           accOnKey: {'g/4':'b','a/4':'b'} },
+    { name: 'Mib Mayor mixta secundaria',  vex: 'Eb', notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'e/4':'b','a/4':'b','b/4':'b','c/5':'b','d/5':'b','e/5':'b'},                                 accOnKey: {'c/5':'b','d/5':'b'} },
+    { name: 'Lab Mayor mixta secundaria',  vex: 'Ab', notes: ['a/3','b/3','c/4','d/4','e/4','f/4','g/4','a/4'], acc: {'a/3':'b','b/3':'b','d/4':'b','e/4':'b','f/4':'b','g/4':'b','a/4':'b'},                       accOnKey: {'f/4':'b','g/4':'b'} },
+    { name: 'Reb Mayor mixta secundaria',  vex: 'Db', notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'d/4':'b','e/4':'b','g/4':'b','a/4':'b','b/4':'bb','c/5':'b','d/5':'b'},                      accOnKey: {'b/4':'bb','c/5':'b'} },
+    { name: 'Solb Mayor mixta secundaria', vex: 'Gb', notes: ['g/3','a/3','b/3','c/4','d/4','e/4','f/4','g/4'], acc: {'g/3':'b','a/3':'b','b/3':'b','c/4':'b','d/4':'b','e/4':'bb','f/4':'b','g/4':'b'},            accOnKey: {'e/4':'bb','f/4':'b'} },
+    { name: 'Dob Mayor mixta secundaria',  vex: 'Cb', notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'b','d/4':'b','e/4':'b','f/4':'b','g/4':'b','a/4':'bb','b/4':'bb','c/5':'b'},           accOnKey: {'a/4':'bb','b/4':'bb'} }
+  ];
 
   var NOTE_NAMES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
   var ACC_OPTS = [
@@ -44,6 +49,16 @@
     { label: 'sin alt.', val: '' },
     { label: '♯', val: '#' }
   ];
+
+  function parseScaleParts(name) {
+    var base = name.split(' Mayor')[0];
+    if (base.slice(-1) === '#') return { root: base.slice(0, -1), acc: '#' };
+    if (base.slice(-1) === 'b') {
+      var candidate = base.slice(0, -1);
+      if (NOTE_NAMES.indexOf(candidate) !== -1) return { root: candidate, acc: 'b' };
+    }
+    return { root: base, acc: '' };
+  }
 
   var CSS = [
     '.tmesc-wrap{font-family:inherit;color:inherit;width:100%;margin:0 auto;}',
@@ -68,14 +83,12 @@
     '.tmesc-wrap .tm-mode-tag{font-size:.68rem;color:#999;letter-spacing:.05em;margin-bottom:10px;padding:3px 8px;display:inline-block;border:1px solid #e8e0cc;border-radius:2px;background:#fdfcf9;}',
     '.tmesc-wrap .tm-staff-wrap{display:flex;justify-content:center;margin-bottom:18px;background:#fdfcf9;border:1px solid #e8e0cc;border-radius:3px;padding:8px 4px;overflow-x:auto;}',
     '.tmesc-wrap .tm-staff-wrap svg{display:block;max-width:100%;height:auto;}',
-    /* easy */
-    '.tmesc-wrap .tm-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;}',
-    '.tmesc-wrap .tm-opt{font-size:.88rem;font-weight:600;padding:11px 14px;border:1px solid #d8d0b8;background:#fdfcf9;color:#1a1a1a;cursor:pointer;border-radius:3px;transition:all .15s;text-align:center;font-family:inherit;}',
+    '.tmesc-wrap .tm-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;}',
+    '.tmesc-wrap .tm-opt{font-size:.85rem;font-weight:600;padding:11px 14px;border:1px solid #d8d0b8;background:#fdfcf9;color:#1a1a1a;cursor:pointer;border-radius:3px;transition:all .15s;text-align:center;font-family:inherit;}',
     '.tmesc-wrap .tm-opt:hover:not(:disabled){border-color:#8b6914;background:#fdf8ee;}',
     '.tmesc-wrap .tm-opt.tm-ok{border-color:#27ae60!important;background:rgba(39,174,96,.1)!important;color:#1e8449!important;}',
     '.tmesc-wrap .tm-opt.tm-ko{border-color:#c0392b!important;background:rgba(192,57,43,.07)!important;color:#a93226!important;}',
     '.tmesc-wrap .tm-opt:disabled{cursor:default;}',
-    /* hard — 2 pasos */
     '.tmesc-wrap .tm-hard-wrap{display:flex;flex-direction:column;gap:10px;}',
     '.tmesc-wrap .tm-hard-notes{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}',
     '.tmesc-wrap .tm-hard-accs{display:flex;gap:8px;justify-content:center;}',
@@ -91,7 +104,6 @@
     '.tmesc-wrap .tm-ha:disabled{cursor:default;opacity:.35;}',
     '.tmesc-wrap .tm-ha.tm-ok{border-color:#27ae60!important;background:rgba(39,174,96,.1)!important;color:#1e8449!important;opacity:1!important;}',
     '.tmesc-wrap .tm-ha.tm-ko{border-color:#c0392b!important;background:rgba(192,57,43,.07)!important;color:#a93226!important;opacity:1!important;}',
-    /* feedback */
     '.tmesc-wrap .tm-fb{display:none;margin-top:14px;padding:11px 14px;border-radius:3px;font-size:.86rem;line-height:1.6;}',
     '.tmesc-wrap .tm-fb.tm-show{display:block;}',
     '.tmesc-wrap .tm-fb.tm-ok{background:rgba(39,174,96,.08);border:1px solid rgba(39,174,96,.3);color:#1e8449;}',
@@ -119,12 +131,13 @@
     }, 200);
   }
 
-  function tmEscMayores(containerId) {
+  function tmEscMixtasMayores(containerId, tipo) {
     injectCSS();
     var wrap = document.getElementById(containerId);
     if (!wrap) return;
     wrap.className = 'tmesc-wrap';
     var uid = containerId;
+    var SCALES = tipo === 'secundaria' ? SCALES_SECUNDARIA : SCALES_PRINCIPAL;
 
     wrap.innerHTML = [
       '<div class="tm-controls">',
@@ -141,7 +154,7 @@
       '<div class="tm-pbar-wrap"><div class="tm-pbar" id="' + uid + '_pbar"></div></div>',
       '<div class="tm-card" id="' + uid + '_card">',
         '<div class="tm-qlbl">Pregunta <span class="tm-qnum" id="' + uid + '_qnum">1</span></div>',
-        '<div class="tm-qtxt">¿Qué escala mayor es esta?</div>',
+        '<div class="tm-qtxt">¿Qué escala mayor mixta es esta?</div>',
         '<div class="tm-mode-tag" id="' + uid + '_modetag"></div>',
         '<div class="tm-staff-wrap"><div id="' + uid + '_staff"></div></div>',
         '<div id="' + uid + '_opts"></div>',
@@ -203,7 +216,6 @@
         wrong = wrong.sort(function () { return Math.random() - 0.5; }).slice(0, 3);
         opts = [correct].concat(wrong).sort(function () { return Math.random() - 0.5; });
       }
-
       var useArm = Math.random() < 0.5;
       return { scale: correct, opts: opts, useArm: useArm };
     }
@@ -224,11 +236,13 @@
       if (q.useArm) stave.addKeySignature(q.scale.vex);
       stave.setContext(ctx).draw();
 
+      var accMap = q.useArm ? q.scale.accOnKey : q.scale.acc;
       var formatWidth = q.useArm ? W - 150 : W - 80;
+
       var notes = q.scale.notes.map(function (pitch) {
         var note = new VF.StaveNote({ keys: [pitch], duration: 'w' });
-        if (!q.useArm && q.scale.acc && q.scale.acc[pitch]) {
-          note.addModifier(new VF.Accidental(q.scale.acc[pitch]), 0);
+        if (accMap && accMap[pitch]) {
+          note.addModifier(new VF.Accidental(accMap[pitch]), 0);
         }
         return note;
       });
@@ -306,7 +320,7 @@
         b.disabled = true;
         b.addEventListener('click', function () {
           if (!selRoot || st.answered) return;
-          var chosen = selRoot + a.val + ' Mayor';
+          var chosen = selRoot + a.val + ' Mayor mixta ' + tipo;
           answerHard(chosen, notesRow, accsRow, b);
         });
         accsRow.appendChild(b);
@@ -351,7 +365,7 @@
       st.answered = true;
       st.total++;
       var correct = cQ.scale.name;
-      var cp = SCALE_PARTS[correct];
+      var cp = parseScaleParts(correct);
       var isOk = chosen === correct;
 
       var selNoteBtn = null;
@@ -399,5 +413,5 @@
     waitVex(nextQ);
   }
 
-  window.tmEscMayores = tmEscMayores;
+  window.tmEscMixtasMayores = tmEscMixtasMayores;
 })();
