@@ -122,7 +122,11 @@
     '.tmdib-wrap .tm-nxt.tm-show{display:block;}',
     '@keyframes tmdib-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}',
     '.tmdib-wrap .tm-shake{animation:tmdib-shake 0.4s ease;}',
-    '@media(max-width:480px){.tmdib-wrap .tm-tool{font-size:.9rem;padding:10px 6px;white-space:nowrap;}}'
+    '@media(max-width:480px){.tmdib-wrap .tm-tool{font-size:.9rem;padding:10px 6px;white-space:nowrap;}}',
+    '.tmdib-wrap .tm-loupe{position:fixed;display:none;pointer-events:none;z-index:9999;background:#fdfcf9;border:2px solid #333;border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,0.35);transform:translate(-50%,calc(-100% - 18px));}',
+    '.tmdib-wrap .tm-loupe::after{content:"";position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);border:11px solid transparent;border-top-color:#333;border-bottom:none;}',
+    '.tmdib-wrap .tm-loupe::before{content:"";position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-top-color:#fdfcf9;border-bottom:none;z-index:1;}',
+    '.tmdib-wrap .tm-loupe-staff{line-height:0;}'
   ].join('');
 
   function injectCSS(id, css) {
@@ -316,6 +320,9 @@
         '<button class="tm-submit" id="' + uid + '_submit">Comprobar Dibujo</button>',
         '<div class="tm-fb" id="' + uid + '_fb"></div>',
         '<button class="tm-nxt" id="' + uid + '_nxt">Siguiente Tonalidad →</button>',
+      '</div>',
+      '<div class="tm-loupe" id="' + uid + '_loupe">',
+        '<div class="tm-loupe-staff" id="' + uid + '_lstaff"></div>',
       '</div>'
     ].join('');
 
@@ -339,6 +346,9 @@
     var elNxt    = document.getElementById(uid + '_nxt');
     var elSubmit = document.getElementById(uid + '_submit');
     var elCard   = document.getElementById(uid + '_card');
+    var elLoupe  = document.getElementById(uid + '_loupe');
+    var elLstaff = document.getElementById(uid + '_lstaff');
+    var lastLoupeKey = null;
 
     document.getElementById(uid + '_tool_sharp').addEventListener('click', function () { setTool('#'); });
     document.getElementById(uid + '_tool_flat').addEventListener('click', function () { setTool('b'); });
@@ -356,6 +366,7 @@
     function setTool(tool) {
       if (st.answered) return;
       activeTool = tool;
+      lastLoupeKey = null;
       document.getElementById(uid + '_tool_sharp').className = 'tm-tool' + (tool === '#' ? ' tm-active' : '');
       document.getElementById(uid + '_tool_flat').className = 'tm-tool' + (tool === 'b' ? ' tm-active' : '');
     }
@@ -406,6 +417,31 @@
       voice.draw(ctx, stave);
     }
 
+    function renderLoupeStaff(pitch, accType) {
+      var key = pitch + accType;
+      if (key === lastLoupeKey) return;
+      lastLoupeKey = key;
+      elLstaff.innerHTML = '';
+      if (typeof Vex === 'undefined') return;
+      var VF = Vex.Flow;
+      var rend = new VF.Renderer(elLstaff, VF.Renderer.Backends.SVG);
+      rend.resize(170, 90);
+      var ctx = rend.getContext();
+      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
+      var stave = new VF.Stave(5, 18, 158);
+      stave.addClef('treble');
+      stave.setContext(ctx).draw();
+      var note = new VF.StaveNote({ keys: [pitch], duration: 'w' });
+      note.setStyle({ fillStyle: 'transparent', strokeStyle: 'transparent' });
+      var acc = new VF.Accidental(accType);
+      if (acc.setStyle) acc.setStyle({ fillStyle: '#1a1a1a', strokeStyle: '#1a1a1a' });
+      note.addModifier(acc, 0);
+      var voice = new VF.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
+      voice.addTickables([note]);
+      new VF.Formatter().joinVoices([voice]).format([voice], 80);
+      voice.draw(ctx, stave);
+    }
+
     function attachStaffListener() {
       var isDragging = false;
       var currentBest = null;
@@ -434,10 +470,16 @@
           elGhost.textContent = activeTool === '#' ? '♯' : '♭';
           elHigh.style.display = 'block';
           elHigh.style.top = (finalY - 6) + 'px';
+          /* lupa encima del dedo */
+          elLoupe.style.left = clientX + 'px';
+          elLoupe.style.top  = clientY + 'px';
+          elLoupe.style.display = 'block';
+          renderLoupeStaff(best.pitch, activeTool);
         } else {
           currentBest = null;
           elGhost.style.display = 'none';
           elHigh.style.display = 'none';
+          elLoupe.style.display = 'none';
         }
       }
 
@@ -452,8 +494,10 @@
         if (currentBest && !st.answered) addNote(currentBest.pitch);
         isDragging = false;
         currentBest = null;
+        lastLoupeKey = null;
         elGhost.style.display = 'none';
         elHigh.style.display = 'none';
+        elLoupe.style.display = 'none';
       }
 
       elWrap.addEventListener('mousedown', startAction);
