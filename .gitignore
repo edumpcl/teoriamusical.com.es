@@ -29,6 +29,9 @@ package-lock.json
 audit-mobile.js
 .playwright-mcp/
 
+# ----- Claude Code (configuración local) -----
+.claude/settings.local.json
+
 # ----- Logs / temporales -----
 *.log
 .cache/
