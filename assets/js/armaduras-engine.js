@@ -425,10 +425,10 @@
       if (typeof Vex === 'undefined') return;
       var VF = Vex.Flow;
       var rend = new VF.Renderer(elLstaff, VF.Renderer.Backends.SVG);
-      rend.resize(170, 90);
+      rend.resize(300, 120);
       var ctx = rend.getContext();
       ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new VF.Stave(5, 18, 158);
+      var stave = new VF.Stave(10, 20, 280);
       stave.addClef('treble');
       stave.setContext(ctx).draw();
       var note = new VF.StaveNote({ keys: [pitch], duration: 'w' });
@@ -438,8 +438,10 @@
       note.addModifier(acc, 0);
       var voice = new VF.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
       voice.addTickables([note]);
-      new VF.Formatter().joinVoices([voice]).format([voice], 80);
+      new VF.Formatter().joinVoices([voice]).format([voice], 180);
       voice.draw(ctx, stave);
+      var svg = elLstaff.querySelector('svg');
+      if (svg) { svg.setAttribute('viewBox','0 0 300 120'); svg.setAttribute('width','180'); svg.setAttribute('height','72'); }
     }
 
     function attachStaffListener() {

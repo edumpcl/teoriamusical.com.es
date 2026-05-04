@@ -65,7 +65,7 @@
   var CSS = [
     '.tm-iv-wrap .tm-card{background:#fff;border:1px solid #d8d0b8;border-radius:12px;padding:24px;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.05);}',
     '.tm-iv-wrap .tm-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:#8b6914;border-radius:12px 12px 0 0;}',
-    '.tm-iv-wrap .tm-staff{background:#fdfcf9;border:1px solid #e8e0cc;border-radius:8px;margin:15px 0;min-height:140px;display:flex;justify-content:center;}',
+    '.tm-iv-wrap .tm-staff{background:#fdfcf9;border:1px solid #e8e0cc;border-radius:8px;margin:15px 0;min-height:140px;display:flex;justify-content:center;align-items:flex-start;}',
     '.tm-iv-wrap .tm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:10px;margin-top:10px;}',
     '.tm-iv-wrap .tm-opt{font-size:.85rem;font-weight:700;padding:12px;border:1px solid #d8d0b8;background:#f5f2ea;cursor:pointer;border-radius:6px;transition:0.2s;text-align:center;font-family:inherit;}',
     '.tm-iv-wrap .tm-opt.tm-sel{background:#8b6914!important;color:#fff!important;border-color:#8b6914!important;box-shadow:0 4px 10px rgba(139,105,20,0.3);}',
@@ -122,7 +122,11 @@
     '.tm-iv-wrap .tm-cs-acc-btn.tm-ko{background:#c0392b!important;color:#fff!important;border-color:#c0392b!important;}',
     '.tm-iv-wrap .tm-construir-dir{font-size:.88rem;color:#555;text-align:center;margin:4px 0 8px;padding:5px 10px;background:#f5f2ea;border-radius:6px;font-weight:600;}',
     '.tm-iv-wrap .tm-construir-hint{font-size:.78rem;color:#999;text-align:center;margin:0 0 4px;font-style:italic;}',
-    '.tm-iv-wrap .tm-staff[data-construir]{cursor:crosshair;}'
+    '.tm-iv-wrap .tm-staff[data-construir]{cursor:crosshair;}',
+    '.tm-iv-wrap .tm-iv-loupe{position:fixed;display:none;pointer-events:none;z-index:9999;background:#fdfcf9;border:2px solid #333;border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,0.35);transform:translate(-50%,calc(-100% - 18px));}',
+    '.tm-iv-wrap .tm-iv-loupe::after{content:"";position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);border:11px solid transparent;border-top-color:#333;border-bottom:none;}',
+    '.tm-iv-wrap .tm-iv-loupe::before{content:"";position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-top-color:#fdfcf9;border-bottom:none;z-index:1;}',
+    '.tm-iv-wrap .tm-iv-loupe-staff{line-height:0;}'
   ].join('');
 
   function injectCSS() {
@@ -413,7 +417,7 @@
       elNot.innerHTML = '';
       var V = Vex.Flow;
       var r = new V.Renderer(elNot, V.Renderer.Backends.SVG);
-      r.resize(300, 160);
+      r.resize(300, 220);
       var ctx = r.getContext();
       var stave = new V.Stave(10, 20, 280);
       stave.addClef('treble').setContext(ctx).draw();
@@ -484,7 +488,8 @@
           '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>',
           '<div id="' + uid + '_fb" class="tm-fb"></div>',
           '<button id="' + uid + '_nxt" class="tm-nxt">Siguiente \u2192</button>',
-        '</div>'
+        '</div>',
+        '<div class="tm-iv-loupe" id="' + uid + '_loupe"><div class="tm-iv-loupe-staff" id="' + uid + '_lstaff"></div></div>'
       ].join('');
 
       document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
@@ -492,19 +497,61 @@
 
       if (config.test === 'construir' || config.test === 'construir_semitono' || config.test === 'construir_numero') {
         var elNotDiv = document.getElementById(uid + '_not');
+        var elLoupe  = document.getElementById(uid + '_loupe');
+        var elLstaff = document.getElementById(uid + '_lstaff');
+        var lastLoupeKey = null;
         elNotDiv.style.cursor = 'crosshair';
+
+        function calcStep(clientY) {
+          var rect = elNotDiv.getBoundingClientRect();
+          var ns = Math.round((clientY - rect.top - 60) / 5);
+          return Math.max(-3, Math.min(12, ns));
+        }
+
+        function renderLoupeNote(vfn, oct, acc) {
+          var key = vfn + oct + acc;
+          if (key === lastLoupeKey) return;
+          lastLoupeKey = key;
+          elLstaff.innerHTML = '';
+          if (typeof Vex === 'undefined') return;
+          var V = Vex.Flow;
+          var rend = new V.Renderer(elLstaff, V.Renderer.Backends.SVG);
+          rend.resize(300, 220);
+          var ctx = rend.getContext();
+          ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
+          var stave = new V.Stave(10, 38, 280);
+          stave.addClef('treble').setContext(ctx).draw();
+          var note = new V.StaveNote({ keys: [vfn + '/' + oct], duration: 'w' });
+          var accStr = accidental(acc);
+          if (accStr) note.addModifier(new V.Accidental(accStr), 0);
+          var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
+          voice.addTickables([note]);
+          new V.Formatter().joinVoices([voice]).format([voice], 180);
+          voice.draw(ctx, stave);
+          var svg = elLstaff.querySelector('svg');
+          if (svg) { svg.setAttribute('viewBox','0 0 300 220'); svg.setAttribute('width','180'); svg.setAttribute('height','132'); }
+        }
+
+        function showLoupe(clientX, clientY) {
+          if (answered) return;
+          var rd = CS_ROWS[calcStep(clientY) + 3];
+          elLoupe.style.left = clientX + 'px';
+          elLoupe.style.top  = clientY + 'px';
+          elLoupe.style.display = 'block';
+          renderLoupeNote(rd.vfn, rd.oct, sel.acc || 0);
+        }
+
+        function hideLoupe() {
+          elLoupe.style.display = 'none';
+          lastLoupeKey = null;
+        }
+
         var onConstruirStaffInteract = function(e) {
           if (answered) return;
-          var rect = elNotDiv.getBoundingClientRect();
           var clientY = (e.changedTouches || e.touches)
             ? (e.changedTouches || e.touches)[0].clientY
             : e.clientY;
-          var clickY = clientY - rect.top;
-          /* staveY=20 → top line (F5) at px=60; cada paso = 5px
-             noteStep -3=Si5, -2=La5, -1=Sol5, 0=Fa5, …, 12=La3 */
-          var noteStep = Math.round((clickY - 60) / 5);
-          noteStep = Math.max(-3, Math.min(12, noteStep));
-          var rd = CS_ROWS[noteStep + 3];
+          var rd = CS_ROWS[calcStep(clientY) + 3];
           sel.construirNote = rd;
           sel.ans = rd.n + '_' + rd.oct + '_' + sel.acc;
           drawConstruirPreview(rd.vfn, rd.oct, sel.acc);
@@ -512,9 +559,23 @@
           var hintEl = document.getElementById(uid + '_content').querySelector('.tm-construir-hint');
           if (hintEl) hintEl.textContent = 'Pulsa de nuevo para cambiar la nota';
         };
+
         elNotDiv.addEventListener('click', onConstruirStaffInteract);
+        elNotDiv.addEventListener('mousemove', function(e) { showLoupe(e.clientX, e.clientY); });
+        elNotDiv.addEventListener('mouseleave', hideLoupe);
+        elNotDiv.addEventListener('touchstart', function(e) {
+          e.preventDefault();
+          var t = e.touches[0];
+          showLoupe(t.clientX, t.clientY);
+        }, {passive: false});
+        elNotDiv.addEventListener('touchmove', function(e) {
+          e.preventDefault();
+          var t = e.touches[0];
+          showLoupe(t.clientX, t.clientY);
+        }, {passive: false});
         elNotDiv.addEventListener('touchend', function(e) {
           e.preventDefault();
+          hideLoupe();
           onConstruirStaffInteract(e);
         }, {passive: false});
       }
@@ -710,7 +771,7 @@
       elNot.innerHTML = '';
       var V = Vex.Flow;
       var r = new V.Renderer(elNot, V.Renderer.Backends.SVG);
-      var staveH = (config.test === 'construir' || config.test === 'construir_semitono' || config.test === 'construir_numero') ? 160 : 130;
+      var staveH = (config.test === 'construir' || config.test === 'construir_semitono' || config.test === 'construir_numero') ? 220 : 130;
       var staveY = (config.test === 'construir' || config.test === 'construir_semitono' || config.test === 'construir_numero') ? 20 : 10;
       r.resize(300, staveH);
       var ctx = r.getContext();
