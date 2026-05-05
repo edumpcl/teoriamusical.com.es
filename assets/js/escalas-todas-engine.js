@@ -1,0 +1,647 @@
+/* Motor de ejercicios — Todas las Escalas (90 escalas: 6 tipos × 15 tonalidades) */
+(function () {
+  'use strict';
+
+  var SCALES_MAY_NAT = [
+    { name: 'Do Mayor',   vex: 'C',  notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {},                                                                                                                     accOnKey: {} },
+    { name: 'Sol Mayor',  vex: 'G',  notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'f/5':'#'},                                                                                                            accOnKey: {} },
+    { name: 'Re Mayor',   vex: 'D',  notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'f/4':'#','c/5':'#'},                                                                                                  accOnKey: {} },
+    { name: 'La Mayor',   vex: 'A',  notes: ['a/4','b/4','c/5','d/5','e/5','f/5','g/5','a/5'], acc: {'c/5':'#','f/5':'#','g/5':'#'},                                                                                        accOnKey: {} },
+    { name: 'Mi Mayor',   vex: 'E',  notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'f/4':'#','g/4':'#','c/5':'#','d/5':'#'},                                                                              accOnKey: {} },
+    { name: 'Si Mayor',   vex: 'B',  notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'c/4':'#','d/4':'#','f/4':'#','g/4':'#','a/4':'#'},                                                                    accOnKey: {} },
+    { name: 'Fa# Mayor',  vex: 'F#', notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'f/4':'#','g/4':'#','a/4':'#','c/5':'#','d/5':'#','e/5':'#','f/5':'#'},                                               accOnKey: {} },
+    { name: 'Do# Mayor',  vex: 'C#', notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'#','d/4':'#','e/4':'#','f/4':'#','g/4':'#','a/4':'#','b/4':'#','c/5':'#'},                                     accOnKey: {} },
+    { name: 'Fa Mayor',   vex: 'F',  notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'b/4':'b'},                                                                                                            accOnKey: {} },
+    { name: 'Sib Mayor',  vex: 'Bb', notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'b/3':'b','e/4':'b','b/4':'b'},                                                                                        accOnKey: {} },
+    { name: 'Mib Mayor',  vex: 'Eb', notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'e/4':'b','a/4':'b','b/4':'b','e/5':'b'},                                                                              accOnKey: {} },
+    { name: 'Lab Mayor',  vex: 'Ab', notes: ['a/3','b/3','c/4','d/4','e/4','f/4','g/4','a/4'], acc: {'a/3':'b','b/3':'b','d/4':'b','e/4':'b','a/4':'b'},                                                                    accOnKey: {} },
+    { name: 'Reb Mayor',  vex: 'Db', notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'d/4':'b','e/4':'b','g/4':'b','a/4':'b','b/4':'b','d/5':'b'},                                                         accOnKey: {} },
+    { name: 'Solb Mayor', vex: 'Gb', notes: ['g/3','a/3','b/3','c/4','d/4','e/4','f/4','g/4'], acc: {'g/3':'b','a/3':'b','b/3':'b','c/4':'b','d/4':'b','e/4':'b','g/4':'b'},                                               accOnKey: {} },
+    { name: 'Dob Mayor',  vex: 'Cb', notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'b','d/4':'b','e/4':'b','f/4':'b','g/4':'b','a/4':'b','b/4':'b','c/5':'b'},                                     accOnKey: {} }
+  ];
+
+  var SCALES_MAY_PRIN = [
+    { name: 'Do Mayor mixta principal',   vex: 'C',  notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'a/4':'b'},                                                                                            accOnKey: {'a/4':'b'} },
+    { name: 'Sol Mayor mixta principal',  vex: 'G',  notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'e/5':'b','f/5':'#'},                                                                                  accOnKey: {'e/5':'b'} },
+    { name: 'Re Mayor mixta principal',   vex: 'D',  notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'f/4':'#','b/4':'b','c/5':'#'},                                                                        accOnKey: {'b/4':'b'} },
+    { name: 'La Mayor mixta principal',   vex: 'A',  notes: ['a/4','b/4','c/5','d/5','e/5','f/5','g/5','a/5'], acc: {'c/5':'#','g/5':'#'},                                                                                  accOnKey: {'f/5':'n'} },
+    { name: 'Mi Mayor mixta principal',   vex: 'E',  notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'f/4':'#','g/4':'#','d/5':'#'},                                                                        accOnKey: {'c/5':'n'} },
+    { name: 'Si Mayor mixta principal',   vex: 'B',  notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'c/4':'#','d/4':'#','f/4':'#','a/4':'#'},                                                              accOnKey: {'g/4':'n'} },
+    { name: 'Fa# Mayor mixta principal',  vex: 'F#', notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'f/4':'#','g/4':'#','a/4':'#','c/5':'#','e/5':'#','f/5':'#'},                                          accOnKey: {'d/5':'n'} },
+    { name: 'Do# Mayor mixta principal',  vex: 'C#', notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'#','d/4':'#','e/4':'#','f/4':'#','g/4':'#','b/4':'#','c/5':'#'},                                accOnKey: {'a/4':'n'} },
+    { name: 'Fa Mayor mixta principal',   vex: 'F',  notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'b/4':'b','d/5':'b'},                                                                                  accOnKey: {'d/5':'b'} },
+    { name: 'Sib Mayor mixta principal',  vex: 'Bb', notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'b/3':'b','e/4':'b','g/4':'b','b/4':'b'},                                                              accOnKey: {'g/4':'b'} },
+    { name: 'Mib Mayor mixta principal',  vex: 'Eb', notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'e/4':'b','a/4':'b','b/4':'b','c/5':'b','e/5':'b'},                                                    accOnKey: {'c/5':'b'} },
+    { name: 'Lab Mayor mixta principal',  vex: 'Ab', notes: ['a/3','b/3','c/4','d/4','e/4','f/4','g/4','a/4'], acc: {'a/3':'b','b/3':'b','d/4':'b','e/4':'b','f/4':'b','a/4':'b'},                                          accOnKey: {'f/4':'b'} },
+    { name: 'Reb Mayor mixta principal',  vex: 'Db', notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'d/4':'b','e/4':'b','g/4':'b','a/4':'b','b/4':'bb','d/5':'b'},                                         accOnKey: {'b/4':'bb'} },
+    { name: 'Solb Mayor mixta principal', vex: 'Gb', notes: ['g/3','a/3','b/3','c/4','d/4','e/4','f/4','g/4'], acc: {'g/3':'b','a/3':'b','b/3':'b','c/4':'b','d/4':'b','e/4':'bb','g/4':'b'},                               accOnKey: {'e/4':'bb'} },
+    { name: 'Dob Mayor mixta principal',  vex: 'Cb', notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'b','d/4':'b','e/4':'b','f/4':'b','g/4':'b','a/4':'bb','b/4':'b','c/5':'b'},                     accOnKey: {'a/4':'bb'} }
+  ];
+
+  var SCALES_MAY_SEC = [
+    { name: 'Do Mayor mixta secundaria',   vex: 'C',  notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'a/4':'b','b/4':'b'},                                                                                  accOnKey: {'a/4':'b','b/4':'b'} },
+    { name: 'Sol Mayor mixta secundaria',  vex: 'G',  notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'e/5':'b'},                                                                                             accOnKey: {'e/5':'b','f/5':'n'} },
+    { name: 'Re Mayor mixta secundaria',   vex: 'D',  notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'f/4':'#','b/4':'b'},                                                                                   accOnKey: {'b/4':'b','c/5':'n'} },
+    { name: 'La Mayor mixta secundaria',   vex: 'A',  notes: ['a/4','b/4','c/5','d/5','e/5','f/5','g/5','a/5'], acc: {'c/5':'#'},                                                                                             accOnKey: {'f/5':'n','g/5':'n'} },
+    { name: 'Mi Mayor mixta secundaria',   vex: 'E',  notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'f/4':'#','g/4':'#'},                                                                                   accOnKey: {'c/5':'n','d/5':'n'} },
+    { name: 'Si Mayor mixta secundaria',   vex: 'B',  notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'c/4':'#','d/4':'#','f/4':'#'},                                                                        accOnKey: {'g/4':'n','a/4':'n'} },
+    { name: 'Fa# Mayor mixta secundaria',  vex: 'F#', notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'f/4':'#','g/4':'#','a/4':'#','c/5':'#','f/5':'#'},                                                    accOnKey: {'d/5':'n','e/5':'n'} },
+    { name: 'Do# Mayor mixta secundaria',  vex: 'C#', notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'#','d/4':'#','e/4':'#','f/4':'#','g/4':'#','c/5':'#'},                                          accOnKey: {'a/4':'n','b/4':'n'} },
+    { name: 'Fa Mayor mixta secundaria',   vex: 'F',  notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'b/4':'b','d/5':'b','e/5':'b'},                                                                        accOnKey: {'d/5':'b','e/5':'b'} },
+    { name: 'Sib Mayor mixta secundaria',  vex: 'Bb', notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'b/3':'b','e/4':'b','g/4':'b','a/4':'b','b/4':'b'},                                                    accOnKey: {'g/4':'b','a/4':'b'} },
+    { name: 'Mib Mayor mixta secundaria',  vex: 'Eb', notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'e/4':'b','a/4':'b','b/4':'b','c/5':'b','d/5':'b','e/5':'b'},                                          accOnKey: {'c/5':'b','d/5':'b'} },
+    { name: 'Lab Mayor mixta secundaria',  vex: 'Ab', notes: ['a/3','b/3','c/4','d/4','e/4','f/4','g/4','a/4'], acc: {'a/3':'b','b/3':'b','d/4':'b','e/4':'b','f/4':'b','g/4':'b','a/4':'b'},                                accOnKey: {'f/4':'b','g/4':'b'} },
+    { name: 'Reb Mayor mixta secundaria',  vex: 'Db', notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'d/4':'b','e/4':'b','g/4':'b','a/4':'b','b/4':'bb','c/5':'b','d/5':'b'},                               accOnKey: {'b/4':'bb','c/5':'b'} },
+    { name: 'Solb Mayor mixta secundaria', vex: 'Gb', notes: ['g/3','a/3','b/3','c/4','d/4','e/4','f/4','g/4'], acc: {'g/3':'b','a/3':'b','b/3':'b','c/4':'b','d/4':'b','e/4':'bb','f/4':'b','g/4':'b'},                     accOnKey: {'e/4':'bb','f/4':'b'} },
+    { name: 'Dob Mayor mixta secundaria',  vex: 'Cb', notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'b','d/4':'b','e/4':'b','f/4':'b','g/4':'b','a/4':'bb','b/4':'bb','c/5':'b'},                    accOnKey: {'a/4':'bb','b/4':'bb'} }
+  ];
+
+  var SCALES_MEN_NAT = [
+    { name: 'La menor natural',   vex: 'C',  notes: ['a/3','b/3','c/4','d/4','e/4','f/4','g/4','a/4'], acc: {},                                                                                                              accOnKey: {} },
+    { name: 'Mi menor natural',   vex: 'G',  notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'f/4':'#'},                                                                                                     accOnKey: {} },
+    { name: 'Si menor natural',   vex: 'D',  notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'c/4':'#','f/4':'#'},                                                                                          accOnKey: {} },
+    { name: 'Fa# menor natural',  vex: 'A',  notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'f/4':'#','g/4':'#','c/5':'#','f/5':'#'},                                                                      accOnKey: {} },
+    { name: 'Do# menor natural',  vex: 'E',  notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'#','d/4':'#','f/4':'#','g/4':'#','c/5':'#'},                                                            accOnKey: {} },
+    { name: 'Sol# menor natural', vex: 'B',  notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'g/4':'#','a/4':'#','c/5':'#','d/5':'#','f/5':'#','g/5':'#'},                                                  accOnKey: {} },
+    { name: 'Re# menor natural',  vex: 'F#', notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'d/4':'#','e/4':'#','f/4':'#','g/4':'#','a/4':'#','c/5':'#','d/5':'#'},                                        accOnKey: {} },
+    { name: 'La# menor natural',  vex: 'C#', notes: ['a/4','b/4','c/5','d/5','e/5','f/5','g/5','a/5'], acc: {'a/4':'#','b/4':'#','c/5':'#','d/5':'#','e/5':'#','f/5':'#','g/5':'#','a/5':'#'},                              accOnKey: {} },
+    { name: 'Re menor natural',   vex: 'F',  notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'b/4':'b'},                                                                                                     accOnKey: {} },
+    { name: 'Sol menor natural',  vex: 'Bb', notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'b/4':'b','e/5':'b'},                                                                                          accOnKey: {} },
+    { name: 'Do menor natural',   vex: 'Eb', notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'e/4':'b','a/4':'b','b/4':'b'},                                                                                accOnKey: {} },
+    { name: 'Fa menor natural',   vex: 'Ab', notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'a/4':'b','b/4':'b','d/5':'b','e/5':'b'},                                                                      accOnKey: {} },
+    { name: 'Sib menor natural',  vex: 'Db', notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'b/3':'b','d/4':'b','e/4':'b','g/4':'b','a/4':'b','b/4':'b'},                                                  accOnKey: {} },
+    { name: 'Mib menor natural',  vex: 'Gb', notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'e/4':'b','g/4':'b','a/4':'b','b/4':'b','c/5':'b','d/5':'b','e/5':'b'},                                        accOnKey: {} },
+    { name: 'Lab menor natural',  vex: 'Cb', notes: ['a/3','b/3','c/4','d/4','e/4','f/4','g/4','a/4'], acc: {'a/3':'b','b/3':'b','c/4':'b','d/4':'b','e/4':'b','f/4':'b','g/4':'b','a/4':'b'},                              accOnKey: {} }
+  ];
+
+  var SCALES_MEN_ARM = [
+    { name: 'La menor armónica',   vex: 'C',  notes: ['a/3','b/3','c/4','d/4','e/4','f/4','g/4','a/4'], acc: {'g/4':'#'},                                                                                                   accOnKey: {'g/4':'#'} },
+    { name: 'Mi menor armónica',   vex: 'G',  notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'f/4':'#','d/5':'#'},                                                                                         accOnKey: {'d/5':'#'} },
+    { name: 'Si menor armónica',   vex: 'D',  notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'c/4':'#','f/4':'#','a/4':'#'},                                                                               accOnKey: {'a/4':'#'} },
+    { name: 'Fa# menor armónica',  vex: 'A',  notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'f/4':'#','g/4':'#','c/5':'#','e/5':'#','f/5':'#'},                                                           accOnKey: {'e/5':'#'} },
+    { name: 'Do# menor armónica',  vex: 'E',  notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'#','d/4':'#','f/4':'#','g/4':'#','b/4':'#','c/5':'#'},                                                 accOnKey: {'b/4':'#'} },
+    { name: 'Sol# menor armónica', vex: 'B',  notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'g/4':'#','a/4':'#','c/5':'#','d/5':'#','f/5':'##','g/5':'#'},                                                accOnKey: {'f/5':'##'} },
+    { name: 'Re# menor armónica',  vex: 'F#', notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'d/4':'#','e/4':'#','f/4':'#','g/4':'#','a/4':'#','c/5':'##','d/5':'#'},                                      accOnKey: {'c/5':'##'} },
+    { name: 'La# menor armónica',  vex: 'C#', notes: ['a/4','b/4','c/5','d/5','e/5','f/5','g/5','a/5'], acc: {'a/4':'#','b/4':'#','c/5':'#','d/5':'#','e/5':'#','f/5':'#','g/5':'##','a/5':'#'},                            accOnKey: {'g/5':'##'} },
+    { name: 'Re menor armónica',   vex: 'F',  notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'b/4':'b','c/5':'#'},                                                                                         accOnKey: {'c/5':'#'} },
+    { name: 'Sol menor armónica',  vex: 'Bb', notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'b/4':'b','e/5':'b','f/5':'#'},                                                                               accOnKey: {'f/5':'#'} },
+    { name: 'Do menor armónica',   vex: 'Eb', notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'e/4':'b','a/4':'b','b/4':'n'},                                                                               accOnKey: {'b/4':'n'} },
+    { name: 'Fa menor armónica',   vex: 'Ab', notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'a/4':'b','b/4':'b','d/5':'b','e/5':'n'},                                                                     accOnKey: {'e/5':'n'} },
+    { name: 'Sib menor armónica',  vex: 'Db', notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'b/3':'b','d/4':'b','e/4':'b','g/4':'b','a/4':'n','b/4':'b'},                                                 accOnKey: {'a/4':'n'} },
+    { name: 'Mib menor armónica',  vex: 'Gb', notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'e/4':'b','g/4':'b','a/4':'b','b/4':'b','c/5':'b','d/5':'n','e/5':'b'},                                       accOnKey: {'d/5':'n'} },
+    { name: 'Lab menor armónica',  vex: 'Cb', notes: ['a/3','b/3','c/4','d/4','e/4','f/4','g/4','a/4'], acc: {'a/3':'b','b/3':'b','c/4':'b','d/4':'b','e/4':'b','f/4':'b','g/4':'n','a/4':'b'},                             accOnKey: {'g/4':'n'} }
+  ];
+
+  var SCALES_MEN_MEL = [
+    { name: 'La menor melódica',   vex: 'C',  notes: ['a/3','b/3','c/4','d/4','e/4','f/4','g/4','a/4'], acc: {'f/4':'#','g/4':'#'},                                                                                         accOnKey: {'f/4':'#','g/4':'#'} },
+    { name: 'Mi menor melódica',   vex: 'G',  notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'f/4':'#','c/5':'#','d/5':'#'},                                                                               accOnKey: {'c/5':'#','d/5':'#'} },
+    { name: 'Si menor melódica',   vex: 'D',  notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'c/4':'#','f/4':'#','g/4':'#','a/4':'#'},                                                                     accOnKey: {'g/4':'#','a/4':'#'} },
+    { name: 'Fa# menor melódica',  vex: 'A',  notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'f/4':'#','g/4':'#','c/5':'#','d/5':'#','e/5':'#','f/5':'#'},                                                 accOnKey: {'d/5':'#','e/5':'#'} },
+    { name: 'Do# menor melódica',  vex: 'E',  notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'#','d/4':'#','f/4':'#','g/4':'#','a/4':'#','b/4':'#','c/5':'#'},                                       accOnKey: {'a/4':'#','b/4':'#'} },
+    { name: 'Sol# menor melódica', vex: 'B',  notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'g/4':'#','a/4':'#','c/5':'#','d/5':'#','e/5':'#','f/5':'##','g/5':'#'},                                      accOnKey: {'e/5':'#','f/5':'##'} },
+    { name: 'Re# menor melódica',  vex: 'F#', notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'d/4':'#','e/4':'#','f/4':'#','g/4':'#','a/4':'#','b/4':'#','c/5':'##','d/5':'#'},                            accOnKey: {'b/4':'#','c/5':'##'} },
+    { name: 'La# menor melódica',  vex: 'C#', notes: ['a/4','b/4','c/5','d/5','e/5','f/5','g/5','a/5'], acc: {'a/4':'#','b/4':'#','c/5':'#','d/5':'#','e/5':'#','f/5':'##','g/5':'##','a/5':'#'},                           accOnKey: {'f/5':'##','g/5':'##'} },
+    { name: 'Re menor melódica',   vex: 'F',  notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'c/5':'#'},                                                                                                    accOnKey: {'b/4':'n','c/5':'#'} },
+    { name: 'Sol menor melódica',  vex: 'Bb', notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'b/4':'b','f/5':'#'},                                                                                          accOnKey: {'e/5':'n','f/5':'#'} },
+    { name: 'Do menor melódica',   vex: 'Eb', notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'e/4':'b'},                                                                                                    accOnKey: {'a/4':'n','b/4':'n'} },
+    { name: 'Fa menor melódica',   vex: 'Ab', notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'a/4':'b','b/4':'b'},                                                                                          accOnKey: {'d/5':'n','e/5':'n'} },
+    { name: 'Sib menor melódica',  vex: 'Db', notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'b/3':'b','d/4':'b','e/4':'b','b/4':'b'},                                                                     accOnKey: {'g/4':'n','a/4':'n'} },
+    { name: 'Mib menor melódica',  vex: 'Gb', notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'e/4':'b','g/4':'b','a/4':'b','b/4':'b','e/5':'b'},                                                           accOnKey: {'c/5':'n','d/5':'n'} },
+    { name: 'Lab menor melódica',  vex: 'Cb', notes: ['a/3','b/3','c/4','d/4','e/4','f/4','g/4','a/4'], acc: {'a/3':'b','b/3':'b','c/4':'b','d/4':'b','e/4':'b','a/4':'b'},                                                  accOnKey: {'f/4':'n','g/4':'n'} }
+  ];
+
+  var ALL_SCALES = [].concat(SCALES_MAY_NAT, SCALES_MAY_PRIN, SCALES_MAY_SEC, SCALES_MEN_NAT, SCALES_MEN_ARM, SCALES_MEN_MEL);
+
+  var NOTE_NAMES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
+  var ACC_OPTS = [
+    { label: '♭', val: 'b' },
+    { label: 'sin alt.', val: '' },
+    { label: '♯', val: '#' }
+  ];
+  var TYPES_MAYOR = [
+    { label: 'Natural',         val: 'natural' },
+    { label: 'Mixta Principal', val: 'principal' },
+    { label: 'Mixta Secundaria',val: 'secundaria' }
+  ];
+  var TYPES_MENOR = [
+    { label: 'Menor Natural', val: 'natural' },
+    { label: 'Armónica',      val: 'armónica' },
+    { label: 'Melódica',      val: 'melódica' }
+  ];
+
+  function parseScaleParts(name) {
+    var mode, baseStr, type;
+    if (name.indexOf('menor') !== -1) {
+      mode = 'Menor';
+      var mi = name.indexOf(' menor ');
+      baseStr = name.slice(0, mi);
+      type = name.slice(mi + 7);
+    } else {
+      mode = 'Mayor';
+      var mi = name.indexOf(' Mayor');
+      baseStr = name.slice(0, mi);
+      var rest = name.slice(mi + 6).trim();
+      type = rest === '' ? 'natural' : rest === 'mixta principal' ? 'principal' : 'secundaria';
+    }
+    var root, acc;
+    if (baseStr.slice(-1) === '#') {
+      root = baseStr.slice(0, -1); acc = '#';
+    } else if (baseStr.slice(-1) === 'b' && NOTE_NAMES.indexOf(baseStr.slice(0, -1)) !== -1) {
+      root = baseStr.slice(0, -1); acc = 'b';
+    } else {
+      root = baseStr; acc = '';
+    }
+    return { root: root, acc: acc, mode: mode, type: type };
+  }
+
+  function buildAnswer(root, accVal, mode, type) {
+    if (mode === 'Mayor') {
+      if (type === 'natural') return root + accVal + ' Mayor';
+      return root + accVal + ' Mayor mixta ' + type;
+    }
+    return root + accVal + ' menor ' + type;
+  }
+
+  var CSS = [
+    '.tmesc-wrap{font-family:inherit;color:inherit;width:100%;margin:0 auto;}',
+    '.tmesc-wrap *{box-sizing:border-box;margin:0;padding:0;}',
+    '.tmesc-wrap .tm-controls{display:flex;gap:8px;align-items:center;margin-bottom:18px;flex-wrap:wrap;}',
+    '.tmesc-wrap .tm-lbl{font-size:.75rem;color:#999;letter-spacing:.08em;text-transform:uppercase;}',
+    '.tmesc-wrap .tm-btn{font-size:.78rem;padding:6px 14px;border:1px solid #d8d0b8;background:#fff;color:#999;cursor:pointer;border-radius:3px;transition:all .15s;font-family:inherit;}',
+    '.tmesc-wrap .tm-btn:hover{border-color:#8b6914;color:#8b6914;}',
+    '.tmesc-wrap .tm-btn.tm-on{background:#8b6914;color:#fff;border-color:#8b6914;font-weight:600;}',
+    '.tmesc-wrap .tm-stats{display:flex;border:1px solid #d8d0b8;border-radius:3px;overflow:hidden;margin-bottom:18px;background:#fff;}',
+    '.tmesc-wrap .tm-stat{flex:1;padding:9px 8px;border-right:1px solid #d8d0b8;text-align:center;}',
+    '.tmesc-wrap .tm-stat:last-child{border-right:none;}',
+    '.tmesc-wrap .tm-sv{font-size:1.5rem;font-weight:700;color:#8b6914;line-height:1;}',
+    '.tmesc-wrap .tm-sl{font-size:.6rem;color:#aaa;letter-spacing:.06em;text-transform:uppercase;margin-top:2px;}',
+    '.tmesc-wrap .tm-pbar-wrap{height:3px;background:#e8e0cc;border-radius:2px;overflow:hidden;margin-bottom:18px;}',
+    '.tmesc-wrap .tm-pbar{height:100%;background:linear-gradient(90deg,#8b6914,#2a7a6e);transition:width .4s;width:0%;}',
+    '.tmesc-wrap .tm-card{background:#fff;border:1px solid #d8d0b8;border-radius:4px;padding:24px 20px 20px;margin-bottom:16px;position:relative;overflow:hidden;}',
+    '.tmesc-wrap .tm-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#8b6914,#2a7a6e);}',
+    '.tmesc-wrap .tm-qlbl{font-size:.68rem;color:#aaa;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;}',
+    '.tmesc-wrap .tm-qnum{color:#8b6914;font-weight:700;}',
+    '.tmesc-wrap .tm-qtxt{font-size:1.05rem;font-weight:600;margin-bottom:10px;color:#333;}',
+    '.tmesc-wrap .tm-mode-tag{font-size:.68rem;color:#999;letter-spacing:.05em;margin-bottom:10px;padding:3px 8px;display:inline-block;border:1px solid #e8e0cc;border-radius:2px;background:#fdfcf9;}',
+    '.tmesc-wrap .tm-staff-wrap{display:flex;justify-content:center;margin-bottom:18px;background:#fdfcf9;border:1px solid #e8e0cc;border-radius:3px;padding:8px 4px;overflow-x:auto;}',
+    '.tmesc-wrap .tm-staff-wrap svg{display:block;max-width:100%;height:auto;}',
+    '.tmesc-wrap .tm-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;}',
+    '.tmesc-wrap .tm-opt{font-size:.82rem;font-weight:600;padding:11px 14px;border:1px solid #d8d0b8;background:#fdfcf9;color:#1a1a1a;cursor:pointer;border-radius:3px;transition:all .15s;text-align:center;font-family:inherit;}',
+    '.tmesc-wrap .tm-opt:hover:not(:disabled){border-color:#8b6914;background:#fdf8ee;}',
+    '.tmesc-wrap .tm-opt.tm-ok{border-color:#27ae60!important;background:rgba(39,174,96,.1)!important;color:#1e8449!important;}',
+    '.tmesc-wrap .tm-opt.tm-ko{border-color:#c0392b!important;background:rgba(192,57,43,.07)!important;color:#a93226!important;}',
+    '.tmesc-wrap .tm-opt:disabled{cursor:default;}',
+    '.tmesc-wrap .tm-hard-wrap{display:flex;flex-direction:column;gap:10px;}',
+    '.tmesc-wrap .tm-hard-notes{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}',
+    '.tmesc-wrap .tm-hard-accs{display:flex;gap:8px;justify-content:center;}',
+    '.tmesc-wrap .tm-hard-mode{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}',
+    '.tmesc-wrap .tm-hard-types{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}',
+    '.tmesc-wrap .tm-hard-type-group{display:flex;flex-direction:column;gap:6px;align-items:center;}',
+    '.tmesc-wrap .tm-type-group-lbl{font-size:.65rem;color:#999;letter-spacing:.1em;text-transform:uppercase;font-weight:600;}',
+    '.tmesc-wrap .tm-type-btns{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;}',
+    '.tmesc-wrap .tm-acc-hint{font-size:.72rem;color:#aaa;text-align:center;min-height:1em;}',
+    '.tmesc-wrap .tm-hn{font-size:.88rem;font-weight:600;padding:9px 14px;border:1px solid #d8d0b8;background:#fdfcf9;color:#333;cursor:pointer;border-radius:3px;transition:all .15s;font-family:inherit;min-width:56px;text-align:center;}',
+    '.tmesc-wrap .tm-hn:hover:not(:disabled){border-color:#8b6914;background:#fdf8ee;}',
+    '.tmesc-wrap .tm-hn.tm-sel{background:#8b6914;color:#fff;border-color:#8b6914;}',
+    '.tmesc-wrap .tm-hn.tm-ok{border-color:#27ae60!important;background:rgba(39,174,96,.1)!important;color:#1e8449!important;}',
+    '.tmesc-wrap .tm-hn.tm-ko{border-color:#c0392b!important;background:rgba(192,57,43,.07)!important;color:#a93226!important;}',
+    '.tmesc-wrap .tm-hn:disabled{cursor:default;}',
+    '.tmesc-wrap .tm-ha{font-size:.85rem;font-weight:700;padding:9px 16px;border:1px solid #d8d0b8;background:#fdfcf9;color:#333;cursor:pointer;border-radius:3px;transition:all .15s;font-family:inherit;text-align:center;}',
+    '.tmesc-wrap .tm-ha:hover:not(:disabled){border-color:#8b6914;background:#fdf8ee;}',
+    '.tmesc-wrap .tm-ha:disabled{cursor:default;opacity:.35;}',
+    '.tmesc-wrap .tm-ha.tm-sel{background:#8b6914;color:#fff;border-color:#8b6914;opacity:1;}',
+    '.tmesc-wrap .tm-ha.tm-ok{border-color:#27ae60!important;background:rgba(39,174,96,.1)!important;color:#1e8449!important;opacity:1!important;}',
+    '.tmesc-wrap .tm-ha.tm-ko{border-color:#c0392b!important;background:rgba(192,57,43,.07)!important;color:#a93226!important;opacity:1!important;}',
+    '.tmesc-wrap .tm-fb{display:none;margin-top:14px;padding:11px 14px;border-radius:3px;font-size:.86rem;line-height:1.6;}',
+    '.tmesc-wrap .tm-fb.tm-show{display:block;}',
+    '.tmesc-wrap .tm-fb.tm-ok{background:rgba(39,174,96,.08);border:1px solid rgba(39,174,96,.3);color:#1e8449;}',
+    '.tmesc-wrap .tm-fb.tm-ko{background:rgba(192,57,43,.07);border:1px solid rgba(192,57,43,.3);color:#a93226;}',
+    '.tmesc-wrap .tm-nxt{display:none;width:100%;margin-top:12px;padding:11px;font-size:.82rem;letter-spacing:.07em;text-transform:uppercase;background:#8b6914;color:#fff;border:none;border-radius:3px;cursor:pointer;font-weight:600;font-family:inherit;}',
+    '.tmesc-wrap .tm-nxt:hover{opacity:.85;}',
+    '.tmesc-wrap .tm-nxt.tm-show{display:block;}',
+    '@keyframes tmesc-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}',
+    '.tmesc-wrap .tm-shake{animation:tmesc-shake 0.4s ease;}'
+  ].join('');
+
+  function injectCSS() {
+    if (document.getElementById('tmesc-css')) return;
+    var s = document.createElement('style');
+    s.id = 'tmesc-css';
+    s.textContent = CSS;
+    document.head.appendChild(s);
+  }
+
+  function waitVex(cb) {
+    if (typeof Vex !== 'undefined') { cb(); return; }
+    var i = 0, iv = setInterval(function () {
+      if (typeof Vex !== 'undefined') { clearInterval(iv); cb(); }
+      else if (++i > 40) clearInterval(iv);
+    }, 200);
+  }
+
+  function tmEscTodas(containerId) {
+    injectCSS();
+    var wrap = document.getElementById(containerId);
+    if (!wrap) return;
+    wrap.className = 'tmesc-wrap';
+    var uid = containerId;
+
+    wrap.innerHTML = [
+      '<div class="tm-controls">',
+        '<span class="tm-lbl">Dificultad:</span>',
+        '<button class="tm-btn tm-on" id="' + uid + '_easy">Fácil</button>',
+        '<button class="tm-btn" id="' + uid + '_hard">Difícil</button>',
+      '</div>',
+      '<div class="tm-stats">',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_tot">0</div><div class="tm-sl">Preguntas</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_cor">0</div><div class="tm-sl">Correctas</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_pct">—</div><div class="tm-sl">Acierto</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_str">0</div><div class="tm-sl">Racha</div></div>',
+      '</div>',
+      '<div class="tm-pbar-wrap"><div class="tm-pbar" id="' + uid + '_pbar"></div></div>',
+      '<div class="tm-card" id="' + uid + '_card">',
+        '<div class="tm-qlbl">Pregunta <span class="tm-qnum" id="' + uid + '_qnum">1</span></div>',
+        '<div class="tm-qtxt">¿Qué escala es esta?</div>',
+        '<div class="tm-mode-tag" id="' + uid + '_modetag"></div>',
+        '<div class="tm-staff-wrap"><div id="' + uid + '_staff"></div></div>',
+        '<div id="' + uid + '_opts"></div>',
+        '<div class="tm-fb" id="' + uid + '_fb"></div>',
+        '<button class="tm-nxt" id="' + uid + '_nxt">Siguiente →</button>',
+      '</div>'
+    ].join('');
+
+    var st = { total: 0, correct: 0, streak: 0, qnum: 0, answered: false, diff: 'easy' };
+    var used = [];
+    var cQ = null;
+    var selRoot = null;
+    var selAcc  = null;
+    var selMode = null;
+
+    var elTot     = document.getElementById(uid + '_tot');
+    var elCor     = document.getElementById(uid + '_cor');
+    var elPct     = document.getElementById(uid + '_pct');
+    var elStr     = document.getElementById(uid + '_str');
+    var elPbar    = document.getElementById(uid + '_pbar');
+    var elQnum    = document.getElementById(uid + '_qnum');
+    var elStaff   = document.getElementById(uid + '_staff');
+    var elOpts    = document.getElementById(uid + '_opts');
+    var elFb      = document.getElementById(uid + '_fb');
+    var elNxt     = document.getElementById(uid + '_nxt');
+    var elCard    = document.getElementById(uid + '_card');
+    var elModeTag = document.getElementById(uid + '_modetag');
+
+    document.getElementById(uid + '_easy').addEventListener('click', function () { setDiff('easy'); });
+    document.getElementById(uid + '_hard').addEventListener('click', function () { setDiff('hard'); });
+    elNxt.addEventListener('click', nextQ);
+
+    function setDiff(d) {
+      st.diff = d;
+      document.getElementById(uid + '_easy').className = 'tm-btn' + (d === 'easy' ? ' tm-on' : '');
+      document.getElementById(uid + '_hard').className = 'tm-btn' + (d === 'hard' ? ' tm-on' : '');
+      st.total = 0; st.correct = 0; st.streak = 0; st.qnum = 0;
+      used = [];
+      updateStats();
+      nextQ();
+    }
+
+    function updateStats() {
+      elTot.textContent  = st.total;
+      elCor.textContent  = st.correct;
+      elPct.textContent  = st.total > 0 ? Math.round(st.correct / st.total * 100) + '%' : '—';
+      elStr.textContent  = st.streak;
+      elPbar.style.width = st.total > 0 ? Math.round(st.correct / st.total * 100) + '%' : '0%';
+    }
+
+    function genQ() {
+      var pool = ALL_SCALES.filter(function (s, i) { return used.indexOf(i) === -1; });
+      if (!pool.length) { used = []; pool = ALL_SCALES.slice(); }
+      var idx = Math.floor(Math.random() * pool.length);
+      var correct = pool[idx];
+      used.push(ALL_SCALES.indexOf(correct));
+
+      var opts = null;
+      if (st.diff === 'easy') {
+        var wrong = ALL_SCALES.filter(function (s) { return s.name !== correct.name; });
+        wrong = wrong.sort(function () { return Math.random() - 0.5; }).slice(0, 3);
+        opts = [correct].concat(wrong).sort(function () { return Math.random() - 0.5; });
+      }
+      var useArm = Math.random() < 0.5;
+      return { scale: correct, opts: opts, useArm: useArm };
+    }
+
+    function renderStaff(q) {
+      elStaff.innerHTML = '';
+      elModeTag.textContent = q.useArm ? 'Con armadura' : 'Con alteraciones';
+      if (typeof Vex === 'undefined') return;
+      var VF = Vex.Flow;
+      var W = 520, H = 155;
+      var rend = new VF.Renderer(elStaff, VF.Renderer.Backends.SVG);
+      rend.resize(W, H);
+      var ctx = rend.getContext();
+      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
+
+      var stave = new VF.Stave(10, 38, W - 20);
+      stave.addClef('treble');
+      if (q.useArm) stave.addKeySignature(q.scale.vex);
+      stave.setContext(ctx).draw();
+
+      var accMap = q.useArm ? q.scale.accOnKey : q.scale.acc;
+      var formatWidth = q.useArm ? W - 150 : W - 80;
+
+      var notes = q.scale.notes.map(function (pitch) {
+        var note = new VF.StaveNote({ keys: [pitch], duration: 'w' });
+        if (accMap && accMap[pitch]) {
+          note.addModifier(new VF.Accidental(accMap[pitch]), 0);
+        }
+        return note;
+      });
+
+      var voice = new VF.Voice({ num_beats: 8, beat_value: 4 }).setStrict(false);
+      voice.addTickables(notes);
+      new VF.Formatter().joinVoices([voice]).format([voice], formatWidth);
+      voice.draw(ctx, stave);
+
+      var svg = elStaff.querySelector('svg');
+      if (svg) {
+        svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        svg.setAttribute('width', String(W));
+        svg.setAttribute('height', String(H));
+      }
+    }
+
+    function renderOpts() {
+      elOpts.innerHTML = '';
+      st.answered = false;
+      selRoot = null;
+      selAcc  = null;
+      selMode = null;
+
+      if (st.diff === 'easy') {
+        var div = document.createElement('div');
+        div.className = 'tm-opts';
+        cQ.opts.forEach(function (s) {
+          var b = document.createElement('button');
+          b.className = 'tm-opt';
+          b.textContent = s.name;
+          b.addEventListener('click', function () { answerEasy(s.name, b); });
+          div.appendChild(b);
+        });
+        elOpts.appendChild(div);
+      } else {
+        renderHardOpts();
+      }
+    }
+
+    function renderHardOpts() {
+      var hwrap = document.createElement('div');
+      hwrap.className = 'tm-hard-wrap';
+
+      /* ── Row 1: note buttons ─────────────────────────────────────── */
+      var notesRow = document.createElement('div');
+      notesRow.className = 'tm-hard-notes';
+
+      /* ── Hint text ───────────────────────────────────────────────── */
+      var hint = document.createElement('div');
+      hint.className = 'tm-acc-hint';
+      hint.textContent = 'Elige la nota raíz';
+
+      /* ── Row 2: accidental buttons (disabled until note selected) ── */
+      var accsRow = document.createElement('div');
+      accsRow.className = 'tm-hard-accs';
+
+      /* ── Row 3: Mayor / Menor (disabled until acc selected) ──────── */
+      var modeRow = document.createElement('div');
+      modeRow.className = 'tm-hard-mode';
+
+      /* ── Row 4: 6 type buttons in 2 groups (disabled until mode) ─── */
+      var typesWrap = document.createElement('div');
+      typesWrap.className = 'tm-hard-types';
+
+      /* Mayor group */
+      var mayGrp = document.createElement('div');
+      mayGrp.className = 'tm-hard-type-group';
+      var mayLbl = document.createElement('div');
+      mayLbl.className = 'tm-type-group-lbl';
+      mayLbl.textContent = 'Mayor';
+      var mayBtns = document.createElement('div');
+      mayBtns.className = 'tm-type-btns';
+
+      /* Menor group */
+      var menGrp = document.createElement('div');
+      menGrp.className = 'tm-hard-type-group';
+      var menLbl = document.createElement('div');
+      menLbl.className = 'tm-type-group-lbl';
+      menLbl.textContent = 'menor';
+      var menBtns = document.createElement('div');
+      menBtns.className = 'tm-type-btns';
+
+      /* Note buttons */
+      NOTE_NAMES.forEach(function (n) {
+        var b = document.createElement('button');
+        b.className = 'tm-hn';
+        b.textContent = n;
+        b.dataset.note = n;
+        b.addEventListener('click', function () {
+          if (st.answered) return;
+          selRoot = n;
+          notesRow.querySelectorAll('.tm-hn').forEach(function (x) {
+            x.classList.toggle('tm-sel', x.dataset.note === n);
+          });
+          accsRow.querySelectorAll('.tm-ha').forEach(function (x) { x.disabled = false; });
+          hint.textContent = 'Ahora elige la alteración';
+        });
+        notesRow.appendChild(b);
+      });
+
+      /* Accidental buttons */
+      ACC_OPTS.forEach(function (a) {
+        var b = document.createElement('button');
+        b.className = 'tm-ha';
+        b.textContent = a.label;
+        b.dataset.acc = a.val;
+        b.disabled = true;
+        b.addEventListener('click', function () {
+          if (st.answered) return;
+          selAcc = a.val;
+          accsRow.querySelectorAll('.tm-ha').forEach(function (x) {
+            x.classList.toggle('tm-sel', x.dataset.acc === a.val);
+          });
+          modeRow.querySelectorAll('.tm-ha').forEach(function (x) { x.disabled = false; });
+          hint.textContent = '¿Mayor o Menor?';
+        });
+        accsRow.appendChild(b);
+      });
+
+      /* Mode buttons */
+      ['Mayor', 'Menor'].forEach(function (m) {
+        var b = document.createElement('button');
+        b.className = 'tm-ha';
+        b.textContent = m;
+        b.dataset.mode = m;
+        b.disabled = true;
+        b.addEventListener('click', function () {
+          if (st.answered) return;
+          selMode = m;
+          modeRow.querySelectorAll('.tm-ha').forEach(function (x) {
+            x.classList.toggle('tm-sel', x.dataset.mode === m);
+          });
+          typesWrap.querySelectorAll('.tm-ha').forEach(function (x) {
+            x.disabled = (x.dataset.grp !== m);
+          });
+          hint.textContent = 'Selecciona el tipo de escala';
+        });
+        modeRow.appendChild(b);
+      });
+
+      /* Type buttons — Mayor group */
+      TYPES_MAYOR.forEach(function (t) {
+        var b = document.createElement('button');
+        b.className = 'tm-ha';
+        b.textContent = t.label;
+        b.dataset.grp  = 'Mayor';
+        b.dataset.type = t.val;
+        b.disabled = true;
+        b.addEventListener('click', function () { doSubmit(t.val, notesRow, accsRow, modeRow, typesWrap); });
+        mayBtns.appendChild(b);
+      });
+
+      /* Type buttons — Menor group */
+      TYPES_MENOR.forEach(function (t) {
+        var b = document.createElement('button');
+        b.className = 'tm-ha';
+        b.textContent = t.label;
+        b.dataset.grp  = 'Menor';
+        b.dataset.type = t.val;
+        b.disabled = true;
+        b.addEventListener('click', function () { doSubmit(t.val, notesRow, accsRow, modeRow, typesWrap); });
+        menBtns.appendChild(b);
+      });
+
+      mayGrp.appendChild(mayLbl);
+      mayGrp.appendChild(mayBtns);
+      menGrp.appendChild(menLbl);
+      menGrp.appendChild(menBtns);
+      typesWrap.appendChild(mayGrp);
+      typesWrap.appendChild(menGrp);
+
+      hwrap.appendChild(notesRow);
+      hwrap.appendChild(hint);
+      hwrap.appendChild(accsRow);
+      hwrap.appendChild(modeRow);
+      hwrap.appendChild(typesWrap);
+      elOpts.appendChild(hwrap);
+    }
+
+    function doSubmit(typeVal, notesRow, accsRow, modeRow, typesWrap) {
+      if (st.answered) return;
+      st.answered = true;
+      st.total++;
+
+      var correct = cQ.scale.name;
+      var cp = parseScaleParts(correct);
+      var chosen = buildAnswer(selRoot, selAcc, selMode, typeVal);
+      var isOk = chosen === correct;
+
+      /* Disable everything */
+      notesRow.querySelectorAll('button').forEach(function (x) { x.disabled = true; });
+      accsRow.querySelectorAll('button').forEach(function (x) { x.disabled = true; });
+      modeRow.querySelectorAll('button').forEach(function (x) { x.disabled = true; });
+      typesWrap.querySelectorAll('button').forEach(function (x) { x.disabled = true; });
+
+      if (isOk) {
+        st.correct++; st.streak++;
+
+        notesRow.querySelectorAll('.tm-hn').forEach(function (x) {
+          if (x.dataset.note === selRoot) { x.classList.remove('tm-sel'); x.classList.add('tm-ok'); }
+        });
+        accsRow.querySelectorAll('.tm-ha').forEach(function (x) {
+          if (x.dataset.acc === selAcc) { x.classList.remove('tm-sel'); x.classList.add('tm-ok'); }
+        });
+        modeRow.querySelectorAll('.tm-ha').forEach(function (x) {
+          if (x.dataset.mode === selMode) { x.classList.remove('tm-sel'); x.classList.add('tm-ok'); }
+        });
+        typesWrap.querySelectorAll('.tm-ha').forEach(function (x) {
+          if (x.dataset.grp === selMode && x.dataset.type === typeVal) x.classList.add('tm-ok');
+        });
+
+        elFb.className = 'tm-fb tm-ok tm-show';
+        elFb.innerHTML = '<strong>✓ ¡Correcto!</strong> — Es <strong>' + correct + '</strong>.';
+      } else {
+        st.streak = 0;
+
+        /* Note */
+        notesRow.querySelectorAll('.tm-hn').forEach(function (x) {
+          if (x.dataset.note === selRoot) { x.classList.remove('tm-sel'); x.classList.add(selRoot === cp.root ? 'tm-ok' : 'tm-ko'); }
+          else if (x.dataset.note === cp.root && selRoot !== cp.root) x.classList.add('tm-ok');
+        });
+        /* Acc */
+        accsRow.querySelectorAll('.tm-ha').forEach(function (x) {
+          if (x.dataset.acc === selAcc) { x.classList.remove('tm-sel'); x.classList.add(selAcc === cp.acc ? 'tm-ok' : 'tm-ko'); }
+          else if (x.dataset.acc === cp.acc && selAcc !== cp.acc) x.classList.add('tm-ok');
+        });
+        /* Mode */
+        modeRow.querySelectorAll('.tm-ha').forEach(function (x) {
+          if (x.dataset.mode === selMode) { x.classList.remove('tm-sel'); x.classList.add(selMode === cp.mode ? 'tm-ok' : 'tm-ko'); }
+          else if (x.dataset.mode === cp.mode && selMode !== cp.mode) x.classList.add('tm-ok');
+        });
+        /* Type */
+        typesWrap.querySelectorAll('.tm-ha').forEach(function (x) {
+          var isClicked  = x.dataset.grp === selMode && x.dataset.type === typeVal;
+          var isCorrect  = x.dataset.grp === cp.mode  && x.dataset.type === cp.type;
+          if (isClicked) x.classList.add('tm-ko');
+          if (isCorrect) x.classList.add('tm-ok');
+        });
+
+        elFb.className = 'tm-fb tm-ko tm-show';
+        elFb.innerHTML = '<strong>✗ Incorrecto</strong> — La respuesta era: <strong>' + correct + '</strong>.';
+        elCard.classList.add('tm-shake');
+        setTimeout(function () { elCard.classList.remove('tm-shake'); }, 400);
+      }
+
+      updateStats();
+      elNxt.className = 'tm-nxt tm-show';
+    }
+
+    function answerEasy(chosen, btn) {
+      if (st.answered) return;
+      st.answered = true;
+      st.total++;
+      var correct = cQ.scale.name;
+      var isOk = chosen === correct;
+      if (isOk) {
+        st.correct++; st.streak++;
+        btn.classList.add('tm-ok');
+        elFb.className = 'tm-fb tm-ok tm-show';
+        elFb.innerHTML = '<strong>✓ ¡Correcto!</strong> — Es <strong>' + correct + '</strong>.';
+      } else {
+        st.streak = 0;
+        btn.classList.add('tm-ko');
+        elOpts.querySelectorAll('.tm-opt').forEach(function (x) {
+          if (x.textContent === correct) x.classList.add('tm-ok');
+          x.disabled = true;
+        });
+        elFb.className = 'tm-fb tm-ko tm-show';
+        elFb.innerHTML = '<strong>✗ Incorrecto</strong> — La respuesta era: <strong>' + correct + '</strong>.';
+        elCard.classList.add('tm-shake');
+        setTimeout(function () { elCard.classList.remove('tm-shake'); }, 400);
+      }
+      elOpts.querySelectorAll('.tm-opt').forEach(function (x) { x.disabled = true; });
+      updateStats();
+      elNxt.className = 'tm-nxt tm-show';
+    }
+
+    function nextQ() {
+      cQ = genQ();
+      st.qnum++;
+      elQnum.textContent = st.qnum;
+      elFb.className = 'tm-fb';
+      elNxt.className = 'tm-nxt';
+      renderStaff(cQ);
+      renderOpts();
+    }
+
+    waitVex(nextQ);
+  }
+
+  window.tmEscTodas = tmEscTodas;
+})();
