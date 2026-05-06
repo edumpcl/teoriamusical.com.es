@@ -58,6 +58,28 @@
     { name: 'Lab menor melódica',  vex: 'Cb', notes: ['a/3','b/3','c/4','d/4','e/4','f/4','g/4','a/4'], acc: {'a/3':'b','b/3':'b','c/4':'b','d/4':'b','e/4':'b','a/4':'b'},                                            accOnKey: {'f/4':'n','g/4':'n'} }
   ];
 
+  function expandMelodic(mel, nat) {
+    var asc  = mel.notes;
+    var desc = asc.slice(0, 7).reverse();
+    var n15  = asc.concat(desc);
+    var p7 = asc[6], p6 = asc[5];
+    var cancelMap = { '#': 'n', '##': '#', 'n': 'b' };
+
+    var accArr = n15.map(function (p, i) { return i < 8 ? (mel.acc[p] || null) : null; });
+    accArr[8] = nat.acc[p7] || 'n';
+    accArr[9] = nat.acc[p6] || 'n';
+
+    var accOnKeyArr = n15.map(function (p, i) { return i < 8 ? (mel.accOnKey[p] || null) : null; });
+    accOnKeyArr[8] = cancelMap[mel.accOnKey[p7]] || null;
+    accOnKeyArr[9] = cancelMap[mel.accOnKey[p6]] || null;
+
+    return { name: mel.name, vex: mel.vex, notes: n15, accArr: accArr, accOnKeyArr: accOnKeyArr };
+  }
+
+  var SCALES_MELODICA_15 = SCALES_MELODICA.map(function (mel, i) {
+    return expandMelodic(mel, SCALES_NATURAL[i]);
+  });
+
   var NOTE_NAMES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
   var ACC_OPTS = [
     { label: '♭', val: 'b' },
@@ -152,7 +174,7 @@
     if (!wrap) return;
     wrap.className = 'tmesc-wrap';
     var uid = containerId;
-    var SCALES = tipo === 'armónica' ? SCALES_ARMONICA : (tipo === 'melódica' ? SCALES_MELODICA : SCALES_NATURAL);
+    var SCALES = tipo === 'armónica' ? SCALES_ARMONICA : (tipo === 'melódica' ? SCALES_MELODICA_15 : SCALES_NATURAL);
     var qtxt = '¿Qué escala menor ' + tipo + ' es esta?';
 
     wrap.innerHTML = [
@@ -241,7 +263,8 @@
       elModeTag.textContent = q.useArm ? 'Con armadura' : 'Con alteraciones';
       if (typeof Vex === 'undefined') return;
       var VF = Vex.Flow;
-      var W = 520, H = 155;
+      var n = q.scale.notes.length;
+      var W = n > 8 ? 900 : 520, H = 155;
       var rend = new VF.Renderer(elStaff, VF.Renderer.Backends.SVG);
       rend.resize(W, H);
       var ctx = rend.getContext();
@@ -252,14 +275,16 @@
       if (q.useArm) stave.addKeySignature(q.scale.vex);
       stave.setContext(ctx).draw();
 
-      var accMap = q.useArm ? q.scale.accOnKey : q.scale.acc;
+      var accData = q.useArm
+        ? (q.scale.accOnKeyArr || q.scale.accOnKey)
+        : (q.scale.accArr     || q.scale.acc);
+      var isArr = Array.isArray(accData);
       var formatWidth = q.useArm ? W - 150 : W - 80;
 
-      var notes = q.scale.notes.map(function (pitch) {
+      var notes = q.scale.notes.map(function (pitch, i) {
         var note = new VF.StaveNote({ keys: [pitch], duration: 'w' });
-        if (accMap && accMap[pitch]) {
-          note.addModifier(new VF.Accidental(accMap[pitch]), 0);
-        }
+        var a = isArr ? accData[i] : (accData && accData[pitch]);
+        if (a) note.addModifier(new VF.Accidental(a), 0);
         return note;
       });
 
