@@ -109,7 +109,7 @@
   function tmAcEngine(containerId, config) {
     injectCSS();
     config = config || {};
-    if (config.test === 'construir') { startConstruirMode(containerId); return; }
+    if (config.test === 'construir') { startConstruirMode(containerId, config.inversion || 'fundamental'); return; }
     var invType = config.inversion || 'fundamental';
 
     var wrap = document.getElementById(containerId);
@@ -357,7 +357,7 @@
   /* ================================================================
      Modo construir tríadas
      ================================================================ */
-  function startConstruirMode(containerId) {
+  function startConstruirMode(containerId, invType) {
     var wrap = document.getElementById(containerId);
     if (!wrap) return;
     wrap.className = 'tm-iv-wrap';
@@ -393,7 +393,7 @@
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-iv-mode-screen">',
-            '<h2 class="tm-iv-title">Test — Construir Tr\xedadas</h2>',
+            '<h2 class="tm-iv-title">Test — Construir ' + (INV_TITLES[invType] || 'Tr\xedadas') + '</h2>',
             '<p class="tm-iv-subtitle">Elige el nivel de dificultad — ' + totalQ + ' preguntas</p>',
             '<div class="tm-iv-modes">',
               DIFICULTADES.map(function(d,i){
@@ -483,6 +483,9 @@
     function genQ() {
       var att = 0, n1, a1, triad, n2, n3, nd3, nd5, a2, a3;
       var maxRes = Math.max(1, maxAlt);
+      var inv_use = invType === 'todas'
+        ? ['fundamental','1a','2a'][Math.floor(Math.random()*3)]
+        : invType;
       do {
         n1    = Math.floor(Math.random() * 7);
         a1    = maxAlt === 0 ? 0 : (Math.floor(Math.random() * (2*maxAlt+1)) - maxAlt);
@@ -494,12 +497,26 @@
         a3 = triad.fifth  - nd5 + a1;
         att++;
       } while ((Math.abs(a1)>maxAlt || Math.abs(a2)>maxRes || Math.abs(a3)>maxRes) && att<300);
-      var oct2 = n2 > n1 ? 4 : 5;
-      var oct3 = n3 > n1 ? 4 : 5;
-      cQ = {n1:n1,a1:a1,n2:n2,a2:a2,oct2:oct2,n3:n3,a3:a3,oct3:oct3,triad:triad};
+      var bass, exp1, exp2;
+      if (inv_use === 'fundamental') {
+        bass = {n:n1,a:a1,vfn:VF_NAMES[n1],oct:4};
+        exp1 = {n:n2,a:a2,vfn:VF_NAMES[n2],oct:n2>n1?4:5};
+        exp2 = {n:n3,a:a3,vfn:VF_NAMES[n3],oct:n3>n1?4:5};
+      } else if (inv_use === '1a') {
+        var o3 = n3>n2?4:5;
+        bass = {n:n2,a:a2,vfn:VF_NAMES[n2],oct:4};
+        exp1 = {n:n3,a:a3,vfn:VF_NAMES[n3],oct:o3};
+        exp2 = {n:n1,a:a1,vfn:VF_NAMES[n1],oct:n1>n3?o3:o3+1};
+      } else {
+        var o1 = n1>n3?4:5;
+        bass = {n:n3,a:a3,vfn:VF_NAMES[n3],oct:4};
+        exp1 = {n:n1,a:a1,vfn:VF_NAMES[n1],oct:o1};
+        exp2 = {n:n2,a:a2,vfn:VF_NAMES[n2],oct:n2>n1?o1:o1+1};
+      }
+      cQ = {n1:n1,a1:a1,n2:n2,a2:a2,n3:n3,a3:a3,triad:triad,inv:inv_use,bass:bass,exp1:exp1,exp2:exp2};
     }
 
-    /* ---- Draw main staff (root + placed notes) ---- */
+    /* ---- Draw main staff (bass + placed notes, sorted by pitch) ---- */
     function drawStaff() {
       var elNot = document.getElementById(uid+'_not');
       if (!elNot || typeof Vex === 'undefined') return;
@@ -511,13 +528,14 @@
       ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
       var stave = new V.Stave(10, STAVE_Y, STAVE_W);
       stave.addClef('treble').setContext(ctx).draw();
-      var keys = [VF_NAMES[cQ.n1]+'/4'];
-      placedNotes.forEach(function(p){ keys.push(p.vfn+'/'+p.oct); });
-      var chord = new V.StaveNote({keys:keys,duration:'w'});
-      var a0 = accStr(cQ.a1); if (a0) chord.addModifier(new V.Accidental(a0),0);
-      placedNotes.forEach(function(p,i){
-        var a = accStr(p.acc); if (a) chord.addModifier(new V.Accidental(a),i+1);
+      var allNotes = [{vfn:cQ.bass.vfn,oct:cQ.bass.oct,acc:cQ.bass.a}];
+      placedNotes.forEach(function(p){ allNotes.push({vfn:p.vfn,oct:p.oct,acc:p.acc}); });
+      allNotes.sort(function(a,b){
+        return (a.oct*12+NS[VF_NAMES.indexOf(a.vfn)])-(b.oct*12+NS[VF_NAMES.indexOf(b.vfn)]);
       });
+      var keys = allNotes.map(function(n){ return n.vfn+'/'+n.oct; });
+      var chord = new V.StaveNote({keys:keys,duration:'w'});
+      allNotes.forEach(function(n,i){ var a=accStr(n.acc); if(a) chord.addModifier(new V.Accidental(a),i); });
       var voice = new V.Voice({num_beats:4,beat_value:4}).setStrict(false);
       voice.addTickables([chord]);
       new V.Formatter().joinVoices([voice]).format([voice],180);
@@ -534,7 +552,7 @@
     function drawLoupe(row) {
       var elLstaff = document.getElementById(uid+'_lstaff');
       if (!elLstaff || typeof Vex === 'undefined') return;
-      var key = cQ.n1+','+cQ.a1+'|'+placedNotes.map(function(p){return p.vfn+p.oct+p.acc;}).join(',')+'|'+row.vfn+row.oct+activeTool;
+      var key = cQ.bass.vfn+','+cQ.bass.oct+','+cQ.bass.a+'|'+placedNotes.map(function(p){return p.vfn+p.oct+p.acc;}).join(',')+'|'+row.vfn+row.oct+activeTool;
       if (key === lastLoupeKey) return;
       lastLoupeKey = key;
       elLstaff.innerHTML = '';
@@ -547,7 +565,7 @@
       stave.addClef('treble').setContext(ctx).draw();
 
       /* Collect all notes, sort bottom-to-top so setKeyStyle index matches VF rendering */
-      var all = [{vfn:VF_NAMES[cQ.n1],oct:4,acc:cQ.a1,pre:false}];
+      var all = [{vfn:cQ.bass.vfn,oct:cQ.bass.oct,acc:cQ.bass.a,pre:false}];
       placedNotes.forEach(function(p){ all.push({vfn:p.vfn,oct:p.oct,acc:p.acc,pre:false}); });
       all.push({vfn:row.vfn,oct:row.oct,acc:activeTool,pre:true});
       all.sort(function(a,b){
@@ -653,33 +671,39 @@
       if (b) b.classList.toggle('tm-ready', placedNotes.length === 2);
     }
 
+    /* ---- Role labels per inversion ---- */
+    function invRoles(inv) {
+      if (inv === 'fundamental') return ['3\xaa','5\xaa'];
+      if (inv === '1a')         return ['5\xaa','fund.'];
+      return ['fund.','3\xaa'];
+    }
+
     /* ---- Check answer ---- */
     function checkAnswer() {
       var elBtn = document.getElementById(uid+'_btn');
       if (!elBtn || !elBtn.classList.contains('tm-ready') || answered) return;
       answered = true;
-      var exp3 = {vfn:VF_NAMES[cQ.n2],oct:cQ.oct2,acc:cQ.a2};
-      var exp5 = {vfn:VF_NAMES[cQ.n3],oct:cQ.oct3,acc:cQ.a3};
-      function match(p,e){ return p.vfn===e.vfn && p.oct===e.oct && p.acc===e.acc; }
+      var exp1 = cQ.exp1, exp2 = cQ.exp2;
+      function match(p,e){ return p.vfn===e.vfn && p.oct===e.oct && p.acc===e.a; }
       var ok = placedNotes.length===2 && (
-        (match(placedNotes[0],exp3)&&match(placedNotes[1],exp5)) ||
-        (match(placedNotes[0],exp5)&&match(placedNotes[1],exp3))
+        (match(placedNotes[0],exp1)&&match(placedNotes[1],exp2)) ||
+        (match(placedNotes[0],exp2)&&match(placedNotes[1],exp1))
       );
       elBtn.style.display = 'none';
       document.getElementById(uid+'_nxt').className = 'tm-nxt tm-show';
       var elFb = document.getElementById(uid+'_fb');
-      var r3 = NOTE_NAMES[cQ.n2]+ACC_SYM[String(cQ.a2)];
-      var r5 = NOTE_NAMES[cQ.n3]+ACC_SYM[String(cQ.a3)];
+      var roles = invRoles(cQ.inv);
+      var lbl1 = NOTE_NAMES[exp1.n]+ACC_SYM[String(exp1.a)];
+      var lbl2 = NOTE_NAMES[exp2.n]+ACC_SYM[String(exp2.a)];
       if (ok) {
         score++;
         elFb.className = 'tm-fb tm-ok tm-show';
-        elFb.innerHTML = '<strong>✓ \xa1Correcto!</strong> — 3\xaa: '+r3+', 5\xaa: '+r5+'.';
+        elFb.innerHTML = '<strong>✓ \xa1Correcto!</strong> — '+roles[0]+': '+lbl1+', '+roles[1]+': '+lbl2+'.';
       } else {
-        /* Show correct answer on staff */
-        placedNotes = [{vfn:VF_NAMES[cQ.n2],oct:cQ.oct2,acc:cQ.a2},{vfn:VF_NAMES[cQ.n3],oct:cQ.oct3,acc:cQ.a3}];
+        placedNotes = [{vfn:exp1.vfn,oct:exp1.oct,acc:exp1.a},{vfn:exp2.vfn,oct:exp2.oct,acc:exp2.a}];
         drawStaff();
         elFb.className = 'tm-fb tm-ko tm-show';
-        elFb.innerHTML = '<strong>✗ Incorrecto.</strong> La soluci\xf3n: 3\xaa '+r3+', 5\xaa '+r5+'.';
+        elFb.innerHTML = '<strong>✗ Incorrecto.</strong> La soluci\xf3n: '+roles[0]+' '+lbl1+', '+roles[1]+' '+lbl2+'.';
       }
       document.getElementById(uid+'_badge').textContent = '✓ '+score;
       document.getElementById(uid+'_wrap').classList.add('tm-answered');
@@ -698,8 +722,10 @@
       document.getElementById(uid+'_wrap').classList.remove('tm-answered');
       genQ();
       var rootLbl = NOTE_NAMES[cQ.n1]+ACC_SYM[String(cQ.a1)];
+      var roles = invRoles(cQ.inv);
+      var invSuffix = cQ.inv === 'fundamental' ? '' : (cQ.inv === '1a' ? ' (1\xaa inv.)' : ' (2\xaa inv.)');
       document.getElementById(uid+'_q').innerHTML =
-        'Dibuja la 3\xaa y la 5\xaa del acorde: <strong>'+rootLbl+' — '+cQ.triad.short+'</strong>';
+        'Dibuja la '+roles[0]+' y la '+roles[1]+' del acorde'+invSuffix+': <strong>'+rootLbl+' — '+cQ.triad.short+'</strong>';
       drawStaff();
     }
 
