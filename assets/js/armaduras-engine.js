@@ -401,21 +401,20 @@
       stave.setContext(ctx).draw();
       currentStave = stave;
       if (userDrawing.length > 0) {
-        var tickables = userDrawing.map(function (val) {
-          var parts = val.split('/');
-          var pitch = parts[0] + '/' + parts[1];
+        var startX = stave.getX() + 55;
+        var spacing = 14;
+        for (var i = 0; i < userDrawing.length; i++) {
+          var parts = userDrawing[i].split('/');
+          var p = parts[0] + '/' + parts[1];
           var alt = parts[2];
-          var note = new VF.StaveNote({ keys: [pitch], duration: 'w' });
-          note.setStyle({ fillStyle: 'transparent', strokeStyle: 'transparent' });
-          var acc = new VF.Accidental(alt);
-          if (acc.setStyle) acc.setStyle({ fillStyle: '#1a1a1a', strokeStyle: '#1a1a1a' });
-          note.addModifier(acc, 0);
-          return note;
-        });
-        var voice = new VF.Voice({ num_beats: userDrawing.length, beat_value: 4 }).setStrict(false);
-        voice.addTickables(tickables);
-        new VF.Formatter().joinVoices([voice]).format([voice], Math.max(staveW - 120, 80));
-        voice.draw(ctx, stave);
+          var laneY = 2;
+          for (var li = 0; li < LANES.length; li++) {
+            if (LANES[li].pitch === p) { laneY = LANES[li].line; break; }
+          }
+          VF.Glyph.renderGlyph(ctx, startX + i * spacing,
+            stave.getYForLine(laneY), 38,
+            alt === '#' ? 'accidentalSharp' : 'accidentalFlat');
+        }
       }
       var svg = elNotac.querySelector('svg');
       if (svg) {
@@ -439,33 +438,35 @@
       var stave = new VF.Stave(10, 20, 280);
       stave.addClef('treble');
       stave.setContext(ctx).draw();
-      var tickables = userDrawing.map(function (val) {
-        var parts = val.split('/');
+
+      function lineForPitch(p) {
+        for (var li = 0; li < LANES.length; li++) {
+          if (LANES[li].pitch === p) return LANES[li].line;
+        }
+        return 2;
+      }
+
+      var GSIZE = 38;
+      var startX = 82;
+      var spacing = 16;
+
+      /* Alteraciones ya colocadas — negro */
+      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
+      for (var i = 0; i < userDrawing.length; i++) {
+        var parts = userDrawing[i].split('/');
         var p = parts[0] + '/' + parts[1];
         var alt = parts[2];
-        var n = new VF.StaveNote({ keys: [p], duration: 'w' });
-        n.addModifier(new VF.Accidental(alt), 0);
-        return n;
-      });
-      var previewNote = new VF.StaveNote({ keys: [pitch], duration: 'w' });
-      var previewAcc = new VF.Accidental(accType);
-      if (previewAcc.setStyle) previewAcc.setStyle({ fillStyle: '#8b6914', strokeStyle: '#8b6914' });
-      previewNote.addModifier(previewAcc, 0);
-      tickables.push(previewNote);
-      var voice = new VF.Voice({ num_beats: tickables.length, beat_value: 4 }).setStrict(false);
-      voice.addTickables(tickables);
-      new VF.Formatter().joinVoices([voice]).format([voice], 200);
-      voice.draw(ctx, stave);
-      /* Ocultar cabezas de nota dejando solo visibles las alteraciones */
-      for (var i = 0; i < tickables.length; i++) {
-        var nhs = tickables[i].noteHeads;
-        if (nhs) {
-          for (var j = 0; j < nhs.length; j++) {
-            var nhEl = typeof nhs[j].getSVGElement === 'function' ? nhs[j].getSVGElement() : null;
-            if (nhEl) nhEl.style.visibility = 'hidden';
-          }
-        }
+        VF.Glyph.renderGlyph(ctx, startX + i * spacing,
+          stave.getYForLine(lineForPitch(p)),
+          GSIZE, alt === '#' ? 'accidentalSharp' : 'accidentalFlat');
       }
+
+      /* Alteración en preview — dorado */
+      ctx.setFillStyle('#8b6914'); ctx.setStrokeStyle('#8b6914');
+      VF.Glyph.renderGlyph(ctx, startX + userDrawing.length * spacing,
+        stave.getYForLine(lineForPitch(pitch)),
+        GSIZE, accType === '#' ? 'accidentalSharp' : 'accidentalFlat');
+
       var svg = elLstaff.querySelector('svg');
       var dispW = userDrawing.length > 0 ? '240' : '180';
       var dispH = userDrawing.length > 0 ? '96' : '72';
