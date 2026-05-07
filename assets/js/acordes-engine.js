@@ -1,4 +1,4 @@
-/* Motor de ejercicios de acordes tríada — v2 con inversiones */
+/* Motor de ejercicios de acordes tríada — v3 construir inversiones */
 (function () {
   'use strict';
 
