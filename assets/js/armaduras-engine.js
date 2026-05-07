@@ -388,10 +388,11 @@
       elNotac.innerHTML = '';
       if (typeof Vex === 'undefined') return;
       var VF = Vex.Flow;
-      var rend = new VF.Renderer(elNotac, VF.Renderer.Backends.SVG);
-      var totalW = Math.min(elNotac.offsetWidth || elWrap.offsetWidth || 500, 500);
-      if (totalW < 200) totalW = 200;
+      var containerW = elNotac.offsetWidth || elWrap.offsetWidth;
+      if (!containerW) containerW = Math.min(window.innerWidth - 60, 500);
+      var totalW = Math.min(Math.max(containerW, 200), 500);
       var staveW = totalW - 20;
+      var rend = new VF.Renderer(elNotac, VF.Renderer.Backends.SVG);
       rend.resize(totalW, 140);
       var ctx = rend.getContext();
       ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
@@ -399,26 +400,33 @@
       stave.addClef('treble');
       stave.setContext(ctx).draw();
       currentStave = stave;
-      if (userDrawing.length === 0) return;
-      var tickables = userDrawing.map(function (val) {
-        var parts = val.split('/');
-        var pitch = parts[0] + '/' + parts[1];
-        var alt = parts[2];
-        var note = new VF.StaveNote({ keys: [pitch], duration: 'w' });
-        note.setStyle({ fillStyle: 'transparent', strokeStyle: 'transparent' });
-        var acc = new VF.Accidental(alt);
-        if (acc.setStyle) acc.setStyle({ fillStyle: '#1a1a1a', strokeStyle: '#1a1a1a' });
-        note.addModifier(acc, 0);
-        return note;
-      });
-      var voice = new VF.Voice({ num_beats: userDrawing.length, beat_value: 4 }).setStrict(false);
-      voice.addTickables(tickables);
-      new VF.Formatter().joinVoices([voice]).format([voice], Math.max(staveW - 120, 80));
-      voice.draw(ctx, stave);
+      if (userDrawing.length > 0) {
+        var tickables = userDrawing.map(function (val) {
+          var parts = val.split('/');
+          var pitch = parts[0] + '/' + parts[1];
+          var alt = parts[2];
+          var note = new VF.StaveNote({ keys: [pitch], duration: 'w' });
+          note.setStyle({ fillStyle: 'transparent', strokeStyle: 'transparent' });
+          var acc = new VF.Accidental(alt);
+          if (acc.setStyle) acc.setStyle({ fillStyle: '#1a1a1a', strokeStyle: '#1a1a1a' });
+          note.addModifier(acc, 0);
+          return note;
+        });
+        var voice = new VF.Voice({ num_beats: userDrawing.length, beat_value: 4 }).setStrict(false);
+        voice.addTickables(tickables);
+        new VF.Formatter().joinVoices([voice]).format([voice], Math.max(staveW - 120, 80));
+        voice.draw(ctx, stave);
+      }
+      var svg = elNotac.querySelector('svg');
+      if (svg) {
+        svg.setAttribute('viewBox', '0 0 ' + totalW + ' 140');
+        svg.style.width = '100%';
+        svg.style.height = 'auto';
+      }
     }
 
     function renderLoupeStaff(pitch, accType) {
-      var key = pitch + accType;
+      var key = userDrawing.join(',') + '|' + pitch + accType;
       if (key === lastLoupeKey) return;
       lastLoupeKey = key;
       elLstaff.innerHTML = '';
@@ -431,17 +439,31 @@
       var stave = new VF.Stave(10, 20, 280);
       stave.addClef('treble');
       stave.setContext(ctx).draw();
-      var note = new VF.StaveNote({ keys: [pitch], duration: 'w' });
-      note.setStyle({ fillStyle: 'transparent', strokeStyle: 'transparent' });
-      var acc = new VF.Accidental(accType);
-      if (acc.setStyle) acc.setStyle({ fillStyle: '#1a1a1a', strokeStyle: '#1a1a1a' });
-      note.addModifier(acc, 0);
-      var voice = new VF.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
-      voice.addTickables([note]);
-      new VF.Formatter().joinVoices([voice]).format([voice], 180);
+      var tickables = userDrawing.map(function (val) {
+        var parts = val.split('/');
+        var p = parts[0] + '/' + parts[1];
+        var alt = parts[2];
+        var n = new VF.StaveNote({ keys: [p], duration: 'w' });
+        n.setStyle({ fillStyle: 'transparent', strokeStyle: 'transparent' });
+        var a = new VF.Accidental(alt);
+        if (a.setStyle) a.setStyle({ fillStyle: '#1a1a1a', strokeStyle: '#1a1a1a' });
+        n.addModifier(a, 0);
+        return n;
+      });
+      var previewNote = new VF.StaveNote({ keys: [pitch], duration: 'w' });
+      previewNote.setStyle({ fillStyle: 'transparent', strokeStyle: 'transparent' });
+      var previewAcc = new VF.Accidental(accType);
+      if (previewAcc.setStyle) previewAcc.setStyle({ fillStyle: '#8b6914', strokeStyle: '#8b6914' });
+      previewNote.addModifier(previewAcc, 0);
+      tickables.push(previewNote);
+      var voice = new VF.Voice({ num_beats: tickables.length, beat_value: 4 }).setStrict(false);
+      voice.addTickables(tickables);
+      new VF.Formatter().joinVoices([voice]).format([voice], 200);
       voice.draw(ctx, stave);
       var svg = elLstaff.querySelector('svg');
-      if (svg) { svg.setAttribute('viewBox','0 0 300 120'); svg.setAttribute('width','180'); svg.setAttribute('height','72'); }
+      var dispW = userDrawing.length > 0 ? '240' : '180';
+      var dispH = userDrawing.length > 0 ? '96' : '72';
+      if (svg) { svg.setAttribute('viewBox','0 0 300 120'); svg.setAttribute('width', dispW); svg.setAttribute('height', dispH); }
     }
 
     function attachStaffListener() {
@@ -457,26 +479,43 @@
         var relX = clientX - wrapRect.left;
         var svgElem = elNotac.querySelector('svg');
         var svgOffsetY = svgElem ? (svgElem.getBoundingClientRect().top - wrapRect.top) : 15;
+        var svgScale = 1;
+        if (svgElem) {
+          var natW = parseFloat(svgElem.getAttribute('width') || '500');
+          var dispW = svgElem.getBoundingClientRect().width;
+          if (natW > 0 && dispW > 0) svgScale = dispW / natW;
+        }
         var best = null, bestDist = 9999;
         LANES.forEach(function (lane) {
-          var laneY = svgOffsetY + currentStave.getYForLine(lane.line);
+          var laneY = svgOffsetY + currentStave.getYForLine(lane.line) * svgScale;
           var dist = Math.abs(relY - laneY);
           if (dist < bestDist) { bestDist = dist; best = lane; }
         });
         if (best && bestDist < 30) {
           currentBest = best;
-          var finalY = svgOffsetY + currentStave.getYForLine(best.line);
+          var finalY = svgOffsetY + currentStave.getYForLine(best.line) * svgScale;
           elGhost.style.display = 'block';
           elGhost.style.top = finalY + 'px';
           elGhost.style.left = relX + 'px';
           elGhost.textContent = activeTool === '#' ? '♯' : '♭';
           elHigh.style.display = 'block';
           elHigh.style.top = (finalY - 6) + 'px';
-          /* lupa encima del dedo */
+          /* lupa encima del dedo, clamped al viewport */
+          elLoupe.style.transform = '';
           elLoupe.style.left = clientX + 'px';
           elLoupe.style.top  = clientY + 'px';
           elLoupe.style.display = 'block';
           renderLoupeStaff(best.pitch, activeTool);
+          var lr = elLoupe.getBoundingClientRect();
+          var pad = 8;
+          if (lr.left < pad) {
+            elLoupe.style.left = (clientX - lr.left + pad) + 'px';
+          } else if (lr.right > window.innerWidth - pad) {
+            elLoupe.style.left = (clientX - (lr.right - window.innerWidth + pad)) + 'px';
+          }
+          if (lr.top < pad) {
+            elLoupe.style.transform = 'translate(-50%, 18px)';
+          }
         } else {
           currentBest = null;
           elGhost.style.display = 'none';

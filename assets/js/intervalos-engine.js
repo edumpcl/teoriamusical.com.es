@@ -509,7 +509,7 @@
         }
 
         function renderLoupeNote(vfn, oct, acc) {
-          var key = vfn + oct + acc;
+          var key = cQ.n1 + '_' + (cQ.a1 || 0) + '|' + vfn + oct + acc;
           if (key === lastLoupeKey) return;
           lastLoupeKey = key;
           elLstaff.innerHTML = '';
@@ -521,11 +521,19 @@
           ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
           var stave = new V.Stave(10, 38, 280);
           stave.addClef('treble').setContext(ctx).draw();
-          var note = new V.StaveNote({ keys: [vfn + '/' + oct], duration: 'w' });
+          var sn1 = new V.StaveNote({ keys: [VF_NAMES[cQ.n1] + '/4'], duration: 'w' });
+          var acc1str = (cQ.a1 !== undefined && cQ.a1 !== 0) ? accidental(cQ.a1) : null;
+          if (acc1str) sn1.addModifier(new V.Accidental(acc1str), 0);
+          var sn2 = new V.StaveNote({ keys: [vfn + '/' + oct], duration: 'w' });
+          if (sn2.setStyle) sn2.setStyle({ fillStyle: '#8b6914', strokeStyle: '#8b6914' });
           var accStr = accidental(acc);
-          if (accStr) note.addModifier(new V.Accidental(accStr), 0);
+          if (accStr) {
+            var a2 = new V.Accidental(accStr);
+            if (a2.setStyle) a2.setStyle({ fillStyle: '#8b6914', strokeStyle: '#8b6914' });
+            sn2.addModifier(a2, 0);
+          }
           var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
-          voice.addTickables([note]);
+          voice.addTickables([sn1, sn2]);
           new V.Formatter().joinVoices([voice]).format([voice], 180);
           voice.draw(ctx, stave);
           var svg = elLstaff.querySelector('svg');
@@ -535,10 +543,21 @@
         function showLoupe(clientX, clientY) {
           if (answered) return;
           var rd = CS_ROWS[calcStep(clientY) + 3];
+          elLoupe.style.transform = '';
           elLoupe.style.left = clientX + 'px';
           elLoupe.style.top  = clientY + 'px';
           elLoupe.style.display = 'block';
           renderLoupeNote(rd.vfn, rd.oct, sel.acc || 0);
+          var lr = elLoupe.getBoundingClientRect();
+          var pad = 8;
+          if (lr.left < pad) {
+            elLoupe.style.left = (clientX - lr.left + pad) + 'px';
+          } else if (lr.right > window.innerWidth - pad) {
+            elLoupe.style.left = (clientX - (lr.right - window.innerWidth + pad)) + 'px';
+          }
+          if (lr.top < pad) {
+            elLoupe.style.transform = 'translate(-50%, 18px)';
+          }
         }
 
         function hideLoupe() {
