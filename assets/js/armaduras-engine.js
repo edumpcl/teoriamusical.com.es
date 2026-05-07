@@ -444,14 +444,10 @@
         var p = parts[0] + '/' + parts[1];
         var alt = parts[2];
         var n = new VF.StaveNote({ keys: [p], duration: 'w' });
-        n.setStyle({ fillStyle: 'transparent', strokeStyle: 'transparent' });
-        var a = new VF.Accidental(alt);
-        if (a.setStyle) a.setStyle({ fillStyle: '#1a1a1a', strokeStyle: '#1a1a1a' });
-        n.addModifier(a, 0);
+        n.addModifier(new VF.Accidental(alt), 0);
         return n;
       });
       var previewNote = new VF.StaveNote({ keys: [pitch], duration: 'w' });
-      previewNote.setStyle({ fillStyle: 'transparent', strokeStyle: 'transparent' });
       var previewAcc = new VF.Accidental(accType);
       if (previewAcc.setStyle) previewAcc.setStyle({ fillStyle: '#8b6914', strokeStyle: '#8b6914' });
       previewNote.addModifier(previewAcc, 0);
@@ -460,6 +456,16 @@
       voice.addTickables(tickables);
       new VF.Formatter().joinVoices([voice]).format([voice], 200);
       voice.draw(ctx, stave);
+      /* Ocultar cabezas de nota dejando solo visibles las alteraciones */
+      for (var i = 0; i < tickables.length; i++) {
+        var nhs = tickables[i].noteHeads;
+        if (nhs) {
+          for (var j = 0; j < nhs.length; j++) {
+            var nhEl = typeof nhs[j].getSVGElement === 'function' ? nhs[j].getSVGElement() : null;
+            if (nhEl) nhEl.style.visibility = 'hidden';
+          }
+        }
+      }
       var svg = elLstaff.querySelector('svg');
       var dispW = userDrawing.length > 0 ? '240' : '180';
       var dispH = userDrawing.length > 0 ? '96' : '72';
