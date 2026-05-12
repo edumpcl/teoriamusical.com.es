@@ -78,7 +78,11 @@
     { vfn:'c', n:0, oct:4, line: 5   },
     { vfn:'b', n:6, oct:3, line: 5.5 },
     { vfn:'a', n:5, oct:3, line: 6   },
-    { vfn:'g', n:4, oct:3, line: 6.5 }
+    { vfn:'g', n:4, oct:3, line: 6.5 },
+    { vfn:'f', n:3, oct:3, line: 7   },
+    { vfn:'e', n:2, oct:3, line: 7.5 },
+    { vfn:'d', n:1, oct:3, line: 8   },
+    { vfn:'c', n:0, oct:3, line: 8.5 }
   ];
   var FIRST_ROW_SVGY = STAVE_Y + ROWS[0].line * 10; /* 55 + (-1.5)*10 = 40 */
 
@@ -414,8 +418,11 @@
       var expected = parseScale(cQ);
       var placed   = sortedByPitch(placedNotes);
 
-      var ok = placed.length === 8 && expected.every(function (e, i) {
-        return placed[i].vfn === e.vfn && placed[i].oct === e.oct && placed[i].acc === e.acc;
+      var ascending = placed.every(function (p, i) {
+        return i === 0 || pitchVal(placed[i]) > pitchVal(placed[i - 1]);
+      });
+      var ok = ascending && placed.length === 8 && expected.every(function (e, i) {
+        return placed[i].vfn === e.vfn && placed[i].acc === e.acc;
       });
 
       elBtn.style.display = 'none';
