@@ -265,7 +265,7 @@
 
       if (sorted.length > 0) {
         var vfNotes = sorted.map(function (p) {
-          var n = new V.StaveNote({ keys: [p.vfn + '/' + p.oct], duration: 'q' });
+          var n = new V.StaveNote({ keys: [p.vfn + '/' + p.oct], duration: 'w' });
           var a = accStr(p.acc);
           if (a) n.addModifier(new V.Accidental(a), 0);
           return n;
