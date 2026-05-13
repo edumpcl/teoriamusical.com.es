@@ -211,7 +211,7 @@
     else                                  _clickClasico(isAccent, isSubdiv, isMedium, when, vol);
   }
 
-  function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
+function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
     const freq  = isAccent ? 3000 : isSubdiv ? 1800 : 2200;
     const decay = isSubdiv ? 0.014 : isAccent ? 0.042 : 0.028;
 
@@ -548,7 +548,6 @@
     if (_domBpmNum) _domBpmNum.textContent = bpm;
     if (_domTempoName) _domTempoName.textContent = getTempoName(bpm);
     if (_domBpmSlider) _domBpmSlider.value = bpm;
-    if (isPlaying) nextBeatTime = audioCtx ? audioCtx.currentTime + 0.05 : nextBeatTime;
   }
 
   function updatePlayBtn() {
@@ -736,7 +735,6 @@
   function setupBpmBtn(btn, delta) {
     btn.addEventListener('click', () => {
       _applyBpm(bpm + delta);
-      if (isPlaying) nextBeatTime = audioCtx ? audioCtx.currentTime + 0.05 : nextBeatTime;
     });
   }
 
@@ -758,7 +756,6 @@
     // BPM slider
     _domBpmSlider.addEventListener('input', () => {
       _applyBpm(parseInt(_domBpmSlider.value));
-      if (isPlaying) nextBeatTime = audioCtx ? audioCtx.currentTime + 0.05 : nextBeatTime;
     });
 
     // BPM buttons
@@ -880,13 +877,11 @@
         e.preventDefault();
         const delta = e.shiftKey && (e.metaKey || e.ctrlKey) ? 10 : e.shiftKey ? 5 : 1;
         _applyBpm(bpm + delta);
-        if (isPlaying) nextBeatTime = audioCtx ? audioCtx.currentTime + 0.05 : nextBeatTime;
       }
       if (e.code === 'ArrowDown') {
         e.preventDefault();
         const delta = e.shiftKey && (e.metaKey || e.ctrlKey) ? 10 : e.shiftKey ? 5 : 1;
         _applyBpm(bpm - delta);
-        if (isPlaying) nextBeatTime = audioCtx ? audioCtx.currentTime + 0.05 : nextBeatTime;
       }
     });
 
