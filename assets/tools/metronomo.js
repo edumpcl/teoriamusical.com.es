@@ -41,6 +41,11 @@
   // Cada compás usa su número natural de pasos: x/4 → x×4 dieciseisavos, x/8 → x×2
   const METER_PATTERNS = {
     '2/4': [  // 8 pasos
+      { name: 'Básico',
+        kick:  [1,0,0,0,0,0,0,0],
+        snare: [0,0,0,0,1,0,0,0],
+        hhc:   [1,0,1,0,1,0,1,0],
+        hho:   [0,0,0,0,0,0,0,0] },
       { name: 'Marcha',
         kick:  [1,0,0,0,1,0,0,0],
         snare: [0,0,0,0,1,0,0,0],
@@ -53,6 +58,11 @@
         hho:   [0,0,0,0,0,0,0,1] },
     ],
     '3/4': [  // 12 pasos
+      { name: 'Básico',
+        kick:  [1,0,0,0,0,0,0,0,0,0,0,0],
+        snare: [0,0,0,0,1,0,0,0,1,0,0,0],
+        hhc:   [1,0,1,0,1,0,1,0,1,0,1,0],
+        hho:   [0,0,0,0,0,0,0,0,0,0,0,0] },
       { name: 'Vals',
         kick:  [1,0,0,0,0,0,0,0,0,0,0,0],
         snare: [0,0,0,0,1,0,0,0,1,0,0,0],
@@ -70,6 +80,11 @@
         hho:   [0,0,0,0,0,0,0,0,0,1,0,0] },
     ],
     '4/4': [  // 16 pasos
+      { name: 'Básico',
+        kick:  [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+        snare: [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+        hhc:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+        hho:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
       { name: 'Rock',
         kick:  [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
         snare: [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
@@ -102,6 +117,11 @@
         hho:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
     ],
     '6/8': [  // 12 pasos
+      { name: 'Básico',
+        kick:  [1,0,0,0,0,0,0,0,0,0,0,0],
+        snare: [0,0,0,0,0,0,1,0,0,0,0,0],
+        hhc:   [1,0,1,0,1,0,1,0,1,0,1,0],
+        hho:   [0,0,0,0,0,0,0,0,0,0,0,0] },
       { name: 'Balada',
         kick:  [1,0,0,0,0,0,1,0,0,0,0,0],
         snare: [0,0,0,1,0,0,0,0,0,1,0,0],
@@ -903,4 +923,9 @@ function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
   } else {
     init();
   }
+
+  window.metronomoSetBpm = function(bpm) {
+    _applyBpm(bpm);
+    document.querySelector('.tm-metronomo-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 })();

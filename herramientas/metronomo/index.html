@@ -439,6 +439,23 @@
 
 
 
+<h2>Funciones del metrónomo online</h2>
+
+<p>Este metrónomo va más allá del clic básico. Estas son las funciones que lo hacen especialmente útil para el estudio musical:</p>
+
+<ul class="wp-block-list">
+<li><strong>Compases simples y compuestos:</strong> Elige entre 1/4, 2/4, 3/4, 4/4, 5/4 (simples) y 3/8, 6/8, 9/8, 12/8, 15/8 (compuestos). El primer pulso de cada compás suena con acento automático.</li>
+<li><strong>Compás libre:</strong> Crea compases asimétricos propios de la música contemporánea, el flamenco o el jazz de vanguardia —como 5/8, 7/8 u 11/8— agrupando corcheas libremente (grupos de 1, 2 o 3).</li>
+<li><strong>Subdivisiones:</strong> Activa negra, corchea, tresillo, semicorchea, quintillo, sextillo, septillo u ×8 para trabajar cualquier figuración rítmica.</li>
+<li><strong>Caja de ritmos integrada:</strong> Acompaña el clic con patrones de batería (Kick, Snare, Hi-Hat abierto y cerrado) con presets por compás: Rock, Pop, Funk, Bossa, Reggae, Shuffle, Vals, Jig…</li>
+<li><strong>Modo Ensayo:</strong> Define un rango de BPM (inicio → final) y un número de compases. El metrónomo sube el tempo de forma gradual y automática, ideal para superar pasajes difíciles.</li>
+<li><strong>Tap Tempo:</strong> Golpea la tecla <kbd>T</kbd> o el botón TAP al ritmo de una canción para detectar automáticamente el BPM.</li>
+<li><strong>Acento personalizable:</strong> Haz clic en cada pulso del compás para ciclar entre Fuerte, Medio, Débil y Silencio —perfecto para practicar polirritmias o contratiempos.</li>
+<li><strong>Tipos de sonido:</strong> Clásico (digital agudo), Electrónico (sine + transiente) o Digital (beep puro). Ajusta el volumen del clic y el acento por separado.</li>
+</ul>
+
+
+
 <h2 id="h-3-ejercicios-ritmicos-para-empezar-hoy-mismo" class="wp-block-heading">3 Ejercicios Rítmicos para Empezar Hoy Mismo</h2>
 
 
@@ -471,19 +488,70 @@
 
 
 
+<h2>Metrónomo para cada instrumento</h2>
+
+<h3>Metrónomo para guitarra</h3>
+<p>La guitarra es el instrumento donde más se nota la falta de tempo. Empieza siempre con el rasgueo o el fingerpicking a un 60–70% de la velocidad objetivo. Usa la subdivisión de <strong>corchea</strong> para trabajar patrones de 8 tiempos, y la de <strong>tresillo</strong> para estilos shuffle o blues. La caja de ritmos con el patrón Rock o Reggae te dará contexto musical real mientras practicas.</p>
+
+<h3>Metrónomo para piano y teclado</h3>
+<p>En piano, el metrónomo es esencial para igualar ambas manos. Practica primero cada mano por separado a tempo lento, luego júntalas. Para escalas y arpegios usa la <strong>subdivisión de semicorchea</strong>; para piezas con polirritmia (3 contra 2, 4 contra 3) el <strong>compás libre</strong> te permite programar cada agrupación. El <strong>Modo Ensayo</strong> es ideal para subir el tempo de un pasaje difícil de forma controlada.</p>
+
+<h3>Metrónomo para batería</h3>
+<p>La caja de ritmos integrada permite tocar sobre patrones reales de Kick, Snare y Hi-Hat mientras el metrónomo marca los pulsos. Usa el compás 4/4 con el patrón Rock para trabajar el rudimento básico, y el 6/8 con Jig o Siciliana para métricas compuestas. Activa la subdivisión de <strong>semicorchea</strong> para trabajar la precisión de los redobles.</p>
+
+<h3>Metrónomo para instrumentos de cuerda y viento</h3>
+<p>Violín, viola, cello, flauta, clarinete y trompeta se benefician especialmente de practicar a <strong>tempo muy lento</strong> (40–60 BPM) con subdivisión de corchea, prestando atención a la calidad del sonido. Sube 5 BPM cada vez que encadenes 3 repeticiones sin errores. Los compases compuestos 6/8 y 9/8 son especialmente comunes en el repertorio clásico para estos instrumentos.</p>
+
+<p>¿Estás trabajando la lectura musical a la vez? Practica también con los <a href="/ejercicios/escalas/construir-escala-mayor/">ejercicios de construcción de escalas</a> o los <a href="/ejercicios/escalas/escalas-mayores/">ejercicios de identificación de escalas mayores</a> para combinar ritmo y teoría.</p>
+
+
+
+<h2>Tabla de tempos musicales (BPM)</h2>
+
+<p>Las indicaciones de tempo en italiano son un estándar universal en la notación musical. Esta tabla muestra el rango de BPM correspondiente a cada término y su carácter expresivo:</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:.95rem;margin-bottom:1.5rem;">
+  <thead>
+    <tr style="background:var(--bg3,#f0ede6);text-align:left;">
+      <th style="padding:10px 14px;border-bottom:2px solid var(--border,#ddd);">Indicación</th>
+      <th style="padding:10px 14px;border-bottom:2px solid var(--border,#ddd);">BPM</th>
+      <th style="padding:10px 14px;border-bottom:2px solid var(--border,#ddd);">Carácter</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);cursor:pointer;color:var(--accent,#2a7a6e);font-weight:500;" onclick="metronomoSetBpm(30)" title="Establecer 30 BPM">Grave</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">15–39</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">Muy lento y solemne</td></tr>
+    <tr style="background:var(--bg2,#faf8f4);"><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);cursor:pointer;color:var(--accent,#2a7a6e);font-weight:500;" onclick="metronomoSetBpm(50)" title="Establecer 50 BPM">Largo</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">40–59</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">Amplio y sostenido</td></tr>
+    <tr><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);cursor:pointer;color:var(--accent,#2a7a6e);font-weight:500;" onclick="metronomoSetBpm(63)" title="Establecer 63 BPM">Larghetto</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">60–65</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">Algo menos lento que Largo</td></tr>
+    <tr style="background:var(--bg2,#faf8f4);"><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);cursor:pointer;color:var(--accent,#2a7a6e);font-weight:500;" onclick="metronomoSetBpm(70)" title="Establecer 70 BPM">Adagio</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">66–75</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">Lento y expresivo</td></tr>
+    <tr><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);cursor:pointer;color:var(--accent,#2a7a6e);font-weight:500;" onclick="metronomoSetBpm(80)" title="Establecer 80 BPM">Andante</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">76–89</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">Al paso, tranquilo</td></tr>
+    <tr style="background:var(--bg2,#faf8f4);"><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);cursor:pointer;color:var(--accent,#2a7a6e);font-weight:500;" onclick="metronomoSetBpm(96)" title="Establecer 96 BPM">Moderato</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">90–104</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">Moderado, equilibrado</td></tr>
+    <tr><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);cursor:pointer;color:var(--accent,#2a7a6e);font-weight:500;" onclick="metronomoSetBpm(108)" title="Establecer 108 BPM">Allegretto</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">105–114</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">Algo vivo, ligero</td></tr>
+    <tr style="background:var(--bg2,#faf8f4);"><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);cursor:pointer;color:var(--accent,#2a7a6e);font-weight:500;" onclick="metronomoSetBpm(120)" title="Establecer 120 BPM">Allegro</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">115–129</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">Rápido y alegre</td></tr>
+    <tr><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);cursor:pointer;color:var(--accent,#2a7a6e);font-weight:500;" onclick="metronomoSetBpm(144)" title="Establecer 144 BPM">Vivace</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">130–167</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">Vivo y enérgico</td></tr>
+    <tr style="background:var(--bg2,#faf8f4);"><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);cursor:pointer;color:var(--accent,#2a7a6e);font-weight:500;" onclick="metronomoSetBpm(176)" title="Establecer 176 BPM">Presto</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">168–199</td><td style="padding:9px 14px;border-bottom:1px solid var(--border,#eee);">Muy rápido</td></tr>
+    <tr><td style="padding:9px 14px;cursor:pointer;color:var(--accent,#2a7a6e);font-weight:500;" onclick="metronomoSetBpm(208)" title="Establecer 208 BPM">Prestissimo</td><td style="padding:9px 14px;">200–300</td><td style="padding:9px 14px;">Extremadamente rápido</td></tr>
+  </tbody>
+</table>
+
+<p>Haz clic en el nombre del tempo en la tabla para configurar automáticamente el metrónomo a esa velocidad, o usa el indicador que aparece sobre el slider —el metrónomo muestra el nombre italiano en tiempo real según los BPM seleccionados.</p>
+
+
+
 <h2 class="wp-block-heading">Preguntas Frecuentes (FAQ) sobre el uso del Metrónomo</h2>
 
 
 
-<p><strong>¿Debo usar el metrónomo todo el tiempo que practico?</strong>&nbsp;No necesariamente. Es ideal usarlo durante el calentamiento de técnica (escalas o arpegios) o cuando estás trabajando un pasaje difícil para mantener el rigor. Sin embargo, también debes dedicar tiempo a tocar "libre" (rubato) para desarrollar tu expresividad musical.</p>
+<p><strong>¿Qué es el TAP tempo y cómo funciona?</strong>&nbsp;El TAP tempo permite detectar automáticamente el BPM de una canción: pulsa el botón TAP (o la tecla <kbd>T</kbd>) varias veces seguidas al ritmo de la música. El metrónomo calcula el promedio de los intervalos entre golpes y ajusta el tempo. Con 3–5 taps ya obtienes una medición precisa.</p>
 
+<p><strong>¿Cómo funciona la caja de ritmos integrada?</strong>&nbsp;La caja de ritmos añade patrones de batería (bombo, caja, hi-hat cerrado y abierto) sincronizados con el metrónomo. Elige un patrón predefinido según el compás activo —Rock, Pop, Funk, Bossa, Reggae, Shuffle, Vals, Jig…— o crea el tuyo propio activando y desactivando pasos. Cada instrumento tiene su propio control de volumen.</p>
 
+<p><strong>¿Para qué sirve el Modo Ensayo?</strong>&nbsp;El Modo Ensayo incrementa el tempo automáticamente desde un BPM inicial hasta un BPM final a lo largo de un número determinado de compases. Es la técnica más eficaz para superar pasajes técnicos difíciles: defines el tempo en el que fallas y el objetivo, y el metrónomo te lleva hasta allí de forma gradual.</p>
 
-<p><strong>¿Qué significan términos italianos como&nbsp;<em>Allegro</em>&nbsp;o&nbsp;<em>Andante</em>&nbsp;en número de BPM?</strong>&nbsp;Aunque las asignaciones pueden variar según el compositor, generalmente&nbsp;<em>Andante</em>&nbsp;(paso de caminata) suele rondar los 76-108 BPM, mientras que&nbsp;<em>Allegro</em>&nbsp;(rápido y alegre) indica un rango entre 120-156 BPM.</p>
+<p><strong>¿Qué diferencia hay entre compás simple y compuesto?</strong>&nbsp;En un compás simple (2/4, 3/4, 4/4…) cada pulso se subdivide en dos partes iguales. En uno compuesto (6/8, 9/8, 12/8…) cada pulso se subdivide en tres, dando un carácter más fluido o de "balanceo". El metrónomo gestiona ambos tipos automáticamente: en compuestos, cada pulso dura una negra con puntillo.</p>
 
+<p><strong>¿Qué es el compás libre y cuándo se usa?</strong>&nbsp;El compás libre permite crear agrupaciones asimétricas de corcheas que no encajan en los compases estándar, como 5/8 (2+3 o 3+2), 7/8 (2+2+3) u 11/8. Es habitual en música contemporánea, balkánica, flamenca y en el jazz de vanguardia. Añade los grupos con los botones +1, +2 y +3, y pulsa Aplicar.</p>
 
-
-<p><strong>Practicar tan lento me aburre, ¿qué hago?</strong>&nbsp;La velocidad no es más que la consecuencia inevitable de la precisión. Al tocar lento, programa tu cerebro de forma correcta. Para no aburrirte, concéntrate de forma casi obsesiva en la calidad del tono de tu instrumento, la postura de tus manos y tu respiración. Cuando subas la velocidad, te asombrará la facilidad.</p>
+<p><strong>¿Debo usar el metrónomo todo el tiempo que practico?</strong>&nbsp;No necesariamente. Es esencial para calentamiento técnico (escalas, arpegios) y para fijar pasajes difíciles. Pero también debes dedicar tiempo a tocar sin él —en rubato— para desarrollar expresividad y musicalidad. Un equilibrio habitual es 70% con metrónomo, 30% libre.</p>
 
 
 
@@ -493,24 +561,45 @@
   "@type": "FAQPage",
   "mainEntity": [{
     "@type": "Question",
+    "name": "¿Qué es el TAP tempo y cómo funciona?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "El TAP tempo permite detectar automáticamente el BPM de una canción: pulsa el botón TAP (o la tecla T) varias veces al ritmo de la música. El metrónomo calcula el promedio de los intervalos y ajusta el tempo. Con 3–5 taps obtienes una medición precisa."
+    }
+  }, {
+    "@type": "Question",
+    "name": "¿Cómo funciona la caja de ritmos integrada?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "La caja de ritmos añade patrones de batería (bombo, caja, hi-hat) sincronizados con el metrónomo. Elige un patrón predefinido —Rock, Pop, Funk, Bossa, Reggae, Vals…— o crea el tuyo propio activando pasos. Cada instrumento tiene su propio volumen."
+    }
+  }, {
+    "@type": "Question",
+    "name": "¿Para qué sirve el Modo Ensayo?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "El Modo Ensayo incrementa el tempo automáticamente desde un BPM inicial hasta un BPM final a lo largo de un número de compases. Es la técnica más eficaz para superar pasajes técnicos difíciles de forma gradual."
+    }
+  }, {
+    "@type": "Question",
+    "name": "¿Qué diferencia hay entre compás simple y compuesto?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "En un compás simple cada pulso se subdivide en dos partes. En uno compuesto (6/8, 9/8, 12/8) cada pulso se subdivide en tres, dando un carácter más fluido. El metrónomo gestiona ambos automáticamente."
+    }
+  }, {
+    "@type": "Question",
+    "name": "¿Qué es el compás libre y cuándo se usa?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "El compás libre permite crear agrupaciones asimétricas como 5/8, 7/8 u 11/8, habituales en música contemporánea, balcánica o flamenca. Se construye añadiendo grupos de 1, 2 o 3 corcheas y pulsando Aplicar."
+    }
+  }, {
+    "@type": "Question",
     "name": "¿Debo usar el metrónomo todo el tiempo que practico?",
     "acceptedAnswer": {
       "@type": "Answer",
-      "text": "No necesariamente. Es ideal usarlo durante el calentamiento de técnica (escalas o arpegios) o cuando estás trabajando un pasaje difícil para mantener el rigor. Sin embargo, también debes dedicar tiempo a tocar 'libre' para desarrollar expresividad."
-    }
-  }, {
-    "@type": "Question",
-    "name": "¿Qué significan términos italianos como Allegro o Andante en número de BPM?",
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Andante (paso de caminata) suele rondar los 76-108 BPM, mientras que Allegro (rápido y alegre) indica un rango entre 120-156 BPM."
-    }
-  }, {
-    "@type": "Question",
-    "name": "Practicar tan lento me aburre, ¿qué hago?",
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "La velocidad es consecuencia de la precisión. Al tocar lento, concéntrate en la calidad del tono de tu instrumento, la postura de tus manos y tu respiración."
+      "text": "No necesariamente. Es esencial para calentamiento técnico y pasajes difíciles, pero también debes dedicar tiempo a tocar en rubato para desarrollar expresividad. Un equilibrio habitual es 70% con metrónomo, 30% libre."
     }
   }]
 }
