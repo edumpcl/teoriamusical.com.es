@@ -182,8 +182,10 @@
     if (!audioCtx) {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       compressor = audioCtx.createDynamicsCompressor();
-      compressor.threshold.value = -24;
-      compressor.ratio.value = 4;
+      compressor.threshold.value = -6;
+      compressor.ratio.value = 2;
+      compressor.attack.value = 0.001;
+      compressor.release.value = 0.08;
       masterGain = audioCtx.createGain();
       masterGain.gain.value = 1.0;
       compressor.connect(masterGain);
@@ -210,55 +212,59 @@
   }
 
   function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
-    const noiseFreq = isAccent ? 2800 : isSubdiv ? 1200 : 1800;
-    const oscFreq   = isAccent ? 1700 : isSubdiv ?  900 : 1200;
-    const decay     = isSubdiv ? 0.022 : isAccent ? 0.060 : 0.042;
+    const bodyFreq = isAccent ? 2200 : isSubdiv ? 1000 : 1400;
+    const bodyQ    = isAccent ? 28   : isSubdiv ? 35   : 30;
+    const decay    = isSubdiv ? 0.020 : isAccent ? 0.065 : 0.048;
 
-    const noise = audioCtx.createBufferSource();
-    noise.buffer = getNoiseBuffer();
-    const bp = audioCtx.createBiquadFilter();
-    bp.type = 'bandpass';
-    bp.frequency.setValueAtTime(noiseFreq, when);
-    bp.Q.value = 12;
-    const ng = audioCtx.createGain();
-    ng.gain.setValueAtTime(vol * 0.55, when);
-    ng.gain.exponentialRampToValueAtTime(0.001, when + decay * 0.4);
-    noise.connect(bp); bp.connect(ng); ng.connect(compressor);
-    noise.start(when); noise.stop(when + decay * 0.5);
+    // Sharp transient: brief highpass noise burst (the initial "click" attack)
+    const t = audioCtx.createBufferSource();
+    t.buffer = getNoiseBuffer();
+    const thp = audioCtx.createBiquadFilter();
+    thp.type = 'highpass';
+    thp.frequency.setValueAtTime(isAccent ? 4500 : 3000, when);
+    const tg = audioCtx.createGain();
+    tg.gain.setValueAtTime(vol * 1.1, when);
+    tg.gain.exponentialRampToValueAtTime(0.001, when + 0.006);
+    t.connect(thp); thp.connect(tg); tg.connect(compressor);
+    t.start(when); t.stop(when + 0.009);
 
-    const osc = audioCtx.createOscillator();
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(oscFreq, when);
-    osc.frequency.exponentialRampToValueAtTime(oscFreq * 0.55, when + decay);
-    const og = audioCtx.createGain();
-    og.gain.setValueAtTime(vol * 0.55, when);
-    og.gain.exponentialRampToValueAtTime(0.001, when + decay);
-    osc.connect(og); og.connect(compressor);
-    osc.start(when); osc.stop(when + decay + 0.01);
+    // Resonant body: high-Q bandpass noise (gives the woody "tock" ring)
+    const b = audioCtx.createBufferSource();
+    b.buffer = getNoiseBuffer();
+    const bbp = audioCtx.createBiquadFilter();
+    bbp.type = 'bandpass';
+    bbp.frequency.setValueAtTime(bodyFreq, when);
+    bbp.Q.value = bodyQ;
+    const bg = audioCtx.createGain();
+    bg.gain.setValueAtTime(vol * 1.5, when);
+    bg.gain.exponentialRampToValueAtTime(0.001, when + decay);
+    b.connect(bbp); bbp.connect(bg); bg.connect(compressor);
+    b.start(when); b.stop(when + decay + 0.01);
   }
 
   function _clickElectronico(isAccent, isSubdiv, isMedium, when, vol) {
-    const noiseFreq = isAccent ? 4000 : isSubdiv ? 1500 : 2500;
-    const oscFreq   = isAccent ? 1900 : isSubdiv ?  900 : 1400;
-    const decay     = isSubdiv ? 0.015 : isAccent ? 0.070 : 0.050;
+    const bodyFreq = isAccent ? 1900 : isSubdiv ? 900  : 1400;
+    const decay    = isSubdiv ? 0.015 : isAccent ? 0.070 : 0.050;
 
-    const noise = audioCtx.createBufferSource();
-    noise.buffer = getNoiseBuffer();
-    const hp = audioCtx.createBiquadFilter();
-    hp.type = 'highpass';
-    hp.frequency.setValueAtTime(noiseFreq, when);
-    const ng = audioCtx.createGain();
-    ng.gain.setValueAtTime(vol * 0.35, when);
-    ng.gain.exponentialRampToValueAtTime(0.001, when + 0.008);
-    noise.connect(hp); hp.connect(ng); ng.connect(compressor);
-    noise.start(when); noise.stop(when + 0.012);
+    // Very brief noise transient
+    const t = audioCtx.createBufferSource();
+    t.buffer = getNoiseBuffer();
+    const thp = audioCtx.createBiquadFilter();
+    thp.type = 'highpass';
+    thp.frequency.setValueAtTime(isAccent ? 5000 : 3500, when);
+    const tg = audioCtx.createGain();
+    tg.gain.setValueAtTime(vol * 0.8, when);
+    tg.gain.exponentialRampToValueAtTime(0.001, when + 0.004);
+    t.connect(thp); thp.connect(tg); tg.connect(compressor);
+    t.start(when); t.stop(when + 0.006);
 
+    // Clean sine body
     const osc = audioCtx.createOscillator();
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(oscFreq, when);
+    osc.frequency.setValueAtTime(bodyFreq, when);
     const og = audioCtx.createGain();
     og.gain.setValueAtTime(0, when);
-    og.gain.linearRampToValueAtTime(vol * 0.9, when + 0.001);
+    og.gain.linearRampToValueAtTime(vol * 1.1, when + 0.001);
     og.gain.exponentialRampToValueAtTime(0.001, when + decay);
     osc.connect(og); og.connect(compressor);
     osc.start(when); osc.stop(when + decay + 0.01);
