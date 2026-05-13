@@ -205,35 +205,35 @@
   }
 
   function playClick(isAccent, isSubdiv, when, isMedium) {
-    const vol = isAccent ? volAccent : isMedium ? volClick * 0.85 : isSubdiv ? volClick * 0.45 : volClick;
+    const vol = (isAccent ? volAccent : isMedium ? volClick * 0.85 : isSubdiv ? volClick * 0.45 : volClick) * 2.5;
     if (soundType === 'digital')          _clickDigital(isAccent, isSubdiv, isMedium, when, vol);
     else if (soundType === 'electronico') _clickElectronico(isAccent, isSubdiv, isMedium, when, vol);
     else                                  _clickClasico(isAccent, isSubdiv, isMedium, when, vol);
   }
 
   function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
-    const freq  = isAccent ? 1600 : isSubdiv ? 1100 : 950;
-    const decay = isSubdiv ? 0.018 : isAccent ? 0.055 : 0.038;
+    const freq  = isAccent ? 3000 : isSubdiv ? 1800 : 2200;
+    const decay = isSubdiv ? 0.014 : isAccent ? 0.042 : 0.028;
 
-    // Brief highpass noise burst — the initial "tick" attack
+    // Very brief highpass noise transient — the click attack
     const n = audioCtx.createBufferSource();
     n.buffer = getNoiseBuffer();
     const nhp = audioCtx.createBiquadFilter();
     nhp.type = 'highpass';
-    nhp.frequency.setValueAtTime(1800, when);
+    nhp.frequency.setValueAtTime(4000, when);
     const ng = audioCtx.createGain();
-    ng.gain.setValueAtTime(vol * (isSubdiv ? 0.5 : 1.0), when);
-    ng.gain.exponentialRampToValueAtTime(0.001, when + 0.006);
+    ng.gain.setValueAtTime(vol * (isSubdiv ? 0.4 : 0.9), when);
+    ng.gain.exponentialRampToValueAtTime(0.001, when + 0.004);
     n.connect(nhp); nhp.connect(ng); ng.connect(compressor);
-    n.start(when); n.stop(when + 0.009);
+    n.start(when); n.stop(when + 0.006);
 
-    // Triangle with pitch drop — the woody "tock" body
+    // Clean sine with pitch drop — digital character
     const osc = audioCtx.createOscillator();
-    osc.type = 'triangle';
+    osc.type = 'sine';
     osc.frequency.setValueAtTime(freq, when);
-    osc.frequency.exponentialRampToValueAtTime(freq * 0.42, when + decay);
+    osc.frequency.exponentialRampToValueAtTime(freq * 0.45, when + decay);
     const og = audioCtx.createGain();
-    og.gain.setValueAtTime(vol * (isSubdiv ? 0.45 : 1.0), when);
+    og.gain.setValueAtTime(vol * (isSubdiv ? 0.4 : 1.1), when);
     og.gain.exponentialRampToValueAtTime(0.001, when + decay);
     osc.connect(og); og.connect(compressor);
     osc.start(when); osc.stop(when + decay + 0.01);
@@ -268,7 +268,7 @@
   }
 
   function _clickDigital(isAccent, isSubdiv, isMedium, when, vol) {
-    const freq     = isAccent ? 1800 : isSubdiv ? 600 : isMedium ? 1200 : 1000;
+    const freq     = isAccent ? 2400 : isSubdiv ? 900 : isMedium ? 1800 : 1600;
     const duration = isAccent ? 0.12  : isSubdiv ? 0.025 : 0.060;
     const osc = audioCtx.createOscillator();
     osc.type = 'sine';
@@ -413,7 +413,7 @@
           const stepIdx = (startStep + s) % drSteps;
           const stepTime = nextBeatTime + s * stepDuration;
           DR_INSTS.forEach((_, i) => {
-            if (drPattern[i][stepIdx]) playDrum(i, drVolumes[i], stepTime);
+            if (drPattern[i][stepIdx]) playDrum(i, drVolumes[i] * 2.5, stepTime);
           });
         }
       }
