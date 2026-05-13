@@ -116,6 +116,13 @@
         hhc:   [1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1],
         hho:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
     ],
+    '9/8': [  // 18 pasos — 3 tiempos compuestos de 3 corcheas
+      { name: 'Básico',
+        kick:  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        snare: [0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0],
+        hhc:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+        hho:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+    ],
     '6/8': [  // 12 pasos
       { name: 'Básico',
         kick:  [1,0,0,0,0,0,0,0,0,0,0,0],
@@ -148,7 +155,7 @@
     // Fallbacks por familia
     if (m === '1/4') return METER_PATTERNS['2/4'];
     if (m === '5/4' || m === '7/4') return METER_PATTERNS['4/4'];
-    if (m === '3/8' || m === '9/8' || m === '12/8' || m === '15/8') return METER_PATTERNS['6/8'];
+    if (m === '3/8' || m === '12/8' || m === '15/8') return METER_PATTERNS['6/8'];
     return METER_PATTERNS['4/4'];
   }
 
