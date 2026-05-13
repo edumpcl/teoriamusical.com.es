@@ -212,34 +212,31 @@
   }
 
   function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
-    const bodyFreq = isAccent ? 2200 : isSubdiv ? 1000 : 1400;
-    const bodyQ    = isAccent ? 28   : isSubdiv ? 35   : 30;
-    const decay    = isSubdiv ? 0.020 : isAccent ? 0.065 : 0.048;
+    const freq  = isAccent ? 1600 : isSubdiv ? 1100 : 950;
+    const decay = isSubdiv ? 0.018 : isAccent ? 0.055 : 0.038;
 
-    // Sharp transient: brief highpass noise burst (the initial "click" attack)
-    const t = audioCtx.createBufferSource();
-    t.buffer = getNoiseBuffer();
-    const thp = audioCtx.createBiquadFilter();
-    thp.type = 'highpass';
-    thp.frequency.setValueAtTime(isAccent ? 4500 : 3000, when);
-    const tg = audioCtx.createGain();
-    tg.gain.setValueAtTime(vol * 1.1, when);
-    tg.gain.exponentialRampToValueAtTime(0.001, when + 0.006);
-    t.connect(thp); thp.connect(tg); tg.connect(compressor);
-    t.start(when); t.stop(when + 0.009);
+    // Brief highpass noise burst — the initial "tick" attack
+    const n = audioCtx.createBufferSource();
+    n.buffer = getNoiseBuffer();
+    const nhp = audioCtx.createBiquadFilter();
+    nhp.type = 'highpass';
+    nhp.frequency.setValueAtTime(1800, when);
+    const ng = audioCtx.createGain();
+    ng.gain.setValueAtTime(vol * (isSubdiv ? 0.5 : 1.0), when);
+    ng.gain.exponentialRampToValueAtTime(0.001, when + 0.006);
+    n.connect(nhp); nhp.connect(ng); ng.connect(compressor);
+    n.start(when); n.stop(when + 0.009);
 
-    // Resonant body: high-Q bandpass noise (gives the woody "tock" ring)
-    const b = audioCtx.createBufferSource();
-    b.buffer = getNoiseBuffer();
-    const bbp = audioCtx.createBiquadFilter();
-    bbp.type = 'bandpass';
-    bbp.frequency.setValueAtTime(bodyFreq, when);
-    bbp.Q.value = bodyQ;
-    const bg = audioCtx.createGain();
-    bg.gain.setValueAtTime(vol * 1.5, when);
-    bg.gain.exponentialRampToValueAtTime(0.001, when + decay);
-    b.connect(bbp); bbp.connect(bg); bg.connect(compressor);
-    b.start(when); b.stop(when + decay + 0.01);
+    // Triangle with pitch drop — the woody "tock" body
+    const osc = audioCtx.createOscillator();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, when);
+    osc.frequency.exponentialRampToValueAtTime(freq * 0.42, when + decay);
+    const og = audioCtx.createGain();
+    og.gain.setValueAtTime(vol * (isSubdiv ? 0.45 : 1.0), when);
+    og.gain.exponentialRampToValueAtTime(0.001, when + decay);
+    osc.connect(og); og.connect(compressor);
+    osc.start(when); osc.stop(when + decay + 0.01);
   }
 
   function _clickElectronico(isAccent, isSubdiv, isMedium, when, vol) {
