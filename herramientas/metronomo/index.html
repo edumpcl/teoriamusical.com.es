@@ -238,6 +238,16 @@
       <button class="btn-reset" id="btn-reset">RESET</button>
     </div>
 
+    <!-- SONIDO -->
+    <div class="ctrl-box full">
+      <div class="box-label">Sonido</div>
+      <div class="pill-group">
+        <span class="pill sound-pill active" data-sound="clasico">Clásico</span>
+        <span class="pill sound-pill" data-sound="electronico">Electrónico</span>
+        <span class="pill sound-pill" data-sound="digital">Digital</span>
+      </div>
+    </div>
+
     <!-- COMPÁS -->
     <div class="ctrl-box full">
       <div class="box-label">Compás</div>
@@ -295,14 +305,6 @@
     <!-- VOLÚMENES -->
     <div class="ctrl-box">
       <div class="box-label">Volúmenes</div>
-      <div style="margin-bottom:12px;">
-        <div style="font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1.5px;">Sonido</div>
-        <div class="pill-group">
-          <span class="pill sound-pill active" data-sound="clasico">Clásico</span>
-          <span class="pill sound-pill" data-sound="electronico">Electrónico</span>
-          <span class="pill sound-pill" data-sound="digital">Digital</span>
-        </div>
-      </div>
       <div class="vol-row">
         <span class="vol-label">Click</span>
         <input type="range" class="vol-slider" id="vol-click" min="0" max="100" value="80">
