@@ -25,8 +25,10 @@
   let audioCtx = null;
   let compressor = null;
   let masterGain = null;
+  let _noiseBuffer = null;
   let volClick = 0.8;
   let volAccent = 1.0;
+  let soundType = 'clasico';
 
   // Drum machine
   let drEnabled = false;
@@ -191,24 +193,89 @@
     return audioCtx;
   }
 
+  function getNoiseBuffer() {
+    if (_noiseBuffer) return _noiseBuffer;
+    const len = Math.floor(audioCtx.sampleRate * 0.15);
+    _noiseBuffer = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+    const d = _noiseBuffer.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    return _noiseBuffer;
+  }
+
   function playClick(isAccent, isSubdiv, when, isMedium) {
-    const ctx = getAudioCtx();
-    const gainNode = ctx.createGain();
-    gainNode.connect(compressor);
-    const osc = ctx.createOscillator();
+    const vol = isAccent ? volAccent : isMedium ? volClick * 0.85 : isSubdiv ? volClick * 0.45 : volClick;
+    if (soundType === 'digital')          _clickDigital(isAccent, isSubdiv, isMedium, when, vol);
+    else if (soundType === 'electronico') _clickElectronico(isAccent, isSubdiv, isMedium, when, vol);
+    else                                  _clickClasico(isAccent, isSubdiv, isMedium, when, vol);
+  }
+
+  function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
+    const noiseFreq = isAccent ? 2800 : isSubdiv ? 1200 : 1800;
+    const oscFreq   = isAccent ? 1700 : isSubdiv ?  900 : 1200;
+    const decay     = isSubdiv ? 0.022 : isAccent ? 0.060 : 0.042;
+
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = getNoiseBuffer();
+    const bp = audioCtx.createBiquadFilter();
+    bp.type = 'bandpass';
+    bp.frequency.setValueAtTime(noiseFreq, when);
+    bp.Q.value = 12;
+    const ng = audioCtx.createGain();
+    ng.gain.setValueAtTime(vol * 0.55, when);
+    ng.gain.exponentialRampToValueAtTime(0.001, when + decay * 0.4);
+    noise.connect(bp); bp.connect(ng); ng.connect(compressor);
+    noise.start(when); noise.stop(when + decay * 0.5);
+
+    const osc = audioCtx.createOscillator();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(oscFreq, when);
+    osc.frequency.exponentialRampToValueAtTime(oscFreq * 0.55, when + decay);
+    const og = audioCtx.createGain();
+    og.gain.setValueAtTime(vol * 0.55, when);
+    og.gain.exponentialRampToValueAtTime(0.001, when + decay);
+    osc.connect(og); og.connect(compressor);
+    osc.start(when); osc.stop(when + decay + 0.01);
+  }
+
+  function _clickElectronico(isAccent, isSubdiv, isMedium, when, vol) {
+    const noiseFreq = isAccent ? 4000 : isSubdiv ? 1500 : 2500;
+    const oscFreq   = isAccent ? 1900 : isSubdiv ?  900 : 1400;
+    const decay     = isSubdiv ? 0.015 : isAccent ? 0.070 : 0.050;
+
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = getNoiseBuffer();
+    const hp = audioCtx.createBiquadFilter();
+    hp.type = 'highpass';
+    hp.frequency.setValueAtTime(noiseFreq, when);
+    const ng = audioCtx.createGain();
+    ng.gain.setValueAtTime(vol * 0.35, when);
+    ng.gain.exponentialRampToValueAtTime(0.001, when + 0.008);
+    noise.connect(hp); hp.connect(ng); ng.connect(compressor);
+    noise.start(when); noise.stop(when + 0.012);
+
+    const osc = audioCtx.createOscillator();
     osc.type = 'sine';
-    osc.connect(gainNode);
-    let freq, duration, vol;
-    if (isAccent)       { freq = 1800; duration = 0.12;  vol = volAccent; }
-    else if (isMedium)  { freq = 1200; duration = 0.08;  vol = volClick * 0.85; }
-    else if (isSubdiv)  { freq = 600;  duration = 0.025; vol = volClick * 0.5; }
-    else                { freq = 1000; duration = 0.06;  vol = volClick; }
+    osc.frequency.setValueAtTime(oscFreq, when);
+    const og = audioCtx.createGain();
+    og.gain.setValueAtTime(0, when);
+    og.gain.linearRampToValueAtTime(vol * 0.9, when + 0.001);
+    og.gain.exponentialRampToValueAtTime(0.001, when + decay);
+    osc.connect(og); og.connect(compressor);
+    osc.start(when); osc.stop(when + decay + 0.01);
+  }
+
+  function _clickDigital(isAccent, isSubdiv, isMedium, when, vol) {
+    const freq     = isAccent ? 1800 : isSubdiv ? 600 : isMedium ? 1200 : 1000;
+    const duration = isAccent ? 0.12  : isSubdiv ? 0.025 : 0.060;
+    const osc = audioCtx.createOscillator();
+    osc.type = 'sine';
     osc.frequency.setValueAtTime(freq, when);
-    gainNode.gain.setValueAtTime(0, when);
-    gainNode.gain.linearRampToValueAtTime(vol, when + 0.0005);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, when + duration);
-    osc.start(when);
-    osc.stop(when + duration + 0.01);
+    const og = audioCtx.createGain();
+    og.gain.setValueAtTime(0, when);
+    og.gain.linearRampToValueAtTime(vol, when + 0.0005);
+    og.gain.exponentialRampToValueAtTime(0.001, when + duration);
+    osc.connect(og); og.connect(compressor);
+    osc.start(when); osc.stop(when + duration + 0.01);
   }
 
   // ── SAMPLES (AVL RedZeppelin) ─────────────────────────────────────────────
@@ -774,6 +841,13 @@
     volAccentSlider.addEventListener('input', () => {
       volAccent = volAccentSlider.value / 100;
       document.getElementById('vol-accent-num').textContent = volAccentSlider.value;
+    });
+
+    document.querySelectorAll('.sound-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        soundType = pill.dataset.sound;
+        document.querySelectorAll('.sound-pill').forEach(p => p.classList.toggle('active', p === pill));
+      });
     });
 
     // Practice
