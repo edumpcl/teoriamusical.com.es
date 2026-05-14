@@ -1,0 +1,73 @@
+# Teoría Musical
+
+> Recurso educativo online en español sobre teoría musical: diccionario interactivo, ejercicios prácticos y herramientas gratuitas para músicos (metrónomo y afinador). Todo el contenido está en notación española (Do, Re, Mi, Fa, Sol, La, Si). Sin registro ni pago.
+
+Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.com.es/
+
+## Herramientas gratuitas
+
+- [Metrónomo Online](https://www.teoriamusical.com.es/herramientas/metronomo/): Metrónomo digital con caja de ritmos integrada, tres tipos de sonido (clásico, electrónico, digital), subdivisiones, compases simples y compuestos (2/4, 3/4, 4/4, 6/8, 9/8, 12/8…), patrones de batería básicos y rango de 20 a 300 BPM. Funciona en navegador sin instalación.
+- [Afinador Online](https://www.teoriamusical.com.es/herramientas/afinador/): Afinador cromático gratuito con detección de nota por micrófono (algoritmo YIN), medidor de cents (−50¢ a +50¢), notas de referencia tocables, referencia A4 ajustable (435–450 Hz) y soporte para instrumentos transpositores (clarinete en Si♭, trompeta, corno inglés, saxofón alto…). Muestra la nota real y la nota escrita simultáneamente.
+
+## Teoría Musical (introducción)
+
+- [Teoría Musical](https://www.teoriamusical.com.es/teoria-musical/): Introducción general a la teoría musical: fundamentos, lenguaje musical y conceptos básicos.
+
+## Diccionario Musical
+
+- [Diccionario Musical](https://www.teoriamusical.com.es/diccionario-musical/): Índice de todos los conceptos de teoría musical explicados en español.
+
+### Acordes
+- [Acordes](https://www.teoriamusical.com.es/diccionario-musical/acordes/): Introducción a los acordes musicales.
+- [Acordes tríadas](https://www.teoriamusical.com.es/diccionario-musical/acordes/acordes-triadas/): Mayor, menor, aumentado y disminuido.
+- [Acorde de séptima de dominante](https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-de-dominante/): Construcción y función del acorde V7.
+- [Acorde de séptima de sensible](https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-de-sensible/): Construcción y función del acorde VII7.
+- [Acorde de séptima disminuida](https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-disminuida/): Construcción y uso del acorde disminuido con séptima.
+
+### Claves musicales
+- [Claves musicales](https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/): Clave de Sol, Fa y Do; su colocación en el pentagrama y lectura.
+
+### Compases
+- [Compases](https://www.teoriamusical.com.es/diccionario-musical/compases/): Compases simples y compuestos; introducción.
+- [Analizar compases](https://www.teoriamusical.com.es/diccionario-musical/compases/analizar-compases/): Cómo identificar y analizar un compás musical.
+- [Acentuación en compases simples](https://www.teoriamusical.com.es/diccionario-musical/compases/acentuacion-ritmica-de-los-compases-simples/): Acentuación rítmica en 2/4, 3/4, 4/4.
+- [Acentuación en compases compuestos](https://www.teoriamusical.com.es/diccionario-musical/compases/acentuacion-ritmica-de-los-compases-compuestos/): Acentuación rítmica en 6/8, 9/8, 12/8.
+
+### Intervalos
+- [Intervalos musicales](https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-musicales/): Definición, clasificación y tipos de intervalos.
+- [Intervalos consonantes y disonantes](https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-consonantes-y-disonantes/): Diferencia entre consonancia y disonancia.
+- [Inversión de intervalos](https://www.teoriamusical.com.es/diccionario-musical/intervalos/inversion/): Cómo invertir un intervalo y la regla del 9.
+- [Ampliación y reducción de intervalos](https://www.teoriamusical.com.es/diccionario-musical/intervalos/ampliacion-reduccion-de-intervalos/): Aumentar o disminuir intervalos alterando sus notas.
+- [Tono y semitono](https://www.teoriamusical.com.es/diccionario-musical/intervalos/tono-y-semitono/): Unidades básicas de distancia entre notas.
+- [Semitono diatónico y cromático](https://www.teoriamusical.com.es/diccionario-musical/intervalos/semitono-diatonico-y-semitono-cromatico/): Diferencia entre ambos tipos de semitono.
+- [Unísono y notas enarmónicas](https://www.teoriamusical.com.es/diccionario-musical/intervalos/unisono-y-notas-enarmonicas/): Notas con el mismo sonido y distinto nombre.
+
+### Otros conceptos
+- [Nombres de las notas musicales](https://www.teoriamusical.com.es/diccionario-musical/nombres-de-las-notas-musicales/): Origen del solfeo (Do, Re, Mi…) y equivalencia con la notación anglosajona (C, D, E…).
+- [Grados de la escala](https://www.teoriamusical.com.es/diccionario-musical/nombres-de-los-grados-de-la-escala/): Tónica, supertónica, mediante, subdominante, dominante, superdominante, sensible.
+- [Pentagramas](https://www.teoriamusical.com.es/diccionario-musical/pentagramas/): Estructura del pentagrama, líneas y espacios.
+
+### Tonalidades y escalas
+- [Tonalidades y armaduras](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/tonalidades-y-armaduras/): Relación entre tonalidad y armadura de clave.
+- [Orden de las alteraciones](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/orden-de-las-alteraciones-en-la-que-aparecen-las-armaduras/): Orden en que aparecen sostenidos y bemoles en las armaduras.
+- [Escalas mayores naturales](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-naturales/): Las 15 escalas mayores naturales con sus armaduras.
+- [Escalas mayores mixolidias](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-mixolidias/): El modo mixolidio aplicado a las escalas mayores.
+- [Escalas mayores mixtas principales](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-mixtas-principales/): Escalas mixtas con alteraciones principales.
+- [Escalas mayores mixtas secundarias](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-mixtas-secundarias/): Escalas mixtas con alteraciones secundarias.
+- [Comparar tipos de escalas mayores](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/comparar-los-tipos-de-escalas-mayores/): Tabla comparativa de los distintos tipos de escalas mayores.
+- [Escalas menores naturales](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/escalas-menores-naturales/): Las 15 escalas menores naturales.
+- [Escalas menores armónicas](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/escalas-menores-armonicas/): La escala menor con la sensible elevada.
+- [Escalas menores melódicas](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/escalas-menores-melodicas/): La escala menor con sexta y séptima elevadas en ascenso.
+- [Escalas menores dóricas](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/escalas-menores-doricas/): El modo dórico aplicado a las escalas menores.
+- [Comparar tipos de escalas menores](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/comparar-los-tipos-de-escalas-menores/): Tabla comparativa de los distintos tipos de escalas menores.
+
+## Ejercicios interactivos
+
+- [Ejercicios de intervalos](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/): Práctica interactiva de identificación y construcción de intervalos (segundas, terceras, cuartas, quintas, sextas, séptimas, octavas; melódicos, armónicos, ascendentes, descendentes, consonantes, disonantes, conjuntos, disjuntos, semitono diatónico y cromático, enarmónicas).
+- [Ejercicios de tonalidades](https://www.teoriamusical.com.es/ejercicios/tonalidades/): Identificación de tonalidades y armaduras.
+
+## Blog
+
+- [Blog de Teoría Musical](https://www.teoriamusical.com.es/blog/): Artículos sobre armonía, historia de la música y análisis musical.
+- [Himno a San Juan (origen del solfeo)](https://www.teoriamusical.com.es/blog/himno-a-san-juan/): Artículo sobre el origen de los nombres Do, Re, Mi, Fa, Sol, La, Si a partir del himno gregoriano Ut queant laxis.
+- [Armonía](https://www.teoriamusical.com.es/blog/armonia/): Introducción a la armonía tonal.
