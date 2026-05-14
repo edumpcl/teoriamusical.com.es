@@ -69,6 +69,17 @@
   }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.teoriamusical.com.es/" },
+    { "@type": "ListItem", "position": 2, "name": "Herramientas", "item": "https://www.teoriamusical.com.es/herramientas/" },
+    { "@type": "ListItem", "position": 3, "name": "Afinador Online", "item": "https://www.teoriamusical.com.es/herramientas/afinador/" }
+  ]
+}
+</script>
 </head>
 <body class="tm-page">
 <a class="tm-skip" href="#main">Saltar al contenido</a>
@@ -258,18 +269,7 @@
         <span id="mic-label">Activar</span>
       </button>
     </div>
-    <div id="debug-panel" style="
-      margin-top:12px;
-      padding:8px 12px;
-      background:#f0e8d8;
-      border:1px solid var(--border);
-      border-radius:6px;
-      font-family:'Roboto Mono',monospace;
-      font-size:11px;
-      color:var(--rust);
-      display:none;
-      word-break:break-all;
-    "></div>
+    <p id="mic-error" style="display:none; margin-top:10px; color:var(--red); font-size:0.9rem; text-align:center;"></p>
   </div>
 
   <!-- REFERENCIA A4 -->
@@ -321,6 +321,61 @@
 
 </div><!-- /wrap -->
 <script src="/assets/tools/afinador.js" defer></script>
+
+<!-- FUNCIONES DEL AFINADOR -->
+<section class="tm-seccion">
+  <div class="tm-seccion-inner">
+    <div class="tm-seccion-cabecera" style="justify-content: center; text-align: center;">
+      <h2 class="tm-seccion-titulo">Funciones del <span>afinador online</span></h2>
+    </div>
+    <ul style="max-width: 700px; margin: 2rem auto 0 auto; display: flex; flex-direction: column; gap: 0.85rem; list-style: none; padding: 0;">
+      <li style="display: flex; gap: 0.75rem; align-items: flex-start; color: #514232; line-height: 1.6;"><span style="color: #8b6914; font-weight: 700; flex-shrink: 0;">✓</span><span><strong>Detección automática de nota</strong> — el algoritmo YIN analiza el audio en tiempo real e identifica la nota (Do, Re, Mi…) y su octava.</span></li>
+      <li style="display: flex; gap: 0.75rem; align-items: flex-start; color: #514232; line-height: 1.6;"><span style="color: #8b6914; font-weight: 700; flex-shrink: 0;">✓</span><span><strong>Medidor de cents</strong> — visualiza con precisión si vas bemol o sostenido, con escala de −50¢ a +50¢.</span></li>
+      <li style="display: flex; gap: 0.75rem; align-items: flex-start; color: #514232; line-height: 1.6;"><span style="color: #8b6914; font-weight: 700; flex-shrink: 0;">✓</span><span><strong>Instrumentos transpositores</strong> — soporte para Clarinete en Si♭, Trompeta, Corno inglés, Saxofón y más; muestra la nota escrita y la nota real simultáneamente.</span></li>
+      <li style="display: flex; gap: 0.75rem; align-items: flex-start; color: #514232; line-height: 1.6;"><span style="color: #8b6914; font-weight: 700; flex-shrink: 0;">✓</span><span><strong>Referencia A4 ajustable</strong> — configura el La de referencia entre 435 Hz y 450 Hz para adaptarte a cualquier orquesta o diapasón.</span></li>
+      <li style="display: flex; gap: 0.75rem; align-items: flex-start; color: #514232; line-height: 1.6;"><span style="color: #8b6914; font-weight: 700; flex-shrink: 0;">✓</span><span><strong>Notas de referencia</strong> — pulsa cualquier nota para escuchar el tono puro y afinar por oído sin necesidad de micrófono.</span></li>
+      <li style="display: flex; gap: 0.75rem; align-items: flex-start; color: #514232; line-height: 1.6;"><span style="color: #8b6914; font-weight: 700; flex-shrink: 0;">✓</span><span><strong>Notación española</strong> — muestra las notas como Do, Re, Mi, Fa, Sol, La, Si (solfeo latino).</span></li>
+      <li style="display: flex; gap: 0.75rem; align-items: flex-start; color: #514232; line-height: 1.6;"><span style="color: #8b6914; font-weight: 700; flex-shrink: 0;">✓</span><span><strong>Gratis y sin instalación</strong> — funciona directamente en el navegador en móvil, tablet u ordenador; no requiere ninguna app.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- AFINADOR POR INSTRUMENTO -->
+<section class="tm-seccion">
+  <div class="tm-seccion-inner">
+    <div class="tm-seccion-cabecera" style="justify-content: center; text-align: center;">
+      <h2 class="tm-seccion-titulo">Afinador para cada <span>instrumento</span></h2>
+    </div>
+    <div style="max-width: 800px; margin: 2rem auto 0 auto; display: flex; flex-direction: column; gap: 2rem;">
+
+      <div>
+        <h3 style="color: #8b6914; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Afinador para guitarra</h3>
+        <p style="color: #514232; line-height: 1.7;">La afinación estándar de la guitarra (Mi–La–Re–Sol–Si–Mi) es la más común. Activa el micrófono, pulsa una cuerda al aire y ajusta hasta que el medidor quede en el centro. También funciona para guitarras en Drop D (cuerdas 1ª a 5ª iguales, 6ª bajada a Re) y otras afinaciones alternativas, siempre que la nota esté dentro del rango cromático. Nuestro <a href="/herramientas/afinador/">afinador para guitarra</a> detecta automáticamente cualquier nota sin que tengas que seleccionarla.</p>
+      </div>
+
+      <div>
+        <h3 style="color: #8b6914; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Afinador para bajo eléctrico</h3>
+        <p style="color: #514232; line-height: 1.7;">El bajo estándar de 4 cuerdas afina Mi–La–Re–Sol (una octava por debajo de las cuatro cuerdas graves de la guitarra). El afinador detecta frecuencias graves desde 41 Hz (Mi1), por lo que cubre perfectamente bajos de 4, 5 y 6 cuerdas. Para mejores resultados con frecuencias muy graves, toca la cuerda cerca de un micrófono externo o sube el volumen del instrumento.</p>
+      </div>
+
+      <div>
+        <h3 style="color: #8b6914; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Afinador para violín</h3>
+        <p style="color: #514232; line-height: 1.7;">El violín afina en quintas: Sol–Re–La–Mi. La cuerda de La (La4 = 440 Hz) es la referencia habitual al inicio de cada ensayo. Con este afinador puedes ajustar el La4 de referencia entre 435 y 450 Hz para adaptarte a orquestas históricas (415 Hz habitualmente) o a ensembles modernos. Toca cada cuerda al aire y acerca la aguja al centro.</p>
+      </div>
+
+      <div>
+        <h3 style="color: #8b6914; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Afinador para ukelele</h3>
+        <p style="color: #514232; line-height: 1.7;">El ukelele soprano estándar afina Sol–Do–Mi–La (afinación re-entrant). Nuestro afinador cubre ese rango y reconoce todas las cuerdas sin necesidad de configuración previa. Activa el micrófono, pulsa cada cuerda por separado y comprueba que la aguja se centra en la nota correcta.</p>
+      </div>
+
+      <div>
+        <h3 style="color: #8b6914; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Afinador para instrumentos de viento</h3>
+        <p style="color: #514232; line-height: 1.7;">La flauta traversa, el oboe, la trompeta y el clarinete pueden afinarse usando el micrófono de igual forma que los instrumentos de cuerda. Para instrumentos transpositores (clarinete en Si♭, trompeta en Si♭, corno inglés en Fa, saxofón alto en Mi♭…) activa la sección "Instrumento transpositor" del afinador: verás simultáneamente la nota real que suena y la nota escrita que debes leer en la partitura.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- SECCIÓN DE INSTRUCCIONES / SEO -->
 <section class="tm-seccion">
@@ -398,14 +453,14 @@
     <div class="tm-seccion-cabecera" style="text-align: center; justify-content: center;">
       <h2 class="tm-seccion-titulo">Preguntas <span>Frecuentes</span></h2>
     </div>
-    
+
     <div style="max-width: 800px; margin: 2rem auto 0 auto; display: flex; flex-direction: column; gap: 1.5rem;">
       <!-- Pregunta 1 -->
       <div style="background: #faf7f2; border: 1px solid #e8e0cc; padding: 1.5rem; border-radius: 0.75rem;">
         <h3 style="color: #1a1208; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: flex-start; gap: 0.75rem;">
           <strong style="color: #8b6914;">¿</strong> Cómo funciona el afinador online?
         </h3>
-        <p style="color: #514232; line-height: 1.6; margin-left: 1.5rem;">Simplemente pulsa el botón de micrófono y otorga el permiso de audio a tu navegador. Toca una cuerda o nota de tu instrumento y el afinador detectará automáticamente la nota musical (Do, Re, Mi, Fa, Sol, La, Si). Ajusta la tensión hasta que el medidor quede afinado en el centro.</p>
+        <p style="color: #514232; line-height: 1.6; margin-left: 1.5rem;">Simplemente pulsa el botón de micrófono y otorga el permiso de audio a tu navegador. Toca una cuerda o nota de tu instrumento y el afinador detectará automáticamente la nota musical (Do, Re, Mi, Fa, Sol, La, Si). Ajusta la tensión hasta que el medidor quede centrado y el indicador se ponga verde.</p>
       </div>
 
       <!-- Pregunta 2 -->
@@ -421,24 +476,37 @@
         <h3 style="color: #1a1208; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: flex-start; gap: 0.75rem;">
           <strong style="color: #8b6914;">¿</strong> Funciona en teléfonos móviles y ordenadores?
         </h3>
-        <p style="color: #514232; line-height: 1.6; margin-left: 1.5rem;">Absolutamente. Es totalmente compatible con cualquier dispositivo moderno que cuente con un navegador actualizado (Chrome, Safari, Mozilla, Edge) y un micrófono. Funciona de manera impecable tanto en Android e iPhone como en sistemas Windows y Mac.</p>
+        <p style="color: #514232; line-height: 1.6; margin-left: 1.5rem;">Sí. Es compatible con cualquier dispositivo moderno con un navegador actualizado (Chrome, Safari, Edge, Firefox) y micrófono. Funciona tanto en Android e iPhone como en ordenadores con Windows o Mac.</p>
       </div>
 
       <!-- Pregunta 4 -->
       <div style="background: #faf7f2; border: 1px solid #e8e0cc; padding: 1.5rem; border-radius: 0.75rem;">
         <h3 style="color: #1a1208; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: flex-start; gap: 0.75rem;">
-          <strong style="color: #8b6914;">¿</strong> Qué instrumentos puedo afinar acá?
+          <strong style="color: #8b6914;">¿</strong> Qué instrumentos puedo afinar?
         </h3>
-        <p style="color: #514232; line-height: 1.6; margin-left: 1.5rem;">Nuestro afinador cubre un rango frecuencial completo y dispone de ajuste de transposición. Gracias a esto, puedes afinar guitarras (clásicas, acústicas o eléctricas), ukeleles, bajos, violines, violonchelos y la inmensa mayoría de instrumentos acústicos siempre que tu micrófono recoja el sonido.</p>
+        <p style="color: #514232; line-height: 1.6; margin-left: 1.5rem;">Cualquier instrumento que emita un tono con fundamental clara: guitarra, bajo, violín, viola, violonchelo, ukelele, mandolina, contrabajo, flauta, oboe, trompeta, clarinete y muchos más. Para instrumentos transpositores (clarinete, trompeta, saxofón…) activa la sección "Instrumento transpositor" para ver la nota escrita y la nota real a la vez.</p>
+      </div>
+
+      <!-- Pregunta 5 -->
+      <div style="background: #faf7f2; border: 1px solid #e8e0cc; padding: 1.5rem; border-radius: 0.75rem;">
+        <h3 style="color: #1a1208; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: flex-start; gap: 0.75rem;">
+          <strong style="color: #8b6914;">¿</strong> Qué son los cents y para qué sirven?
+        </h3>
+        <p style="color: #514232; line-height: 1.6; margin-left: 1.5rem;">Un cent es la centésima parte de un semitono. El afinador muestra cuántos cents separan tu nota de la afinación perfecta (escala de −50¢ a +50¢). Un valor negativo (bemol) significa que la nota va baja y hay que tensar; un valor positivo (sostenido) significa que va alta y hay que aflojar. La afinación perfecta es 0¢.</p>
+      </div>
+
+      <!-- Pregunta 6 -->
+      <div style="background: #faf7f2; border: 1px solid #e8e0cc; padding: 1.5rem; border-radius: 0.75rem;">
+        <h3 style="color: #1a1208; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: flex-start; gap: 0.75rem;">
+          <strong style="color: #8b6914;">¿</strong> Puedo cambiar el La de referencia?
+        </h3>
+        <p style="color: #514232; line-height: 1.6; margin-left: 1.5rem;">Sí. En la sección "Referencia A4" puedes ajustar el La4 entre 435 Hz y 450 Hz pulsando los botones + y −. El estándar internacional es 440 Hz, pero muchas orquestas sinfónicas usan 442 Hz o incluso 444 Hz. Cambia el valor antes de empezar a afinar para que el afinador use tu referencia personalizada.</p>
       </div>
     </div>
   </div>
 </section>
 
-
-
-
-<!-- Código Técnico: Bloque JSON-LD de Datos Estructurados para añadir SEO de "FAQs" -->
+<!-- JSON-LD FAQ -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -449,7 +517,7 @@
       "name": "¿Cómo funciona el afinador online?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Simplemente pulsa el botón de micrófono y otorga el permiso de audio a tu navegador. Toca una cuerda o nota en tu instrumento y el afinador detectará automáticamente la nota musical (Do, Re, Mi, Fa, Sol, La, Si). Ajusta la tensión hasta que el medidor quede afinado en el centro."
+        "text": "Pulsa el botón de micrófono y otorga el permiso de audio a tu navegador. Toca una cuerda o nota de tu instrumento y el afinador detectará automáticamente la nota musical (Do, Re, Mi, Fa, Sol, La, Si). Ajusta la tensión hasta que el medidor quede centrado y el indicador se ponga verde."
       }
     },
     {
@@ -457,7 +525,7 @@
       "name": "¿Es gratis usar este afinador musical?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sí, este afinador interactivo es 100% gratuito. No requiere suscripciones, pagos ni descargas de ninguna aplicación externa. Puedes usar la herramienta tantas veces como necesites directamente desde la web."
+        "text": "Sí, es 100% gratuito. No requiere suscripciones, pagos ni descargas de ninguna aplicación externa. Puedes usarlo tantas veces como necesites directamente desde el navegador."
       }
     },
     {
@@ -465,15 +533,31 @@
       "name": "¿Funciona en teléfonos móviles y ordenadores?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Absolutamente. Es totalmente compatible con cualquier dispositivo moderno que cuente con un navegador actualizado (Chrome, Safari, Mozilla, Edge) y un micrófono. Funciona de manera impecable tanto en Android e iPhone como en sistemas Windows y Mac."
+        "text": "Sí. Es compatible con cualquier dispositivo moderno con un navegador actualizado (Chrome, Safari, Edge, Firefox) y micrófono: Android, iPhone, Windows y Mac."
       }
     },
     {
       "@type": "Question",
-      "name": "¿Qué instrumentos puedo afinar acá?",
+      "name": "¿Qué instrumentos puedo afinar?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Nuestro afinador cubre un rango frecuencial completo y dispone de ajuste de transposición. Gracias a esto, puedes afinar guitarras (clásicas, acústicas o eléctricas), ukeleles, bajos, violines, violonchelos y la inmensa mayoría de instrumentos acústicos siempre que tu micrófono recoja el sonido."
+        "text": "Cualquier instrumento que emita un tono con fundamental clara: guitarra, bajo, violín, viola, violonchelo, ukelele, mandolina, contrabajo, flauta, oboe, trompeta, clarinete y más. Para instrumentos transpositores activa la sección Instrumento transpositor para ver la nota escrita y la nota real simultáneamente."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué son los cents y para qué sirven?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Un cent es la centésima parte de un semitono. El afinador muestra cuántos cents separan tu nota de la afinación perfecta (escala de −50¢ a +50¢). Valor negativo significa que la nota va baja y hay que tensar; valor positivo que va alta y hay que aflojar. La afinación perfecta es 0¢."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo cambiar el La de referencia?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. En la sección Referencia A4 puedes ajustar el La4 entre 435 Hz y 450 Hz. El estándar internacional es 440 Hz, pero muchas orquestas sinfónicas usan 442 Hz o 444 Hz. Cambia el valor antes de afinar para que el afinador use tu referencia personalizada."
       }
     }
   ]

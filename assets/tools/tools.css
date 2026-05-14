@@ -495,10 +495,14 @@
     display: flex; align-items: center; justify-content: center;
   }
   .note-name.in-tune  { color: var(--green); }
-  .note-name.flat     { color: var(--teal); }
+  .note-name.flat     { color: var(--red); }
   .note-name.sharp    { color: var(--red); }
   .note-name.silent   { color: var(--border); }
   .note-name.written  { color: var(--rust); font-size: 70px; }
+  .note-name.written.in-tune { color: var(--green); }
+  .note-name.written.flat    { color: var(--red); }
+  .note-name.written.sharp   { color: var(--red); }
+  .note-name.written.silent  { color: var(--border); }
   .note-octave { font-family: ui-monospace, monospace; font-size: 18px; color: var(--muted); min-height: 24px; }
   .note-freq { font-family: ui-monospace, monospace; font-size: 12px; color: var(--muted); margin-top: 4px; min-height: 20px; }
   .note-display.no-transp { grid-template-columns: 1fr; }
@@ -514,7 +518,7 @@
   .gauge-needle-dot { transition: fill 0.1s; }
   .cents-display { text-align: center; font-family: ui-monospace, monospace; font-size: 28px; font-weight: 500; color: var(--muted); transition: color 0.1s; min-height: 36px; letter-spacing: 1px; }
   .cents-display.in-tune { color: var(--green); }
-  .cents-display.flat    { color: var(--teal); }
+  .cents-display.flat    { color: var(--red); }
   .cents-display.sharp   { color: var(--red); }
   .cents-labels { display: flex; justify-content: space-between; font-family: ui-monospace, monospace; font-size: 10px; color: var(--muted); padding: 0 4px; margin-top: 4px; }
 

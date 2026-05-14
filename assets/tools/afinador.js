@@ -154,7 +154,7 @@
 
     let color;
     if (state === 'in-tune') color = 'var(--green)';
-    else if (state === 'flat') color = 'var(--teal)';
+    else if (state === 'flat') color = 'var(--red)';
     else if (state === 'sharp') color = 'var(--red)';
     else color = 'var(--border)';
 
@@ -196,6 +196,7 @@
       domNoteName.textContent = '—';
       domNoteOctave.textContent = '';
       domNoteFreq.textContent = '';
+      domNoteWritten.className = 'note-name written silent';
       domNoteWritten.textContent = '—';
       domNoteWritOct.textContent = '';
       domCents.className = 'cents-display';
@@ -224,9 +225,11 @@
       const semitones = 12 * Math.log2(freq / a4Ref) + 69;
       const midi = Math.round(semitones);
       const w = writtenNote(midi);
+      domNoteWritten.className = `note-name written ${state}`;
       domNoteWritten.textContent = w.name;
       domNoteWritOct.textContent = w.octave;
     } else {
+      domNoteWritten.className = 'note-name written';
       domNoteWritten.textContent = '—';
       domNoteWritOct.textContent = '';
     }
@@ -238,7 +241,7 @@
     domStatNote.textContent = name + octave;
     domStatFreq.textContent = freq.toFixed(1);
     domStatCents.textContent = `${sign}${cents}`;
-    domStatCents.style.color = state === 'in-tune' ? 'var(--green)' : state === 'flat' ? 'var(--teal)' : 'var(--red)';
+    domStatCents.style.color = state === 'in-tune' ? 'var(--green)' : 'var(--red)';
 
     updateGauge(cents, state);
   }
@@ -289,38 +292,28 @@
   }
 
   // ── MIC ──────────────────────────────────────────────────────────────────────
-  const domDebug = document.getElementById('debug-panel');
-  function dbg(msg) {
-    domDebug.style.display = 'block';
-    domDebug.textContent = msg;
+  const domMicError = document.getElementById('mic-error');
+  function showMicError(msg) {
+    domMicError.textContent = msg;
+    domMicError.style.display = 'block';
   }
+  function clearMicError() { domMicError.style.display = 'none'; }
 
   async function startMic() {
-    // Poner botón en estado intermedio mientras carga
+    clearMicError();
     domBtnMic.style.background = 'var(--gold)';
     domBtnMic.style.borderColor = 'var(--gold)';
     domBtnMic.style.color = '#fff';
     domMicLabel.textContent = '...';
 
     try {
-      dbg('Solicitando micrófono...');
-
-      // Pedir permiso primero
       mediaStream = await navigator.mediaDevices.getUserMedia({
         audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
         video: false
       });
 
-      dbg('Micrófono OK, creando AudioContext...');
-
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-      if (audioCtx.state === 'suspended') {
-        dbg('AudioContext suspendido, resumiendo...');
-        await audioCtx.resume();
-      }
-
-      dbg('AudioContext: ' + audioCtx.state + ' | SR: ' + audioCtx.sampleRate);
+      if (audioCtx.state === 'suspended') await audioCtx.resume();
 
       const source = audioCtx.createMediaStreamSource(mediaStream);
       analyser = audioCtx.createAnalyser();
@@ -333,23 +326,26 @@
       lastNoteData = null;
       lastSignalTime = 0;
 
-      // Botón activo
       domBtnMic.classList.add('active');
       domBtnMic.style.background = '';
       domBtnMic.style.borderColor = '';
       domBtnMic.style.color = '';
       domMicLabel.textContent = 'Activo';
-      domDebug.style.display = 'none';
 
       rafId = requestAnimationFrame(analyse);
 
     } catch (err) {
-      dbg('ERROR: ' + err.name + ' — ' + err.message);
-      // Restaurar botón
       domBtnMic.style.background = '';
       domBtnMic.style.borderColor = '';
       domBtnMic.style.color = '';
       domMicLabel.textContent = 'Activar';
+      if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+        showMicError('Permiso de micrófono denegado. Haz clic en el icono del candado en la barra de direcciones y permite el acceso al micrófono.');
+      } else if (err.name === 'NotFoundError') {
+        showMicError('No se detectó ningún micrófono. Conecta un micrófono e inténtalo de nuevo.');
+      } else {
+        showMicError('No se pudo acceder al micrófono (' + err.name + '). Comprueba que ninguna otra aplicación lo esté usando.');
+      }
       stopMic();
     }
   }
