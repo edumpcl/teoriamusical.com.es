@@ -60,6 +60,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Escalas menores melódicas](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/escalas-menores-melodicas/): La escala menor con sexta y séptima elevadas en ascenso.
 - [Escalas menores dóricas](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/escalas-menores-doricas/): El modo dórico aplicado a las escalas menores.
 - [Comparar tipos de escalas menores](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/comparar-los-tipos-de-escalas-menores/): Tabla comparativa de los distintos tipos de escalas menores.
+- [Tonalidades Vecinas](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/tonalidades-vecinas/): Aprende qué son las tonalidades vecinas, cómo identificarlas y por qué son la base de las modulaciones más naturales en música. Guía completa con ejemplos.
 
 ## Ejercicios interactivos
 
