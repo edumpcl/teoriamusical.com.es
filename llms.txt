@@ -64,8 +64,59 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 
 ## Ejercicios interactivos
 
-- [Ejercicios de intervalos](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/): Práctica interactiva de identificación y construcción de intervalos (segundas, terceras, cuartas, quintas, sextas, séptimas, octavas; melódicos, armónicos, ascendentes, descendentes, consonantes, disonantes, conjuntos, disjuntos, semitono diatónico y cromático, enarmónicas).
+### Intervalos
+- [Ejercicios de intervalos](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/): Portada de todos los ejercicios de intervalos. Identificación y construcción.
+- [Análisis completo de intervalos](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/analisis-completo-de-intervalos/): Ejercicios que combinan todos los tipos de análisis de intervalos.
+- [Intervalos: segundas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/segundas/): Identificación de intervalos de segunda mayor y menor.
+- [Intervalos: terceras](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/terceras/): Identificación de intervalos de tercera mayor y menor.
+- [Intervalos: cuartas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/cuartas/): Identificación de intervalos de cuarta justa y aumentada.
+- [Intervalos: quintas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/quintas/): Identificación de intervalos de quinta justa y disminuida.
+- [Intervalos: sextas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/sextas/): Identificación de intervalos de sexta mayor y menor.
+- [Intervalos: séptimas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/septimas/): Identificación de intervalos de séptima mayor y menor.
+- [Intervalos: octavas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/octavas/): Identificación de intervalos de octava justa.
+- [Intervalos armónicos y melódicos](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/armonicos-y-melodicos/): Distinguir entre intervalos armónicos (simultáneos) y melódicos (sucesivos).
+- [Intervalos ascendentes y descendentes](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/ascendentes-y-descendentes/): Identificar la dirección del intervalo melódico.
+- [Intervalos conjuntos y disjuntos](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/conjuntos-y-disjuntos/): Identificar si el movimiento melódico es por grados conjuntos o saltos.
+- [Distancia de intervalos](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/distancia/): Calcular la distancia en tonos y semitonos de un intervalo.
+- [Intervalos consonantes y disonantes](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/intervalos-consonantes-y-disonantes/): Clasificar intervalos según su cualidad consonante o disonante.
+- [Semitono diatónico, cromático, enarmónicas y unísono](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/semitono-diatonico-semitono-cromatico-notas-enarmonicas-y-unisono/): Ejercicios combinados sobre tipos de semitono, notas enarmónicas e intervalos de unísono.
+- [Construir intervalos](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/): Portada de los ejercicios de construcción de intervalos sobre una nota dada.
+- [Construir segundas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/segundas/): Escribe la nota que forma una segunda mayor o menor sobre la nota indicada.
+- [Construir terceras](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/terceras/): Construir intervalos de tercera sobre una nota dada.
+- [Construir cuartas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/cuartas/): Construir intervalos de cuarta sobre una nota dada.
+- [Construir quintas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/quintas/): Construir intervalos de quinta sobre una nota dada.
+- [Construir sextas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/sextas/): Construir intervalos de sexta sobre una nota dada.
+- [Construir séptimas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/septimas/): Construir intervalos de séptima sobre una nota dada.
+- [Construir octavas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/octavas/): Construir intervalos de octava sobre una nota dada.
+- [Construir semitonos y enarmónicas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/semitono-y-enarmonicas/): Construir semitonos diatónicos, cromáticos y notas enarmónicas.
+
+### Escalas
+- [Ejercicios de escalas](https://www.teoriamusical.com.es/ejercicios/escalas/): Portada de todos los ejercicios de escalas musicales.
+- [Escala mayor natural](https://www.teoriamusical.com.es/ejercicios/escalas/escalas-mayores/): Identificar y escribir escalas mayores naturales en pentagrama.
+- [Escala mayor mixta principal](https://www.teoriamusical.com.es/ejercicios/escalas/escalas-mayores-mixta-principal/): Ejercicios sobre la escala mayor mixta principal.
+- [Escala mayor mixta secundaria](https://www.teoriamusical.com.es/ejercicios/escalas/escalas-mayores-mixta-secundaria/): Ejercicios sobre la escala mayor mixta secundaria.
+- [Escala menor natural](https://www.teoriamusical.com.es/ejercicios/escalas/escalas-menores-natural/): Identificar y escribir escalas menores naturales.
+- [Escala menor armónica](https://www.teoriamusical.com.es/ejercicios/escalas/escalas-menores-armonica/): Ejercicios sobre la escala menor armónica (sensible elevada).
+- [Escala menor melódica](https://www.teoriamusical.com.es/ejercicios/escalas/escalas-menores-melodica/): Ejercicios sobre la escala menor melódica (sexta y séptima elevadas en ascenso).
+- [Todas las escalas](https://www.teoriamusical.com.es/ejercicios/escalas/todas-las-escalas/): Ejercicios combinados con todos los tipos de escalas.
+- [Construir escala mayor](https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-mayor/): Construir una escala mayor a partir de su tónica en pentagrama.
+
+### Tonalidades
 - [Ejercicios de tonalidades](https://www.teoriamusical.com.es/ejercicios/tonalidades/): Identificación de tonalidades y armaduras.
+- [Ejercicios de tonalidades vecinas](https://www.teoriamusical.com.es/ejercicios/tonalidades/tonalidades-vecinas/): Identificar las cinco tonalidades vecinas de una tonalidad dada.
+
+### Acordes
+- [Ejercicios de acordes](https://www.teoriamusical.com.es/ejercicios/acordes/): Portada de todos los ejercicios de acordes (tríadas y acordes de séptima).
+- [Tríadas en estado fundamental](https://www.teoriamusical.com.es/ejercicios/acordes/triadas-en-fundamental/): Identificar tríadas en posición fundamental.
+- [Tríadas en primera inversión](https://www.teoriamusical.com.es/ejercicios/acordes/triadas-en-primera-inversion/): Identificar tríadas en primera inversión (acorde de sexta).
+- [Tríadas en segunda inversión](https://www.teoriamusical.com.es/ejercicios/acordes/triadas-en-segunda-inversion/): Identificar tríadas en segunda inversión (acorde de cuarta y sexta).
+- [Tríadas en todas las posiciones](https://www.teoriamusical.com.es/ejercicios/acordes/triadas-todas-las-posiciones/): Identificar tríadas en cualquier posición mezcladas.
+- [Construir tríadas](https://www.teoriamusical.com.es/ejercicios/acordes/construir-triadas/): Escribir el acorde tríada sobre una nota dada en estado fundamental.
+- [Construir tríadas en primera inversión](https://www.teoriamusical.com.es/ejercicios/acordes/construir-triadas-primera-inversion/): Escribir tríadas en primera inversión.
+- [Construir tríadas en segunda inversión](https://www.teoriamusical.com.es/ejercicios/acordes/construir-triadas-segunda-inversion/): Escribir tríadas en segunda inversión.
+- [Construir tríadas en todas las posiciones](https://www.teoriamusical.com.es/ejercicios/acordes/construir-triadas-todas-posiciones/): Construir tríadas en cualquier posición indicada.
+
+### Compases
 - [Ejercicios de Análisis de Compases](https://www.teoriamusical.com.es/ejercicios/compases/analizar-compas/): Practica el análisis de compases musicales: identifica si es simple o compuesto, el número de tiempos, el tipo de subdivisión y las unidades de tiempo, subdivisión y compás. Test online gratis.
 
 ## Blog
