@@ -785,3 +785,21 @@ figcaption, .wp-element-caption {
 .tm-tabla-intervalos tbody tr:hover td:not(.ti-na):not(.ti-label) {
   background: #fdf5e8;
 }
+
+/* FAQ list */
+.tm-faq-list { display:flex; flex-direction:column; gap:12px; margin:24px 0; }
+.tm-faq-item {
+  border:1px solid #d4c4a0; border-radius:8px;
+  overflow:hidden; background:#fff;
+}
+.tm-faq-q {
+  padding:14px 18px; font-weight:700; color:#3a1a00;
+  font-size:1rem; line-height:1.4;
+  border-left:4px solid #b8860b;
+  background:#fdf5e8;
+}
+.tm-faq-a {
+  padding:14px 18px; color:#3a1a00;
+  font-size:.95rem; line-height:1.7;
+  border-top:1px solid #ede4d2;
+}
