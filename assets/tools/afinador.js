@@ -79,11 +79,13 @@
     const bufLen = buffer.length;
     const half = Math.floor(bufLen / 2);
     const threshold = 0.15;
-    const diff = new Float32Array(half);
+    const tauMin = Math.max(2, Math.ceil(sampleRate / 4200));
+    const tauMax = Math.min(half - 1, Math.floor(sampleRate / 40));
+    const diff = new Float32Array(tauMax + 1);
 
-    // Difference function
+    // Difference function (only up to tauMax — covers 40–4200 Hz)
     diff[0] = 0;
-    for (let tau = 1; tau < half; tau++) {
+    for (let tau = 1; tau <= tauMax; tau++) {
       let s = 0;
       for (let i = 0; i < half; i++) {
         const d = buffer[i] - buffer[i + tau];
@@ -93,28 +95,28 @@
     }
 
     // Cumulative mean normalized difference
-    const cmnd = new Float32Array(half);
+    const cmnd = new Float32Array(tauMax + 1);
     cmnd[0] = 1;
     let runSum = 0;
-    for (let tau = 1; tau < half; tau++) {
+    for (let tau = 1; tau <= tauMax; tau++) {
       runSum += diff[tau];
       cmnd[tau] = runSum === 0 ? 0 : diff[tau] * tau / runSum;
     }
 
-    // Absolute threshold
-    let tau = 2;
-    while (tau < half) {
+    // Absolute threshold (search from tauMin)
+    let tau = tauMin;
+    while (tau <= tauMax) {
       if (cmnd[tau] < threshold) {
-        while (tau + 1 < half && cmnd[tau + 1] < cmnd[tau]) tau++;
+        while (tau + 1 <= tauMax && cmnd[tau + 1] < cmnd[tau]) tau++;
         break;
       }
       tau++;
     }
-    if (tau === half || cmnd[tau] >= threshold) return -1;
+    if (tau > tauMax || cmnd[tau] >= threshold) return -1;
 
     // Parabolic interpolation
     const x0 = tau > 1 ? tau - 1 : tau;
-    const x2 = tau + 1 < half ? tau + 1 : tau;
+    const x2 = tau + 1 <= tauMax ? tau + 1 : tau;
     let betterTau;
     if (x0 === tau) {
       betterTau = cmnd[tau] <= cmnd[x2] ? tau : x2;
@@ -167,7 +169,7 @@
     const largeArc = Math.abs(angle) > 180 ? 1 : 0;
     const sweep = angle >= 0 ? 1 : 0;
 
-    if (state === 'silent' || !cents) {
+    if (state === 'silent') {
       domFill.setAttribute('d', `M ${cx} ${cy}`);
     } else {
       domFill.setAttribute('d',
@@ -210,7 +212,7 @@
 
     const { name, octave, cents, freq } = noteData;
     let state;
-    if (Math.abs(cents) <= 10) state = 'in-tune';
+    if (Math.abs(cents) <= 5) state = 'in-tune';
     else if (cents < 0)        state = 'flat';
     else                       state = 'sharp';
 
