@@ -485,6 +485,7 @@
   .met-hdr-btn svg { flex-shrink: 0; }
 
   /* ── FULLSCREEN ── */
+  /* ── METRÓNOMO FULLSCREEN — móvil (pantalla completa) ── */
   .tm-metronomo-wrap.is-fullscreen {
     position: fixed;
     inset: 0;
@@ -503,6 +504,24 @@
   .tm-metronomo-wrap.is-fullscreen .bpm-num { font-size: 128px; }
   .tm-metronomo-wrap.is-fullscreen .btn-play { width: 80px; height: 80px; }
   .tm-metronomo-wrap.is-fullscreen .btn-play svg { width: 32px; height: 32px; }
+
+  /* ── METRÓNOMO FULLSCREEN — escritorio (modal centrado) ── */
+  @media (min-width: 768px) {
+    .tm-metronomo-wrap.is-fullscreen {
+      top: 50%;
+      right: auto;
+      bottom: auto;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(880px, 95vw);
+      max-height: 90vh;
+      border-radius: 14px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+    }
+    .tm-metronomo-wrap.is-fullscreen .bpm-num { font-size: 96px; }
+    .tm-metronomo-wrap.is-fullscreen .btn-play { width: 64px; height: 64px; }
+    .tm-metronomo-wrap.is-fullscreen .btn-play svg { width: 26px; height: 26px; }
+  }
 
   /* ── FLASH ── */
   @keyframes beatFlash {
@@ -667,15 +686,18 @@
     .stats-row { grid-template-columns: repeat(3, 1fr); }
   }
 
-  /* ── AFINADOR FULLSCREEN ── */
-  .tm-afinador-wrap.is-fullscreen .afin-toolbar {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: var(--bg2);
-    padding: 6px 0;
-    margin-bottom: 6px;
+  /* ── FULLSCREEN: backdrop en escritorio ── */
+  body.has-fullscreen { overflow: hidden; }
+  body.has-fullscreen::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 14, 5, 0.75);
+    z-index: 9998;
   }
+
+  /* ── FULLSCREEN: toolbars sticky ── */
+  .tm-afinador-wrap.is-fullscreen .afin-toolbar,
   .tm-metronomo-wrap.is-fullscreen .met-toolbar {
     position: sticky;
     top: 0;
@@ -684,6 +706,8 @@
     padding: 6px 0;
     margin-bottom: 6px;
   }
+
+  /* ── AFINADOR FULLSCREEN — móvil (pantalla completa) ── */
   .tm-afinador-wrap.is-fullscreen {
     position: fixed;
     inset: 0;
@@ -692,6 +716,7 @@
     overflow-y: auto;
     padding: 20px;
     max-width: none;
+    border-radius: 0;
   }
   .tm-afinador-wrap.is-fullscreen #afin-box-transp,
   .tm-afinador-wrap.is-fullscreen #afin-box-refnotes,
@@ -699,3 +724,21 @@
   .tm-afinador-wrap.is-fullscreen .note-name { font-size: 120px; letter-spacing: -4px; }
   .tm-afinador-wrap.is-fullscreen .cents-display { font-size: 36px; }
   .tm-afinador-wrap.is-fullscreen .btn-mic { width: 88px; height: 88px; }
+
+  /* ── AFINADOR FULLSCREEN — escritorio (modal centrado) ── */
+  @media (min-width: 768px) {
+    .tm-afinador-wrap.is-fullscreen {
+      top: 50%;
+      right: auto;
+      bottom: auto;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(700px, 95vw);
+      max-height: 90vh;
+      border-radius: 14px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+    }
+    .tm-afinador-wrap.is-fullscreen .note-name { font-size: 80px; letter-spacing: -3px; }
+    .tm-afinador-wrap.is-fullscreen .cents-display { font-size: 28px; }
+    .tm-afinador-wrap.is-fullscreen .btn-mic { width: 72px; height: 72px; }
+  }

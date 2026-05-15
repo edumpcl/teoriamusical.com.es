@@ -967,7 +967,7 @@ function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
     function setFullscreen(on) {
       _isFullscreen = on;
       metWrap.classList.toggle('is-fullscreen', on);
-      document.body.style.overflow = on ? 'hidden' : '';
+      document.body.classList.toggle('has-fullscreen', on);
       fsIcon.innerHTML = on ? FS_EXIT : FS_ENTER;
       if (fsLabel) fsLabel.textContent = on ? 'Salir' : 'Pantalla completa';
       fsBtn.title = on ? 'Salir de pantalla completa' : 'Pantalla completa';

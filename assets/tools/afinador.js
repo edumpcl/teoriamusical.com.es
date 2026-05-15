@@ -551,7 +551,7 @@
   function setAfinFullscreen(on) {
     _isFullscreen = on;
     afinWrap.classList.toggle('is-fullscreen', on);
-    document.body.style.overflow = on ? 'hidden' : '';
+    document.body.classList.toggle('has-fullscreen', on);
     if (fsIcon)  fsIcon.innerHTML = on ? FS_EXIT : FS_ENTER;
     if (fsLabel) fsLabel.textContent = on ? 'Salir' : 'Pantalla completa';
     if (fsBtn)   fsBtn.title = on ? 'Salir de pantalla completa' : 'Pantalla completa';
