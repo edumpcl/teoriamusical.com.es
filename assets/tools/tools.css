@@ -451,7 +451,7 @@
     .subdiv-icon { font-size: 18px; }
     .subdiv-label { font-size: 10px; }
     .bpm-num { font-size: 72px; }
-    .practice-row { grid-template-columns: 1fr 1fr; }
+    .practice-row { grid-template-columns: 1fr 1fr 1fr; }
     .shortcuts-grid { grid-template-columns: 1fr; }
   }
 
