@@ -539,4 +539,28 @@
   updateGauge(0, 'silent');
   updateRefDisplay();
 
+  // ── FULLSCREEN ────────────────────────────────────────────────────────────────
+  const afinWrap = document.querySelector('.tm-afinador-wrap');
+  const fsBtn    = document.getElementById('afin-btn-fullscreen');
+  const fsIcon   = document.getElementById('afin-fs-icon');
+  const fsLabel  = fsBtn ? fsBtn.querySelector('.afin-fs-label') : null;
+  let _isFullscreen = false;
+  const FS_ENTER = '<polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>';
+  const FS_EXIT  = '<polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/>';
+
+  function setAfinFullscreen(on) {
+    _isFullscreen = on;
+    afinWrap.classList.toggle('is-fullscreen', on);
+    document.body.style.overflow = on ? 'hidden' : '';
+    if (fsIcon)  fsIcon.innerHTML = on ? FS_EXIT : FS_ENTER;
+    if (fsLabel) fsLabel.textContent = on ? 'Salir' : 'Pantalla completa';
+    if (fsBtn)   fsBtn.title = on ? 'Salir de pantalla completa' : 'Pantalla completa';
+  }
+
+  if (fsBtn) fsBtn.addEventListener('click', () => setAfinFullscreen(!_isFullscreen));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && _isFullscreen) setAfinFullscreen(false);
+  });
+
 })();
