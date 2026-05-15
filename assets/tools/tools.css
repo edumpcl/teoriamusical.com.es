@@ -455,6 +455,54 @@
     .shortcuts-grid { grid-template-columns: 1fr; }
   }
 
+  /* ── TOOLBAR (Share + Fullscreen) ── */
+  .met-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .met-hdr-btn {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: ui-monospace, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+    white-space: nowrap;
+  }
+  .met-hdr-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-bg); }
+  .met-hdr-btn.copied { border-color: var(--green); color: var(--green); background: #edf8f2; }
+  .met-hdr-btn svg { flex-shrink: 0; }
+
+  /* ── FULLSCREEN ── */
+  .tm-metronomo-wrap.is-fullscreen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--bg2);
+    overflow-y: auto;
+    padding: 20px;
+    max-width: none;
+    border-radius: 0;
+  }
+  .tm-metronomo-wrap.is-fullscreen #box-volumenes,
+  .tm-metronomo-wrap.is-fullscreen #box-stats,
+  .tm-metronomo-wrap.is-fullscreen #box-ensayo,
+  .tm-metronomo-wrap.is-fullscreen #box-cajaritmos,
+  .tm-metronomo-wrap.is-fullscreen #box-atajos { display: none; }
+  .tm-metronomo-wrap.is-fullscreen .bpm-num { font-size: 128px; }
+  .tm-metronomo-wrap.is-fullscreen .btn-play { width: 80px; height: 80px; }
+  .tm-metronomo-wrap.is-fullscreen .btn-play svg { width: 32px; height: 32px; }
+
   /* ── FLASH ── */
   @keyframes beatFlash {
     0%   { color: var(--gold); }

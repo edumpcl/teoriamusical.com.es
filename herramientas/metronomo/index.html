@@ -231,6 +231,18 @@
     </div>
   </div>
 
+  <!-- TOOLBAR -->
+  <div class="met-toolbar">
+    <button id="btn-share" class="met-hdr-btn" title="Compartir esta configuración" aria-label="Compartir configuración">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      <span class="share-label">Compartir</span>
+    </button>
+    <button id="btn-fullscreen" class="met-hdr-btn" title="Pantalla completa" aria-label="Pantalla completa">
+      <svg id="fs-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+      <span class="fs-label">Pantalla completa</span>
+    </button>
+  </div>
+
   <!-- MAIN GRID -->
   <div class="met-grid">
 
@@ -275,7 +287,7 @@
     </div>
 
     <!-- SONIDO -->
-    <div class="ctrl-box full">
+    <div class="ctrl-box full" id="box-sonido">
       <div class="box-label">Sonido</div>
       <div class="pill-group">
         <span class="pill sound-pill active" data-sound="clasico">Clásico</span>
@@ -285,7 +297,7 @@
     </div>
 
     <!-- COMPÁS -->
-    <div class="ctrl-box full">
+    <div class="ctrl-box full" id="box-compas">
       <div class="box-label">Compás</div>
       <div style="margin-bottom:8px;">
         <div style="font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1.5px;">Simples</div>
@@ -324,7 +336,7 @@
     </div>
 
     <!-- SUBDIVISIÓN -->
-    <div class="ctrl-box full">
+    <div class="ctrl-box full" id="box-subdivision">
       <div class="box-label">Subdivisión</div>
       <div class="subdiv-grid" id="subdiv-grid">
         <button class="subdiv-btn active" data-div="1"><span class="subdiv-icon">♩</span><span class="subdiv-label">Negra</span></button>
@@ -339,7 +351,7 @@
     </div>
 
     <!-- VOLÚMENES -->
-    <div class="ctrl-box">
+    <div class="ctrl-box" id="box-volumenes">
       <div class="box-label">Volúmenes</div>
       <div class="vol-row">
         <span class="vol-label">Click</span>
@@ -354,7 +366,7 @@
     </div>
 
     <!-- STATS -->
-    <div class="ctrl-box">
+    <div class="ctrl-box" id="box-stats">
       <div class="box-label">Stats</div>
       <div class="stats-grid">
         <div class="stat-item"><span class="stat-val" id="st-beat">—</span><span class="stat-lbl">Beat</span></div>
@@ -365,7 +377,7 @@
     </div>
 
     <!-- MODO ENSAYO -->
-    <div class="ctrl-box full">
+    <div class="ctrl-box full" id="box-ensayo">
       <div class="box-label">Modo Ensayo</div>
       <div class="practice-row">
         <div class="prac-field">
@@ -386,14 +398,14 @@
     </div>
 
     <!-- CAJA DE RITMOS -->
-    <div class="ctrl-box full">
+    <div class="ctrl-box full" id="box-cajaritmos">
       <div class="box-label">Caja de Ritmos</div>
       <div class="dr-patterns" id="dr-patterns"></div>
       <div class="dr-instruments" id="dr-instruments"></div>
     </div>
 
     <!-- ATAJOS -->
-    <div class="ctrl-box full">
+    <div class="ctrl-box full" id="box-atajos">
       <div class="box-label">Atajos de teclado</div>
       <div class="shortcuts-grid">
         <div class="shortcut-item"><span class="key-badge">Space</span><span>Play / Stop</span></div>

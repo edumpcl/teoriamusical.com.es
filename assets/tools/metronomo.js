@@ -1,6 +1,7 @@
 /* teoriamusical-herramientas — metronomo.js */
 (function() {
   // ── ESTADO GLOBAL ──────────────────────────────────────────────────────────
+  let _ready = false; // true once init is complete; gates URL updates
   let bpm = 120;
   let isPlaying = false;
   let currentBeat = 0;
@@ -204,6 +205,41 @@
     return n;
   }
 
+  // ── URL COMPARTIBLE ───────────────────────────────────────────────────────
+  function updateUrl() {
+    if (!_ready) return;
+    const p = new URLSearchParams();
+    if (bpm !== 120)        p.set('bpm', bpm);
+    if (meter !== '2/4')    p.set('meter', meter);
+    if (subdivision !== 1)  p.set('subdiv', subdivision);
+    if (soundType !== 'clasico') p.set('sound', soundType);
+    if (freeGroupSizes.length > 0) p.set('groups', freeGroupSizes.join('-'));
+    const qs = p.toString();
+    history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
+  }
+
+  function readUrlParams() {
+    const p = new URLSearchParams(location.search);
+    const out = {};
+    if (p.has('bpm')) {
+      const v = parseInt(p.get('bpm'));
+      if (v >= 15 && v <= 300) out.bpm = v;
+    }
+    if (p.has('meter')) out.meter = p.get('meter');
+    if (p.has('subdiv')) {
+      const v = parseInt(p.get('subdiv'));
+      if ([1,2,3,4,5,6,7,8].includes(v)) out.subdiv = v;
+    }
+    if (p.has('sound') && ['clasico','electronico','digital'].includes(p.get('sound'))) {
+      out.sound = p.get('sound');
+    }
+    if (p.has('groups')) {
+      const groups = p.get('groups').split('-').map(Number).filter(n => n >= 1 && n <= 3);
+      if (groups.length >= 2) out.groups = groups;
+    }
+    return out;
+  }
+
   // ── AUDIO ─────────────────────────────────────────────────────────────────
   function getAudioCtx() {
     if (!audioCtx) {
@@ -387,6 +423,7 @@ function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
   function _applyBpm(newBpm) {
     bpm = Math.max(15, Math.min(300, newBpm));
     updateBpmDisplay();
+    updateUrl();
   }
 
   function schedule() {
@@ -644,6 +681,7 @@ function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
     });
     loadMeterPatterns(m);
     if (isPlaying) { stopMet(); startMet(); }
+    updateUrl();
   }
 
   // ── TAP TEMPO ─────────────────────────────────────────────────────────────
@@ -848,6 +886,7 @@ function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
       buildBeatDots();
       loadMeterPatterns(meter);
       if (isPlaying) { stopMet(); startMet(); }
+      updateUrl();
     });
 
     // Subdivisions
@@ -855,6 +894,7 @@ function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
       btn.addEventListener('click', () => {
         subdivision = parseInt(btn.dataset.div);
         document.querySelectorAll('.subdiv-btn').forEach(b => b.classList.toggle('active', b === btn));
+        updateUrl();
       });
     });
 
@@ -874,6 +914,7 @@ function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
       pill.addEventListener('click', () => {
         soundType = pill.dataset.sound;
         document.querySelectorAll('.sound-pill').forEach(p => p.classList.toggle('active', p === pill));
+        updateUrl();
       });
     });
 
@@ -895,11 +936,52 @@ function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
 
     // Drum patterns — pills are built dynamically by loadMeterPatterns
 
+    // Share button
+    document.getElementById('btn-share').addEventListener('click', async () => {
+      const url = location.href;
+      const btn = document.getElementById('btn-share');
+      const label = btn.querySelector('.share-label');
+      try {
+        await navigator.clipboard.writeText(url);
+      } catch (e) {
+        prompt('Copia este enlace:', url);
+        return;
+      }
+      btn.classList.add('copied');
+      if (label) label.textContent = '¡Copiado!';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        if (label) label.textContent = 'Compartir';
+      }, 2000);
+    });
+
+    // Fullscreen button
+    const metWrap = document.querySelector('.tm-metronomo-wrap');
+    let _isFullscreen = false;
+    const fsBtn = document.getElementById('btn-fullscreen');
+    const fsIcon = document.getElementById('fs-icon');
+    const fsLabel = fsBtn.querySelector('.fs-label');
+    const FS_ENTER = '<polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>';
+    const FS_EXIT  = '<polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/>';
+
+    function setFullscreen(on) {
+      _isFullscreen = on;
+      metWrap.classList.toggle('is-fullscreen', on);
+      document.body.style.overflow = on ? 'hidden' : '';
+      fsIcon.innerHTML = on ? FS_EXIT : FS_ENTER;
+      if (fsLabel) fsLabel.textContent = on ? 'Salir' : 'Pantalla completa';
+      fsBtn.title = on ? 'Salir de pantalla completa' : 'Pantalla completa';
+      if (on) metWrap.scrollTop = 0;
+    }
+
+    fsBtn.addEventListener('click', () => setFullscreen(!_isFullscreen));
+
     // Keyboard
     document.addEventListener('keydown', e => {
       if (e.target.tagName === 'INPUT') return;
       if (e.code === 'Space') { e.preventDefault(); togglePlay(); }
       if (e.code === 'KeyT') tapTempo();
+      if (e.key === 'Escape' && _isFullscreen) setFullscreen(false);
       if (e.code === 'ArrowUp') {
         e.preventDefault();
         const delta = e.shiftKey && (e.metaKey || e.ctrlKey) ? 10 : e.shiftKey ? 5 : 1;
@@ -923,6 +1005,36 @@ function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
     updateBpmDisplay();
     updateStats(null);
     loadDrumSamples();
+
+    // Apply URL params (after DOM is ready, before enabling URL updates)
+    const urlParams = readUrlParams();
+    if (urlParams.bpm) { bpm = Math.max(15, Math.min(300, urlParams.bpm)); updateBpmDisplay(); }
+    if (urlParams.sound) {
+      soundType = urlParams.sound;
+      document.querySelectorAll('.sound-pill').forEach(p => {
+        p.classList.toggle('active', p.dataset.sound === soundType);
+      });
+    }
+    if (urlParams.groups) {
+      freeGroups = [...urlParams.groups];
+      renderFreeGroups();
+      document.querySelectorAll('.meter-pill').forEach(p => p.classList.remove('active'));
+      freeGroupSizes = [...urlParams.groups];
+      beatsPerMeasure = urlParams.groups.length;
+      meter = urlParams.groups.reduce((a, b) => a + b, 0) + '/8';
+      buildBeatDots();
+      loadMeterPatterns(meter);
+    } else if (urlParams.meter) {
+      setMeter(urlParams.meter);
+    }
+    if (urlParams.subdiv) {
+      subdivision = urlParams.subdiv;
+      document.querySelectorAll('.subdiv-btn').forEach(b => {
+        b.classList.toggle('active', parseInt(b.dataset.div) === subdivision);
+      });
+    }
+
+    _ready = true; // from here on, state changes update the URL
   }
 
   if (document.readyState === 'loading') {
