@@ -668,6 +668,22 @@
   }
 
   /* ── AFINADOR FULLSCREEN ── */
+  .tm-afinador-wrap.is-fullscreen .afin-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg2);
+    padding: 6px 0;
+    margin-bottom: 6px;
+  }
+  .tm-metronomo-wrap.is-fullscreen .met-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg2);
+    padding: 6px 0;
+    margin-bottom: 6px;
+  }
   .tm-afinador-wrap.is-fullscreen {
     position: fixed;
     inset: 0;
