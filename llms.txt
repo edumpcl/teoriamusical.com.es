@@ -65,6 +65,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 
 - [Ejercicios de intervalos](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/): Práctica interactiva de identificación y construcción de intervalos (segundas, terceras, cuartas, quintas, sextas, séptimas, octavas; melódicos, armónicos, ascendentes, descendentes, consonantes, disonantes, conjuntos, disjuntos, semitono diatónico y cromático, enarmónicas).
 - [Ejercicios de tonalidades](https://www.teoriamusical.com.es/ejercicios/tonalidades/): Identificación de tonalidades y armaduras.
+- [Ejercicios de Análisis de Compases](https://www.teoriamusical.com.es/ejercicios/compases/analizar-compas/): Practica el análisis de compases musicales: identifica si es simple o compuesto, el número de tiempos, el tipo de subdivisión y las unidades de tiempo, subdivisión y compás. Test online gratis.
 
 ## Blog
 
