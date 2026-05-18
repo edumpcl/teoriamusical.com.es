@@ -6,6 +6,7 @@
   let mediaStream = null;
   let rafId = null;
   let isActive = false;
+  let wakeLock = null;
   let a4Ref = 442;
   let smoothFreq = 0;
   let lastNoteData = null;
@@ -16,6 +17,18 @@
   let refOsc = null;
   let refGain = null;
   let playingRefBtn = null;
+
+  async function acquireWakeLock() {
+    if (!('wakeLock' in navigator)) return;
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => { wakeLock = null; });
+    } catch (e) {}
+  }
+
+  function releaseWakeLock() {
+    if (wakeLock) { wakeLock.release(); wakeLock = null; }
+  }
 
   // Notas en español
   const NOTE_NAMES = ['Do','Do#','Re','Re#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'];
@@ -324,6 +337,7 @@
       source.connect(analyser);
 
       isActive = true;
+      acquireWakeLock();
       smoothFreq = 0;
       lastNoteData = null;
       lastSignalTime = 0;
@@ -369,6 +383,7 @@
 
   function stopMic() {
     isActive = false;
+    releaseWakeLock();
     stopRefNote();
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
     if (mediaStream) { mediaStream.getTracks().forEach(t => t.stop()); mediaStream = null; }
