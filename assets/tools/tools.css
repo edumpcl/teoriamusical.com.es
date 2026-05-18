@@ -441,6 +441,11 @@
     box-shadow: 0 1px 0 var(--border);
   }
 
+  /* ── MOBILE: eliminar retardo de 300 ms en controles táctiles ── */
+  .bpm-btn, .btn-play, .btn-tap, .btn-reset,
+  .pill, .subdiv-btn, .btn-prac-start, .met-hdr-btn,
+  .beat-dot, .beat-dot-wrap, .dr-step { touch-action: manipulation; }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 480px) {
     .met-grid { grid-template-columns: 1fr; }

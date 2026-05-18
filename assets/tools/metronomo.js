@@ -22,6 +22,23 @@
   // DOM cache
   let _domBpmNum, _domTempoName, _domBpmSlider, _domBeatDots, _domStBeat, _domStMeasure, _domStInterval, _domStTotal, _domPlayIcon, _domPracBar, _domPendG, _domPendBall;
 
+  // Wake Lock
+  let wakeLock = null;
+
+  async function acquireWakeLock() {
+    if (!('wakeLock' in navigator)) return;
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => {
+        if (isPlaying) acquireWakeLock();
+      });
+    } catch (e) {}
+  }
+
+  function releaseWakeLock() {
+    if (wakeLock) { wakeLock.release(); wakeLock = null; }
+  }
+
   // Audio
   let audioCtx = null;
   let compressor = null;
@@ -529,6 +546,7 @@ function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
   function startMet() {
     getAudioCtx();
     isPlaying = true;
+    acquireWakeLock();
     currentBeat = 0;
     if (!practiceActive) measureCount = 0;
     nextBeatTime = audioCtx.currentTime + 0.05;
@@ -540,6 +558,7 @@ function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
 
   function stopMet() {
     isPlaying = false;
+    releaseWakeLock();
     _metGeneration++;
     clearInterval(schedulerInterval);
     schedulerInterval = null;
@@ -997,6 +1016,7 @@ function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
     // Visibility change
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden && audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      if (!document.hidden && isPlaying && !wakeLock) acquireWakeLock();
     });
 
     // Build initial state
