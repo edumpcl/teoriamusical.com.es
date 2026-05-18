@@ -8,6 +8,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 
 - [Metrónomo Online](https://www.teoriamusical.com.es/herramientas/metronomo/): Metrónomo digital con caja de ritmos integrada, tres tipos de sonido (clásico, electrónico, digital), subdivisiones, compases simples y compuestos (2/4, 3/4, 4/4, 6/8, 9/8, 12/8…), patrones de batería básicos y rango de 20 a 300 BPM. Funciona en navegador sin instalación.
 - [Afinador Online](https://www.teoriamusical.com.es/herramientas/afinador/): Afinador cromático gratuito con detección de nota por micrófono (algoritmo YIN), medidor de cents (−50¢ a +50¢), notas de referencia tocables, referencia A4 ajustable (435–450 Hz) y soporte para instrumentos transpositores (clarinete en Si♭, trompeta, corno inglés, saxofón alto…). Muestra la nota real y la nota escrita simultáneamente.
+- [Afinador de Bombardino Online Gratis](https://www.teoriamusical.com.es/herramientas/afinador/bombardino/): Afina tu bombardino (eufonio) online gratis. Instrumento en Sib, concert pitch en notación orquestal. A4 ajustable. Sin instalación.
 
 ## Teoría Musical (introducción)
 
