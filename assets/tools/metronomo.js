@@ -785,6 +785,7 @@ function _clickClasico(isAccent, isSubdiv, isMedium, when, vol) {
       const vol = document.createElement('input');
       vol.type = 'range'; vol.className = 'dr-vol-slider';
       vol.min = 0; vol.max = 100; vol.value = Math.round(drVolumes[instIdx] * 100);
+      vol.setAttribute('aria-label', 'Volumen ' + name);
       vol.addEventListener('input', () => { drVolumes[instIdx] = vol.value / 100; });
       row.appendChild(vol);
       container.appendChild(row);

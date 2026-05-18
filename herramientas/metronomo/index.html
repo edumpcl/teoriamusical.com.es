@@ -255,7 +255,7 @@
         <button class="bpm-btn" id="btn-plus" aria-label="Más BPM">+</button>
       </div>
       <div class="tempo-name" id="tempo-name">Moderato</div>
-      <input type="range" class="bpm-slider" id="bpm-slider" min="15" max="300" value="120">
+      <input type="range" class="bpm-slider" id="bpm-slider" min="15" max="300" value="120" aria-label="Tempo (BPM)">
       <div class="bpm-range-labels"><span>15</span><span>300</span></div>
     </div>
 
@@ -355,12 +355,12 @@
       <div class="box-label">Volúmenes</div>
       <div class="vol-row">
         <span class="vol-label">Click</span>
-        <input type="range" class="vol-slider" id="vol-click" min="0" max="100" value="80">
+        <input type="range" class="vol-slider" id="vol-click" min="0" max="100" value="80" aria-label="Volumen del clic">
         <span class="vol-num" id="vol-click-num">80</span>
       </div>
       <div class="vol-row" style="margin-bottom:14px;">
         <span class="vol-label">Acento</span>
-        <input type="range" class="vol-slider" id="vol-accent" min="0" max="100" value="100">
+        <input type="range" class="vol-slider" id="vol-accent" min="0" max="100" value="100" aria-label="Volumen del acento">
         <span class="vol-num" id="vol-accent-num">100</span>
       </div>
     </div>
@@ -381,15 +381,15 @@
       <div class="box-label">Modo Ensayo</div>
       <div class="practice-row">
         <div class="prac-field">
-          <label>Compases</label>
+          <label for="prac-measures">Compases</label>
           <input type="number" id="prac-measures" value="8" min="1" max="999">
         </div>
         <div class="prac-field">
-          <label>BPM inicio</label>
+          <label for="prac-bpm-start">BPM inicio</label>
           <input type="number" id="prac-bpm-start" value="60" min="20" max="300">
         </div>
         <div class="prac-field">
-          <label>BPM final</label>
+          <label for="prac-bpm-end">BPM final</label>
           <input type="number" id="prac-bpm-end" value="120" min="20" max="300">
         </div>
       </div>
