@@ -553,7 +553,7 @@
     gap: 0;
     width: 100%;
   }
-  .note-col { display: flex; flex-direction: column; align-items: center; padding: 20px 10px 12px; }
+  .note-col { display: flex; flex-direction: column; align-items: center; padding: 20px 10px 12px; min-width: 0; }
   .note-col + .note-col { border-left: 1px solid var(--border); }
   .note-col-label { font-family: ui-monospace, monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 6px; }
   .note-name {
@@ -687,6 +687,7 @@
   /* ── RESPONSIVE AFINADOR ── */
   @media (max-width: 480px) {
     .note-name { font-size: 60px; }
+    .note-name.written { font-size: 50px; }
     .ref-notes-grid { grid-template-columns: repeat(4, 1fr); }
     .stats-row { grid-template-columns: repeat(3, 1fr); }
   }
