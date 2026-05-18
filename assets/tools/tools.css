@@ -692,6 +692,58 @@
     .stats-row { grid-template-columns: repeat(3, 1fr); }
   }
 
+  /* ── CUERDAS ── */
+  .afin-strings { display: flex; gap: 5px; }
+  .afin-string-item {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 4px 8px;
+    border-radius: 8px;
+    background: var(--bg3);
+    border: 1.5px solid var(--border);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .afin-string-wire {
+    width: 60%;
+    border-radius: 2px;
+    background: var(--border);
+    transition: background 0.2s;
+  }
+  .afin-string-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    line-height: 1.1;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+  .afin-string-oct { font-family: ui-monospace, monospace; font-size: 8px; vertical-align: super; }
+  .afin-string-cents {
+    font-family: ui-monospace, monospace;
+    font-size: 10px;
+    color: var(--muted);
+    min-height: 13px;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .afin-string-item.s-intune { background: #edf8f2; border-color: var(--green); }
+  .afin-string-item.s-intune .afin-string-wire  { background: var(--green); }
+  .afin-string-item.s-intune .afin-string-name  { color: var(--green); }
+  .afin-string-item.s-intune .afin-string-cents { color: var(--green); }
+  .afin-string-item.s-flat,
+  .afin-string-item.s-sharp { background: #fdf0ef; border-color: var(--red); }
+  .afin-string-item.s-flat .afin-string-wire,
+  .afin-string-item.s-sharp .afin-string-wire  { background: var(--red); }
+  .afin-string-item.s-flat .afin-string-name,
+  .afin-string-item.s-sharp .afin-string-name  { color: var(--red); }
+  .afin-string-item.s-flat .afin-string-cents,
+  .afin-string-item.s-sharp .afin-string-cents { color: var(--red); }
+
   /* ── FULLSCREEN: backdrop en escritorio ── */
   body.has-fullscreen { overflow: hidden; }
   body.has-fullscreen::before {
@@ -726,7 +778,8 @@
   }
   .tm-afinador-wrap.is-fullscreen #afin-box-transp,
   .tm-afinador-wrap.is-fullscreen #afin-box-refnotes,
-  .tm-afinador-wrap.is-fullscreen #afin-box-stats { display: none; }
+  .tm-afinador-wrap.is-fullscreen #afin-box-stats,
+  .tm-afinador-wrap.is-fullscreen #afin-strings-panel { display: none; }
   .tm-afinador-wrap.is-fullscreen .note-name { font-size: 120px; letter-spacing: -4px; }
   .tm-afinador-wrap.is-fullscreen .cents-display { font-size: 36px; }
   .tm-afinador-wrap.is-fullscreen .btn-mic { width: 88px; height: 88px; }

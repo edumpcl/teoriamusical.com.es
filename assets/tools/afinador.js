@@ -17,6 +17,8 @@
   let refOsc = null;
   let refGain = null;
   let playingRefBtn = null;
+  const AFIN_STRINGS = window.AFIN_STRINGS || null;
+  const strItems = [];
 
   async function acquireWakeLock() {
     if (!('wakeLock' in navigator)) return;
@@ -220,6 +222,7 @@
       domStatFreq.textContent = '—';
       domStatCents.textContent = '—';
       updateGauge(0, 'silent');
+      if (AFIN_STRINGS) resetStringPanel();
       return;
     }
 
@@ -259,6 +262,7 @@
     domStatCents.style.color = state === 'in-tune' ? 'var(--green)' : 'var(--red)';
 
     updateGauge(cents, state);
+    if (AFIN_STRINGS) { const mf = 12 * Math.log2(freq / a4Ref) + 69; updateStringPanel(mf); }
   }
 
   // ── ANÁLISIS ─────────────────────────────────────────────────────────────────
@@ -553,6 +557,73 @@
   setDisplay(null);
   updateGauge(0, 'silent');
   updateRefDisplay();
+
+  // ── CUERDAS ──────────────────────────────────────────────────────────────────
+  function wireThick(midi) {
+    if (midi <= 30) return 5;
+    if (midi <= 42) return 4;
+    if (midi <= 52) return 3;
+    if (midi <= 62) return 2;
+    return 1;
+  }
+
+  function initStringPanel() {
+    const aWrap = document.querySelector('.tm-afinador-wrap');
+    const acBox = aWrap.querySelector('.ctrl-box.accent-box');
+    const panel = document.createElement('div');
+    panel.className = 'ctrl-box';
+    panel.id = 'afin-strings-panel';
+    const lbl = document.createElement('div');
+    lbl.className = 'box-label';
+    lbl.textContent = 'Cuerdas';
+    const grid = document.createElement('div');
+    grid.className = 'afin-strings';
+    AFIN_STRINGS.forEach(s => {
+      const item = document.createElement('div');
+      item.className = 'afin-string-item';
+      const wire = document.createElement('div');
+      wire.className = 'afin-string-wire';
+      wire.style.height = wireThick(s.midi) + 'px';
+      const lname = document.createElement('div');
+      lname.className = 'afin-string-name';
+      lname.innerHTML = s.name + '<span class="afin-string-oct">' + s.oct + '</span>';
+      const cEl = document.createElement('div');
+      cEl.className = 'afin-string-cents';
+      item.append(wire, lname, cEl);
+      grid.appendChild(item);
+      strItems.push(item);
+    });
+    panel.append(lbl, grid);
+    acBox.insertAdjacentElement('afterend', panel);
+  }
+
+  function updateStringPanel(midiFloat) {
+    let bIdx = 0, bDist = Infinity;
+    for (let i = 0; i < AFIN_STRINGS.length; i++) {
+      const d = Math.abs(midiFloat - AFIN_STRINGS[i].midi);
+      if (d < bDist) { bDist = d; bIdx = i; }
+    }
+    strItems.forEach((item, i) => {
+      const cEl = item.querySelector('.afin-string-cents');
+      if (i === bIdx) {
+        const c = Math.round((midiFloat - AFIN_STRINGS[i].midi) * 100);
+        item.className = 'afin-string-item ' + (Math.abs(c) <= 5 ? 's-intune' : c < 0 ? 's-flat' : 's-sharp');
+        cEl.textContent = (c > 0 ? '+' : '') + c + '¢';
+      } else {
+        item.className = 'afin-string-item';
+        cEl.textContent = '';
+      }
+    });
+  }
+
+  function resetStringPanel() {
+    strItems.forEach(item => {
+      item.className = 'afin-string-item';
+      item.querySelector('.afin-string-cents').textContent = '';
+    });
+  }
+
+  if (AFIN_STRINGS) initStringPanel();
 
   // ── FULLSCREEN ────────────────────────────────────────────────────────────────
   const afinWrap = document.querySelector('.tm-afinador-wrap');
