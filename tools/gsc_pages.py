@@ -1,3 +1,12 @@
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+import requests
+_session = requests.Session()
+_session.verify = False
+
+import httplib2
+import google_auth_httplib2
+
 from pathlib import Path
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
@@ -8,9 +17,12 @@ SITE = "https://www.teoriamusical.com.es/"
 
 creds = Credentials.from_authorized_user_file(TOKEN_FILE)
 if creds.expired and creds.refresh_token:
-    creds.refresh(Request())
+    creds.refresh(Request(session=_session))
 
-service = build("searchconsole", "v1", credentials=creds)
+_http = google_auth_httplib2.AuthorizedHttp(
+    creds, http=httplib2.Http(disable_ssl_certificate_validation=True)
+)
+service = build("searchconsole", "v1", http=_http)
 result = service.searchanalytics().query(siteUrl=SITE, body={
     "startDate": "2026-02-01",
     "endDate": "2026-05-18",
