@@ -781,6 +781,9 @@
   .tm-afinador-wrap.is-fullscreen #afin-box-stats,
   .tm-afinador-wrap.is-fullscreen #afin-strings-panel { display: none; }
   .tm-afinador-wrap.is-fullscreen .note-name { font-size: 120px; letter-spacing: -4px; }
+  /* Con transpositor (2 col): la columna mide ~147 px en 375 px → "Sol♯" a 120 px no cabe */
+  .tm-afinador-wrap.is-fullscreen .note-display:not(.no-transp) .note-name        { font-size: 72px; letter-spacing: -2px; }
+  .tm-afinador-wrap.is-fullscreen .note-display:not(.no-transp) .note-name.written { font-size: 64px; }
   .tm-afinador-wrap.is-fullscreen .cents-display { font-size: 36px; }
   .tm-afinador-wrap.is-fullscreen .btn-mic { width: 88px; height: 88px; }
 
@@ -798,6 +801,9 @@
       box-shadow: 0 24px 80px rgba(0,0,0,0.55);
     }
     .tm-afinador-wrap.is-fullscreen .note-name { font-size: 80px; letter-spacing: -3px; }
+    /* Desktop tiene columnas de ~310 px: 80 px cabe sin problema */
+    .tm-afinador-wrap.is-fullscreen .note-display:not(.no-transp) .note-name        { font-size: 80px; letter-spacing: -3px; }
+    .tm-afinador-wrap.is-fullscreen .note-display:not(.no-transp) .note-name.written { font-size: 72px; }
     .tm-afinador-wrap.is-fullscreen .cents-display { font-size: 28px; }
     .tm-afinador-wrap.is-fullscreen .btn-mic { width: 72px; height: 72px; }
   }
