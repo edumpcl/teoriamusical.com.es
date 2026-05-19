@@ -1,0 +1,645 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import os
+
+BASE = r'c:\Users\edues\Documents\Claude\Projects\teoriamusical.com.es'
+AFIN = os.path.join(BASE, 'herramientas', 'afinador')
+
+WIDGET = '''\
+<div class="tm-afinador-wrap">
+
+  <!-- HEADER -->
+  <div class="afin-header">
+    <div class="afin-logo">&#9833;</div>
+    <div>
+      <div class="afin-title">Afinador</div>
+      <div class="afin-subtitle">teoriamusical.com.es</div>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="afin-toolbar">
+    <button id="afin-btn-fullscreen" class="met-hdr-btn" title="Pantalla completa" aria-label="Pantalla completa">
+      <svg id="afin-fs-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+      <span class="afin-fs-label">Pantalla completa</span>
+    </button>
+  </div>
+
+  <!-- NOTA PRINCIPAL + GAUGE -->
+  <div class="ctrl-box accent-box">
+    <div class="box-label">Afinaci&#243;n</div>
+    <div class="note-display no-transp" id="note-display">
+      <div class="note-col">
+        <div class="note-col-label">Nota real</div>
+        <div class="note-name silent" id="note-name">&#8212;</div>
+        <div class="note-octave" id="note-octave"></div>
+        <div class="note-freq" id="note-freq"></div>
+      </div>
+      <div class="note-col">
+        <div class="note-col-label">Nota escrita</div>
+        <div class="note-name written" id="note-written">&#8212;</div>
+        <div class="note-octave" id="note-written-oct"></div>
+      </div>
+    </div>
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+        <path class="gauge-track" d="M 40 150 A 110 110 0 0 1 260 150" fill="none"/>
+        <path class="gauge-fill" id="gauge-fill" d="M 150 40 A 110 110 0 0 1 150 40" fill="none" stroke="var(--border)"/>
+        <line class="gauge-center-line" x1="150" y1="45" x2="150" y2="143"/>
+        <g stroke="var(--border)" stroke-width="1.5" opacity="0.6">
+          <line x1="40"  y1="150" x2="50"  y2="150"/>
+          <line x1="260" y1="150" x2="250" y2="150"/>
+          <line x1="91"  y1="46"  x2="95"  y2="53"/>
+          <line x1="209" y1="46"  x2="205" y2="53"/>
+        </g>
+        <line class="gauge-needle" id="gauge-needle" x1="150" y1="148" x2="150" y2="45" stroke="var(--border)"/>
+        <circle class="gauge-needle-dot" id="gauge-dot" cx="150" cy="150" r="7" fill="var(--border)"/>
+      </svg>
+    </div>
+    <div class="cents-display" id="cents-display">&#8212; &#162;</div>
+    <div class="cents-labels">
+      <span>&#8722;50&#162;</span><span>&#8722;25&#162;</span><span>0</span><span>+25&#162;</span><span>+50&#162;</span>
+    </div>
+    <div class="mic-row" style="margin-top:20px;">
+      <button class="btn-mic" id="btn-mic">
+        <span class="mic-icon">&#127897;</span>
+        <span id="mic-label">Activar</span>
+      </button>
+    </div>
+    <p id="mic-error" style="display:none; margin-top:10px; color:var(--red); font-size:0.9rem; text-align:center;"></p>
+  </div>
+
+  <!-- REFERENCIA A4 -->
+  <div class="ctrl-box">
+    <div class="box-label">Referencia A4</div>
+    <div class="ref-row">
+      <span class="ref-label">La4 =</span>
+      <button class="ref-btn" id="ref-minus">&#8722;</button>
+      <span class="ref-value" id="ref-value">442 Hz</span>
+      <button class="ref-btn" id="ref-plus">+</button>
+    </div>
+  </div>
+
+  <!-- TRANSPOSICI&#211;N -->
+  <div class="ctrl-box" id="afin-box-transp">
+    <div class="box-label">Instrumento transpositor</div>
+    <div class="transp-instruments" id="transp-instruments"></div>
+    <div class="transp-semitones">
+      <button class="ref-btn" id="transp-minus">&#8722;</button>
+      <span class="transp-val" id="transp-val">0 st</span>
+      <button class="ref-btn" id="transp-plus">+</button>
+    </div>
+  </div>
+
+  <!-- NOTAS DE REFERENCIA -->
+  <div class="ctrl-box" id="afin-box-refnotes">
+    <div class="box-label">Notas de referencia &#8212; pulsa para escuchar</div>
+    <div class="ref-notes-grid" id="ref-notes-grid"></div>
+  </div>
+
+  <!-- STATS -->
+  <div class="ctrl-box" id="afin-box-stats">
+    <div class="box-label">Informaci&#243;n</div>
+    <div class="stats-row">
+      <div class="stat-item"><span class="stat-val" id="stat-note">&#8212;</span><span class="stat-lbl">Nota</span></div>
+      <div class="stat-item"><span class="stat-val" id="stat-freq">&#8212;</span><span class="stat-lbl">Hz</span></div>
+      <div class="stat-item"><span class="stat-val" id="stat-cents">&#8212;</span><span class="stat-lbl">Cents</span></div>
+    </div>
+  </div>
+
+</div><!-- /tm-afinador-wrap -->'''
+
+HEADER_NAV = '''\
+<header class="tm-site-header">
+  <div class="tm-container tm-header-inner">
+    <a class="tm-brand" href="/"><span class="tm-brand-mark"><img src="/assets/img/favicon.png" alt=""></span><span class="tm-brand-text">Teor&#237;a Musical</span></a>
+    <button class="tm-nav-toggle" aria-label="Men&#250;" aria-expanded="false" aria-controls="tm-nav"><span></span><span></span><span></span></button>
+    <nav id="tm-nav" class="tm-nav" aria-label="Principal">
+      <ul class="tm-nav-list">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/diccionario-musical/">Diccionario Musical</a></li>
+        <li><a href="/ejercicios/">Ejercicios</a></li>
+        <li class="tm-has-sub"><a href="/herramientas/" class="is-active">Herramientas</a>
+          <ul class="tm-subnav">
+            <li><a href="/herramientas/metronomo/">Metr&#243;nomo</a></li>
+            <li><a href="/herramientas/afinador/">Afinador</a></li>
+          </ul>
+        </li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/test-tecnico-de-laboratorio/">Test Laboratorio</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>'''
+
+FOOTER = '''\
+<footer class="tm-site-footer">
+  <div class="tm-container tm-footer-inner">
+    <div class="tm-footer-col">
+      <h3>Teor&#237;a Musical</h3>
+      <p>Aprende m&#250;sica desde sus fundamentos: diccionario, ejercicios interactivos y herramientas gratuitas.</p>
+    </div>
+    <div class="tm-footer-col">
+      <h3>Secciones</h3>
+      <ul>
+        <li><a href="/diccionario-musical/">Diccionario Musical</a></li>
+        <li><a href="/ejercicios/">Ejercicios Musicales</a></li>
+        <li class="tm-has-sub"><a href="/herramientas/">Herramientas</a>
+          <ul class="tm-subnav"><li><a href="/herramientas/metronomo/">Metr&#243;nomo</a></li><li><a href="/herramientas/afinador/">Afinador</a></li></ul>
+        </li>
+        <li><a href="/blog/">Blog</a></li>
+      </ul>
+    </div>
+    <div class="tm-footer-col">
+      <h3>Informaci&#243;n</h3>
+      <ul>
+        <li><a href="/contacto/">Contacto</a></li>
+        <li><a href="/aviso-legal/">Aviso legal</a></li>
+        <li><a href="/politica-de-privacidad/">Pol&#237;tica de privacidad</a></li>
+        <li><a href="/politica-de-cookies/">Pol&#237;tica de cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="tm-footer-bottom">
+    <p>&#169; <span id="tm-year"></span> Teor&#237;a Musical &#8212; Eduardo Escrig Zome&#241;o. Todos los derechos reservados.</p>
+  </div>
+</footer>'''
+
+SIBLINGS = '''\
+<h2>Otros afinadores por instrumento</h2>
+<ul class="wp-block-list">
+<li><a href="/herramientas/afinador/">Afinador online (todos los instrumentos)</a></li>
+<li><a href="/herramientas/afinador/guitarra/">Afinador de guitarra</a></li>
+<li><a href="/herramientas/afinador/bajo/">Afinador de bajo</a></li>
+<li><a href="/herramientas/afinador/violin/">Afinador de viol&#237;n</a></li>
+<li><a href="/herramientas/afinador/ukelele/">Afinador de ukelele</a></li>
+<li><a href="/herramientas/afinador/viola/">Afinador de viola</a></li>
+<li><a href="/herramientas/afinador/violonchelo/">Afinador de violonchelo</a></li>
+<li><a href="/herramientas/afinador/contrabajo/">Afinador de contrabajo</a></li>
+<li><a href="/herramientas/afinador/mandolina/">Afinador de mandolina</a></li>
+<li><a href="/herramientas/afinador/banjo/">Afinador de banjo</a></li>
+<li><a href="/herramientas/afinador/flauta/">Afinador de flauta</a></li>
+<li><a href="/herramientas/afinador/flautin/">Afinador de flauta&#237;n</a></li>
+<li><a href="/herramientas/afinador/oboe/">Afinador de oboe</a></li>
+<li><a href="/herramientas/afinador/corno-ingles/">Afinador de corno ingl&#233;s</a></li>
+<li><a href="/herramientas/afinador/clarinete/">Afinador de clarinete</a></li>
+<li><a href="/herramientas/afinador/clarinete-bajo/">Afinador de clarinete bajo</a></li>
+<li><a href="/herramientas/afinador/fagot/">Afinador de fagot</a></li>
+<li><a href="/herramientas/afinador/contrafagot/">Afinador de contrafagot</a></li>
+<li><a href="/herramientas/afinador/saxofon-soprano/">Afinador de saxof&#243;n soprano</a></li>
+<li><a href="/herramientas/afinador/saxofon-alto/">Afinador de saxof&#243;n alto</a></li>
+<li><a href="/herramientas/afinador/saxofon-tenor/">Afinador de saxof&#243;n tenor</a></li>
+<li><a href="/herramientas/afinador/saxofon-baritono/">Afinador de saxof&#243;n bar&#237;tono</a></li>
+<li><a href="/herramientas/afinador/trompeta/">Afinador de trompeta</a></li>
+<li><a href="/herramientas/afinador/fliscorno/">Afinador de fliscorno</a></li>
+<li><a href="/herramientas/afinador/trompa/">Afinador de trompa</a></li>
+<li><a href="/herramientas/afinador/trombon/">Afinador de tromb&#243;n</a></li>
+<li><a href="/herramientas/afinador/bombardino/">Afinador de bombardino</a></li>
+<li><a href="/herramientas/afinador/tuba/">Afinador de tuba</a></li>
+<li><a href="/herramientas/afinador/arpa/">Afinador de arpa</a></li>
+<li><a href="/herramientas/afinador/timbales/">Afinador de timbales</a></li>
+</ul>'''
+
+COOKIE_SCRIPT = """\
+<!-- Google Search Console verification -->
+<meta name="google-site-verification" content="-bWygyA80PPsmSsmf6FQ_oZs6YeGjN95HzprqD07fos">
+
+<!-- Google Consent Mode v2 -->
+<script>
+  window['googlefc'] = window['googlefc'] || {};
+  window['googlefc'].controlledMessagingFunction = function(m){ m.proceed(false); };
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied',
+    'analytics_storage': 'denied', 'functionality_storage': 'granted',
+    'security_storage': 'granted', 'wait_for_update': 500
+  });
+  try {
+    var m = document.cookie.match('(?:^|; )tm_cookie_consent=([^;]*)');
+    if (m) {
+      var p = JSON.parse(decodeURIComponent(m[1]));
+      gtag('consent', 'update', {
+        analytics_storage: p.analytics ? 'granted' : 'denied',
+        ad_storage: p.advertising ? 'granted' : 'denied',
+        ad_user_data: p.advertising ? 'granted' : 'denied',
+        ad_personalization: p.advertising ? 'granted' : 'denied'
+      });
+    }
+  } catch (e) {}
+</script>"""
+
+COOKIE_BANNER = """\
+<!-- Cookie consent (RGPD) -->
+<div id="tm-cookie-overlay" role="dialog" aria-modal="true" aria-labelledby="tm-cookie-title">
+  <div id="tm-cookie-modal">
+    <div id="tm-cookie-icon" aria-hidden="true">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="18.5" stroke="#b8860b" stroke-width="1.5" fill="#faf8f4"/>
+        <circle cx="14" cy="15" r="2.2" fill="#b8860b"/>
+        <circle cx="24" cy="13" r="1.7" fill="#b8860b"/>
+        <circle cx="27" cy="24" r="2.2" fill="#b8860b"/>
+        <circle cx="16" cy="26" r="1.7" fill="#b8860b"/>
+        <circle cx="21" cy="20" r="1.1" fill="#b8860b"/>
+      </svg>
+    </div>
+    <h2 id="tm-cookie-title">Usamos cookies</h2>
+    <p id="tm-cookie-desc">Utilizamos cookies propias &#8212;necesarias para el funcionamiento del sitio&#8212; y de terceros para an&#225;lisis del tr&#225;fico y publicidad. Puedes aceptarlas, rechazar las opcionales o configurarlas seg&#250;n tus preferencias. <a href="/politica-de-cookies/" id="tm-privacy-link" rel="noopener noreferrer">Pol&#237;tica de cookies</a>.</p>
+    <div id="tm-cookie-panel" hidden>
+      <div class="tm-toggle-row"><div class="tm-toggle-info"><strong>Necesarias</strong><span>Imprescindibles para el funcionamiento del sitio. No se pueden desactivar.</span></div><div class="tm-toggle-wrap tm-toggle-forced"><input type="checkbox" id="tm-chk-necessary" checked disabled><label for="tm-chk-necessary" class="tm-switch-label"></label></div></div>
+      <div class="tm-toggle-row"><div class="tm-toggle-info"><strong>Anal&#237;ticas</strong><span>Miden el tr&#225;fico y el comportamiento de navegaci&#243;n (Google Analytics 4).</span></div><div class="tm-toggle-wrap"><input type="checkbox" id="tm-chk-analytics"><label for="tm-chk-analytics" class="tm-switch-label"></label></div></div>
+      <div class="tm-toggle-row"><div class="tm-toggle-info"><strong>Publicitarias</strong><span>Permiten mostrar anuncios relevantes seg&#250;n tus intereses (Google AdSense).</span></div><div class="tm-toggle-wrap"><input type="checkbox" id="tm-chk-advertising"><label for="tm-chk-advertising" class="tm-switch-label"></label></div></div>
+    </div>
+    <div id="tm-cookie-actions">
+      <button id="tm-btn-accept" class="tm-btn tm-btn-primary">Aceptar todo</button>
+      <button id="tm-btn-necessary" class="tm-btn tm-btn-secondary">Solo necesarias</button>
+      <button id="tm-btn-configure" class="tm-btn tm-btn-link">Configurar</button>
+      <button id="tm-btn-save" class="tm-btn tm-btn-primary" hidden>Guardar preferencias</button>
+    </div>
+  </div>
+</div>
+<button id="tm-cookie-trigger" aria-label="Gestionar cookies" title="Gestionar cookies" hidden>
+  <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="18.5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="14" cy="15" r="2.2" fill="currentColor"/><circle cx="24" cy="13" r="1.7" fill="currentColor"/><circle cx="27" cy="24" r="2.2" fill="currentColor"/><circle cx="16" cy="26" r="1.7" fill="currentColor"/><circle cx="21" cy="20" r="1.1" fill="currentColor"/></svg>
+</button>
+<script src="/assets/js/consent.js" defer></script>"""
+
+# Datos específicos de cada saxofón
+SAXES = [
+    {
+        'slug': 'saxofon-soprano',
+        'name': 'Saxofón Soprano',
+        'transp': 2,
+        'title': 'Afinador de Saxofón Soprano Online Gratis | Instrumento en Si♭ | Teoría Musical',
+        'desc': 'Afina tu saxofón soprano online gratis. Transpositor en Si♭: muestra nota escrita y sonido real. A4 ajustable. Sin instalación.',
+        'crumb': 'Afinador de Saxofón Soprano',
+        'h1': 'Afinador de Saxofón Soprano Online',
+        'intro': '<p>Afina tu saxofón soprano directamente desde el navegador sin instalar nada. El soprano es un instrumento transpositor en Si♭, igual que la trompeta y el clarinete: cuando el saxofonista lee Do escrito, el sonido real es Si♭, una segunda mayor más grave.</p>\n<p>El afinador muestra simultáneamente la <em>nota real</em> (concert pitch) y la <em>nota escrita</em> tal como aparece en la partitura.</p>',
+        'content': '''\
+<h2>El saxofón soprano: instrumento transpositor en Si♭</h2>
+<p>Cuando el saxofonista soprano lee Do escrito suena Si♭ real (segunda mayor más grave). La tabla muestra la correspondencia entre nota escrita y sonido real:</p>
+<table style="width:100%;border-collapse:collapse;font-size:.95rem;margin-bottom:1.5rem;">
+  <thead><tr style="background:var(--bg3,#f0ede6);text-align:left;">
+    <th style="padding:8px 12px;border-bottom:2px solid var(--border,#ddd);">Nota escrita (partitura)</th>
+    <th style="padding:8px 12px;border-bottom:2px solid var(--border,#ddd);">Sonido real (afinador)</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Do4</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Si♭3</td></tr>
+    <tr style="background:var(--bg2,#faf8f4);"><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Re4</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Do4</td></tr>
+    <tr><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Mi4</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Re4</td></tr>
+    <tr style="background:var(--bg2,#faf8f4);"><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">La4 (escrito)</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Sol4 (392 Hz)</td></tr>
+    <tr><td style="padding:7px 12px;">Si4 (escrito)</td><td style="padding:7px 12px;">La4 (440 Hz) ← referencia</td></tr>
+  </tbody>
+</table>
+<p>Para afinar, toca el <strong>Si escrito</strong> (La4 real = 440 Hz) y centra la aguja en 0¢.</p>
+<h2>Cómo ajustar la afinación del saxofón soprano</h2>
+<ul class="wp-block-list">
+<li><strong>Tudel (cuello):</strong> el ajuste principal. Empujar baja el tono; retirar lo sube.</li>
+<li><strong>Calentamiento previo:</strong> sopla aire caliente 3-5 minutos antes de afinar. El soprano es especialmente sensible a la temperatura.</li>
+<li><strong>Presión de embocadura:</strong> una embocadura apretada sube el tono en el registro agudo. Ajusta con la menor presión posible.</li>
+<li><strong>Transpositor activo:</strong> el afinador ya está configurado en Si♭ para esta página. Verás la nota escrita y el sonido real a la vez.</li>
+</ul>
+<h2>Preguntas frecuentes: afinador de saxofón soprano online</h2>
+<div class="tm-faq-list">
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿Por qué el afinador muestra Si♭ cuando toco Do en el soprano?</div>
+    <div class="tm-faq-a">El saxofón soprano es un instrumento transpositor en Si♭. Al tocar Do escrito, el sonido real es Si♭, una segunda mayor más grave. El afinador muestra siempre el sonido real (concert pitch) y, con el transpositor activo, también la nota escrita correspondiente.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿Qué nota debo tocar para afinar el soprano con La4 = 440 Hz?</div>
+    <div class="tm-faq-a">Toca el Si escrito (Si4 en la partitura). Corresponde al La4 real (440 Hz). Centra la aguja del afinador en 0¢ y ajusta el tudel hasta conseguirlo.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿En qué se diferencia el soprano del tenor?</div>
+    <div class="tm-faq-a">Ambos son instrumentos en Si♭ con la misma transposición de nombre de nota. La diferencia es la tesitura: el soprano suena una octava más aguda que el tenor. Para la afinación, la configuración del transpositor es idéntica (Si♭, +2 semitonos).</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿Funciona el afinador con soprano de bóquilla metálica o de ébano?</div>
+    <div class="tm-faq-a">Sí. El tipo de bóquilla afecta al timbre y a la afinación general, pero el afinador detecta la frecuencia fundamental independientemente del material. Asegúrate de que la caña esté en buen estado para una detección precisa.</div>
+  </div>
+</div>''',
+    },
+    {
+        'slug': 'saxofon-alto',
+        'name': 'Saxofón Alto',
+        'transp': -3,
+        'title': 'Afinador de Saxofón Alto Online Gratis | Instrumento en Mi♭ | Teoría Musical',
+        'desc': 'Afina tu saxofón alto online gratis. Transpositor en Mi♭: muestra nota escrita y sonido real. A4 ajustable. Sin instalación.',
+        'crumb': 'Afinador de Saxofón Alto',
+        'h1': 'Afinador de Saxofón Alto Online',
+        'intro': '<p>Afina tu saxofón alto directamente desde el navegador sin instalar nada. El saxo alto es un instrumento transpositor en Mi♭: cuando el saxofonista lee Do escrito, el sonido real es Mi♭, una sexta mayor más grave.</p>\n<p>El afinador muestra simultáneamente la <em>nota real</em> (concert pitch) y la <em>nota escrita</em> tal como aparece en la partitura.</p>',
+        'content': '''\
+<h2>El saxofón alto: instrumento transpositor en Mi♭</h2>
+<p>Cuando el saxofonista alto lee Do escrito suena Mi♭ real (una sexta mayor más grave). Para La4 real (440 Hz) el saxofonista debe leer Fa♯ escrito:</p>
+<table style="width:100%;border-collapse:collapse;font-size:.95rem;margin-bottom:1.5rem;">
+  <thead><tr style="background:var(--bg3,#f0ede6);text-align:left;">
+    <th style="padding:8px 12px;border-bottom:2px solid var(--border,#ddd);">Nota escrita (partitura)</th>
+    <th style="padding:8px 12px;border-bottom:2px solid var(--border,#ddd);">Sonido real (afinador)</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Do (escrito)</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Mi♭ real</td></tr>
+    <tr style="background:var(--bg2,#faf8f4);"><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Re (escrito)</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Fa real</td></tr>
+    <tr><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Mi (escrito)</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Sol real</td></tr>
+    <tr style="background:var(--bg2,#faf8f4);"><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Fa♯ (escrito)</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">La real (440 Hz) ← referencia</td></tr>
+    <tr><td style="padding:7px 12px;">Sol (escrito)</td><td style="padding:7px 12px;">Si♭ real</td></tr>
+  </tbody>
+</table>
+<p>Para afinar, toca el <strong>Fa♯ escrito</strong> (La4 real = 440 Hz) y centra la aguja en 0¢.</p>
+<h2>Cómo ajustar la afinación del saxofón alto</h2>
+<ul class="wp-block-list">
+<li><strong>Tudel (cuello):</strong> el ajuste principal. Empujar baja el tono; retirar lo sube. Afloja el tornillo sólo lo necesario.</li>
+<li><strong>Calentamiento previo:</strong> sopla aire caliente 3-5 minutos antes de afinar y vacía el agua acumulada.</li>
+<li><strong>Caña y bóquilla:</strong> una caña dura sube el tono en el registro agudo; una blanda tiende a bajar en el grave.</li>
+<li><strong>Transpositor activo:</strong> el afinador ya está configurado en Mi♭ para esta página. Verás la nota escrita y el sonido real a la vez.</li>
+</ul>
+<h2>Preguntas frecuentes: afinador de saxofón alto online</h2>
+<div class="tm-faq-list">
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿Por qué el afinador muestra Mi♭ cuando toco Do en el saxo alto?</div>
+    <div class="tm-faq-a">El saxofón alto es un instrumento transpositor en Mi♭. Al tocar Do escrito, el sonido real es Mi♭ (una sexta mayor más grave). El afinador siempre muestra el sonido real (concert pitch) y, con el transpositor activo, también la nota escrita correspondiente.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿Qué nota debo tocar para afinar el alto con La4 = 440 Hz?</div>
+    <div class="tm-faq-a">Toca el Fa♯ escrito. Corresponde al La4 real (440 Hz). Centra la aguja del afinador en 0¢ y ajusta el tudel hasta conseguirlo.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿En qué se diferencia el saxo alto del barítono?</div>
+    <div class="tm-faq-a">Ambos son instrumentos en Mi♭ con la misma transposición de nombre de nota. El barítono suena una octava más grave que el alto. Para la afinación, la configuración del transpositor es idéntica (Mi♭, −3 semitonos).</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿Cómo afecta la presión del labio a la afinación?</div>
+    <div class="tm-faq-a">Más presión del labio inferior sube el tono; menos presión lo baja. Para afinar de forma estable, mantén una embocadura relajada y usa el tudel como ajuste principal.</div>
+  </div>
+</div>''',
+    },
+    {
+        'slug': 'saxofon-tenor',
+        'name': 'Saxofón Tenor',
+        'transp': 2,
+        'title': 'Afinador de Saxofón Tenor Online Gratis | Instrumento en Si♭ | Teoría Musical',
+        'desc': 'Afina tu saxofón tenor online gratis. Transpositor en Si♭: muestra nota escrita y sonido real. A4 ajustable. Sin instalación.',
+        'crumb': 'Afinador de Saxofón Tenor',
+        'h1': 'Afinador de Saxofón Tenor Online',
+        'intro': '<p>Afina tu saxofón tenor directamente desde el navegador sin instalar nada. El tenor es un instrumento transpositor en Si♭: cuando el saxofonista lee Do escrito, el sonido real es Si♭, una novena mayor más grave (segunda mayor más una octava).</p>\n<p>El afinador muestra simultáneamente la <em>nota real</em> (concert pitch) y la <em>nota escrita</em> tal como aparece en la partitura.</p>',
+        'content': '''\
+<h2>El saxofón tenor: instrumento transpositor en Si♭</h2>
+<p>El tenor comparte la misma transposición de nombre de nota que el soprano (Si♭), pero suena una octava más grave. Para La4 real (440 Hz) el saxofonista debe leer Si escrito:</p>
+<table style="width:100%;border-collapse:collapse;font-size:.95rem;margin-bottom:1.5rem;">
+  <thead><tr style="background:var(--bg3,#f0ede6);text-align:left;">
+    <th style="padding:8px 12px;border-bottom:2px solid var(--border,#ddd);">Nota escrita (partitura)</th>
+    <th style="padding:8px 12px;border-bottom:2px solid var(--border,#ddd);">Sonido real (afinador)</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Do (escrito)</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Si♭ real</td></tr>
+    <tr style="background:var(--bg2,#faf8f4);"><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Re (escrito)</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Do real</td></tr>
+    <tr><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Mi (escrito)</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Re real</td></tr>
+    <tr style="background:var(--bg2,#faf8f4);"><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">La (escrito)</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Sol real (392 Hz)</td></tr>
+    <tr><td style="padding:7px 12px;">Si (escrito)</td><td style="padding:7px 12px;">La real (440 Hz) ← referencia</td></tr>
+  </tbody>
+</table>
+<p>Para afinar, toca el <strong>Si escrito</strong> (La4 real = 440 Hz) y centra la aguja en 0¢.</p>
+<h2>Cómo ajustar la afinación del saxofón tenor</h2>
+<ul class="wp-block-list">
+<li><strong>Tudel (cuello):</strong> el ajuste principal. El tenor tiene el tudel más largo que el soprano. Empujar baja el tono; retirar lo sube.</li>
+<li><strong>Calentamiento previo:</strong> el cuerpo grande del tenor requiere al menos 5 minutos. Sopla aire caliente y vacía el agua.</li>
+<li><strong>Caña y bóquilla:</strong> una caña blanda tiende a afinar bajo en el registro grave. El grosor de la caña influye especialmente en el tenor.</li>
+<li><strong>Transpositor activo:</strong> el afinador ya está configurado en Si♭ para esta página. Verás la nota escrita y el sonido real a la vez.</li>
+</ul>
+<h2>Preguntas frecuentes: afinador de saxofón tenor online</h2>
+<div class="tm-faq-list">
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿Por qué el afinador muestra Si♭ cuando toco Do en el tenor?</div>
+    <div class="tm-faq-a">El saxofón tenor es un instrumento transpositor en Si♭. Al tocar Do escrito, el sonido real es Si♭ (una novena mayor más grave: segunda mayor más una octava). El afinador muestra siempre el sonido real y, con el transpositor activo, también la nota escrita.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿Qué nota debo tocar para afinar el tenor con La4 = 440 Hz?</div>
+    <div class="tm-faq-a">Toca el Si escrito. Corresponde al La4 real (440 Hz). Es la misma nota escrita de referencia que para la trompeta y el clarinete en Si♭.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿En qué se diferencia el tenor del soprano?</div>
+    <div class="tm-faq-a">Ambos son instrumentos en Si♭ con la misma transposición de nombre de nota. El tenor suena una octava más grave que el soprano y tiene un cuerpo y tudel más largos. Para la afinación, la configuración del transpositor es idéntica.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿El afinador detecta bien las notas graves del tenor?</div>
+    <div class="tm-faq-a">Sí, el algoritmo YIN detecta frecuencias desde 40 Hz, cubriendo toda la tesitura del tenor. Para las notas más graves, acerca el instrumento al micrófono y asegúrate de que no haya ruido de fondo.</div>
+  </div>
+</div>''',
+    },
+    {
+        'slug': 'saxofon-baritono',
+        'name': 'Saxofón Barítono',
+        'transp': -3,
+        'title': 'Afinador de Saxofón Barítono Online Gratis | Instrumento en Mi♭ | Teoría Musical',
+        'desc': 'Afina tu saxofón barítono online gratis. Transpositor en Mi♭: muestra nota escrita y sonido real. A4 ajustable. Sin instalación.',
+        'crumb': 'Afinador de Saxofón Barítono',
+        'h1': 'Afinador de Saxofón Barítono Online',
+        'intro': '<p>Afina tu saxofón barítono directamente desde el navegador sin instalar nada. El barítono es un instrumento transpositor en Mi♭: comparte la misma transposición de nombre de nota que el saxo alto, pero suena una octava más grave.</p>\n<p>El afinador muestra simultáneamente la <em>nota real</em> (concert pitch) y la <em>nota escrita</em> tal como aparece en la partitura.</p>',
+        'content': '''\
+<h2>El saxofón barítono: instrumento transpositor en Mi♭</h2>
+<p>El barítono comparte la misma transposición de nombre de nota que el saxo alto (Mi♭), pero suena una octava más grave. Para La real (440 Hz) el saxofonista debe leer Fa♯ escrito:</p>
+<table style="width:100%;border-collapse:collapse;font-size:.95rem;margin-bottom:1.5rem;">
+  <thead><tr style="background:var(--bg3,#f0ede6);text-align:left;">
+    <th style="padding:8px 12px;border-bottom:2px solid var(--border,#ddd);">Nota escrita (partitura)</th>
+    <th style="padding:8px 12px;border-bottom:2px solid var(--border,#ddd);">Sonido real (afinador)</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Do (escrito)</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Mi♭ real</td></tr>
+    <tr style="background:var(--bg2,#faf8f4);"><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Re (escrito)</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Fa real</td></tr>
+    <tr><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Mi (escrito)</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Sol real</td></tr>
+    <tr style="background:var(--bg2,#faf8f4);"><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">Fa♯ (escrito)</td><td style="padding:7px 12px;border-bottom:1px solid var(--border,#eee);">La real (440 Hz) ← referencia</td></tr>
+    <tr><td style="padding:7px 12px;">Sol (escrito)</td><td style="padding:7px 12px;">Si♭ real</td></tr>
+  </tbody>
+</table>
+<p>Para afinar, toca el <strong>Fa♯ escrito</strong> (La real = 440 Hz) y centra la aguja en 0¢.</p>
+<h2>Cómo ajustar la afinación del saxofón barítono</h2>
+<ul class="wp-block-list">
+<li><strong>Tudel (cuello):</strong> el ajuste principal. El barítono tiene el tudel más largo de todos los saxofones. Empujar baja el tono; retirar lo sube.</li>
+<li><strong>Calentamiento previo:</strong> el gran volumen de aire del barítono requiere al menos 5-8 minutos de calentamiento antes de afinar.</li>
+<li><strong>Frecuencias graves:</strong> para las notas más graves, acerca el instrumento al micrófono y evita ruidos de fondo.</li>
+<li><strong>Transpositor activo:</strong> el afinador ya está configurado en Mi♭ para esta página. Verás la nota escrita y el sonido real a la vez.</li>
+</ul>
+<h2>Preguntas frecuentes: afinador de saxofón barítono online</h2>
+<div class="tm-faq-list">
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿Por qué el afinador muestra Mi♭ cuando toco Do en el barítono?</div>
+    <div class="tm-faq-a">El saxofón barítono es un instrumento transpositor en Mi♭. Al tocar Do escrito, el sonido real es Mi♭ (una decimotercera mayor más grave: sexta mayor más una octava). El afinador muestra siempre el sonido real y, con el transpositor activo, también la nota escrita.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿Qué nota debo tocar para afinar el barítono con La = 440 Hz?</div>
+    <div class="tm-faq-a">Toca el Fa♯ escrito. Corresponde al La real (440 Hz). Es la misma nota escrita de referencia que para el saxo alto.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿El afinador detecta bien las notas graves del barítono?</div>
+    <div class="tm-faq-a">Sí, el algoritmo YIN detecta frecuencias desde 40 Hz. La nota más grave del barítono estándar es el La♭1 (aproximadamente 46 Hz). Para mejor detección, acerca el instrumento al micrófono y asegúrate de que el volumen del instrumento sea suficiente.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">¿En qué se diferencia el barítono del alto?</div>
+    <div class="tm-faq-a">Ambos son instrumentos en Mi♭ con la misma transposición de nombre de nota. El barítono suena una octava más grave que el alto y tiene el cuerpo más grande. Para la afinación, la configuración del transpositor es idéntica (Mi♭, −3 semitonos).</div>
+  </div>
+</div>''',
+    },
+]
+
+
+def make_page(s):
+    url = f'https://www.teoriamusical.com.es/herramientas/afinador/{s["slug"]}/'
+    json_app = (
+        f'{{"@context":"https://schema.org","@type":"SoftwareApplication",'
+        f'"name":"Afinador de {s["name"]} Online",'
+        f'"description":"{s["desc"]}",'
+        f'"url":"{url}",'
+        f'"applicationCategory":"MusicApplication","operatingSystem":"Web",'
+        f'"inLanguage":"es","isAccessibleForFree":true,'
+        f'"author":{{"@type":"Person","name":"Eduardo Escrig Zome\\u00f1o",'
+        f'"url":"https://www.teoriamusical.com.es/"}},'
+        f'"offers":{{"@type":"Offer","price":"0","priceCurrency":"EUR"}}}}'
+    )
+    json_bc = (
+        f'{{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":['
+        f'{{"@type":"ListItem","position":1,"name":"Inicio","item":"https://www.teoriamusical.com.es/"}},'
+        f'{{"@type":"ListItem","position":2,"name":"Herramientas","item":"https://www.teoriamusical.com.es/herramientas/"}},'
+        f'{{"@type":"ListItem","position":3,"name":"Afinador Online","item":"https://www.teoriamusical.com.es/herramientas/afinador/"}},'
+        f'{{"@type":"ListItem","position":4,"name":"Afinador de {s["name"]}","item":"{url}"}}]}}'
+    )
+    return f"""<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{s['title']}</title>
+<meta name="description" content="{s['desc']}">
+<link rel="canonical" href="{url}">
+<meta property="og:title" content="{s['title']}">
+<meta property="og:description" content="{s['desc']}">
+<meta property="og:image" content="https://www.teoriamusical.com.es/assets/img/og-afinador.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{url}">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Teoría Musical">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.teoriamusical.com.es/assets/img/og-afinador.png">
+<link rel="icon" href="/assets/img/favicon.png" type="image/png">
+
+{COOKIE_SCRIPT}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/tools/tools.css">
+
+<script type="application/ld+json">{json_app}</script>
+<script type="application/ld+json">{json_bc}</script>
+</head>
+<body class="tm-page">
+<a class="tm-skip" href="#main">Saltar al contenido</a>
+
+{COOKIE_BANNER}
+
+{HEADER_NAV}
+
+<main id="main" class="tm-main">
+
+  <nav class="tm-breadcrumb" aria-label="Migas">
+    <div class="tm-container">
+      <a href="/">Inicio</a><span class="tm-crumb-sep">&#8250;</span><a href="/herramientas/">Herramientas</a><span class="tm-crumb-sep">&#8250;</span><a href="/herramientas/afinador/">Afinador Online</a><span class="tm-crumb-sep">&#8250;</span><span aria-current="page">{s['crumb']}</span>
+    </div>
+  </nav>
+
+<header class="tm-page-header"><div class="tm-container"><h1>{s['h1']}</h1></div></header>
+<div class="tm-container tm-article-wrap">
+  <article class="tm-article">
+
+{s['intro']}
+
+{WIDGET}
+<script>window.AFIN_TRANSP={s['transp']};</script>
+<script src="/assets/tools/afinador.js" defer></script>
+
+{s['content']}
+
+{SIBLINGS}
+
+  </article>
+</div>
+
+</main>
+
+{FOOTER}
+<script src="/assets/js/main.js" defer></script>
+</body>
+</html>"""
+
+
+# ── 1. CREAR LAS 4 PÁGINAS ────────────────────────────────────────────────────
+for s in SAXES:
+    d = os.path.join(AFIN, s['slug'])
+    os.makedirs(d, exist_ok=True)
+    path = os.path.join(d, 'index.html')
+    with open(path, 'w', encoding='utf-8', newline='\n') as f:
+        f.write(make_page(s))
+    print(f'Created: {s["slug"]}')
+
+# ── 2. ACTUALIZAR SIBLING LISTS EN PÁGINAS EXISTENTES ─────────────────────────
+OLD_SAX = '<li><a href="/herramientas/afinador/saxofon/">Afinador de saxof&#243;n</a></li>'
+NEW_SAX = ('<li><a href="/herramientas/afinador/saxofon-soprano/">Afinador de saxof&#243;n soprano</a></li>\n'
+           '<li><a href="/herramientas/afinador/saxofon-alto/">Afinador de saxof&#243;n alto</a></li>\n'
+           '<li><a href="/herramientas/afinador/saxofon-tenor/">Afinador de saxof&#243;n tenor</a></li>\n'
+           '<li><a href="/herramientas/afinador/saxofon-baritono/">Afinador de saxof&#243;n bar&#237;tono</a></li>')
+
+SKIP = {'saxofon-soprano', 'saxofon-alto', 'saxofon-tenor', 'saxofon-baritono'}
+updated = 0
+for entry in os.scandir(AFIN):
+    if not entry.is_dir() or entry.name in SKIP:
+        continue
+    fpath = os.path.join(entry.path, 'index.html')
+    if not os.path.exists(fpath):
+        continue
+    with open(fpath, 'r', encoding='utf-8') as f:
+        content = f.read()
+    if OLD_SAX in content:
+        with open(fpath, 'w', encoding='utf-8', newline='\n') as f:
+            f.write(content.replace(OLD_SAX, NEW_SAX))
+        print(f'Updated sibling: {entry.name}')
+        updated += 1
+
+print(f'Updated {updated} satellite pages.')
+
+# ── 3. ACTUALIZAR ÍNDICE PRINCIPAL ────────────────────────────────────────────
+idx = os.path.join(AFIN, 'index.html')
+with open(idx, 'r', encoding='utf-8') as f:
+    idx_c = f.read()
+
+OLD_IDX = '  <li><a href="/herramientas/afinador/saxofon/">Afinador de saxofón</a> — alto Mi♭, tenor Si♭</li>'
+NEW_IDX = ('  <li><a href="/herramientas/afinador/saxofon-soprano/">Afinador de saxofón soprano</a> — transpositor en Si♭</li>\n'
+           '  <li><a href="/herramientas/afinador/saxofon-alto/">Afinador de saxofón alto</a> — transpositor en Mi♭</li>\n'
+           '  <li><a href="/herramientas/afinador/saxofon-tenor/">Afinador de saxofón tenor</a> — transpositor en Si♭</li>\n'
+           '  <li><a href="/herramientas/afinador/saxofon-baritono/">Afinador de saxofón barítono</a> — transpositor en Mi♭</li>')
+
+if OLD_IDX in idx_c:
+    with open(idx, 'w', encoding='utf-8', newline='\n') as f:
+        f.write(idx_c.replace(OLD_IDX, NEW_IDX))
+    print('Updated main index.')
+else:
+    print(f'WARNING: main index entry not found. Looking for:\n{repr(OLD_IDX)}')
+
+# ── 4. ACTUALIZAR SITEMAP ─────────────────────────────────────────────────────
+sm_path = os.path.join(BASE, 'sitemap.xml')
+with open(sm_path, 'r', encoding='utf-8') as f:
+    sm = f.read()
+
+OLD_SM = '  <url><loc>https://www.teoriamusical.com.es/herramientas/afinador/saxofon/</loc><lastmod>2026-05-18</lastmod></url>'
+NEW_SM = (OLD_SM + '\n'
+          '  <url><loc>https://www.teoriamusical.com.es/herramientas/afinador/saxofon-soprano/</loc><lastmod>2026-05-19</lastmod></url>\n'
+          '  <url><loc>https://www.teoriamusical.com.es/herramientas/afinador/saxofon-alto/</loc><lastmod>2026-05-19</lastmod></url>\n'
+          '  <url><loc>https://www.teoriamusical.com.es/herramientas/afinador/saxofon-tenor/</loc><lastmod>2026-05-19</lastmod></url>\n'
+          '  <url><loc>https://www.teoriamusical.com.es/herramientas/afinador/saxofon-baritono/</loc><lastmod>2026-05-19</lastmod></url>')
+
+if OLD_SM in sm:
+    with open(sm_path, 'w', encoding='utf-8', newline='\n') as f:
+        f.write(sm.replace(OLD_SM, NEW_SM))
+    print('Updated sitemap.')
+else:
+    print('WARNING: sitemap entry not found.')
+
+print('All done.')
