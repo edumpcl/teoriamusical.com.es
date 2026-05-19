@@ -35,3 +35,7 @@ audit-mobile.js
 # ----- Logs / temporales -----
 *.log
 .cache/
+
+# ----- Google Search Console / OAuth -----
+tools/credentials.json
+tools/token.json
