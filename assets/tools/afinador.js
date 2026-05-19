@@ -553,7 +553,8 @@
   // ── INIT ──────────────────────────────────────────────────────────────────────
   buildRefNotes();
   buildTranspInstruments();
-  updateTranspDisplay();
+  if (window.AFIN_TRANSP) setTransp(window.AFIN_TRANSP);
+  else updateTranspDisplay();
   setDisplay(null);
   updateGauge(0, 'silent');
   updateRefDisplay();
