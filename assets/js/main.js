@@ -124,6 +124,18 @@
     });
   })();
 
+  // FAQ accordion
+  document.querySelectorAll('.tm-faq-q').forEach(function (q) {
+    q.setAttribute('role', 'button');
+    q.setAttribute('tabindex', '0');
+    var item = q.closest('.tm-faq-item');
+    function toggle() { item.classList.toggle('open'); }
+    q.addEventListener('click', toggle);
+    q.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
+
   // External links open in new tab (optional usability)
   document.querySelectorAll('a[href^="http"]:not([href*="teoriamusical.com.es"])').forEach(function (a) {
     if (!a.hasAttribute('target')) {
