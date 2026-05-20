@@ -575,9 +575,11 @@
         if (currentQ.seq.length === 0) {
           elFb.innerHTML = '<strong>✗ Te has equivocado</strong> — ' + currentQ.maj + ' no tiene NINGUNA alteración.';
         } else {
+          var NOTE_ES = { c:'Do', d:'Re', e:'Mi', f:'Fa', g:'Sol', a:'La', b:'Si' };
           var sol = currentQ.seq.map(function (s) {
             var p = s.split('/');
-            return p[0].toUpperCase() + (p[2] === '#' ? ' Sostenido' : ' Bemol');
+            var nombre = NOTE_ES[p[0].toLowerCase()] || p[0].toUpperCase();
+            return nombre + (p[2] === '#' ? ' Sostenido' : ' Bemol');
           }).join(', ');
           elFb.innerHTML = '<strong>✗ Dibujo Incorrecto</strong> — En solfeo el orden importa.<br><br>👉 La solución era: <strong>' + sol + '</strong>.';
         }
