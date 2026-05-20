@@ -579,7 +579,7 @@
           var sol = currentQ.seq.map(function (s) {
             var p = s.split('/');
             var nombre = NOTE_ES[p[0].toLowerCase()] || p[0].toUpperCase();
-            return nombre + (p[2] === '#' ? ' Sostenido' : ' Bemol');
+            return nombre + (p[2] === '#' ? '#' : 'b');
           }).join(', ');
           elFb.innerHTML = '<strong>✗ Dibujo Incorrecto</strong> — En solfeo el orden importa.<br><br>👉 La solución era: <strong>' + sol + '</strong>.';
         }
