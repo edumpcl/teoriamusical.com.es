@@ -264,6 +264,18 @@
       <div class="bpm-range-labels"><span>15</span><span>300</span></div>
     </div>
 
+    <!-- PLAY + TAP -->
+    <div class="ctrl-box" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+      <div class="box-label" style="text-align:center;">Control</div>
+      <div class="play-row">
+        <button class="btn-play" id="btn-play" aria-label="Play/Stop">
+          <svg id="play-icon" width="26" height="26" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>
+        </button>
+      </div>
+      <button class="btn-tap" id="btn-tap">TAP (T)</button>
+      <button class="btn-reset" id="btn-reset">RESET</button>
+    </div>
+
     <!-- PENDULUM + BEAT DOTS + PLAY -->
     <div class="ctrl-box pendulum-box">
       <div class="box-label">Péndulo</div>
@@ -277,18 +289,6 @@
         </svg>
       </div>
       <div class="beat-dots" id="beat-dots"></div>
-    </div>
-
-    <!-- PLAY + TAP -->
-    <div class="ctrl-box" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
-      <div class="box-label" style="text-align:center;">Control</div>
-      <div class="play-row">
-        <button class="btn-play" id="btn-play" aria-label="Play/Stop">
-          <svg id="play-icon" width="26" height="26" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>
-        </button>
-      </div>
-      <button class="btn-tap" id="btn-tap">TAP (T)</button>
-      <button class="btn-reset" id="btn-reset">RESET</button>
     </div>
 
     <!-- SONIDO -->
