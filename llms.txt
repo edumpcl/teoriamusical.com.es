@@ -14,6 +14,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Afinador de Guitarra Online Gratis](https://www.teoriamusical.com.es/herramientas/afinador/guitarra/): Afina tu guitarra con el micrófono del móvil o PC. Afinación estándar Mi-La-Re-Sol-Si-Mi y afinaciones alternativas como Drop D. Gratis.
 - [Afinador de Oboe Online Gratis](https://www.teoriamusical.com.es/herramientas/afinador/oboe/): Afina tu oboe con el micrófono. Instrumento en Do (concert pitch). El oboe da el La de referencia en orquesta. A4 ajustable. Gratis.
 - [Afinador de Violín Online Gratis](https://www.teoriamusical.com.es/herramientas/afinador/violin/): Afina tu violín con el micrófono. Afinación estándar en quintas Sol-Re-La-Mi. Referencia La4 entre 435-450 Hz para orquesta. Gratis.
+- [Afinador de Flauta Traversa Gratis](https://www.teoriamusical.com.es/herramientas/afinador/flauta/): Afina tu flauta traversa online gratis con el micrófono. Instrumento en Do (concert pitch). A4 ajustable entre 440 y 450 Hz. Sin instalación.
 
 ## Teoría Musical (introducción)
 
