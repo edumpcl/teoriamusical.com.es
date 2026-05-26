@@ -236,6 +236,30 @@ figcaption { font-size: .9em; color: var(--text-muted); margin-top: .4em; text-a
 .tm-article { max-width: 78ch; width: 100%; }
 .tm-article p, .tm-article li, .tm-article td, .tm-article th, .tm-article a { overflow-wrap: break-word; }
 .tm-article table { display: block; overflow-x: auto; max-width: 100%; }
+
+/* ── Tabla general ── */
+.tm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .93rem;
+}
+.tm-table th {
+  background: var(--brand);
+  color: #fff;
+  padding: .65rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  border: 1px solid var(--brand-dark);
+  white-space: nowrap;
+}
+.tm-table td {
+  padding: .6rem 1rem;
+  border: 1px solid var(--border);
+  vertical-align: middle;
+}
+.tm-table tbody tr:nth-child(even) td { background: var(--bg-alt); }
+.tm-table tbody tr:hover td { background: var(--surface-alt); }
+
 .tm-article img { border-radius: var(--radius-sm); }
 .tm-article h2 { scroll-margin-top: 5rem; }
 .tm-article h3 { scroll-margin-top: 5rem; }
