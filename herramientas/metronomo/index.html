@@ -55,8 +55,7 @@
 <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/style.css">
-<link rel="preload" href="/assets/tools/tools.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="/assets/tools/tools.css"></noscript>
+<link rel="stylesheet" href="/assets/tools/tools.css">
 
 <script type="application/ld+json">
 {
@@ -424,28 +423,7 @@
 
   </div><!-- /met-grid -->
 </div><!-- /wrap -->
-<script>
-(function(){
-  var el = document.querySelector('.tm-metronomo-wrap');
-  var loaded = false, _pendingBpm = null;
-  function loadScript() {
-    if (loaded) return;
-    loaded = true;
-    var s = document.createElement('script');
-    s.src = '/assets/tools/metronomo.js';
-    s.onload = function() { if (_pendingBpm !== null) window.metronomoSetBpm(_pendingBpm); };
-    document.head.appendChild(s);
-  }
-  window.metronomoSetBpm = function(b) { _pendingBpm = b; loadScript(); };
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function(e, o) {
-      if (e[0].isIntersecting) { o.disconnect(); loadScript(); }
-    }, { rootMargin: '400px' }).observe(el);
-  } else {
-    loadScript();
-  }
-})();
-</script>
+<script src="/assets/tools/metronomo.js" defer></script>
 
 
 
