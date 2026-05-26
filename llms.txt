@@ -16,6 +16,9 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Afinador de Violín Online Gratis](https://www.teoriamusical.com.es/herramientas/afinador/violin/): Afina tu violín con el micrófono. Afinación estándar en quintas Sol-Re-La-Mi. Referencia La4 entre 435-450 Hz para orquesta. Gratis.
 - [Afinador de Flauta Traversa Gratis](https://www.teoriamusical.com.es/herramientas/afinador/flauta/): Afina tu flauta traversa online gratis con el micrófono. Instrumento en Do (concert pitch). A4 ajustable entre 440 y 450 Hz. Sin instalación.
 - [Afinador de Arpa Online Gratis](https://www.teoriamusical.com.es/herramientas/afinador/arpa/): Afina tu arpa online gratis con el micrófono. 47 cuerdas, 7 pedales. Afinación cuerda por cuerda. A4 ajustable. Sin instalación.
+- [Afinador de Flautín Online Gratis](https://www.teoriamusical.com.es/herramientas/afinador/flautin/): Afina tu flautín (piccolo) online gratis. Instrumento en Do que suena una octava más aguda que lo escrito. A4 ajustable. Sin instalación.
+- [Afinador de Trompeta Online Gratis](https://www.teoriamusical.com.es/herramientas/afinador/trompeta/): Afina tu trompeta online gratis. Instrumento transpositor en Sib: el afinador muestra el sonido real (concert pitch). A4 ajustable. Sin instalación.
+- [Afinador de Saxofón Barítono Gratis](https://www.teoriamusical.com.es/herramientas/afinador/saxofon-baritono/): Afina tu saxofón barítono online gratis. Transpositor en Mi♭: muestra nota escrita y sonido real. A4 ajustable. Sin instalación.
 
 ## Teoría Musical (introducción)
 
