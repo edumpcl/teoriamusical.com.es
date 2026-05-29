@@ -34,18 +34,20 @@
                      "DblAum":"Doble Aumentada", "DblDis":"Doble Disminuida" };
 
   var CONSONANCIA_MAP = {
-    "1j":"Consonancia Perfecta","5j":"Consonancia Perfecta","8j":"Consonancia Perfecta",
-    "4j":"Semiconsonancia",
+    "1j":"Consonancia Perfecta","4j":"Consonancia Perfecta","5j":"Consonancia Perfecta","8j":"Consonancia Perfecta",
     "3m":"Consonancia Imperfecta","3M":"Consonancia Imperfecta",
     "6m":"Consonancia Imperfecta","6M":"Consonancia Imperfecta",
+    "1A":"Disonancia Absoluta",
     "2m":"Disonancia Absoluta","2M":"Disonancia Absoluta",
+    "3d":"Disonancia Absoluta","3dd":"Disonancia Absoluta",
+    "6AA":"Disonancia Absoluta",
     "7m":"Disonancia Absoluta","7M":"Disonancia Absoluta",
-    "4A":"Semiconsonancia","5d":"Semiconsonancia",
-    "2d":"Disonancia Condicional","3d":"Disonancia Condicional",
+    "4A":"Semiconsonancia","5d":"Semiconsonancia","3AA":"Semiconsonancia",
+    "2d":"Disonancia Condicional",
     "4d":"Disonancia Condicional","5A":"Disonancia Condicional",
-    "2AA":"Disonancia Condicional","3AA":"Disonancia Condicional",
-    "4AA":"Disonancia Condicional","5AA":"Disonancia Condicional","6AA":"Disonancia Condicional",
-    "3dd":"Disonancia Condicional","4dd":"Disonancia Condicional","5dd":"Disonancia Condicional",
+    "2AA":"Disonancia Condicional",
+    "4AA":"Disonancia Condicional","5AA":"Disonancia Condicional",
+    "4dd":"Disonancia Condicional","5dd":"Disonancia Condicional",
     "6dd":"Disonancia Condicional","7dd":"Disonancia Condicional"
   };
 
