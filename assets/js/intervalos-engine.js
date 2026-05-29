@@ -637,9 +637,16 @@
             return '<button class="tm-opt" data-g="asc_des" data-v="' + t + '">' + t + '</button>';
           }).join('') + '</div></div>';
       } else if (config.test === 'consonancia') {
+        var consOpts = [
+          {v:'Consonancia Perfecta',  d:'Consonancia<br>Perfecta'},
+          {v:'Consonancia Imperfecta',d:'Consonancia<br>Imperfecta'},
+          {v:'Semiconsonancia',       d:'Semi-<br>consonancia'},
+          {v:'Disonancia Absoluta',   d:'Disonancia<br>Absoluta'},
+          {v:'Disonancia Condicional',d:'Disonancia<br>Condicional'}
+        ];
         h += '<div class="tm-grid">' +
-          ['Consonancia Perfecta','Consonancia Imperfecta','Semiconsonancia','Disonancia Absoluta','Disonancia Condicional'].map(function(t){
-            return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
+          consOpts.map(function(o){
+            return '<button class="tm-opt" data-g="ans" data-v="' + o.v + '">' + o.d + '</button>';
           }).join('') + '</div>';
       } else if (config.test === 'arm_mel') {
         h += '<div class="tm-grid">' +
