@@ -218,6 +218,25 @@
 <header class="tm-page-header"><div class="tm-container"><h1>Afinador Online</h1></div></header>
 <div class="tm-container tm-article-wrap">
   <article class="tm-article">
+<style>
+.afin-features { max-width: 700px; margin: 2rem auto 0 auto; display: flex; flex-direction: column; gap: 0.85rem; list-style: none; padding: 0; }
+.afin-features li { display: flex; gap: 0.75rem; align-items: flex-start; line-height: 1.6; }
+.afin-check { color: #8b6914; font-weight: 700; flex-shrink: 0; }
+.afin-instru-list { max-width: 800px; margin: 2rem auto 0 auto; display: flex; flex-direction: column; gap: 2rem; }
+.afin-instru-list h3 { color: #8b6914; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+.afin-instru-list p { line-height: 1.7; }
+.afin-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem; }
+.afin-step { background: #faf7f2; border: 1px solid #e8e0cc; padding: 2rem; border-radius: 1rem; text-align: center; }
+.afin-step-icon { width: 3.5rem; height: 3.5rem; background: #8b6914; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 1.5rem auto; }
+.afin-step h3 { color: #1a1208; font-size: 1.2rem; font-weight: 600; margin-bottom: 0.75rem; }
+.afin-step p { line-height: 1.6; font-size: 0.95rem; }
+.afin-guitar-box { background: #faf7f2; border-radius: 1rem; border: 1px solid #e8e0cc; padding: 3rem; }
+.afin-guitar-notes { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+.afin-guitar-note { background: #fff; padding: 1.25rem 2rem; border-radius: 0.75rem; border-bottom: 2px solid #b5872a; min-width: 140px; text-align: center; }
+.afin-guitar-note strong { color: #1a1208; display: block; font-size: 1.25rem; margin-bottom: 0.25rem; }
+.afin-guitar-note .afin-hz { font-family: monospace; }
+.afin-guitar-note .afin-sub { font-size: 0.8rem; opacity: 0.7; }
+</style>
 
 <div class="tm-afinador-wrap">
 
@@ -295,7 +314,7 @@
     </div>
 
     <!-- Mic button -->
-    <div class="mic-row" style="margin-top:20px;">
+    <div class="mic-row">
       <button class="btn-mic" id="btn-mic">
         <span class="mic-icon">🎙</span>
         <span id="mic-label">Activar</span>
@@ -360,14 +379,14 @@
     <div class="tm-seccion-cabecera">
       <h2 class="tm-seccion-titulo">Funciones del <span>afinador online</span></h2>
     </div>
-    <ul style="max-width: 700px; margin: 2rem auto 0 auto; display: flex; flex-direction: column; gap: 0.85rem; list-style: none; padding: 0;">
-      <li style="display: flex; gap: 0.75rem; align-items: flex-start; line-height: 1.6;"><span style="color: #8b6914; font-weight: 700; flex-shrink: 0;">✓</span><span><strong>Detección automática de nota</strong> — el algoritmo YIN analiza el audio en tiempo real e identifica la nota (Do, Re, Mi…) y su octava.</span></li>
-      <li style="display: flex; gap: 0.75rem; align-items: flex-start; line-height: 1.6;"><span style="color: #8b6914; font-weight: 700; flex-shrink: 0;">✓</span><span><strong>Medidor de cents</strong> — visualiza con precisión si vas bemol o sostenido, con escala de −50¢ a +50¢.</span></li>
-      <li style="display: flex; gap: 0.75rem; align-items: flex-start; line-height: 1.6;"><span style="color: #8b6914; font-weight: 700; flex-shrink: 0;">✓</span><span><strong>Instrumentos transpositores</strong> — soporte para Clarinete en Si♭, Trompeta, Corno inglés, Saxofón y más; muestra la nota escrita y la nota real simultáneamente.</span></li>
-      <li style="display: flex; gap: 0.75rem; align-items: flex-start; line-height: 1.6;"><span style="color: #8b6914; font-weight: 700; flex-shrink: 0;">✓</span><span><strong>Referencia A4 ajustable</strong> — configura el La de referencia entre 435 Hz y 450 Hz para adaptarte a cualquier orquesta o diapasón.</span></li>
-      <li style="display: flex; gap: 0.75rem; align-items: flex-start; line-height: 1.6;"><span style="color: #8b6914; font-weight: 700; flex-shrink: 0;">✓</span><span><strong>Notas de referencia</strong> — pulsa cualquier nota para escuchar el tono puro y afinar por oído sin necesidad de micrófono.</span></li>
-      <li style="display: flex; gap: 0.75rem; align-items: flex-start; line-height: 1.6;"><span style="color: #8b6914; font-weight: 700; flex-shrink: 0;">✓</span><span><strong>Notación española</strong> — muestra las notas como Do, Re, Mi, Fa, Sol, La, Si (solfeo latino).</span></li>
-      <li style="display: flex; gap: 0.75rem; align-items: flex-start; line-height: 1.6;"><span style="color: #8b6914; font-weight: 700; flex-shrink: 0;">✓</span><span><strong>Gratis y sin instalación</strong> — funciona directamente en el navegador en móvil, tablet u ordenador; no requiere ninguna app.</span></li>
+    <ul class="afin-features">
+      <li><span class="afin-check">✓</span><span><strong>Detección automática de nota</strong> — el algoritmo YIN analiza el audio en tiempo real e identifica la nota (Do, Re, Mi…) y su octava.</span></li>
+      <li><span class="afin-check">✓</span><span><strong>Medidor de cents</strong> — visualiza con precisión si vas bemol o sostenido, con escala de −50¢ a +50¢.</span></li>
+      <li><span class="afin-check">✓</span><span><strong>Instrumentos transpositores</strong> — soporte para Clarinete en Si♭, Trompeta, Corno inglés, Saxofón y más; muestra la nota escrita y la nota real simultáneamente.</span></li>
+      <li><span class="afin-check">✓</span><span><strong>Referencia A4 ajustable</strong> — configura el La de referencia entre 435 Hz y 450 Hz para adaptarte a cualquier orquesta o diapasón.</span></li>
+      <li><span class="afin-check">✓</span><span><strong>Notas de referencia</strong> — pulsa cualquier nota para escuchar el tono puro y afinar por oído sin necesidad de micrófono.</span></li>
+      <li><span class="afin-check">✓</span><span><strong>Notación española</strong> — muestra las notas como Do, Re, Mi, Fa, Sol, La, Si (solfeo latino).</span></li>
+      <li><span class="afin-check">✓</span><span><strong>Gratis y sin instalación</strong> — funciona directamente en el navegador en móvil, tablet u ordenador; no requiere ninguna app.</span></li>
     </ul>
   </div>
 </section>
@@ -378,41 +397,41 @@
     <div class="tm-seccion-cabecera">
       <h2 class="tm-seccion-titulo">Afinador para cada <span>instrumento</span></h2>
     </div>
-    <div style="max-width: 800px; margin: 2rem auto 0 auto; display: flex; flex-direction: column; gap: 2rem;">
+    <div class="afin-instru-list">
 
       <div>
-        <h3 style="color: #8b6914; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Afinador para guitarra</h3>
-        <p style="line-height: 1.7;">La afinación estándar de la guitarra (Mi–La–Re–Sol–Si–Mi) es la más común. Se activa el micrófono, se pulsa una cuerda al aire y se ajusta hasta que el medidor quede en el centro. También funciona para guitarras en Drop D (cuerdas 1ª a 5ª iguales, 6ª bajada a Re) y otras afinaciones alternativas, siempre que la nota esté dentro del rango cromático. Nuestro <a href="/herramientas/afinador/guitarra/">afinador para guitarra</a> detecta automáticamente cualquier nota sin necesidad de seleccionarla.</p>
+        <h3>Afinador para guitarra</h3>
+        <p>La afinación estándar de la guitarra (Mi–La–Re–Sol–Si–Mi) es la más común. Se activa el micrófono, se pulsa una cuerda al aire y se ajusta hasta que el medidor quede en el centro. También funciona para guitarras en Drop D (cuerdas 1ª a 5ª iguales, 6ª bajada a Re) y otras afinaciones alternativas, siempre que la nota esté dentro del rango cromático. Nuestro <a href="/herramientas/afinador/guitarra/">afinador para guitarra</a> detecta automáticamente cualquier nota sin necesidad de seleccionarla.</p>
       </div>
 
       <div>
-        <h3 style="color: #8b6914; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Afinador para bajo eléctrico</h3>
-        <p style="line-height: 1.7;">El bajo estándar de 4 cuerdas afina Mi–La–Re–Sol (una octava por debajo de las cuatro cuerdas graves de la guitarra). El afinador detecta frecuencias graves desde 41 Hz (Mi1), por lo que cubre perfectamente bajos de 4, 5 y 6 cuerdas. Para mejores resultados con frecuencias muy graves, conviene tocar la cuerda cerca de un micrófono externo o subir el volumen del instrumento.</p>
+        <h3>Afinador para bajo eléctrico</h3>
+        <p>El bajo estándar de 4 cuerdas afina Mi–La–Re–Sol (una octava por debajo de las cuatro cuerdas graves de la guitarra). El afinador detecta frecuencias graves desde 41 Hz (Mi1), por lo que cubre perfectamente bajos de 4, 5 y 6 cuerdas. Para mejores resultados con frecuencias muy graves, conviene tocar la cuerda cerca de un micrófono externo o subir el volumen del instrumento.</p>
       </div>
 
       <div>
-        <h3 style="color: #8b6914; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Afinador para violín</h3>
-        <p style="line-height: 1.7;">El violín afina en quintas: Sol–Re–La–Mi. La cuerda de La (La4 = 440 Hz) es la referencia habitual al inicio de cada ensayo. La referencia de La4 es ajustable entre 435 y 450 Hz para adaptarse a orquestas históricas (415 Hz habitualmente) o a ensembles modernos. Se toca cada cuerda al aire y se ajusta hasta centrar la aguja.</p>
+        <h3>Afinador para violín</h3>
+        <p>El violín afina en quintas: Sol–Re–La–Mi. La cuerda de La (La4 = 440 Hz) es la referencia habitual al inicio de cada ensayo. La referencia de La4 es ajustable entre 435 y 450 Hz para adaptarse a orquestas históricas (415 Hz habitualmente) o a ensembles modernos. Se toca cada cuerda al aire y se ajusta hasta centrar la aguja.</p>
       </div>
 
       <div>
-        <h3 style="color: #8b6914; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Afinador para ukelele</h3>
-        <p style="line-height: 1.7;">El ukelele soprano estándar afina Sol–Do–Mi–La (afinación re-entrant). El afinador cubre ese rango y reconoce todas las cuerdas sin necesidad de configuración previa. Se activa el micrófono, se pulsa cada cuerda por separado y se comprueba que la aguja se centra en la nota correcta.</p>
+        <h3>Afinador para ukelele</h3>
+        <p>El ukelele soprano estándar afina Sol–Do–Mi–La (afinación re-entrant). El afinador cubre ese rango y reconoce todas las cuerdas sin necesidad de configuración previa. Se activa el micrófono, se pulsa cada cuerda por separado y se comprueba que la aguja se centra en la nota correcta.</p>
       </div>
 
       <div>
-        <h3 style="color: #8b6914; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Afinador para viola</h3>
-        <p style="line-height: 1.7;">La viola afina en quintas: Do–Sol–Re–La (Do3–Sol3–Re4–La4), una quinta por debajo del violín. Se toca cada cuerda al aire y se ajusta hasta que el afinador muestre la nota correcta centrada en 0¢. La cuerda más grave es el Do3 (261 Hz), que exige acercar bien el instrumento al micrófono por ser una frecuencia más baja.</p>
+        <h3>Afinador para viola</h3>
+        <p>La viola afina en quintas: Do–Sol–Re–La (Do3–Sol3–Re4–La4), una quinta por debajo del violín. Se toca cada cuerda al aire y se ajusta hasta que el afinador muestre la nota correcta centrada en 0¢. La cuerda más grave es el Do3 (261 Hz), que exige acercar bien el instrumento al micrófono por ser una frecuencia más baja.</p>
       </div>
 
       <div>
-        <h3 style="color: #8b6914; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Afinador para violonchelo</h3>
-        <p style="line-height: 1.7;">El violonchelo afina también en quintas: Do–Sol–Re–La, pero una octava más grave que la viola (Do2–Sol2–Re3–La3). La cuerda grave Do2 (65 Hz) es especialmente difícil de captar con micrófonos internos de móvil; si el afinador no responde, conviene acercar el instrumento o usar un micrófono externo. La referencia de afinación habitual en orquesta es el La del oboe.</p>
+        <h3>Afinador para violonchelo</h3>
+        <p>El violonchelo afina también en quintas: Do–Sol–Re–La, pero una octava más grave que la viola (Do2–Sol2–Re3–La3). La cuerda grave Do2 (65 Hz) es especialmente difícil de captar con micrófonos internos de móvil; si el afinador no responde, conviene acercar el instrumento o usar un micrófono externo. La referencia de afinación habitual en orquesta es el La del oboe.</p>
       </div>
 
       <div>
-        <h3 style="color: #8b6914; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Afinador para instrumentos de viento</h3>
-        <p style="line-height: 1.7;">La flauta traversa, el oboe, la trompeta y el clarinete pueden afinarse usando el micrófono de igual forma que los instrumentos de cuerda. Para instrumentos transpositores (clarinete en Si♭, trompeta en Si♭, corno inglés en Fa, saxofón alto en Mi♭…) se activa la sección "Instrumento transpositor" del afinador: se verán simultáneamente la nota real que suena y la nota escrita que aparece en la partitura.</p>
+        <h3>Afinador para instrumentos de viento</h3>
+        <p>La flauta traversa, el oboe, la trompeta y el clarinete pueden afinarse usando el micrófono de igual forma que los instrumentos de cuerda. Para instrumentos transpositores (clarinete en Si♭, trompeta en Si♭, corno inglés en Fa, saxofón alto en Mi♭…) se activa la sección "Instrumento transpositor" del afinador: se verán simultáneamente la nota real que suena y la nota escrita que aparece en la partitura.</p>
       </div>
 
     </div>
@@ -426,23 +445,23 @@
       <h2 class="tm-seccion-titulo">¿Cómo funciona este <span>afinador</span>?</h2>
     </div>
     
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem;">
-      <div style="background: #faf7f2; border: 1px solid #e8e0cc; padding: 2rem; border-radius: 1rem; text-align: center;">
-        <div style="width: 3.5rem; height: 3.5rem; background: #8b6914; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 1.5rem auto;">🎙️</div>
-        <h3 style="color: #1a1208; font-size: 1.2rem; font-weight: 600; margin-bottom: 0.75rem;">1. Activar el micrófono</h3>
-        <p style="line-height: 1.6; font-size: 0.95rem;">Se pulsa en "Activar" dentro del afinador. El navegador pedirá permiso para usar el micrófono temporalmente.</p>
+    <div class="afin-steps">
+      <div class="afin-step">
+        <div class="afin-step-icon">🎙️</div>
+        <h3>1. Activar el micrófono</h3>
+        <p>Se pulsa en "Activar" dentro del afinador. El navegador pedirá permiso para usar el micrófono temporalmente.</p>
       </div>
 
-      <div style="background: #faf7f2; border: 1px solid #e8e0cc; padding: 2rem; border-radius: 1rem; text-align: center;">
-        <div style="width: 3.5rem; height: 3.5rem; background: #8b6914; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 1.5rem auto;">🎸</div>
-        <h3 style="color: #1a1208; font-size: 1.2rem; font-weight: 600; margin-bottom: 0.75rem;">2. Hacer sonar una nota</h3>
-        <p style="line-height: 1.6; font-size: 0.95rem;">Se hace sonar una nota clara. En pantalla aparece qué nota es (como Do o Mi) y hacia dónde se mueve la aguja.</p>
+      <div class="afin-step">
+        <div class="afin-step-icon">🎸</div>
+        <h3>2. Hacer sonar una nota</h3>
+        <p>Se hace sonar una nota clara. En pantalla aparece qué nota es (como Do o Mi) y hacia dónde se mueve la aguja.</p>
       </div>
 
-      <div style="background: #faf7f2; border: 1px solid #e8e0cc; padding: 2rem; border-radius: 1rem; text-align: center;">
-        <div style="width: 3.5rem; height: 3.5rem; background: #8b6914; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 1.5rem auto;">🎯</div>
-        <h3 style="color: #1a1208; font-size: 1.2rem; font-weight: 600; margin-bottom: 0.75rem;">3. Ajustar al centro</h3>
-        <p style="line-height: 1.6; font-size: 0.95rem;">Si la aguja queda a la izquierda, hay que tensar la cuerda (está grave). Si queda a la derecha, hay que aflojarla (está aguda).</p>
+      <div class="afin-step">
+        <div class="afin-step-icon">🎯</div>
+        <h3>3. Ajustar al centro</h3>
+        <p>Si la aguja queda a la izquierda, hay que tensar la cuerda (está grave). Si queda a la derecha, hay que aflojarla (está aguda).</p>
       </div>
     </div>
   </div>
@@ -451,34 +470,34 @@
 <!-- GUÍA PARA GUITARRA DEBAJO DE LAS INSTRUCCIONES -->
 <section class="tm-seccion">
   <div class="tm-seccion-inner">
-    <div style="background: #faf7f2; border-radius: 1rem; border: 1px solid #e8e0cc; padding: 3rem;">
+    <div class="afin-guitar-box">
       <h2 class="tm-seccion-titulo">Notas para <span>Guitarra Estándar</span></h2>
-      <p style="text-align: center; margin-bottom: 2.5rem; font-size: 1.1rem; max-width: 600px; margin-left: auto; margin-right: auto;">Si afinas a 440 Hz (la referencia habitual), el objetivo es acercarse a estas frecuencias cuando toques cada cuerda al aire.</p>
+      <p style="text-align:center; max-width:600px; margin: 0 auto 2.5rem auto; font-size:1.1rem;">Si afinas a 440 Hz (la referencia habitual), el objetivo es acercarse a estas frecuencias cuando toques cada cuerda al aire.</p>
 
-      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;">
-        <div style="background: #fff; padding: 1.25rem 2rem; border-radius: 0.75rem; border-bottom: 2px solid #b5872a; min-width: 140px; text-align: center;">
-          <strong style="color: #1a1208; display: block; font-size: 1.25rem; margin-bottom: 0.25rem;">1ª – Mi <span style="font-size:0.8rem; opacity:0.7;">(Agudo)</span></strong>
-          <span style="font-family: monospace;">329.6 Hz</span>
+      <div class="afin-guitar-notes">
+        <div class="afin-guitar-note">
+          <strong>1ª – Mi <span class="afin-sub">(Agudo)</span></strong>
+          <span class="afin-hz">329.6 Hz</span>
         </div>
-        <div style="background: #fff; padding: 1.25rem 2rem; border-radius: 0.75rem; border-bottom: 2px solid #b5872a; min-width: 140px; text-align: center;">
-          <strong style="color: #1a1208; display: block; font-size: 1.25rem; margin-bottom: 0.25rem;">2ª – Si</strong>
-          <span style="font-family: monospace;">246.9 Hz</span>
+        <div class="afin-guitar-note">
+          <strong>2ª – Si</strong>
+          <span class="afin-hz">246.9 Hz</span>
         </div>
-        <div style="background: #fff; padding: 1.25rem 2rem; border-radius: 0.75rem; border-bottom: 2px solid #b5872a; min-width: 140px; text-align: center;">
-          <strong style="color: #1a1208; display: block; font-size: 1.25rem; margin-bottom: 0.25rem;">3ª – Sol</strong>
-          <span style="font-family: monospace;">196.0 Hz</span>
+        <div class="afin-guitar-note">
+          <strong>3ª – Sol</strong>
+          <span class="afin-hz">196.0 Hz</span>
         </div>
-        <div style="background: #fff; padding: 1.25rem 2rem; border-radius: 0.75rem; border-bottom: 2px solid #b5872a; min-width: 140px; text-align: center;">
-          <strong style="color: #1a1208; display: block; font-size: 1.25rem; margin-bottom: 0.25rem;">4ª – Re</strong>
-          <span style="font-family: monospace;">146.8 Hz</span>
+        <div class="afin-guitar-note">
+          <strong>4ª – Re</strong>
+          <span class="afin-hz">146.8 Hz</span>
         </div>
-        <div style="background: #fff; padding: 1.25rem 2rem; border-radius: 0.75rem; border-bottom: 2px solid #b5872a; min-width: 140px; text-align: center;">
-          <strong style="color: #1a1208; display: block; font-size: 1.25rem; margin-bottom: 0.25rem;">5ª – La</strong>
-          <span style="font-family: monospace;">110.0 Hz</span>
+        <div class="afin-guitar-note">
+          <strong>5ª – La</strong>
+          <span class="afin-hz">110.0 Hz</span>
         </div>
-        <div style="background: #fff; padding: 1.25rem 2rem; border-radius: 0.75rem; border-bottom: 2px solid #b5872a; min-width: 140px; text-align: center;">
-          <strong style="color: #1a1208; display: block; font-size: 1.25rem; margin-bottom: 0.25rem;">6ª – Mi <span style="font-size:0.8rem; opacity:0.7;">(Grave)</span></strong>
-          <span style="font-family: monospace;">82.4 Hz</span>
+        <div class="afin-guitar-note">
+          <strong>6ª – Mi <span class="afin-sub">(Grave)</span></strong>
+          <span class="afin-hz">82.4 Hz</span>
         </div>
       </div>
     </div>
@@ -495,7 +514,7 @@
     <div class="tm-seccion-cabecera">
       <h2 class="tm-seccion-titulo">Afinaciones alternativas de <span>guitarra</span></h2>
     </div>
-    <p style="text-align:center; max-width:680px; margin: 1rem auto 2rem auto; line-height:1.7;">El afinador detecta cualquier nota cromáticamente, por lo que funciona con todas estas afinaciones sin cambiar ninguna configuración.</p>
+    <p style="text-align:center; max-width:680px; margin: 1rem auto 2rem auto;">El afinador detecta cualquier nota cromáticamente, por lo que funciona con todas estas afinaciones sin cambiar ninguna configuración.</p>
     <div style="overflow-x:auto;margin:1.5rem 0">
       <table class="tm-table">
         <thead>
