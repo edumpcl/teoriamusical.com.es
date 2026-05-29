@@ -192,7 +192,7 @@
       <p>En cada pregunta se muestra una indicación de compás. Se identifican las características haciendo clic en las opciones y se pulsa <strong>Comprobar</strong> al responder las seis preguntas.</p>
 
       <!-- WIDGET -->
-      <div style="margin:32px 0;">
+      <div>
         <div id="tmcompas1"></div>
         <script>
           document.addEventListener('DOMContentLoaded', function () {
@@ -235,105 +235,105 @@
         .tm-ref-nota-tie { width:32px !important; height:8px !important; display:inline-block; flex-shrink:0; margin-top:22px; }
       </style>
       <div style="overflow-x:auto;margin:1.5rem 0;">
-        <table style="min-width:580px;border-collapse:collapse;font-size:.9rem;">
+        <table class="tm-table">
           <thead>
-            <tr style="background:#8b6914;color:#fff;">
-              <th style="padding:10px;text-align:left;border:1px solid #b5872a;">Compás</th>
-              <th style="padding:10px;text-align:center;border:1px solid #b5872a;">Tipo</th>
-              <th style="padding:10px;text-align:center;border:1px solid #b5872a;">Tiempos</th>
-              <th style="padding:10px;text-align:center;border:1px solid #b5872a;">Subdiv.</th>
-              <th style="padding:10px;text-align:center;border:1px solid #b5872a;">U. tiempo</th>
-              <th style="padding:10px;text-align:center;border:1px solid #b5872a;">U. subdiv.</th>
-              <th style="padding:10px;text-align:center;border:1px solid #b5872a;">U. compás</th>
+            <tr>
+              <th>Compás</th>
+              <th style="text-align:center">Tipo</th>
+              <th style="text-align:center">Tiempos</th>
+              <th style="text-align:center">Subdiv.</th>
+              <th style="text-align:center">U. tiempo</th>
+              <th style="text-align:center">U. subdiv.</th>
+              <th style="text-align:center">U. compás</th>
             </tr>
           </thead>
           <tbody>
-            <tr style="background:#faf7f2;">
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;font-weight:700;">2/4</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Simple</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">2</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Binaria</td>
+            <tr>
+              <td><strong>2/4</strong></td>
+              <td style="text-align:center">Simple</td>
+              <td style="text-align:center">2</td>
+              <td style="text-align:center">Binaria</td>
               <td class="tm-ref-nota" data-nota="n">♩</td>
               <td class="tm-ref-nota" data-nota="c">♪</td>
               <td class="tm-ref-nota" data-nota="b">𝅗𝅥</td>
             </tr>
             <tr>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;font-weight:700;">3/4</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Simple</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">3</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Binaria</td>
+              <td><strong>3/4</strong></td>
+              <td style="text-align:center">Simple</td>
+              <td style="text-align:center">3</td>
+              <td style="text-align:center">Binaria</td>
               <td class="tm-ref-nota" data-nota="n"></td>
               <td class="tm-ref-nota" data-nota="c"></td>
               <td class="tm-ref-nota" data-nota="bP"></td>
             </tr>
-            <tr style="background:#faf7f2;">
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;font-weight:700;">4/4</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Simple</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">4</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Binaria</td>
+            <tr>
+              <td><strong>4/4</strong></td>
+              <td style="text-align:center">Simple</td>
+              <td style="text-align:center">4</td>
+              <td style="text-align:center">Binaria</td>
               <td class="tm-ref-nota" data-nota="n"></td>
               <td class="tm-ref-nota" data-nota="c"></td>
               <td class="tm-ref-nota" data-nota="r"></td>
             </tr>
             <tr>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;font-weight:700;">2/2</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Simple</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">2</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Binaria</td>
+              <td><strong>2/2</strong></td>
+              <td style="text-align:center">Simple</td>
+              <td style="text-align:center">2</td>
+              <td style="text-align:center">Binaria</td>
               <td class="tm-ref-nota" data-nota="b"></td>
               <td class="tm-ref-nota" data-nota="n"></td>
               <td class="tm-ref-nota" data-nota="r"></td>
             </tr>
-            <tr style="background:#faf7f2;">
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;font-weight:700;">3/8</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Simple</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">3</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Binaria</td>
+            <tr>
+              <td><strong>3/8</strong></td>
+              <td style="text-align:center">Simple</td>
+              <td style="text-align:center">3</td>
+              <td style="text-align:center">Binaria</td>
               <td class="tm-ref-nota" data-nota="c"></td>
               <td class="tm-ref-nota" data-nota="sc"></td>
               <td class="tm-ref-nota" data-nota="nP"></td>
             </tr>
             <tr>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;font-weight:700;">6/8</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Compuesto</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">2</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Ternaria</td>
+              <td><strong>6/8</strong></td>
+              <td style="text-align:center">Compuesto</td>
+              <td style="text-align:center">2</td>
+              <td style="text-align:center">Ternaria</td>
               <td class="tm-ref-nota" data-nota="nP"></td>
               <td class="tm-ref-nota" data-nota="c"></td>
               <td class="tm-ref-nota" data-nota="bP"></td>
             </tr>
-            <tr style="background:#faf7f2;">
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;font-weight:700;">9/8</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Compuesto</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">3</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Ternaria</td>
+            <tr>
+              <td><strong>9/8</strong></td>
+              <td style="text-align:center">Compuesto</td>
+              <td style="text-align:center">3</td>
+              <td style="text-align:center">Ternaria</td>
               <td class="tm-ref-nota" data-nota="nP"></td>
               <td class="tm-ref-nota" data-nota="c"></td>
               <td class="tm-ref-nota" data-nota="bP+nP"></td>
             </tr>
             <tr>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;font-weight:700;">12/8</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Compuesto</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">4</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Ternaria</td>
+              <td><strong>12/8</strong></td>
+              <td style="text-align:center">Compuesto</td>
+              <td style="text-align:center">4</td>
+              <td style="text-align:center">Ternaria</td>
               <td class="tm-ref-nota" data-nota="nP"></td>
               <td class="tm-ref-nota" data-nota="c"></td>
               <td class="tm-ref-nota" data-nota="rP"></td>
             </tr>
-            <tr style="background:#faf7f2;">
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;font-weight:700;">6/4</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Compuesto</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">2</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Ternaria</td>
+            <tr>
+              <td><strong>6/4</strong></td>
+              <td style="text-align:center">Compuesto</td>
+              <td style="text-align:center">2</td>
+              <td style="text-align:center">Ternaria</td>
               <td class="tm-ref-nota" data-nota="bP"></td>
               <td class="tm-ref-nota" data-nota="n"></td>
               <td class="tm-ref-nota" data-nota="rP"></td>
             </tr>
             <tr>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;font-weight:700;">9/4</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Compuesto</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">3</td>
-              <td style="padding:9px 10px;border:1px solid #e8e0cc;text-align:center;">Ternaria</td>
+              <td><strong>9/4</strong></td>
+              <td style="text-align:center">Compuesto</td>
+              <td style="text-align:center">3</td>
+              <td style="text-align:center">Ternaria</td>
               <td class="tm-ref-nota" data-nota="bP"></td>
               <td class="tm-ref-nota" data-nota="n"></td>
               <td class="tm-ref-nota" data-nota="rP+bP"></td>
@@ -348,10 +348,10 @@
 
     <section class="tm-seccion">
 <div class="tm-seccion-inner">
-<div class="tm-seccion-cabecera" style="text-align: center; justify-content: center;">
+<div class="tm-seccion-cabecera">
 <h2 class="tm-seccion-titulo">Preguntas <span>Frecuentes</span></h2>
 </div>
-<div style="max-width:800px; margin:2rem auto 0 auto;">
+<div>
 <div class="tm-faq-list">
         <div class="tm-faq-item">
           <div class="tm-faq-q">¿Cuál es la diferencia entre un compás simple y un compuesto?</div>
