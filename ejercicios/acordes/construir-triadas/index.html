@@ -182,60 +182,52 @@
 <div class="tm-container tm-article-wrap">
   <article class="tm-article">
 
-<div style="font-family: 'Inter', system-ui, -apple-system, sans-serif; color: #333; line-height: 1.6; max-width: 900px; margin: 0 auto;">
+<h1>Construir tríadas en fundamental</h1>
 
-  <div style="margin-bottom: 40px; padding: 20px 0; border-bottom: 2px solid #8b6914;">
-    <div style="display: flex; align-items: center; gap: 20px;">
-      <img src="/assets/img/2026/04/bach_favicon.png" style="width: 50px; height: auto;" alt="Mascota Bach">
-      <h1 style="color: #8b6914; margin: 0; font-size: clamp(1.4rem, 5vw, 2.2rem); text-transform: uppercase; font-family: 'Arial Black', sans-serif; letter-spacing: 1px; flex: 1; min-width: 0;">CONSTRUIR TRÍADAS EN FUNDAMENTAL</h1>
-    </div>
-  </div>
+  <p>Se muestra la <strong>nota del bajo</strong> (fundamental) y el <strong>tipo de acorde</strong>. La tarea es dibujar en el pentagrama la <strong>3ª y la 5ª</strong> que corresponden. Se pulsa en el pentagrama para colocar cada nota; los botones de alteración se usan antes de colocarla.</p>
 
-  <p style="font-size: 1.1rem;">Se muestra la <strong>nota del bajo</strong> (fundamental) y el <strong>tipo de acorde</strong>. La tarea es dibujar en el pentagrama la <strong>3ª y la 5ª</strong> que corresponden. Se pulsa en el pentagrama para colocar cada nota; los botones de alteración se usan antes de colocarla.</p>
+  <h2>Tipos de acorde</h2>
 
-  <h2 style="color: #8b6914; border-left: 5px solid #2a7a6e; padding-left: 15px; margin-top: 40px;">Tipos de acorde</h2>
-
-  <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; border: 1px solid #e8e0cc;">
-    <thead style="background: #8b6914; color: #ffffff;">
+  <table class="tm-table">
+    <thead>
       <tr>
-        <th style="padding: .8rem 1rem; text-align: left;">Etiqueta</th>
-        <th style="padding: .8rem 1rem; text-align: left;">Nombre</th>
-        <th style="padding: .8rem 1rem; text-align: center;">3ª</th>
-        <th style="padding: .8rem 1rem; text-align: center;">5ª</th>
+        <th>Etiqueta</th>
+        <th>Nombre</th>
+        <th>3ª</th>
+        <th>5ª</th>
       </tr>
     </thead>
     <tbody>
-      <tr style="border-bottom: 1px solid #e8e0cc; background: #faf8f0;">
-        <td style="padding: .8rem 1rem; font-weight: 700; font-size: 1.1rem;">PM</td>
-        <td style="padding: .8rem 1rem;">Perfecta Mayor</td>
-        <td style="padding: .8rem 1rem; text-align: center;">3ª Mayor (4 st)</td>
-        <td style="padding: .8rem 1rem; text-align: center;">5ª Justa (7 st)</td>
-      </tr>
-      <tr style="border-bottom: 1px solid #e8e0cc;">
-        <td style="padding: .8rem 1rem; font-weight: 700; font-size: 1.1rem;">Pm</td>
-        <td style="padding: .8rem 1rem;">Perfecta menor</td>
-        <td style="padding: .8rem 1rem; text-align: center;">3ª menor (3 st)</td>
-        <td style="padding: .8rem 1rem; text-align: center;">5ª Justa (7 st)</td>
-      </tr>
-      <tr style="border-bottom: 1px solid #e8e0cc; background: #faf8f0;">
-        <td style="padding: .8rem 1rem; font-weight: 700; font-size: 1.1rem;">5dis</td>
-        <td style="padding: .8rem 1rem;">5ª Disminuida</td>
-        <td style="padding: .8rem 1rem; text-align: center;">3ª menor (3 st)</td>
-        <td style="padding: .8rem 1rem; text-align: center;">5ª Dis. (6 st)</td>
+      <tr>
+        <td>PM</td>
+        <td>Perfecta Mayor</td>
+        <td>3ª Mayor (4 st)</td>
+        <td>5ª Justa (7 st)</td>
       </tr>
       <tr>
-        <td style="padding: .8rem 1rem; font-weight: 700; font-size: 1.1rem;">5Aum</td>
-        <td style="padding: .8rem 1rem;">5ª Aumentada</td>
-        <td style="padding: .8rem 1rem; text-align: center;">3ª Mayor (4 st)</td>
-        <td style="padding: .8rem 1rem; text-align: center;">5ª Aum. (8 st)</td>
+        <td>Pm</td>
+        <td>Perfecta menor</td>
+        <td>3ª menor (3 st)</td>
+        <td>5ª Justa (7 st)</td>
+      </tr>
+      <tr>
+        <td>5dis</td>
+        <td>5ª Disminuida</td>
+        <td>3ª menor (3 st)</td>
+        <td>5ª Dis. (6 st)</td>
+      </tr>
+      <tr>
+        <td>5Aum</td>
+        <td>5ª Aumentada</td>
+        <td>3ª Mayor (4 st)</td>
+        <td>5ª Aum. (8 st)</td>
       </tr>
     </tbody>
   </table>
 
-  <h2 style="color: #8b6914; border-left: 5px solid #2a7a6e; padding-left: 15px; margin-top: 40px;">Ejercicio</h2>
+  <h2>Ejercicio</h2>
 
-  <div style="margin: 30px 0; padding: 20px; background: white; border: 1px solid #e8e0cc; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-    <div id="tmac_ct"></div>
+      <div id="tmac_ct"></div>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         tmAcEngine("tmac_ct", { test: 'construir' });
@@ -243,14 +235,7 @@
     </script>
   </div>
 
-  <div style="text-align: center; margin-top: 50px; padding: 30px; background: linear-gradient(135deg, #fdfcf9 0%, #f5f2ea 100%); border-radius: 15px; border: 1px solid #e8e0cc;">
-    <h3 style="color: #8b6914; margin-top: 0;">Identificación de tríadas</h3>
-    <p style="margin-bottom: 25px;">El objetivo es reconocer el tipo de acorde a partir de las tres notas escritas en el pentagrama.</p>
-    <a href="/ejercicios/acordes/triadas-en-fundamental/" style="display: inline-block; padding: 14px 30px; background: #2a7a6e; color: white; text-decoration: none; border-radius: 6px; font-weight: 700; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">IDENTIFICAR TRÍADAS</a>
-  </div>
-
-</div>
-
+  <p><a href="/ejercicios/acordes/triadas-en-fundamental/">IDENTIFICAR TRÍADAS</a></p>
 
 <p>Para consolidar los cambios de acorde conviene practicar al ritmo del <a href="/herramientas/metronomo/">metrónomo</a>, empezando lento (50-60 BPM) y subiendo gradualmente. El <a href="/herramientas/afinador/">afinador online</a> permite verificar que cada nota del acorde suena afinada.</p>
   

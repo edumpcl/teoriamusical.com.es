@@ -184,9 +184,7 @@
 <div class="tm-container tm-article-wrap">
   <article class="tm-article">
 
-<div style="font-family: 'Inter', system-ui, -apple-system, sans-serif; color: #333; line-height: 1.6; max-width: 900px; margin: 0 auto;">
-
-  <div style="margin-bottom: 40px; padding: 20px 0; border-bottom: 2px solid #8b6914;">
+<div style="margin-bottom: 40px; padding: 20px 0; border-bottom: 2px solid #8b6914;">
     <div style="display: flex; align-items: center; gap: 20px;">
       <img src="/assets/img/2026/04/bach_favicon.png" style="width: 50px; height: auto;" alt="Mascota Bach">
       <div>
@@ -196,55 +194,50 @@
     </div>
   </div>
 
-  <p style="font-size: 1.1rem;">Este es el <strong>reto final</strong>: los acordes aparecerán en cualquiera de las tres posiciones de forma aleatoria. El objetivo es identificar el tipo de tríada sin saber de antemano si está en posición fundamental, en primera inversión o en segunda. Cuando se falle, el feedback indicará también qué posición era.</p>
+  <p>Este es el <strong>reto final</strong>: los acordes aparecerán en cualquiera de las tres posiciones de forma aleatoria. El objetivo es identificar el tipo de tríada sin saber de antemano si está en posición fundamental, en primera inversión o en segunda. Cuando se falle, el feedback indicará también qué posición era.</p>
 
-  <h2 style="color: #8b6914; border-left: 5px solid #2a7a6e; padding-left: 15px; margin-top: 40px;">1. Resumen de las tres posiciones</h2>
+  <h2>1. Resumen de las tres posiciones</h2>
 
-  <table style="width:100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.92rem; border: 1px solid #e8e0cc;">
-    <thead style="background: #8b6914; color: #ffffff;">
+  <table class="tm-table">
+    <thead>
       <tr>
-        <th style="padding: .9rem; text-align: left;">Posición</th>
-        <th style="padding: .9rem; text-align: left;">Nota en el bajo</th>
-        <th style="padding: .9rem; text-align: left;">Nota en el medio</th>
-        <th style="padding: .9rem; text-align: left;">Nota en el agudo</th>
+        <th>Posición</th>
+        <th>Nota en el bajo</th>
+        <th>Nota en el medio</th>
+        <th>Nota en el agudo</th>
       </tr>
     </thead>
     <tbody>
-      <tr style="border-bottom: 1px solid #e8e0cc; background: #faf8f0;">
-        <td style="padding: .9rem; font-weight: 600;">Fundamental</td>
-        <td style="padding: .9rem;">Fundamental (1)</td>
-        <td style="padding: .9rem;">Tercera (3)</td>
-        <td style="padding: .9rem;">Quinta (5)</td>
+      <tr>
+        <td>Fundamental</td>
+        <td>Fundamental (1)</td>
+        <td>Tercera (3)</td>
+        <td>Quinta (5)</td>
       </tr>
-      <tr style="border-bottom: 1px solid #e8e0cc;">
-        <td style="padding: .9rem; font-weight: 600;">1ª Inversión</td>
-        <td style="padding: .9rem;">Tercera (3)</td>
-        <td style="padding: .9rem;">Quinta (5)</td>
-        <td style="padding: .9rem;">Fundamental (1) ↑</td>
+      <tr>
+        <td>1ª Inversión</td>
+        <td>Tercera (3)</td>
+        <td>Quinta (5)</td>
+        <td>Fundamental (1) ↑</td>
       </tr>
-      <tr style="background: #faf8f0;">
-        <td style="padding: .9rem; font-weight: 600;">2ª Inversión</td>
-        <td style="padding: .9rem;">Quinta (5)</td>
-        <td style="padding: .9rem;">Fundamental (1)</td>
-        <td style="padding: .9rem;">Tercera (3)</td>
+      <tr>
+        <td>2ª Inversión</td>
+        <td>Quinta (5)</td>
+        <td>Fundamental (1)</td>
+        <td>Tercera (3)</td>
       </tr>
     </tbody>
   </table>
 
-  <h2 style="color: #8b6914; border-left: 5px solid #2a7a6e; padding-left: 15px; margin-top: 40px;">2. Estrategia de identificación rápida</h2>
+  <h2>2. Estrategia de identificación rápida</h2>
 
-  <div style="background: #fdfcf9; border: 1px solid #e8e0cc; padding: 20px; margin: 25px 0; border-radius: 8px;">
-    <p style="margin: 0; font-weight: 500;">
-      <strong>El método universal:</strong><br><br>
-      Sea cual sea la posición, siempre es posible <strong>reordenar mentalmente las tres notas</strong> apilándolas por terceras ascendentes. Una vez en posición fundamental, se aplica el análisis estándar: calidad de la 3ª (Mayor = 4 st, menor = 3 st) y calidad de la 5ª (Justa = 7 st, Disminuida = 6 st, Aumentada = 8 st).
-    </p>
-  </div>
+  <blockquote><strong>El método universal:</strong><br><br>
+      Sea cual sea la posición, siempre es posible <strong>reordenar mentalmente las tres notas</strong> apilándolas por terceras ascendentes. Una vez en posición fundamental, se aplica el análisis estándar: calidad de la 3ª (Mayor = 4 st, menor = 3 st) y calidad de la 5ª (Justa = 7 st, Disminuida = 6 st, Aumentada = 8 st).</blockquote>
 
-  <h2 style="color: #8b6914; border-left: 5px solid #2a7a6e; padding-left: 15px; margin-top: 40px;">3. Reto final interactivo</h2>
+  <h2>3. Reto final interactivo</h2>
   <p>Los acordes aparecen en <strong>posición aleatoria</strong>. Si fallas, el feedback indica también en qué posición estaba el acorde.</p>
 
-  <div style="margin: 40px 0; padding: 20px; background: white; border: 2px solid #b8860b; border-radius: 12px; box-shadow: 0 4px 20px rgba(184,134,11,0.1);">
-    <div id="tmac4"></div>
+      <div id="tmac4"></div>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         tmAcEngine("tmac4", { inversion: 'todas' });
@@ -252,17 +245,8 @@
     </script>
   </div>
 
-  <div style="text-align: center; margin-top: 50px; padding: 30px; background: linear-gradient(135deg, #fdfcf9 0%, #f5f2ea 100%); border-radius: 15px; border: 1px solid #e8e0cc;">
-    <h3 style="color: #8b6914; margin-top: 0;">Volver a practicar por posición</h3>
-    <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 20px;">
-      <a href="/ejercicios/acordes/triadas-en-fundamental/" style="padding: 12px 20px; background: #2a7a6e; color: white; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 0.9rem;">Fundamental</a>
-      <a href="/ejercicios/acordes/triadas-en-primera-inversion/" style="padding: 12px 20px; background: #2a7a6e; color: white; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 0.9rem;">1ª Inversión</a>
-      <a href="/ejercicios/acordes/triadas-en-segunda-inversion/" style="padding: 12px 20px; background: #2a7a6e; color: white; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 0.9rem;">2ª Inversión</a>
-    </div>
+  <p><a href="/ejercicios/acordes/triadas-en-fundamental/">Fundamental</a></p>
   </div>
-
-</div>
-
 
 <p>Para consolidar los cambios de acorde conviene practicar al ritmo del <a href="/herramientas/metronomo/">metrónomo</a>, empezando lento (50-60 BPM) y subiendo gradualmente. El <a href="/herramientas/afinador/">afinador online</a> permite verificar que cada nota del acorde suena afinada.</p>
   
