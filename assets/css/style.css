@@ -858,6 +858,16 @@ figcaption, .wp-element-caption {
   background: #fdf5e8;
 }
 
+/* Scrollable table wrapper */
+.tm-table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+
+/* CTA row / button links */
+.tm-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 1.5rem; }
+.tm-cta { color: #fff; padding: 12px 22px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-block; }
+.tm-cta--teal { background: #2a7a6e; }
+.tm-cta--gold { background: #8b6914; }
+.tm-cta--gray { background: #555; }
+
 /* FAQ list */
 .tm-faq-list { display:flex; flex-direction:column; gap:12px; margin:24px 0; }
 .tm-faq-item {
