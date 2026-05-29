@@ -861,12 +861,18 @@ figcaption, .wp-element-caption {
 /* Scrollable table wrapper */
 .tm-table-wrap { overflow-x: auto; margin: 1.5rem 0; }
 
+/* Hero / landing section utilities */
+.tm-hero-btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.75rem; }
+.tm-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.tm-quiz-preview-inner { padding: 1.5rem; text-align: center; background: var(--bg-alt); border-radius: 8px; color: var(--text); }
+.tm-quiz-preview-inner p { margin: 0; font-size: 0.95rem; }
+
 /* CTA row / button links */
 .tm-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 1.5rem; }
-.tm-cta { color: #fff; padding: 12px 22px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-block; }
-.tm-cta--teal { background: #2a7a6e; }
-.tm-cta--gold { background: #8b6914; }
-.tm-cta--gray { background: #555; }
+.tm-cta-btn { color: #fff; padding: 12px 22px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-block; }
+.tm-cta-btn--teal { background: #2a7a6e; }
+.tm-cta-btn--gold { background: #8b6914; }
+.tm-cta-btn--gray { background: #555; }
 
 /* FAQ list */
 .tm-faq-list { display:flex; flex-direction:column; gap:12px; margin:24px 0; }
