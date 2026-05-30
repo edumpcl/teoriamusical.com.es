@@ -192,21 +192,19 @@
 <p>La medición numérica es la operación fundamental de toda la gramática musical.</p>
   <h2>1. El Algoritmo de Conteo</h2>
   <p>Para determinar el número de un intervalo, contamos las posiciones (líneas y espacios) que existen entre ambas notas en el pentagrama, <strong>incluyendo siempre las dos notas implicadas</strong>.</p>
-  <blockquote><strong>Ejemplo Práctico: De FA a SI</strong>
-    <ul>
-      <li>FA (1), SOL (2), LA (3), SI (4)</li>
-      <li>Resultado: Es un intervalo de <strong>CUARTA</strong>.</li>
-    </ul></blockquote>
+  <p><strong>Ejemplo: de FA a SI</strong></p>
+  <ul>
+    <li>FA (1), SOL (2), LA (3), SI (4)</li>
+    <li>Resultado: intervalo de <strong>cuarta</strong>.</li>
+  </ul>
   <h2>Test de Medición Numérica</h2>
     
-<div id="tmnum">
+<div id="tmnum"></div>
 <script>
   document.addEventListener("DOMContentLoaded", function(){
     tmIvEngine("tmnum", {test:"numero"});
   });
 </script>
-
-  </div>
 
   <h2>2. Construir intervalos por número</h2>
   <p>Se muestra una nota en el pentagrama junto con un número y una dirección. Hay que indicar la posición correcta de la segunda nota contando los pasos diatónicos.</p>
@@ -216,9 +214,8 @@
         tmIvEngine("tmconstruir_num", {test:"construir_numero"});
       });
     </script>
-  </div>
 
-  <p><a href="/ejercicios/ejercicios-de-intervalos-musicales/armonicos-y-melodicos/">Siguiente lección: Armónicos y melódicos</a></p>
+  <p><a href="/ejercicios/ejercicios-de-intervalos-musicales/armonicos-y-melodicos/">Armónicos y melódicos →</a></p>
 
 <p>Para reforzar el reconocimiento auditivo, los <a href="/herramientas/afinador/">tonos de referencia del afinador</a> permiten comparar el sonido de cada intervalo con el tono puro. El <a href="/herramientas/metronomo/">metrónomo online</a> ayuda a trabajar la velocidad de lectura a vista.</p>
   
