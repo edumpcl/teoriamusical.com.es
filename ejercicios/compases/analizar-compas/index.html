@@ -67,6 +67,10 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"HowTo","name":"Cómo practicar el análisis de compases en el ejercicio interactivo","description":"Proceso para identificar las características de un compás: tipo (simple o compuesto), tiempos, unidades de tiempo, subdivisión y compás.","step":[{"@type":"HowToStep","name":"Leer el numerador y denominador","text":"El numerador indica el número de pulsos o agrupaciones. El denominador indica la figura de referencia (4=negra, 2=blanca, 8=corchea)."},{"@type":"HowToStep","name":"Determinar si es simple o compuesto","text":"Si el numerador es 2, 3 o 4, el compás es simple (subdivisión binaria). Si es 6, 9 o 12, es compuesto (subdivisión ternaria)."},{"@type":"HowToStep","name":"Calcular el número de tiempos","text":"En simples, el numerador = número de tiempos. En compuestos, divide el numerador entre 3: 6/8 tiene 2 tiempos, 9/8 tiene 3, 12/8 tiene 4."},{"@type":"HowToStep","name":"Determinar las unidades","text":"La unidad de tiempo es la figura del denominador (en simples) o esa figura con puntillo (en compuestos). La unidad de subdivisión es la mitad de la unidad de tiempo (simples) o la figura del denominador (compuestos). La unidad de compás es la unidad de tiempo multiplicada por el número de tiempos."}]}
 </script>
+<style>
+#tm-tabla-compases th:not(:first-child),
+#tm-tabla-compases td:not(:first-child) { text-align: center; }
+</style>
 </head>
 <body class="tm-page">
 <a class="tm-skip" href="#main">Saltar al contenido</a>
@@ -235,105 +239,105 @@
         .tm-ref-nota-tie { width:32px !important; height:8px !important; display:inline-block; flex-shrink:0; margin-top:22px; }
       </style>
       <div class="tm-table-wrap">
-        <table class="tm-table">
+        <table class="tm-table" id="tm-tabla-compases">
           <thead>
             <tr>
               <th>Compás</th>
-              <th style="text-align:center">Tipo</th>
-              <th style="text-align:center">Tiempos</th>
-              <th style="text-align:center">Subdiv.</th>
-              <th style="text-align:center">U. tiempo</th>
-              <th style="text-align:center">U. subdiv.</th>
-              <th style="text-align:center">U. compás</th>
+              <th>Tipo</th>
+              <th>Tiempos</th>
+              <th>Subdiv.</th>
+              <th>U. tiempo</th>
+              <th>U. subdiv.</th>
+              <th>U. compás</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><strong>2/4</strong></td>
-              <td style="text-align:center">Simple</td>
-              <td style="text-align:center">2</td>
-              <td style="text-align:center">Binaria</td>
+              <td>Simple</td>
+              <td>2</td>
+              <td>Binaria</td>
               <td class="tm-ref-nota" data-nota="n">♩</td>
               <td class="tm-ref-nota" data-nota="c">♪</td>
               <td class="tm-ref-nota" data-nota="b">𝅗𝅥</td>
             </tr>
             <tr>
               <td><strong>3/4</strong></td>
-              <td style="text-align:center">Simple</td>
-              <td style="text-align:center">3</td>
-              <td style="text-align:center">Binaria</td>
+              <td>Simple</td>
+              <td>3</td>
+              <td>Binaria</td>
               <td class="tm-ref-nota" data-nota="n"></td>
               <td class="tm-ref-nota" data-nota="c"></td>
               <td class="tm-ref-nota" data-nota="bP"></td>
             </tr>
             <tr>
               <td><strong>4/4</strong></td>
-              <td style="text-align:center">Simple</td>
-              <td style="text-align:center">4</td>
-              <td style="text-align:center">Binaria</td>
+              <td>Simple</td>
+              <td>4</td>
+              <td>Binaria</td>
               <td class="tm-ref-nota" data-nota="n"></td>
               <td class="tm-ref-nota" data-nota="c"></td>
               <td class="tm-ref-nota" data-nota="r"></td>
             </tr>
             <tr>
               <td><strong>2/2</strong></td>
-              <td style="text-align:center">Simple</td>
-              <td style="text-align:center">2</td>
-              <td style="text-align:center">Binaria</td>
+              <td>Simple</td>
+              <td>2</td>
+              <td>Binaria</td>
               <td class="tm-ref-nota" data-nota="b"></td>
               <td class="tm-ref-nota" data-nota="n"></td>
               <td class="tm-ref-nota" data-nota="r"></td>
             </tr>
             <tr>
               <td><strong>3/8</strong></td>
-              <td style="text-align:center">Simple</td>
-              <td style="text-align:center">3</td>
-              <td style="text-align:center">Binaria</td>
+              <td>Simple</td>
+              <td>3</td>
+              <td>Binaria</td>
               <td class="tm-ref-nota" data-nota="c"></td>
               <td class="tm-ref-nota" data-nota="sc"></td>
               <td class="tm-ref-nota" data-nota="nP"></td>
             </tr>
             <tr>
               <td><strong>6/8</strong></td>
-              <td style="text-align:center">Compuesto</td>
-              <td style="text-align:center">2</td>
-              <td style="text-align:center">Ternaria</td>
+              <td>Compuesto</td>
+              <td>2</td>
+              <td>Ternaria</td>
               <td class="tm-ref-nota" data-nota="nP"></td>
               <td class="tm-ref-nota" data-nota="c"></td>
               <td class="tm-ref-nota" data-nota="bP"></td>
             </tr>
             <tr>
               <td><strong>9/8</strong></td>
-              <td style="text-align:center">Compuesto</td>
-              <td style="text-align:center">3</td>
-              <td style="text-align:center">Ternaria</td>
+              <td>Compuesto</td>
+              <td>3</td>
+              <td>Ternaria</td>
               <td class="tm-ref-nota" data-nota="nP"></td>
               <td class="tm-ref-nota" data-nota="c"></td>
               <td class="tm-ref-nota" data-nota="bP+nP"></td>
             </tr>
             <tr>
               <td><strong>12/8</strong></td>
-              <td style="text-align:center">Compuesto</td>
-              <td style="text-align:center">4</td>
-              <td style="text-align:center">Ternaria</td>
+              <td>Compuesto</td>
+              <td>4</td>
+              <td>Ternaria</td>
               <td class="tm-ref-nota" data-nota="nP"></td>
               <td class="tm-ref-nota" data-nota="c"></td>
               <td class="tm-ref-nota" data-nota="rP"></td>
             </tr>
             <tr>
               <td><strong>6/4</strong></td>
-              <td style="text-align:center">Compuesto</td>
-              <td style="text-align:center">2</td>
-              <td style="text-align:center">Ternaria</td>
+              <td>Compuesto</td>
+              <td>2</td>
+              <td>Ternaria</td>
               <td class="tm-ref-nota" data-nota="bP"></td>
               <td class="tm-ref-nota" data-nota="n"></td>
               <td class="tm-ref-nota" data-nota="rP"></td>
             </tr>
             <tr>
               <td><strong>9/4</strong></td>
-              <td style="text-align:center">Compuesto</td>
-              <td style="text-align:center">3</td>
-              <td style="text-align:center">Ternaria</td>
+              <td>Compuesto</td>
+              <td>3</td>
+              <td>Ternaria</td>
               <td class="tm-ref-nota" data-nota="bP"></td>
               <td class="tm-ref-nota" data-nota="n"></td>
               <td class="tm-ref-nota" data-nota="rP+bP"></td>
