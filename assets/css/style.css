@@ -223,6 +223,7 @@ figcaption { font-size: .9em; color: var(--text-muted); margin-top: .4em; text-a
   border-bottom: 1px solid var(--border);
 }
 .tm-page-header h1 { margin: 0; }
+.tm-page-header-sub { margin: 0.5rem 0 0; color: var(--text-muted); font-size: 1rem; font-weight: 400; }
 
 /* ---------- Main & Article ---------- */
 .tm-main { min-height: 60vh; }
