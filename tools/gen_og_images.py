@@ -7,6 +7,7 @@ import os
 
 ROOT = os.path.join(os.path.dirname(__file__), '..')
 OUT  = os.path.join(ROOT, 'assets', 'img')
+BACH = os.path.join(OUT, '2026', '04', 'bach_favicon.png')
 
 W, H = 1200, 630
 
@@ -95,10 +96,21 @@ def make_og(filename, tag, title, subtitle, desc, badges):
             bx = 50
             by += bh + 10
 
-    # --- Branding ---
+    # --- Branding (texto) ---
     brand = 'teoriamusical.com.es'
     bw    = draw.textlength(brand, font=F_BRAND)
     draw.text((W - bw - 20, H - 36), brand, font=F_BRAND, fill=CREAM2)
+
+    # --- Favicon de Bach (esquina inferior derecha, sobre el texto) ---
+    try:
+        bach = Image.open(BACH).convert('RGBA')
+        bsize = 60
+        bach = bach.resize((bsize, bsize), Image.LANCZOS)
+        bx = W - bsize - 30
+        by = H - 36 - bsize - 8
+        img.paste(bach, (bx, by), bach)
+    except Exception as e:
+        print(f'  (aviso: no se pudo pegar el favicon de Bach: {e})')
 
     # Guardar
     out_path = os.path.join(OUT, filename)
@@ -196,6 +208,24 @@ make_og(
     subtitle = 'Diccionario · Ejercicios · Metrónomo · Afinador',
     desc     = 'Música desde sus fundamentos: gratis y sin instalación',
     badges   = ['Diccionario', 'Ejercicios', 'Metrónomo', 'Afinador'],
+)
+
+make_og(
+    'og-sincopa.png',
+    tag      = 'DICCIONARIO MUSICAL',
+    title    = 'Síncopa Musical',
+    subtitle = 'Desplazamiento del acento al tiempo débil',
+    desc     = 'Tipos de síncopa, ejemplos en pentagrama y diferencia con el contratiempo',
+    badges   = ['De compás', 'De tiempo', 'De parte', 'Jazz', 'Reggae', 'Bossa Nova'],
+)
+
+make_og(
+    'og-contratiempo.png',
+    tag      = 'DICCIONARIO MUSICAL',
+    title    = 'Nota a Contratiempo',
+    subtitle = 'El tiempo fuerte en silencio, la nota en el débil',
+    desc     = 'Tipos, ejemplos en pentagrama y diferencia con la síncopa',
+    badges   = ['Reggae', 'Ska', 'Bossa Nova', 'Flamenco', 'Jazz', 'Tango'],
 )
 
 print('Listo.')
