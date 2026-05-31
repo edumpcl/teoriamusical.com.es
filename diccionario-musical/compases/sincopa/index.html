@@ -437,10 +437,10 @@ document.addEventListener('DOMContentLoaded', function() {
     stave.addClef('treble').addTimeSignature('4/4');
     stave.setContext(ctx).draw();
 
-    var n1 = new VF.StaveNote({clef:'treble', keys:['c/5'], duration:'q'});
-    var n2 = new VF.StaveNote({clef:'treble', keys:['d/5'], duration:'q'});
-    var n3 = new VF.StaveNote({clef:'treble', keys:['d/5'], duration:'q'});
-    var n4 = new VF.StaveNote({clef:'treble', keys:['e/5'], duration:'q'});
+    var n1 = new VF.StaveNote({clef:'treble', keys:['c/5'], duration:'q', stem_direction:-1});
+    var n2 = new VF.StaveNote({clef:'treble', keys:['d/5'], duration:'q', stem_direction:-1});
+    var n3 = new VF.StaveNote({clef:'treble', keys:['d/5'], duration:'q', stem_direction:-1});
+    var n4 = new VF.StaveNote({clef:'treble', keys:['e/5'], duration:'q', stem_direction:-1});
 
     var notes = [n1, n2, n3, n4];
     VF.Formatter.FormatAndDraw(ctx, stave, notes);
@@ -464,11 +464,11 @@ document.addEventListener('DOMContentLoaded', function() {
     stave.addClef('treble').addTimeSignature('4/4');
     stave.setContext(ctx).draw();
 
-    var n1 = new VF.StaveNote({clef:'treble', keys:['c/5'], duration:'q'});
-    var n2 = new VF.StaveNote({clef:'treble', keys:['d/5'], duration:'8'});
-    var n3 = new VF.StaveNote({clef:'treble', keys:['e/5'], duration:'8'});
-    var n4 = new VF.StaveNote({clef:'treble', keys:['e/5'], duration:'q'});
-    var n5 = new VF.StaveNote({clef:'treble', keys:['f/5'], duration:'q'});
+    var n1 = new VF.StaveNote({clef:'treble', keys:['c/5'], duration:'q', stem_direction:-1});
+    var n2 = new VF.StaveNote({clef:'treble', keys:['d/5'], duration:'8',  stem_direction:-1});
+    var n3 = new VF.StaveNote({clef:'treble', keys:['e/5'], duration:'8',  stem_direction:-1});
+    var n4 = new VF.StaveNote({clef:'treble', keys:['e/5'], duration:'q', stem_direction:-1});
+    var n5 = new VF.StaveNote({clef:'treble', keys:['f/5'], duration:'q', stem_direction:-1});
 
     VF.Beam.generateBeams([n2, n3]);
     var notes = [n1, n2, n3, n4, n5];
@@ -496,14 +496,14 @@ document.addEventListener('DOMContentLoaded', function() {
     var stave2 = new VF.Stave(260, 30, 270);
     stave2.setContext(ctx).draw();
 
-    var na1 = new VF.StaveNote({clef:'treble', keys:['c/5'], duration:'q'});
-    var na2 = new VF.StaveNote({clef:'treble', keys:['d/5'], duration:'q'});
-    var na3 = new VF.StaveNote({clef:'treble', keys:['e/5'], duration:'q'});
-    var na4 = new VF.StaveNote({clef:'treble', keys:['f/5'], duration:'q'});
+    var na1 = new VF.StaveNote({clef:'treble', keys:['c/5'], duration:'q', stem_direction:-1});
+    var na2 = new VF.StaveNote({clef:'treble', keys:['d/5'], duration:'q', stem_direction:-1});
+    var na3 = new VF.StaveNote({clef:'treble', keys:['e/5'], duration:'q', stem_direction:-1});
+    var na4 = new VF.StaveNote({clef:'treble', keys:['f/5'], duration:'q', stem_direction:-1});
 
-    var nb1 = new VF.StaveNote({clef:'treble', keys:['f/5'], duration:'h'});
-    var nb2 = new VF.StaveNote({clef:'treble', keys:['e/5'], duration:'q'});
-    var nb3 = new VF.StaveNote({clef:'treble', keys:['d/5'], duration:'q'});
+    var nb1 = new VF.StaveNote({clef:'treble', keys:['f/5'], duration:'h', stem_direction:-1});
+    var nb2 = new VF.StaveNote({clef:'treble', keys:['e/5'], duration:'q', stem_direction:-1});
+    var nb3 = new VF.StaveNote({clef:'treble', keys:['d/5'], duration:'q', stem_direction:-1});
 
     VF.Formatter.FormatAndDraw(ctx, stave1, [na1, na2, na3, na4]);
     VF.Formatter.FormatAndDraw(ctx, stave2, [nb1, nb2, nb3]);

@@ -410,13 +410,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var notes = [
       new VF.StaveNote({clef:'treble', keys:['b/4'], duration:'8r'}),
-      new VF.StaveNote({clef:'treble', keys:['c/5'], duration:'8'}),
+      new VF.StaveNote({clef:'treble', keys:['c/5'], duration:'8', stem_direction:-1}),
       new VF.StaveNote({clef:'treble', keys:['b/4'], duration:'8r'}),
-      new VF.StaveNote({clef:'treble', keys:['d/5'], duration:'8'}),
+      new VF.StaveNote({clef:'treble', keys:['d/5'], duration:'8', stem_direction:-1}),
       new VF.StaveNote({clef:'treble', keys:['b/4'], duration:'8r'}),
-      new VF.StaveNote({clef:'treble', keys:['e/5'], duration:'8'}),
+      new VF.StaveNote({clef:'treble', keys:['e/5'], duration:'8', stem_direction:-1}),
       new VF.StaveNote({clef:'treble', keys:['b/4'], duration:'8r'}),
-      new VF.StaveNote({clef:'treble', keys:['f/5'], duration:'8'})
+      new VF.StaveNote({clef:'treble', keys:['f/5'], duration:'8', stem_direction:-1})
     ];
     VF.Formatter.FormatAndDraw(ctx, stave, notes);
   })();
@@ -435,11 +435,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var notes = [
       new VF.StaveNote({clef:'treble', keys:['b/4'], duration:'8r'}),
-      new VF.StaveNote({clef:'treble', keys:['c/5'], duration:'q'}),
+      new VF.StaveNote({clef:'treble', keys:['c/5'], duration:'q', stem_direction:-1}),
       new VF.StaveNote({clef:'treble', keys:['b/4'], duration:'8r'}),
-      new VF.StaveNote({clef:'treble', keys:['c/5'], duration:'q'}),
+      new VF.StaveNote({clef:'treble', keys:['c/5'], duration:'q', stem_direction:-1}),
       new VF.StaveNote({clef:'treble', keys:['b/4'], duration:'8r'}),
-      new VF.StaveNote({clef:'treble', keys:['c/5'], duration:'q'}),
+      new VF.StaveNote({clef:'treble', keys:['c/5'], duration:'q', stem_direction:-1}),
       new VF.StaveNote({clef:'treble', keys:['b/4'], duration:'16r'}),
     ];
     VF.Formatter.FormatAndDraw(ctx, stave, notes);
@@ -459,8 +459,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var notes = [
       new VF.StaveNote({clef:'treble', keys:['b/4'], duration:'qr'}),
-      new VF.StaveNote({clef:'treble', keys:['d/5'], duration:'q'}),
-      new VF.StaveNote({clef:'treble', keys:['e/5'], duration:'q'})
+      new VF.StaveNote({clef:'treble', keys:['d/5'], duration:'q', stem_direction:-1}),
+      new VF.StaveNote({clef:'treble', keys:['e/5'], duration:'q', stem_direction:-1})
     ];
     VF.Formatter.FormatAndDraw(ctx, stave, notes);
   })();
