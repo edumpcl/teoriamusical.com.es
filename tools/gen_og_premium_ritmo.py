@@ -32,10 +32,24 @@ F_BRAND  = font('georgia.ttf',  22)
 F_TAG    = font('segoeuib.ttf', 18)
 F_LABEL  = font('georgia.ttf',  19)
 
-# Fuente musical SMuFL (Leland) para glifos de silencios/notas
-LELAND = os.path.join(os.path.dirname(__file__), 'Leland.ttf')
+# Fuente musical SMuFL (Leland) para glifos de silencios/notas.
+# Se convierte el woff2 del proyecto a ttf la primera vez (PIL no lee woff2).
+LELAND_WOFF2 = os.path.join(ROOT, 'assets', 'fonts', 'Leland.woff2')
+LELAND_TTF   = os.path.join(os.path.dirname(__file__), 'Leland.ttf')
+def _ensure_leland_ttf():
+    if os.path.exists(LELAND_TTF):
+        return
+    try:
+        from fontTools.ttLib import TTFont
+        f = TTFont(LELAND_WOFF2)
+        f.flavor = None
+        f.save(LELAND_TTF)
+        print('  Convertido Leland.woff2 -> Leland.ttf')
+    except Exception as e:
+        print('  (aviso: no se pudo convertir Leland.woff2:', e, ')')
 def music_font(size):
-    try:    return ImageFont.truetype(LELAND, size)
+    _ensure_leland_ttf()
+    try:    return ImageFont.truetype(LELAND_TTF, size)
     except Exception as e:
         print('  (aviso: no se pudo cargar Leland.ttf:', e, ')')
         return None

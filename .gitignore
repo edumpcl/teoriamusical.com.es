@@ -21,6 +21,9 @@ env/
 # wp_parsed.json SÍ se versiona: permite regenerar el sitio con
 # `python3 tools/build.py` sin necesitar el XML original.
 tools/raw/
+# Fuentes .ttf regeneradas desde los .woff2 de assets/fonts/ por
+# gen_og_premium_ritmo.py — no hace falta versionarlas.
+tools/*.ttf
 
 # ----- Node / Playwright -----
 node_modules/
