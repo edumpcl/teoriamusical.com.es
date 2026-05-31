@@ -3,23 +3,31 @@ Extrae datos clave de Google Search Console para análisis SEO.
 Reutiliza el token.json generado por gsc_list_properties.py
 """
 
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+import requests as _requests
+_session = _requests.Session()
+_session.verify = False
+import httplib2
+import google_auth_httplib2
 from pathlib import Path
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
-import json
 
-SCOPES = ["https://www.googleapis.com/auth/webmasters.readonly"]
 TOKEN_FILE = Path(__file__).parent / "token.json"
 SITE = "https://www.teoriamusical.com.es/"
 DATE_START = "2026-02-01"
-DATE_END = "2026-05-18"
+DATE_END = "2026-05-30"
+SCOPES = ["https://www.googleapis.com/auth/webmasters.readonly"]
 
 
 def get_credentials():
     creds = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
     if creds.expired and creds.refresh_token:
-        creds.refresh(Request())
+        creds.refresh(Request(session=_session))
     return creds
 
 
@@ -54,7 +62,10 @@ def print_table(title, rows, headers):
 
 def main():
     creds = get_credentials()
-    service = build("searchconsole", "v1", credentials=creds)
+    _http = google_auth_httplib2.AuthorizedHttp(
+        creds, http=httplib2.Http(disable_ssl_certificate_validation=True)
+    )
+    service = build("searchconsole", "v1", http=_http)
 
     print(f"\nPeríodo: {DATE_START} → {DATE_END}")
     print(f"Sitio: {SITE}")

@@ -90,6 +90,8 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Escalas menores dóricas](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/escalas-menores-doricas/): El modo dórico aplicado a las escalas menores.
 - [Comparar tipos de escalas menores](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/comparar-los-tipos-de-escalas-menores/): Tabla comparativa de los distintos tipos de escalas menores.
 - [Tonalidades Vecinas](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/tonalidades-vecinas/): Aprende qué son las tonalidades vecinas, cómo identificarlas y por qué son la base de las modulaciones más naturales en música. Guía completa con ejemplos.
+- [Síncopa Musical: Qué Es, Tipos y Cómo Se Escribe](https://www.teoriamusical.com.es/diccionario-musical/compases/sincopa/): Qué es la síncopa en música: desplazamiento del acento a un tiempo débil o parte débil del tiempo. Tipos, ejemplos en pentagrama y diferencia con el contratiempo.
+- [Nota a Contratiempo: Qué Es y Cómo Se Escribe](https://www.teoriamusical.com.es/diccionario-musical/compases/notas-a-contratiempo/): Qué es una nota a contratiempo: nota que ataca en la parte débil del tiempo mientras el tiempo fuerte queda en silencio. Tipos, ejemplos en pentagrama y diferencia con la síncopa.
 
 ## Ejercicios interactivos
 
