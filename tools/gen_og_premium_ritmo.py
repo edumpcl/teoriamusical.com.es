@@ -32,10 +32,22 @@ F_BRAND  = font('georgia.ttf',  22)
 F_TAG    = font('segoeuib.ttf', 18)
 F_LABEL  = font('georgia.ttf',  19)
 
+# Fuente musical SMuFL (Leland) para glifos de silencios/notas
+LELAND = os.path.join(os.path.dirname(__file__), 'Leland.ttf')
+def music_font(size):
+    try:    return ImageFont.truetype(LELAND, size)
+    except Exception as e:
+        print('  (aviso: no se pudo cargar Leland.ttf:', e, ')')
+        return None
+# 1 em SMuFL = 4 espacios de pentagrama; GAP=20 => em=80
+SMUFL_REST8 = chr(0xE4E6)   # silencio de corchea (rest8th)
+
 # --- Geometria del pentagrama (zona derecha) ---
 SX0, SX1 = 620, 1150      # extension horizontal del pentagrama
 SCY      = 250            # centro vertical del pentagrama
 GAP      = 20             # separacion entre lineas
+# 1 em SMuFL = 4 espacios de pentagrama; GAP=20 => em=80
+F_MUSIC = music_font(4 * GAP)
 def line_y(i):            # i = -2..2 (linea central = 0)
     return SCY + i * GAP
 
@@ -70,9 +82,13 @@ def tie(draw, x1, x2, y):
     draw.arc(bbox, start=180, end=360, fill=GOLD, width=5)
 
 def eighth_rest(draw, cx, cy):
-    # silencio de corchea estilizado: trazo diagonal con gancho
-    draw.line([(cx + 8, cy - 16), (cx - 6, cy + 16)], fill=STAFF, width=4)
-    draw.ellipse([cx + 4, cy - 20, cx + 16, cy - 8], fill=STAFF)
+    # silencio de corchea real con la fuente musical Leland (SMuFL rest8th).
+    # El glifo se ancla por su baseline en la linea central del pentagrama.
+    if F_MUSIC is not None:
+        draw.text((cx, cy), SMUFL_REST8, font=F_MUSIC, fill=STAFF, anchor='mm')
+    else:
+        # respaldo: trazo diagonal (no deberia usarse)
+        draw.line([(cx + 8, cy - 16), (cx - 6, cy + 16)], fill=STAFF, width=4)
 
 def barline(draw, x):
     draw.line([(x, line_y(-2)), (x, line_y(2))], fill=STAFF, width=2)
