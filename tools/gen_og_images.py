@@ -144,4 +144,58 @@ make_og(
     badges   = ['Pentagrama', 'Claves', 'Notas', 'Grados', 'Semitonos'],
 )
 
+make_og(
+    'og-ejercicios-intervalos.png',
+    tag      = 'EJERCICIOS INTERACTIVOS',
+    title    = 'Ejercicios de Intervalos',
+    subtitle = 'Identificación · Construcción · Distancia · Especie',
+    desc     = 'Tests para reconocer y construir intervalos en el pentagrama',
+    badges   = ['Segundas', 'Terceras', 'Cuartas', 'Quintas', 'Sextas', 'Séptimas'],
+)
+
+make_og(
+    'og-ejercicios-acordes.png',
+    tag      = 'EJERCICIOS INTERACTIVOS',
+    title    = 'Ejercicios de Acordes',
+    subtitle = 'Tríadas en Fundamental, 1ª y 2ª Inversión',
+    desc     = 'Identificación y construcción de los 4 tipos de tríada',
+    badges   = ['Mayor', 'menor', 'Disminuido', 'Aumentado', '1ª Inv.', '2ª Inv.'],
+)
+
+make_og(
+    'og-ejercicios-escalas.png',
+    tag      = 'EJERCICIOS INTERACTIVOS',
+    title    = 'Ejercicios de Escalas',
+    subtitle = 'Mayor · Menor Natural · Armónica · Melódica · Mixtas',
+    desc     = 'Identifica y construye las 90 escalas del conservatorio',
+    badges   = ['Mayor', 'Menor Natural', 'Armónica', 'Melódica', 'Mixta'],
+)
+
+make_og(
+    'og-ejercicios.png',
+    tag      = 'EJERCICIOS INTERACTIVOS',
+    title    = 'Ejercicios Musicales',
+    subtitle = 'Intervalos · Acordes · Escalas · Tonalidades · Compases',
+    desc     = '771 tests interactivos para todos los niveles de teoría musical',
+    badges   = ['Intervalos', 'Acordes', 'Escalas', 'Tonalidades', 'Compases'],
+)
+
+make_og(
+    'og-blog.png',
+    tag      = 'BLOG',
+    title    = 'Teoría Musical',
+    subtitle = 'Artículos · Historia · Práctica · Análisis',
+    desc     = 'Artículos de teoría musical, historia y práctica instrumental',
+    badges   = ['Historia', 'Armonía', 'Solfeo', 'Análisis', 'Práctica'],
+)
+
+make_og(
+    'og-site.png',
+    tag      = 'TEORÍA MUSICAL',
+    title    = 'Teoría Musical',
+    subtitle = 'Diccionario · Ejercicios · Metrónomo · Afinador',
+    desc     = 'Música desde sus fundamentos: gratis y sin instalación',
+    badges   = ['Diccionario', 'Ejercicios', 'Metrónomo', 'Afinador'],
+)
+
 print('Listo.')
