@@ -96,6 +96,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [El Puntillo en Música: Qué Es y Cómo Se Calcula](https://www.teoriamusical.com.es/diccionario-musical/puntillo/): El puntillo musical aumenta la duración de una figura en la mitad de su valor. Cómo se calcula en cada figura, el puntillo en los silencios y el doble puntillo.
 - [Ligaduras Musicales: de Unión y de Expresión (Diferencias)](https://www.teoriamusical.com.es/diccionario-musical/ligaduras/): Las dos ligaduras musicales: la de unión une notas de la misma altura y suma su duración; la de expresión (legato) liga notas distintas. Diferencias y ejemplos.
 - [Alteraciones Musicales: Sostenido, Bemol y Becuadro](https://www.teoriamusical.com.es/diccionario-musical/alteraciones/): Las alteraciones musicales: sostenido (♯), bemol (♭), becuadro (♮) y las dobles. Qué hace cada una, alteraciones propias, accidentales y de precaución.
+- [Cualidades del Sonido: Altura, Duración, Intensidad y Timbre](https://www.teoriamusical.com.es/diccionario-musical/cualidades-del-sonido/): Las cuatro cualidades del sonido musical: altura (agudo/grave), duración, intensidad (fuerte/suave) y timbre. Qué es cada una, de qué depende y cómo se representa.
 
 ## Ejercicios interactivos
 
