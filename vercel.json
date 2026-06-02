@@ -26,6 +26,7 @@
     }
   ],
   "redirects": [
+    { "source": "/teoria-musical", "destination": "/", "permanent": true },
     { "source": "/index.php", "destination": "/", "permanent": true },
     { "source": "/wp-admin/:path*", "destination": "/", "permanent": false },
     { "source": "/wp-login.php", "destination": "/", "permanent": false }
