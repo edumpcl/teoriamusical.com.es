@@ -92,6 +92,9 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Tonalidades Vecinas](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/tonalidades-vecinas/): Aprende qué son las tonalidades vecinas, cómo identificarlas y por qué son la base de las modulaciones más naturales en música. Guía completa con ejemplos.
 - [Síncopa Musical: Qué Es, Tipos y Cómo Se Escribe](https://www.teoriamusical.com.es/diccionario-musical/compases/sincopa/): Qué es la síncopa en música: desplazamiento del acento a un tiempo débil o parte débil del tiempo. Tipos, ejemplos en pentagrama y diferencia con el contratiempo.
 - [Nota a Contratiempo: Qué Es y Cómo Se Escribe](https://www.teoriamusical.com.es/diccionario-musical/compases/notas-a-contratiempo/): Qué es una nota a contratiempo: nota que ataca en la parte débil del tiempo mientras el tiempo fuerte queda en silencio. Tipos, ejemplos en pentagrama y diferencia con la síncopa.
+- [Figuras Musicales: las 7 Figuras y su Duración (con Silencios)](https://www.teoriamusical.com.es/diccionario-musical/figuras-musicales/): Las 7 figuras musicales (redonda, blanca, negra, corchea, semicorchea, fusa y semifusa), su duración y equivalencias, los silencios, el puntillo y la ligadura.
+- [El Puntillo en Música: Qué Es y Cómo Se Calcula](https://www.teoriamusical.com.es/diccionario-musical/puntillo/): El puntillo musical aumenta la duración de una figura en la mitad de su valor. Cómo se calcula en cada figura, el puntillo en los silencios y el doble puntillo.
+- [Ligaduras Musicales: de Unión y de Expresión (Diferencias)](https://www.teoriamusical.com.es/diccionario-musical/ligaduras/): Las dos ligaduras musicales: la de unión une notas de la misma altura y suma su duración; la de expresión (legato) liga notas distintas. Diferencias y ejemplos.
 
 ## Ejercicios interactivos
 

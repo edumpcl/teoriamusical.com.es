@@ -411,6 +411,7 @@ figure.tm-staff img { display: inline-block; }
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 .tm-card-dic {
+  position: relative;
   display: flex; flex-direction: column; gap: .4rem;
   padding: 1.4rem 1.25rem;
   background: var(--bg-alt);
@@ -421,6 +422,12 @@ figure.tm-staff img { display: inline-block; }
   color: var(--text);
   transition: box-shadow .2s, border-color .2s, transform .2s;
 }
+/* Tarjeta-div con enlace de título "estirado" (toda la tarjeta es clicable) */
+a.tm-card-dic-titulo { text-decoration: none; }
+a.tm-card-dic-titulo::after { content: ""; position: absolute; inset: 0; }
+.tm-card-dic-sub { position: relative; z-index: 1; font-size: .82rem; color: var(--text-muted); margin-top: .1rem; }
+.tm-card-dic-sub a { color: var(--brand); text-decoration: none; }
+.tm-card-dic-sub a:hover { text-decoration: underline; }
 .tm-card-dic:hover {
   border-color: var(--brand);
   box-shadow: var(--shadow);
