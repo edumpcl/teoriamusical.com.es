@@ -101,6 +101,8 @@ code, pre { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .
 pre { padding: 1em; overflow-x: auto; }
 figure { margin: 1.5em 0; }
 figcaption { font-size: .9em; color: var(--text-muted); margin-top: .4em; text-align: center; }
+figure.tm-staff { text-align: center; }
+figure.tm-staff img { display: inline-block; }
 
 /* ---------- Utilities ---------- */
 .tm-container { max-width: var(--container); margin: 0 auto; padding: 0 1.25rem; }

@@ -1,0 +1,1262 @@
+[
+{
+"file": "pentatonica-mayor-do",
+"keys": [
+"c/4",
+"d/4",
+"e/4",
+"g/4",
+"a/4",
+"c/5"
+]
+},
+{
+"file": "pentatonica-mayor-sol",
+"keys": [
+"g/4",
+"a/4",
+"b/4",
+"d/5",
+"e/5",
+"g/5"
+]
+},
+{
+"file": "pentatonica-mayor-re",
+"keys": [
+"d/4",
+"e/4",
+"f#/4",
+"a/4",
+"b/4",
+"d/5"
+]
+},
+{
+"file": "pentatonica-mayor-la",
+"keys": [
+"a/4",
+"b/4",
+"c#/5",
+"e/5",
+"f#/5",
+"a/5"
+]
+},
+{
+"file": "pentatonica-mayor-mi",
+"keys": [
+"e/4",
+"f#/4",
+"g#/4",
+"b/4",
+"c#/5",
+"e/5"
+]
+},
+{
+"file": "pentatonica-mayor-si",
+"keys": [
+"b/4",
+"c#/5",
+"d#/5",
+"f#/5",
+"g#/5",
+"b/5"
+]
+},
+{
+"file": "pentatonica-mayor-fa-sost",
+"keys": [
+"f#/4",
+"g#/4",
+"a#/4",
+"c#/5",
+"d#/5",
+"f#/5"
+]
+},
+{
+"file": "pentatonica-mayor-do-sost",
+"keys": [
+"c#/4",
+"d#/4",
+"e#/4",
+"g#/4",
+"a#/4",
+"c#/5"
+]
+},
+{
+"file": "pentatonica-mayor-fa",
+"keys": [
+"f/4",
+"g/4",
+"a/4",
+"c/5",
+"d/5",
+"f/5"
+]
+},
+{
+"file": "pentatonica-mayor-si-bemol",
+"keys": [
+"bb/4",
+"c/5",
+"d/5",
+"f/5",
+"g/5",
+"bb/5"
+]
+},
+{
+"file": "pentatonica-mayor-mi-bemol",
+"keys": [
+"eb/4",
+"f/4",
+"g/4",
+"bb/4",
+"c/5",
+"eb/5"
+]
+},
+{
+"file": "pentatonica-mayor-la-bemol",
+"keys": [
+"ab/4",
+"bb/4",
+"c/5",
+"eb/5",
+"f/5",
+"ab/5"
+]
+},
+{
+"file": "pentatonica-mayor-re-bemol",
+"keys": [
+"db/4",
+"eb/4",
+"f/4",
+"ab/4",
+"bb/4",
+"db/5"
+]
+},
+{
+"file": "pentatonica-mayor-sol-bemol",
+"keys": [
+"gb/4",
+"ab/4",
+"bb/4",
+"db/5",
+"eb/5",
+"gb/5"
+]
+},
+{
+"file": "pentatonica-mayor-do-bemol",
+"keys": [
+"cb/4",
+"db/4",
+"eb/4",
+"gb/4",
+"ab/4",
+"cb/5"
+]
+},
+{
+"file": "pentatonica-menor-la",
+"keys": [
+"a/4",
+"c/5",
+"d/5",
+"e/5",
+"g/5",
+"a/5"
+]
+},
+{
+"file": "pentatonica-menor-mi",
+"keys": [
+"e/4",
+"g/4",
+"a/4",
+"b/4",
+"d/5",
+"e/5"
+]
+},
+{
+"file": "pentatonica-menor-si",
+"keys": [
+"b/4",
+"d/5",
+"e/5",
+"f#/5",
+"a/5",
+"b/5"
+]
+},
+{
+"file": "pentatonica-menor-fa-sost",
+"keys": [
+"f#/4",
+"a/4",
+"b/4",
+"c#/5",
+"e/5",
+"f#/5"
+]
+},
+{
+"file": "pentatonica-menor-do-sost",
+"keys": [
+"c#/4",
+"e/4",
+"f#/4",
+"g#/4",
+"b/4",
+"c#/5"
+]
+},
+{
+"file": "pentatonica-menor-sol-sost",
+"keys": [
+"g#/4",
+"b/4",
+"c#/5",
+"d#/5",
+"f#/5",
+"g#/5"
+]
+},
+{
+"file": "pentatonica-menor-re-sost",
+"keys": [
+"d#/4",
+"f#/4",
+"g#/4",
+"a#/4",
+"c#/5",
+"d#/5"
+]
+},
+{
+"file": "pentatonica-menor-la-sost",
+"keys": [
+"a#/4",
+"c#/5",
+"d#/5",
+"e#/5",
+"g#/5",
+"a#/5"
+]
+},
+{
+"file": "pentatonica-menor-re",
+"keys": [
+"d/4",
+"f/4",
+"g/4",
+"a/4",
+"c/5",
+"d/5"
+]
+},
+{
+"file": "pentatonica-menor-sol",
+"keys": [
+"g/4",
+"bb/4",
+"c/5",
+"d/5",
+"f/5",
+"g/5"
+]
+},
+{
+"file": "pentatonica-menor-do",
+"keys": [
+"c/4",
+"eb/4",
+"f/4",
+"g/4",
+"bb/4",
+"c/5"
+]
+},
+{
+"file": "pentatonica-menor-fa",
+"keys": [
+"f/4",
+"ab/4",
+"bb/4",
+"c/5",
+"eb/5",
+"f/5"
+]
+},
+{
+"file": "pentatonica-menor-si-bemol",
+"keys": [
+"bb/4",
+"db/5",
+"eb/5",
+"f/5",
+"ab/5",
+"bb/5"
+]
+},
+{
+"file": "pentatonica-menor-mi-bemol",
+"keys": [
+"eb/4",
+"gb/4",
+"ab/4",
+"bb/4",
+"db/5",
+"eb/5"
+]
+},
+{
+"file": "pentatonica-menor-la-bemol",
+"keys": [
+"ab/4",
+"cb/5",
+"db/5",
+"eb/5",
+"gb/5",
+"ab/5"
+]
+},
+{
+"file": "blues-menor-la",
+"keys": [
+"a/4",
+"c/5",
+"d/5",
+"eb/5",
+"e/5",
+"g/5",
+"a/5"
+]
+},
+{
+"file": "blues-menor-mi",
+"keys": [
+"e/4",
+"g/4",
+"a/4",
+"bb/4",
+"b/4",
+"d/5",
+"e/5"
+]
+},
+{
+"file": "blues-menor-si",
+"keys": [
+"b/4",
+"d/5",
+"e/5",
+"f/5",
+"f#/5",
+"a/5",
+"b/5"
+]
+},
+{
+"file": "blues-menor-fa-sost",
+"keys": [
+"f#/4",
+"a/4",
+"b/4",
+"c/5",
+"c#/5",
+"e/5",
+"f#/5"
+]
+},
+{
+"file": "blues-menor-do-sost",
+"keys": [
+"c#/4",
+"e/4",
+"f#/4",
+"g/4",
+"g#/4",
+"b/4",
+"c#/5"
+]
+},
+{
+"file": "blues-menor-sol-sost",
+"keys": [
+"g#/4",
+"b/4",
+"c#/5",
+"d/5",
+"d#/5",
+"f#/5",
+"g#/5"
+]
+},
+{
+"file": "blues-menor-re-sost",
+"keys": [
+"d#/4",
+"f#/4",
+"g#/4",
+"a/4",
+"a#/4",
+"c#/5",
+"d#/5"
+]
+},
+{
+"file": "blues-menor-la-sost",
+"keys": [
+"a#/4",
+"c#/5",
+"d#/5",
+"e/5",
+"e#/5",
+"g#/5",
+"a#/5"
+]
+},
+{
+"file": "blues-menor-re",
+"keys": [
+"d/4",
+"f/4",
+"g/4",
+"ab/4",
+"a/4",
+"c/5",
+"d/5"
+]
+},
+{
+"file": "blues-menor-sol",
+"keys": [
+"g/4",
+"bb/4",
+"c/5",
+"db/5",
+"d/5",
+"f/5",
+"g/5"
+]
+},
+{
+"file": "blues-menor-do",
+"keys": [
+"c/4",
+"eb/4",
+"f/4",
+"gb/4",
+"g/4",
+"bb/4",
+"c/5"
+]
+},
+{
+"file": "blues-menor-fa",
+"keys": [
+"f/4",
+"ab/4",
+"bb/4",
+"cb/5",
+"c/5",
+"eb/5",
+"f/5"
+]
+},
+{
+"file": "blues-menor-si-bemol",
+"keys": [
+"bb/4",
+"db/5",
+"eb/5",
+"fb/5",
+"f/5",
+"ab/5",
+"bb/5"
+]
+},
+{
+"file": "blues-menor-mi-bemol",
+"keys": [
+"eb/4",
+"gb/4",
+"ab/4",
+"bbb/4",
+"bb/4",
+"db/5",
+"eb/5"
+]
+},
+{
+"file": "blues-menor-la-bemol",
+"keys": [
+"ab/4",
+"cb/5",
+"db/5",
+"ebb/5",
+"eb/5",
+"gb/5",
+"ab/5"
+]
+},
+{
+"file": "hispano-arabe-do",
+"keys": [
+"c/4",
+"db/4",
+"e/4",
+"f/4",
+"g/4",
+"ab/4",
+"bb/4",
+"c/5"
+]
+},
+{
+"file": "hispano-arabe-sol",
+"keys": [
+"g/4",
+"ab/4",
+"b/4",
+"c/5",
+"d/5",
+"eb/5",
+"f/5",
+"g/5"
+]
+},
+{
+"file": "hispano-arabe-re",
+"keys": [
+"d/4",
+"eb/4",
+"f#/4",
+"g/4",
+"a/4",
+"bb/4",
+"c/5",
+"d/5"
+]
+},
+{
+"file": "hispano-arabe-la",
+"keys": [
+"a/4",
+"bb/4",
+"c#/5",
+"d/5",
+"e/5",
+"f/5",
+"g/5",
+"a/5"
+]
+},
+{
+"file": "hispano-arabe-mi",
+"keys": [
+"e/4",
+"f/4",
+"g#/4",
+"a/4",
+"b/4",
+"c/5",
+"d/5",
+"e/5"
+]
+},
+{
+"file": "hispano-arabe-si",
+"keys": [
+"b/4",
+"c/5",
+"d#/5",
+"e/5",
+"f#/5",
+"g/5",
+"a/5",
+"b/5"
+]
+},
+{
+"file": "hispano-arabe-fa-sost",
+"keys": [
+"f#/4",
+"g/4",
+"a#/4",
+"b/4",
+"c#/5",
+"d/5",
+"e/5",
+"f#/5"
+]
+},
+{
+"file": "hispano-arabe-do-sost",
+"keys": [
+"c#/4",
+"d/4",
+"e#/4",
+"f#/4",
+"g#/4",
+"a/4",
+"b/4",
+"c#/5"
+]
+},
+{
+"file": "hispano-arabe-fa",
+"keys": [
+"f/4",
+"gb/4",
+"a/4",
+"bb/4",
+"c/5",
+"db/5",
+"eb/5",
+"f/5"
+]
+},
+{
+"file": "hispano-arabe-si-bemol",
+"keys": [
+"bb/4",
+"cb/5",
+"d/5",
+"eb/5",
+"f/5",
+"gb/5",
+"ab/5",
+"bb/5"
+]
+},
+{
+"file": "hispano-arabe-mi-bemol",
+"keys": [
+"eb/4",
+"fb/4",
+"g/4",
+"ab/4",
+"bb/4",
+"cb/5",
+"db/5",
+"eb/5"
+]
+},
+{
+"file": "hispano-arabe-la-bemol",
+"keys": [
+"ab/4",
+"bbb/4",
+"c/5",
+"db/5",
+"eb/5",
+"fb/5",
+"gb/5",
+"ab/5"
+]
+},
+{
+"file": "hispano-arabe-re-bemol",
+"keys": [
+"db/4",
+"ebb/4",
+"f/4",
+"gb/4",
+"ab/4",
+"bbb/4",
+"cb/5",
+"db/5"
+]
+},
+{
+"file": "hispano-arabe-sol-bemol",
+"keys": [
+"gb/4",
+"abb/4",
+"bb/4",
+"cb/5",
+"db/5",
+"ebb/5",
+"fb/5",
+"gb/5"
+]
+},
+{
+"file": "hispano-arabe-do-bemol",
+"keys": [
+"cb/4",
+"dbb/4",
+"eb/4",
+"fb/4",
+"gb/4",
+"abb/4",
+"bbb/4",
+"cb/5"
+]
+},
+{
+"file": "oriental-do",
+"keys": [
+"c/4",
+"db/4",
+"e/4",
+"f/4",
+"g/4",
+"ab/4",
+"b/4",
+"c/5"
+]
+},
+{
+"file": "oriental-sol",
+"keys": [
+"g/4",
+"ab/4",
+"b/4",
+"c/5",
+"d/5",
+"eb/5",
+"f#/5",
+"g/5"
+]
+},
+{
+"file": "oriental-re",
+"keys": [
+"d/4",
+"eb/4",
+"f#/4",
+"g/4",
+"a/4",
+"bb/4",
+"c#/5",
+"d/5"
+]
+},
+{
+"file": "oriental-la",
+"keys": [
+"a/4",
+"bb/4",
+"c#/5",
+"d/5",
+"e/5",
+"f/5",
+"g#/5",
+"a/5"
+]
+},
+{
+"file": "oriental-mi",
+"keys": [
+"e/4",
+"f/4",
+"g#/4",
+"a/4",
+"b/4",
+"c/5",
+"d#/5",
+"e/5"
+]
+},
+{
+"file": "oriental-si",
+"keys": [
+"b/4",
+"c/5",
+"d#/5",
+"e/5",
+"f#/5",
+"g/5",
+"a#/5",
+"b/5"
+]
+},
+{
+"file": "oriental-fa-sost",
+"keys": [
+"f#/4",
+"g/4",
+"a#/4",
+"b/4",
+"c#/5",
+"d/5",
+"e#/5",
+"f#/5"
+]
+},
+{
+"file": "oriental-do-sost",
+"keys": [
+"c#/4",
+"d/4",
+"e#/4",
+"f#/4",
+"g#/4",
+"a/4",
+"b#/4",
+"c#/5"
+]
+},
+{
+"file": "oriental-fa",
+"keys": [
+"f/4",
+"gb/4",
+"a/4",
+"bb/4",
+"c/5",
+"db/5",
+"e/5",
+"f/5"
+]
+},
+{
+"file": "oriental-si-bemol",
+"keys": [
+"bb/4",
+"cb/5",
+"d/5",
+"eb/5",
+"f/5",
+"gb/5",
+"a/5",
+"bb/5"
+]
+},
+{
+"file": "oriental-mi-bemol",
+"keys": [
+"eb/4",
+"fb/4",
+"g/4",
+"ab/4",
+"bb/4",
+"cb/5",
+"d/5",
+"eb/5"
+]
+},
+{
+"file": "oriental-la-bemol",
+"keys": [
+"ab/4",
+"bbb/4",
+"c/5",
+"db/5",
+"eb/5",
+"fb/5",
+"g/5",
+"ab/5"
+]
+},
+{
+"file": "oriental-re-bemol",
+"keys": [
+"db/4",
+"ebb/4",
+"f/4",
+"gb/4",
+"ab/4",
+"bbb/4",
+"c/5",
+"db/5"
+]
+},
+{
+"file": "oriental-sol-bemol",
+"keys": [
+"gb/4",
+"abb/4",
+"bb/4",
+"cb/5",
+"db/5",
+"ebb/5",
+"f/5",
+"gb/5"
+]
+},
+{
+"file": "oriental-do-bemol",
+"keys": [
+"cb/4",
+"dbb/4",
+"eb/4",
+"fb/4",
+"gb/4",
+"abb/4",
+"bb/4",
+"cb/5"
+]
+},
+{
+"file": "cromatica-do",
+"keys": [
+"c/4",
+"c#/4",
+"d/4",
+"d#/4",
+"e/4",
+"f/4",
+"f#/4",
+"g/4",
+"g#/4",
+"a/4",
+"a#/4",
+"b/4",
+"c/5"
+]
+},
+{
+"file": "cromatica-do-sost",
+"keys": [
+"c#/4",
+"d/4",
+"d#/4",
+"e/4",
+"f/4",
+"f#/4",
+"g/4",
+"g#/4",
+"a/4",
+"a#/4",
+"b/4",
+"c/5",
+"c#/5"
+]
+},
+{
+"file": "cromatica-re",
+"keys": [
+"d/4",
+"d#/4",
+"e/4",
+"f/4",
+"f#/4",
+"g/4",
+"g#/4",
+"a/4",
+"a#/4",
+"b/4",
+"c/5",
+"c#/5",
+"d/5"
+]
+},
+{
+"file": "cromatica-mi-bemol",
+"keys": [
+"eb/4",
+"e/4",
+"f/4",
+"f#/4",
+"g/4",
+"g#/4",
+"a/4",
+"a#/4",
+"b/4",
+"c/5",
+"c#/5",
+"d/5",
+"d#/5"
+]
+},
+{
+"file": "cromatica-mi",
+"keys": [
+"e/4",
+"f/4",
+"f#/4",
+"g/4",
+"g#/4",
+"a/4",
+"a#/4",
+"b/4",
+"c/5",
+"c#/5",
+"d/5",
+"d#/5",
+"e/5"
+]
+},
+{
+"file": "cromatica-fa",
+"keys": [
+"f/4",
+"f#/4",
+"g/4",
+"g#/4",
+"a/4",
+"a#/4",
+"b/4",
+"c/5",
+"c#/5",
+"d/5",
+"d#/5",
+"e/5",
+"f/5"
+]
+},
+{
+"file": "cromatica-fa-sost",
+"keys": [
+"f#/4",
+"g/4",
+"g#/4",
+"a/4",
+"a#/4",
+"b/4",
+"c/5",
+"c#/5",
+"d/5",
+"d#/5",
+"e/5",
+"f/5",
+"f#/5"
+]
+},
+{
+"file": "cromatica-sol",
+"keys": [
+"g/4",
+"g#/4",
+"a/4",
+"a#/4",
+"b/4",
+"c/5",
+"c#/5",
+"d/5",
+"d#/5",
+"e/5",
+"f/5",
+"f#/5",
+"g/5"
+]
+},
+{
+"file": "cromatica-la-bemol",
+"keys": [
+"ab/4",
+"a/4",
+"a#/4",
+"b/4",
+"c/5",
+"c#/5",
+"d/5",
+"d#/5",
+"e/5",
+"f/5",
+"f#/5",
+"g/5",
+"g#/5"
+]
+},
+{
+"file": "cromatica-la",
+"keys": [
+"a/4",
+"a#/4",
+"b/4",
+"c/5",
+"c#/5",
+"d/5",
+"d#/5",
+"e/5",
+"f/5",
+"f#/5",
+"g/5",
+"g#/5",
+"a/5"
+]
+},
+{
+"file": "cromatica-si-bemol",
+"keys": [
+"bb/4",
+"b/4",
+"c/5",
+"c#/5",
+"d/5",
+"d#/5",
+"e/5",
+"f/5",
+"f#/5",
+"g/5",
+"g#/5",
+"a/5",
+"a#/5"
+]
+},
+{
+"file": "cromatica-si",
+"keys": [
+"b/4",
+"c/5",
+"c#/5",
+"d/5",
+"d#/5",
+"e/5",
+"f/5",
+"f#/5",
+"g/5",
+"g#/5",
+"a/5",
+"a#/5",
+"b/5"
+]
+},
+{
+"file": "hexatona-do",
+"keys": [
+"c/4",
+"d/4",
+"e/4",
+"f#/4",
+"g#/4",
+"a#/4",
+"c/5"
+]
+},
+{
+"file": "hexatona-do-sost",
+"keys": [
+"c#/4",
+"d#/4",
+"e#/4",
+"f##/4",
+"g##/4",
+"a##/4",
+"c#/5"
+]
+},
+{
+"file": "hexatona-re",
+"keys": [
+"d/4",
+"e/4",
+"f#/4",
+"g#/4",
+"a#/4",
+"b#/4",
+"d/5"
+]
+},
+{
+"file": "hexatona-mi-bemol",
+"keys": [
+"eb/4",
+"f/4",
+"g/4",
+"a/4",
+"b/4",
+"c#/5",
+"eb/5"
+]
+},
+{
+"file": "hexatona-mi",
+"keys": [
+"e/4",
+"f#/4",
+"g#/4",
+"a#/4",
+"b#/4",
+"c##/5",
+"e/5"
+]
+},
+{
+"file": "hexatona-fa",
+"keys": [
+"f/4",
+"g/4",
+"a/4",
+"b/4",
+"c#/5",
+"d#/5",
+"f/5"
+]
+},
+{
+"file": "hexatona-fa-sost",
+"keys": [
+"f#/4",
+"g#/4",
+"a#/4",
+"b#/4",
+"c##/5",
+"d##/5",
+"f#/5"
+]
+},
+{
+"file": "hexatona-sol",
+"keys": [
+"g/4",
+"a/4",
+"b/4",
+"c#/5",
+"d#/5",
+"e#/5",
+"g/5"
+]
+},
+{
+"file": "hexatona-la-bemol",
+"keys": [
+"ab/4",
+"bb/4",
+"c/5",
+"d/5",
+"e/5",
+"f#/5",
+"ab/5"
+]
+},
+{
+"file": "hexatona-la",
+"keys": [
+"a/4",
+"b/4",
+"c#/5",
+"d#/5",
+"e#/5",
+"f##/5",
+"a/5"
+]
+},
+{
+"file": "hexatona-si-bemol",
+"keys": [
+"bb/4",
+"c/5",
+"d/5",
+"e/5",
+"f#/5",
+"g#/5",
+"bb/5"
+]
+},
+{
+"file": "hexatona-si",
+"keys": [
+"b/4",
+"c#/5",
+"d#/5",
+"e#/5",
+"f##/5",
+"g##/5",
+"b/5"
+]
+}
+]

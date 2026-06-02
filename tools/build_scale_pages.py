@@ -22,11 +22,17 @@ import html
 import json
 import pathlib
 
+import scale_keys
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 BASE = "https://www.teoriamusical.com.es"
 SECTION = "/diccionario-musical/tonalidades"
-OG_IMG = f"{BASE}/assets/img/og-pages/og-diccionario-musical-tonalidades.png"
 DATE = "2026-06-01"
+
+
+def og_for(slug):
+    """OG premium per-pagina (misma convencion que gen_og_pages.py)."""
+    return f"{BASE}/assets/img/og-pages/og-diccionario-musical-tonalidades-{slug}.png"
 
 CONSENT = """<script>
   window['googlefc'] = window['googlefc'] || {};
@@ -205,7 +211,7 @@ def build_schema(p):
         "@context": "https://schema.org", "@type": "Article",
         "headline": p["h1"], "description": p["desc"], "url": url,
         "inLanguage": "es", "isAccessibleForFree": True,
-        "image": {"@type": "ImageObject", "url": OG_IMG},
+        "image": {"@type": "ImageObject", "url": og_for(p["slug"])},
         "author": {"@type": "Person", "name": "Eduardo Escrig Zomeño"},
         "datePublished": DATE, "dateModified": DATE,
         "mainEntityOfPage": {"@type": "WebPage", "@id": url},
@@ -261,6 +267,7 @@ def faq_section(faqs):
 
 def render(p):
     url = f"{BASE}{SECTION}/{p['slug']}/"
+    og = og_for(p["slug"])
     head = f"""<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -271,7 +278,7 @@ def render(p):
 <link rel="canonical" href="{url}">
 <meta property="og:title" content="{p['title']}">
 <meta property="og:description" content="{p['desc']}">
-<meta property="og:image" content="{OG_IMG}">
+<meta property="og:image" content="{og}">
 <meta property="og:type" content="article">
 <meta property="og:url" content="{url}">
 <meta property="og:locale" content="es_ES">
@@ -279,7 +286,7 @@ def render(p):
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{p['title']}">
 <meta name="twitter:description" content="{p['desc']}">
-<meta name="twitter:image" content="{OG_IMG}">
+<meta name="twitter:image" content="{og}">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <link rel="icon" href="/assets/img/favicon.png" type="image/png">
 
@@ -309,6 +316,7 @@ def render(p):
         f'<header class="tm-page-header"><div class="tm-container"><h1>{p["h1"]}</h1></div></header>\n'
         '<div class="tm-container tm-article-wrap">\n  <article class="tm-article tm-article--wide">\n\n'
         f'{p["body"].strip()}\n\n'
+        f'{scale_keys.blocks_for(p["slug"])}\n\n'
         f'{faq_section(p["faqs"])}\n\n'
         '  </article>\n</div>\n\n</main>\n\n'
         f'{FOOTER}'

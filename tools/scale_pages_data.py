@@ -25,6 +25,8 @@ PAGES = [
 
 <p><strong>Ascendente desde Do:</strong> Do · Do♯ · Re · Re♯ · Mi · Fa · Fa♯ · Sol · Sol♯ · La · La♯ · Si · Do.</p>
 
+<figure class="tm-staff"><img src="/assets/img/escalas/escala-cromatica-do.png" alt="Escala cromática ascendente desde Do en clave de sol" loading="lazy"><figcaption>Escala cromática ascendente desde Do.</figcaption></figure>
+
 <p><strong>Descendente desde Do:</strong> Do · Si · Si♭ · La · La♭ · Sol · Sol♭ · Fa · Mi · Mi♭ · Re · Re♭ · Do.</p>
 
 <h2>Para qué sirve</h2>
@@ -68,9 +70,13 @@ PAGES = [
 
 <p>Se forma con los grados <strong>1, 2, 3, 5 y 6</strong> de la escala mayor (se eliminan el 4.º y el 7.º). En <strong>Do</strong>: Do · Re · Mi · Sol · La. Tiene un carácter alegre y abierto, típico del folk y el country.</p>
 
+<figure class="tm-staff"><img src="/assets/img/escalas/pentatonica-mayor-do.png" alt="Escala pentatónica mayor de Do en el pentagrama" loading="lazy"><figcaption>Pentatónica mayor de Do: Do Re Mi Sol La.</figcaption></figure>
+
 <h2>Pentatónica menor</h2>
 
 <p>Se forma con los grados <strong>1, ♭3, 4, 5 y ♭7</strong> de la <a href="/diccionario-musical/tonalidades/escalas-menores/">escala menor</a>. En <strong>La</strong>: La · Do · Re · Mi · Sol. Es la escala de los solos de guitarra por excelencia y la base de la <a href="/diccionario-musical/tonalidades/escala-de-blues/">escala de blues</a>.</p>
+
+<figure class="tm-staff"><img src="/assets/img/escalas/pentatonica-menor-la.png" alt="Escala pentatónica menor de La en el pentagrama" loading="lazy"><figcaption>Pentatónica menor de La: La Do Re Mi Sol.</figcaption></figure>
 
 <h2>Relación entre ambas</h2>
 
@@ -115,6 +121,8 @@ PAGES = [
 <h2>Escala de blues menor</h2>
 
 <p>Es la pentatónica menor (1 · ♭3 · 4 · 5 · ♭7) con la blue note (♭5) intercalada entre el 4.º grado y la quinta justa. En <strong>La</strong>: La · Do · Re · <strong>Mi♭</strong> · Mi · Sol.</p>
+
+<figure class="tm-staff"><img src="/assets/img/escalas/blues-menor-la.png" alt="Escala de blues menor de La con la blue note Mi bemol en el pentagrama" loading="lazy"><figcaption>Blues menor de La: La Do Re Mi♭ Mi Sol (la blue note es Mi♭).</figcaption></figure>
 
 <h2>Escala de blues mayor</h2>
 
@@ -172,6 +180,8 @@ PAGES = [
 </table>
 </div>
 
+<figure class="tm-staff"><img src="/assets/img/escalas/tonos-enteros-do.png" alt="Escala de tonos enteros desde Do en el pentagrama" loading="lazy"><figcaption>Escala de tonos enteros desde Do: Do Re Mi Fa♯ Sol♯ La♯.</figcaption></figure>
+
 <h2>Sonido y uso</h2>
 
 <p>De la escala de tonos enteros surgen de forma natural los <a href="/diccionario-musical/acordes/acordes-triadas/">acordes aumentados</a>, que comparten esa cualidad suspendida. <strong>Claude Debussy</strong> y los compositores impresionistas la emplearon para evocar atmósferas de ensueño, agua o niebla; hoy es habitual en bandas sonoras para sugerir irrealidad o un sueño.</p>
@@ -215,6 +225,20 @@ PAGES = [
 </table>
 </div>
 
+<h2>Los 7 modos en el pentagrama</h2>
+
+<p>Cada modo sobre las teclas blancas, de su tónica a su octava:</p>
+
+<div class="tm-img-grid-2">
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-jonico.png" alt="Modo jónico desde Do en el pentagrama" loading="lazy"><figcaption>Jónico (Do)</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-dorico.png" alt="Modo dórico desde Re en el pentagrama" loading="lazy"><figcaption>Dórico (Re)</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-frigio.png" alt="Modo frigio desde Mi en el pentagrama" loading="lazy"><figcaption>Frigio (Mi)</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-lidio.png" alt="Modo lidio desde Fa en el pentagrama" loading="lazy"><figcaption>Lidio (Fa)</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-mixolidio.png" alt="Modo mixolidio desde Sol en el pentagrama" loading="lazy"><figcaption>Mixolidio (Sol)</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-eolico.png" alt="Modo eólico desde La en el pentagrama" loading="lazy"><figcaption>Eólico (La)</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-locrio.png" alt="Modo locrio desde Si en el pentagrama" loading="lazy"><figcaption>Locrio (Si)</figcaption></figure>
+</div>
+
 <h2>Modos mayores y menores</h2>
 
 <p>Tres modos tienen tercera mayor y «suenan a mayor»: <strong>jónico</strong>, <strong>lidio</strong> y <strong>mixolidio</strong>. Otros tres tienen tercera menor: <strong>dórico</strong>, <strong>frigio</strong> y <strong>eólico</strong>. El <strong>locrio</strong>, con quinta disminuida, es un caso aparte y apenas se usa como centro tonal.</p>
@@ -236,5 +260,142 @@ PAGES = [
                 ("Observar el nuevo patrón", "El orden de tonos y semitonos cambia respecto a la mayor, y con él el carácter modal característico."),
             ],
         },
+    },
+    {
+        "slug": "modos-gregorianos",
+        "breadcrumb": "Modos Gregorianos",
+        "title": "Modos Gregorianos: los 8 Modos de la Música Antigua",
+        "desc": "Los modos gregorianos o eclesiásticos: 8 modos auténticos y plagales con su finalis, base del canto gregoriano. Diferencia con los modos griegos.",
+        "h1": "Modos Gregorianos",
+        "body": """
+<p>Los <strong>modos gregorianos</strong> (o modos eclesiásticos) son el sistema de ocho escalas que organizó la música religiosa de la Edad Media y que constituye la base del <strong>canto gregoriano</strong>. Cada modo se define por su <strong>finalis</strong> —la nota de reposo— y por su ámbito, y se agrupan en parejas auténtico–plagal.</p>
+
+<h2>¿Qué son los modos gregorianos?</h2>
+
+<p>Antes del sistema tonal de mayor y menor, la música occidental se organizaba en modos. Los teóricos medievales numeraron ocho, del I al VIII. Cada modo gira en torno a su <strong>finalis</strong> (la nota en la que terminan las melodías) y tiene un <strong>tenor</strong> o cuerda de recitación sobre la que se canta gran parte del texto.</p>
+
+<p>Conviven dos nomenclaturas. La de raíz <strong>griega</strong> nombra los modos como dórico, frigio, lidio y mixolidio (y sus plagales hipo-). La <strong>latina</strong> agrupa cada finalis en una pareja auténtico/plagal con los nombres <strong>Protus</strong> (finalis Re), <strong>Deuterus</strong> (Mi), <strong>Tritus</strong> (Fa) y <strong>Tetrardus</strong> (Sol): así, el modo I es el Protus auténtico y el II el Protus plagal, y así sucesivamente.</p>
+
+<h2>Los 8 modos</h2>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead>
+    <tr><th>Modo</th><th>Nombre griego</th><th>Nombre latino</th><th>Tipo</th><th>Finalis</th><th>Repercusión</th><th>Ámbito</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>I</td><td>Dórico</td><td>Protus auténtico</td><td>Auténtico</td><td>Re</td><td>La</td><td>Re–Re</td></tr>
+    <tr><td>II</td><td>Hipodórico</td><td>Protus plagal</td><td>Plagal</td><td>Re</td><td>Fa</td><td>La–La</td></tr>
+    <tr><td>III</td><td>Frigio</td><td>Deuterus auténtico</td><td>Auténtico</td><td>Mi</td><td>Do</td><td>Mi–Mi</td></tr>
+    <tr><td>IV</td><td>Hipofrigio</td><td>Deuterus plagal</td><td>Plagal</td><td>Mi</td><td>La</td><td>Si–Si</td></tr>
+    <tr><td>V</td><td>Lidio</td><td>Tritus auténtico</td><td>Auténtico</td><td>Fa</td><td>Do</td><td>Fa–Fa</td></tr>
+    <tr><td>VI</td><td>Hipolidio</td><td>Tritus plagal</td><td>Plagal</td><td>Fa</td><td>La</td><td>Do–Do</td></tr>
+    <tr><td>VII</td><td>Mixolidio</td><td>Tetrardus auténtico</td><td>Auténtico</td><td>Sol</td><td>Re</td><td>Sol–Sol</td></tr>
+    <tr><td>VIII</td><td>Hipomixolidio</td><td>Tetrardus plagal</td><td>Plagal</td><td>Sol</td><td>Do</td><td>Re–Re</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Auténticos y plagales</h2>
+
+<p>Cada finalis genera dos modos. En el modo <strong>auténtico</strong> la melodía se mueve por encima de la finalis, hasta la octava superior. En el modo <strong>plagal</strong> (prefijo «hipo-») la melodía gira alrededor de la finalis, desde una cuarta por debajo hasta una quinta por encima. Ambos comparten la misma finalis pero tienen distinto ámbito y distinto tenor.</p>
+
+<h2>La finalis y la repercusión</h2>
+
+<p>Cada modo se reconoce por dos notas clave. La <strong>finalis</strong> es la nota en la que concluyen las melodías, el centro de reposo del modo. La <strong>repercusión</strong> (también llamada <em>tenor</em>, <em>cuerda de recitación</em> o <em>tuba</em>) es la nota sobre la que se recita gran parte del texto, la más repetida. En los modos auténticos la repercusión está una quinta sobre la finalis (con ajustes en el III y el VIII para evitar el si); en los plagales, una tercera por debajo de la del auténtico correspondiente.</p>
+
+<h2>Los 8 modos en el pentagrama</h2>
+
+<p>Cada modo con su ámbito completo. La nota marcada con <strong>F</strong> (en dorado) es la <strong>finalis</strong>; la marcada con <strong>R</strong> (en azul) es la <strong>repercusión</strong> o tenor.</p>
+
+<div class="tm-img-grid-2">
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-gregoriano-1.png" alt="Modo I dórico (protus auténtico): finalis Re, repercusión La" loading="lazy"><figcaption>I. Dórico — Protus auténtico</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-gregoriano-2.png" alt="Modo II hipodórico (protus plagal): finalis Re, repercusión Fa" loading="lazy"><figcaption>II. Hipodórico — Protus plagal</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-gregoriano-3.png" alt="Modo III frigio (deuterus auténtico): finalis Mi, repercusión Do" loading="lazy"><figcaption>III. Frigio — Deuterus auténtico</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-gregoriano-4.png" alt="Modo IV hipofrigio (deuterus plagal): finalis Mi, repercusión La" loading="lazy"><figcaption>IV. Hipofrigio — Deuterus plagal</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-gregoriano-5.png" alt="Modo V lidio (tritus auténtico): finalis Fa, repercusión Do" loading="lazy"><figcaption>V. Lidio — Tritus auténtico</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-gregoriano-6.png" alt="Modo VI hipolidio (tritus plagal): finalis Fa, repercusión La" loading="lazy"><figcaption>VI. Hipolidio — Tritus plagal</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-gregoriano-7.png" alt="Modo VII mixolidio (tetrardus auténtico): finalis Sol, repercusión Re" loading="lazy"><figcaption>VII. Mixolidio — Tetrardus auténtico</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-gregoriano-8.png" alt="Modo VIII hipomixolidio (tetrardus plagal): finalis Sol, repercusión Do" loading="lazy"><figcaption>VIII. Hipomixolidio — Tetrardus plagal</figcaption></figure>
+</div>
+
+<h2>¿Es lo mismo que los modos griegos?</h2>
+
+<p>Los nombres coinciden (dórico, frigio, lidio, mixolidio), pero los sistemas son distintos. Los modos gregorianos son <strong>ocho</strong>, medievales, definidos por finalis y ámbito (con parejas auténtico/plagal). Los <a href="/diccionario-musical/tonalidades/modos-griegos/">modos griegos</a> modernos son <strong>siete</strong> y se obtienen tocando la escala mayor desde cada grado. En notas, el dórico gregoriano (Re–Re) coincide con el dórico moderno. Más tarde, en el Renacimiento, Glareano amplió el sistema a doce modos al añadir el eólico y el jónico.</p>
+""",
+        "faqs": [
+            ("¿Qué son los modos gregorianos?", "Son las ocho escalas o modos eclesiásticos que organizaban la música medieval y el canto gregoriano. Cada uno se define por su finalis (nota de reposo) y su ámbito, y se agrupan en parejas auténtico y plagal."),
+            ("¿Cuántos modos gregorianos hay?", "Tradicionalmente ocho, numerados del I al VIII (cuatro auténticos y cuatro plagales). En el Renacimiento, Glareano amplió el sistema a doce al añadir el eólico y el jónico con sus plagales."),
+            ("¿Qué diferencia un modo auténtico de uno plagal?", "Comparten la misma finalis, pero el ámbito cambia: en el auténtico la melodía se mueve por encima de la finalis hasta la octava; en el plagal (prefijo «hipo-») gira en torno a la finalis, desde una cuarta por debajo hasta una quinta por encima."),
+            ("¿Es lo mismo modos gregorianos que modos griegos?", "No. Los gregorianos son ocho modos medievales definidos por finalis y ámbito; los modos griegos modernos son siete escalas derivadas de la escala mayor. Comparten los nombres (dórico, frigio…) y algunos coinciden en notas, pero son sistemas históricamente distintos."),
+        ],
+    },
+    {
+        "slug": "escala-hispano-arabe",
+        "breadcrumb": "Escala Hispano-Árabe",
+        "title": "Escala Hispano-Árabe (Andaluza): Notas y Sonido Flamenco",
+        "desc": "La escala hispano-árabe o andaluza (frigio dominante): Mi Fa Sol♯ La Si Do Re. Su 2ª aumentada y el sonido flamenco, con ejemplo en pentagrama.",
+        "h1": "Escala Hispano-Árabe",
+        "body": """
+<p>La <strong>escala hispano-árabe</strong>, también llamada <strong>escala andaluza</strong> o <strong>flamenca</strong>, es la responsable del característico color de la música flamenca y de buena parte de la tradición del sur de España y el norte de África. En la teoría moderna se conoce como <strong>modo frigio dominante</strong> (o frigio mayor).</p>
+
+<h2>¿Qué es la escala hispano-árabe?</h2>
+
+<p>Es una escala de siete notas que coincide con el quinto grado de la <a href="/diccionario-musical/tonalidades/escalas-menores/escalas-menores-armonicas/">escala menor armónica</a>. Su rasgo distintivo es una <strong>tercera mayor</strong> sobre una base frigia (con <strong>segunda menor</strong>), lo que produce una <strong>segunda aumentada</strong> entre el 2.º y el 3.er grado: el intervalo que da el sabor oriental y flamenco.</p>
+
+<h2>Estructura e intervalos</h2>
+
+<p>Su patrón de tonos y semitonos es:</p>
+
+<p style="text-align:center;font-size:1.15rem"><strong>Semitono · 2.ª aumentada · Semitono · Tono · Semitono · Tono · Tono</strong></p>
+
+<p>Por grados: 1 · ♭2 · 3 · 4 · 5 · ♭6 · ♭7. Sobre <strong>Mi</strong>, la tónica más habitual en la guitarra flamenca: Mi · Fa · Sol♯ · La · Si · Do · Re.</p>
+
+<figure class="tm-staff"><img src="/assets/img/escalas/escala-hispano-arabe-mi.png" alt="Escala hispano-árabe o andaluza sobre Mi en el pentagrama" loading="lazy"><figcaption>Escala hispano-árabe sobre Mi: Mi Fa Sol♯ La Si Do Re.</figcaption></figure>
+
+<h2>El sonido flamenco</h2>
+
+<p>Esta escala es la base de la <strong>cadencia andaluza</strong> (Lam–Sol–Fa–Mi), donde el acorde de Mi mayor funciona como reposo. La tercera mayor (Sol♯) sobre la tónica Mi y la segunda menor (Fa) crean esa tensión inconfundible del flamenco, el fado y muchas melodías de raíz árabe y sefardí.</p>
+""",
+        "faqs": [
+            ("¿Qué es la escala hispano-árabe?", "Es una escala de siete notas, también llamada andaluza o flamenca, conocida en la teoría moderna como frigio dominante. Coincide con el quinto grado de la escala menor armónica y es la base del sonido flamenco."),
+            ("¿Por qué suena tan «flamenca» o «andaluza»?", "Por la segunda aumentada entre su 2.º y 3.er grado (Fa–Sol♯ sobre Mi), combinada con una segunda menor sobre la tónica. Ese intervalo poco habitual produce el característico color andaluz y oriental."),
+            ("¿Es lo mismo que el modo frigio?", "No exactamente. El modo frigio tiene tercera menor; la escala hispano-árabe (frigio dominante) eleva esa tercera a mayor, creando la segunda aumentada característica. Por eso también se la llama frigio mayor."),
+            ("¿De qué escala procede?", "Es el quinto modo de la escala menor armónica. Por ejemplo, la escala hispano-árabe de Mi procede de la escala de La menor armónica empezando desde su quinto grado, Mi."),
+        ],
+    },
+    {
+        "slug": "escala-oriental",
+        "breadcrumb": "Escala Oriental",
+        "title": "Escala Oriental (Doble Armónica): Notas y Sonido",
+        "desc": "La escala oriental o doble armónica (bizantina): Do Re♭ Mi Fa Sol La♭ Si. Sus dos segundas aumentadas y su sonido oriental, con ejemplo en pentagrama.",
+        "h1": "Escala Oriental",
+        "body": """
+<p>La <strong>escala oriental</strong>, conocida también como <strong>escala doble armónica</strong> o <strong>bizantina</strong>, evoca de inmediato las sonoridades de Oriente Medio. Su rasgo más llamativo son las <strong>dos segundas aumentadas</strong> que contiene.</p>
+
+<h2>¿Qué es la escala oriental?</h2>
+
+<p>Es una escala de siete notas con <strong>tercera mayor</strong> y <strong>séptima mayor</strong> (sensible), pero con el 2.º y el 6.º grados rebajados. Esos dos bemoles generan dos intervalos de <strong>segunda aumentada</strong> —entre el 2.º y el 3.er grado y entre el 6.º y el 7.º—, responsables de su inconfundible carácter exótico.</p>
+
+<h2>Estructura e intervalos</h2>
+
+<p>Su patrón de tonos y semitonos es:</p>
+
+<p style="text-align:center;font-size:1.15rem"><strong>Semitono · 2.ª aumentada · Semitono · Tono · Semitono · 2.ª aumentada · Semitono</strong></p>
+
+<p>Por grados: 1 · ♭2 · 3 · 4 · 5 · ♭6 · 7. Sobre <strong>Do</strong>: Do · Re♭ · Mi · Fa · Sol · La♭ · Si.</p>
+
+<figure class="tm-staff"><img src="/assets/img/escalas/escala-oriental-do.png" alt="Escala oriental o doble armónica sobre Do en el pentagrama" loading="lazy"><figcaption>Escala oriental sobre Do: Do Re♭ Mi Fa Sol La♭ Si.</figcaption></figure>
+
+<h2>Diferencia con la escala hispano-árabe</h2>
+
+<p>Ambas comparten la segunda aumentada inicial y el color oriental, pero no son iguales. La escala oriental añade una <strong>segunda</strong> segunda aumentada (entre el 6.º y el 7.º grado) y mantiene la séptima mayor, mientras que la <a href="/diccionario-musical/tonalidades/escala-hispano-arabe/">escala hispano-árabe</a> tiene una sola segunda aumentada y séptima menor. La oriental suena, por tanto, aún más tensa y «bizantina».</p>
+""",
+        "faqs": [
+            ("¿Qué es la escala oriental?", "Es una escala de siete notas, también llamada doble armónica o bizantina, con tercera y séptima mayores pero con el 2.º y 6.º grados rebajados. Esos bemoles crean dos segundas aumentadas que le dan su sonido oriental."),
+            ("¿Por qué tiene un sonido tan «oriental» o «bizantino»?", "Por sus dos intervalos de segunda aumentada (entre los grados 2-3 y 6-7). Ese salto de tres semitonos, poco frecuente en la música occidental, evoca las músicas de Oriente Medio y de los Balcanes."),
+            ("¿Cuántas segundas aumentadas tiene la escala oriental?", "Dos: una entre el segundo y el tercer grado y otra entre el sexto y el séptimo. Esa doble segunda aumentada es lo que la distingue y le da nombre de escala «doble armónica»."),
+            ("¿En qué se diferencia de la escala hispano-árabe?", "La hispano-árabe (frigio dominante) tiene una sola segunda aumentada y séptima menor; la oriental tiene dos segundas aumentadas y séptima mayor. Ambas comparten el color oriental, pero la oriental es más tensa."),
+        ],
     },
 ]
