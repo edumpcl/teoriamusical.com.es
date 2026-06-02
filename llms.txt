@@ -95,6 +95,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Figuras Musicales: las 7 Figuras y su Duración (con Silencios)](https://www.teoriamusical.com.es/diccionario-musical/figuras-musicales/): Las 7 figuras musicales (redonda, blanca, negra, corchea, semicorchea, fusa y semifusa), su duración y equivalencias, los silencios, el puntillo y la ligadura.
 - [El Puntillo en Música: Qué Es y Cómo Se Calcula](https://www.teoriamusical.com.es/diccionario-musical/puntillo/): El puntillo musical aumenta la duración de una figura en la mitad de su valor. Cómo se calcula en cada figura, el puntillo en los silencios y el doble puntillo.
 - [Ligaduras Musicales: de Unión y de Expresión (Diferencias)](https://www.teoriamusical.com.es/diccionario-musical/ligaduras/): Las dos ligaduras musicales: la de unión une notas de la misma altura y suma su duración; la de expresión (legato) liga notas distintas. Diferencias y ejemplos.
+- [Alteraciones Musicales: Sostenido, Bemol y Becuadro](https://www.teoriamusical.com.es/diccionario-musical/alteraciones/): Las alteraciones musicales: sostenido (♯), bemol (♭), becuadro (♮) y las dobles. Qué hace cada una, alteraciones propias, accidentales y de precaución.
 
 ## Ejercicios interactivos
 
