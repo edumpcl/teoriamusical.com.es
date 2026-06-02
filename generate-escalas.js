@@ -44,6 +44,15 @@ const SCALES = [
   S('modo-mixolidio', ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5']),
   S('modo-eolico',    ['a/4','b/4','c/5','d/5','e/5','f/5','g/5','a/5']),
   S('modo-locrio',    ['b/4','c/5','d/5','e/5','f/5','g/5','a/5','b/5']),
+
+  // Especies de octava griegas (sistema antiguo), DESCENDENTES de agudo a grave
+  S('modo-mixolidio-griego-descendente', ['b/4','a/4','g/4','f/4','e/4','d/4','c/4','b/3']),
+  S('modo-lidio-griego-descendente',     ['c/5','b/4','a/4','g/4','f/4','e/4','d/4','c/4']),
+  S('modo-frigio-griego-descendente',    ['d/5','c/5','b/4','a/4','g/4','f/4','e/4','d/4']),
+  S('modo-dorio-griego-descendente',     ['e/5','d/5','c/5','b/4','a/4','g/4','f/4','e/4']),
+  S('modo-hipolidio-griego-descendente', ['f/5','e/5','d/5','c/5','b/4','a/4','g/4','f/4']),
+  S('modo-hipofrigio-griego-descendente',['g/5','f/5','e/5','d/5','c/5','b/4','a/4','g/4']),
+  S('modo-hipodorio-griego-descendente', ['a/5','g/5','f/5','e/5','d/5','c/5','b/4','a/4']),
 ];
 
 const RENDER_FN = `

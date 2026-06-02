@@ -196,17 +196,54 @@ PAGES = [
     {
         "slug": "modos-griegos",
         "breadcrumb": "Modos Griegos",
-        "title": "Modos Griegos: los 7 Modos de la Escala Mayor",
-        "desc": "Los 7 modos griegos (jónico, dórico, frigio, lidio, mixolidio, eólico y locrio): qué son, su patrón de intervalos, carácter y ejemplos en teclas blancas.",
+        "title": "Modos Griegos: Sistema Antiguo Descendente y Modos Modernos",
+        "desc": "Los modos griegos: el sistema de la Antigua Grecia (descendente, con sus especies de octava) y los siete modos modernos de la escala mayor (ascendentes).",
         "h1": "Modos Griegos",
         "body": """
-<p>Los <strong>modos griegos</strong> (o modos eclesiásticos) son las <strong>siete escalas</strong> que resultan de tocar una <a href="/diccionario-musical/tonalidades/escalas-mayores/">escala mayor</a> empezando por cada uno de sus grados. Comparten las mismas notas pero, al cambiar la nota de reposo, cada uno adquiere un patrón de tonos y semitonos —y un carácter— distinto.</p>
+<p>El nombre «modos griegos» encierra en realidad <strong>dos sistemas distintos</strong>: el de la <strong>Antigua Grecia</strong>, que concebía las escalas de forma <strong>descendente</strong>, y la versión <strong>moderna</strong> que hoy se enseña como los siete modos de la <a href="/diccionario-musical/tonalidades/escalas-mayores/">escala mayor</a>, ascendente. A continuación se explican ambos, empezando por el clásico.</p>
 
-<h2>¿Qué son los modos griegos?</h2>
+<h2>El sistema griego antiguo (descendente)</h2>
 
-<p>Si se tocan únicamente las teclas blancas del piano, según la nota por la que se empiece se obtiene un modo diferente: de Do a Do resulta el modo jónico (la escala mayor); de Re a Re, el dórico; de Mi a Mi, el frigio, y así sucesivamente hasta el locrio. Todos usan las notas de Do mayor, pero cada uno «gira» en torno a una tónica distinta.</p>
+<p>La música de la Antigua Grecia se organizaba en <strong>tetracordios</strong>: grupos de cuatro notas ordenadas <strong>de agudo a grave</strong>. Dos tetracordios formaban una octava, por lo que las escalas griegas se describían y se cantaban <strong>descendentes</strong>, al contrario que hoy. El modo central y más apreciado era el <strong>dorio</strong>.</p>
 
-<h2>Los 7 modos</h2>
+<p>De ahí surgían las siete <strong>especies de octava</strong>, que tomaban el nombre de pueblos y regiones griegas. Situadas sobre las notas naturales y leídas de agudo a grave, eran:</p>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead>
+    <tr><th>Modo (griego antiguo)</th><th>Octava</th><th>Notas (de agudo a grave)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Mixolidio</strong></td><td>Si–Si</td><td>Si La Sol Fa Mi Re Do Si</td></tr>
+    <tr><td><strong>Lidio</strong></td><td>Do–Do</td><td>Do Si La Sol Fa Mi Re Do</td></tr>
+    <tr><td><strong>Frigio</strong></td><td>Re–Re</td><td>Re Do Si La Sol Fa Mi Re</td></tr>
+    <tr><td><strong>Dorio</strong></td><td>Mi–Mi</td><td>Mi Re Do Si La Sol Fa Mi</td></tr>
+    <tr><td><strong>Hipolidio</strong></td><td>Fa–Fa</td><td>Fa Mi Re Do Si La Sol Fa</td></tr>
+    <tr><td><strong>Hipofrigio</strong></td><td>Sol–Sol</td><td>Sol Fa Mi Re Do Si La Sol</td></tr>
+    <tr><td><strong>Hipodorio</strong></td><td>La–La</td><td>La Sol Fa Mi Re Do Si La</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Las 7 especies de octava en el pentagrama</h3>
+
+<p>Cada modo griego antiguo, descendente de agudo a grave. El dorio (Mi–Mi) era el central del sistema:</p>
+
+<div class="tm-img-grid-2">
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-mixolidio-griego-descendente.png" alt="Modo mixolidio griego descendente, Si a Si" loading="lazy"><figcaption>Mixolidio (Si–Si)</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-lidio-griego-descendente.png" alt="Modo lidio griego descendente, Do a Do" loading="lazy"><figcaption>Lidio (Do–Do)</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-frigio-griego-descendente.png" alt="Modo frigio griego descendente, Re a Re" loading="lazy"><figcaption>Frigio (Re–Re)</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-dorio-griego-descendente.png" alt="Modo dorio griego descendente, Mi a Mi" loading="lazy"><figcaption>Dorio (Mi–Mi) — central</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-hipolidio-griego-descendente.png" alt="Modo hipolidio griego descendente, Fa a Fa" loading="lazy"><figcaption>Hipolidio (Fa–Fa)</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-hipofrigio-griego-descendente.png" alt="Modo hipofrigio griego descendente, Sol a Sol" loading="lazy"><figcaption>Hipofrigio (Sol–Sol)</figcaption></figure>
+<figure class="tm-staff"><img src="/assets/img/escalas/modo-hipodorio-griego-descendente.png" alt="Modo hipodorio griego descendente, La a La" loading="lazy"><figcaption>Hipodorio (La–La)</figcaption></figure>
+</div>
+
+<p><strong>Cuidado con la confusión histórica:</strong> al adoptar estos nombres en la Edad Media, los teóricos los <strong>reasignaron a escalas distintas y ascendentes</strong>. Por eso el dorio griego antiguo (descendente, Mi–Mi) <strong>no coincide</strong> con el dórico medieval o moderno (ascendente, Re–Re). Los nombres son los mismos; las escalas, no.</p>
+
+<h2>Los modos modernos (ascendentes)</h2>
+
+<p>Hoy se llama «modos griegos» —de forma impropia— a las <strong>siete escalas que resultan de tocar la escala mayor empezando por cada uno de sus grados</strong>, leídas de forma <strong>ascendente</strong>. Comparten las mismas notas pero, al cambiar la nota de reposo, cada uno adquiere un patrón —y un carácter— distinto. Sobre las teclas blancas del piano, de Do a Do resulta el jónico; de Re a Re, el dórico; de Mi a Mi, el frigio, y así hasta el locrio.</p>
 
 <div class="tm-table-wrap">
 <table class="tm-table">
@@ -227,7 +264,7 @@ PAGES = [
 
 <h2>Los 7 modos en el pentagrama</h2>
 
-<p>Cada modo sobre las teclas blancas, de su tónica a su octava:</p>
+<p>Cada modo moderno sobre las teclas blancas, ascendente, de su tónica a su octava:</p>
 
 <div class="tm-img-grid-2">
 <figure class="tm-staff"><img src="/assets/img/escalas/modo-jonico.png" alt="Modo jónico desde Do en el pentagrama" loading="lazy"><figcaption>Jónico (Do)</figcaption></figure>
@@ -246,7 +283,8 @@ PAGES = [
 <p>Dos de estos modos se estudian también como tipos concretos de escala en el conservatorio: el modo eólico coincide con la <a href="/diccionario-musical/tonalidades/escalas-menores/escalas-menores-naturales/">escala menor natural</a>, el dórico con la <a href="/diccionario-musical/tonalidades/escalas-menores/escalas-menores-doricas/">escala menor dórica</a> y el mixolidio con la <a href="/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-mixolidias/">escala mayor mixolidia</a>.</p>
 """,
         "faqs": [
-            ("¿Qué son los modos griegos?", "Son las siete escalas que se obtienen al tocar una escala mayor empezando por cada uno de sus grados. Comparten las mismas notas pero cada uno tiene una tónica distinta y, por tanto, un patrón de intervalos y un carácter propios."),
+            ("¿Qué son los modos griegos?", "El nombre designa dos sistemas: el de la Antigua Grecia, con escalas descendentes organizadas en tetracordios, y la versión moderna, ascendente, que son las siete escalas que se obtienen al tocar una escala mayor empezando por cada uno de sus grados."),
+            ("¿Los modos griegos son ascendentes o descendentes?", "El sistema griego antiguo concebía las escalas descendentes (de agudo a grave); su modo central era el dorio (Mi–Mi descendente). La versión moderna que hoy se llama «modos griegos» es ascendente y procede de la escala mayor. Además, los nombres se reasignaron en la Edad Media, así que el dorio antiguo no coincide con el dórico moderno."),
             ("¿Cuántos modos griegos hay y cómo se llaman?", "Siete: jónico, dórico, frigio, lidio, mixolidio, eólico y locrio. Corresponden a empezar la escala mayor desde sus grados I a VII respectivamente."),
             ("¿Qué modos son mayores y cuáles menores?", "Tienen carácter mayor el jónico, el lidio y el mixolidio (tercera mayor); tienen carácter menor el dórico, el frigio y el eólico (tercera menor). El locrio, con quinta disminuida, es inestable y no se usa como tónica."),
             ("¿En qué se diferencia el modo jónico de la escala mayor?", "En nada: el modo jónico es exactamente la escala mayor. Del mismo modo, el modo eólico coincide con la escala menor natural."),
