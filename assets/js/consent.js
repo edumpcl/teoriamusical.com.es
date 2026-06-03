@@ -54,7 +54,8 @@
       ad_user_data:       dv,
       ad_personalization: dv
     });
-    if (prefs.analytics)   loadGA4();
+    // GA4 ya se carga siempre (Consent Mode v2 avanzado); aquí solo actualizamos
+    // el estado de consentimiento, que es lo que controla si GA escribe cookies.
     if (prefs.advertising) loadAdSense();
   }
 
@@ -120,6 +121,13 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && overlay.classList.contains('tm-show') && getCookie()) hide();
     });
+
+    // Consent Mode v2 (modo avanzado): cargamos GA4 SIEMPRE, no solo tras aceptar.
+    // El estado por defecto es analytics_storage='denied' (definido en el <head>),
+    // así que GA NO escribe cookies hasta que el usuario consiente; mientras tanto
+    // envía pings anónimos sin cookies que Google usa para modelar el tráfico no
+    // consentido. Esto recupera la medición casi completa siendo RGPD-compliant.
+    loadGA4();
 
     var existing = getCookie();
     if (existing && typeof existing.analytics !== 'undefined') {
