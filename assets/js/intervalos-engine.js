@@ -52,15 +52,31 @@
   };
 
   /*
-   * Dificultades — filtran el máximo de alteraciones en la 2ª nota (|a2|):
-   *   Fácil:     |a2| = 0  → solo notas naturales
-   *   Medio:     |a2| ≤ 1  → hasta simples aumentados/disminuidos (# / b)
-   *   Difícil:   |a2| ≤ 2  → hasta dobles aumentados/disminuidos (## / bb)
+   * Dificultades. Cada nivel define:
+   *   maxAlt — máximo de alteraciones en la 2ª nota (|a2|): 0, 1 o 2
+   *   simple — true: solo intervalos simples (hasta 8ª); false: hasta la 15ª
+   *   types  — 'basic' (Mayor/menor/Justa), 'single' (+ aum/dis), 'all' (+ dobles)
+   * DIF_BASIC (3 niveles): tests por número, consonancia, semitonos…
+   * DIF_FULL  (4 niveles): tests "completo" y "construir".
    */
-  var DIFICULTADES = [
-    { lbl: "F\xe1cil",     maxAlt: 0, id: 'easy'   },
-    { lbl: "Medio",        maxAlt: 1, id: 'medium' },
-    { lbl: "Dif\xedcil",  maxAlt: 2, id: 'hard'   }
+  var DIF_BASIC = [
+    { lbl:"F\xe1cil",   maxAlt:0, simple:true, types:'basic',  icon:'☀️', desc:'Solo notas naturales',     id:'easy'   },
+    { lbl:"Medio",      maxAlt:1, simple:true, types:'single', icon:'⚡',       desc:'Con sostenidos y bemoles', id:'medium' },
+    { lbl:"Dif\xedcil", maxAlt:2, simple:true, types:'all',    icon:'🔥', desc:'Con dobles alteraciones',  id:'hard'   }
+  ];
+  var DIF_FULL = [
+    { lbl:"F\xe1cil",   maxAlt:0, simple:true,  types:'basic',  icon:'☀️', desc:'Hasta la 8\xaa, notas naturales',      id:'easy'   },
+    { lbl:"Medio",      maxAlt:1, simple:true,  types:'single', icon:'⚡',       desc:'Hasta la 8\xaa, con alteraciones',     id:'medium' },
+    { lbl:"Dif\xedcil", maxAlt:1, simple:false, types:'single', icon:'🔥', desc:'Hasta la 15\xaa (compuestos)',         id:'hard'   },
+    { lbl:"Pro",        maxAlt:2, simple:false, types:'all',    icon:'💎', desc:'Hasta la 15\xaa, dobles alteraciones', id:'pro'    }
+  ];
+  /* Construir: 4 niveles SIMPLES (el pentagrama de colocación no admite compuestos
+     hasta la 15ª con la raíz en la 4ª octava). El 4º nivel añade tipos dobles. */
+  var DIF_CONSTRUIR = [
+    { lbl:"F\xe1cil",   maxAlt:0, simple:true, types:'basic',  icon:'☀️', desc:'Solo notas naturales',           id:'easy'   },
+    { lbl:"Medio",      maxAlt:1, simple:true, types:'single', icon:'⚡',       desc:'Con sostenidos y bemoles',       id:'medium' },
+    { lbl:"Dif\xedcil", maxAlt:2, simple:true, types:'single', icon:'🔥', desc:'Con dobles alteraciones',        id:'hard'   },
+    { lbl:"Pro",        maxAlt:2, simple:true, types:'all',    icon:'💎', desc:'Intervalos dobles aum./dis.',    id:'pro'    }
   ];
   var PREGUNTAS_POR_TEST = 10;
 
@@ -147,7 +163,10 @@
     var uid = containerId;
 
     var totalQ = PREGUNTAS_POR_TEST;
-    var currentQ, score, cQ, sel, answered, maxAlt, currentDiff, usedFingerprints;
+    var currentQ, score, cQ, sel, answered, maxAlt, currentDiff, currentDiffObj, usedFingerprints;
+    var DIFICULTADES = config.test === 'completo' ? DIF_FULL
+                     : (config.test === 'construir' && !config.val) ? DIF_CONSTRUIR
+                     : DIF_BASIC;
 
     var TITULOS = {
       'grupo':      'Intervalos de ' + (config.val || '') + '\xaa',
@@ -161,13 +180,6 @@
       'construir_semitono': 'Construir semitonos y enarm\xf3nicas',
       'construir_numero':   'Construir por n\xfamero'
     };
-
-    var ICONOS_DIFICULTAD = ['\u2600\ufe0f', '\u26a1', '\ud83d\udd25'];
-    var DESCS_DIFICULTAD = [
-      'Solo notas naturales',
-      'Con sostenidos y bemoles',
-      'Con dobles alteraciones'
-    ];
 
     var NOTE_NAMES_ES = ['Do','Re','Mi','Fa','Sol','La','Si'];
     var ACC_DISPLAY = {'-2':'bb','-1':'♭','0':'','1':'♯','2':'×'};
@@ -199,21 +211,22 @@
       /* completo: excluir unísonos (1ª) — no aparecen en las opciones de número */
       if (config.test === 'completo') {
         k = k.filter(function(x){ return DEFS[x][0] > 0; });
-        /* en fácil solo intervalos simples (hasta 8ª) */
-        if (currentDiff === 'easy') k = k.filter(function(x){ return DEFS[x][0] < 8; });
+        /* simple: solo hasta 8ª; compuesto: hasta la 15ª */
+        if (currentDiffObj.simple) k = k.filter(function(x){ return DEFS[x][0] < 8; });
       }
-      /* consonancia/construir: solo intervalos simples (hasta 8ª) */
-      if (config.test === 'consonancia' || config.test === 'construir') {
+      /* consonancia: solo intervalos simples (hasta 8ª) */
+      if (config.test === 'consonancia') {
         k = k.filter(function(x){ return DEFS[x][0] <= 7; });
       }
-      /* construir: sin unísonos; filtro por número si config.val */
+      /* construir: simples (hasta 8ª) salvo en niveles compuestos; sin unísonos; filtro por número */
       if (config.test === 'construir') {
+        if (currentDiffObj.simple) k = k.filter(function(x){ return DEFS[x][0] <= 7; });
         k = k.filter(function(x){ return DEFS[x][0] > 0; });
         if (config.val) k = k.filter(function(x){ return DEFS[x][2] === config.val; });
       }
-      if (currentDiff === 'easy') {
+      if (currentDiffObj.types === 'basic') {
         k = k.filter(function(x){ var t = DEFS[x][3]; return t==='Mayor'||t==='menor'||t==='Justa'; });
-      } else if (currentDiff === 'medium') {
+      } else if (currentDiffObj.types === 'single') {
         k = k.filter(function(x){ var t = DEFS[x][3]; return t!=='DblAum'&&t!=='DblDis'; });
       }
       return k;
@@ -444,9 +457,9 @@
       var btns = DIFICULTADES.map(function(d, i) {
         return [
           '<button class="tm-iv-mode-btn" data-i="' + i + '">',
-            '<span class="tm-iv-mode-icon">' + ICONOS_DIFICULTAD[i] + '</span>',
+            '<span class="tm-iv-mode-icon">' + d.icon + '</span>',
             '<span class="tm-iv-mode-lbl">' + d.lbl + '</span>',
-            '<span class="tm-iv-mode-desc">' + DESCS_DIFICULTAD[i] + '</span>',
+            '<span class="tm-iv-mode-desc">' + d.desc + '</span>',
           '</button>'
         ].join('');
       }).join('');
@@ -464,6 +477,7 @@
       wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
           var d    = DIFICULTADES[parseInt(btn.dataset.i, 10)];
+          currentDiffObj   = d;
           maxAlt           = d.maxAlt;
           currentDiff      = d.id;
           currentQ         = 0;
@@ -608,14 +622,14 @@
       var elCont = document.getElementById(uid + '_content');
       var h = '';
       if (config.test === 'completo') {
-        var numOpts = currentDiff === 'easy'
+        var numOpts = currentDiffObj.simple
           ? ['2','3','4','5','6','7','8']
           : ['2','3','4','5','6','7','8','9','10','11','12','13','14','15'];
         h += '<div><div class="tm-grid">' +
           numOpts.map(function(n){
             return '<button class="tm-opt" data-g="num" data-v="' + n + '">' + n + '\xaa</button>';
           }).join('') + '</div></div>';
-        var tiposCompleto = currentDiff === 'hard'
+        var tiposCompleto = currentDiffObj.types === 'all'
           ? ['Doble Disminuida','Disminuida','menor','Justa','Mayor','Aumentada','Doble Aumentada']
           : ['Disminuida','menor','Justa','Mayor','Aumentada'];
         h += '<div style="margin-top:10px"><div class="tm-grid">' +
@@ -724,7 +738,7 @@
       } else {
         var PERFECTAS = ['1','4','5','8'];
         var esPerfecta = PERFECTAS.indexOf(config.val) !== -1;
-        if (currentDiff === 'hard') {
+        if (currentDiffObj.types === 'all') {
           var tiposGrupo = esPerfecta
             ? ['Doble Disminuida','Disminuida','Justa','Aumentada','Doble Aumentada']
             : ['Doble Disminuida','Disminuida','menor','Mayor','Aumentada','Doble Aumentada'];
@@ -1016,11 +1030,11 @@
     function init() {
       usedFingerprints = [];
       if (config.test === 'construir_numero') {
-        maxAlt = 0; currentDiff = 'easy';
+        currentDiffObj = DIF_BASIC[0]; maxAlt = currentDiffObj.maxAlt; currentDiff = currentDiffObj.id;
         currentQ = 0; score = 0;
         startQuiz();
       } else if (config.test === 'arm_mel' || config.test === 'asc_des' || config.test === 'con_dis' || config.test === 'semitono') {
-        maxAlt = 1; currentDiff = 'medium';
+        currentDiffObj = DIF_BASIC[1]; maxAlt = currentDiffObj.maxAlt; currentDiff = currentDiffObj.id;
         currentQ = 0; score = 0;
         startQuiz();
       } else {

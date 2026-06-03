@@ -291,38 +291,48 @@
     function drawLoupe(row) {
       var elLstaff = document.getElementById(uid + '_lstaff');
       if (!elLstaff || typeof Vex === 'undefined') return;
-      var key = row.vfn + row.oct + activeTool;
+      /* la clave incluye lo ya escrito para refrescar al añadir/quitar notas */
+      var key = placedNotes.map(function (p) { return p.vfn + p.oct + p.acc; }).join(',') +
+                '|' + row.vfn + row.oct + activeTool;
       if (key === lastLoupeKey) return;
       lastLoupeKey = key;
       elLstaff.innerHTML = '';
 
       var V = Vex.Flow;
       var rend = new V.Renderer(elLstaff, V.Renderer.Backends.SVG);
-      rend.resize(180, 120);
+      rend.resize(300, 120);
       var ctx = rend.getContext();
       ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(10, 20, 160);
+      var stave = new V.Stave(10, 20, 280);
       stave.addClef('treble').setContext(ctx).draw();
 
-      var note = new V.StaveNote({ keys: [row.vfn + '/' + row.oct], duration: 'w' });
-      if (note.setKeyStyle) note.setKeyStyle(0, { fillStyle: '#8b6914', strokeStyle: '#8b6914' });
-      var a = accStr(activeTool);
-      if (a) {
-        var accObj = new V.Accidental(a);
-        if (accObj.setStyle) accObj.setStyle({ fillStyle: '#8b6914', strokeStyle: '#8b6914' });
-        note.addModifier(accObj, 0);
-      }
+      /* notas ya escritas (negro) + la nota bajo el cursor (dorado), ordenadas */
+      var preview = { vfn: row.vfn, oct: row.oct, acc: activeTool, _hover: true };
+      var all = sortedByPitch(placedNotes.concat([preview]));
+      var vfNotes = all.map(function (p) {
+        var n = new V.StaveNote({ keys: [p.vfn + '/' + p.oct], duration: 'w' });
+        if (p._hover && n.setKeyStyle) n.setKeyStyle(0, { fillStyle: '#8b6914', strokeStyle: '#8b6914' });
+        var a = accStr(p.acc);
+        if (a) {
+          var accObj = new V.Accidental(a);
+          if (p._hover && accObj.setStyle) accObj.setStyle({ fillStyle: '#8b6914', strokeStyle: '#8b6914' });
+          n.addModifier(accObj, 0);
+        }
+        return n;
+      });
 
       var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
-      voice.addTickables([note]);
-      new V.Formatter().joinVoices([voice]).format([voice], 120);
+      voice.addTickables(vfNotes);
+      new V.Formatter().joinVoices([voice]).format([voice], 220);
       voice.draw(ctx, stave);
 
       var svg = elLstaff.querySelector('svg');
+      var dispW = placedNotes.length > 0 ? '240' : '160';
+      var dispH = placedNotes.length > 0 ? '96' : '64';
       if (svg) {
-        svg.setAttribute('viewBox', '0 0 180 120');
-        svg.setAttribute('width', '135');
-        svg.setAttribute('height', '90');
+        svg.setAttribute('viewBox', '0 0 300 120');
+        svg.setAttribute('width', dispW);
+        svg.setAttribute('height', dispH);
       }
     }
 
