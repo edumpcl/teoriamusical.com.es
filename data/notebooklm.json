@@ -1,0 +1,34 @@
+{
+  "intro": "Resúmenes interactivos en Google NotebookLM, organizados por libro y unidad. Vamos subiendo nuevas unidades de forma continua.",
+  "books": [
+    {
+      "name": "Hematología",
+      "units": [
+        { "n": 1,  "title": "La sangre: composición y funciones",                 "url": "https://notebooklm.google.com/notebook/1d27d88f-6128-4b67-8068-237b1a3785a7" },
+        { "n": 2,  "title": "El sistema hematopoyético y la hematopoyesis",        "url": "https://notebooklm.google.com/notebook/3d0653da-dcda-47ab-bc41-3b9d61d922a8" },
+        { "n": 3,  "title": "Frotis sanguíneo: preparación y evaluación",          "url": "https://notebooklm.google.com/notebook/51973e68-d623-4cb3-b6a7-f1fd1d68eebd" },
+        { "n": 4,  "title": "Tinciones hematológicas",                             "url": "https://notebooklm.google.com/notebook/8f2b3d84-db17-4ee2-8311-4364ae9c8e4c" },
+        { "n": 5,  "title": "Eritrocitos y parásitos sanguíneos",                  "url": "https://notebooklm.google.com/notebook/e036f1dd-4198-4b28-a6d0-3978d3168f21" },
+        { "n": 6,  "title": "Hemoglobina y parámetros eritrocitarios",            "url": "https://notebooklm.google.com/notebook/7106a4c7-24f6-42fe-b088-c5812b8e7fb9" },
+        { "n": 7,  "title": "Metabolismo del hierro",                              "url": "https://notebooklm.google.com/notebook/afdc7f65-aa81-48ce-8d6d-ed4caae222c3" },
+        { "n": 8,  "title": "Anemias y poliglobulias",                             "url": null },
+        { "n": 9,  "title": "Leucocitos: formación y clasificación",              "url": null },
+        { "n": 10, "title": "Evaluación y diagnóstico de leucocitos",             "url": null },
+        { "n": 11, "title": "Alteraciones de los leucocitos",                      "url": null },
+        { "n": 12, "title": "Métodos de tinción y análisis celular",              "url": null },
+        { "n": 13, "title": "Leucemias, linfomas y gammapatías",                  "url": null },
+        { "n": 14, "title": "Plaquetas: formación, función y agregación",         "url": null },
+        { "n": 15, "title": "Alteraciones plaquetarias",                           "url": null },
+        { "n": 16, "title": "Analizadores hematológicos automatizados",           "url": null },
+        { "n": 17, "title": "Hemostasia y coagulación",                            "url": null },
+        { "n": 18, "title": "Pruebas de coagulación y hemostasia",                "url": null },
+        { "n": 19, "title": "Trombofilia y tratamiento antitrombótico",           "url": null },
+        { "n": 20, "title": "Trastornos hemorrágicos",                            "url": null },
+        { "n": 21, "title": "Diagnóstico de la trombofilia",                      "url": null },
+        { "n": 22, "title": "Grupos sanguíneos (AB0 y Rh)",                       "url": null },
+        { "n": 23, "title": "Bancos de sangre y donación",                        "url": null },
+        { "n": 24, "title": "Componentes sanguíneos y transfusión",               "url": null }
+      ]
+    }
+  ]
+}
