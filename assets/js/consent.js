@@ -132,8 +132,11 @@
     var existing = getCookie();
     if (existing && typeof existing.analytics !== 'undefined') {
       applyConsent(existing);
+      trigger.hidden = false;
+    } else {
+      // Visitante sin decisión previa: mostramos el banner de inmediato (RGPD).
+      show();
     }
-    trigger.hidden = false;
   }
 
   if (document.readyState === 'loading') {
