@@ -45,6 +45,20 @@
     document.head.appendChild(s);
   }
 
+  // Carga AdSense y rellena las unidades manuales (<ins class="adsbygoogle">).
+  // Si no hay consentimiento publicitario, se piden anuncios NO personalizados
+  // (contextuales, sin cookies). El push se hace una sola vez por unidad.
+  function startAds(personalized) {
+    loadAdSense();
+    window.adsbygoogle = window.adsbygoogle || [];
+    window.adsbygoogle.requestNonPersonalizedAds = personalized ? 0 : 1;
+    var units = document.querySelectorAll('ins.adsbygoogle:not([data-tm-pushed])');
+    for (var i = 0; i < units.length; i++) {
+      units[i].setAttribute('data-tm-pushed', '1');
+      try { window.adsbygoogle.push({}); } catch (e) {}
+    }
+  }
+
   function applyConsent(prefs) {
     var av = prefs.analytics   ? 'granted' : 'denied';
     var dv = prefs.advertising ? 'granted' : 'denied';
@@ -56,7 +70,8 @@
     });
     // GA4 ya se carga siempre (Consent Mode v2 avanzado); aquí solo actualizamos
     // el estado de consentimiento, que es lo que controla si GA escribe cookies.
-    if (prefs.advertising) loadAdSense();
+    // Los anuncios se sirven personalizados solo si el usuario lo ha aceptado.
+    startAds(!!prefs.advertising);
   }
 
   var overlay, panel, btnAccept, btnNecessary, btnConfigure, btnSave;
@@ -134,7 +149,9 @@
       applyConsent(existing);
       trigger.hidden = false;
     } else {
-      // Visitante sin decisión previa: mostramos el banner de inmediato (RGPD).
+      // Visitante sin decisión previa: anuncios NO personalizados y mostramos
+      // el banner de inmediato (RGPD).
+      startAds(false);
       show();
     }
   }

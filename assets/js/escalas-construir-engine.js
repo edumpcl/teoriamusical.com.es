@@ -22,7 +22,7 @@
     return 0;
   }
 
-  var SCALES = [
+  var SCALES_MAYOR = [
     { name: 'Do Mayor',   numAlts: 0, notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {} },
     { name: 'Sol Mayor',  numAlts: 1, notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'f/5':'#'} },
     { name: 'Re Mayor',   numAlts: 2, notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'f/4':'#','c/5':'#'} },
@@ -41,6 +41,12 @@
   ];
 
   function parseScale(scale) {
+    if (scale.seq) {
+      /* secuencia ordenada (p. ej. melódica ascendente+descendente): [vfn, oct, accNum] */
+      return scale.seq.map(function (t) {
+        return { vfn: t[0], oct: parseInt(t[1], 10), acc: t[2] };
+      });
+    }
     return scale.notes.map(function (key) {
       var p = key.split('/');
       return { vfn: p[0], oct: parseInt(p[1], 10), acc: accNum(scale.acc[key] || '') };
@@ -56,7 +62,7 @@
   var DIFICULTADES = [
     { lbl: 'F\xe1cil',    desc: 'Sin alteraciones o con 1',    maxAlts: 1  },
     { lbl: 'Medio',       desc: 'Hasta 4 alteraciones',        maxAlts: 4  },
-    { lbl: 'Dif\xedcil', desc: 'Las 15 escalas mayores',       maxAlts: 99 }
+    { lbl: 'Dif\xedcil', desc: 'Todas las tonalidades',         maxAlts: 99 }
   ];
 
   var SVG_W = 520, SVG_H = 200, STAVE_Y = 55, STAVE_W = 480;
@@ -153,7 +159,11 @@
     var uid = containerId;
 
     var totalQ = PREGUNTAS;
+    var SCALES = config.scales || SCALES_MAYOR;
     var currentQ, score, maxAlts, cQ, answered, placedNotes, activeTool, lastLoupeKey, currentSvg;
+    var vW = SVG_W, vSW = STAVE_W;            // ancho del lienzo/pentagrama (mayor en secuencias)
+    function targetLen() { return (cQ && cQ.seq) ? cQ.seq.length : 8; }
+    function isSeq() { return !!(cQ && cQ.seq); }
 
     function showModeScreen() {
       wrap.innerHTML = [
@@ -246,6 +256,8 @@
       var pool = SCALES.filter(function (s) { return s.numAlts <= maxAlts; });
       if (!pool.length) pool = SCALES;
       cQ = pool[Math.floor(Math.random() * pool.length)];
+      /* las secuencias (15 notas asc+desc) necesitan un pentagrama más ancho */
+      if (cQ.seq) { vW = 940; vSW = 900; } else { vW = SVG_W; vSW = STAVE_W; }
     }
 
     function sortedByPitch(arr) {
@@ -257,14 +269,15 @@
       if (!elNot || typeof Vex === 'undefined') return;
       elNot.innerHTML = '';
 
-      var sorted = sortedByPitch(placedNotes);
+      /* en modo secuencia se respeta el orden de colocación (asc + desc) */
+      var sorted = isSeq() ? placedNotes.slice() : sortedByPitch(placedNotes);
 
       var V = Vex.Flow;
       var r = new V.Renderer(elNot, V.Renderer.Backends.SVG);
-      r.resize(SVG_W, SVG_H);
+      r.resize(vW, SVG_H);
       var ctx = r.getContext();
       ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(10, STAVE_Y, STAVE_W);
+      var stave = new V.Stave(10, STAVE_Y, vSW);
       stave.addClef('treble').setContext(ctx).draw();
 
       if (sorted.length > 0) {
@@ -276,13 +289,13 @@
         });
         var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
         voice.addTickables(vfNotes);
-        new V.Formatter().joinVoices([voice]).format([voice], STAVE_W - 60);
+        new V.Formatter().joinVoices([voice]).format([voice], vSW - 60);
         voice.draw(ctx, stave);
       }
 
       var svg = elNot.querySelector('svg');
       if (svg) {
-        svg.setAttribute('viewBox', '0 0 ' + SVG_W + ' ' + SVG_H);
+        svg.setAttribute('viewBox', '0 0 ' + vW + ' ' + SVG_H);
         svg.style.width = '100%'; svg.style.height = 'auto';
         currentSvg = svg;
       }
@@ -308,7 +321,7 @@
 
       /* notas ya escritas (negro) + la nota bajo el cursor (dorado), ordenadas */
       var preview = { vfn: row.vfn, oct: row.oct, acc: activeTool, _hover: true };
-      var all = sortedByPitch(placedNotes.concat([preview]));
+      var all = isSeq() ? [preview] : sortedByPitch(placedNotes.concat([preview]));
       var vfNotes = all.map(function (p) {
         var n = new V.StaveNote({ keys: [p.vfn + '/' + p.oct], duration: 'w' });
         if (p._hover && n.setKeyStyle) n.setKeyStyle(0, { fillStyle: '#8b6914', strokeStyle: '#8b6914' });
@@ -340,7 +353,7 @@
       if (!currentSvg) return ROWS[9];
       var sr = currentSvg.getBoundingClientRect();
       if (!sr.width) return ROWS[9];
-      var scale = sr.width / SVG_W;
+      var scale = sr.width / vW;
       var svgY = (clientY - sr.top) / scale;
       var idx = Math.round((svgY - FIRST_ROW_SVGY) / 5);
       return ROWS[Math.max(0, Math.min(ROWS.length - 1, idx))];
@@ -360,7 +373,7 @@
         currentBest = row;
         var sr = currentSvg.getBoundingClientRect();
         var wr = elWrap.getBoundingClientRect();
-        var sc = sr.width / SVG_W;
+        var sc = sr.width / vW;
         var lineY = (sr.top - wr.top) + (STAVE_Y + row.line * 10) * sc;
         elHigh.style.display = 'block';
         elHigh.style.top = (lineY - 1) + 'px';
@@ -377,7 +390,7 @@
       }
 
       function startAction(e) {
-        if (answered || placedNotes.length >= 8) return;
+        if (answered || placedNotes.length >= targetLen()) return;
         isDragging = true;
         updatePreview(e);
       }
@@ -385,12 +398,14 @@
       function endAction() {
         if (!isDragging) return;
         isDragging = false;
-        if (currentBest && !answered && placedNotes.length < 8) {
+        if (currentBest && !answered && placedNotes.length < targetLen()) {
           var newNote = { vfn: currentBest.vfn, oct: currentBest.oct, acc: activeTool };
           var existingIdx = -1;
-          for (var i = 0; i < placedNotes.length; i++) {
-            if (placedNotes[i].vfn === newNote.vfn && placedNotes[i].oct === newNote.oct) {
-              existingIdx = i; break;
+          if (!isSeq()) {
+            for (var i = 0; i < placedNotes.length; i++) {
+              if (placedNotes[i].vfn === newNote.vfn && placedNotes[i].oct === newNote.oct) {
+                existingIdx = i; break;
+              }
             }
           }
           if (existingIdx >= 0) {
@@ -416,8 +431,8 @@
     function updateBtn() {
       var b  = document.getElementById(uid + '_btn');
       var nc = document.getElementById(uid + '_nc');
-      if (b)  b.classList.toggle('tm-ready', placedNotes.length === 8);
-      if (nc) nc.textContent = 'Notas colocadas: ' + placedNotes.length + ' / 8';
+      if (b)  b.classList.toggle('tm-ready', placedNotes.length === targetLen());
+      if (nc) nc.textContent = 'Notas colocadas: ' + placedNotes.length + ' / ' + targetLen();
     }
 
     function checkAnswer() {
@@ -426,14 +441,22 @@
       answered = true;
 
       var expected = parseScale(cQ);
-      var placed   = sortedByPitch(placedNotes);
-
-      var ascending = placed.every(function (p, i) {
-        return i === 0 || pitchVal(placed[i]) > pitchVal(placed[i - 1]);
-      });
-      var ok = ascending && placed.length === 8 && expected.every(function (e, i) {
-        return placed[i].vfn === e.vfn && placed[i].acc === e.acc;
-      });
+      var ok;
+      if (isSeq()) {
+        /* secuencia: se respeta el orden de colocación y la octava */
+        var placedS = placedNotes.slice();
+        ok = placedS.length === expected.length && expected.every(function (e, i) {
+          return placedS[i].vfn === e.vfn && placedS[i].oct === e.oct && placedS[i].acc === e.acc;
+        });
+      } else {
+        var placed = sortedByPitch(placedNotes);
+        var ascending = placed.every(function (p, i) {
+          return i === 0 || pitchVal(placed[i]) > pitchVal(placed[i - 1]);
+        });
+        ok = ascending && placed.length === expected.length && expected.every(function (e, i) {
+          return placed[i].vfn === e.vfn && placed[i].acc === e.acc;
+        });
+      }
 
       elBtn.style.display = 'none';
       document.getElementById(uid + '_nxt').className = 'tm-nxt tm-show';
@@ -468,8 +491,8 @@
       document.getElementById(uid + '_fb').className = 'tm-fb';
       document.getElementById(uid + '_nxt').className = 'tm-nxt';
       document.getElementById(uid + '_wrap').classList.remove('tm-answered');
-      document.getElementById(uid + '_nc').textContent = 'Notas colocadas: 0 / 8';
       genQ();
+      document.getElementById(uid + '_nc').textContent = 'Notas colocadas: 0 / ' + targetLen();
       document.getElementById(uid + '_q').innerHTML =
         'Dibuja la escala completa: <strong>' + cQ.name + '</strong>';
       drawStaff();
