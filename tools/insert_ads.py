@@ -44,43 +44,82 @@ def ad_block(slot):
     ) % (CLIENT, slot)
 
 
+# Etiquetas de bloque que cuentan para la profundidad de anidamiento.
+BLOCK = re.compile(
+    r'<(/?)(?:div|section|aside|nav|ul|ol|table|figure|header|footer|form|main|article)\b[^>]*>',
+    re.I)
+# <h2> de contenido = SIN atributo class (puede tener id). Excluye tarjetas/FAQ.
+H2C = re.compile(r'<h2(?![^>]*\bclass=)[^>]*>')
+# Bloque de anuncio ya insertado (para limpiar).
+AD_RE = re.compile(
+    r'[ \t]*<div class="tm-ad">\s*<ins class="adsbygoogle"[^>]*></ins>\s*</div>\n*')
+
+
+def strip_ads(html):
+    return AD_RE.sub('', html)
+
+
+def toplevel_content_h2(region):
+    """Posiciones (en region) de los <h2> de contenido que son hijos DIRECTOS
+    de <article> (profundidad de bloque == 1). Asi descartamos los <h2> que
+    viven dentro de tarjetas/rejillas/secciones (profundidad > 1)."""
+    events = []
+    for m in BLOCK.finditer(region):
+        events.append((m.start(), 0 if m.group(1) == '/' else 1))  # 0=close,1=open
+    for m in H2C.finditer(region):
+        events.append((m.start(), 2))  # 2 = h2 candidato
+    events.sort()
+    depth = 0
+    out = []
+    for pos, kind in events:
+        if kind == 2:
+            if depth == 1:           # solo article abierto => h2 de primer nivel
+                out.append(pos)
+        elif kind == 1:
+            depth += 1
+        else:
+            depth -= 1
+    return out
+
+
+# Marcadores de rejilla de tarjetas: paginas indice/hub. No llevan anuncios.
+GRID_RE = re.compile(r'ej-cards|tm-grid|tm-hero|tm-card')
+
+
 def process(html):
-    """Devuelve (nuevo_html, estado)."""
-    if 'class="tm-ad"' in html or ('data-ad-slot="%s"' % SLOT_INTRO) in html:
-        return html, "skip-ya-tiene"
+    """Reconcilia y auto-corrige: SIEMPRE limpia primero y reinserta donde toca,
+    asi se arreglan colocaciones viejas mal hechas. Devuelve (nuevo_html, estado)."""
+    original = html
+    html = strip_ads(html)   # partir de cero (corrige inserciones previas)
 
     m_art = re.search(r'<article\b', html)
     ends = list(re.finditer(r'</article>', html))
-    if not m_art or not ends:
-        return html, "skip-sin-article"
 
-    # Mas de un <article> => pagina de listado (p.ej. blog/index): cada post va
-    # en su propio <article>. No insertamos para no meternos entre tarjetas.
-    if len(re.findall(r'<article\b', html)) > 1 or len(ends) > 1:
-        return html, "skip-listado"
+    qualifies, reason = True, ""
+    if not m_art or not ends:
+        qualifies, reason = False, "sin-article"
+    elif len(re.findall(r'<article\b', html)) > 1 or len(ends) > 1:
+        qualifies, reason = False, "listado"     # p.ej. blog/index
+    else:
+        region = html[m_art.start():ends[-1].start()]
+        if GRID_RE.search(region):
+            qualifies, reason = False, "rejilla"  # indice/hub con tarjetas
+        elif len(toplevel_content_h2(region)) == 0:
+            qualifies, reason = False, "landing"  # sin prosa de primer nivel
+
+    if not qualifies:
+        if html != original:
+            return html, "LIMPIADA(" + reason + ")"
+        return html, "skip-" + reason
 
     art_start = m_art.start()
     art_end = ends[-1].start()
     region = html[art_start:art_end]
+    h2pos = toplevel_content_h2(region)
 
-    # Los <h2> de contenido real NO llevan clase (<h2> o <h2 id="...">). Los de
-    # landing / tarjetas / FAQ siempre llevan class= (tm-hero-card-titulo,
-    # tm-seccion-titulo...). Si no hay ningun <h2> de contenido => es una pagina
-    # indice/landing o muy fina y NO le ponemos anuncios (evita romper rejillas
-    # de tarjetas y cumple la politica de AdSense sobre contenido escaso).
-    content_h2 = list(re.finditer(r'<h2(?![^>]*\bclass=)', region))
-    if len(content_h2) == 0:
-        return html, "skip-landing"
-
-    inserts = []  # (pos_absoluta, texto)
-
-    # Ad 2: antes del ultimo </article> (siempre en paginas de contenido).
-    inserts.append((art_end, ad_block(SLOT_END)))
-
-    # Ad 1: antes del 2o <h2> de contenido (tras la primera seccion).
-    if len(content_h2) >= 2:
-        pos = art_start + content_h2[1].start()
-        inserts.append((pos, ad_block(SLOT_INTRO)))
+    inserts = [(art_end, ad_block(SLOT_END))]  # Ad 2: antes de </article>
+    if len(h2pos) >= 2:
+        inserts.append((art_start + h2pos[1], ad_block(SLOT_INTRO)))
         ad1 = "h2#2"
     else:
         ad1 = "solo-ad2"
@@ -88,6 +127,8 @@ def process(html):
     for pos, text in sorted(inserts, key=lambda x: x[0], reverse=True):
         html = html[:pos] + text + html[pos:]
 
+    if html == original:
+        return html, "ok-igual(" + ad1 + ")"
     return html, "ok(" + ad1 + ")"
 
 
