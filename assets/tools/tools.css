@@ -353,6 +353,23 @@
   .stat-val { font-family: ui-monospace, monospace; font-size: 18px; color: var(--green); display: block; font-weight: 500; }
   .stat-lbl { font-family: ui-monospace, monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); display: block; margin-top: 2px; }
 
+  /* ── TIEMPO DE PRÁCTICA ── */
+  .prac-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .prac-stats-grid .stat-val { font-size: 22px; }
+  .prac-reset {
+    margin-top: 10px;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-family: ui-monospace, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    padding: 2px 0;
+  }
+  .prac-reset:hover { color: var(--text); text-decoration: underline; }
+
   /* ── MODO ENSAYO ── */
   .practice-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
   .prac-field label {
@@ -472,6 +489,21 @@
     .tm-tool-intro { display: none; } /* en móvil priorizamos el tool; el texto sigue en el DOM (SEO) y se repite más abajo */
     .tm-breadcrumb { padding: 0.4rem 0; font-size: 0.8rem; }
     .bpm-range-labels { display: none; }
+
+    /* Pantalla completa en móvil: Tempo + Play + Péndulo en un solo vistazo */
+    .tm-metronomo-wrap.is-fullscreen { padding: 12px; }
+    .tm-metronomo-wrap.is-fullscreen .met-toolbar { margin-bottom: 8px; }
+    .tm-metronomo-wrap.is-fullscreen .met-grid { gap: 8px; }
+    .tm-metronomo-wrap.is-fullscreen .ctrl-box { padding: 12px; }
+    .tm-metronomo-wrap.is-fullscreen .box-label { margin-bottom: 6px; padding-bottom: 5px; }
+    .tm-metronomo-wrap.is-fullscreen .bpm-num { font-size: 64px; min-width: 0; }
+    .tm-metronomo-wrap.is-fullscreen .bpm-display { gap: 12px; margin-bottom: 2px; }
+    .tm-metronomo-wrap.is-fullscreen .tempo-name { margin-bottom: 8px; }
+    .tm-metronomo-wrap.is-fullscreen .btn-play { width: 64px; height: 64px; }
+    .tm-metronomo-wrap.is-fullscreen .btn-play svg { width: 26px; height: 26px; }
+    .tm-metronomo-wrap.is-fullscreen .pendulum-svg-wrap { max-width: 84px; }
+    .tm-metronomo-wrap.is-fullscreen .beat-dots { margin-top: 10px; gap: 6px; }
+    .tm-metronomo-wrap.is-fullscreen .beat-dot { width: 40px; height: 44px; }
   }
 
   /* ── TOOLBAR (Share + Fullscreen) ── */
@@ -517,10 +549,11 @@
   }
   .tm-metronomo-wrap.is-fullscreen #box-volumenes,
   .tm-metronomo-wrap.is-fullscreen #box-stats,
+  .tm-metronomo-wrap.is-fullscreen #box-practica,
   .tm-metronomo-wrap.is-fullscreen #box-ensayo,
   .tm-metronomo-wrap.is-fullscreen #box-cajaritmos,
   .tm-metronomo-wrap.is-fullscreen #box-atajos { display: none; }
-  .tm-metronomo-wrap.is-fullscreen .bpm-num { font-size: 128px; }
+  .tm-metronomo-wrap.is-fullscreen .bpm-num { font-size: 96px; }
   .tm-metronomo-wrap.is-fullscreen .btn-play { width: 80px; height: 80px; }
   .tm-metronomo-wrap.is-fullscreen .btn-play svg { width: 32px; height: 32px; }
 
