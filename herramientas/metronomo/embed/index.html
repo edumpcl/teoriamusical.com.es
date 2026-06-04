@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metrónomo · teoriamusical.com.es</title>
+<meta name="description" content="Metrónomo online gratuito embebible. Versión compacta del metrónomo de teoriamusical.com.es.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://www.teoriamusical.com.es/herramientas/metronomo/">
+<link rel="icon" href="/assets/img/favicon.png" type="image/png">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#1a1208;--bg2:#241a0c;--bg3:#2f2410;--line:#4a3500;
+    --gold:#d6a020;--gold-dim:#8a6a14;--cream:#f5e6c8;--muted:#a8946a;--text:#ece0c4;
+  }
+  html,body{height:100%}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:14px;min-height:100%;user-select:none;-webkit-user-select:none;
+  }
+  .wrap{width:100%;max-width:360px;display:flex;flex-direction:column;gap:12px;align-items:center}
+  .bpm-row{display:flex;align-items:center;gap:14px;justify-content:center;width:100%}
+  .bpm-btn{
+    width:42px;height:42px;border-radius:10px;border:1px solid var(--line);
+    background:var(--bg3);color:var(--cream);font-size:22px;line-height:1;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;transition:background .12s,border-color .12s;
+  }
+  .bpm-btn:hover{background:var(--bg2);border-color:var(--gold-dim)}
+  .bpm-num{font-size:54px;font-weight:700;color:var(--gold);min-width:120px;text-align:center;font-variant-numeric:tabular-nums;line-height:1}
+  .bpm-unit{font-size:12px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:-4px}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;background:var(--bg3);outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--gold);cursor:pointer;border:none}
+  input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--gold);cursor:pointer;border:none}
+  .dots{display:flex;gap:8px;justify-content:center;min-height:16px;flex-wrap:wrap}
+  .dot{width:14px;height:14px;border-radius:50%;background:var(--bg3);border:1px solid var(--line);transition:transform .05s,background .05s}
+  .dot.accent{border-color:var(--gold-dim)}
+  .dot.on{background:var(--gold);transform:scale(1.25)}
+  .dot.accent.on{background:var(--cream)}
+  .controls{display:flex;gap:10px;align-items:center;width:100%;justify-content:center}
+  .play{
+    flex:1;max-width:200px;height:50px;border:none;border-radius:12px;cursor:pointer;
+    background:var(--gold);color:#1a1208;font-size:16px;font-weight:700;letter-spacing:1px;
+    display:flex;align-items:center;justify-content:center;gap:8px;transition:filter .12s;
+  }
+  .play:hover{filter:brightness(1.08)}
+  .play.playing{background:var(--bg3);color:var(--cream);border:1px solid var(--gold-dim)}
+  .tap{
+    height:50px;padding:0 16px;border:1px solid var(--line);border-radius:12px;cursor:pointer;
+    background:var(--bg3);color:var(--cream);font-size:13px;font-weight:600;letter-spacing:1px;
+  }
+  .tap:hover{border-color:var(--gold-dim)}
+  .meter-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+  .meter-pill{
+    padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg3);
+    color:var(--muted);font-size:13px;cursor:pointer;font-variant-numeric:tabular-nums;transition:all .12s;
+  }
+  .meter-pill:hover{border-color:var(--gold-dim);color:var(--cream)}
+  .meter-pill.active{background:var(--gold);color:#1a1208;border-color:var(--gold);font-weight:700}
+  .credit{margin-top:4px;font-size:12px;color:var(--muted);text-align:center}
+  .credit a{color:var(--gold);text-decoration:none;font-weight:600}
+  .credit a:hover{text-decoration:underline}
+  @media (max-height:300px){.bpm-num{font-size:42px}.play,.tap{height:42px}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="bpm-num" id="bpm">120</div>
+      <div class="bpm-unit">BPM</div>
+    </div>
+    <div class="bpm-row">
+      <button class="bpm-btn" id="minus" aria-label="Menos BPM">−</button>
+      <input type="range" id="slider" min="40" max="240" value="120" aria-label="Tempo">
+      <button class="bpm-btn" id="plus" aria-label="Más BPM">+</button>
+    </div>
+    <div class="meter-row" id="meters" role="group" aria-label="Compás">
+      <button class="meter-pill" data-beats="2">2/4</button>
+      <button class="meter-pill active" data-beats="4">4/4</button>
+      <button class="meter-pill" data-beats="3">3/4</button>
+      <button class="meter-pill" data-beats="6">6/8</button>
+    </div>
+    <div class="dots" id="dots" aria-hidden="true"></div>
+    <div class="controls">
+      <button class="play" id="play"><span id="play-label">▶ Iniciar</span></button>
+      <button class="tap" id="tap" title="Pulsa al ritmo">TAP</button>
+    </div>
+    <div class="credit">🎵 <a href="https://www.teoriamusical.com.es/herramientas/metronomo/" target="_blank" rel="noopener">Metrónomo de teoriamusical.com.es</a></div>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+  var ctx=null, master=null;
+  var bpm=120, beats=4, playing=false, current=0, nextTime=0, timer=null;
+  var $=function(id){return document.getElementById(id)};
+  var bpmEl=$("bpm"), slider=$("slider"), playBtn=$("play"), playLabel=$("play-label"), dotsEl=$("dots");
+
+  function ensureCtx(){
+    if(!ctx){ ctx=new (window.AudioContext||window.webkitAudioContext)(); master=ctx.createGain(); master.gain.value=1; master.connect(ctx.destination); }
+    if(ctx.state==="suspended") ctx.resume();
+  }
+  function click(accent, time){
+    var freq=accent?3000:2100, dur=accent?.042:.028, vol=accent?1:.6;
+    // ruido (transitorio)
+    var buf=ctx.createBuffer(1, Math.floor(.05*ctx.sampleRate), ctx.sampleRate), d=buf.getChannelData(0);
+    for(var i=0;i<d.length;i++) d[i]=Math.random()*2-1;
+    var nb=ctx.createBufferSource(); nb.buffer=buf;
+    var hp=ctx.createBiquadFilter(); hp.type="highpass"; hp.frequency.value=4000;
+    var ng=ctx.createGain(); ng.gain.setValueAtTime(vol*.5,time); ng.gain.exponentialRampToValueAtTime(.001,time+.004);
+    nb.connect(hp); hp.connect(ng); ng.connect(master); nb.start(time); nb.stop(time+.02);
+    // tono
+    var osc=ctx.createOscillator(); osc.frequency.setValueAtTime(freq,time); osc.frequency.exponentialRampToValueAtTime(freq*.5,time+dur);
+    var g=ctx.createGain(); g.gain.setValueAtTime(vol,time); g.gain.exponentialRampToValueAtTime(.001,time+dur);
+    osc.connect(g); g.connect(master); osc.start(time); osc.stop(time+dur+.01);
+  }
+  function buildDots(){
+    dotsEl.innerHTML="";
+    for(var i=0;i<beats;i++){ var el=document.createElement("div"); el.className="dot"+(i===0?" accent":""); el.dataset.i=i; dotsEl.appendChild(el); }
+  }
+  function flash(i){
+    var els=dotsEl.children;
+    for(var k=0;k<els.length;k++) els[k].classList.toggle("on", k===i);
+  }
+  function scheduler(){
+    while(nextTime < ctx.currentTime + 0.1){
+      var accent=(current===0), beatIdx=current, t=nextTime;
+      click(accent, t);
+      setTimeout(function(idx){return function(){ if(playing) flash(idx); }}(beatIdx), Math.max(0,(t-ctx.currentTime)*1000));
+      nextTime += 60/bpm;
+      current=(current+1)%beats;
+    }
+  }
+  function start(){
+    ensureCtx(); playing=true; current=0; nextTime=ctx.currentTime+0.06;
+    timer=setInterval(scheduler,25);
+    playBtn.classList.add("playing"); playLabel.textContent="■ Parar";
+  }
+  function stop(){
+    playing=false; if(timer){clearInterval(timer); timer=null;}
+    playBtn.classList.remove("playing"); playLabel.textContent="▶ Iniciar";
+    var els=dotsEl.children; for(var k=0;k<els.length;k++) els[k].classList.remove("on");
+  }
+  function toggle(){ playing?stop():start(); }
+  function setBpm(v){
+    bpm=Math.max(40,Math.min(240,v|0));
+    bpmEl.textContent=bpm; slider.value=bpm;
+  }
+  function setBeats(n){
+    beats=n; current=0; buildDots();
+    var pills=document.querySelectorAll(".meter-pill");
+    for(var k=0;k<pills.length;k++) pills[k].classList.toggle("active", +pills[k].dataset.beats===n);
+  }
+
+  // eventos
+  $("minus").addEventListener("click",function(){setBpm(bpm-1)});
+  $("plus").addEventListener("click",function(){setBpm(bpm+1)});
+  slider.addEventListener("input",function(){setBpm(+slider.value)});
+  playBtn.addEventListener("click",toggle);
+  document.querySelectorAll(".meter-pill").forEach(function(p){ p.addEventListener("click",function(){ setBeats(+p.dataset.beats); }); });
+
+  // TAP tempo
+  var taps=[];
+  $("tap").addEventListener("click",function(){
+    var now=performance.now();
+    if(taps.length && now-taps[taps.length-1]>2000) taps=[];
+    taps.push(now); if(taps.length>5) taps.shift();
+    if(taps.length>=2){
+      var sum=0; for(var i=1;i<taps.length;i++) sum+=taps[i]-taps[i-1];
+      setBpm(Math.round(60000/(sum/(taps.length-1))));
+    }
+  });
+
+  // teclado: espacio = play/stop
+  document.addEventListener("keydown",function(e){ if(e.code==="Space"){ e.preventDefault(); toggle(); } });
+
+  buildDots();
+})();
+</script>
+</body>
+</html>

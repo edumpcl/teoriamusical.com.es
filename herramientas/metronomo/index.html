@@ -660,6 +660,35 @@
 
 
 
+<h2>Inserta el metrónomo gratis en tu web</h2>
+
+<p>¿Tienes una web, un blog o una página como profesor de música? Puedes <strong>incrustar este metrónomo gratis</strong> en cualquier sitio con una sola línea de código. La versión embebible es ligera, funciona en el móvil y no necesita instalación. Copia el código y pégalo donde quieras que aparezca:</p>
+
+<div class="tm-embed-box" style="background:#241a0c;border:1px solid #4a3500;border-radius:12px;padding:16px;margin:18px 0;">
+  <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;">
+    <iframe src="/herramientas/metronomo/embed/" width="360" height="300" style="border:0;border-radius:12px;max-width:100%;flex:0 0 auto;" title="Vista previa del metrónomo embebible" loading="lazy"></iframe>
+    <div style="flex:1;min-width:240px;">
+      <label for="tm-embed-code" style="display:block;font-size:13px;color:#a8946a;margin-bottom:6px;">Código para insertar:</label>
+      <textarea id="tm-embed-code" readonly rows="5" aria-label="Código para insertar el metrónomo" style="width:100%;background:#1a1208;color:#ece0c4;border:1px solid #4a3500;border-radius:8px;padding:10px;font-family:'DM Mono',ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.5;resize:vertical;">&lt;iframe src="https://www.teoriamusical.com.es/herramientas/metronomo/embed/" width="360" height="300" style="border:0;border-radius:12px;max-width:100%" title="Metrónomo online" loading="lazy"&gt;&lt;/iframe&gt;
+&lt;p&gt;Metrónomo por &lt;a href="https://www.teoriamusical.com.es/herramientas/metronomo/"&gt;teoriamusical.com.es&lt;/a&gt;&lt;/p&gt;</textarea>
+      <button id="tm-embed-copy" type="button" style="margin-top:10px;background:#d6a020;color:#1a1208;border:none;border-radius:8px;padding:10px 18px;font-weight:700;cursor:pointer;font-size:14px;">Copiar código</button>
+      <p style="font-size:12px;color:#a8946a;margin-top:8px;">Puedes ajustar <code>width</code> y <code>height</code> a tu gusto. La línea de atribución ayuda a otros músicos a descubrir la herramienta (¡gracias!).</p>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById("tm-embed-copy"),ta=document.getElementById("tm-embed-code");
+  if(!btn||!ta)return;
+  btn.addEventListener("click",function(){
+    ta.focus();ta.select();ta.setSelectionRange(0,99999);
+    var orig=btn.textContent,done=function(){btn.textContent="¡Copiado!";setTimeout(function(){btn.textContent=orig;},1800);};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ta.value).then(done,function(){try{document.execCommand("copy");done();}catch(e){}});}
+    else{try{document.execCommand("copy");done();}catch(e){}}
+  });
+})();
+</script>
+
 <h2>Preguntas Frecuentes sobre el Metrónomo</h2>
 
 <div class="tm-faq-list">
