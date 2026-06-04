@@ -21,6 +21,19 @@
     if (s === 'bb') return -2;
     return 0;
   }
+  /* Para una secuencia ordenada en un solo compás (sin armadura), calcula el
+     glifo de alteración a dibujar en cada nota según la persistencia dentro del
+     compás: '#','b','##','bb','n' (becuadro que cancela) o null (sin glifo). */
+  function measureAccidentals(seq) {
+    var active = {};
+    return seq.map(function (p) {
+      var k = p.vfn + p.oct;
+      var cur = (k in active) ? active[k] : 0;
+      if (p.acc === cur) return null;
+      active[k] = p.acc;
+      return p.acc === 2 ? '##' : p.acc === 1 ? '#' : p.acc === -1 ? 'b' : p.acc === -2 ? 'bb' : 'n';
+    });
+  }
 
   var SCALES_MAYOR = [
     { name: 'Do Mayor',   numAlts: 0, notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {} },
@@ -59,11 +72,38 @@
 
   var PREGUNTAS = 10;
   var ICONOS = ['☀️', '⚡', '🔥'];
-  var DIFICULTADES = [
-    { lbl: 'F\xe1cil',    desc: 'Sin alteraciones o con 1',    maxAlts: 1  },
-    { lbl: 'Medio',       desc: 'Hasta 4 alteraciones',        maxAlts: 4  },
-    { lbl: 'Dif\xedcil', desc: 'Todas las tonalidades',         maxAlts: 99 }
-  ];
+  var DIFF_LBL = ['F\xe1cil', 'Medio', 'Dif\xedcil'];
+  var DIFF_BASE = [1, 4, 99];
+  /* Alteraciones de la ARMADURA del relativo menor, por tónica. La melódica y la
+     armónica añaden alteraciones (6ª/7ª) que NO van en la armadura, así que su
+     dificultad se mide por la armadura, no por el total de alteraciones dibujadas. */
+  var KSIG_MINOR = {
+    'La': 0, 'Mi': 1, 'Si': 2, 'Fa♯': 3, 'Do♯': 4, 'Sol♯': 5, 'Re♯': 6, 'La♯': 7,
+    'Re': 1, 'Sol': 2, 'Do': 3, 'Fa': 4, 'Si♭': 5, 'Mi♭': 6, 'La♭': 7
+  };
+  /* métrica de dificultad: nº de alteraciones de la armadura (en melódica/armónica)
+     o, para el resto, el total de alteraciones dibujadas (que ya coincide con la armadura) */
+  function diffMetric(s) {
+    if (/Mel[oó]dica|Arm[oó]nica/.test(s.name)) {
+      var tonic = s.name.split(' ')[0];
+      if (tonic in KSIG_MINOR) return KSIG_MINOR[tonic];
+    }
+    return s.numAlts;
+  }
+  /* Construye los 3 niveles adaptándose al juego de escalas: si el umbral base
+     dejaría el grupo vacío se sube al mínimo disponible. Las descripciones
+     reflejan el umbral real (en alteraciones de armadura). */
+  function buildDifficulties(scales) {
+    var minA = Math.min.apply(null, scales.map(diffMetric));
+    return DIFF_BASE.map(function (b, i) {
+      var last = i === DIFF_BASE.length - 1;
+      var maxA = last ? b : Math.max(b, minA);
+      var desc = last ? 'Todas las tonalidades'
+               : maxA <= 1 ? 'Sin alteraciones o con 1'
+               : 'Hasta ' + maxA + ' alteraciones';
+      return { lbl: DIFF_LBL[i], desc: desc, maxAlts: maxA };
+    });
+  }
 
   var SVG_W = 520, SVG_H = 200, STAVE_Y = 55, STAVE_W = 480;
 
@@ -134,10 +174,11 @@
     '.tm-ec-wrap .tm-tool-edit{font-size:.82rem;padding:8px 12px;border:1px solid #d8d0b8;background:#f5f2ea;cursor:pointer;border-radius:6px;font-family:inherit;color:#555;transition:.15s;}',
     '.tm-ec-wrap .tm-tool-edit:hover{border-color:#8b6914;color:#8b6914;}',
     '.tm-ec-wrap .tm-note-count{font-size:.82rem;color:#666;margin:4px 0 0;text-align:center;}',
-    '.tm-ec-wrap .tm-iv-loupe{position:fixed;display:none;pointer-events:none;z-index:9999;background:#fdfcf9;border:2px solid #333;border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,0.35);transform:translate(-50%,calc(-100% - 18px));}',
+    '.tm-ec-wrap .tm-iv-loupe{position:fixed;display:none;pointer-events:none;z-index:9999;background:#fdfcf9;border:2px solid #333;border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,0.35);transform:translate(-50%,calc(-100% - 18px));max-width:calc(100vw - 16px);}',
     '.tm-ec-wrap .tm-iv-loupe::after{content:"";position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);border:11px solid transparent;border-top-color:#333;border-bottom:none;}',
     '.tm-ec-wrap .tm-iv-loupe::before{content:"";position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-top-color:#fdfcf9;border-bottom:none;z-index:1;}',
     '.tm-ec-wrap .tm-iv-loupe-staff{line-height:0;}',
+    '.tm-ec-wrap .tm-iv-loupe-staff svg{display:block;max-width:100%;height:auto;}',
     '@media(max-width:500px){.tm-ec-wrap .tm-iv-modes{flex-direction:column;align-items:center;}.tm-ec-wrap .tm-iv-mode-btn{width:100%;max-width:220px;}}'
   ].join('');
 
@@ -160,6 +201,7 @@
 
     var totalQ = PREGUNTAS;
     var SCALES = config.scales || SCALES_MAYOR;
+    var DIFICULTADES = buildDifficulties(SCALES);
     var currentQ, score, maxAlts, cQ, answered, placedNotes, activeTool, lastLoupeKey, currentSvg;
     var vW = SVG_W, vSW = STAVE_W;            // ancho del lienzo/pentagrama (mayor en secuencias)
     function targetLen() { return (cQ && cQ.seq) ? cQ.seq.length : 8; }
@@ -253,8 +295,12 @@
     }
 
     function genQ() {
-      var pool = SCALES.filter(function (s) { return s.numAlts <= maxAlts; });
-      if (!pool.length) pool = SCALES;
+      var pool = SCALES.filter(function (s) { return diffMetric(s) <= maxAlts; });
+      if (!pool.length) {
+        /* salvaguarda: nunca caer en TODAS las escalas; usar solo las más fáciles */
+        var minA = Math.min.apply(null, SCALES.map(diffMetric));
+        pool = SCALES.filter(function (s) { return diffMetric(s) === minA; });
+      }
       cQ = pool[Math.floor(Math.random() * pool.length)];
       /* las secuencias (15 notas asc+desc) necesitan un pentagrama más ancho */
       if (cQ.seq) { vW = 940; vSW = 900; } else { vW = SVG_W; vSW = STAVE_W; }
@@ -281,10 +327,14 @@
       stave.addClef('treble').setContext(ctx).draw();
 
       if (sorted.length > 0) {
-        var vfNotes = sorted.map(function (p) {
+        var seq = isSeq();
+        /* en secuencia (asc+desc en un solo compás) se dibujan ♯/♭ y los
+           becuadros que cancelan una alteración anterior del mismo compás */
+        var glyphs = seq ? measureAccidentals(sorted) : null;
+        var vfNotes = sorted.map(function (p, i) {
           var n = new V.StaveNote({ keys: [p.vfn + '/' + p.oct], duration: 'w' });
-          var a = accStr(p.acc);
-          if (a) n.addModifier(new V.Accidental(a), 0);
+          var glyph = seq ? glyphs[i] : accStr(p.acc);
+          if (glyph) n.addModifier(new V.Accidental(glyph), 0);
           return n;
         });
         var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
@@ -312,38 +362,56 @@
       elLstaff.innerHTML = '';
 
       var V = Vex.Flow;
+
+      /* notas ya escritas (negro) + la nota bajo el cursor (dorado).
+         En secuencia (asc+desc) se conserva el orden de colocación; si no, por altura. */
+      var seqL = isSeq();
+      var preview = { vfn: row.vfn, oct: row.oct, acc: activeTool, _hover: true };
+      var all = seqL ? placedNotes.concat([preview]) : sortedByPitch(placedNotes.concat([preview]));
+
+      /* En secuencia la lupa muestra solo una ventana de las últimas notas para
+         mantenerse compacta. Las alteraciones se calculan sobre la secuencia
+         COMPLETA, así el becuadro que cancela una alteración previa se dibuja
+         aunque esa alteración haya quedado fuera de la ventana. */
+      var glyphs = seqL ? measureAccidentals(all) : null;
+      var start = seqL ? Math.max(0, all.length - 8) : 0;
+      var shown = all.slice(start);
+
+      var canvasW = Math.max(300, 24 + shown.length * 30);
+
       var rend = new V.Renderer(elLstaff, V.Renderer.Backends.SVG);
-      rend.resize(300, 120);
+      rend.resize(canvasW, 120);
       var ctx = rend.getContext();
       ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(10, 20, 280);
+      var stave = new V.Stave(10, 20, canvasW - 20);
       stave.addClef('treble').setContext(ctx).draw();
 
-      /* notas ya escritas (negro) + la nota bajo el cursor (dorado), ordenadas */
-      var preview = { vfn: row.vfn, oct: row.oct, acc: activeTool, _hover: true };
-      var all = isSeq() ? [preview] : sortedByPitch(placedNotes.concat([preview]));
-      var vfNotes = all.map(function (p) {
+      var vfNotes = shown.map(function (p, i) {
         var n = new V.StaveNote({ keys: [p.vfn + '/' + p.oct], duration: 'w' });
-        if (p._hover && n.setKeyStyle) n.setKeyStyle(0, { fillStyle: '#8b6914', strokeStyle: '#8b6914' });
-        var a = accStr(p.acc);
-        if (a) {
-          var accObj = new V.Accidental(a);
+        var glyph = seqL ? glyphs[start + i] : accStr(p.acc);
+        if (glyph) {
+          var accObj = new V.Accidental(glyph);
           if (p._hover && accObj.setStyle) accObj.setStyle({ fillStyle: '#8b6914', strokeStyle: '#8b6914' });
           n.addModifier(accObj, 0);
         }
+        if (p._hover && n.setKeyStyle) n.setKeyStyle(0, { fillStyle: '#8b6914', strokeStyle: '#8b6914' });
         return n;
       });
 
       var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
       voice.addTickables(vfNotes);
-      new V.Formatter().joinVoices([voice]).format([voice], 220);
+      new V.Formatter().joinVoices([voice]).format([voice], canvasW - 80);
       voice.draw(ctx, stave);
 
       var svg = elLstaff.querySelector('svg');
-      var dispW = placedNotes.length > 0 ? '240' : '160';
-      var dispH = placedNotes.length > 0 ? '96' : '64';
       if (svg) {
-        svg.setAttribute('viewBox', '0 0 300 120');
+        var dispW, dispH;
+        if (placedNotes.length === 0) { dispW = 160; dispH = 64; }
+        else {
+          dispW = Math.max(240, Math.min(340, Math.round(canvasW * 0.8)));
+          dispH = Math.round(dispW * 120 / canvasW);
+        }
+        svg.setAttribute('viewBox', '0 0 ' + canvasW + ' 120');
         svg.setAttribute('width', dispW);
         svg.setAttribute('height', dispH);
       }
