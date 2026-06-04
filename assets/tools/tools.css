@@ -490,20 +490,13 @@
     .tm-breadcrumb { padding: 0.4rem 0; font-size: 0.8rem; }
     .bpm-range-labels { display: none; }
 
-    /* Pantalla completa en móvil: Tempo + Play + Péndulo en un solo vistazo */
-    .tm-metronomo-wrap.is-fullscreen { padding: 12px; }
-    .tm-metronomo-wrap.is-fullscreen .met-toolbar { margin-bottom: 8px; }
-    .tm-metronomo-wrap.is-fullscreen .met-grid { gap: 8px; }
-    .tm-metronomo-wrap.is-fullscreen .ctrl-box { padding: 12px; }
-    .tm-metronomo-wrap.is-fullscreen .box-label { margin-bottom: 6px; padding-bottom: 5px; }
-    .tm-metronomo-wrap.is-fullscreen .bpm-num { font-size: 64px; min-width: 0; }
-    .tm-metronomo-wrap.is-fullscreen .bpm-display { gap: 12px; margin-bottom: 2px; }
-    .tm-metronomo-wrap.is-fullscreen .tempo-name { margin-bottom: 8px; }
-    .tm-metronomo-wrap.is-fullscreen .btn-play { width: 64px; height: 64px; }
-    .tm-metronomo-wrap.is-fullscreen .btn-play svg { width: 26px; height: 26px; }
-    .tm-metronomo-wrap.is-fullscreen .pendulum-svg-wrap { max-width: 84px; }
-    .tm-metronomo-wrap.is-fullscreen .beat-dots { margin-top: 10px; gap: 6px; }
-    .tm-metronomo-wrap.is-fullscreen .beat-dot { width: 40px; height: 44px; }
+    /* Pantalla completa en móvil: Tempo + Play + Péndulo grandes y en un solo vistazo */
+    .tm-metronomo-wrap.is-fullscreen { padding: 14px; }
+    .tm-metronomo-wrap.is-fullscreen .met-toolbar { margin-bottom: 10px; }
+    .tm-metronomo-wrap.is-fullscreen .met-grid { gap: 12px; }
+    .tm-metronomo-wrap.is-fullscreen .ctrl-box { padding: 16px; }
+    .tm-metronomo-wrap.is-fullscreen .bpm-display { gap: 14px; margin-bottom: 4px; }
+    .tm-metronomo-wrap.is-fullscreen .pendulum-svg-wrap { max-width: 120px; }
   }
 
   /* ── TOOLBAR (Share + Fullscreen) ── */
@@ -553,9 +546,9 @@
   .tm-metronomo-wrap.is-fullscreen #box-ensayo,
   .tm-metronomo-wrap.is-fullscreen #box-cajaritmos,
   .tm-metronomo-wrap.is-fullscreen #box-atajos { display: none; }
-  .tm-metronomo-wrap.is-fullscreen .bpm-num { font-size: 96px; }
-  .tm-metronomo-wrap.is-fullscreen .btn-play { width: 80px; height: 80px; }
-  .tm-metronomo-wrap.is-fullscreen .btn-play svg { width: 32px; height: 32px; }
+  .tm-metronomo-wrap.is-fullscreen .bpm-num { font-size: 112px; }
+  .tm-metronomo-wrap.is-fullscreen .btn-play { width: 88px; height: 88px; }
+  .tm-metronomo-wrap.is-fullscreen .btn-play svg { width: 34px; height: 34px; }
 
   /* ── METRÓNOMO FULLSCREEN — escritorio (modal centrado) ── */
   @media (min-width: 768px) {
