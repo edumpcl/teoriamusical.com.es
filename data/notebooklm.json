@@ -11,23 +11,112 @@
         { "n": 5,  "title": "Eritrocitos y parásitos sanguíneos",                  "url": "https://notebooklm.google.com/notebook/e036f1dd-4198-4b28-a6d0-3978d3168f21" },
         { "n": 6,  "title": "Hemoglobina y parámetros eritrocitarios",            "url": "https://notebooklm.google.com/notebook/7106a4c7-24f6-42fe-b088-c5812b8e7fb9" },
         { "n": 7,  "title": "Metabolismo del hierro",                              "url": "https://notebooklm.google.com/notebook/afdc7f65-aa81-48ce-8d6d-ed4caae222c3" },
-        { "n": 8,  "title": "Anemias y poliglobulias",                             "url": null },
-        { "n": 9,  "title": "Leucocitos: formación y clasificación",              "url": null },
-        { "n": 10, "title": "Evaluación y diagnóstico de leucocitos",             "url": null },
-        { "n": 11, "title": "Alteraciones de los leucocitos",                      "url": null },
-        { "n": 12, "title": "Métodos de tinción y análisis celular",              "url": null },
-        { "n": 13, "title": "Leucemias, linfomas y gammapatías",                  "url": null },
-        { "n": 14, "title": "Plaquetas: formación, función y agregación",         "url": null },
-        { "n": 15, "title": "Alteraciones plaquetarias",                           "url": null },
-        { "n": 16, "title": "Analizadores hematológicos automatizados",           "url": null },
-        { "n": 17, "title": "Hemostasia y coagulación",                            "url": null },
-        { "n": 18, "title": "Pruebas de coagulación y hemostasia",                "url": null },
-        { "n": 19, "title": "Trombofilia y tratamiento antitrombótico",           "url": null },
-        { "n": 20, "title": "Trastornos hemorrágicos",                            "url": null },
-        { "n": 21, "title": "Diagnóstico de la trombofilia",                      "url": null },
-        { "n": 22, "title": "Grupos sanguíneos (AB0 y Rh)",                       "url": null },
-        { "n": 23, "title": "Bancos de sangre y donación",                        "url": null },
-        { "n": 24, "title": "Componentes sanguíneos y transfusión",               "url": null }
+        { "n": 8,  "title": "Anemias y poliglobulias",                             "url": "https://notebooklm.google.com/notebook/4902d8dd-2332-4b77-86e2-f71598c3c571" },
+        { "n": 9,  "title": "Leucocitos: formación y clasificación",              "url": "https://notebooklm.google.com/notebook/2b34c5a4-df87-4039-aa29-aa86cc730ee9" },
+        { "n": 10, "title": "Evaluación y diagnóstico de leucocitos",             "url": "https://notebooklm.google.com/notebook/e1d820f6-fdbd-482b-868c-ec15c73d04fd" },
+        { "n": 11, "title": "Alteraciones de los leucocitos",                      "url": "https://notebooklm.google.com/notebook/18575a81-db94-4d0f-8656-1ce7654e04a7" },
+        { "n": 12, "title": "Métodos de tinción y análisis celular",              "url": "https://notebooklm.google.com/notebook/67731666-b2c6-4cba-841c-0ac03b4040c7" },
+        { "n": 13, "title": "Leucemias, linfomas y gammapatías",                  "url": "https://notebooklm.google.com/notebook/99e2dcdf-be91-475e-8f55-7130f04c2c7d" },
+        { "n": 14, "title": "Plaquetas: formación, función y agregación",         "url": "https://notebooklm.google.com/notebook/1f3389d7-4597-497e-abb3-b09aeb6a12a2" },
+        { "n": 15, "title": "Alteraciones plaquetarias",                           "url": "https://notebooklm.google.com/notebook/a832261a-fc01-4f5c-add3-06e1e0bb253e" },
+        { "n": 16, "title": "Analizadores hematológicos automatizados",           "url": "https://notebooklm.google.com/notebook/88a7e56f-9054-4589-ad42-625f7be980f2" },
+        { "n": 17, "title": "Hemostasia y coagulación",                            "url": "https://notebooklm.google.com/notebook/ea9da753-00e8-4542-b404-00da9de1c7e0" },
+        { "n": 18, "title": "Pruebas de coagulación y hemostasia",                "url": "https://notebooklm.google.com/notebook/c31097ae-ab67-4c52-85a6-ac6c43f3998b" },
+        { "n": 19, "title": "Trombofilia y tratamiento antitrombótico",           "url": "https://notebooklm.google.com/notebook/ba24f5d7-7b34-4eb0-b823-9f079a19bc01" },
+        { "n": 20, "title": "Trastornos hemorrágicos",                            "url": "https://notebooklm.google.com/notebook/331ced91-4fbe-422c-80cd-adc4d5d503fe" },
+        { "n": 21, "title": "Diagnóstico de la trombofilia",                      "url": "https://notebooklm.google.com/notebook/9c149bc1-df18-4f5e-a2be-b34d77ca633b" },
+        { "n": 22, "title": "Grupos sanguíneos (AB0 y Rh)",                       "url": "https://notebooklm.google.com/notebook/c37e0cd3-2d7b-4fb5-896c-597b1de289af" },
+        { "n": 23, "title": "Bancos de sangre y donación",                        "url": "https://notebooklm.google.com/notebook/360fa1c6-1efa-4b45-98f3-a950cb288241" },
+        { "n": 24, "title": "Componentes sanguíneos y transfusión",               "url": "https://notebooklm.google.com/notebook/d883010b-89dc-4517-b548-1b18bfb63ac3" }
+      ]
+    },
+    {
+      "name": "Técnicas Generales de Laboratorio",
+      "units": [
+        { "n": 1, "title": "Material, equipos y reactivos del laboratorio",        "url": null },
+        { "n": 2, "title": "Seguridad y gestión de residuos",                      "url": null },
+        { "n": 3, "title": "Soluciones, diluciones y pH",                          "url": null },
+        { "n": 4, "title": "Técnicas de separación: centrifugación y electroforesis", "url": null },
+        { "n": 5, "title": "Microscopía óptica",                                   "url": null },
+        { "n": 6, "title": "Estadística y control de calidad",                     "url": null }
+      ]
+    },
+    {
+      "name": "Gestión de Muestras Biológicas",
+      "units": [
+        { "n": 1,  "title": "El sistema sanitario y la ética profesional",         "url": null },
+        { "n": 2,  "title": "El técnico de laboratorio: funciones y organización", "url": null },
+        { "n": 3,  "title": "Gestión del laboratorio y procesos de análisis",      "url": null },
+        { "n": 4,  "title": "Las muestras biológicas: tratamiento y variabilidad", "url": null },
+        { "n": 5,  "title": "Muestras de sangre: extracción y procesamiento",      "url": null },
+        { "n": 6,  "title": "Análisis de orina: recogida y procesamiento",         "url": null },
+        { "n": 7,  "title": "Heces y otros líquidos biológicos",                   "url": null },
+        { "n": 8,  "title": "Muestras de tejido y técnicas de imagen",             "url": null },
+        { "n": 9,  "title": "Biobancos y aspectos éticos",                         "url": null },
+        { "n": 10, "title": "Seguridad en el laboratorio",                         "url": null }
+      ]
+    },
+    {
+      "name": "Bioquímica",
+      "units": [
+        { "n": 1, "title": "Técnicas instrumentales: espectroscopía y cromatografía", "url": null },
+        { "n": 2, "title": "Metabolismo de los hidratos de carbono",               "url": null },
+        { "n": 3, "title": "Metabolismo de los lípidos",                           "url": null },
+        { "n": 4, "title": "Proteínas: estructura y análisis",                     "url": null },
+        { "n": 5, "title": "Productos del metabolismo: creatinina, urea, bilirrubina y ácido úrico", "url": null },
+        { "n": 6, "title": "Determinación de enzimas",                             "url": null },
+        { "n": 7, "title": "Análisis de orina",                                    "url": null },
+        { "n": 8, "title": "Análisis de heces y fluidos corporales",               "url": null },
+        { "n": 9, "title": "Hormonas y equilibrio hidroelectrolítico",             "url": null }
+      ]
+    },
+    {
+      "name": "Inmunología",
+      "units": [
+        { "n": 1,  "title": "El sistema inmunitario: células, órganos y anticuerpos", "url": null },
+        { "n": 2,  "title": "Respuesta inmunitaria e inmunodeficiencias",          "url": null },
+        { "n": 3,  "title": "Reacciones de aglutinación",                          "url": null },
+        { "n": 4,  "title": "Inmunoprecipitación e inmunoelectroforesis",          "url": null },
+        { "n": 5,  "title": "El sistema del complemento",                          "url": null },
+        { "n": 6,  "title": "Inmunoensayos: principios y radioinmunoensayo",       "url": null },
+        { "n": 7,  "title": "Ensayos inmunoenzimáticos (ELISA)",                   "url": null },
+        { "n": 8,  "title": "Inmunofluorescencia e inmunoblotting",                "url": null },
+        { "n": 9,  "title": "Diagnóstico serológico",                              "url": null },
+        { "n": 10, "title": "Enfermedades autoinmunes: conceptos y mecanismos",    "url": null },
+        { "n": 11, "title": "Autoanticuerpos y su diagnóstico",                    "url": null },
+        { "n": 12, "title": "Enfermedades autoinmunes sistémicas",                 "url": null },
+        { "n": 13, "title": "Reacciones de hipersensibilidad",                     "url": null },
+        { "n": 14, "title": "Diagnóstico de enfermedades alérgicas",               "url": null },
+        { "n": 15, "title": "Citometría de flujo",                                 "url": null },
+        { "n": 16, "title": "Evaluación de la función inmunitaria celular",        "url": null },
+        { "n": 17, "title": "Complejo mayor de histocompatibilidad (MHC)",         "url": null },
+        { "n": 18, "title": "Tipificación HLA",                                    "url": null }
+      ]
+    },
+    {
+      "name": "Microbiología",
+      "units": [
+        { "n": 1, "title": "Introducción y seguridad en microbiología clínica",    "url": null },
+        { "n": 2, "title": "Morfología, microscopía y tinciones",                  "url": null },
+        { "n": 3, "title": "Medios y cultivo de microorganismos",                  "url": null },
+        { "n": 4, "title": "Identificación bacteriana",                            "url": null },
+        { "n": 5, "title": "Bacterias de interés clínico",                         "url": null },
+        { "n": 6, "title": "Antibióticos y resistencias",                          "url": null },
+        { "n": 7, "title": "Micología",                                            "url": null },
+        { "n": 8, "title": "Parasitología",                                        "url": null },
+        { "n": 9, "title": "Virología",                                            "url": null }
+      ]
+    },
+    {
+      "name": "Biología Molecular",
+      "units": [
+        { "n": 1, "title": "Organización y bioseguridad del laboratorio",          "url": null },
+        { "n": 2, "title": "Cultivos celulares",                                   "url": null },
+        { "n": 3, "title": "Citogenética",                                         "url": null },
+        { "n": 4, "title": "Ácidos nucleicos: estructura y propiedades",           "url": null },
+        { "n": 5, "title": "PCR y electroforesis",                                 "url": null },
+        { "n": 6, "title": "Hibridación: FISH, blotting y microarrays",            "url": null },
+        { "n": 7, "title": "Aplicaciones: secuenciación, diagnóstico y genética forense", "url": null }
       ]
     }
   ]
