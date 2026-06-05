@@ -157,6 +157,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Ejercicios de Análisis de Compases](https://www.teoriamusical.com.es/ejercicios/compases/analizar-compas/): Practica el análisis de compases musicales: identifica si es simple o compuesto, el número de tiempos, el tipo de subdivisión y las unidades de tiempo, subdivisión y compás. Test online gratis.
 - [Construir Escala Menor Armónica con Armadura](https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-menor-armonica-con-armadura/): Escribe primero la armadura y luego la escala menor armónica, como en clase. Ejercicio interactivo en dos pasos: armadura + escala.
 - [Construir Escala Mayor con Armadura](https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-mayor-con-armadura/): Escribe primero la armadura y luego la escala mayor, como en clase. Ejercicio interactivo en dos pasos: armadura + escala.
+- [Escala Mixolidia](https://www.teoriamusical.com.es/ejercicios/escalas/escalas-mixolidia/): Ejercicios para identificar las escalas mixolidias en el pentagrama: la escala mayor con el 7º grado rebajado. Test interactivo gratuito.
 
 ## Blog
 

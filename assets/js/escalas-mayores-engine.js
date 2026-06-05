@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  var SCALES = [
+  var SCALES_MAYOR = [
     { name: 'Do Mayor',   vex: 'C',  notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {} },
     { name: 'Sol Mayor',  vex: 'G',  notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'f/5':'#'} },
     { name: 'Re Mayor',   vex: 'D',  notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'f/4':'#','c/5':'#'} },
@@ -37,6 +37,30 @@
     'Solb Mayor': { root: 'Sol', acc: 'b' },
     'Dob Mayor':  { root: 'Do',  acc: 'b' }
   };
+
+  /* mixolidia = escala mayor con la 7ª rebajada un semitono. La armadura es la de
+     la mayor; el 7º rebajado se escribe como alteración (becuadro o bemol). */
+  var LOWER_ABS = { '#': '', '': 'b', 'b': 'bb' };
+  var LOWER_KEY = { '#': 'n', '': 'b', 'b': 'bb' };
+  function deriveMixolidia(maj) {
+    var p7 = maj.notes[6];
+    var base = maj.acc[p7] || '';
+    var acc = {}; for (var k in maj.acc) acc[k] = maj.acc[k];
+    var absG = LOWER_ABS[base];
+    if (absG === '') delete acc[p7]; else acc[p7] = absG;
+    var accOnKey = {}; accOnKey[p7] = LOWER_KEY[base];
+    return { name: maj.name.replace(' Mayor', ' Mixolidia'), vex: maj.vex, notes: maj.notes.slice(), acc: acc, accOnKey: accOnKey };
+  }
+  var SCALES_MIXOLIDIA = SCALES_MAYOR.map(deriveMixolidia).filter(function (s) {
+    return s.acc[s.notes[6]] !== 'bb';   // descarta tonalidades extremas (doble bemol)
+  });
+
+  function parseRoot(name, suf) {
+    var base = name.split(suf)[0];
+    if (base.slice(-1) === '#') return { root: base.slice(0, -1), acc: '#' };
+    if (base.slice(-1) === 'b') { var c = base.slice(0, -1); if (NOTE_NAMES.indexOf(c) !== -1) return { root: c, acc: 'b' }; }
+    return { root: base, acc: '' };
+  }
 
   var NOTE_NAMES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
   var ACC_OPTS = [
@@ -119,12 +143,15 @@
     }, 200);
   }
 
-  function tmEscMayores(containerId) {
+  function tmEscMayores(containerId, tipo) {
     injectCSS();
     var wrap = document.getElementById(containerId);
     if (!wrap) return;
     wrap.className = 'tmesc-wrap';
     var uid = containerId;
+    var SCALES = tipo === 'mixolidia' ? SCALES_MIXOLIDIA : SCALES_MAYOR;
+    var SUF  = tipo === 'mixolidia' ? ' Mixolidia' : ' Mayor';
+    var QTXT = tipo === 'mixolidia' ? '¿Qué escala mixolidia es esta?' : '¿Qué escala mayor es esta?';
 
     wrap.innerHTML = [
       '<div class="tm-controls">',
@@ -141,7 +168,7 @@
       '<div class="tm-pbar-wrap"><div class="tm-pbar" id="' + uid + '_pbar"></div></div>',
       '<div class="tm-card" id="' + uid + '_card">',
         '<div class="tm-qlbl">Pregunta <span class="tm-qnum" id="' + uid + '_qnum">1</span></div>',
-        '<div class="tm-qtxt">¿Qué escala mayor es esta?</div>',
+        '<div class="tm-qtxt">' + QTXT + '</div>',
         '<div class="tm-mode-tag" id="' + uid + '_modetag"></div>',
         '<div class="tm-staff-wrap"><div id="' + uid + '_staff"></div></div>',
         '<div id="' + uid + '_opts"></div>',
@@ -225,11 +252,10 @@
       stave.setContext(ctx).draw();
 
       var formatWidth = q.useArm ? W - 150 : W - 80;
+      var accData = q.useArm ? (q.scale.accOnKey || {}) : (q.scale.acc || {});
       var notes = q.scale.notes.map(function (pitch) {
         var note = new VF.StaveNote({ keys: [pitch], duration: 'w' });
-        if (!q.useArm && q.scale.acc && q.scale.acc[pitch]) {
-          note.addModifier(new VF.Accidental(q.scale.acc[pitch]), 0);
-        }
+        if (accData[pitch]) note.addModifier(new VF.Accidental(accData[pitch]), 0);
         return note;
       });
 
@@ -306,7 +332,7 @@
         b.disabled = true;
         b.addEventListener('click', function () {
           if (!selRoot || st.answered) return;
-          var chosen = selRoot + a.val + ' Mayor';
+          var chosen = selRoot + a.val + SUF;
           answerHard(chosen, notesRow, accsRow, b);
         });
         accsRow.appendChild(b);
@@ -351,7 +377,7 @@
       st.answered = true;
       st.total++;
       var correct = cQ.scale.name;
-      var cp = SCALE_PARTS[correct];
+      var cp = parseRoot(correct, SUF);
       var isOk = chosen === correct;
 
       var selNoteBtn = null;

@@ -80,6 +80,24 @@
     return expandMelodic(mel, SCALES_NATURAL[i]);
   });
 
+  /* dórica = menor natural con la 6ª subida un semitono. La armadura es la de la
+     menor; el 6º elevado se escribe como alteración (becuadro o sostenido). */
+  var RAISE_KEY = { 'b': 'n', '': '#', '#': '##', 'bb': 'b' };
+  function deriveDorica(nat) {
+    var p6 = nat.notes[5];
+    var base = nat.acc[p6] || '';
+    var acc = {}; for (var k in nat.acc) acc[k] = nat.acc[k];
+    if (base === 'b') delete acc[p6];          // 6ª bemol → natural: sin accidental sin armadura
+    else if (base === '') acc[p6] = '#';
+    else if (base === '#') acc[p6] = '##';
+    else if (base === 'bb') acc[p6] = 'b';
+    var accOnKey = {}; accOnKey[p6] = RAISE_KEY[base];
+    return { name: nat.name.replace('natural', 'dórica'), vex: nat.vex, notes: nat.notes.slice(), acc: acc, accOnKey: accOnKey };
+  }
+  var SCALES_DORICA = SCALES_NATURAL.map(deriveDorica).filter(function (s) {
+    var g = s.acc[s.notes[5]]; return g !== '##' && g !== 'bb';   // descarta tonalidades extremas (doble alteración)
+  });
+
   var NOTE_NAMES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
   var ACC_OPTS = [
     { label: '♭', val: 'b' },
@@ -174,7 +192,7 @@
     if (!wrap) return;
     wrap.className = 'tmesc-wrap';
     var uid = containerId;
-    var SCALES = tipo === 'armónica' ? SCALES_ARMONICA : (tipo === 'melódica' ? SCALES_MELODICA_15 : SCALES_NATURAL);
+    var SCALES = tipo === 'armónica' ? SCALES_ARMONICA : tipo === 'melódica' ? SCALES_MELODICA_15 : tipo === 'dórica' ? SCALES_DORICA : SCALES_NATURAL;
     var qtxt = '¿Qué escala menor ' + tipo + ' es esta?';
 
     wrap.innerHTML = [
