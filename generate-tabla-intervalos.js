@@ -48,10 +48,14 @@ const rowsHtml = ROWS.map(([a, b, c, d, img], i) =>
 const HTML = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:#ffffff; }
-  .card { width:1000px; background:#fffdf9; border:1px solid #e6dcc6;
+  /* Proporción A3 vertical (1000 / 1414 = 0,707) para que llene la hoja al imprimir. */
+  .card { width:1000px; height:1414px; display:flex; flex-direction:column;
+          background:#fffdf9; border:1px solid #e6dcc6;
           border-radius:18px; overflow:hidden; font-family:'Segoe UI',Arial,sans-serif;
           box-shadow:0 10px 30px rgba(120,90,20,.10); }
-  .head { background:linear-gradient(135deg,#b8860b,#9a6f08); padding:26px 34px 22px; }
+  .head { flex:none; background:linear-gradient(135deg,#b8860b,#9a6f08); padding:30px 34px 24px; }
+  .tbl { flex:1 1 auto; }
+  .tbl table { height:100%; }
   .head h1 { color:#fff; font-family:Georgia,'Times New Roman',serif; font-size:36px;
              font-weight:700; letter-spacing:.2px; }
   .head p { color:#f6e9c8; font-size:17px; margin-top:6px; }
@@ -60,16 +64,16 @@ const HTML = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
              letter-spacing:.5px; text-align:left; padding:13px 30px; }
   thead th.c-num, tbody td.c-num { text-align:center; }
   thead th.c-staff, tbody td.c-staff { text-align:center; }
-  tbody td { padding:9px 30px; font-size:18px; color:#2a2113;
-             border-top:1px solid #efe6d2; }
+  tbody td { padding:9px 30px; font-size:19px; color:#2a2113;
+             vertical-align:middle; border-top:1px solid #efe6d2; }
   tbody tr.odd { background:#faf6ec; }
   td.c-int { font-weight:700; color:#1d1708; }
   td.c-num { font-weight:700; color:#b8860b; font-size:19px; }
   td.c-ex { color:#5a5240; white-space:nowrap; }
-  td.c-staff img { display:block; margin:0 auto; height:52px; width:auto;
+  td.c-staff img { display:block; margin:0 auto; height:58px; width:auto;
                    background:#fff; border:1px solid #ece3cf; border-radius:6px; }
-  .foot { display:flex; justify-content:space-between; align-items:center;
-          padding:14px 34px; background:#f7efde; border-top:2px solid #b8860b; }
+  .foot { flex:none; display:flex; justify-content:space-between; align-items:center;
+          padding:16px 34px; background:#f7efde; border-top:2px solid #b8860b; }
   .foot .note { color:#9a6f08; font-size:22px; }
   .foot .brand { display:flex; align-items:center; gap:11px;
                  color:#7a6a3a; font-size:17px; font-family:Georgia,serif; font-weight:700; }
@@ -80,12 +84,14 @@ const HTML = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
       <h1>Tabla de intervalos musicales</h1>
       <p>Calificación, distancia en semitonos y ejemplo desde <strong>Do</strong></p>
     </div>
+    <div class="tbl">
     <table>
       <thead><tr><th class="c-int">Intervalo</th><th>Calificación</th>
         <th class="c-num">Semitonos</th><th>Ejemplo desde Do</th>
         <th class="c-staff">En el pentagrama</th></tr></thead>
       <tbody>${rowsHtml}</tbody>
     </table>
+    </div>
     <div class="foot"><span class="note">𝄞 ♪ ♩</span>
       <span class="brand"><img class="bach" src="${BACH_URI}" alt="">teoriamusical.com.es</span></div>
   </div>
@@ -97,7 +103,7 @@ async function main() {
   // La imagen solo se sirve como descarga (no incrustada), así que el peso no afecta a la página.
   const ctx = await browser.newContext({ deviceScaleFactor: 4 });
   const page = await ctx.newPage();
-  await page.setViewportSize({ width: 1080, height: 1300 });
+  await page.setViewportSize({ width: 1080, height: 1480 });
   await page.setContent(HTML);
   await page.waitForTimeout(400);
   const card = await page.$('#card');
