@@ -12,6 +12,7 @@ _session = _requests.Session()
 _session.verify = False
 import httplib2
 import google_auth_httplib2
+from datetime import date, timedelta
 from pathlib import Path
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
@@ -19,8 +20,9 @@ from googleapiclient.discovery import build
 
 TOKEN_FILE = Path(__file__).parent / "token.json"
 SITE = "https://www.teoriamusical.com.es/"
-DATE_START = "2026-02-01"
-DATE_END = "2026-05-30"
+# Ventana dinámica: últimos 90 días, con el retardo (~2-3 días) de GSC.
+DATE_END = (date.today() - timedelta(days=3)).isoformat()
+DATE_START = (date.today() - timedelta(days=93)).isoformat()
 SCOPES = ["https://www.googleapis.com/auth/webmasters.readonly"]
 
 
