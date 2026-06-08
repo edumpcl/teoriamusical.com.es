@@ -98,6 +98,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Ligaduras Musicales: de Unión y de Expresión (Diferencias)](https://www.teoriamusical.com.es/diccionario-musical/ligaduras/): Las dos ligaduras musicales: la de unión une notas de la misma altura y suma su duración; la de expresión (legato) liga notas distintas. Diferencias y ejemplos.
 - [Alteraciones Musicales: Sostenido, Bemol y Becuadro](https://www.teoriamusical.com.es/diccionario-musical/alteraciones/): Las alteraciones musicales: sostenido (♯), bemol (♭), becuadro (♮) y las dobles. Qué hace cada una, alteraciones propias, accidentales y de precaución.
 - [Cualidades del Sonido: Altura, Duración, Intensidad y Timbre](https://www.teoriamusical.com.es/diccionario-musical/cualidades-del-sonido/): Las cuatro cualidades del sonido musical: altura (agudo/grave), duración, intensidad (fuerte/suave) y timbre. Qué es cada una, de qué depende y cómo se representa.
+- [Grupos de Valoración Especial: Tresillo, Dosillo, Cuatrillo…](https://www.teoriamusical.com.es/diccionario-musical/grupos-de-valoracion-especial/): Qué son los grupos de valoración especial (o figuras especiales): tresillo, dosillo, cuatrillo, quintillo, seisillo y septillo. Cómo se escriben, su duración y ejemplos en el pentagrama.
 
 ## Ejercicios interactivos
 
