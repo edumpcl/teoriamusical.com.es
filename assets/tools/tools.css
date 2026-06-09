@@ -847,3 +847,26 @@
     .tm-afinador-wrap.is-fullscreen .cents-display { font-size: 28px; }
     .tm-afinador-wrap.is-fullscreen .btn-mic { width: 72px; height: 72px; }
   }
+
+  /* ── Práctica: cuenta atrás (count-in) + modo silencio (gap trainer) ── */
+  .pendulum-box { position: relative; }
+  /* Número de cuenta atrás: fondo transparente + halo, para no tapar el péndulo */
+  .countin-overlay {
+    position: absolute; inset: 0; z-index: 5; pointer-events: none;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Roboto Mono', monospace; font-weight: 700; font-size: 66px;
+    color: var(--gold);
+    text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 6px #fff, 0 0 3px #fff;
+  }
+  .countin-overlay[hidden] { display: none; }
+  /* Modo silencio: el péndulo sigue oscilando (no se atenúa); badge claro de "silencio" */
+  .pendulum-box.is-silent::after {
+    content: "🔇 Silencio"; position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+    font-family: 'Roboto Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: .5px;
+    color: var(--rust); background: rgba(255,255,255,.78); padding: 3px 11px; border-radius: 12px;
+    pointer-events: none; z-index: 4; white-space: nowrap;
+  }
+  .gap-status {
+    font-family: 'Roboto Mono', monospace; font-size: 12px; color: var(--muted);
+    margin-left: auto; align-self: center;
+  }

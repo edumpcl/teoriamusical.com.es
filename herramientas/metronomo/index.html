@@ -55,7 +55,7 @@
 <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/style.css?v=3d026e09">
-<link rel="stylesheet" href="/assets/tools/tools.css?v=22c72387">
+<link rel="stylesheet" href="/assets/tools/tools.css?v=586d4fc1">
 
 <script type="application/ld+json">
 {
@@ -288,6 +288,7 @@
         </svg>
       </div>
       <div class="beat-dots" id="beat-dots"></div>
+      <div class="countin-overlay" id="countin-overlay" hidden></div>
     </div>
 
     <!-- SONIDO -->
@@ -411,6 +412,27 @@
       <button class="btn-prac-start" id="btn-prac">INICIAR ENSAYO</button>
     </div>
 
+    <!-- PRÁCTICA: cuenta atrás + modo silencio -->
+    <div class="ctrl-box full" id="box-practica">
+      <div class="box-label">Práctica</div>
+      <div class="pill-group" style="margin-bottom:12px;align-items:center">
+        <span class="pill" id="pill-countin" role="button" tabindex="0">Cuenta atrás</span>
+        <span class="pill" id="pill-gap" role="button" tabindex="0">Modo silencio</span>
+        <span id="gap-status" class="gap-status">—</span>
+      </div>
+      <div class="practice-row" id="gap-fields" hidden>
+        <div class="prac-field">
+          <label for="gap-play">Tocar (compases)</label>
+          <input type="number" id="gap-play" value="2" min="1" max="16">
+        </div>
+        <div class="prac-field">
+          <label for="gap-mute">Silenciar (compases)</label>
+          <input type="number" id="gap-mute" value="2" min="1" max="16">
+        </div>
+        <div class="prac-field"></div>
+      </div>
+    </div>
+
     <!-- CAJA DE RITMOS -->
     <div class="ctrl-box full" id="box-cajaritmos">
       <div class="box-label">Caja de Ritmos</div>
@@ -433,7 +455,7 @@
 
   </div><!-- /met-grid -->
 </div><!-- /wrap -->
-<script src="/assets/tools/metronomo.js?v=db034174" defer></script>
+<script src="/assets/tools/metronomo.js?v=99a1cf42" defer></script>
 
 
 
