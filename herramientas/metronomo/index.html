@@ -546,9 +546,11 @@
 
 <h2>Precisión del metrónomo: por qué no se desfasa</h2>
 
-<p>La estabilidad del tempo es lo más importante de un metrónomo. Muchos metrónomos web sencillos hacen sonar cada clic con un temporizador de JavaScript (<code>setInterval</code>), y eso introduce pequeñas variaciones —<em>jitter</em>— porque el navegador no garantiza el instante exacto en que ejecuta ese código.</p>
+<p>La estabilidad del tempo es lo más importante de un metrónomo. Muchos metrónomos web sencillos generan cada clic mediante temporizadores de JavaScript (<code>setInterval</code> o <code>setTimeout</code>), lo que puede introducir pequeñas variaciones de tiempo —<em>jitter</em>— porque el navegador no garantiza que el código se ejecute exactamente en el instante previsto.</p>
 
-<p>Este metrónomo funciona de otra forma: usa la <strong>Web Audio API</strong> con un <strong>planificador anticipado (<em>lookahead</em>)</strong>. Calcula y <strong>programa cada clic en el reloj del motor de audio con precisión de muestra</strong> (<em>sample-accurate</em>), por adelantado y sin depender del temporizador de JavaScript. El resultado es un pulso <strong>estable y sin deriva audible</strong>, igual que en los metrónomos profesionales, sea cual sea el tempo o el dispositivo.</p>
+<p>Este metrónomo utiliza la <strong>Web Audio API</strong> junto con un sistema de <strong>planificación anticipada (<em>lookahead scheduling</em>)</strong>. Un proceso de JavaScript calcula los próximos clics con antelación, pero cada sonido queda <strong>programado directamente en el reloj interno del motor de audio</strong>, que trabaja con <strong>precisión de muestra</strong> (<em>sample-accurate</em>).</p>
+
+<p>Gracias a este enfoque, las variaciones normales del navegador no afectan al momento real en que se reproduce cada clic, obteniendo un pulso <strong>extremadamente estable y sin deriva audible</strong> incluso durante sesiones largas de práctica. Es el mismo principio de programación temporal utilizado por numerosas aplicaciones de audio profesionales basadas en navegador.</p>
 
 <h2>Cómo usar el Modo Ensayo para subir el tempo paso a paso</h2>
 
