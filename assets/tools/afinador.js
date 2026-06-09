@@ -19,6 +19,11 @@
   let playingRefBtn = null;
   const AFIN_STRINGS = window.AFIN_STRINGS || null;
   const strItems = [];
+  // Features avanzadas
+  let lastClarity = -1;
+  let strobeOn = false, strobeOffset = 0, strobeLastT = 0, conservOn = false, lastConservKey = '';
+  const HIST_LEN = 180;
+  const histBuf = [];
 
   async function acquireWakeLock() {
     if (!('wakeLock' in navigator)) return;
@@ -72,6 +77,18 @@
   const domStatNote    = document.getElementById('stat-note');
   const domStatFreq    = document.getElementById('stat-freq');
   const domStatCents   = document.getElementById('stat-cents');
+  const domConf         = document.getElementById('afin-conf');
+  const domSignalFill   = document.getElementById('afin-signal');
+  const domConfVal      = document.getElementById('afin-conf-val');
+  const domHistory      = document.getElementById('afin-history');
+  const histCtx         = domHistory ? domHistory.getContext('2d') : null;
+  const domStrobe       = document.getElementById('afin-strobe');
+  const domStrobeStrip  = document.getElementById('afin-strobe-strip');
+  const domStrobeToggle = document.getElementById('afin-strobe-toggle');
+  const domConserv      = document.getElementById('afin-conserv');
+  const domConservEmpty = document.getElementById('afin-conserv-empty');
+  const domConservBody  = document.getElementById('afin-conserv-body');
+  const domConservToggle= document.getElementById('afin-conserv-toggle');
 
   // ── FRECUENCIA → NOTA ────────────────────────────────────────────────────────
   function freqToNote(freq) {
@@ -127,7 +144,7 @@
       }
       tau++;
     }
-    if (tau > tauMax || cmnd[tau] >= threshold) return -1;
+    if (tau > tauMax || cmnd[tau] >= threshold) { lastClarity = -1; return -1; }
 
     // Parabolic interpolation
     const x0 = tau > 1 ? tau - 1 : tau;
@@ -142,6 +159,8 @@
       betterTau = tau + (s2 - s0) / (2 * (2 * s1 - s2 - s0));
     }
 
+    if (!isFinite(betterTau) || betterTau <= 0) betterTau = tau; // tono casi puro: evita NaN
+    lastClarity = cmnd[tau];
     return sampleRate / betterTau;
   }
 
@@ -254,7 +273,13 @@
 
     domCents.className = `cents-display ${state}`;
     const sign = cents > 0 ? '+' : '';
-    domCents.textContent = `${sign}${cents} ¢`;
+    // Desviación también en Hz respecto a la nota objetivo
+    const semisH = 12 * Math.log2(freq / a4Ref) + 69;
+    const midiH = Math.round(semisH);
+    const targetF = a4Ref * Math.pow(2, (midiH - 69) / 12);
+    const hzDev = freq - targetF;
+    const hzSign = hzDev >= 0 ? '+' : '−';
+    domCents.innerHTML = `${sign}${cents} ¢ <span class="cents-hz">(${hzSign}${Math.abs(hzDev).toFixed(1)} Hz)</span>`;
 
     domStatNote.textContent = name + octave;
     domStatFreq.textContent = freq.toFixed(1);
@@ -263,6 +288,107 @@
 
     updateGauge(cents, state);
     if (AFIN_STRINGS) { const mf = 12 * Math.log2(freq / a4Ref) + 69; updateStringPanel(mf); }
+  }
+
+  // ── FEATURES: confianza, histórico, estroboscópico, conservatorio ────────────
+  function afinUpdateExtras(noteData, amplitude, clarity, valid) {
+    // Confianza / nivel de señal
+    if (domConf && !domConf.hidden) {
+      const sig = Math.min(1, amplitude / 0.08);
+      const clr = (valid && clarity >= 0) ? Math.max(0, Math.min(1, 1 - clarity / 0.15)) : 0;
+      if (domSignalFill) {
+        domSignalFill.style.width = Math.round(sig * 100) + '%';
+        domSignalFill.style.background = sig < 0.15 ? 'var(--red)' : sig < 0.4 ? 'var(--rust)' : 'var(--green)';
+      }
+      if (domConfVal) {
+        let txt, col;
+        if (!valid || amplitude < 0.01) { txt = '—'; col = 'var(--muted)'; }
+        else if (clr > 0.66) { txt = 'Alta'; col = 'var(--green)'; }
+        else if (clr > 0.33) { txt = 'Media'; col = 'var(--rust)'; }
+        else { txt = 'Baja (ruido)'; col = 'var(--red)'; }
+        domConfVal.textContent = txt; domConfVal.style.color = col;
+      }
+    }
+    // Histórico de estabilidad
+    histBuf.push(valid ? noteData.cents : null);
+    while (histBuf.length > HIST_LEN) histBuf.shift();
+    drawHistory();
+    // Estroboscópico (se mueve proporcional a la desviación; quieto = afinado)
+    if (strobeOn && domStrobeStrip) {
+      if (valid) {
+        // Estroboscopio real: las bandas se desplazan a la velocidad del BATIDO
+        // (diferencia con la nota objetivo). Afinado exacto → batido 0 → quietas.
+        const semis = 12 * Math.log2(noteData.freq / a4Ref) + 69;
+        const midi = Math.round(semis);
+        const targetF = a4Ref * Math.pow(2, (midi - 69) / 12);
+        const df = noteData.freq - targetF; // Hz de batido (0 = afinado)
+        const tnow = performance.now();
+        let dt = (tnow - strobeLastT) / 1000;
+        if (!(dt > 0) || dt > 0.1) dt = 0.016;
+        strobeLastT = tnow;
+        strobeOffset += df * 32 * dt; // una banda (32px) por Hz de batido y segundo
+        domStrobeStrip.style.backgroundPositionX = strobeOffset.toFixed(1) + 'px';
+        domStrobeStrip.classList.toggle('in-tune', Math.abs(noteData.cents) <= 3);
+      } else {
+        strobeLastT = performance.now();
+        domStrobeStrip.classList.remove('in-tune');
+      }
+    }
+    // Modo conservatorio
+    if (conservOn) updateConserv(valid ? noteData : null);
+  }
+
+  function drawHistory() {
+    if (!histCtx) return;
+    const W = domHistory.width, H = domHistory.height, mid = H / 2, span = mid - 8;
+    histCtx.clearRect(0, 0, W, H);
+    histCtx.lineWidth = 1; histCtx.strokeStyle = 'rgba(120,90,20,0.12)';
+    [-50, -25, 25, 50].forEach(c => { const y = mid - c / 50 * span; histCtx.beginPath(); histCtx.moveTo(0, y); histCtx.lineTo(W, y); histCtx.stroke(); });
+    histCtx.strokeStyle = 'rgba(80,60,10,0.4)'; histCtx.beginPath(); histCtx.moveTo(0, mid); histCtx.lineTo(W, mid); histCtx.stroke();
+    const n = histBuf.length; if (n < 2) return;
+    const dx = W / (HIST_LEN - 1);
+    histCtx.lineWidth = 2; histCtx.strokeStyle = '#8b6914'; histCtx.lineJoin = 'round';
+    histCtx.beginPath(); let started = false;
+    for (let i = 0; i < n; i++) {
+      const v = histBuf[i];
+      if (v === null) { started = false; continue; }
+      const x = i * dx, cc = Math.max(-50, Math.min(50, v)), y = mid - cc / 50 * span;
+      if (!started) { histCtx.moveTo(x, y); started = true; } else histCtx.lineTo(x, y);
+    }
+    histCtx.stroke();
+  }
+
+  const ENHARM = { 'Do♯': 'Re♭', 'Re♯': 'Mi♭', 'Fa♯': 'Sol♭', 'Sol♯': 'La♭', 'La♯': 'Si♭' };
+  function updateConserv(noteData) {
+    if (!domConserv || domConserv.hidden) return;
+    if (!noteData || !noteData.name) { lastConservKey = ''; domConservEmpty.hidden = false; domConservBody.hidden = true; return; }
+    const { name, octave, freq } = noteData;
+    const key = name + octave;
+    domConservEmpty.hidden = true; domConservBody.hidden = false;
+    if (key !== lastConservKey) { // solo reconstruye al cambiar de nota
+      lastConservKey = key;
+      const isSharp = name.indexOf('♯') >= 0;
+      const altLine = isSharp ? `${name} = ${ENHARM[name]} (enarmónicas, mismo sonido)` : `${name} natural`;
+      const fbOct = octave - 1;
+      domConservBody.innerHTML =
+        `<div class="acv-note">${name}<sub>${octave}</sub></div>` +
+        '<dl>' +
+        `<dt>Frecuencia</dt><dd id="acv-freq">—</dd>` +
+        `<dt>Alteración</dt><dd>${altLine}</dd>` +
+        `<dt>Índice acústico</dt><dd>${name}${octave} (internacional) · ${name}${fbOct} (<a href="/diccionario-musical/indice-acustico/">franco-belga</a>)</dd>` +
+        '</dl>' +
+        '<p style="margin:.4rem 0 0;font-size:13px;color:var(--muted)">Más en <a href="/diccionario-musical/claves-musicales/">claves</a> y <a href="/diccionario-musical/nombres-de-las-notas-musicales/">notas musicales</a>.</p>';
+    }
+    const fq = document.getElementById('acv-freq');
+    if (fq) fq.textContent = freq.toFixed(1) + ' Hz';
+  }
+
+  function resetExtras() {
+    histBuf.length = 0; drawHistory();
+    if (domSignalFill) domSignalFill.style.width = '0%';
+    if (domConfVal) { domConfVal.textContent = '—'; domConfVal.style.color = 'var(--muted)'; }
+    lastConservKey = '';
+    if (conservOn) updateConserv(null);
   }
 
   // ── ANÁLISIS ─────────────────────────────────────────────────────────────────
@@ -282,6 +408,7 @@
         lastNoteData = null;
         smoothFreq = 0;
       }
+      afinUpdateExtras(null, amplitude, -1, false);
       rafId = requestAnimationFrame(analyse);
       return;
     }
@@ -294,6 +421,7 @@
         lastNoteData = null;
         smoothFreq = 0;
       }
+      afinUpdateExtras(null, amplitude, -1, false);
       rafId = requestAnimationFrame(analyse);
       return;
     }
@@ -306,6 +434,7 @@
       lastNoteData = noteData;
       setDisplay(noteData);
     }
+    afinUpdateExtras(noteData, amplitude, lastClarity, !!noteData);
 
     rafId = requestAnimationFrame(analyse);
   }
@@ -351,6 +480,7 @@
       domBtnMic.style.borderColor = '';
       domBtnMic.style.color = '';
       domMicLabel.textContent = 'Activo';
+      if (domConf) domConf.hidden = false;
 
       rafId = requestAnimationFrame(analyse);
 
@@ -401,6 +531,8 @@
     domBtnMic.style.borderColor = '';
     domBtnMic.style.color = '';
     domMicLabel.textContent = 'Activar';
+    if (domConf) domConf.hidden = true;
+    resetExtras();
     setDisplay(null);
   }
 
@@ -420,6 +552,7 @@
   function changeRef(delta) {
     a4Ref = Math.max(390, Math.min(480, a4Ref + delta));
     updateRefDisplay();
+    saveAfin();
   }
 
   function setupRefBtn(btn, delta) {
@@ -513,6 +646,7 @@
     document.querySelectorAll('.transp-pill').forEach(p => {
       p.classList.toggle('active', parseInt(p.dataset.st) === transpSemitones);
     });
+    saveAfin();
   }
 
   function buildTranspInstruments() {
@@ -551,13 +685,42 @@
   setupTranspBtn(document.getElementById('transp-plus'),  +1);
 
   // ── INIT ──────────────────────────────────────────────────────────────────────
+  // Persistencia: referencia A4 y transposición (esta última solo en el afinador general)
+  function saveAfin() {
+    try {
+      const data = { a4: a4Ref };
+      if (!window.AFIN_TRANSP) data.transp = transpSemitones;
+      localStorage.setItem('tm_afin_v1', JSON.stringify(data));
+    } catch (e) {}
+  }
+  (function loadAfin() {
+    let s; try { s = JSON.parse(localStorage.getItem('tm_afin_v1') || '{}'); } catch (e) { return; }
+    if (!s || typeof s !== 'object') return;
+    if (typeof s.a4 === 'number' && s.a4 >= 390 && s.a4 <= 480) a4Ref = s.a4;
+    if (!window.AFIN_TRANSP && typeof s.transp === 'number' && s.transp >= -12 && s.transp <= 12) transpSemitones = s.transp;
+  })();
+
   buildRefNotes();
   buildTranspInstruments();
   if (window.AFIN_TRANSP) setTransp(window.AFIN_TRANSP);
-  else updateTranspDisplay();
+  else setTransp(transpSemitones);
   setDisplay(null);
   updateGauge(0, 'silent');
   updateRefDisplay();
+
+  // ── Toggles de features avanzadas ──
+  if (domStrobeToggle) domStrobeToggle.addEventListener('click', () => {
+    strobeOn = !strobeOn;
+    domStrobeToggle.classList.toggle('active', strobeOn);
+    if (domStrobe) domStrobe.hidden = !strobeOn;
+  });
+  if (domConservToggle) domConservToggle.addEventListener('click', () => {
+    conservOn = !conservOn;
+    domConservToggle.classList.toggle('active', conservOn);
+    if (domConserv) domConserv.hidden = !conservOn;
+    if (conservOn) updateConserv(lastNoteData);
+  });
+  drawHistory();
 
   // ── CUERDAS ──────────────────────────────────────────────────────────────────
   function wireThick(midi) {

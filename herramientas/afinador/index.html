@@ -55,7 +55,7 @@
 <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/style.css?v=3d026e09">
-<link rel="stylesheet" href="/assets/tools/tools.css?v=586d4fc1">
+<link rel="stylesheet" href="/assets/tools/tools.css?v=e5e37772">
 
 <script type="application/ld+json">
 {
@@ -321,6 +321,18 @@
       </button>
     </div>
     <p id="mic-error" style="display:none; margin-top:10px; color:var(--red); font-size:0.9rem; text-align:center;"></p>
+
+    <!-- Confianza / nivel de señal -->
+    <div class="afin-conf" id="afin-conf" hidden>
+      <div class="afin-conf-row">
+        <span class="afin-conf-lbl">Señal</span>
+        <div class="afin-conf-bar"><div class="afin-conf-fill" id="afin-signal"></div></div>
+      </div>
+      <div class="afin-conf-row">
+        <span class="afin-conf-lbl">Confianza</span>
+        <span class="afin-conf-val" id="afin-conf-val">—</span>
+      </div>
+    </div>
   </div>
 
   <!-- REFERENCIA A4 -->
@@ -370,8 +382,32 @@
     </div>
   </div>
 
+  <!-- ANÁLISIS: estabilidad + estroboscópico -->
+  <div class="ctrl-box" id="afin-box-analisis">
+    <div class="box-label">Análisis de afinación</div>
+    <canvas id="afin-history" class="afin-history" width="600" height="120" aria-label="Histórico de desviación en cents"></canvas>
+    <div class="afin-history-cap">Desviación (¢) en los últimos segundos · la línea central es la afinación correcta</div>
+    <div class="afin-strobe-ctrl">
+      <span class="pill" id="afin-strobe-toggle" role="button" tabindex="0">Modo estroboscópico</span>
+    </div>
+    <div class="afin-strobe" id="afin-strobe" hidden>
+      <div class="afin-strobe-strip" id="afin-strobe-strip"></div>
+      <div class="afin-strobe-cap">Afina hasta que las bandas se <strong>detengan</strong> y se pongan <strong>verdes</strong>. Si se mueven a la derecha, la nota está alta; a la izquierda, baja. Cuanto más cerca de afinar, más despacio van.</div>
+    </div>
+  </div>
+
+  <!-- MODO CONSERVATORIO -->
+  <div class="ctrl-box" id="afin-box-conserv">
+    <div class="box-label">Modo conservatorio</div>
+    <span class="pill" id="afin-conserv-toggle" role="button" tabindex="0">Explicar la nota</span>
+    <div class="afin-conserv" id="afin-conserv" hidden>
+      <p class="afin-conserv-empty" id="afin-conserv-empty">Toca o canta una nota: aquí se explicará su nombre, frecuencia, alteración y octava.</p>
+      <div class="afin-conserv-body" id="afin-conserv-body" hidden></div>
+    </div>
+  </div>
+
 </div><!-- /wrap -->
-<script src="/assets/tools/afinador.js?v=64aadfe0" defer></script>
+<script src="/assets/tools/afinador.js?v=bfe35d9b" defer></script>
 
 <!-- FUNCIONES DEL AFINADOR -->
 <section class="tm-seccion">
@@ -463,6 +499,31 @@
         <h3>3. Ajustar al centro</h3>
         <p>Si la aguja queda a la izquierda, hay que tensar la cuerda (está grave). Si queda a la derecha, hay que aflojarla (está aguda).</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENTENDER LA AFINACIÓN (educativo) -->
+<section class="tm-seccion">
+  <div class="tm-seccion-inner">
+    <div class="tm-seccion-cabecera">
+      <h2 class="tm-seccion-titulo">Entender la <span>afinación</span></h2>
+    </div>
+    <div class="tm-article">
+      <h3>¿Qué es un cent?</h3>
+      <p>El <strong>cent</strong> es la unidad con la que se mide la desviación de afinación. Un <a href="/diccionario-musical/intervalos/tono-y-semitono/">semitono</a> se divide en <strong>100 cents</strong>, así que una octava tiene 1.200. El oído humano apenas distingue diferencias menores de unos 5 cents, por eso este afinador considera una nota «afinada» cuando está dentro de <strong>±5¢</strong>. El medidor va de −50¢ (medio semitono bajo) a +50¢ (medio semitono alto).</p>
+
+      <h3>Frecuencia, Hz y altura</h3>
+      <p>La <strong>altura</strong> de un sonido depende de su <strong>frecuencia</strong>, medida en hercios (Hz): cuantas más vibraciones por segundo, más agudo. Cada nota tiene una frecuencia concreta y, al subir una octava, la frecuencia se <strong>duplica</strong> (el La4 son 440 Hz; el La5, 880 Hz). El afinador convierte la frecuencia detectada en el nombre de la <a href="/diccionario-musical/nombres-de-las-notas-musicales/">nota</a> y su desviación en cents.</p>
+
+      <h3>El La 440 y la calibración</h3>
+      <p>El estándar internacional fija el <strong>La4 en 440 Hz</strong>, pero no es universal: muchas orquestas afinan a 442 o 443 Hz para sonar más «brillantes», y la música antigua usa el <strong>diapasón barroco a 415 Hz</strong>. Por eso el afinador permite <strong>calibrar la referencia A4</strong>: ajústala antes de empezar para que coincida con tu agrupación. El nombre de la nota (Do4, La4…) sigue el <a href="/diccionario-musical/indice-acustico/">índice acústico</a>.</p>
+
+      <h3>Armónicos: por qué importa la fundamental</h3>
+      <p>Un sonido real no es una frecuencia pura: es una <strong>fundamental</strong> (la que da el nombre de la nota) más una serie de <strong>armónicos</strong> más agudos que definen el timbre. Los afinadores sencillos a veces «saltan» a un armónico y muestran una nota equivocada. Este afinador usa el algoritmo <strong>YIN</strong>, robusto frente a los armónicos, para seguir la fundamental incluso en timbres ricos o graves.</p>
+
+      <h3>Sobre la precisión</h3>
+      <p>La precisión real de cualquier afinador <em>por micrófono</em> depende de la calidad del micro, del ruido ambiente y de lo limpio que sea el sonido. Probado con tonos exactos, el motor de detección (YIN) acierta la frecuencia con un error <strong>inferior a ~1 cent en todo el rango musical</strong> (prácticamente 0 hasta el registro agudo) en condiciones de señal limpia; en uso real, esa precisión la limita tu micrófono. Por eso mostramos un <strong>indicador de confianza</strong>: si la señal es débil o hay ruido, la medición no es fiable y conviene acercarse al micrófono y tocar una nota clara y sostenida. El <strong>histórico de estabilidad</strong> te muestra si mantienes la afinación o si oscilas, muy útil para voz y cuerda.</p>
     </div>
   </div>
 </section>

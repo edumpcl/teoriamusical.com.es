@@ -870,3 +870,39 @@
     font-family: 'Roboto Mono', monospace; font-size: 12px; color: var(--muted);
     margin-left: auto; align-self: center;
   }
+
+  /* ── Afinador: confianza/señal, histórico, estroboscópico, conservatorio ── */
+  .afin-conf { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+  .afin-conf-row { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+  .afin-conf-lbl { font-family: 'Roboto Mono', monospace; color: var(--muted); width: 72px; }
+  .afin-conf-bar { flex: 1; height: 8px; background: var(--bg3); border-radius: 5px; overflow: hidden; }
+  .afin-conf-fill { height: 100%; width: 0%; background: var(--green); transition: width .12s, background .2s; }
+  .afin-conf-val { font-family: 'Roboto Mono', monospace; font-weight: 700; color: var(--muted); }
+  .cents-hz { font-size: 0.42em; font-weight: 400; color: var(--muted); vertical-align: middle; }
+  .afin-history { width: 100%; height: auto; display: block; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; }
+  .afin-history-cap, .afin-strobe-cap { font-size: 11px; color: var(--muted); text-align: center; margin-top: 6px; font-family: 'Roboto Mono', monospace; }
+  .afin-strobe-ctrl { margin-top: 12px; }
+  .afin-strobe { margin-top: 12px; }
+  .afin-strobe[hidden] { display: none; }
+  /* Estroboscopio real: las bandas se desplazan a la velocidad del batido.
+     Quietas = afinado (se ponen verdes). Derecha = alto · Izquierda = bajo. */
+  .afin-strobe-strip {
+    height: 58px; border-radius: 8px; border: 1px solid var(--border); background-color: var(--bg2);
+    background-image: repeating-linear-gradient(90deg, var(--gold) 0 16px, transparent 16px 32px);
+    background-size: 32px 100%; background-position-x: 0; will-change: background-position;
+    transition: box-shadow .25s;
+  }
+  .afin-strobe-strip.in-tune {
+    background-image: repeating-linear-gradient(90deg, var(--green) 0 16px, transparent 16px 32px);
+    box-shadow: 0 0 0 2px var(--green) inset, 0 0 14px rgba(39,174,96,0.45);
+  }
+  .afin-conserv { margin-top: 12px; }
+  .afin-conserv[hidden] { display: none; }
+  .afin-conserv-empty { font-size: 13px; color: var(--muted); text-align: center; margin: 4px 0; }
+  .afin-conserv-body[hidden] { display: none; }
+  .afin-conserv-body { font-size: 14px; line-height: 1.6; }
+  .afin-conserv-body .acv-note { font-family: var(--font-display, Georgia), serif; font-size: 1.6rem; font-weight: 700; color: var(--heading, var(--gold)); }
+  .afin-conserv-body dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 8px 0; }
+  .afin-conserv-body dt { font-family: 'Roboto Mono', monospace; font-size: 12px; color: var(--muted); }
+  .afin-conserv-body dd { margin: 0; }
+  .afin-conserv-body a { color: var(--gold); }
