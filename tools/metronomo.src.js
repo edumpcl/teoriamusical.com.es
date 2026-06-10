@@ -63,7 +63,7 @@
   V=null,
   R=.8,
   N=1,
-  H="clasico",
+  H="templeblock",
   D=!1;
   const K=["KICK","SNARE","HH-C","HH-O"];
   let P=16,
@@ -141,7 +141,7 @@
     120!==p&&e.set("bpm",p),
     "2/4"!==E&&e.set("meter",E),
     1!==v&&e.set("subdiv",v),
-    "clasico"!==H&&e.set("sound",H),
+    "templeblock"!==H&&e.set("sound",H),
     x.length>0&&e.set("groups",x.join("-"));
     const t=e.toString();
     history.replaceState(null,"",location.pathname+(t?"?"+t:""))
@@ -252,13 +252,25 @@
     templeblock:{f:["templeblock5.wav",1],m:["templeblock4.wav",1],d:["templeblock1.wav",1]},
     claves:{f:["claves.wav",1.15],m:["claves.wav",1],d:["claves.wav",.85]},
     cencerro:{f:["cencerro1.wav",1],m:["cencerro2.wav",1],d:["cencerro2.wav",.85]}
-  },cb={};
-  let cbLoaded=!1;
+  },cb={},cbB={};
+  let cbLoaded=!1,cbPF=!1;
+  function clkUrls(){
+    const t=new Set();
+    return Object.values(CL).forEach(o=>{t.add(o.f[0]),t.add(o.m[0]),t.add(o.d[0])}),[...t]
+  }
+  function pf(){
+    cbPF||(cbPF=!0,clkUrls().forEach(u=>fetch("/assets/audio/click/"+u).then(e=>e.arrayBuffer()).then(e=>{cbB[u]=e}).catch(()=>{})))
+  }
   async function lc(){
     if(cbLoaded)return;
-    const e=J(),t=new Set();
-    Object.values(CL).forEach(o=>{t.add(o.f[0]),t.add(o.m[0]),t.add(o.d[0])});
-    await Promise.all([...t].map(u=>fetch("/assets/audio/click/"+u).then(e=>e.arrayBuffer()).then(t=>e.decodeAudioData(t)).then(e=>{cb[u]=e}).catch(()=>{})));
+    const e=J();
+    await Promise.all(clkUrls().map(async u=>{
+      try{
+        const t=cbB[u]||await fetch("/assets/audio/click/"+u).then(e=>e.arrayBuffer());
+        cb[u]=await e.decodeAudioData(t.slice(0))
+      }catch(e){
+      }
+    })),
     cbLoaded=!0
   }
   function te(e,t,n){
@@ -813,6 +825,8 @@
     document.addEventListener("visibilitychange",()=>{
       !document.hidden&&C&&"suspended"===C.state&&C.resume(),document.hidden||!h||T||S()
     }),
+    "requestIdleCallback"in window?requestIdleCallback(pf):setTimeout(pf,1200),
+    ["pointerdown","keydown","touchstart"].forEach(ev=>document.addEventListener(ev,()=>lc(),{once:!0,passive:!0})),
     ve(),
     Ie(E),
     pe(),
@@ -828,7 +842,7 @@
       }if(e.has("meter")&&(t.meter=e.get("meter")),e.has("subdiv")){
         const n=parseInt(e.get("subdiv"));
         [1,2,3,4,5,6,7,8].includes(n)&&(t.subdiv=n)
-      }if(e.has("sound")&&["clasico","electronico","digital"].includes(e.get("sound"))&&(t.sound=e.get("sound")),e.has("groups")){
+      }if(e.has("sound")&&["clasico","electronico","digital","templeblock","claves","cencerro"].includes(e.get("sound"))&&(t.sound=e.get("sound")),e.has("groups")){
         const n=e.get("groups").split("-").map(Number).filter(e=>e>=1&&e<=3);
         n.length>=2&&(t.groups=n)
       }return t
@@ -842,7 +856,7 @@
       }if(!L||"object"!=typeof L)return;
       if(!("bpm"in G)&&L.bpm>=15&&L.bpm<=300)G.bpm=L.bpm;
       if(!("subdiv"in G)&&[1,2,3,4,5,6,7,8].includes(L.subdiv))G.subdiv=L.subdiv;
-      if(!("sound"in G)&&["clasico","electronico","digital"].includes(L.sound))G.sound=L.sound;
+      if(!("sound"in G)&&["clasico","electronico","digital","templeblock","claves","cencerro"].includes(L.sound))G.sound=L.sound;
       if(!("meter"in G)&&!("groups"in G)){
         if(Array.isArray(L.groups)){
           const g=L.groups.map(Number).filter(e=>e>=1&&e<=3);
