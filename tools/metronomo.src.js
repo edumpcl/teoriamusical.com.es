@@ -146,7 +146,9 @@
     const t=e.toString();
     history.replaceState(null,"",location.pathname+(t?"?"+t:""))
   }function J(){
-    return C||(C=new(window.AudioContext||window.webkitAudioContext),M=C.createDynamicsCompressor(),M.threshold.value=-6,M.ratio.value=2,M.attack.value=.001,M.release.value=.08,q=C.createGain(),q.gain.value=1,M.connect(q),q.connect(C.destination)),
+    return C||(C=new(window.AudioContext||window.webkitAudioContext),M=C.createDynamicsCompressor(),M.threshold.value=-6,M.ratio.value=2,M.attack.value=.001,M.release.value=.08,q=C.createGain(),q.gain.value=1,M.connect(q),q.connect(C.destination),C.addEventListener("statechange",()=>{
+      h&&"running"!==C.state&&C.resume().catch(()=>{})
+    })),
     "suspended"===C.state&&C.resume(),
     C
   }function Q(){
@@ -160,6 +162,20 @@
     return V
   }function X(e,t,n,a){
     const o=2.4*(e?N:a?.85*R:t?.45*R:R);
+    if(CL[H]){
+      const m=CL[H],r=e?m.f:a?m.m:m.d,b=cb[r[0]];
+      if(b){
+        const s=C.createBufferSource();
+        s.buffer=b,
+        s.playbackRate.value=r[1];
+        const g=C.createGain();
+        g.gain.setValueAtTime(.9*o,n),
+        s.connect(g),
+        g.connect(M),
+        s.start(n);
+        return
+      }
+    }
     "digital"===H?function(e,t,n,a,o){
       const c=e?2400:t?900:n?1800:1600,
       s=e?.12:t?.025:.06,
@@ -175,7 +191,7 @@
       l.start(a),
       l.stop(a+s+.01)
     }(e,t,a,n,o):"electronico"===H?function(e,t,n,a,o){
-      const c=e?1900:t?900:1400,
+      const c=e?1900:t?900:n?1650:1400,
       s=t?.015:e?.07:.05,
       l=C.createBufferSource();
       l.buffer=Q();
@@ -201,8 +217,8 @@
       u.connect(M),
       d.start(a),
       d.stop(a+s+.01)
-    }(e,t,0,n,o):function(e,t,n,a,o){
-      const c=e?3e3:t?1800:2200,
+    }(e,t,a,n,o):function(e,t,n,a,o){
+      const c=e?3e3:t?1800:n?2550:2200,
       s=t?.014:e?.042:.028,
       l=C.createBufferSource();
       l.buffer=Q();
@@ -228,10 +244,23 @@
       u.connect(M),
       d.start(a),
       d.stop(a+s+.01)
-    }(e,t,0,n,o)
+    }(e,t,a,n,o)
   }const Z=[["/assets/audio/drums/36-Ludwig-26-Kick-1.wav","/assets/audio/drums/36-Ludwig-26-Kick-2.wav","/assets/audio/drums/36-Ludwig-26-Kick-3.wav"],["/assets/audio/drums/38-Ludwig-14-Snare-1.wav","/assets/audio/drums/38-Ludwig-14-Snare-2.wav","/assets/audio/drums/38-Ludwig-14-Snare-3.wav"],["/assets/audio/drums/42-Sabian-13-HatClosed-1.wav","/assets/audio/drums/42-Sabian-13-HatClosed-2.wav","/assets/audio/drums/42-Sabian-13-HatClosed-3.wav"],["/assets/audio/drums/48-Sabian-13-HatSwish-1.wav","/assets/audio/drums/48-Sabian-13-HatSwish-2.wav","/assets/audio/drums/48-Sabian-13-HatSwish-3.wav"]],
   _=Z.map(e=>e.map(()=>null));
   let ee=!1;
+  const CL={
+    templeblock:{f:["templeblock5.wav",1],m:["templeblock4.wav",1],d:["templeblock1.wav",1]},
+    claves:{f:["claves.wav",1.15],m:["claves.wav",1],d:["claves.wav",.85]},
+    cencerro:{f:["cencerro1.wav",1],m:["cencerro2.wav",1],d:["cencerro2.wav",.85]}
+  },cb={};
+  let cbLoaded=!1;
+  async function lc(){
+    if(cbLoaded)return;
+    const e=J(),t=new Set();
+    Object.values(CL).forEach(o=>{t.add(o.f[0]),t.add(o.m[0]),t.add(o.d[0])});
+    await Promise.all([...t].map(u=>fetch("/assets/audio/click/"+u).then(e=>e.arrayBuffer()).then(t=>e.decodeAudioData(t)).then(e=>{cb[u]=e}).catch(()=>{})));
+    cbLoaded=!0
+  }
   function te(e,t,n){
     const a=J(),
     o=a.createGain();
@@ -285,6 +314,7 @@
     const e=C.currentTime,
     t=60/p,
     n=t/2;
+    ne<e&&(ne=e+.04);
     for(;
     ne<e+.1;
     ){
@@ -370,6 +400,7 @@
       await Promise.all(t),
       ee=!0
     }(),
+    lc(),
     h=!0,
     tmPracStart(),
     S(),
@@ -448,7 +479,7 @@
       var t;
       fe.length!==k&&(t=k,fe=Array.from({
         length:t
-      },(e,t)=>0===t?"strong":"weak")),
+      },(e,t)=>0===t?"strong":4===k&&2===t?"medium":"weak")),
       e.innerHTML="",
       e.style.paddingBottom="0";
       for(let t=0;
@@ -732,7 +763,7 @@
     }),
     document.querySelectorAll(".sound-pill").forEach(e=>{
       e.addEventListener("click",()=>{
-        H=e.dataset.sound,document.querySelectorAll(".sound-pill").forEach(t=>t.classList.toggle("active",t===e)),Y()
+        H=e.dataset.sound,CL[H]&&lc(),document.querySelectorAll(".sound-pill").forEach(t=>t.classList.toggle("active",t===e)),Y()
       })
     }),
     document.getElementById("btn-prac").addEventListener("click",()=>{
