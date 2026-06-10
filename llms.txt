@@ -100,6 +100,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Cualidades del Sonido: Altura, Duración, Intensidad y Timbre](https://www.teoriamusical.com.es/diccionario-musical/cualidades-del-sonido/): Las cuatro cualidades del sonido musical: altura (agudo/grave), duración, intensidad (fuerte/suave) y timbre. Qué es cada una, de qué depende y cómo se representa.
 - [Grupos de Valoración Especial: Tresillo, Dosillo, Cuatrillo…](https://www.teoriamusical.com.es/diccionario-musical/grupos-de-valoracion-especial/): Qué son los grupos de valoración especial (o figuras especiales): tresillo, dosillo, cuatrillo, quintillo, seisillo y septillo. Cómo se escriben, su duración y ejemplos en el pentagrama.
 - [Índice Acústico: Sistema Internacional y Franco-Belga](https://www.teoriamusical.com.es/diccionario-musical/indice-acustico/): El índice acústico numera las octavas para nombrar cada nota. Diferencias entre el sistema internacional (Do central = Do4) y el franco-belga (Do3), con tabla de equivalencias.
+- [Escala Cromática: Qué Es, Notas y para Qué Sirve](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-cromatica/): Qué es la escala cromática: las 12 notas separadas por semitonos. Cómo se escribe ascendente y descendente, ejemplo en Do y sus usos en la música.
 
 ## Ejercicios interactivos
 
