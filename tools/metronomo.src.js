@@ -146,7 +146,7 @@
     const t=e.toString();
     history.replaceState(null,"",location.pathname+(t?"?"+t:""))
   }function J(){
-    return C||(C=new(window.AudioContext||window.webkitAudioContext),M=C.createDynamicsCompressor(),M.threshold.value=-6,M.ratio.value=2,M.attack.value=.001,M.release.value=.08,q=C.createGain(),q.gain.value=1,M.connect(q),q.connect(C.destination),C.addEventListener("statechange",()=>{
+    return C||(C=new(window.AudioContext||window.webkitAudioContext)({latencyHint:.2}),M=C.createDynamicsCompressor(),M.threshold.value=-2,M.knee.value=0,M.ratio.value=12,M.attack.value=.001,M.release.value=.12,q=C.createGain(),q.gain.value=1,M.connect(q),q.connect(C.destination),function(){try{const e=C.createBuffer(1,1,C.sampleRate),t=C.createBufferSource();t.buffer=e,t.connect(C.destination),t.start(0)}catch(e){}}(),C.addEventListener("statechange",()=>{
       h&&"running"!==C.state&&C.resume().catch(()=>{})
     })),
     "suspended"===C.state&&C.resume(),
@@ -161,7 +161,7 @@
     n++)t[n]=2*Math.random()-1;
     return V
   }function X(e,t,n,a){
-    const o=2.4*(e?N:a?.85*R:t?.45*R:R);
+    const _sub=t;let o=.9*(e?N:a?.85*R:t?.45*R:R);
     if(CL[H]){
       const m=CL[H],r=e?m.f:a?m.m:m.d,b=cb[r[0]];
       if(b){
@@ -169,7 +169,8 @@
         s.buffer=b,
         s.playbackRate.value=r[1];
         const g=C.createGain();
-        g.gain.setValueAtTime(.9*o,n),
+        g.gain.setValueAtTime(1.1*o,n),
+        _sub&&g.gain.exponentialRampToValueAtTime(.001,n+.06),
         s.connect(g),
         g.connect(M),
         s.start(n);
@@ -325,15 +326,17 @@
     if(!C)return;
     const e=C.currentTime,
     t=60/p,
-    n=t/2;
+    n=t/2,
+    LAT=C.outputLatency||C.baseLatency||0,
+    LOOK=document.hidden?2.5:.5;
     ne<e&&(ne=e+.04);
     for(;
-    ne<e+.1;
+    ne<e+LOOK;
     ){
       if(ciLeft>0){
         const cb=ciK-ciLeft,
         u2=B,
-        d2=Math.max(0,1e3*(ne-e)),
+        d2=Math.max(0,1e3*(ne-e+LAT)),
         sn=cb+1;
         X(0===cb,!1,ne,!1),
         setTimeout(()=>{
@@ -352,7 +355,7 @@
       gpSil=gpOn&&gpCyc>0&&g%gpCyc>=gpPlay;
       if(gpOn){
         const u3=B,
-        d3=Math.max(0,1e3*(ne-e)),
+        d3=Math.max(0,1e3*(ne-e+LAT)),
         sl=gpSil;
         setTimeout(()=>{
           u3===B&&gpUpdate(sl)
@@ -376,12 +379,12 @@
           const e=(t+a)%P,
           o=ne+a*n;
           K.forEach((t,n)=>{
-            O[n][e]&&te(n,2.4*F[n],o)
+            O[n][e]&&te(n,.9*F[n],o)
           })
         }
       }const l=a,
       i=ne,
-      d=Math.max(0,1e3*(i-e)),
+      d=Math.max(0,1e3*(i-e+LAT)),
       u=B,
       m=D?x.length>0?2*x.slice(0,a).reduce((e,t)=>e+t,0):a*(P/k)%P:-1;
       if(setTimeout(()=>{
@@ -401,7 +404,7 @@
         },d+100)
       }ne+=o
     }
-  }function se(){
+  }async function se(){
     J(),
     ee||async function(){
       const e=J(),
@@ -412,8 +415,9 @@
       await Promise.all(t),
       ee=!0
     }(),
-    lc(),
+    cbLoaded||await lc(),
     h=!0,
+    q&&(q.gain.cancelScheduledValues(C.currentTime),q.gain.setValueAtTime(1,C.currentTime)),
     tmPracStart(),
     S(),
     f=0,
@@ -440,6 +444,7 @@
   }function le(){
     tmPracStop(),
     h=!1,
+    C&&q&&(q.gain.cancelScheduledValues(C.currentTime),q.gain.setValueAtTime(q.gain.value,C.currentTime),q.gain.linearRampToValueAtTime(0,C.currentTime+.03)),
     T&&(T.release(),T=null),
     B++,
     clearInterval(ae),
@@ -462,7 +467,7 @@
   de=null;
   function ue(t){
     document.querySelectorAll(".beat-dot").forEach((e,n)=>e.classList.toggle("active",n===t)),
-    e&&(e.classList.remove("beat-flash"),e.offsetWidth,e.classList.add("beat-flash"))
+    e&&(e.classList.remove("beat-flash"),requestAnimationFrame(()=>requestAnimationFrame(()=>e.classList.add("beat-flash"))))
   }function me(e){
     o&&(o.textContent=null!==e?e+1:"—"),
     c&&(c.textContent=null!==e?g+1:"—"),
@@ -823,7 +828,7 @@
       }
     }),
     document.addEventListener("visibilitychange",()=>{
-      !document.hidden&&C&&"suspended"===C.state&&C.resume(),document.hidden||!h||T||S()
+      !document.hidden&&C&&"suspended"===C.state&&C.resume(),document.hidden||!h||T||S(),document.hidden&&h&&ce()
     }),
     "requestIdleCallback"in window?requestIdleCallback(pf):setTimeout(pf,1200),
     ["pointerdown","keydown","touchstart"].forEach(ev=>document.addEventListener(ev,()=>lc(),{once:!0,passive:!0})),
