@@ -117,6 +117,8 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Acorde Aumentado: Qué Es, Cómo Se Forma y Cifrado](https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-aumentado/): El acorde aumentado es una tríada de 3ª mayor y 5ª aumentada, de sonoridad tensa e inestable. Cómo se forma (Do-Mi-Sol♯), su cifrado y dónde aparece.
 - [Acorde Disminuido: Qué Es, Cómo Se Forma y Cifrado](https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-disminuido/): El acorde disminuido es una tríada de 3ª menor y 5ª disminuida, de sonoridad tensa. Cómo se forma (Do-Mi♭-Sol♭), su cifrado y su diferencia con la séptima disminuida.
 - [Intervalos Armónicos y Melódicos: Diferencia y Ejemplos](https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-armonicos-y-melodicos/): La diferencia entre intervalo melódico (notas sucesivas) y armónico (notas simultáneas), con ejemplos en pentagrama. El tamaño del intervalo no cambia; solo cómo suena.
+- [Intervalos Conjuntos y Disjuntos: Qué Son y Ejemplos](https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-conjuntos-y-disjuntos/): Intervalo conjunto (grados contiguos, una 2ª) frente a disjunto (un salto de 3ª o más), con ejemplos en pentagrama y su papel en el movimiento melódico.
+- [Intervalos Simples y Compuestos: Qué Son y Cómo Reducirlos](https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-simples-y-compuestos/): Intervalo simple (hasta la 8ª) frente a compuesto (mayor que la 8ª), con ejemplos en pentagrama y cómo reducir un intervalo compuesto a simple restando 7.
 
 ## Ejercicios interactivos
 
