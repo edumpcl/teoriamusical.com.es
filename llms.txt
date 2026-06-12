@@ -102,6 +102,8 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Índice Acústico: Sistema Internacional y Franco-Belga](https://www.teoriamusical.com.es/diccionario-musical/indice-acustico/): El índice acústico numera las octavas para nombrar cada nota. Diferencias entre el sistema internacional (Do central = Do4) y el franco-belga (Do3), con tabla de equivalencias.
 - [Escala Cromática: Qué Es, Notas y para Qué Sirve](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-cromatica/): Qué es la escala cromática: las 12 notas separadas por semitonos. Cómo se escribe ascendente y descendente, ejemplo en Do y sus usos en la música.
 - [Círculo de Quintas: Qué Es y Cómo Se Lee (con Diagrama)](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/circulo-de-quintas/): El círculo de quintas explicado: qué es, cómo se lee y para qué sirve. Diagrama descargable con las 12 tonalidades mayores, sus relativas menores y las armaduras (sostenidos y bemoles).
+- [Escala Oriental (Doble Armónica): Notas y Sonido](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-oriental/): La escala oriental o doble armónica (bizantina): Do Re♭ Mi Fa Sol La♭ Si. Sus dos segundas aumentadas y su sonido oriental, con ejemplo en pentagrama.
+- [Escala Hispano-Árabe (Andaluza): Notas y Sonido Flamenco](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-hispano-arabe/): La escala hispano-árabe o andaluza (frigio dominante): Mi Fa Sol♯ La Si Do Re. Su 2ª aumentada y el sonido flamenco, con ejemplo en pentagrama.
 
 ## Ejercicios interactivos
 
