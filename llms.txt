@@ -120,6 +120,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Intervalos Conjuntos y Disjuntos: Qué Son y Ejemplos](https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-conjuntos-y-disjuntos/): Intervalo conjunto (grados contiguos, una 2ª) frente a disjunto (un salto de 3ª o más), con ejemplos en pentagrama y su papel en el movimiento melódico.
 - [Intervalos Simples y Compuestos: Qué Son y Cómo Reducirlos](https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-simples-y-compuestos/): Intervalo simple (hasta la 8ª) frente a compuesto (mayor que la 8ª), con ejemplos en pentagrama y cómo reducir un intervalo compuesto a simple restando 7.
 - [Unidad de Tiempo y Unidad de Compás: Qué Son y Ejemplos](https://www.teoriamusical.com.es/diccionario-musical/compases/unidad-de-tiempo-y-unidad-de-compas/): Qué es la unidad de compás (la figura que llena el compás) y la unidad de tiempo (la figura de cada parte), cómo se leen los números del compás y la subdivisión.
+- [Escala Mixolidia: Qué Es, Fórmula y Cómo Se Forma](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-mixolidia/): La escala mixolidia es el 5º modo griego: una escala mayor con la 7ª bemol. Su fórmula, cómo se forma (Do mixolidio: Do Re Mi Fa Sol La Si♭) y su sonido dominante.
 
 ## Ejercicios interactivos
 
