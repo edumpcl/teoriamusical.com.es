@@ -106,6 +106,8 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Escala Hispano-Árabe (Andaluza): Notas y Sonido Flamenco](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-hispano-arabe/): La escala hispano-árabe o andaluza (frigio dominante): Mi Fa Sol♯ La Si Do Re. Su 2ª aumentada y el sonido flamenco, con ejemplo en pentagrama.
 - [Acordes de Séptima: Los 5 Tipos, Cifrado y Estructura](https://www.teoriamusical.com.es/diccionario-musical/acordes/acordes-de-septima/): Los acordes de séptima: qué son y sus 5 tipos (dominante, mayor, menor, de sensible o semidisminuido y disminuido), con su estructura, cifrado (C7, Cmaj7, Cm7…) y ejemplo en pentagrama.
 - [Cadencias Musicales: Tipos (Auténtica, Plagal, Rota…) y Ejemplos](https://www.teoriamusical.com.es/diccionario-musical/cadencias/): Las cadencias musicales: qué son y sus tipos —auténtica (perfecta e imperfecta), plagal, rota o de engaño y semicadencia—, con los acordes de cada una y ejemplos en pentagrama.
+- [Dinámica Musical: Matices (pp, mf, ff) y Reguladores](https://www.teoriamusical.com.es/diccionario-musical/dinamica-musical/): La dinámica musical o matices: los grados de intensidad (de pianissimo a fortissimo: pp, p, mp, mf, f, ff), los reguladores de crescendo y diminuendo y los cambios súbitos (sf, fp).
+- [Tempo Musical: Indicaciones (Largo, Andante, Allegro…) y BPM](https://www.teoriamusical.com.es/diccionario-musical/tempo-musical/): El tempo en música: qué es, las indicaciones de tempo italianas de más lento a más rápido (Largo, Adagio, Andante, Moderato, Allegro, Presto) con su BPM, y los cambios de tempo (rit., accel., a tempo).
 
 ## Ejercicios interactivos
 
