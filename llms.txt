@@ -104,6 +104,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Círculo de Quintas: Qué Es y Cómo Se Lee (con Diagrama)](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/circulo-de-quintas/): El círculo de quintas explicado: qué es, cómo se lee y para qué sirve. Diagrama descargable con las 12 tonalidades mayores, sus relativas menores y las armaduras (sostenidos y bemoles).
 - [Escala Oriental (Doble Armónica): Notas y Sonido](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-oriental/): La escala oriental o doble armónica (bizantina): Do Re♭ Mi Fa Sol La♭ Si. Sus dos segundas aumentadas y su sonido oriental, con ejemplo en pentagrama.
 - [Escala Hispano-Árabe (Andaluza): Notas y Sonido Flamenco](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-hispano-arabe/): La escala hispano-árabe o andaluza (frigio dominante): Mi Fa Sol♯ La Si Do Re. Su 2ª aumentada y el sonido flamenco, con ejemplo en pentagrama.
+- [Acordes de Séptima: Los 5 Tipos, Cifrado y Estructura](https://www.teoriamusical.com.es/diccionario-musical/acordes/acordes-de-septima/): Los acordes de séptima: qué son y sus 5 tipos (dominante, mayor, menor, de sensible o semidisminuido y disminuido), con su estructura, cifrado (C7, Cmaj7, Cm7…) y ejemplo en pentagrama.
 
 ## Ejercicios interactivos
 
