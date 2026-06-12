@@ -109,6 +109,9 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Dinámica Musical: Matices (pp, mf, ff) y Reguladores](https://www.teoriamusical.com.es/diccionario-musical/dinamica-musical/): La dinámica musical o matices: los grados de intensidad (de pianissimo a fortissimo: pp, p, mp, mf, f, ff), los reguladores de crescendo y diminuendo y los cambios súbitos (sf, fp).
 - [Tempo Musical: Indicaciones (Largo, Andante, Allegro…) y BPM](https://www.teoriamusical.com.es/diccionario-musical/tempo-musical/): El tempo en música: qué es, las indicaciones de tempo italianas de más lento a más rápido (Largo, Adagio, Andante, Moderato, Allegro, Presto) con su BPM, y los cambios de tempo (rit., accel., a tempo).
 - [Articulación Musical: Legato, Staccato, Acento y Más](https://www.teoriamusical.com.es/diccionario-musical/articulacion-musical/): La articulación musical: cómo se ataca y se une cada nota. Legato, staccato, acento, tenuto y marcato, con su símbolo, su efecto y ejemplos en pentagrama.
+- [Clave de Sol: Qué Es, Notas y Para Qué Sirve](https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-sol/): La clave de Sol en 2ª línea sitúa el Sol₄ en esa línea. Aprende a leer todas sus notas, el truco mnemotécnico y qué instrumentos la usan: violín, guitarra, flauta y voz.
+- [Clave de Fa: Qué Es, Notas y Para Qué Sirve](https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-fa/): La clave de Fa en 4ª línea sitúa el Fa₃ en esa línea y se usa para los registros graves. Aprende a leer todas sus notas, el truco mnemotécnico y qué instrumentos la usan.
+- [Clave de Do: Qué Es, Notas y Las 4 Posiciones](https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-do/): La clave de Do sitúa el Do central sobre la línea que le da nombre. En 3ª línea es la clave de viola. Aprende a leer sus notas y sus 4 posiciones (1ª, 2ª, 3ª y 4ª).
 
 ## Ejercicios interactivos
 
