@@ -32,12 +32,12 @@ function render(def){
     const x = n.getAbsoluteX() + 7;
     const rt = document.createElementNS(NS,'text');
     rt.setAttribute('x',x); rt.setAttribute('y',def.yRoman); rt.setAttribute('text-anchor','middle');
-    rt.setAttribute('font-family','Georgia, serif'); rt.setAttribute('font-size','22'); rt.setAttribute('font-weight','700');
-    rt.setAttribute('fill','#b8860b'); rt.textContent = def.roman[i]; svg.appendChild(rt);
+    rt.setAttribute('font-family','Georgia, serif'); rt.setAttribute('font-size','23'); rt.setAttribute('font-weight','400');
+    rt.setAttribute('fill','#8a6a00'); rt.textContent = def.roman[i]; svg.appendChild(rt);
     const nm = document.createElementNS(NS,'text');
     nm.setAttribute('x',x); nm.setAttribute('y',def.yName); nm.setAttribute('text-anchor','middle');
-    nm.setAttribute('font-family','Inter, Arial, sans-serif'); nm.setAttribute('font-size','13');
-    nm.setAttribute('fill','#333'); nm.textContent = def.names[i]; svg.appendChild(nm);
+    nm.setAttribute('font-family','Arial, Helvetica, sans-serif'); nm.setAttribute('font-size','14'); nm.setAttribute('font-weight','400');
+    nm.setAttribute('fill','#1a1a1a'); nm.textContent = def.names[i]; svg.appendChild(nm);
   });
 }
 `;

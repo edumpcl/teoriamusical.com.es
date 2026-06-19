@@ -46,8 +46,8 @@ function render(def){
     const svg = div.querySelector('svg');
     const t = document.createElementNS(NS,'text');
     t.setAttribute('x', 14); t.setAttribute('y', y - 8);
-    t.setAttribute('font-family','Inter, Arial, sans-serif'); t.setAttribute('font-size','15'); t.setAttribute('font-weight','700');
-    t.setAttribute('fill','#b8860b'); t.textContent = row.label; svg.appendChild(t);
+    t.setAttribute('font-family','Arial, Helvetica, sans-serif'); t.setAttribute('font-size','17'); t.setAttribute('font-weight','400');
+    t.setAttribute('fill','#1a1a1a'); t.textContent = row.label; svg.appendChild(t);
   });
 }
 `;
