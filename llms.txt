@@ -123,6 +123,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Escala Mixolidia: Qué Es, Fórmula y Cómo Se Forma](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-mixolidia/): La escala mixolidia es el 5º modo griego: una escala mayor con la 7ª bemol. Su fórmula, cómo se forma (Do mixolidio: Do Re Mi Fa Sol La Si♭) y su sonido dominante.
 - [Comienzo tético, anacrúsico y acéfalo (con ejemplos)](https://www.teoriamusical.com.es/diccionario-musical/la-frase-musical/comienzo-tetico-anacrusico-acefalo/): Las tres formas de empezar una frase musical: comienzo tético, anacrúsico (la anacrusa) y acéfalo. Explicadas en el pentagrama y con ejemplos de canciones conocidas.
 - [Anacrusa: qué es, cómo se escribe y ejemplos](https://www.teoriamusical.com.es/diccionario-musical/compases/anacrusa/): Qué es la anacrusa en música, cómo se escribe en el pentagrama y cómo se completa el último compás. Con ejemplos en partitura, como el Cumpleaños feliz.
+- [Final de frase en tiempo fuerte y débil (íctico y posíctico)](https://www.teoriamusical.com.es/diccionario-musical/la-frase-musical/final-tiempo-fuerte-y-debil/): Cómo termina una frase musical: final en tiempo fuerte y en tiempo débil (íctico y posíctico). Explicado en el pentagrama, con la nota sobre los antiguos términos «masculino» y «femenino».
 
 ## Ejercicios interactivos
 
