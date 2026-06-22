@@ -126,6 +126,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Final de frase en tiempo fuerte y débil (íctico y posíctico)](https://www.teoriamusical.com.es/diccionario-musical/la-frase-musical/final-tiempo-fuerte-y-debil/): Cómo termina una frase musical: final en tiempo fuerte y en tiempo débil (íctico y posíctico). Explicado en el pentagrama, con la nota sobre los antiguos términos «masculino» y «femenino».
 - [Tresillo: qué es, cómo se cuenta y tipos](https://www.teoriamusical.com.es/diccionario-musical/grupos-de-valoracion-especial/tresillo/): Qué es un tresillo en música: tres figuras en el tiempo de dos. Cómo se cuenta, los tipos (de negra, corchea, semicorchea) y por qué no es lo mismo que un 6/8.
 - [Dosillo: qué es, cómo se cuenta y ejemplos](https://www.teoriamusical.com.es/diccionario-musical/grupos-de-valoracion-especial/dosillo/): Qué es un dosillo en música: dos figuras en el tiempo de tres, propio de los compases compuestos. Cómo se cuenta, sus tipos y por qué es el inverso del tresillo.
+- [Las Notas del Piano: Dónde Están en el Teclado](https://www.teoriamusical.com.es/diccionario-musical/notas-del-piano/): Aprende dónde están las notas en el teclado del piano con un teclado interactivo. El patrón de teclas blancas y negras, el truco de los grupos de 2 y 3, el Do central y las octavas.
 
 ## Ejercicios interactivos
 
