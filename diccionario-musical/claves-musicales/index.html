@@ -57,6 +57,14 @@
 <link rel="stylesheet" href="/assets/css/style.css?v=76a6eccc">
 <style>.fig-sm { max-width: 180px; }</style>
 
+<!-- Ejercicio interactivo embebido (lectura de notas) -->
+<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
+<script src="/assets/js/lectura-notas-engine.js?v=32c02a68" defer></script>
+<style>.tm-embed-quiz{min-height:400px;margin:18px 0}@media(max-width:600px){.tm-embed-quiz{min-height:470px}}.tm-embed-cap{font-size:.92rem;color:#555;margin-top:10px}</style>
+<script>
+document.addEventListener("DOMContentLoaded",function(){var els=[].slice.call(document.querySelectorAll("[data-tmnotas-clave]"));if(!els.length)return;function init(el){if(el.dataset.tmInit||typeof tmNotasEngine!=="function")return;el.dataset.tmInit="1";tmNotasEngine(el.id,{clave:el.getAttribute("data-tmnotas-clave")});}if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){init(e.target);io.unobserve(e.target);}});},{rootMargin:"250px 0px"});els.forEach(function(el){io.observe(el);});}else{els.forEach(init);}});
+</script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -68,7 +76,7 @@
   "isAccessibleForFree": true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-diccionario-musical-claves-musicales.png"},
   "author": {"@type": "Person", "name": "Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},
   "datePublished": "2021-01-15",
-  "dateModified":"2026-06-19",
+  "dateModified":"2026-06-22",
   "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/"},
   "publisher": {
     "@type": "Organization",
@@ -342,6 +350,9 @@
 
 <p>Recurso mnemotécnico: líneas (de abajo arriba) = <strong>Mi–Sol–Si–Re–Fa</strong>; espacios = <strong>Fa–La–Do–Mi</strong>.</p>
 
+<div class="tm-embed-quiz"><div id="tmqc-sol" data-tmnotas-clave="sol2"></div></div>
+<p class="tm-embed-cap">Practica también <a href="/ejercicios/escribir-notas/clave-de-sol/">escribiendo notas en clave de Sol</a> · <a href="/ejercicios/identificar-notas/clave-de-sol/">abrir el ejercicio a pantalla completa →</a></p>
+
 <h2 id="h-notas-clave-fa">Notas en la clave de Fa (en 4ª línea)</h2>
 
 <p>La nota de referencia es <strong>Fa</strong> en la 4ª línea. Es la clave de violonchelo, contrabajo, piano (mano izquierda) y bajo eléctrico:</p>
@@ -373,6 +384,9 @@
 
 <p>Recurso mnemotécnico: líneas (de abajo arriba) = <strong>Sol–Si–Re–Fa–La</strong>; espacios = <strong>La–Do–Mi–Sol</strong>.</p>
 
+<div class="tm-embed-quiz"><div id="tmqc-fa" data-tmnotas-clave="fa4"></div></div>
+<p class="tm-embed-cap">Practica también <a href="/ejercicios/escribir-notas/clave-de-fa-en-4/">escribiendo notas en clave de Fa</a> · <a href="/ejercicios/identificar-notas/clave-de-fa-en-4/">abrir el ejercicio a pantalla completa →</a></p>
+
 <h2 id="h-notas-clave-do">Notas en la clave de Do (en 3ª línea)</h2>
 
 <p>La nota de referencia es el <strong>Do central</strong> en la 3ª línea. Es la clave estándar para la viola:</p>
@@ -402,6 +416,9 @@
 </div>
 
 <p>La clave de Do en 4ª línea se usa para fagot y trombón tenor; en ella el Do central está en la 4ª línea, desplazando todas las notas un escalón hacia arriba.</p>
+
+<div class="tm-embed-quiz"><div id="tmqc-do" data-tmnotas-clave="do3"></div></div>
+<p class="tm-embed-cap">Practica también <a href="/ejercicios/escribir-notas/clave-de-do-en-3/">escribiendo notas en clave de Do</a> · <a href="/ejercicios/identificar-notas/clave-de-do-en-3/">abrir el ejercicio a pantalla completa →</a></p>
 
 <h3>La clave de Do en otras posiciones (1ª, 2ª y 4ª)</h3>
 
@@ -525,6 +542,8 @@
     <li><a href="/diccionario-musical/claves-musicales/clave-de-do/">Clave de Do</a></li>
     <li><a href="/diccionario-musical/pentagramas/">Pentagrama musical</a></li>
     <li><a href="/diccionario-musical/nombres-de-las-notas-musicales/">Nombres de las notas musicales</a></li>
+    <li><a href="/ejercicios/identificar-notas/">Ejercicio: ¿qué nota es? (todas las claves)</a></li>
+    <li><a href="/ejercicios/escribir-notas/">Ejercicio: escribir notas en el pentagrama</a></li>
   </ul>
 </aside>
 </div>

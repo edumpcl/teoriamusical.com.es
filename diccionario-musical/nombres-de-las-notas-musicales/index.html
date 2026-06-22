@@ -56,6 +56,14 @@
 <link rel="preload" href="/assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/style.css?v=76a6eccc">
 
+<!-- Ejercicios interactivos embebidos (lectura de notas + equivalencias) -->
+<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
+<script src="/assets/js/lectura-notas-engine.js?v=32c02a68" defer></script>
+<script src="/assets/js/equivalencias-engine.js?v=14f71eaa" defer></script>
+<style>.tm-embed-quiz{min-height:400px;margin:18px 0}.tm-embed-quiz-eq{min-height:300px;margin:18px 0}@media(max-width:600px){.tm-embed-quiz{min-height:470px}.tm-embed-quiz-eq{min-height:340px}}.tm-embed-cap{font-size:.92rem;color:#555;margin-top:10px}</style>
+<script>
+document.addEventListener("DOMContentLoaded",function(){var els=[].slice.call(document.querySelectorAll("[data-tmnotas-clave],[data-tmequiv]"));if(!els.length)return;function init(el){if(el.dataset.tmInit)return;if(el.hasAttribute("data-tmequiv")){if(typeof tmEquivEngine!=="function")return;el.dataset.tmInit="1";tmEquivEngine(el.id);}else{if(typeof tmNotasEngine!=="function")return;el.dataset.tmInit="1";tmNotasEngine(el.id,{clave:el.getAttribute("data-tmnotas-clave")});}}if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){init(e.target);io.unobserve(e.target);}});},{rootMargin:"250px 0px"});els.forEach(function(el){io.observe(el);});}else{els.forEach(init);}});
+</script>
 
 <script type="application/ld+json">
 {
@@ -67,7 +75,7 @@
   "inLanguage": "es",
   "isAccessibleForFree": true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-diccionario-musical-nombres-de-las-notas-musicales.png"},
   "datePublished": "2020-01-01",
-  "dateModified": "2026-06-18",
+  "dateModified": "2026-06-22",
   "author": {"@type": "Person", "name": "Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},
   "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.teoriamusical.com.es/diccionario-musical/nombres-de-las-notas-musicales/"},
   "publisher": {
@@ -240,7 +248,15 @@
 <div class="tm-container tm-article-wrap">
   <article class="tm-article">
     
-<p>El sistema musical occidental utiliza <strong>7 nombres de notas</strong>: Do, Re, Mi, Fa, Sol, La y Si. Estos nombres provienen del <em>Himno a San Juan</em>, cuyas estrofas empezaban por las sílabas <em>Ut, Re, Mi, Fa, Sol, La</em> — Guido de Arezzo las utilizó en el siglo XI para enseñar a los cantores. Con el tiempo <em>Ut</em> pasó a llamarse <em>Do</em> y se añadió el <em>Si</em>. Lo contamos con detalle en <a href="/blog/himno-a-san-juan/">el Himno a San Juan, el origen del Do-Re-Mi</a>.</p>
+<p>Las <strong>notas musicales</strong> son <strong>siete</strong>: <strong>Do, Re, Mi, Fa, Sol, La y Si</strong>. En la notación anglosajona se nombran con las letras <strong>C, D, E, F, G, A y B</strong>, y en el sistema alemán el Si natural se escribe <strong>H</strong> (la <strong>B</strong> alemana corresponde al Si♭).</p>
+
+<ul>
+  <li><strong>Español:</strong> Do · Re · Mi · Fa · Sol · La · Si</li>
+  <li><strong>Inglés:</strong> C · D · E · F · G · A · B</li>
+  <li><strong>Alemán:</strong> C · D · E · F · G · A · H &nbsp;(el Si♮ es H y el Si♭ es B)</li>
+</ul>
+
+<p>Estos siete nombres provienen del <em>Himno a San Juan</em>, cuyas estrofas empezaban por las sílabas <em>Ut, Re, Mi, Fa, Sol, La</em> — Guido de Arezzo las utilizó en el siglo XI para enseñar a los cantores. Con el tiempo <em>Ut</em> pasó a llamarse <em>Do</em> y se añadió el <em>Si</em>. Lo contamos con detalle en <a href="/blog/himno-a-san-juan/">el Himno a San Juan, el origen del Do-Re-Mi</a>.</p>
 
 <h2>Tabla de equivalencias: español, inglés y alemán</h2>
 
@@ -261,6 +277,15 @@
 </tbody>
 </table>
 </div>
+
+<p><strong>Curiosidad:</strong> esta peculiaridad alemana permitió a <strong>Johann Sebastian Bach</strong> firmar su música con las notas <strong>Si♭–La–Do–Si♮</strong>, que en alemán se escriben <strong>B–A–C–H</strong>. Este «motivo BACH» aparece, entre otras obras, en la fuga inacabada de su <em>Arte de la fuga</em>, y compositores posteriores como Liszt, Schumann o Schönberg lo usaron como homenaje.</p>
+
+<h3>Pon a prueba tus equivalencias</h3>
+
+<p>Diez preguntas rápidas para memorizar los nombres de las notas en español, inglés y alemán —incluida la trampa del Si alemán (H frente a B)—.</p>
+
+<div class="tm-embed-quiz-eq"><div id="tmq-equiv" data-tmequiv="1"></div></div>
+<p class="tm-embed-cap"><a href="/ejercicios/equivalencias-de-notas/">Abrir el test de equivalencias a pantalla completa →</a></p>
 
 <div class="tm-ad">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
@@ -294,6 +319,30 @@
 
 <p>Las notas entre guiones (como Do♯ y Re♭) suenan igual en el piano pero se llaman de forma diferente según el contexto armónico: se denominan <a href="/diccionario-musical/intervalos/unisono-y-notas-enarmonicas/">notas enarmónicas</a>. Entre Mi y Fa, y entre Si y Do, no existe nota intermedia: ya son <a href="/diccionario-musical/intervalos/tono-y-semitono/">semitonos naturales</a>.</p>
 
+<h3>Las alteraciones en inglés y alemán</h3>
+
+<p>El inglés añade <em>sharp</em> (♯) o <em>flat</em> (♭) detrás de la letra. El alemán tiene reglas propias: los <strong>sostenidos</strong> terminan en <strong>-is</strong> y los <strong>bemoles</strong> en <strong>-es</strong>. La excepción que conviene recordar es el <strong>Si♭</strong>, que en alemán es simplemente <strong>B</strong> (el Si natural, recuerda, es H).</p>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+<thead><tr><th>Español</th><th>Inglés</th><th>Alemán</th></tr></thead>
+<tbody>
+<tr><td>Do♯</td><td>C♯ (C sharp)</td><td>Cis</td></tr>
+<tr><td>Re♭</td><td>D♭ (D flat)</td><td>Des</td></tr>
+<tr><td>Re♯</td><td>D♯</td><td>Dis</td></tr>
+<tr><td>Mi♭</td><td>E♭</td><td>Es</td></tr>
+<tr><td>Fa♯</td><td>F♯</td><td>Fis</td></tr>
+<tr><td>Sol♭</td><td>G♭</td><td>Ges</td></tr>
+<tr><td>Sol♯</td><td>G♯</td><td>Gis</td></tr>
+<tr><td>La♭</td><td>A♭</td><td>As</td></tr>
+<tr><td>La♯</td><td>A♯</td><td>Ais</td></tr>
+<tr><td>Si♭</td><td>B♭</td><td>B</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Siguiendo la misma regla se forman las alteraciones menos frecuentes: Mi♯ es <em>Eis</em>, Si♯ es <em>His</em>, Do♭ es <em>Ces</em> y Fa♭ es <em>Fes</em>.</p>
+
 <h2 id="h-d-nde-se-colocan-las-notas-en-las-diferentes-claves-que-tenemos">¿Dónde se colocan las notas en las diferentes claves musicales?</h2>
 
 <p>En música existen <a href="/diccionario-musical/claves-musicales/">7 claves musicales</a> (Sol, Fa en 3ª y 4ª línea, y Do en 1ª, 2ª, 3ª y 4ª línea). Cada clave define qué nota ocupa la línea de referencia del pentagrama, lo que determina la posición del resto.</p>
@@ -310,6 +359,9 @@
 
 <p>En <a href="/diccionario-musical/claves-musicales/clave-de-sol/">clave de Sol</a>, el Sol₄ ocupa la 2ª línea. Las líneas del <a href="/diccionario-musical/pentagramas/">pentagrama</a> (de abajo arriba) son <strong>Mi–Sol–Si–Re–Fa</strong> y los espacios <strong>Fa–La–Do–Mi</strong>. La 1ª línea adicional inferior es el Do₄ (Do central).</p>
 
+<div class="tm-embed-quiz"><div id="tmq-sol" data-tmnotas-clave="sol2"></div></div>
+<p class="tm-embed-cap">Practica también <a href="/ejercicios/escribir-notas/clave-de-sol/">escribiendo notas en clave de Sol</a> · <a href="/ejercicios/identificar-notas/clave-de-sol/">abrir el ejercicio a pantalla completa →</a></p>
+
 
 
 <h3 id="h-clave-de-fa-en-4-l-nea">Clave de Fa en 4ª línea</h3>
@@ -321,6 +373,9 @@
 
 
 <p>En <a href="/diccionario-musical/claves-musicales/clave-de-fa/">clave de Fa</a> en 4ª línea, el Fa₃ ocupa la 4ª línea. Las líneas (de abajo arriba) son <strong>Sol–Si–Re–Fa–La</strong> y los espacios <strong>La–Do–Mi–Sol</strong>. El Do central aparece en la 1ª línea adicional superior.</p>
+
+<div class="tm-embed-quiz"><div id="tmq-fa4" data-tmnotas-clave="fa4"></div></div>
+<p class="tm-embed-cap">Practica también <a href="/ejercicios/escribir-notas/clave-de-fa-en-4/">escribiendo notas en clave de Fa en 4ª</a> · <a href="/ejercicios/identificar-notas/clave-de-fa-en-4/">abrir el ejercicio a pantalla completa →</a></p>
 
 
 
@@ -334,6 +389,9 @@
 
 <p>En clave de Fa en 3ª línea (clave de barítono), el Fa ocupa la 3ª línea. Es poco frecuente en la música actual; aparece en algunas partituras de voz de barítono y violonchelo antiguas.</p>
 
+<div class="tm-embed-quiz"><div id="tmq-fa3" data-tmnotas-clave="fa3"></div></div>
+<p class="tm-embed-cap">Practica también <a href="/ejercicios/escribir-notas/clave-de-fa-en-3/">escribiendo notas en clave de Fa en 3ª</a> · <a href="/ejercicios/identificar-notas/clave-de-fa-en-3/">abrir el ejercicio a pantalla completa →</a></p>
+
 
 
 <h3 id="h-clave-de-do-en-1-l-nea">Clave de Do en 1ª línea</h3>
@@ -345,6 +403,9 @@
 
 
 <p>En <a href="/diccionario-musical/claves-musicales/clave-de-do/">clave de Do</a> en 1ª línea (clave de soprano), el Do₄ ocupa la 1ª línea. Fue la clave estándar para voces de soprano en el canto gregoriano y la polifonía renacentista.</p>
+
+<div class="tm-embed-quiz"><div id="tmq-do1" data-tmnotas-clave="do1"></div></div>
+<p class="tm-embed-cap">Practica también <a href="/ejercicios/escribir-notas/clave-de-do-en-1/">escribiendo notas en clave de Do en 1ª</a> · <a href="/ejercicios/identificar-notas/clave-de-do-en-1/">abrir el ejercicio a pantalla completa →</a></p>
 
 
 
@@ -358,6 +419,9 @@
 
 <p>En clave de Do en 2ª línea (clave de mezzo-soprano), el Do₄ ocupa la 2ª línea. Rara en la música moderna, se usaba para la voz de mezzo-soprano y contralto en la polifonía coral.</p>
 
+<div class="tm-embed-quiz"><div id="tmq-do2" data-tmnotas-clave="do2"></div></div>
+<p class="tm-embed-cap">Practica también <a href="/ejercicios/escribir-notas/clave-de-do-en-2/">escribiendo notas en clave de Do en 2ª</a> · <a href="/ejercicios/identificar-notas/clave-de-do-en-2/">abrir el ejercicio a pantalla completa →</a></p>
+
 
 
 <h3 id="h-clave-de-do-en-3-l-nea">Clave de Do en 3ª línea</h3>
@@ -370,6 +434,9 @@
 
 <p>En clave de Do en 3ª línea (clave de viola o alto), el Do₄ ocupa la 3ª línea. Es la clave estándar de la viola y se usa también en algunos pasajes de trombón alto. Las líneas (de abajo arriba) son <strong>Fa–La–Do–Mi–Sol</strong>.</p>
 
+<div class="tm-embed-quiz"><div id="tmq-do3" data-tmnotas-clave="do3"></div></div>
+<p class="tm-embed-cap">Practica también <a href="/ejercicios/escribir-notas/clave-de-do-en-3/">escribiendo notas en clave de Do en 3ª</a> · <a href="/ejercicios/identificar-notas/clave-de-do-en-3/">abrir el ejercicio a pantalla completa →</a></p>
+
 
 
 <h3 id="h-clave-de-do-en-4-l-nea">Clave de Do en 4ª línea</h3>
@@ -381,6 +448,9 @@
 
 
 <p>En clave de Do en 4ª línea (clave de tenor), el Do₄ ocupa la 4ª línea. La usan el fagot, el trombón tenor y el violonchelo en pasajes de registro agudo. Las líneas (de abajo arriba) son <strong>Mi–Sol–Si–Re–Fa</strong>, igual que la clave de Sol pero desplazadas dos grados.</p>
+
+<div class="tm-embed-quiz"><div id="tmq-do4" data-tmnotas-clave="do4"></div></div>
+<p class="tm-embed-cap">Practica también <a href="/ejercicios/escribir-notas/clave-de-do-en-4/">escribiendo notas en clave de Do en 4ª</a> · <a href="/ejercicios/identificar-notas/clave-de-do-en-4/">abrir el ejercicio a pantalla completa →</a></p>
 
 
 
@@ -427,6 +497,8 @@
 <aside class="tm-related">
   <h2>Ejercicios relacionados</h2>
   <ul>
+    <li><a href="/ejercicios/identificar-notas/">¿Qué nota es? — leer notas en todas las claves</a></li>
+    <li><a href="/ejercicios/escribir-notas/">Escribir notas en el pentagrama (todas las claves)</a></li>
     <li><a href="/ejercicios/">Todos los ejercicios de teoría musical</a></li>
   </ul>
 </aside>

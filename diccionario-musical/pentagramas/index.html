@@ -56,6 +56,14 @@
 <link rel="preload" href="/assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/style.css?v=76a6eccc">
 
+<!-- Ejercicio interactivo embebido (lectura de notas) -->
+<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
+<script src="/assets/js/lectura-notas-engine.js?v=32c02a68" defer></script>
+<style>.tm-embed-quiz{min-height:400px;margin:18px 0}@media(max-width:600px){.tm-embed-quiz{min-height:470px}}.tm-embed-cap{font-size:.92rem;color:#555;margin-top:10px}</style>
+<script>
+document.addEventListener("DOMContentLoaded",function(){var els=[].slice.call(document.querySelectorAll("[data-tmnotas-clave]"));if(!els.length)return;function init(el){if(el.dataset.tmInit||typeof tmNotasEngine!=="function")return;el.dataset.tmInit="1";tmNotasEngine(el.id,{clave:el.getAttribute("data-tmnotas-clave")});}if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){init(e.target);io.unobserve(e.target);}});},{rootMargin:"250px 0px"});els.forEach(function(el){io.observe(el);});}else{els.forEach(init);}});
+</script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -67,7 +75,7 @@
   "isAccessibleForFree": true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-diccionario-musical-pentagramas.png"},
   "author": {"@type": "Person", "name": "Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},
   "datePublished": "2020-01-15",
-  "dateModified": "2026-06-19",
+  "dateModified": "2026-06-22",
   "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.teoriamusical.com.es/diccionario-musical/pentagramas/"},
   "publisher": {
     "@type": "Organization",
@@ -334,6 +342,9 @@
 <p>Un recurso mnemotécnico: las <strong>líneas</strong> (de abajo arriba) son <strong>Mi–Sol–Si–Re–Fa</strong>, y los <strong>espacios</strong> son <strong>Fa–La–Do–Mi</strong>. La 1ª línea adicional inferior es el Do central, el punto de referencia entre la clave de Sol y la <a href="/diccionario-musical/claves-musicales/">clave de Fa en 4ª</a>. Según el <a href="/diccionario-musical/indice-acustico/">índice acústico</a>, ese Do central es Do₄ (sistema internacional) o Do₃ (franco-belga).</p>
 
 <p>Para las claves de Fa y las cinco claves de Do, véase la página de <a href="/diccionario-musical/claves-musicales/">claves musicales</a>.</p>
+
+<div class="tm-embed-quiz"><div id="tmqp-sol" data-tmnotas-clave="sol2"></div></div>
+<p class="tm-embed-cap">Practica también <a href="/ejercicios/escribir-notas/clave-de-sol/">escribiendo notas en el pentagrama</a> · <a href="/ejercicios/identificar-notas/clave-de-sol/">abrir el ejercicio a pantalla completa →</a></p>
 
 <h2 id="h-como-usar">¿Para qué sirven los pentagramas en blanco?</h2>
 
