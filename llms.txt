@@ -127,6 +127,8 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Tresillo: qué es, cómo se cuenta y tipos](https://www.teoriamusical.com.es/diccionario-musical/grupos-de-valoracion-especial/tresillo/): Qué es un tresillo en música: tres figuras en el tiempo de dos. Cómo se cuenta, los tipos (de negra, corchea, semicorchea) y por qué no es lo mismo que un 6/8.
 - [Dosillo: qué es, cómo se cuenta y ejemplos](https://www.teoriamusical.com.es/diccionario-musical/grupos-de-valoracion-especial/dosillo/): Qué es un dosillo en música: dos figuras en el tiempo de tres, propio de los compases compuestos. Cómo se cuenta, sus tipos y por qué es el inverso del tresillo.
 - [Las Notas del Piano: Dónde Están en el Teclado](https://www.teoriamusical.com.es/diccionario-musical/notas-del-piano/): Aprende dónde están las notas en el teclado del piano con un teclado interactivo. El patrón de teclas blancas y negras, el truco de los grupos de 2 y 3, el Do central y las octavas.
+- [Las Notas en los Instrumentos Musicales](https://www.teoriamusical.com.es/diccionario-musical/notas-en-los-instrumentos/): Las notas son las mismas en todos los instrumentos; lo que cambia es dónde están. Guía para encontrar las notas en el piano, la guitarra y los instrumentos de viento.
+- [Las Notas de la Flauta Travesera (Tesitura y Registros)](https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-flauta-travesera/): La flauta travesera es un instrumento en Do, no transpositor. Su tesitura (Do₄–Do₇), los cuatro registros, cómo suena, el sistema Boehm y sus digitaciones.
 
 ## Ejercicios interactivos
 
