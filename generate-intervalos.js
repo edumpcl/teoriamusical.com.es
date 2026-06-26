@@ -36,7 +36,7 @@ const INTERVALS = [
   H(['2a-Aumentada-1024x239.png','2a-Aumentada.png'], ['c/4','d#/4'], [acc(1,'#')]),
   H(['2a-Mayor-1024x239.png','2a-Mayor.png'],         ['c/4','d/4'],  []),
   H(['2a-menor-1024x239.png','2a-menor.png'],         ['c/4','db/4'], [acc(1,'b')]),
-  H(['enharmonía-1024x239.png','enharmonía.png'],     ['c#/4','d/4'], [acc(0,'#')]),
+  H(['enharmonía-1024x239.png','enharmonía.png'],     ['c#/4','db/4'], [acc(0,'#'),acc(1,'b')]),
 
   // --- Terceras ---
   H(['3º-Aumentada-1024x239.png','3º-Aumentada.png'], ['c/4','e#/4'], [acc(1,'#')]),

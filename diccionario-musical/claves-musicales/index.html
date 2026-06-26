@@ -58,6 +58,7 @@
 <style>.fig-sm { max-width: 180px; }</style>
 
 <!-- Ejercicio interactivo embebido (lectura de notas) -->
+<script src="/assets/js/tm-piano-audio.js?v=42d75058" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
 <script src="/assets/js/lectura-notas-engine.js?v=32c02a68" defer></script>
 <style>.tm-embed-quiz{min-height:400px;margin:18px 0}@media(max-width:600px){.tm-embed-quiz{min-height:470px}}.tm-embed-cap{font-size:.92rem;color:#555;margin-top:10px}</style>
@@ -323,7 +324,7 @@ document.addEventListener("DOMContentLoaded",function(){var els=[].slice.call(do
 
 <p>La nota de referencia es <strong>Sol</strong> en la 2ª línea. Las demás notas se leen subiendo o bajando de esa posición:</p>
 
-<figure class="tm-staff">
+<figure class="tm-staff" data-tm-notes data-tm-baseoct="4">
 <picture><source type="image/webp" srcset="/assets/img/claves/notas-clave-sol.webp"><img src="/assets/img/claves/notas-clave-sol.png" width="620" height="204" loading="lazy" alt="Notas en la clave de Sol en el pentagrama: Mi, Fa, Sol, La, Si, Do, Re, Mi, Fa"></picture>
 <figcaption>Las notas en la clave de Sol, línea a línea y espacio a espacio.</figcaption>
 </figure>
@@ -357,7 +358,7 @@ document.addEventListener("DOMContentLoaded",function(){var els=[].slice.call(do
 
 <p>La nota de referencia es <strong>Fa</strong> en la 4ª línea. Es la clave de violonchelo, contrabajo, piano (mano izquierda) y bajo eléctrico:</p>
 
-<figure class="tm-staff">
+<figure class="tm-staff" data-tm-notes data-tm-baseoct="2">
 <picture><source type="image/webp" srcset="/assets/img/claves/notas-clave-fa.webp"><img src="/assets/img/claves/notas-clave-fa.png" width="620" height="204" loading="lazy" alt="Notas en la clave de Fa en 4ª línea en el pentagrama: Sol, La, Si, Do, Re, Mi, Fa, Sol, La"></picture>
 <figcaption>Las notas en la clave de Fa en 4ª, línea a línea y espacio a espacio.</figcaption>
 </figure>
@@ -391,7 +392,7 @@ document.addEventListener("DOMContentLoaded",function(){var els=[].slice.call(do
 
 <p>La nota de referencia es el <strong>Do central</strong> en la 3ª línea. Es la clave estándar para la viola:</p>
 
-<figure class="tm-staff">
+<figure class="tm-staff" data-tm-notes data-tm-baseoct="3">
 <picture><source type="image/webp" srcset="/assets/img/claves/notas-clave-do.webp"><img src="/assets/img/claves/notas-clave-do.png" width="620" height="204" loading="lazy" alt="Notas en la clave de Do en 3ª línea (viola) en el pentagrama: Fa, Sol, La, Si, Do, Re, Mi, Fa, Sol"></picture>
 <figcaption>Las notas en la clave de Do en 3ª (viola), línea a línea y espacio a espacio.</figcaption>
 </figure>
@@ -424,17 +425,17 @@ document.addEventListener("DOMContentLoaded",function(){var els=[].slice.call(do
 
 <p>La clave de Do puede situarse en cualquiera de las cuatro primeras líneas. El <strong>Do central</strong> cae siempre sobre la línea que da nombre a la clave, y el resto de notas se reordena en consecuencia:</p>
 
-<figure class="tm-staff">
+<figure class="tm-staff" data-tm-notes data-tm-baseoct="4">
 <picture><source type="image/webp" srcset="/assets/img/claves/notas-clave-do-1.webp"><img src="/assets/img/claves/notas-clave-do-1.png" width="620" height="204" loading="lazy" alt="Notas en la clave de Do en 1ª línea (soprano) en el pentagrama: Do, Re, Mi, Fa, Sol, La, Si, Do, Re"></picture>
 <figcaption>Clave de Do en 1ª línea (soprano): el Do central en la 1ª línea.</figcaption>
 </figure>
 
-<figure class="tm-staff">
+<figure class="tm-staff" data-tm-notes data-tm-baseoct="3">
 <picture><source type="image/webp" srcset="/assets/img/claves/notas-clave-do-2.webp"><img src="/assets/img/claves/notas-clave-do-2.png" width="620" height="204" loading="lazy" alt="Notas en la clave de Do en 2ª línea (mezzosoprano) en el pentagrama: La, Si, Do, Re, Mi, Fa, Sol, La, Si"></picture>
 <figcaption>Clave de Do en 2ª línea (mezzosoprano): el Do central en la 2ª línea.</figcaption>
 </figure>
 
-<figure class="tm-staff">
+<figure class="tm-staff" data-tm-notes data-tm-baseoct="3">
 <picture><source type="image/webp" srcset="/assets/img/claves/notas-clave-do-4.webp"><img src="/assets/img/claves/notas-clave-do-4.png" width="620" height="204" loading="lazy" alt="Notas en la clave de Do en 4ª línea (tenor) en el pentagrama: Re, Mi, Fa, Sol, La, Si, Do, Re, Mi"></picture>
 <figcaption>Clave de Do en 4ª línea (tenor): el Do central en la 4ª línea.</figcaption>
 </figure>
@@ -465,7 +466,7 @@ document.addEventListener("DOMContentLoaded",function(){var els=[].slice.call(do
 
 <p>Todas las claves representan los mismos sonidos; lo único que cambia es <strong>dónde se coloca cada altura</strong> en el pentagrama. El punto de referencia común es el <strong>Do central</strong>: una misma nota se escribe en una posición distinta en cada clave. Por eso, al cambiar de clave, una nota «sube» o «baja» de línea aunque suene exactamente igual. Para nombrar a qué octava pertenece cada nota (por ejemplo Do3 o Do4) se usa el <a href="/diccionario-musical/indice-acustico/">índice acústico</a>.</p>
 
-<figure class="tm-staff">
+<figure class="tm-staff" data-tm-notes="Do" data-tm-baseoct="4">
 <picture><source type="image/webp" srcset="/assets/img/claves/equivalencia-claves-do-central.webp"><img src="/assets/img/claves/equivalencia-claves-do-central.png" width="1080" height="168" loading="lazy" alt="El mismo Do central escrito en las siete claves: clave de Sol en 2ª, Do en 1ª, 2ª, 3ª y 4ª, y Fa en 3ª y 4ª"></picture>
 <figcaption>El mismo <strong>Do central</strong> en las siete claves: va subiendo de posición según la clave.</figcaption>
 </figure>
