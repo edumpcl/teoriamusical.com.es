@@ -129,6 +129,8 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Las Notas del Piano: Dónde Están en el Teclado](https://www.teoriamusical.com.es/diccionario-musical/notas-del-piano/): Aprende dónde están las notas en el teclado del piano con un teclado interactivo. El patrón de teclas blancas y negras, el truco de los grupos de 2 y 3, el Do central y las octavas.
 - [Las Notas en los Instrumentos Musicales](https://www.teoriamusical.com.es/diccionario-musical/notas-en-los-instrumentos/): Las notas son las mismas en todos los instrumentos; lo que cambia es dónde están. Guía para encontrar las notas en el piano, la guitarra y los instrumentos de viento.
 - [Las Notas de la Flauta Travesera (Tesitura y Registros)](https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-flauta-travesera/): La flauta travesera es un instrumento en Do, no transpositor. Su tesitura (Do₄–Do₇), los cuatro registros, cómo suena, el sistema Boehm y sus digitaciones.
+- [Escala de Tonos Enteros (Hexátona): Notas y Sonido](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-de-tonos-enteros/): La escala de tonos enteros o hexátona: 6 notas separadas por tonos. Por qué solo existen dos, su sonido ambiguo y su uso en Debussy y el impresionismo.
+- [Escala de Blues: Notas, la Blue Note y Cómo Se Forma](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-de-blues/): La escala de blues: la pentatónica menor más la blue note (♭5). Notas en La y en Do, versiones menor y mayor, y cómo se usa para improvisar.
 
 ## Ejercicios interactivos
 
