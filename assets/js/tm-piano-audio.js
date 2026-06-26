@@ -102,6 +102,23 @@
     return playMidis(scaleToMidis(names, opts.baseOct), opts);
   }
 
+  /* Reproduce una secuencia de acordes (cada uno = lista de MIDIs sonando a la vez). Para cadencias. */
+  function playChords(chordList, opts) {
+    opts = opts || {};
+    var step = opts.chordStep || 1.0;
+    var c = ctx(); if (!c) return Promise.resolve();
+    if (c.state === 'suspended') c.resume();
+    if (!chordList || !chordList.length) return Promise.resolve();
+    var all = {}; chordList.forEach(function (ch) { ch.forEach(function (m) { all[sampOf(m).file] = 1; }); });
+    return Promise.all(Object.keys(all).map(function (f) { return loadBuf(f).then(function (buf) { return [f, buf]; }); }))
+      .then(function (arr) {
+        var bmap = {}; arr.forEach(function (o) { bmap[o[0]] = o[1]; });
+        var t0 = c.currentTime + 0.06, last = chordList.length - 1;
+        chordList.forEach(function (ch, ci) { var when = t0 + ci * step; ch.forEach(function (m) { startAt(c, m, when, bmap, ci === last ? 1.3 : step, true); }); });
+        return chordList.length * step + 0.5;
+      }).catch(function () {});
+  }
+
   /* Extrae los nombres de nota de un texto libre, con alteraciones por símbolo o palabra
      ("Fa sostenido" -> Fa♯, "Re bemol" -> Re♭). No confunde notas dentro de otras palabras. */
   function extractNotes(str) {
@@ -306,6 +323,36 @@
         fig.classList.add('tm-has-play');
         fig.appendChild(makeBtn(map[root], 'Escuchar la escala', 'tm-play-scale--fig'));
       });
+    });
+    /* Acordes/cadencias con notas explícitas: data-tm-chord-notes="Sol Si Re Fa | Do Mi Sol".
+       Un solo grupo = acorde (a la vez); varios grupos separados por '|' = secuencia (cadencia). */
+    document.querySelectorAll('[data-tm-chord-notes]').forEach(function (el) {
+      if (el.querySelector && el.querySelector('.tm-play-scale')) return;
+      var chords = (el.getAttribute('data-tm-chord-notes') || '').split('|')
+        .map(function (part) { return dirMidis(extractNotes(part), 4, 1); })
+        .filter(function (ch) { return ch.length; });
+      if (!chords.length) return;
+      var isFig = el.tagName === 'FIGURE', single = chords.length === 1;
+      if (isFig) el.classList.add('tm-has-play');
+      el.appendChild(makeBtnFromPlay(function () {
+        return single ? playMidis(chords[0], { chord: true }) : playChords(chords);
+      }, single ? 'Escuchar el acorde' : 'Escuchar la cadencia', isFig ? 'tm-play-scale--fig' : ''));
+    });
+    /* Páginas de acordes ([data-tm-chords]): ▶ en cada pentagrama cuyo alt liste las notas tras los ':'
+       ("…: Do, Mi y Sol", "…: Do Mi Sol Si bemol"). Suenan a la vez (acorde), apiladas de grave a agudo. */
+    document.querySelectorAll('[data-tm-chords] img').forEach(function (img) {
+      var alt = img.getAttribute('alt') || '';
+      var ci = alt.lastIndexOf(':');
+      if (ci < 0) return;
+      var names = extractNotes(alt.slice(ci + 1));
+      if (names.length < 2) return;
+      var host = (img.closest && (img.closest('figure') || img.closest('td'))) || img.parentElement;
+      if (!host || host.querySelector('.tm-play-scale')) return;
+      var midis = dirMidis(names, 4, 1);
+      if (!midis.length) return;
+      var isFig = host.tagName === 'FIGURE';
+      if (isFig) host.classList.add('tm-has-play');
+      host.appendChild(makeBtnFromPlay(function () { return playMidis(midis, { chord: true }); }, 'Escuchar el acorde', isFig ? 'tm-play-scale--fig' : ''));
     });
     /* Páginas de intervalos ([data-tm-intervals]): ▶ en cada pentagrama de intervalo, sea <figure> o
        celda de tabla. Lee las notas y el tipo del alt; armónico (a la vez) si dice "armónico/simultáneo",
