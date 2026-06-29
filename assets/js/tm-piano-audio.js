@@ -119,6 +119,45 @@
       }).catch(function () {});
   }
 
+  /* MIDI a partir de una clave estilo VexFlow ("c/4", "f#/4", "eb/5", "c##/4"). */
+  function midiFromKey(p) {
+    var m = /^([a-gA-G])(##|bb|#|b)?\/(-?\d+)$/.exec((p || '').trim());
+    if (!m) return null;
+    var L = { c: 0, d: 2, e: 4, f: 5, g: 7, a: 9, b: 11 }[m[1].toLowerCase()];
+    if (L == null) return null;
+    var acc = m[2] || '';
+    if (acc === '#') L += 1; else if (acc === 'b') L -= 1;
+    else if (acc === '##') L += 2; else if (acc === 'bb') L -= 2;
+    return (parseInt(m[3], 10) + 1) * 12 + L;
+  }
+  var DURBEATS = { w: 4, h: 2, q: 1, '8': 0.5, '16': 0.25, '32': 0.125 };
+  /* Reproduce una melodía con ritmo real. tokens: lista de "clave:duración" (p. ej. "g/4:8",
+     "c/4:q.", barra "|" se ignora, "r:q" = silencio). bpm = pulsos de negra por minuto. */
+  function playMelody(tokens, bpm) {
+    var c = ctx(); if (!c) return Promise.resolve();
+    if (c.state === 'suspended') c.resume();
+    var spb = 60 / (bpm || 96), ev = [], t = 0;
+    tokens.forEach(function (tok) {
+      if (!tok || tok === '|') return;
+      var parts = tok.split(':'), dp = parts[1] || 'q', dots = 0;
+      var dd = dp.replace(/\./g, function () { dots++; return ''; });
+      var beats = DURBEATS[dd]; if (beats == null) beats = 1;
+      var durSecs = beats * (2 - Math.pow(2, -dots)) * spb;   // puntillo(s)
+      var midi = parts[0] === 'r' ? null : midiFromKey(parts[0]);
+      if (midi != null) ev.push({ midi: midi, when: t, dur: durSecs });
+      t += durSecs;
+    });
+    if (!ev.length) return Promise.resolve();
+    var files = {}; ev.forEach(function (e) { files[sampOf(e.midi).file] = 1; });
+    return Promise.all(Object.keys(files).map(function (f) { return loadBuf(f).then(function (b) { return [f, b]; }); }))
+      .then(function (arr) {
+        var bmap = {}; arr.forEach(function (o) { bmap[o[0]] = o[1]; });
+        var t0 = c.currentTime + 0.06, last = ev.length - 1;
+        ev.forEach(function (e, i) { startAt(c, e.midi, t0 + e.when, bmap, e.dur, i === last); });
+        return t + 0.6;
+      }).catch(function () {});
+  }
+
   /* Extrae los nombres de nota de un texto libre, con alteraciones por símbolo o palabra
      ("Fa sostenido" -> Fa♯, "Re bemol" -> Re♭). No confunde notas dentro de otras palabras. */
   function extractNotes(str) {
@@ -170,7 +209,7 @@
     return out;
   }
 
-  var CSS = '.tm-play-scale{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;border:none;background:#8b6914;color:#fff;font-size:.66rem;cursor:pointer;margin-left:8px;vertical-align:middle;line-height:1;flex:0 0 auto;}.tm-play-scale:hover{background:#6b5010;}.tm-play-scale.tm-playing{background:#27ae60;}'
+  var CSS = '.tm-play-scale{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;border:none;background:#8b6914;color:#fff;font-size:.72rem;cursor:pointer;margin-left:8px;vertical-align:middle;line-height:1;flex:0 0 auto;}.tm-play-scale:hover{background:#6b5010;}.tm-play-scale.tm-playing{background:#27ae60;}.tm-play-scale.tm-loading{background:#b08a2e;cursor:progress;}'
     + 'figure.tm-has-play{position:relative;padding-left:44px;}figure.tm-has-play img{max-width:100%;}.tm-play-scale--fig{position:absolute;left:4px;top:50%;transform:translateY(-50%);margin:0;width:34px;height:34px;font-size:.8rem;box-shadow:0 1px 4px rgba(0,0,0,.3);z-index:2;}';
   function injectCSS() { if (document.getElementById('tm-piano-css')) return; var s = document.createElement('style'); s.id = 'tm-piano-css'; s.textContent = CSS; document.head.appendChild(s); }
 
@@ -179,10 +218,12 @@
     btn.className = 'tm-play-scale' + (extraClass ? ' ' + extraClass : ''); btn.type = 'button';
     btn.setAttribute('aria-label', label || 'Escuchar'); btn.textContent = '▶';
     btn.addEventListener('click', function () {
-      btn.classList.add('tm-playing');
+      if (btn.classList.contains('tm-loading') || btn.classList.contains('tm-playing')) return;   // ignora reclics mientras carga/suena
+      btn.classList.add('tm-loading'); btn.textContent = '⏳';   // feedback durante la 1ª descarga del sample
       Promise.resolve(starter()).then(function (dur) {
+        btn.classList.remove('tm-loading'); btn.classList.add('tm-playing'); btn.textContent = '▶';
         setTimeout(function () { btn.classList.remove('tm-playing'); }, ((dur || 1) * 1000) + 200);
-      });
+      }, function () { btn.classList.remove('tm-loading'); btn.textContent = '▶'; });
     });
     return btn;
   }
@@ -401,6 +442,16 @@
       if (isFig) el.classList.add('tm-has-play');
       el.appendChild(makeBtnMidis(midis, 'Escuchar', isFig ? 'tm-play-scale--fig' : ''));
     });
+    /* Melodías con ritmo (figure[data-tm-melody]="g/4:8 a/4:8 … | c/4:q."): ▶ que reproduce
+       la secuencia exacta con su ritmo, al tempo de data-tm-bpm (negra; por defecto 96). */
+    document.querySelectorAll('figure[data-tm-melody]').forEach(function (fig) {
+      if (fig.querySelector('.tm-play-scale')) return;
+      var seq = (fig.getAttribute('data-tm-melody') || '').trim().split(/\s+/).filter(Boolean);
+      if (!seq.length) return;
+      var bpm = parseInt(fig.getAttribute('data-tm-bpm'), 10) || 96;
+      fig.classList.add('tm-has-play');
+      fig.appendChild(makeBtnFromPlay(function () { return playMelody(seq, bpm); }, 'Escuchar la melodía', 'tm-play-scale--fig'));
+    });
     /* Pentagramas de claves (figure[data-tm-clef]): reproducen Do Re Mi Fa Sol La Si Do
        en el registro propio de la clave (Sol/soprano/mezzo/alto en 4ª octava; tenor/barítono/Fa en 3ª). */
     document.querySelectorAll('figure[data-tm-clef]').forEach(function (fig) {
@@ -449,7 +500,7 @@
     });
   }
 
-  window.tmPiano = { playScale: playScale, playMidi: playMidi, nameToPc: nameToPc };
+  window.tmPiano = { playScale: playScale, playMidi: playMidi, playMelody: playMelody, nameToPc: nameToPc };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wire);
   else wire();
 })();
