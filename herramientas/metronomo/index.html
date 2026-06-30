@@ -74,7 +74,7 @@
     "Compás libre con agrupaciones asimétricas",
     "TAP tempo automático",
     "Péndulo visual animado",
-    "Subdivisiones: negra, corchea, tresillo, semicorchea, quintillo, sextillo, septillo, ×8",
+    "Subdivisiones: negra, corchea, tresillo, semicorchea, quintillo, seisillo, septillo, ×8",
     "Caja de ritmos integrada con patrones predefinidos",
     "Modo Ensayo con rampa de tempo automática",
     "Acento personalizable por pulso",
@@ -105,7 +105,7 @@
 }
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"HowTo","name":"Cómo usar el metrónomo online","description":"Guía paso a paso para usar el metrónomo online de Teoría Musical y mejorar el sentido del ritmo.","tool":[{"@type":"HowToTool","name":"Metrónomo online de Teoría Musical"}],"step":[{"@type":"HowToStep","position":1,"name":"Ajustar el tempo (BPM)","text":"Se selecciona el BPM con el slider o los botones + y −. Para estudiar una pieza nueva, se empieza al 60-70 % del tempo final."},{"@type":"HowToStep","position":2,"name":"Seleccionar el compás","text":"Se elige entre compases simples (2/4, 3/4, 4/4, 5/4), compuestos (6/8, 9/8, 12/8, 15/8) o se construye un compás asimétrico libre con agrupaciones de corcheas."},{"@type":"HowToStep","position":3,"name":"Activar la subdivisión","text":"Se selecciona la subdivisión rítmica según lo que se practique: negra, corchea, tresillo, semicorchea o figuraciones más complejas como quintillo o sextillo."},{"@type":"HowToStep","position":4,"name":"Iniciar la reproducción","text":"Se pulsa el botón Play o la barra espaciadora. El péndulo comienza a oscilar y se escucha el clic en el tempo elegido. El primer tiempo de cada compás suena con acento diferenciado."},{"@type":"HowToStep","position":5,"name":"Usar el Modo Ensayo para subir el tempo","text":"Se activa el Modo Ensayo y se definen el BPM inicial, el BPM final y el número de compases. El metrónomo subirá el tempo automáticamente de forma gradual hasta el objetivo."}]}
+{"@context":"https://schema.org","@type":"HowTo","name":"Cómo usar el metrónomo online","description":"Guía paso a paso para usar el metrónomo online de Teoría Musical y mejorar el sentido del ritmo.","tool":[{"@type":"HowToTool","name":"Metrónomo online de Teoría Musical"}],"step":[{"@type":"HowToStep","position":1,"name":"Ajustar el tempo (BPM)","text":"Se selecciona el BPM con el slider o los botones + y −. Para estudiar una pieza nueva, se empieza al 60-70 % del tempo final."},{"@type":"HowToStep","position":2,"name":"Seleccionar el compás","text":"Se elige entre compases simples (2/4, 3/4, 4/4, 5/4), compuestos (6/8, 9/8, 12/8, 15/8) o se construye un compás asimétrico libre con agrupaciones de corcheas."},{"@type":"HowToStep","position":3,"name":"Activar la subdivisión","text":"Se selecciona la subdivisión rítmica según lo que se practique: negra, corchea, tresillo, semicorchea o figuraciones más complejas como quintillo o seisillo."},{"@type":"HowToStep","position":4,"name":"Iniciar la reproducción","text":"Se pulsa el botón Play o la barra espaciadora. El péndulo comienza a oscilar y se escucha el clic en el tempo elegido. El primer tiempo de cada compás suena con acento diferenciado."},{"@type":"HowToStep","position":5,"name":"Usar el Modo Ensayo para subir el tempo","text":"Se activa el Modo Ensayo y se definen el BPM inicial, el BPM final y el número de compases. El metrónomo subirá el tempo automáticamente de forma gradual hasta el objetivo."}]}
 </script>
 </head>
 <body class="tm-page">
@@ -351,8 +351,8 @@
         <button class="subdiv-btn" data-div="2"><span class="subdiv-icon">♪♪</span><span class="subdiv-label">Corchea</span></button>
         <button class="subdiv-btn" data-div="3"><span class="subdiv-icon">♪♪♪</span><span class="subdiv-label">Tresillo</span></button>
         <button class="subdiv-btn" data-div="4"><span class="subdiv-icon">𝅘𝅥𝅯</span><span class="subdiv-label">Semicorch.</span></button>
-        <button class="subdiv-btn" data-div="6"><span class="subdiv-icon">6</span><span class="subdiv-label">Sextillo</span></button>
         <button class="subdiv-btn" data-div="5"><span class="subdiv-icon">5</span><span class="subdiv-label">Quintillo</span></button>
+        <button class="subdiv-btn" data-div="6"><span class="subdiv-icon">6</span><span class="subdiv-label">Seisillo</span></button>
         <button class="subdiv-btn" data-div="7"><span class="subdiv-icon">7</span><span class="subdiv-label">Septillo</span></button>
         <button class="subdiv-btn" data-div="8"><span class="subdiv-icon">×8</span><span class="subdiv-label">×8</span></button>
       </div>
@@ -458,7 +458,78 @@
 
   </div><!-- /met-grid -->
 </div><!-- /wrap -->
-<script src="/assets/tools/metronomo.js?v=7e3d7365" defer></script>
+<script src="/assets/tools/metronomo.js?v=ade7270e" defer></script>
+<script>
+/* Subdivisiones según el compás: en compás COMPUESTO (numerador 6, 9, 12, 15) el tiempo
+   es la negra con puntillo (se divide en 3), así que los botones cambian de nombre/figura.
+   No toca la lógica de audio (que usa data-div); solo el icono y la etiqueta mostrados. */
+(function () {
+  var grid = document.getElementById('subdiv-grid');
+  if (!grid) return;
+  // Compás COMPUESTO (6, 9, 12, 15): el tiempo es negra con puntillo (÷3); cambian 1,2,3,4,6.
+  var COMP = {
+    1: { i: '♩.', l: 'Negra c/p' }, 2: { i: '2', l: 'Dosillo' }, 3: { i: '♪♪♪', l: 'Corchea' },
+    4: { i: '4', l: 'Cuatrillo' }, 6: { i: '𝅘𝅥𝅯', l: 'Semicorch.' }
+  };
+  // Compás LIBRE/asimétrico: tiempo irregular; solo divisiones binarias de la corchea.
+  var FREE = {
+    1: { i: '♩', l: 'Tiempo' }, 2: { i: '♪', l: 'Corchea' },
+    4: { i: '𝅘𝅥𝅯', l: 'Semicorch.' }, 8: { i: '𝅘𝅥𝅰', l: 'Fusa' }
+  };
+  var FREE_VIS = { 1: 1, 2: 1, 4: 1, 8: 1 };   // botones visibles en modo libre
+  var btns = [].slice.call(grid.querySelectorAll('.subdiv-btn'));
+  btns.forEach(function (b) {           // guarda los originales (compás simple)
+    b.dataset.icoS = b.querySelector('.subdiv-icon').textContent;
+    b.dataset.lblS = b.querySelector('.subdiv-label').textContent;
+  });
+  function isCompound(meter) {
+    var m = /^(\d+)\/(\d+)$/.exec(meter || '');
+    return !!m && (+m[1]) % 3 === 0 && (+m[1]) >= 6;   // 6,9,12,15 = compuesto (3/8 es simple)
+  }
+  function mode() {
+    var a = document.querySelector('.meter-pill.active');
+    if (a) return isCompound(a.dataset.meter) ? 'comp' : 'simple';
+    var fg = document.getElementById('free-groups-display');
+    var hasGroups = fg && !/sin grupos/i.test(fg.textContent || '');
+    return hasGroups ? 'free' : 'simple';   // sin pill activa + grupos aplicados = libre
+  }
+  function setBtn(b, ico, lbl) {
+    b.querySelector('.subdiv-icon').textContent = ico;
+    b.querySelector('.subdiv-label').textContent = lbl;
+  }
+  function refresh() {
+    var m = mode();
+    btns.forEach(function (b) {
+      var d = +b.dataset.div;
+      if (m === 'free') {
+        if (FREE_VIS[d]) { b.style.display = ''; setBtn(b, FREE[d].i, FREE[d].l); }
+        else { b.style.display = 'none'; }
+      } else {
+        b.style.display = '';
+        if (m === 'comp' && COMP[d]) setBtn(b, COMP[d].i, COMP[d].l);
+        else setBtn(b, b.dataset.icoS, b.dataset.lblS);
+      }
+    });
+    if (m === 'free') {   // si hay un tresillo/quintillo… activo, resetea a Corchea
+      var act = grid.querySelector('.subdiv-btn.active');
+      if (act && !FREE_VIS[+act.dataset.div]) {
+        var c = grid.querySelector('.subdiv-btn[data-div="2"]');
+        if (c) c.click();
+      }
+    }
+  }
+  var obs = new MutationObserver(refresh);
+  ['simple-meters', 'compound-meters'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) obs.observe(el, { attributes: true, subtree: true, attributeFilter: ['class'] });
+  });
+  ['free-apply', 'free-clear'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('click', function () { setTimeout(refresh, 60); });
+  });
+  setTimeout(refresh, 150);   // estado inicial (incluye carga con ?meter= o ?groups=)
+})();
+</script>
 
 
 
@@ -537,7 +608,7 @@
 <ul>
 <li><strong>Compases simples y compuestos:</strong> Elige entre 1/4, 2/4, 3/4, 4/4, 5/4 (simples) y 3/8, 6/8, 9/8, 12/8, 15/8 (compuestos). El primer pulso de cada compás suena con acento automático.</li>
 <li><strong>Compás libre:</strong> Crea compases asimétricos propios de la música contemporánea, el flamenco o el jazz de vanguardia —como 5/8, 7/8 u 11/8— agrupando corcheas libremente (grupos de 1, 2 o 3).</li>
-<li><strong>Subdivisiones:</strong> Se activa negra, corchea, tresillo, semicorchea, quintillo, sextillo, septillo u ×8 para trabajar cualquier figuración rítmica.</li>
+<li><strong>Subdivisiones:</strong> Se activa negra, corchea, tresillo, semicorchea, quintillo, seisillo, septillo u ×8 para trabajar cualquier figuración rítmica.</li>
 <li><strong>Caja de ritmos integrada:</strong> Acompaña el clic con patrones de batería (Kick, Snare, Hi-Hat abierto y cerrado) con presets por compás: Rock, Pop, Funk, Bossa, Reggae, Shuffle, Vals, Jig…</li>
 <li><strong>Modo Ensayo:</strong> Se define un rango de BPM (inicio → final) y un número de compases. El metrónomo sube el tempo de forma gradual y automática, ideal para superar pasajes difíciles.</li>
 <li><strong>Tap Tempo:</strong> Se golpea la tecla <kbd>T</kbd> o el botón TAP al ritmo de una canción para detectar automáticamente el BPM.</li>

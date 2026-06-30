@@ -3,6 +3,49 @@
  * Mismo comportamiento, solo con saltos de línea e indentación.
  * Generado por tools/beautify-metronomo.cjs. Para desplegar cambios hace falta
  * re-minificar a metronomo.js (p. ej. con terser).
+ *
+ * ─── LEYENDA DE VARIABLES (los nombres son de 1 letra por la minificación) ───
+ * El código se minificó con `mangle`, así que NO hay nombres descriptivos. Este
+ * mapa es lo verificado leyendo el código; sirve para orientarse al hacer retoques.
+ * OJO: algunas letras se REUTILIZAN como locales dentro de funciones (ver notas).
+ *
+ * Estado (variables del IIFE, persisten mientras suena):
+ *   p   = BPM / tempo (15–300)
+ *   v   = subdivisión seleccionada (1–8; data-div de los botones)
+ *   E   = compás como texto ("2/4"); en compás libre, "(suma de corcheas)/8"
+ *   k   = número de tiempos del compás
+ *   x   = grupos del compás LIBRE aplicados, p.ej. [2,3] (vacío = compás normal)
+ *   f   = índice del tiempo actual en el planificador.  ⚠ OJO: dentro del bloque de
+ *         compás libre hay una `f` LOCAL distinta = array temporal de grupos que
+ *         construyen los botones +1/+2/+3 antes de pulsar APLICAR.
+ *   g   = contador de compases (para el ciclo del «modo silencio»)
+ *   h   = está reproduciendo (play sí/no)
+ *   ne  = próximo instante (segundos del AudioContext) que el planificador va a programar
+ *   B   = «token» de la sesión de reproducción (cancela timeouts obsoletos al re-arrancar).
+ *         ⚠ OJO: en el bloque de compás libre, `B` LOCAL = el elemento #free-groups-display.
+ *   C   = AudioContext ;  q = ganancia maestra (master gain)
+ *   R   = volumen del click (0–1) ;  N = volumen del acento (0–1)
+ *   H   = sonido ("templeblock","claves","cencerro","clasico","electronico","digital")
+ *   D   = caja de ritmos activada (sí/no)
+ *   K   = instrumentos de batería ["KICK","SNARE","HH-C","HH-O"]
+ *   P   = pasos del patrón de batería (16) ;  O = parrilla de la caja de ritmos ;  F = volúmenes de cada instrumento
+ *   T   = wakeLock (mantener la pantalla encendida)
+ *   ciOn / ciLeft / ciK    = cuenta atrás (count-in)
+ *   gpOn / gpPlay / gpMute = «modo silencio» (toca gpPlay compases, silencia gpMute)
+ *   G   = valores iniciales leídos de la URL (?bpm=…&meter=…) o de localStorage
+ *
+ * Locales habituales del planificador ce():
+ *   t = segundos por tiempo (60/p) ;  n = t/2 (≈ una corchea) ;  o = duración del tiempo actual
+ *   s = nº de clics que suenan en el tiempo (la subdivisión) ;  a = índice del tiempo
+ *   LAT = latencia de salida ;  LOOK = ventana de anticipación del planificador
+ *   ⚠ Las letras e, t, n, a, o… se reutilizan como locales en muchas funciones: no asumas
+ *      que una letra significa lo mismo en todas partes; míralo en su ámbito.
+ *
+ * Funciones clave (nombres minificados, verificadas):
+ *   oe(bpm) = fijar BPM ;  ce() = PLANIFICADOR (programa los clics por adelantado)
+ *   se() = play ;  le() = stop ;  Y() = reprogramar tras un cambio
+ *   w()  = pintar los grupos del compás libre en pantalla
+ * ─────────────────────────────────────────────────────────────────────────────
  */
 !function(){
   let e,
@@ -361,7 +404,7 @@
           u3===B&&gpUpdate(sl)
         },d3)
       }(gpSil||"muted"===c)||X("strong"===c,!1,ne,"medium"===c);
-      const s=x.length>0&&2===v?x[a]:v;
+      const s=x.length>0?(1===v?1:x[a]*(v/2)):v;
       if(s>1&&!gpSil){
         const e=o/s;
         for(let t=1;
