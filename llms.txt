@@ -140,6 +140,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [El compás de 12/8: qué es, cómo se cuenta y ejemplos](https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-12-8/): El compás de 12/8 es compuesto y se cuenta en cuatro tiempos de negra con puntillo. El compás del blues lento y la balada, con ejemplos en pentagrama.
 - [Signos de repetición: barras, casillas, D.C. y D.S.](https://www.teoriamusical.com.es/diccionario-musical/signos-de-repeticion/): Los signos de repetición de una partitura: barras de repetición, casillas de 1.ª y 2.ª vez, Da Capo, Dal Segno, Coda y Fine. Con ejemplos que puedes escuchar.
 - [Ornamentos musicales: apoyatura, mordente, grupeto y trino](https://www.teoriamusical.com.es/diccionario-musical/ornamentos-musicales/): Los ornamentos o adornos musicales: apoyatura, acciaccatura, mordente, grupeto y trino. Cómo se escriben y cómo se tocan, con ejemplos que puedes escuchar.
+- [Las notas del oboe: tesitura y digitaciones](https://www.teoriamusical.com.es/diccionario-musical/notas-del-oboe/): Las notas del oboe: su tesitura del Si♭3 al Sol6 registro a registro y un diagrama interactivo de digitaciones con sonido real. El oboe está en Do y no transpone.
 
 ## Ejercicios interactivos
 
