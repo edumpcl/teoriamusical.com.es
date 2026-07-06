@@ -236,10 +236,14 @@
     '<line x1="340" y1="198" x2="340" y2="221" stroke="#b9bbc1" stroke-width="1.3"/>' +
     '<line x1="430" y1="199" x2="430" y2="226" stroke="#b9bbc1" stroke-width="1.3"/>' +
     '<line x1="456" y1="199" x2="456" y2="234" stroke="#b9bbc1" stroke-width="1.3"/>' +
+    // muletilla (apoyo de la mano derecha en la culata): decorativa, no es una llave
+    '<path d="M522 198 C535 197 543 206 540 216 C538 223 529 226 521 222 C525 217 527 211 525 205 C524 202 523 200 522 198 Z" fill="#2a2a2a" stroke="#151515" stroke-width="1"/>' +
+    '<circle cx="523" cy="199" r="2" fill="#9a9ca3"/>' +
     // etiquetas
     '<text class="tm-fg-klab" x="38" y="52">Caña</text>' +
     '<text class="tm-fg-klab" x="99" y="66">Campana</text>' +
     '<text class="tm-fg-klab" x="620" y="224">Culata</text>' +
+    '<text class="tm-fg-klab2" x="531" y="236">Muletilla</text>' +
     '<text class="tm-fg-grp" x="232" y="126">Pulgar izquierdo</text>' +
     '<text class="tm-fg-grp" x="481" y="126">Pulgar derecho</text>' +
     '<text class="tm-fg-klab2" x="128" y="160">piano</text>' +

@@ -142,6 +142,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Ornamentos musicales: apoyatura, mordente, grupeto y trino](https://www.teoriamusical.com.es/diccionario-musical/ornamentos-musicales/): Los ornamentos o adornos musicales: apoyatura, acciaccatura, mordente, grupeto y trino. Cómo se escriben y cómo se tocan, con ejemplos que puedes escuchar.
 - [Las notas del oboe: tesitura y digitaciones](https://www.teoriamusical.com.es/diccionario-musical/notas-del-oboe/): Las notas del oboe: su tesitura del Si♭3 al Sol6 registro a registro y un diagrama interactivo de digitaciones con sonido real. El oboe está en Do y no transpone.
 - [Las notas del fagot: tesitura y digitaciones](https://www.teoriamusical.com.es/diccionario-musical/notas-del-fagot/): Las notas del fagot: tesitura del Si♭1 al Mi♭5, claves de lectura (fa en 4ª, do en 4ª y sol) y digitaciones del sistema alemán (Heckel) con diagrama interactivo y sonido real.
+- [Las notas del clarinete: registros y digitaciones](https://www.teoriamusical.com.es/diccionario-musical/notas-del-clarinete/): Las notas del clarinete en Si♭: registros con nombre propio (chalumeau, garganta, clarín, sobreagudo), transposición y digitaciones Boehm con diagrama interactivo y sonido real.
 
 ## Ejercicios interactivos
 

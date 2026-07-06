@@ -128,6 +128,8 @@
     '.tm-ob-key.on .k-ring{stroke:#e8dcc0;}',
     '.tm-ob-half .k-pad{fill:transparent;stroke:none;}',
     '.tm-ob-half.on .k-pad{fill:#8b6914;}',
+    '.tm-ob-trill{fill:#e9eaee;stroke:#8f9199;stroke-width:1.2;}',
+    '.tm-ob-trill-rod{stroke:#b9bbc1;stroke-width:1.2;}',
     '.tm-ob-klab{font-family:Arial,Helvetica,sans-serif;font-size:11px;fill:#555;text-anchor:middle;}',
     '.tm-ob-grp{font-family:Arial,Helvetica,sans-serif;font-size:12px;fill:#8b6914;text-anchor:middle;font-weight:bold;}',
     '.tm-ob-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}',
@@ -182,6 +184,14 @@
     '<line x1="430" y1="131" x2="430" y2="143" stroke="#b9bbc1" stroke-width="1.4"/>' +
     '<line x1="482" y1="133" x2="482" y2="148" stroke="#b9bbc1" stroke-width="1.4"/>' +
     '<line x1="506" y1="133" x2="506" y2="152" stroke="#b9bbc1" stroke-width="1.4"/>' +
+    // llaves de trino (decorativas: un oboe real las lleva para trinos rápidos,
+    // pero no cambian ninguna digitación de esta tabla, así que nunca se encienden)
+    '<line class="tm-ob-trill-rod" x1="225" y1="99" x2="225" y2="110"/>' +
+    '<ellipse class="tm-ob-trill" cx="225" cy="99" rx="5" ry="4"/>' +
+    '<line class="tm-ob-trill-rod" x1="265" y1="99" x2="265" y2="110"/>' +
+    '<ellipse class="tm-ob-trill" cx="265" cy="99" rx="5" ry="4"/>' +
+    '<line class="tm-ob-trill-rod" x1="390" y1="97" x2="390" y2="109"/>' +
+    '<ellipse class="tm-ob-trill" cx="390" cy="97" rx="5" ry="4"/>' +
     // etiquetas
     '<text class="tm-ob-klab" x="163" y="66">Llaves de octava</text>' +
     '<text class="tm-ob-klab" x="205" y="96">1</text><text class="tm-ob-klab" x="245" y="96">2</text><text class="tm-ob-klab" x="285" y="96">3</text>' +
