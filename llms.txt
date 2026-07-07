@@ -144,6 +144,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Las notas del fagot: tesitura y digitaciones](https://www.teoriamusical.com.es/diccionario-musical/notas-del-fagot/): Las notas del fagot: tesitura del Si♭1 al Mi♭5, claves de lectura (fa en 4ª, do en 4ª y sol) y digitaciones del sistema alemán (Heckel) con diagrama interactivo y sonido real.
 - [Las notas del clarinete: registros y digitaciones](https://www.teoriamusical.com.es/diccionario-musical/notas-del-clarinete/): Las notas del clarinete en Si♭: registros con nombre propio (chalumeau, garganta, clarín, sobreagudo), transposición y digitaciones Boehm con diagrama interactivo y sonido real.
 - [Las notas del flautín (piccolo)](https://www.teoriamusical.com.es/diccionario-musical/notas-del-flautin/): Las notas del flautín: tesitura escrita Re4–Do7 (suena una octava arriba), registros y digitaciones Boehm —las de la flauta, sin pata— con diagrama interactivo y sonido.
+- [Las notas del corno inglés](https://www.teoriamusical.com.es/diccionario-musical/notas-del-corno-ingles/): Las notas del corno inglés: tesitura escrita Si3–Sol6 (en Fa, suena una quinta justa abajo), registros y las digitaciones del oboe con diagrama interactivo y sonido real.
 
 ## Ejercicios interactivos
 
