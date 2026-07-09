@@ -147,6 +147,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Las notas del corno inglés](https://www.teoriamusical.com.es/diccionario-musical/notas-del-corno-ingles/): Las notas del corno inglés: tesitura escrita Si3–Sol6 (en Fa, suena una quinta justa abajo), registros y las digitaciones del oboe con diagrama interactivo y sonido real.
 - [Las notas del clarinete bajo](https://www.teoriamusical.com.es/diccionario-musical/notas-del-clarinete-bajo/): Las notas del clarinete bajo: tesitura escrita Mi♭3–La6 (suena una novena mayor abajo), registros y las digitaciones Boehm del clarinete con diagrama interactivo y sonido real.
 - [Las notas del contrafagot](https://www.teoriamusical.com.es/diccionario-musical/notas-del-contrafagot/): Las notas del contrafagot: tesitura escrita Si♭1–Re5 (suena una octava abajo, hasta el Si♭0 real), registros y digitaciones propias con diagrama interactivo y sonido real.
+- [Las notas del saxofón](https://www.teoriamusical.com.es/diccionario-musical/notas-del-saxofon/): Las notas del saxofón: una sola digitación para soprano, alto, tenor y barítono, la transposición de cada miembro, tesitura Si♭3–Fa♯6 y diagrama interactivo con selector de miembro y sonido real.
 
 ## Ejercicios interactivos
 
