@@ -148,6 +148,8 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Las notas del clarinete bajo](https://www.teoriamusical.com.es/diccionario-musical/notas-del-clarinete-bajo/): Las notas del clarinete bajo: tesitura escrita Mi♭3–La6 (suena una novena mayor abajo), registros y las digitaciones Boehm del clarinete con diagrama interactivo y sonido real.
 - [Las notas del contrafagot](https://www.teoriamusical.com.es/diccionario-musical/notas-del-contrafagot/): Las notas del contrafagot: tesitura escrita Si♭1–Re5 (suena una octava abajo, hasta el Si♭0 real), registros y digitaciones propias con diagrama interactivo y sonido real.
 - [Las notas del saxofón](https://www.teoriamusical.com.es/diccionario-musical/notas-del-saxofon/): Las notas del saxofón: una sola digitación para soprano, alto, tenor y barítono, la transposición de cada miembro, tesitura Si♭3–Fa♯6 y diagrama interactivo con selector de miembro y sonido real.
+- [Las notas del requinto](https://www.teoriamusical.com.es/diccionario-musical/notas-del-requinto/): Las notas del requinto (clarinete en Mi♭): tesitura escrita Mi3–La6 (suena una tercera menor arriba), sus registros y las digitaciones Boehm del clarinete con diagrama interactivo y sonido; voz aguda emblemática de la banda de música.
+- [Los instrumentos de viento madera](https://www.teoriamusical.com.es/diccionario-musical/instrumentos-de-viento-madera/): Qué son y cuáles son los instrumentos de viento madera (flauta, flautín, oboe, clarinete, saxofón, corno inglés, fagot, contrafagot); clasificación por embocadura (bisel, caña simple y doble), tabla comparativa con transposición y su papel en la orquesta y la banda, con enlace a la guía interactiva de cada uno.
 
 ## Ejercicios interactivos
 
