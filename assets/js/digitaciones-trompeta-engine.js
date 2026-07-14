@@ -9,13 +9,16 @@
 (function () {
   'use strict';
 
-  // Los 3 pistones (se ENCIENDEN). El resto del dibujo es decorativo.
+  // Los 3 pistones se ENCIENDEN sobre la FOTO real. Coordenadas en el sistema
+  // del viewBox de la imagen (1800×982): x/y = botón (perilla plateada), cx =
+  // borde izq. del cuerpo del pistón (casing) que también se ilumina.
   var KEYS = [
-    { id: 'V1', x: 250, y: 96 },
-    { id: 'V2', x: 292, y: 96 },
-    { id: 'V3', x: 334, y: 96 }
+    { id: 'V1', x: 700, y: 338, cx: 677 },
+    { id: 'V2', x: 780, y: 338, cx: 757 },
+    { id: 'V3', x: 857, y: 338, cx: 834 }
   ];
-  var SVG_W = 560, SVG_H = 240;
+  var SVG_W = 1800, SVG_H = 982;
+  var CASING_Y = 380, CASING_W = 46, CASING_H = 360, BTN_R = 31;
 
   var NAMES = { V1: '1er pistón', V2: '2º pistón', V3: '3er pistón' };
 
@@ -117,13 +120,18 @@
     '.tm-tr-reg{font-size:.9rem;color:#666;margin-top:2px;}',
     '.tm-tr-keysline{font-size:.88rem;color:#8b6914;margin-top:4px;}',
     '.tm-tr-hint{font-size:1.02rem;color:#999;font-weight:600;}',
-    '.tm-tr-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:6px;display:flex;justify-content:center;}',
-    '.tm-tr-svg{display:block;max-width:520px;width:100%;height:auto;margin:0 auto;}',
-    '.tm-tr-key .k-btn{fill:#e9eaee;stroke:#8f9199;stroke-width:1.6;}',
-    '.tm-tr-key.on .k-btn{fill:#8b6914;stroke:#6b5010;}',
-    '.tm-tr-key .k-num{font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:bold;fill:#777;text-anchor:middle;}',
-    '.tm-tr-key.on .k-num{fill:#fff;}',
-    '.tm-tr-klab{font-family:Arial,Helvetica,sans-serif;font-size:11px;fill:#555;text-anchor:middle;}',
+    '.tm-tr-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:6px;}',
+    '.tm-tr-photo{position:relative;max-width:520px;margin:0 auto;}',
+    '.tm-tr-img{display:block;width:100%;height:auto;border-radius:6px;}',
+    '.tm-tr-svg{position:absolute;inset:0;width:100%;height:100%;}',
+    '.tm-tr-key .k-casing{fill:#ff9500;opacity:0;transition:opacity .15s;}',
+    '.tm-tr-key.on .k-casing{opacity:.4;}',
+    '.tm-tr-key .k-btn{fill:#fff;fill-opacity:.12;stroke:rgba(120,90,0,.35);stroke-width:2;transition:all .15s;}',
+    '.tm-tr-key.on .k-btn{fill:#ff9500;fill-opacity:.92;stroke:#fff;stroke-width:5;filter:drop-shadow(0 0 12px #ff9500);}',
+    '.tm-tr-key .k-num{font-family:Arial,Helvetica,sans-serif;font-size:34px;font-weight:bold;fill:#fff;fill-opacity:.42;text-anchor:middle;dominant-baseline:central;transition:all .15s;}',
+    '.tm-tr-key.on .k-num{fill:#3a2b00;fill-opacity:1;}',
+    '.tm-tr-credit{font-size:.72rem;color:#9a9a9a;text-align:center;margin-top:6px;}',
+    '.tm-tr-credit a{color:inherit;}',
     '.tm-tr-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}',
     '.tm-tr-btn{min-width:46px;padding:10px 12px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}',
     '.tm-tr-btn:hover{background:#fdf8ee;border-color:#8b6914;}',
@@ -142,49 +150,13 @@
     document.head.appendChild(s);
   }
 
-  // Dibujo estático: trompeta de latón horizontal (boquilla a la izq., bloque de 3
-  // pistones en el centro, campana a la derecha), bombas de afinación y varillas.
-  var DECO =
-    '<defs><linearGradient id="tmTrBrass" x1="0" y1="0" x2="0" y2="1">' +
-      '<stop offset="0" stop-color="#f4d06a"/><stop offset="0.4" stop-color="#d9a520"/>' +
-      '<stop offset="0.75" stop-color="#b8860b"/><stop offset="1" stop-color="#7a5a08"/>' +
-    '</linearGradient></defs>' +
-    // boquilla
-    '<path d="M18 150 C10 146 10 158 18 154 L40 152 L40 152 Z" fill="#c8b060" stroke="#7a5a08" stroke-width="1"/>' +
-    '<rect x="30" y="146" width="14" height="12" rx="3" fill="#d9c070" stroke="#7a5a08" stroke-width="1"/>' +
-    // tudel/leadpipe superior (de la boquilla al bloque de pistones)
-    '<path d="M44 150 L236 118" stroke="url(#tmTrBrass)" stroke-width="11" fill="none" stroke-linecap="round"/>' +
-    // bomba de afinación (U por arriba a la izquierda)
-    '<path d="M70 148 C70 96 150 96 150 120" stroke="url(#tmTrBrass)" stroke-width="9" fill="none"/>' +
-    // tubo inferior (del bloque a la campana)
-    '<path d="M236 175 L360 182" stroke="url(#tmTrBrass)" stroke-width="12" fill="none" stroke-linecap="round"/>' +
-    // bloque de 3 pistones (casings verticales)
-    '<g stroke="#7a5a08" stroke-width="1.2">' +
-      '<rect x="238" y="104" width="24" height="86" rx="7" fill="url(#tmTrBrass)"/>' +
-      '<rect x="280" y="104" width="24" height="86" rx="7" fill="url(#tmTrBrass)"/>' +
-      '<rect x="322" y="104" width="24" height="86" rx="7" fill="url(#tmTrBrass)"/>' +
-    '</g>' +
-    // bombas en U bajo los pistones
-    '<path d="M250 190 C250 214 292 214 292 190" stroke="url(#tmTrBrass)" stroke-width="8" fill="none"/>' +
-    '<path d="M292 190 C292 220 334 220 334 190" stroke="url(#tmTrBrass)" stroke-width="8" fill="none"/>' +
-    // tubo hacia la campana
-    '<path d="M346 178 C395 182 430 180 452 174" stroke="url(#tmTrBrass)" stroke-width="12" fill="none" stroke-linecap="round"/>' +
-    // campana abocinada (cono que abre a la derecha)
-    '<path d="M448 162 C495 150 528 150 540 156 L540 196 C528 204 495 206 448 192 C456 183 456 171 448 162 Z" fill="url(#tmTrBrass)" stroke="#7a5a08" stroke-width="1.2"/>' +
-    '<ellipse cx="540" cy="176" rx="6" ry="21" fill="#c8960f" stroke="#7a5a08" stroke-width="1"/>' +
-    // varillas de los botones a los casings
-    '<line x1="250" y1="104" x2="250" y2="108" stroke="#b9bbc1" stroke-width="2"/>' +
-    '<line x1="292" y1="104" x2="292" y2="108" stroke="#b9bbc1" stroke-width="2"/>' +
-    '<line x1="334" y1="104" x2="334" y2="108" stroke="#b9bbc1" stroke-width="2"/>' +
-    // etiquetas
-    '<text class="tm-tr-klab" x="30" y="138">Boquilla</text>' +
-    '<text class="tm-tr-klab" x="505" y="150">Campana</text>' +
-    '<text class="tm-tr-klab" x="292" y="228">Pistones</text>';
-
+  // Cada pistón: cuerpo del pistón (casing) + botón + número, todos dentro del
+  // grupo que se ilumina al pulsar. Se dibujan ENCIMA de la foto (viewBox 1800×982).
   function keyShape(k) {
     return '<g class="tm-tr-key" data-k="' + k.id + '">' +
-      '<circle class="k-btn" cx="' + k.x + '" cy="' + k.y + '" r="13"/>' +
-      '<text class="k-num" x="' + k.x + '" y="' + (k.y + 4) + '">' + k.id.slice(1) + '</text></g>';
+      '<rect class="k-casing" x="' + k.cx + '" y="' + CASING_Y + '" width="' + CASING_W + '" height="' + CASING_H + '" rx="18"/>' +
+      '<circle class="k-btn" cx="' + k.x + '" cy="' + k.y + '" r="' + BTN_R + '"/>' +
+      '<text class="k-num" x="' + k.x + '" y="' + k.y + '">' + k.id.slice(1) + '</text></g>';
   }
 
   function tmTrompetaEngine(containerId) {
@@ -201,9 +173,16 @@
     wrap.innerHTML =
       '<div class="tm-tr-wrap">' +
         '<div class="tm-tr-readout" id="' + uid + '_ro"><span class="tm-tr-hint">Elige una nota para ver su digitación</span></div>' +
-        '<div class="tm-tr-diagram"><svg class="tm-tr-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" role="img" aria-label="Diagrama de digitación de la trompeta: instrumento de latón horizontal con la boquilla a la izquierda, tres pistones en el centro y la campana a la derecha; los pistones pulsados se muestran en dorado">' +
-          DECO + keysSvg +
-        '</svg></div>' +
+        '<div class="tm-tr-diagram">' +
+          '<div class="tm-tr-photo">' +
+            '<picture><source type="image/webp" srcset="/assets/img/trompeta/pistones.webp">' +
+            '<img class="tm-tr-img" src="/assets/img/trompeta/pistones.jpg" width="1800" height="982" loading="lazy" alt="Trompeta en Si bemol con la boquilla a la izquierda, los tres pistones en el centro y la campana a la derecha"></picture>' +
+            '<svg class="tm-tr-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagrama de digitación de la trompeta sobre una fotografía real: los pistones que se pulsan se iluminan en dorado">' +
+              keysSvg +
+            '</svg>' +
+          '</div>' +
+          '<p class="tm-tr-credit">Foto: Yamaha Corporation vía <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Trumpet_YTR-8335LA_crop.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0</p>' +
+        '</div>' +
         '<div class="tm-tr-btns">' + btns + '</div>' +
       '</div>';
 
@@ -215,7 +194,7 @@
       var f = sampleFile(n);
       if (!f) return;
       try { audio.pause(); } catch (e) {}
-      audio.src = AUDIO_BASE + f + '.mp3';
+      audio.src = AUDIO_BASE + f + '.mp3?v=2';  // v2: samples normalizados a RMS común
       audio.currentTime = 0;
       var pr = audio.play();
       if (pr && pr.catch) pr.catch(function () {});
