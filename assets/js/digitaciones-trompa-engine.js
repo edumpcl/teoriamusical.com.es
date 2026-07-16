@@ -35,7 +35,7 @@
   };
   var ORDEN = Object.keys(CHART);
   // Las 5 graves aún no tienen audio (las grabará el autor con su trompa).
-  var SIN_AUDIO = { 'Do2':1, 'Do#2':1, 'Re2':1, 'Re#2':1, 'Mi2':1 };
+  var SIN_AUDIO = {};
 
   function parseVal(s) {
     if (s === '-') return null;
