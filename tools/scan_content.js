@@ -14,7 +14,6 @@ function findHtmlFiles(dir, files = []) {
 }
 
 const files = findHtmlFiles('.');
-const noHowTo = [];
 const shortContent = [];
 const fewLinks = [];
 
@@ -25,8 +24,6 @@ for (const f of files) {
   // Skip tools, root index, politica pages
   if (rel.startsWith('tools/') || rel === 'index.html' || rel.includes('politica') || rel.includes('aviso') || rel.includes('contacto')) continue;
 
-  // Check HowTo schema presence
-  const hasHowTo = content.includes('"@type":"HowTo"') || content.includes('"@type": "HowTo"');
   const hasFAQ = content.includes('"@type":"FAQPage"') || content.includes('"@type": "FAQPage"');
 
   // Extract article text length
@@ -37,7 +34,7 @@ for (const f of files) {
     const text = articleHtml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
     const wordCount = text.split(' ').filter(w => w.length > 2).length;
     if (wordCount < 150 && hasFAQ) {
-      shortContent.push({ file: rel, words: wordCount, hasHowTo });
+      shortContent.push({ file: rel, words: wordCount });
     }
   }
 
@@ -50,21 +47,9 @@ for (const f of files) {
     }
   }
 
-  // Pages with FAQ but no HowTo (and not index/hub pages)
-  if (hasFAQ && !hasHowTo && !rel.endsWith('/index.html'.replace('index', '')) ) {
-    const h1Match = content.match(/<h1[^>]*>([^<]+)<\/h1>/);
-    const h1 = h1Match ? h1Match[1].trim() : '';
-    noHowTo.push({ file: rel, h1 });
-  }
 }
 
-console.log('=== Pages with FAQ but NO HowTo schema (' + noHowTo.length + '):');
-for (const i of noHowTo.slice(0, 30)) {
-  console.log('  ' + i.file + ' | ' + i.h1);
-}
-if (noHowTo.length > 30) console.log('  ... and ' + (noHowTo.length - 30) + ' more');
-
-console.log('\n=== Short article content (<150 words) (' + shortContent.length + '):');
+console.log('=== Short article content (<150 words) (' + shortContent.length + '):');
 for (const i of shortContent) {
   console.log('  [' + i.words + 'w] ' + i.file);
 }
