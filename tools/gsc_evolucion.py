@@ -5,27 +5,12 @@ Compara dos períodos de 28 días:
   DESPUÉS: 22 Abr – 19 May 2026  (últimos 28 días antes del lag)
 """
 
-from pathlib import Path
-from google.oauth2.credentials import Credentials
-from google.auth.transport.requests import Request
-from googleapiclient.discovery import build
-import json
-
-SCOPES  = ["https://www.googleapis.com/auth/webmasters.readonly"]
-TOKEN   = Path(__file__).parent / "token.json"
-SITE    = "https://www.teoriamusical.com.es/"
+from gsc_auth import get_service, SITE
 
 ANTES_START  = "2026-03-23"
 ANTES_END    = "2026-04-19"
 DESPUES_START= "2026-04-22"
 DESPUES_END  = "2026-05-19"
-
-
-def creds():
-    c = Credentials.from_authorized_user_file(TOKEN, SCOPES)
-    if c.expired and c.refresh_token:
-        c.refresh(Request())
-    return c
 
 
 def q(svc, start, end, dims, limit=500, filters=None):
@@ -60,7 +45,7 @@ def sep(ch="─", n=78):
 
 
 def main():
-    svc = build("searchconsole", "v1", credentials=creds())
+    svc = get_service()
 
     # ── Resumen global ───────────────────────────────────────────────────────
     ra = q(svc, ANTES_START,   ANTES_END,   ["query"])

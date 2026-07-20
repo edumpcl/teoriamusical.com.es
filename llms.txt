@@ -79,7 +79,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 
 ### Tonalidades y escalas
 - [Tonalidades y armaduras](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/tonalidades-y-armaduras/): Relación entre tonalidad y armadura de clave.
-- [Orden de las alteraciones](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/orden-de-las-alteraciones-en-la-que-aparecen-las-armaduras/): Orden en que aparecen sostenidos y bemoles en las armaduras.
+- [Orden de las alteraciones](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/orden-de-los-sostenidos-y-bemoles/): Orden en que aparecen sostenidos y bemoles en las armaduras.
 - [Escalas mayores naturales](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-naturales/): Las 15 escalas mayores naturales con sus armaduras.
 - [Escalas mayores mixolidias](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-mixolidias/): El modo mixolidio aplicado a las escalas mayores.
 - [Escalas mayores mixtas principales](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-mixtas-principales/): Escalas mixtas con alteraciones principales.
@@ -162,6 +162,8 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Las notas de la corneta: la palometa y sus armónicos](https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-corneta/): Qué notas da la corneta y por qué solo esas: la palometa conmuta entre los armónicos de Do y los de Re♭ (tesitura Sol4-Fa6 en la Do/Re♭). Tipos de corneta (palometa y de 1, 2 y 3 pistones), su papel en las bandas de cornetas y tambores, y por qué las marchas de Semana Santa están en fa menor.
 - [Las notas del violín: las 4 cuerdas y la 1.ª posición](https://www.teoriamusical.com.es/diccionario-musical/notas-del-violin/): Las notas del violín: sus cuatro cuerdas (Sol3, Re4, La4, Mi5) afinadas por quintas justas, por qué no tiene trastes, dónde cae cada nota en la primera posición y por qué la misma nota puede estar en dos sitios (al aire vs con el dedo). Con diagrama interactivo del mástil y sonido real.
 - [Las notas de la viola: cuerdas, clave de do y digitación](https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-viola/): Las notas de la viola: sus cuatro cuerdas (Do3, Sol3, Re4, La4) por quintas justas, por qué usa la clave de do, la digitación sobre foto real hasta la octava y por qué la misma nota está en varios sitios. Diagrama interactivo con arco y pizzicato.
+- [Las notas del violonchelo: cuerdas, clave de fa y digitación](https://www.teoriamusical.com.es/diccionario-musical/notas-del-violonchelo/): Las notas del violonchelo: sus cuatro cuerdas (Do2, Sol2, Re3, La3) por quintas justas —la viola una octava más grave—, por qué se lee en clave de fa (y do de tenor/sol), cómo se toca de pie con pica, la digitación sobre foto real hasta la octava, la posición de pulgar y por qué la misma nota está en varios sitios. Diagrama interactivo con arco y pizzicato.
+- [Orden de los Sostenidos y Bemoles (Truco para Memorizarlo)](https://www.teoriamusical.com.es/diccionario-musical/tonalidades/orden-de-los-sostenidos-y-bemoles/): El orden de los sostenidos (Fa Do Sol Re La Mi Si) y de los bemoles (Si Mi La Re Sol Do Fa) en la armadura, con el truco para memorizarlo y ejemplos en el pentagrama.
 
 ## Ejercicios interactivos
 

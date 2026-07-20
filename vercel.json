@@ -25,6 +25,7 @@
     }
   ],
   "redirects": [
+    { "source": "/diccionario-musical/tonalidades/orden-de-las-alteraciones-en-la-que-aparecen-las-armaduras", "destination": "/diccionario-musical/tonalidades/orden-de-los-sostenidos-y-bemoles/", "permanent": true },
     { "source": "/teoria-musical", "destination": "/", "permanent": true },
     { "source": "/index.php", "destination": "/", "permanent": true },
     { "source": "/wp-admin/:path*", "destination": "/", "permanent": false },

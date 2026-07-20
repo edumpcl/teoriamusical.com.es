@@ -15,20 +15,8 @@ Para el estado de indexación de una URL concreta: python tools/gsc_inspect.py <
 
 import sys
 sys.stdout.reconfigure(encoding="utf-8")
-import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-import requests as _requests
-_session = _requests.Session(); _session.verify = False
-import httplib2, google_auth_httplib2
 from datetime import date, timedelta
-from pathlib import Path
-from google.oauth2.credentials import Credentials
-from google.auth.transport.requests import Request
-from googleapiclient.discovery import build
-
-TOKEN = Path(__file__).parent / "token.json"
-SITE = "https://www.teoriamusical.com.es/"
-SCOPES = ["https://www.googleapis.com/auth/webmasters.readonly"]
+from gsc_auth import get_service, SITE
 
 DIAS = int(sys.argv[1]) if len(sys.argv) > 1 else 28
 END = (date.today() - timedelta(days=3)).isoformat()      # lag ~3 días de GSC
@@ -65,13 +53,6 @@ CONSULTAS = [
 ]
 
 
-def creds():
-    c = Credentials.from_authorized_user_file(TOKEN, SCOPES)
-    if c.expired and c.refresh_token:
-        c.refresh(Request(session=_session))
-    return c
-
-
 def query(svc, dim, limit=5000):
     return svc.searchanalytics().query(siteUrl=SITE, body={
         "startDate": START, "endDate": END,
@@ -83,9 +64,7 @@ def sep(ch="─", n=78): print(ch * n)
 
 
 def main():
-    http = google_auth_httplib2.AuthorizedHttp(
-        creds(), http=httplib2.Http(disable_ssl_certificate_validation=True))
-    svc = build("searchconsole", "v1", http=http)
+    svc = get_service()
 
     print()
     sep("═")

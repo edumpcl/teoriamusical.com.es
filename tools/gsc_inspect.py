@@ -5,14 +5,9 @@ Si no se pasa URL inspecciona la página del metrónomo por defecto.
 """
 
 import sys
-from pathlib import Path
-from google.oauth2.credentials import Credentials
-from google.auth.transport.requests import Request
-from googleapiclient.discovery import build
+sys.stdout.reconfigure(encoding="utf-8")
+from gsc_auth import get_service, SITE
 
-SCOPES   = ["https://www.googleapis.com/auth/webmasters.readonly"]
-TOKEN    = Path(__file__).parent / "token.json"
-SITE     = "https://www.teoriamusical.com.es/"
 DEFAULT  = "https://www.teoriamusical.com.es/herramientas/metronomo/"
 
 def sep(ch="─", n=70): print(ch * n)
@@ -20,11 +15,7 @@ def sep(ch="─", n=70): print(ch * n)
 def main():
     url = sys.argv[1] if len(sys.argv) > 1 else DEFAULT
 
-    creds = Credentials.from_authorized_user_file(TOKEN, SCOPES)
-    if creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-
-    svc = build("searchconsole", "v1", credentials=creds)
+    svc = get_service()
 
     print()
     sep("═")

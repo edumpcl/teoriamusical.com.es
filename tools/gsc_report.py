@@ -5,32 +5,12 @@ Reutiliza el token.json generado por gsc_list_properties.py
 
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
-import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-import requests as _requests
-_session = _requests.Session()
-_session.verify = False
-import httplib2
-import google_auth_httplib2
 from datetime import date, timedelta
-from pathlib import Path
-from google.oauth2.credentials import Credentials
-from google.auth.transport.requests import Request
-from googleapiclient.discovery import build
+from gsc_auth import get_service, SITE
 
-TOKEN_FILE = Path(__file__).parent / "token.json"
-SITE = "https://www.teoriamusical.com.es/"
 # Ventana dinámica: últimos 90 días, con el retardo (~2-3 días) de GSC.
 DATE_END = (date.today() - timedelta(days=3)).isoformat()
 DATE_START = (date.today() - timedelta(days=93)).isoformat()
-SCOPES = ["https://www.googleapis.com/auth/webmasters.readonly"]
-
-
-def get_credentials():
-    creds = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
-    if creds.expired and creds.refresh_token:
-        creds.refresh(Request(session=_session))
-    return creds
 
 
 def query(service, dimensions, row_limit=20, filters=None):
@@ -63,11 +43,7 @@ def print_table(title, rows, headers):
 
 
 def main():
-    creds = get_credentials()
-    _http = google_auth_httplib2.AuthorizedHttp(
-        creds, http=httplib2.Http(disable_ssl_certificate_validation=True)
-    )
-    service = build("searchconsole", "v1", http=_http)
+    service = get_service()
 
     print(f"\nPeríodo: {DATE_START} → {DATE_END}")
     print(f"Sitio: {SITE}")
