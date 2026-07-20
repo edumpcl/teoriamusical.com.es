@@ -42,3 +42,4 @@ audit-mobile.js
 # ----- Google Search Console / OAuth -----
 tools/credentials.json
 tools/token.json
+tools/gsc-service-account.json
