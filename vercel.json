@@ -25,6 +25,7 @@
     }
   ],
   "redirects": [
+    { "source": "/blog/historia/himno-a-san-juan", "destination": "/blog/himno-a-san-juan/", "permanent": true },
     { "source": "/diccionario-musical/tonalidades/orden-de-las-alteraciones-en-la-que-aparecen-las-armaduras", "destination": "/diccionario-musical/tonalidades/orden-de-los-sostenidos-y-bemoles/", "permanent": true },
     { "source": "/teoria-musical", "destination": "/", "permanent": true },
     { "source": "/index.php", "destination": "/", "permanent": true },
