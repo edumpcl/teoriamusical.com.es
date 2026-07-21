@@ -16,15 +16,10 @@
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
-    },
-    {
-      "source": "/wp-content/uploads/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
     }
   ],
   "redirects": [
+    { "source": "/wp-content/uploads/:path*", "destination": "/assets/img/:path*", "permanent": true },
     { "source": "/blog/historia/himno-a-san-juan", "destination": "/blog/himno-a-san-juan/", "permanent": true },
     { "source": "/diccionario-musical/tonalidades/orden-de-las-alteraciones-en-la-que-aparecen-las-armaduras", "destination": "/diccionario-musical/tonalidades/orden-de-los-sostenidos-y-bemoles/", "permanent": true },
     { "source": "/teoria-musical", "destination": "/", "permanent": true },
