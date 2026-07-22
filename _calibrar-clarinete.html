@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calibrar digitaciones del clarinete</title>
+<style>
+  body{font-family:system-ui,Arial,sans-serif;margin:0;padding:16px 16px 120px;background:#f6f4ee;color:#222;}
+  h1{font-size:1.15rem;margin:0 0 6px;}
+  p.help{font-size:.9rem;color:#555;max-width:640px;line-height:1.4;}
+  .cols{display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;}
+  .imgwrap{position:relative;flex:0 0 auto;touch-action:none;}
+  .imgwrap img{display:block;user-select:none;-webkit-user-drag:none;}
+  .dot{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;
+       background:rgba(255,149,0,.85);border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.4),0 0 7px #ff9500;
+       cursor:grab;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#3a2b00;touch-action:none;}
+  .dot.hole{background:rgba(255,149,0,.9);width:30px;height:30px;margin:-15px 0 0 -15px;}
+  .dot .lab{position:absolute;left:30px;top:50%;transform:translateY(-50%);white-space:nowrap;
+       background:rgba(0,0,0,.78);color:#fff;font-size:11px;padding:2px 6px;border-radius:4px;pointer-events:none;}
+  .dot.right .lab{left:auto;right:34px;}
+  .bar{position:fixed;left:0;right:0;bottom:0;background:#1a1a1a;color:#fff;padding:10px 14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;box-shadow:0 -2px 8px rgba(0,0,0,.3);}
+  .bar button{background:#ff9500;color:#1a1a1a;border:none;padding:9px 16px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.95rem;}
+  .bar textarea{flex:1;min-width:220px;height:44px;font-family:monospace;font-size:11px;}
+  .bar span{font-size:.85rem;color:#ffd27a;}
+  .colhead{font-weight:700;margin:0 0 8px;}
+</style>
+</head>
+<body>
+<h1>Calibrar las digitaciones del clarinete 🎯</h1>
+<p class="help">Arrastra cada punto naranja hasta que quede <b>justo encima</b> de su llave o agujero en la foto de tu clarinete. Los puntos grandes son los <b>6 agujeros con anillo</b> (1–6). Cuando estén todos colocados, pulsa <b>“Copiar coordenadas”</b> abajo y pégame el texto en el chat. La foto pequeña de la derecha es la <b>parte de atrás</b> (pulgar y registro).</p>
+
+<div class="cols">
+  <div>
+    <p class="colhead">Frente (boquilla arriba)</p>
+    <div class="imgwrap" id="frontWrap">
+      <img id="frontImg" src="/assets/img/clarinete/digitacion-frente.jpg" alt="frente">
+    </div>
+  </div>
+  <div>
+    <p class="colhead">Atrás (pulgar)</p>
+    <div class="imgwrap" id="backWrap">
+      <img id="backImg" src="/assets/img/clarinete/digitacion-dorso.jpg" alt="atrás">
+    </div>
+  </div>
+</div>
+
+<div class="bar">
+  <button id="copyBtn">Copiar coordenadas</button>
+  <span id="status">Arrastra los puntos…</span>
+  <textarea id="out" readonly></textarea>
+</div>
+
+<script>
+// viewBox nativo de cada imagen
+var FRONT_VB=[220,1475], BACK_VB=[234,334];
+// escala de visualización (px mostrados por px de viewBox)
+var FSCALE=0.52, BSCALE=1.05;
+
+// puntos iniciales (coordenadas en viewBox de cada imagen)
+var FRONT=[
+ ['GS','Sol♯ garganta',121,438],['A','La garganta',106,455],
+ ['H1','Agujero 1',104,542,1],['H2','Agujero 2',103,618,1],['EBBA','Banana Mi♭/Si♭',101,658],
+ ['H3','Agujero 3',103,694,1],['H4','Agujero 4',104,773,1],['SLI','Deslizante Si/Fa♯',84,800],
+ ['H5','Agujero 5',103,830,1],['H6','Agujero 6',103,878,1],
+ ['CSGS','Meñique izq · Do♯/Sol♯',81,700],['LEB','Meñique izq · Mi/Si',61,688],['LFCS','Meñique izq · Fa♯/Do♯',49,708],
+ ['RAB','Meñique dcho · La♭/Mi♭',83,912],['RFC','Meñique dcho · Fa/Do',69,930],
+ ['REB','Meñique dcho · Mi/Si',51,908],['RFCS','Meñique dcho · Fa♯/Do♯',45,925]
+];
+var BACK=[['T','Agujero del pulgar',113,253,1],['R','Llave de registro',115,193]];
+
+function build(list, wrap, scale, vb){
+  var img=wrap.querySelector('img');
+  img.width=vb[0]*scale; img.height=vb[1]*scale;
+  list.forEach(function(k){
+    var d=document.createElement('div');
+    d.className='dot'+(k[4]?' hole':'')+(k[2]>vb[0]/2?' right':'');
+    d.style.left=(k[2]*scale)+'px'; d.style.top=(k[3]*scale)+'px';
+    d.innerHTML=(k[4]?k[4]:k[0].replace(/[^0-9]/g,'')||'')+'<span class="lab">'+k[1]+'</span>';
+    d.dataset.i=list===FRONT?'F':'B';
+    d._k=k;
+    wrap.appendChild(d);
+    makeDraggable(d, wrap, scale, k);
+  });
+}
+function makeDraggable(d, wrap, scale, k){
+  var drag=false, ox=0, oy=0;
+  d.addEventListener('pointerdown',function(e){
+    drag=true; d.setPointerCapture(e.pointerId); d.style.cursor='grabbing';
+    var r=d.getBoundingClientRect(); ox=e.clientX-(r.left+r.width/2); oy=e.clientY-(r.top+r.height/2);
+    e.preventDefault();
+  });
+  d.addEventListener('pointermove',function(e){
+    if(!drag) return;
+    var wr=wrap.getBoundingClientRect();
+    var x=e.clientX-ox-wr.left, y=e.clientY-oy-wr.top;
+    d.style.left=x+'px'; d.style.top=y+'px';
+    k[2]=Math.round(x/scale); k[3]=Math.round(y/scale);
+  });
+  d.addEventListener('pointerup',function(e){ drag=false; d.style.cursor='grab'; update(); });
+}
+function update(){
+  function fmt(list){ return list.map(function(k){return "{ id: '"+k[0]+"', x: "+k[2]+", y: "+k[3]+(k[4]?", r: 13":", r: 8")+" }";}).join(',\n'); }
+  document.getElementById('out').value=
+    "FRONT_KEYS:\n"+fmt(FRONT)+"\n\nBACK_KEYS:\n"+fmt(BACK);
+}
+document.getElementById('copyBtn').addEventListener('click',function(){
+  update();
+  var t=document.getElementById('out'); t.select();
+  try{ navigator.clipboard.writeText(t.value); }catch(e){}
+  document.getElementById('status').textContent='¡Copiado! Pégamelo en el chat.';
+});
+window.addEventListener('load',function(){
+  build(FRONT,document.getElementById('frontWrap'),FSCALE,FRONT_VB);
+  build(BACK,document.getElementById('backWrap'),BSCALE,BACK_VB);
+  update();
+});
+</script>
+</body>
+</html>

@@ -1,46 +1,47 @@
 /* Diagrama de digitaciones del clarinete en Si♭ (sistema Boehm) — interactivo.
-   Clarinete horizontal propio: boquilla con caña a la izquierda, barrilete, cuerpo
-   y campana a la derecha. Llave plateada = abierta, llave dorada = pulsada.
-   Las llaves TRASERAS (registro y agujero del pulgar) van dibujadas encima del tubo,
-   igual que las de garganta (La y Sol♯); los racimos del meñique, debajo.
+   Sobre FOTOS REALES del clarinete (frontal + trasera): al elegir una nota, las
+   llaves y agujeros que se pulsan se ILUMINAN en dorado sobre la foto. La cara
+   frontal lleva los seis agujeros con anillo, las de garganta (La y Sol♯), la
+   «banana», la deslizante y los racimos del meñique; la cara trasera lleva el
+   agujero del pulgar y la llave de registro (12ª).
    Uso: <div id="x"></div><script>tmClarineteEngine('x');</script>
    Datos verificados contra la carta oficial de Yamaha ("Musical Instrument Guide —
    Clarinet fingering chart", PDF), decodificada celda a celda: cubre Mi3–La6 escritos.
    El clarinete en Si♭ TRANSPone: suena un tono por debajo de lo escrito; el marcador
-   muestra ambas alturas y el audio reproduce el sonido real. */
+   muestra ambas alturas y el audio reproduce el sonido real.
+   Foto: clarinete Yamaha de Eduardo Escrig (autor del sitio). */
 (function () {
   'use strict';
 
-  var KEYS = [
-    // Traseras (pulgar izquierdo), dibujadas encima del tubo
-    { id: 'R',    sh: 'oct',   x: 140, y: 118 },  // llave de registro (12ª)
-    { id: 'T',    sh: 'small', x: 165, y: 118 },  // agujero del pulgar
-    // Garganta (mano izquierda, arriba)
-    { id: 'A',    sh: 'tear',  x: 193, y: 116 },  // llave de La
-    { id: 'GS',   sh: 'small', x: 216, y: 118, r: 6 },  // llave de Sol# de garganta
-    // Agujeros (mano izq. 1-3, mano dcha. 4-6)
-    { id: 'H1',   sh: 'hole',  x: 215, y: 165 },
-    { id: 'H2',   sh: 'hole',  x: 250, y: 165 },
-    { id: 'EBBA', sh: 'sliv',  x: 268, y: 150 },  // banana Mi♭/Si♭ (entre 2 y 3)
-    { id: 'H3',   sh: 'hole',  x: 285, y: 165 },
-    { id: 'H4',   sh: 'hole',  x: 345, y: 166 },
-    { id: 'SLI',  sh: 'sliv',  x: 363, y: 151 },  // deslizante Si/Fa♯ (entre 4 y 5)
-    { id: 'H5',   sh: 'hole',  x: 380, y: 166 },
-    { id: 'H6',   sh: 'hole',  x: 415, y: 166 },
-    // Meñique izquierdo ENCIMA del tubo (vista frontal, boquilla a la izq.),
-    // en la unión entre los agujeros 3 y 4
-    { id: 'LEB',  sh: 'spat',  x: 296, y: 120 },  // palanca de Mi/Si
-    { id: 'LFCS', sh: 'spat',  x: 320, y: 112 },  // palanca de Fa♯/Do♯
-    { id: 'CSGS', sh: 'loop',  x: 308, y: 96 },   // llave de Do♯/Sol♯
-    // Meñique derecho (bajo el tubo, tras el agujero 6): racimo de 4 llaves.
-    // REB y RFCS son las palancas de las digitaciones alternativas (no se encienden
-    // con las principales, pero forman parte del racimo real).
-    { id: 'RFC',  sh: 'spat',  x: 438, y: 210 },  // Fa/Do
-    { id: 'RAB',  sh: 'loop',  x: 466, y: 214 },  // La♭/Mi♭
-    { id: 'REB',  sh: 'spat',  x: 444, y: 228 },  // Mi/Si (alternativa dcha.)
-    { id: 'RFCS', sh: 'spat',  x: 470, y: 232 }   // Fa♯/Do♯ (alternativa dcha.)
+  // Coordenadas de cada control sobre la FOTO real (clarinete VERTICAL, boquilla
+  // arriba), en el sistema del viewBox de cada imagen. Frontal: 220×1475.
+  // Trasera: 234×334. r = radio del marcador; num = número de agujero (1-6),
+  // rotulado tenue y resaltado al pulsar.
+  var FRONT_KEYS = [
+    { id: 'GS',   x: 121, y: 438, r: 8 },   // Sol♯ de garganta
+    { id: 'A',    x: 106, y: 455, r: 9 },   // La de garganta
+    { id: 'H1',   x: 104, y: 542, r: 13, num: 1 },
+    { id: 'H2',   x: 103, y: 618, r: 13, num: 2 },
+    { id: 'EBBA', x: 101, y: 658, r: 8 },   // banana Mi♭/Si♭ (entre 2 y 3)
+    { id: 'H3',   x: 103, y: 694, r: 13, num: 3 },
+    { id: 'H4',   x: 104, y: 773, r: 13, num: 4 },
+    { id: 'SLI',  x: 84,  y: 800, r: 8 },   // deslizante Si/Fa♯ (entre 4 y 5)
+    { id: 'H5',   x: 103, y: 830, r: 13, num: 5 },
+    { id: 'H6',   x: 103, y: 878, r: 13, num: 6 },
+    { id: 'CSGS', x: 81,  y: 700, r: 8 },   // Do♯/Sol♯ (meñique izq.)
+    { id: 'LEB',  x: 61,  y: 688, r: 8 },   // Mi/Si (meñique izq.)
+    { id: 'LFCS', x: 49,  y: 708, r: 8 },   // Fa♯/Do♯ (meñique izq.)
+    { id: 'RAB',  x: 83,  y: 912, r: 8 },   // La♭/Mi♭ (meñique dcho.)
+    { id: 'RFC',  x: 69,  y: 930, r: 8 },   // Fa/Do (meñique dcho.)
+    { id: 'REB',  x: 51,  y: 908, r: 8 },   // Mi/Si (meñique dcho.)
+    { id: 'RFCS', x: 45,  y: 925, r: 8 }    // Fa♯/Do♯ (meñique dcho.)
   ];
-  var SVG_W = 680, SVG_H = 280;
+  var FRONT_W = 220, FRONT_H = 1475;
+  var BACK_KEYS = [
+    { id: 'T', x: 113, y: 253, r: 13 },     // agujero del pulgar
+    { id: 'R', x: 115, y: 193, r: 11 }      // llave de registro (12ª)
+  ];
+  var BACK_W = 234, BACK_H = 334;
 
   var NAMES = {
     R: 'registro', T: 'pulgar', A: 'La (garganta)', GS: 'Sol♯ (garganta)',
@@ -160,15 +161,24 @@
     '.tm-cl-reg{font-size:.9rem;color:#666;margin-top:2px;}',
     '.tm-cl-keysline{font-size:.88rem;color:#8b6914;margin-top:4px;}',
     '.tm-cl-hint{font-size:1.02rem;color:#999;font-weight:600;}',
-    '.tm-cl-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:6px;display:flex;justify-content:center;}',
-    '.tm-cl-svg{display:block;max-width:640px;width:100%;height:auto;margin:0 auto;}',
-    '.tm-cl-key .k-pad{fill:#e9eaee;stroke:#8f9199;stroke-width:1.5;}',
-    '.tm-cl-key.on .k-pad{fill:#8b6914;stroke:#6b5010;}',
-    '.tm-cl-key .k-ring{fill:none;stroke:#8f9199;stroke-width:1.2;}',
-    '.tm-cl-key.on .k-ring{stroke:#e8dcc0;}',
-    '.tm-cl-klab{font-family:Arial,Helvetica,sans-serif;font-size:11px;fill:#555;text-anchor:middle;}',
-    '.tm-cl-klab2{font-family:Arial,Helvetica,sans-serif;font-size:9px;fill:#777;text-anchor:middle;}',
-    '.tm-cl-grp{font-family:Arial,Helvetica,sans-serif;font-size:12px;fill:#8b6914;text-anchor:middle;font-weight:bold;}',
+    '.tm-cl-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:10px 8px;}',
+    // dos fotos verticales, una al lado de la otra
+    '.tm-cl-photos{display:flex;gap:16px;justify-content:center;align-items:flex-start;flex-wrap:wrap;}',
+    '.tm-cl-photo{position:relative;flex:0 0 auto;}',
+    '.tm-cl-front img{display:block;height:min(54vh,500px);width:auto;border-radius:6px;}',
+    '.tm-cl-back{display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;}',
+    '.tm-cl-backimg img{display:block;height:min(34vh,300px);width:auto;border-radius:6px;}',
+    '.tm-cl-img{display:block;border-radius:6px;}',
+    '.tm-cl-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}',
+    '.tm-cl-backcap{font-size:.8rem;color:#777;max-width:180px;text-align:center;margin:0;line-height:1.3;}',
+    '.tm-cl-backcap strong{color:#555;}',
+    // marcador: invisible en reposo, dorado brillante al pulsar
+    '.tm-cl-key .k-dot{fill:#ff9500;fill-opacity:0;stroke:rgba(255,255,255,0);stroke-width:0;transition:all .16s;}',
+    '.tm-cl-key.on .k-dot{fill:#ff9500;fill-opacity:.92;stroke:#fff;stroke-width:2.4;filter:drop-shadow(0 0 6px #ff9500);}',
+    '.tm-cl-key .k-num{font-family:Arial,Helvetica,sans-serif;font-weight:bold;fill:#fff;fill-opacity:.55;text-anchor:middle;dominant-baseline:central;paint-order:stroke;stroke:#000;stroke-width:.6px;stroke-opacity:.5;transition:all .16s;pointer-events:none;}',
+    '.tm-cl-key.on .k-num{fill:#3a2b00;fill-opacity:1;stroke-opacity:0;}',
+    '.tm-cl-credit{font-size:.72rem;color:#9a9a9a;text-align:center;margin-top:8px;}',
+    '.tm-cl-credit a{color:inherit;}',
     '.tm-cl-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}',
     '.tm-cl-btn{min-width:46px;padding:10px 12px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}',
     '.tm-cl-btn:hover{background:#fdf8ee;border-color:#8b6914;}',
@@ -187,87 +197,14 @@
     document.head.appendChild(s);
   }
 
-  // Dibujo estático: boquilla con caña, barrilete, cuerpo de granadillo, campana,
-  // anillas, eje de mecánica, varillas y etiquetas.
-  var DECO =
-    '<defs><linearGradient id="tmClWood" x1="0" y1="0" x2="0" y2="1">' +
-      '<stop offset="0" stop-color="#4a453f"/><stop offset="0.3" stop-color="#2c2825"/>' +
-      '<stop offset="0.6" stop-color="#1a1715"/><stop offset="1" stop-color="#0d0b0a"/>' +
-    '</linearGradient></defs>' +
-    // boquilla (pico) con caña y abrazadera
-    '<path d="M38 158 L92 152 L92 180 L38 178 Q30 168 38 158 Z" fill="#1d1a18" stroke="#0d0b0a" stroke-width="1"/>' +
-    '<path d="M38 176 L92 178 L92 181 L38 179 Z" fill="#d9b26a" stroke="#a8843e" stroke-width="0.8"/>' +
-    '<rect x="66" y="154" width="16" height="27" rx="3" fill="#8a8d94" stroke="#5f6167" stroke-width="1"/>' +
-    '<line x1="70" y1="156" x2="70" y2="179" stroke="#6e7076" stroke-width="1"/>' +
-    '<line x1="77" y1="156" x2="77" y2="179" stroke="#6e7076" stroke-width="1"/>' +
-    // barrilete
-    '<path d="M96 150 L128 151 L128 181 L96 182 Z" fill="url(#tmClWood)" stroke="#0d0b0a" stroke-width="1"/>' +
-    '<rect x="94" y="150" width="5" height="32" rx="1.5" fill="#d7d8dc" stroke="#9a9ca3" stroke-width="0.8"/>' +
-    '<rect x="126" y="150" width="5" height="32" rx="1.5" fill="#d7d8dc" stroke="#9a9ca3" stroke-width="0.8"/>' +
-    // cuerpo (ligeramente cónico) y campana
-    '<path d="M131 151 L560 148 C590 147 612 143 626 137 L626 196 C612 190 590 186.5 560 185.5 L131 181 Z" fill="url(#tmClWood)" stroke="#0d0b0a" stroke-width="1"/>' +
-    '<ellipse cx="626" cy="166.5" rx="6" ry="30" fill="#17120e" stroke="#0c0a08" stroke-width="1"/>' +
-    '<ellipse cx="626" cy="166.5" rx="3.2" ry="22" fill="#3a322b"/>' +
-    '<line x1="140" y1="153" x2="552" y2="150" stroke="#6e655c" stroke-width="1" opacity="0.75"/>' +
-    // anilla de unión entre cuerpos
-    '<rect x="312" y="150" width="7" height="33" rx="1.5" fill="#d7d8dc" stroke="#9a9ca3" stroke-width="0.8"/>' +
-    // eje de la mecánica y varillas
-    '<line x1="150" y1="149" x2="548" y2="146.5" stroke="#b9bbc1" stroke-width="1.4"/>' +
-    '<line x1="140" y1="150" x2="140" y2="127" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    '<line x1="165" y1="150" x2="165" y2="127" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    '<line x1="193" y1="150" x2="193" y2="126" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    '<line x1="216" y1="150" x2="216" y2="126" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    '<line x1="296" y1="150" x2="296" y2="126" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    '<line x1="320" y1="150" x2="320" y2="118" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    '<line x1="308" y1="150" x2="308" y2="102" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    '<line x1="438" y1="184" x2="438" y2="205" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    '<line x1="466" y1="184" x2="466" y2="209" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    '<line x1="444" y1="184" x2="444" y2="223" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    '<line x1="470" y1="184" x2="470" y2="227" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    // etiquetas
-    '<text class="tm-cl-klab" x="52" y="140">Caña</text>' +
-    '<text class="tm-cl-klab" x="112" y="142">Barrilete</text>' +
-    '<text class="tm-cl-grp" x="152" y="88">Pulgar (detrás)</text>' +
-    '<text class="tm-cl-klab2" x="139" y="100">registro · pulgar</text>' +
-    '<text class="tm-cl-grp" x="216" y="102">Garganta</text>' +
-    '<text class="tm-cl-klab" x="600" y="128">Campana</text>' +
-    '<text class="tm-cl-klab" x="215" y="205">1</text><text class="tm-cl-klab" x="250" y="205">2</text><text class="tm-cl-klab" x="285" y="205">3</text>' +
-    '<text class="tm-cl-klab" x="345" y="206">4</text><text class="tm-cl-klab" x="380" y="206">5</text><text class="tm-cl-klab" x="415" y="206">6</text>' +
-    '<text class="tm-cl-klab2" x="268" y="143">banana</text>' +
-    '<text class="tm-cl-klab2" x="363" y="144">desliz.</text>' +
-    '<text class="tm-cl-klab" x="308" y="84">Meñique izq.</text>' +
-    '<text class="tm-cl-klab" x="454" y="252">Meñique dcho.</text>' +
-    '<text class="tm-cl-grp" x="250" y="274">Mano izquierda</text>' +
-    '<text class="tm-cl-grp" x="415" y="274">Mano derecha</text>';
-
+  // Cada control = grupo que se ilumina al pulsar (círculo + número opcional).
   function keyShape(k) {
-    var open = '<g class="tm-cl-key" data-k="' + k.id + '">', close = '</g>';
-    if (k.sh === 'oct') {
-      return open + '<ellipse class="k-pad" cx="' + k.x + '" cy="' + k.y + '" rx="5" ry="8"/>' + close;
+    var s = '<g class="tm-cl-key" data-k="' + k.id + '">' +
+      '<circle class="k-dot" cx="' + k.x + '" cy="' + k.y + '" r="' + k.r + '"/>';
+    if (k.num) {
+      s += '<text class="k-num" x="' + k.x + '" y="' + k.y + '" style="font-size:' + (k.r + 3) + 'px">' + k.num + '</text>';
     }
-    if (k.sh === 'small') {
-      return open + '<circle class="k-pad" cx="' + k.x + '" cy="' + k.y + '" r="' + (k.r || 7) + '"/>' + close;
-    }
-    if (k.sh === 'tear') {
-      // gota (llave de La de garganta)
-      return open + '<path class="k-pad" d="M' + k.x + ' ' + (k.y - 9) +
-        ' C' + (k.x + 6) + ' ' + (k.y - 3) + ' ' + (k.x + 5) + ' ' + (k.y + 5) + ' ' + k.x + ' ' + (k.y + 8) +
-        ' C' + (k.x - 5) + ' ' + (k.y + 5) + ' ' + (k.x - 6) + ' ' + (k.y - 3) + ' ' + k.x + ' ' + (k.y - 9) + ' Z"/>' + close;
-    }
-    if (k.sh === 'sliv') {
-      // palanca fina inclinada sobre el tubo
-      return open + '<rect class="k-pad" x="' + (k.x - 8) + '" y="' + (k.y - 3) + '" width="16" height="6" rx="3" transform="rotate(-12 ' + k.x + ' ' + k.y + ')"/>' + close;
-    }
-    if (k.sh === 'spat') {
-      return open + '<rect class="k-pad" x="' + (k.x - 7.5) + '" y="' + (k.y - 4) + '" width="15" height="8" rx="4"/>' + close;
-    }
-    if (k.sh === 'loop') {
-      return open + '<ellipse class="k-pad" cx="' + k.x + '" cy="' + k.y + '" rx="8" ry="6"/>' + close;
-    }
-    // hole: anillo Boehm (plato con anillo)
-    return open +
-      '<circle class="k-pad" cx="' + k.x + '" cy="' + k.y + '" r="9"/>' +
-      '<circle class="k-ring" cx="' + k.x + '" cy="' + k.y + '" r="4"/>' + close;
+    return s + '</g>';
   }
 
   function tmClarineteEngine(containerId) {
@@ -276,7 +213,8 @@
     if (!wrap) return;
     var uid = containerId;
 
-    var keysSvg = KEYS.map(keyShape).join('');
+    var frontSvg = FRONT_KEYS.map(keyShape).join('');
+    var backSvg = BACK_KEYS.map(keyShape).join('');
     var btns = ORDEN.map(function (n) {
       return '<button class="tm-cl-btn" data-n="' + n + '">' + label(n) + '</button>';
     }).join('');
@@ -284,13 +222,27 @@
     wrap.innerHTML =
       '<div class="tm-cl-wrap">' +
         '<div class="tm-cl-readout" id="' + uid + '_ro"><span class="tm-cl-hint">Elige una nota para ver su digitación</span></div>' +
-        '<div class="tm-cl-diagram"><svg class="tm-cl-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" role="img" aria-label="Diagrama de digitación del clarinete: instrumento horizontal con la boquilla a la izquierda y la campana a la derecha; las llaves pulsadas se muestran en dorado">' +
-          DECO + keysSvg +
-        '</svg></div>' +
+        '<div class="tm-cl-diagram">' +
+          '<div class="tm-cl-photos">' +
+            '<div class="tm-cl-photo tm-cl-front">' +
+              '<picture><source type="image/webp" srcset="/assets/img/clarinete/digitacion-frente.webp">' +
+              '<img class="tm-cl-img" src="/assets/img/clarinete/digitacion-frente.jpg" width="220" height="1475" loading="lazy" alt="Clarinete en Si bemol vertical, visto de frente (boquilla arriba, campana abajo); los agujeros y llaves que se pulsan se iluminan en dorado"></picture>' +
+              '<svg class="tm-cl-svg" viewBox="0 0 ' + FRONT_W + ' ' + FRONT_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Digitación del clarinete sobre una fotografía real (cara frontal)">' + frontSvg + '</svg>' +
+            '</div>' +
+            '<div class="tm-cl-back">' +
+              '<div class="tm-cl-photo tm-cl-backimg">' +
+                '<picture><source type="image/webp" srcset="/assets/img/clarinete/digitacion-dorso.webp">' +
+                '<img class="tm-cl-img" src="/assets/img/clarinete/digitacion-dorso.jpg" width="234" height="334" loading="lazy" alt="Detalle de la parte de atrás del clarinete: el agujero del pulgar y la llave de registro"></picture>' +
+                '<svg class="tm-cl-svg" viewBox="0 0 ' + BACK_W + ' ' + BACK_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Digitación del clarinete (cara trasera): pulgar y registro">' + backSvg + '</svg>' +
+              '</div>' +
+              '<p class="tm-cl-backcap"><strong>Parte de atrás</strong><br>el pulgar izquierdo tapa su agujero y aprieta la <strong>llave de registro</strong> (la 12ª).</p>' +
+            '</div>' +
+          '</div>' +
+          '<p class="tm-cl-credit">Foto: clarinete Yamaha de Eduardo Escrig (autor del sitio).</p>' +
+        '</div>' +
         '<div class="tm-cl-btns">' + btns + '</div>' +
       '</div>';
 
-    var svg = wrap.querySelector('.tm-cl-svg');
     var ro = document.getElementById(uid + '_ro');
     var audio = new Audio();
 
@@ -329,10 +281,10 @@
       wrap.querySelectorAll('.tm-cl-btn').forEach(function (b) { b.classList.remove('sel'); });
       if (btn) btn.classList.add('sel');
       var data = FING[n];
-      svg.querySelectorAll('.tm-cl-key').forEach(function (c) { c.classList.remove('on'); });
+      wrap.querySelectorAll('.tm-cl-key').forEach(function (c) { c.classList.remove('on'); });
       var nombres = [];
       if (data) data.keys.forEach(function (id) {
-        var c = svg.querySelector('.tm-cl-key[data-k="' + id + '"]'); if (c) c.classList.add('on');
+        wrap.querySelectorAll('.tm-cl-key[data-k="' + id + '"]').forEach(function (c) { c.classList.add('on'); });
         if (NAMES[id]) nombres.push(NAMES[id]);
       });
       ro.innerHTML =
