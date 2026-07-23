@@ -262,7 +262,12 @@
       new V.Formatter().joinVoices([voice]).format([voice], 80);
       voice.draw(ctx, stave);
       var s = el.querySelector('svg');
-      if (s) { s.setAttribute('viewBox', '0 0 150 150'); s.style.width = '140px'; s.style.maxWidth = '100%'; s.style.height = 'auto'; }
+      if (s) {
+        var vb = '0 0 150 150';
+        try { var bb = s.getBBox(); if (bb && bb.height) { var p = 6; vb = (bb.x - p) + ' ' + (bb.y - p) + ' ' + (bb.width + 2 * p) + ' ' + (bb.height + 2 * p); } } catch (e) {}
+        s.setAttribute('viewBox', vb);
+        s.style.width = '140px'; s.style.maxWidth = '100%'; s.style.height = 'auto';
+      }
     }
 
     function pick(n, btn) {

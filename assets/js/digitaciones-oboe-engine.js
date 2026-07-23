@@ -121,7 +121,7 @@
     '.tm-ob-prov{color:#b06a00;}',
     '.tm-ob-hint{font-size:1.02rem;color:#999;font-weight:600;}',
     '.tm-ob-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:6px;display:flex;justify-content:center;}',
-    '.tm-ob-svg{display:block;max-width:640px;width:100%;height:auto;margin:0 auto;}',
+    '.tm-ob-svg{display:block;height:min(72vh,560px);width:auto;max-width:100%;margin:0 auto;}',
     '.tm-ob-key .k-pad{fill:#e9eaee;stroke:#8f9199;stroke-width:1.5;}',
     '.tm-ob-key.on .k-pad{fill:#8b6914;stroke:#6b5010;}',
     '.tm-ob-key .k-ring{fill:none;stroke:#8f9199;stroke-width:1.2;}',
@@ -242,6 +242,12 @@
     var uid = containerId;
 
     var keysSvg = KEYS.map(keyShape).join('');
+    // Vertical (como se toca): el grupo gira 90° y cada etiqueta se contrarrota -90° para seguir legible.
+    var DECOV = DECO
+      .replace(/<text[^>]*>Mano izquierda<\/text>/, '')
+      .replace(/<text[^>]*>Mano derecha<\/text>/, '')
+      .replace(/<text class="([^"]+)" x="([\d.]+)" y="([\d.]+)">/g,
+        '<text class="$1" x="$2" y="$3" transform="rotate(-90 $2 $3)">');
     var btns = ORDEN.map(function (n) {
       var hasData = !!FING[n];
       return '<button class="tm-ob-btn' + (hasData ? '' : ' todo') + '" data-n="' + n + '">' + label(n) + '</button>';
@@ -250,8 +256,8 @@
     wrap.innerHTML =
       '<div class="tm-ob-wrap">' +
         '<div class="tm-ob-readout" id="' + uid + '_ro"><span class="tm-ob-hint">Elige una nota para ver su digitación</span></div>' +
-        '<div class="tm-ob-diagram"><svg class="tm-ob-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" role="img" aria-label="Diagrama de digitación del oboe: instrumento horizontal con caña a la izquierda y campana a la derecha; las llaves pulsadas se muestran en dorado">' +
-          DECO + keysSvg +
+        '<div class="tm-ob-diagram"><svg class="tm-ob-svg" viewBox="0 0 ' + (SVG_H + 20) + ' ' + SVG_W + '" role="img" aria-label="Diagrama de digitación del oboe: instrumento en vertical (como se toca) con caña a la izquierda y campana a la derecha; las llaves pulsadas se muestran en dorado">' +
+          '<g transform="rotate(90) translate(0,-' + (SVG_H + 20) + ')">' + DECOV + keysSvg + '</g>' +
         '</svg></div>' +
         '<div class="tm-ob-btns">' + btns + '</div>' +
       '</div>';
@@ -288,7 +294,12 @@
       new V.Formatter().joinVoices([voice]).format([voice], 80);
       voice.draw(ctx, stave);
       var s = el.querySelector('svg');
-      if (s) { s.setAttribute('viewBox', '0 0 150 150'); s.style.width = '140px'; s.style.maxWidth = '100%'; s.style.height = 'auto'; }
+      if (s) {
+        var vb = '0 0 150 150';
+        try { var bb = s.getBBox(); if (bb && bb.height) { var p = 6; vb = (bb.x - p) + ' ' + (bb.y - p) + ' ' + (bb.width + 2 * p) + ' ' + (bb.height + 2 * p); } } catch (e) {}
+        s.setAttribute('viewBox', vb);
+        s.style.width = '140px'; s.style.maxWidth = '100%'; s.style.height = 'auto';
+      }
     }
 
     function pick(n, btn) {

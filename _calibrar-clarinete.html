@@ -51,22 +51,22 @@
 </div>
 
 <script>
-// viewBox nativo de cada imagen
-var FRONT_VB=[220,1475], BACK_VB=[234,334];
+// viewBox nativo de cada imagen (frente Yamaha nítido + trasera propia)
+var FRONT_VB=[880,3270], BACK_VB=[170,334];
 // escala de visualización (px mostrados por px de viewBox)
-var FSCALE=0.52, BSCALE=1.05;
+var FSCALE=0.27, BSCALE=0.9;
 
-// puntos iniciales (coordenadas en viewBox de cada imagen)
+// puntos iniciales (los 6 agujeros ya están clavados; ajusta las llaves pequeñas)
 var FRONT=[
- ['GS','Sol♯ garganta',121,438],['A','La garganta',106,455],
- ['H1','Agujero 1',104,542,1],['H2','Agujero 2',103,618,1],['EBBA','Banana Mi♭/Si♭',101,658],
- ['H3','Agujero 3',103,694,1],['H4','Agujero 4',104,773,1],['SLI','Deslizante Si/Fa♯',84,800],
- ['H5','Agujero 5',103,830,1],['H6','Agujero 6',103,878,1],
- ['CSGS','Meñique izq · Do♯/Sol♯',81,700],['LEB','Meñique izq · Mi/Si',61,688],['LFCS','Meñique izq · Fa♯/Do♯',49,708],
- ['RAB','Meñique dcho · La♭/Mi♭',83,912],['RFC','Meñique dcho · Fa/Do',69,930],
- ['REB','Meñique dcho · Mi/Si',51,908],['RFCS','Meñique dcho · Fa♯/Do♯',45,925]
+ ['GS','Sol♯ garganta',400,400],['A','La garganta',430,545],
+ ['H1','Agujero 1',452,722,1],['H2','Agujero 2',454,1035,1],['EBBA','Banana Mi♭/Si♭',250,1190],
+ ['H3','Agujero 3',455,1353,1],['H4','Agujero 4',476,1813,1],['SLI','Deslizante Si/Fa♯',610,1980],
+ ['H5','Agujero 5',474,2141,1],['H6','Agujero 6',473,2441,1],
+ ['CSGS','Meñique izq · Do♯/Sol♯',400,1450],['LEB','Meñique izq · Mi/Si',420,1545],['LFCS','Meñique izq · Fa♯/Do♯',410,1625],
+ ['RAB','Meñique dcho · La♭/Mi♭',645,2755],['RFC','Meñique dcho · Fa/Do',470,2600],
+ ['REB','Meñique dcho · Mi/Si',400,2865],['RFCS','Meñique dcho · Fa♯/Do♯',485,2870]
 ];
-var BACK=[['T','Agujero del pulgar',113,253,1],['R','Llave de registro',115,193]];
+var BACK=[['T','Agujero del pulgar',78,250,1],['R','Llave de registro',78,202]];
 
 function build(list, wrap, scale, vb){
   var img=wrap.querySelector('img');
@@ -75,7 +75,7 @@ function build(list, wrap, scale, vb){
     var d=document.createElement('div');
     d.className='dot'+(k[4]?' hole':'')+(k[2]>vb[0]/2?' right':'');
     d.style.left=(k[2]*scale)+'px'; d.style.top=(k[3]*scale)+'px';
-    d.innerHTML=(k[4]?k[4]:k[0].replace(/[^0-9]/g,'')||'')+'<span class="lab">'+k[1]+'</span>';
+    d.innerHTML=(k[0].replace(/[^0-9]/g,'')||'')+'<span class="lab">'+k[1]+'</span>';
     d.dataset.i=list===FRONT?'F':'B';
     d._k=k;
     wrap.appendChild(d);
