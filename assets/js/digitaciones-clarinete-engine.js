@@ -43,10 +43,11 @@
   // nota a cada espátula va en PINKY_MAP, separada, para poder cambiarla fácil.
   var PINKY_VB = '-30 0 420 400';
   var PINKY_SLOTS = [
-    // izquierdo (arriba) — gotas apiladas a la izquierda del tubo
-    { slot: 'L1', cx: 110, cy: 72,  rx: 27, ry: 15, rot: -16 },
-    { slot: 'L2', cx: 98,  cy: 116, rx: 27, ry: 15, rot: -10 },
-    { slot: 'L3', cx: 106, cy: 160, rx: 27, ry: 15, rot: -6 },
+    // izquierdo (arriba) — 4 gotas apiladas a la izquierda del tubo
+    { slot: 'L1', cx: 110, cy: 60,  rx: 26, ry: 14, rot: -16 },
+    { slot: 'L2', cx: 98,  cy: 96,  rx: 26, ry: 14, rot: -10 },
+    { slot: 'L3', cx: 104, cy: 132, rx: 26, ry: 14, rot: -7 },
+    { slot: 'L4', cx: 110, cy: 168, rx: 26, ry: 14, rot: -4 },
     // derecho (abajo) — 4 espátulas entrelazadas (2 arriba, 2 abajo) a la derecha
     { slot: 'R1', cx: 210, cy: 250, rx: 25, ry: 15, rot: 18 },
     { slot: 'R2', cx: 252, cy: 268, rx: 25, ry: 15, rot: 34 },
@@ -60,7 +61,8 @@
   var PINKY_MAP = {
     L1: { key: 'CSGS', lbl: 'Do♯/Sol♯' },
     L2: { key: 'LFCS', lbl: 'Fa♯/Do♯' },
-    L3: { key: 'LEB',  lbl: 'Mi/Si' },
+    L3: { key: 'LAB',  lbl: 'La♭/Mi♭' },   // 4ª llave izq. (alternativa; en las digitaciones estándar se usa la del lado dcho.)
+    L4: { key: 'LEB',  lbl: 'Mi/Si' },
     R1: { key: 'RFC',  lbl: 'Fa/Do' },
     R2: { key: 'RAB',  lbl: 'La♭/Mi♭' },
     R3: { key: 'REB',  lbl: 'Mi/Si' },
