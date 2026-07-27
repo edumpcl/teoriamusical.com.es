@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
   <!-- ── INICIO ── -->
   <url><loc>https://www.teoriamusical.com.es/</loc><lastmod>2026-05-29</lastmod></url>
@@ -7,148 +8,1353 @@
 
   <!-- ── DICCIONARIO MUSICAL ── -->
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/</loc><lastmod>2026-06-11</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/cadencias/</loc><lastmod>2026-06-11</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/cadencias/</loc><lastmod>2026-06-11</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/cadencias/cadencia-autentica.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/cadencias/cadencia-plagal.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/cadencias/cadencia-rota.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/cadencias/cadencia-semicadencia-dominante.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/cadencias/cadencia-semicadencia-subdominante.png</image:loc></image:image>
+  </url>
 
   <!-- Acordes -->
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/</loc><lastmod>2026-06-11</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acordes-de-septima/</loc><lastmod>2026-06-11</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acordes-triadas/</loc><lastmod>2026-06-12</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-perfecto-mayor/</loc><lastmod>2026-06-12</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-perfecto-menor/</loc><lastmod>2026-06-12</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-aumentado/</loc><lastmod>2026-06-12</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-disminuido/</loc><lastmod>2026-06-12</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-mayor/</loc><lastmod>2026-06-17</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-menor/</loc><lastmod>2026-06-17</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-de-dominante/</loc><lastmod>2026-06-19</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-de-sensible/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-disminuida/</loc><lastmod>2026-05-29</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acordes-de-septima/</loc><lastmod>2026-06-11</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/septima-dominante.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/septima-mayor.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/septima-menor.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/septima-sensible.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/septima-disminuida.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acordes-triadas/</loc><lastmod>2026-06-12</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/ejemplo-triada.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/disminuida-acorde.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/disminuida-quinta.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/disminuida-tercera.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/menor-acorde.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/menor-quinta.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/menor-tercera.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/mayor-acorde.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/mayor-quinta.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/mayor-tercera.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/aumentada-acorde.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/aumentada-quinta.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/aumentada-tercera.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/inv1-acorde.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/inv1-sexta.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/inv1-tercera.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/inv2-acorde.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/inv2-sexta.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/inv2-cuarta.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-fund.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-fund-dominante.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-fund-sensible.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-fund-5s.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-fund-5b.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-fund-5n.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-fund-3s.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-fund-3b.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-fund-3n.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-fund-2n-1.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-fund-2n-2.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-fund-2n-3.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-1a.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-1a-sensible.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-1a-6s.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-1a-6b.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-1a-6n.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-1a-3s.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-1a-3b.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-1a-3n.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-1a-2n-1.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-1a-2n-2.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-1a-2n-3.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-2a.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-2a-dominante.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-2a-sensible.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-2a-6s.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-2a-6b.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-2a-6n.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-2a-4s.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-2a-4b.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-2a-4n.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-2a-2n-1.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-2a-2n-2.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triadas/cif-2a-2n-3.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-perfecto-mayor/</loc><lastmod>2026-06-12</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triada-mayor.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-perfecto-menor/</loc><lastmod>2026-06-12</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triada-menor.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-aumentado/</loc><lastmod>2026-06-12</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triada-aumentada.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-disminuido/</loc><lastmod>2026-06-12</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triada-disminuida.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-mayor/</loc><lastmod>2026-06-17</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/septima-mayor.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-menor/</loc><lastmod>2026-06-17</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/septima-menor.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-de-dominante/</loc><lastmod>2026-06-19</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/fundamental-1-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/fundamental-7-1-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/fundamental-5-1-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/fundamental-3-1-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-fundamental-1-1024x670.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-fundamental-2-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-fundamental-3-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-fundamental-4-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/1a-inversion-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/1a-inversion-6-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/1a-inversion-5-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/1a-inversion-3-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-1a-1-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-1a-2-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-1a-3-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-1a-4-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/2a-inversion-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/2a-inversion-6-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/2a-inversion-4-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/2a-inversion-3-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-2a-1-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-2a-2-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-2a-3-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-2a-4-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/3a-inversion-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/3a-inversion-6-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/3a-inversion-4-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/3a-inversion-2-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-3a-1-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-3a-2-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-3a-3-1024x672.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/cifrado-3a-4-1024x672.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-de-sensible/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-fundamental-1024x755.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-fundamental-7a-1024x755.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-fundamental-5a-1024x755.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-fundamental-3a-1024x755.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-fundamental-cifrado-1-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-fundamental-cifrado-2-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-fundamental-cifrado-3-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-fundamental-cifrado-4-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-1a-inversion-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-1a-inversion-6a-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-1a-inversion-5a-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-1a-inversion-3a-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-1a-inversion-cifrado-5-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-1a-inversion-cifrado-6-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-1a-inversion-cifrado-7-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-1a-inversion-cifrado-8-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-2a-inversion-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-2a-inversion-6a-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-2a-inversion-4a-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-2a-inversion-3a-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-2a-inversion-cifrado-1-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-2a-inversion-cifrado-2-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-2a-inversion-cifrado-4-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-2a-inversion-cifrado-5-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-3a-inversion-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-3a-inversion-6a-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-3a-inversion-4a-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-3a-inversion-2a-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-3a-inversion-cifrado-1-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-3a-inversion-cifrado-2-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-3a-inversion-cifrado-3-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-sensible-3a-inversion-cifrado-4-1024x842.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-disminuida/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-fundamental-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-fundamental-7a-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-fundamental-5a-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-fundamental-3a-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-fundamental-cifrado-5-1024x879.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-fundamental-cifrado-6-1024x719.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-fundamental-cifrado-7-1024x719.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-fundamental-cifrado-8-1024x719.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-1a-inversion-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-1a-inversion-6a-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-1a-inversion-5a-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-1a-inversion-3a-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-1a-inversion-cifrado-5-1024x719.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-1a-inversion-cifrado-6-1024x723.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-1a-inversion-cifrado-7-1024x723.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-1a-inversion-cifrado-8-1024x723.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-2a-inversion-1024x842.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-2a-inversion-6a-2-1024x723.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-2a-inversion-4a-2-1024x723.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-2a-inversion-3a-2-1024x723.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-2a-inversion-cifrado-1-1024x815.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-2a-inversion-cifrado-2-1024x815.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-2a-inversion-cifrado-3-1024x815.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-2a-inversion-cifrado-4-1024x815.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-3a-inversion-2-1024x723.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-3a-inversion-6a-2-1024x723.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-3a-inversion-4a-2-1024x723.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-3a-inversion-2a-2-1024x723.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-3a-inversion-cifrado-1-1024x723.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-3a-inversion-cifrado-2-1024x723.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-3a-inversion-cifrado-3-1024x723.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/acorde-de-7a-de-disminuida-3a-inversion-cifrado-4-1024x723.png</image:loc></image:image>
+  </url>
 
   <!-- Claves musicales -->
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/</loc><lastmod>2026-06-22</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-sol/</loc><lastmod>2026-06-18</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-fa/</loc><lastmod>2026-06-18</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-do/</loc><lastmod>2026-06-18</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/</loc><lastmod>2026-06-22</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/glifo-clave-sol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/glifo-clave-fa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/glifo-clave-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/notas-clave-sol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/notas-clave-fa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/notas-clave-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/notas-clave-do-1.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/notas-clave-do-2.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/notas-clave-do-4.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/equivalencia-claves-do-central.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-sol/</loc><lastmod>2026-06-18</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/glifo-clave-sol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/notas-clave-sol.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-fa/</loc><lastmod>2026-06-18</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/glifo-clave-fa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/notas-clave-fa.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-do/</loc><lastmod>2026-06-18</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/glifo-clave-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/notas-clave-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/notas-clave-do-1.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/notas-clave-do-2.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/claves/notas-clave-do-4.png</image:loc></image:image>
+  </url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/indice-acustico/</loc><lastmod>2026-06-22</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-en-los-instrumentos/</loc><lastmod>2026-07-07</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-piano/</loc><lastmod>2026-06-23</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-flauta-travesera/</loc><lastmod>2026-07-07</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-oboe/</loc><lastmod>2026-07-07</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-fagot/</loc><lastmod>2026-07-04</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-clarinete/</loc><lastmod>2026-07-07</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-flautin/</loc><lastmod>2026-07-07</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-corno-ingles/</loc><lastmod>2026-07-07</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-clarinete-bajo/</loc><lastmod>2026-07-07</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-clarinete-alto/</loc><lastmod>2026-07-22</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-clarinete-contrabajo/</loc><lastmod>2026-07-22</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tipos-de-clarinete/</loc><lastmod>2026-07-22</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tipos-de-saxofon/</loc><lastmod>2026-07-23</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-contrafagot/</loc><lastmod>2026-07-07</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-saxofon/</loc><lastmod>2026-07-09</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/instrumentos-de-viento-madera/</loc><lastmod>2026-07-09</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-requinto/</loc><lastmod>2026-07-09</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-flauta-travesera/</loc><lastmod>2026-07-07</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/flauta/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/flauta/tesitura-grave.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/flauta/tesitura-medio.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/flauta/tesitura-agudo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/flauta/tesitura-sobreagudo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-oboe/</loc><lastmod>2026-07-07</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/oboe/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/oboe/tesitura-grave.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/oboe/tesitura-medio.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/oboe/tesitura-agudo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/oboe/tesitura-sobreagudo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-fagot/</loc><lastmod>2026-07-04</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/fagot/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/fagot/tesitura-grave.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/fagot/tesitura-medio.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/fagot/tesitura-agudo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/fagot/tesitura-sobreagudo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-clarinete/</loc><lastmod>2026-07-07</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete/tesitura-chalumeau.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete/tesitura-garganta.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete/tesitura-clarin.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete/tesitura-sobreagudo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-flautin/</loc><lastmod>2026-07-07</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/flautin/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/flautin/tesitura-grave.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/flautin/tesitura-medio.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/flautin/tesitura-agudo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-corno-ingles/</loc><lastmod>2026-07-07</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/corno-ingles/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/corno-ingles/tesitura-grave.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/corno-ingles/tesitura-medio.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/corno-ingles/tesitura-agudo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/corno-ingles/tesitura-sobreagudo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-clarinete-bajo/</loc><lastmod>2026-07-07</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete-bajo/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete-bajo/tesitura-chalumeau.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete-bajo/tesitura-garganta.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete-bajo/tesitura-clarin.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete-bajo/tesitura-sobreagudo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-clarinete-alto/</loc><lastmod>2026-07-22</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete-alto/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete-alto/tesitura-chalumeau.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete-alto/tesitura-garganta.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete-alto/tesitura-clarin.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete-alto/tesitura-sobreagudo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-clarinete-contrabajo/</loc><lastmod>2026-07-22</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete-contrabajo/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete-contrabajo/tesitura-chalumeau.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete-contrabajo/tesitura-garganta.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete-contrabajo/tesitura-clarin.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/clarinete-contrabajo/tesitura-sobreagudo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tipos-de-clarinete/</loc><lastmod>2026-07-22</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/tipos-de-clarinete/familia.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tipos-de-saxofon/</loc><lastmod>2026-07-23</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/tipos-de-saxofon/familia.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-contrafagot/</loc><lastmod>2026-07-07</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/contrafagot/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/contrafagot/tesitura-grave.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/contrafagot/tesitura-medio.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/contrafagot/tesitura-agudo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/contrafagot/tesitura-sobreagudo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-saxofon/</loc><lastmod>2026-07-09</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/saxofon/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/saxofon/familia.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/saxofon/tesitura-grave.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/saxofon/tesitura-agudo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/saxofon/tesitura-sobreagudo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/instrumentos-de-viento-madera/</loc><lastmod>2026-07-09</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/viento-madera/familia-tamanos.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-requinto/</loc><lastmod>2026-07-09</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/requinto/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/requinto/tesitura-chalumeau.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/requinto/tesitura-garganta.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/requinto/tesitura-clarin.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/requinto/tesitura-sobreagudo.png</image:loc></image:image>
+  </url>
   <url><loc>https://www.teoriamusical.com.es/herramientas/afinador/requinto/</loc><lastmod>2026-07-09</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-trompeta/</loc><lastmod>2026-07-10</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/serie-armonica/</loc><lastmod>2026-07-10</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-fliscorno/</loc><lastmod>2026-07-13</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-trombon/</loc><lastmod>2026-07-13</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-trompa/</loc><lastmod>2026-07-14</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-trombon-bajo/</loc><lastmod>2026-07-15</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-tuba/</loc><lastmod>2026-07-15</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-bombardino/</loc><lastmod>2026-07-16</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/instrumentos-de-viento-metal/</loc><lastmod>2026-07-16</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-corneta/</loc><lastmod>2026-07-16</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-violin/</loc><lastmod>2026-07-17</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-viola/</loc><lastmod>2026-07-20</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-violonchelo/</loc><lastmod>2026-07-20</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-contrabajo/</loc><lastmod>2026-07-20</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-guitarra/</loc><lastmod>2026-07-27</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/instrumentos-de-cuerda-frotada/</loc><lastmod>2026-07-21</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-trompeta/</loc><lastmod>2026-07-10</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/trompeta/pistones.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/trompeta/tesitura-grave.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/trompeta/tesitura-medio.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/trompeta/tesitura-agudo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/serie-armonica/</loc><lastmod>2026-07-10</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/serie-armonica/serie-completa.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-fliscorno/</loc><lastmod>2026-07-13</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/fliscorno/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/fliscorno/tesitura-grave.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/fliscorno/tesitura-medio.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/fliscorno/tesitura-agudo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-trombon/</loc><lastmod>2026-07-13</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/trombon/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/trombon/tesitura-grave.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/trombon/tesitura-medio.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/trombon/tesitura-agudo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-trompa/</loc><lastmod>2026-07-14</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/trompa/instrumento.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-trombon-bajo/</loc><lastmod>2026-07-15</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/trombon-bajo/instrumento.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-tuba/</loc><lastmod>2026-07-15</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/tuba/instrumento.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-bombardino/</loc><lastmod>2026-07-16</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/bombardino/instrumento.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/instrumentos-de-viento-metal/</loc><lastmod>2026-07-16</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/viento-metal/familia-tamanos.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-corneta/</loc><lastmod>2026-07-16</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/corneta/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/corneta/palometa-dos-posiciones.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-violin/</loc><lastmod>2026-07-17</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/violin/instrumento.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-viola/</loc><lastmod>2026-07-20</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/viola/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/viola/partes.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-violonchelo/</loc><lastmod>2026-07-20</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/violonchelo/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/violonchelo/partes.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-contrabajo/</loc><lastmod>2026-07-20</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/contrabajo/instrumento.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/contrabajo/partes.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-guitarra/</loc><lastmod>2026-07-27</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/guitarra/instrumento.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/instrumentos-de-cuerda-frotada/</loc><lastmod>2026-07-21</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/cuerda-frotada/familia-tamanos.jpg</image:loc></image:image>
+  </url>
 
   <!-- Compases -->
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/</loc><lastmod>2026-06-12</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/unidad-de-tiempo-y-unidad-de-compas/</loc><lastmod>2026-06-12</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/analizar-compases/</loc><lastmod>2026-06-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/acentuacion-ritmica-de-los-compases-simples/</loc><lastmod>2026-06-19</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/unidad-de-tiempo-y-unidad-de-compas/</loc><lastmod>2026-06-12</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/unidad-de-compas.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/unidad-de-tiempo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-compuesto-68.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/analizar-compases/</loc><lastmod>2026-06-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compasillo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/alla-breve.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/unidad-de-tiempo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-compuesto-68.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/acentuacion-ritmica-de-los-compases-simples/</loc><lastmod>2026-06-19</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/acentuacion-2-4.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/acentuacion-3-4.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/acentuacion-4-4.png</image:loc></image:image>
+  </url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/la-frase-musical/</loc><lastmod>2026-06-18</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/la-frase-musical/comienzo-tetico-anacrusico-acefalo/</loc><lastmod>2026-06-18</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/la-frase-musical/final-tiempo-fuerte-y-debil/</loc><lastmod>2026-06-19</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/acentuacion-ritmica-de-los-compases-compuestos/</loc><lastmod>2026-06-19</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-6-8/</loc><lastmod>2026-06-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-4-4/</loc><lastmod>2026-06-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-3-4/</loc><lastmod>2026-06-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-simple-y-compuesto/</loc><lastmod>2026-06-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-2-4/</loc><lastmod>2026-06-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-3-8/</loc><lastmod>2026-06-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-9-8/</loc><lastmod>2026-06-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-12-8/</loc><lastmod>2026-06-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-6-4/</loc><lastmod>2026-06-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-3-2/</loc><lastmod>2026-06-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-partido/</loc><lastmod>2026-06-29</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/la-frase-musical/comienzo-tetico-anacrusico-acefalo/</loc><lastmod>2026-06-18</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/frase/comienzo-comparativa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/frase/comienzo-tetico.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/frase/comienzo-anacrusico.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/frase/comienzo-acefalo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/la-frase-musical/final-tiempo-fuerte-y-debil/</loc><lastmod>2026-06-19</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/frase/final-tiempo-fuerte.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/frase/final-tiempo-debil.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/acentuacion-ritmica-de-los-compases-compuestos/</loc><lastmod>2026-06-19</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/acentuacion-6-8.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/acentuacion-9-8.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/acentuacion-12-8.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/seis-corcheas-34-vs-68.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-6-8/</loc><lastmod>2026-06-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-6-8-pulso.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-6-8-subdivision.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-6-8-melodia.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-4-4/</loc><lastmod>2026-06-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-4-4-pulso.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-4-4-subdivision.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-4-4-melodia.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-3-4/</loc><lastmod>2026-06-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-3-4-pulso.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-3-4-subdivision.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-3-4-melodia.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-simple-y-compuesto/</loc><lastmod>2026-06-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-2-4-subdivision.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-6-8-subdivision.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-2-4/</loc><lastmod>2026-06-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-2-4-pulso.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-2-4-subdivision.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-2-4-melodia.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-3-8/</loc><lastmod>2026-06-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-3-8-pulso.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-3-8-subdivision.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-3-8-melodia.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-9-8/</loc><lastmod>2026-06-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-9-8-pulso.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-9-8-subdivision.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-9-8-melodia.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-12-8/</loc><lastmod>2026-06-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-12-8-pulso.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-12-8-subdivision.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-12-8-melodia.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-6-4/</loc><lastmod>2026-06-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-6-4-pulso.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-6-4-subdivision.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-6-4-melodia.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-6-4-hemiolia.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-de-3-2/</loc><lastmod>2026-06-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-3-2-pulso.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-3-2-subdivision.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-3-2-melodia.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/compas-partido/</loc><lastmod>2026-06-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-partido-pulso.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-partido-subdivision.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/compas-partido-melodia.png</image:loc></image:image>
+  </url>
 
   <!-- Intervalos -->
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-musicales/</loc><lastmod>2026-06-19</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-armonicos-y-melodicos/</loc><lastmod>2026-06-12</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-conjuntos-y-disjuntos/</loc><lastmod>2026-06-12</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-simples-y-compuestos/</loc><lastmod>2026-06-12</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-musicales/</loc><lastmod>2026-06-19</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/ejemplo-do-mi.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/ejemplo-do-sol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/ejemplo-do-fas.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/ejemplo-do-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/ejemplo-do-reb.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/ejemplo-do-re.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/ejemplo-do-mib.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/ejemplo-do-fa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/ejemplo-do-lab.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/ejemplo-do-la.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/ejemplo-do-sib.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/ejemplo-do-si.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/ejemplo-do-do8.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/intervalo-arm%C3%B3nico-1.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/intervalo-mel%C3%B3dico-1024x227.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/ejemplo-de-contar-un-intervalo-2-1024x136.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/ejemplo-de-contar-un-intervalo-1024x136.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/intervalo-ascendente-1024x255.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/intervalo-descendente-1024x255.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/2a-Aumentada-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/2a-Mayor-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/2a-menor-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/enharmon%C3%ADa-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/3%C2%BA-Aumentada-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/3%C2%AA-Mayor-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/3%C2%AA-menor-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/3%C2%AA-disminuida-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/4%C2%AA-Aumentada-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/4%C2%AA-Disminuida-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/4%C2%AA-Justa-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/5%C2%AA-Aumentada-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/5%C2%AA-Disminuida-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/5%C2%AA-Justa-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/6%C2%AA-Aumentada-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/6%C2%AA-Mayor-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/6%C2%AA-Disminuida-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/6%C2%AA-menor-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/7%C2%AA-Aumentada-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/7a-Mayor-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/7a-menor-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/7%C2%AA-disminuida-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/8%C2%AA-Disminuida-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/8%C2%AA-Aumentada-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/8%C2%AA-Justa-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/12%C2%AA-Justa-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/reducci%C3%B3n-de-12%C2%AA-Justa-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/reducci%C3%B3n-de-12%C2%AA-Justa-1-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/12%C2%AA-Justa-1-1024x239.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/tabla-de-intervalos-musicales-900.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-armonicos-y-melodicos/</loc><lastmod>2026-06-12</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/intervalo-melodico.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/intervalo-melodico-desc.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/intervalo-armonico.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-conjuntos-y-disjuntos/</loc><lastmod>2026-06-12</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/intervalo-conjunto.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/intervalo-disjunto.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/movimiento-conjunto.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/movimiento-disjunto.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-simples-y-compuestos/</loc><lastmod>2026-06-12</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/intervalo-simple.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/intervalo-compuesto.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/intervalo-novena.png</image:loc></image:image>
+  </url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/intervalos-consonantes-y-disonantes/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/inversion/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/ampliacion-reduccion-de-intervalos/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/tono-y-semitono/</loc><lastmod>2026-06-19</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/semitono-diatonico-y-semitono-cromatico/</loc><lastmod>2026-06-19</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/unisono-y-notas-enarmonicas/</loc><lastmod>2026-05-29</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/inversion/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Inversion-intervalo-simple-2-2-1024x143.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Inversion-intervalo-simple-3-1024x143.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Inversion-intervalo-compuesto-2-1024x143.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Inversion-intervalo-compuesto-1024x143.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/ampliacion-reduccion-de-intervalos/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/ampliaci%C3%B3n-intervalo-original-1024x229.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/ampliaci%C3%B3n-intervalo-original-subir-nota-m%C3%A1s-aguda-1024x229.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/ampliaci%C3%B3n-intervalo-original-2-1024x229.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/ampliaci%C3%B3n-intervalo-original-subir-nota-m%C3%A1s-aguda-2-1024x229.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/ampliaci%C3%B3n-intervalo-original-bajar-nota-m%C3%A1s-grave-1024x229.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/ampliaci%C3%B3n-intervalo-original-bajar-nota-m%C3%A1s-grave-2-1024x229.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/reducci%C3%B3n-intervalo-original-1024x229.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/reducci%C3%B3n-intervalo-original-subir-nota-m%C3%A1s-grave-1024x229.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/reducci%C3%B3n-intervalo-original-2-1024x229.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/reducci%C3%B3n-intervalo-original-subir-nota-m%C3%A1s-grave-2-1024x229.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/reducci%C3%B3n-intervalo-original-bajar-nota-m%C3%A1s-aguda-1024x229.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/reducci%C3%B3n-intervalo-original-bajar-nota-m%C3%A1s-aguda-2-1024x229.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/tono-y-semitono/</loc><lastmod>2026-06-19</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Do-Mayor-1024x174.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/tono-semitono-teclado.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/semitono-diatonico-y-semitono-cromatico/</loc><lastmod>2026-06-19</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/semitono-cromatico-vs-diatonico.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/semitono-diat%C3%B3nico-3-1024x223.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/semitono-diat%C3%B3nico-4-1024x223.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/semitono-diat%C3%B3nico-1-1024x223.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/semitono-diat%C3%B3nico-2-1024x223.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/semitono-crom%C3%A1tico-4-1024x223.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/semitono-crom%C3%A1tico-3-1024x223.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/semitono-crom%C3%A1tico-2-1024x223.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/semitono-crom%C3%A1tico-1-1024x223.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/intervalos/unisono-y-notas-enarmonicas/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Unisono-2-1024x223.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Unisono-1-1024x223.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/notas-enarmonicas-1-1024x223.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/notas-enarmonicas-1024x223.png</image:loc></image:image>
+  </url>
 
   <!-- Notas, grados, pentagrama -->
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/nombres-de-las-notas-musicales/</loc><lastmod>2026-06-22</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/nombres-de-los-grados-de-la-escala/</loc><lastmod>2026-06-19</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/pentagramas/</loc><lastmod>2026-06-22</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/figuras-musicales/</loc><lastmod>2026-06-02</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/signos-de-repeticion/</loc><lastmod>2026-06-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/ornamentos-musicales/</loc><lastmod>2026-06-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/grupos-de-valoracion-especial/</loc><lastmod>2026-06-19</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/grupos-de-valoracion-especial/tresillo/</loc><lastmod>2026-06-19</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/grupos-de-valoracion-especial/dosillo/</loc><lastmod>2026-06-19</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/puntillo/</loc><lastmod>2026-06-02</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/ligaduras/</loc><lastmod>2026-06-02</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/alteraciones/</loc><lastmod>2026-06-02</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/nombres-de-las-notas-musicales/</loc><lastmod>2026-06-22</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/clave-de-Sol-1024x174.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/clave-de-fa-en-4%C2%AA-1024x174.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/clave-de-fa-en-3%C2%AA-1024x174.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/clave-de-do-en-1%C2%AA-1024x174.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/clave-de-do-en-2%C2%AA-1024x174.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/clave-de-do-en-3%C2%AA-1024x174.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/clave-de-do-en-4%C2%AA-1024x174.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/nombres-de-los-grados-de-la-escala/</loc><lastmod>2026-06-19</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/grados-escala-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/Grados-tonales-1024x131.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/Grados-tonales-2-1024x131.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/Grados-modales-1024x131.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/Grados-modales-2-1024x131.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/pentagramas/</loc><lastmod>2026-06-22</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/pentagramas/preview-pentagrama-en-blanco.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/pentagramas/preview-pentagrama-clave-sol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/pentagramas/preview-pentagrama-clave-fa-4.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/pentagramas/preview-pentagrama-clave-fa-3.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/pentagramas/preview-pentagrama-clave-do-1.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/pentagramas/preview-pentagrama-clave-do-2.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/pentagramas/preview-pentagrama-clave-do-3.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/pentagramas/preview-pentagrama-clave-do-4.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/pentagramas/preview-pentagrama-doble.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/pentagramas/preview-pentagrama-doble-sol-fa.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/figuras-musicales/</loc><lastmod>2026-06-02</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-redonda.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-blanca.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-negra.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-corchea.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-semicorchea.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-fusa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-semifusa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/silencio-redonda.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/silencio-blanca.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/silencio-negra.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/silencio-corchea.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/silencio-semicorchea.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/silencio-fusa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/silencio-semifusa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-negra-puntillo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/signos-de-repeticion/</loc><lastmod>2026-06-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/repeticion-barras.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/repeticion-casillas.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/repeticion-dc-fine.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/repeticion-segno-coda.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/ornamentos-musicales/</loc><lastmod>2026-06-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/ornamentos/apoyatura.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/ornamentos/acciaccatura.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/ornamentos/mordente.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/ornamentos/mordente-inferior.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/ornamentos/grupeto.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/ornamentos/grupeto-inferior.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/ornamentos/grupeto-s-vertical.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/ornamentos/trino.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/grupos-de-valoracion-especial/</loc><lastmod>2026-06-19</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/grupo-dosillo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/grupo-tresillo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/grupo-cuatrillo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/grupo-quintillo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/grupo-seisillo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/grupo-septillo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/grupos-de-valoracion-especial/tresillo/</loc><lastmod>2026-06-19</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/tresillo-comparacion.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/tipos-de-tresillo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/tresillo-latino.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/grupos-de-valoracion-especial/dosillo/</loc><lastmod>2026-06-19</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/dosillo-comparacion.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/tipos-de-dosillo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/puntillo/</loc><lastmod>2026-06-02</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-negra-puntillo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-redonda-puntillo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-blanca-puntillo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-corchea-puntillo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-semicorchea-puntillo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-fusa-puntillo.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-semifusa-puntillo.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/ligaduras/</loc><lastmod>2026-06-02</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/ligadura-union.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/ligadura-expresion.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/alteraciones/</loc><lastmod>2026-06-02</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/alteraciones/alteracion-sostenido.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/alteraciones/alteracion-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/alteraciones/alteracion-becuadro.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/alteraciones/alteracion-doble-sostenido.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/alteraciones/alteracion-doble-bemol.png</image:loc></image:image>
+  </url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/cualidades-del-sonido/</loc><lastmod>2026-06-11</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/dinamica-musical/</loc><lastmod>2026-06-11</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tempo-musical/</loc><lastmod>2026-06-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/articulacion-musical/</loc><lastmod>2026-06-12</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/articulacion-musical/</loc><lastmod>2026-06-12</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/articulacion/legato.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/articulacion/staccato.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/articulacion/acento.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/articulacion/tenuto.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/articulacion/marcato.png</image:loc></image:image>
+  </url>
 
   <!-- Tonalidades -->
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/</loc><lastmod>2026-06-17</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/tipos-de-escalas/</loc><lastmod>2026-06-17</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/circulo-de-quintas/</loc><lastmod>2026-06-11</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/circulo-de-quintas/</loc><lastmod>2026-06-11</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/tonalidades/circulo-de-quintas.png</image:loc></image:image>
+  </url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/tonalidades-y-armaduras/</loc><lastmod>2026-05-29</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/tonalidades-vecinas/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/orden-de-los-sostenidos-y-bemoles/</loc><lastmod>2026-07-20</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/orden-de-los-sostenidos-y-bemoles/</loc><lastmod>2026-07-20</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/1-sostenido-1024x406.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/2-sostenidos-1024x406.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/3-sostenidos-1024x406.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/4-sostenidos-1024x406.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/5-sostenidos-1024x406.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/6-sostenidos-1024x406.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/7-sostenidos-1024x406.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/1-bemol-1024x406.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/2-bemoles-1024x406.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/3-bemoles-1024x406.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/4-bemoles-1024x406.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/5-bemoles-1024x406.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/6-bemoles-1024x406.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/7-bemoles-1024x406.png</image:loc></image:image>
+  </url>
 
   <!-- Escalas mayores -->
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/</loc><lastmod>2026-06-23</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-naturales/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-mixolidias/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-mixtas-principales/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-mixtas-secundarias/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/comparar-los-tipos-de-escalas-mayores/</loc><lastmod>2026-05-29</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-naturales/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Do-Mayor-1-1024x152.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Sol-Mayor-1024x149.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Re-Mayor-1024x149.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/La-Mayor-1024x149.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Mi-Mayor-1024x149.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Si-Mayor-1024x149.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Fa-Mayor-1024x149.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Do-Mayor-2-1024x149.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Fa-Mayor-1-1024x149.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Si-b-Mayor-1024x149.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Mi-b-Mayor-1024x149.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/La-b-Mayor-1024x149.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Re-b-Mayor-1024x149.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Sol-b-Mayor-1024x149.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Do-b-Mayor-1024x149.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Sol-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Re-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/La-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Mi-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Si-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Fa-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Do-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Fa-mayor-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Si-b-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-b-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-b-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-b-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-b-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/do-b-mayor-con-armadura-1024x120.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-mixolidias/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Do-Mayor-1-1024x152.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Do-Mayor-Mixolidia-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Sol-Mayor-Mixolidia-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Re-Mayor-Mixolidia-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/La-Mayor-Mixolidia-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Mi-Mayor-Mixolidia-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Si-Mayor-Mixolidia-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Fa-Mayor-Mixolidia-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Do-Mayor-Mixolidia-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Fa-Mayor-Mixolidia-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Si-b-Mayor-Mixolidia-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Mi-b-Mayor-Mixolidia-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/La-b-Mayor-Mixolidia-1024x125.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Re-b-Mayor-Mixolidia-1024x125.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Sol-b-Mayor-Mixolidia-1024x125.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Do-b-Mayor-Mixolidia-1024x125.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Sol-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Re-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/La-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Mi-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Si-Mayor-Mixolidia-con-armadura-1-1024x126.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Fa-Mayor-Mixolidia-con-armdura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Do-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Fa-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Si-b-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Mi-b-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/La-b-Mayor-Mixolidia-con-armadura-1024x125.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Re-b-Mayor-Mixolidia-con-armadura-1024x125.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Sol-b-Mayor-Mixolidia-con-armadura-1024x125.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Do-b-Mayor-Mixolidia-con-armadura-1024x125.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-mixtas-principales/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Do-Mayor-1-1024x152.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-mayor-mista-principal-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-mayor-mista-principal-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-mayor-mixta-principal-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-mayor-mixta-principal-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-mayor-mixta-principal-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-mayor-mixta-principal-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-mayor-mixta-principal-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-mayor-mixta-principal-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-mayor-mixta-principal-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-b-mayor-mixta-principal-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-b-mayor-mixta-principal-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-b-mayor-mixta-principal-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-b-mayor-mixta-principal-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-b-mayor-mixta-principal-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-b-mayor-mixta-principal-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-mayor-mista-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-mayor-mixta-principal-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-b-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-b-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-b-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-b-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-b-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-b-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-mixtas-secundarias/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/Do-Mayor-1-1024x152.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-mayor-mixta-secundaria-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-mayor-mixta-secundaria-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-mayor-mixta-secundaria-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-mayor-mixta-secundaria-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-mayor-mixta-secundaria-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-mayor-mixta-secundaria-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-mayor-mixta-secundaria-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-mayor-mixta-secundaria-2-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-mayor-mixta-secundaria-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-b-mayor-mixta-secundaria-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-b-mayor-mixta-secundaria-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-b-mayor-mixta-secundaria-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-b-mayor-mixta-secundaria-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-b-mayor-mixta-secundaria-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-b-mayor-mixta-secundaria-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-mayor-mixta-secundaria-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-b-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-b-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-b-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-b-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-b-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-b-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-mayores/comparar-los-tipos-de-escalas-mayores/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Do-Mayor-1024x125.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-mayor-mista-principal-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-mayor-mixta-secundaria-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Do-Mayor-Mixolidia-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Sol-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-mayor-mista-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Sol-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Re-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Re-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/La-mayor-con-armadura-1024x125.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/La-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Mi-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Mi-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Fa-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Fa-Mayor-Mixolidia-con-armdura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Do-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Do-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/Fa-mayor-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-mayor-mixta-principal-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-mayor-mixta-secundaria-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Fa-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Si-b-mayor-con-armadura-1024x126.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Si-b-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-b-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-b-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-b-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-b-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-b-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Mi-b-Mayor-Mixolidia-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/La-mayor-con-armadura-1-1024x126.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-b-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-b-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/La-b-Mayor-Mixolidia-con-armadura-1024x125.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-b-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-b-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-b-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Re-b-Mayor-Mixolidia-con-armadura-1024x125.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-b-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-b-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-b-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Sol-b-Mayor-Mixolidia-con-armadura-1024x125.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/do-b-mayor-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-b-mayor-mixta-principal-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-b-mayor-mixta-secundaria-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/Do-b-Mayor-Mixolidia-con-armadura-1024x125.png</image:loc></image:image>
+  </url>
 
   <!-- Escalas menores -->
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/</loc><lastmod>2026-06-23</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/escalas-menores-naturales/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/escalas-menores-armonicas/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/escalas-menores-melodicas/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/escalas-menores-doricas/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/comparar-los-tipos-de-escalas-menores/</loc><lastmod>2026-05-29</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/escalas-menores-naturales/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/la-menor-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/mi-menor-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/si-menor-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/fa-menor-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/do-menor-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/sol-menor-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/re-menor-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/la-menor-1-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/re-menor-1-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/sol-menor-1-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/do-menor-1-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/fa-menor-1-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/si-b-menor-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/mi-b-menor-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/la-b-menor-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/si-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/fa-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/do-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-m-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-m-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/do-m-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/fa-m-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/si-b-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-b-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-b-m-con-armadura-1024x120.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/escalas-menores-armonicas/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/la-menor-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-menor-armonica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-menor-armonica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/si-menor-armonica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/fa-menor-armonica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/do-menor-armonica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-menor-armonica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-menor-armonica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-menor-armonica-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-menor-armonica-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-menor-armonica-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/do-menor-armonica-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/fa-menor-armonica-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/si-b-menor-armonica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-b-menor-armonica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-b-menor-armonica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/si-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/fa-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/do-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-m-armonica-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-m-armonica-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/do-m-armonica-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/fa-m-armonica-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/si-b-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-b-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-b-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/escalas-menores-melodicas/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/la-menor-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-menor-melodica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-menor-melodica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/si-menor-melodica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/fa-menor-melodica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/do-menor-melodica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-menor-melodica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-menor-melodica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-menor-melodica-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-menor-melodica-2-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-menor-melodica-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/do-menor-melodica-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/fa-menor-melodica-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/si-b-menor-melodica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-b-menor-melodica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-b-menor-melodica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-menor-melodica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-menor-melodica-con-armadura-2-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-menor-melodica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-menor-melodica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-menor-melodica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-menor-melodica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-menor-melodica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-menor-melodica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-menor-melodica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-menor-melodica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-menor-melodica-con-armadura-2-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-b-menor-melodica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-b-menor-melodica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-b-menor-melodica-con-armadura-1024x121.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/escalas-menores-doricas/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/02/la-menor-1024x161.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-menor-dorica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-menor-dorica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/si-menor-dorica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/fa-menor-dorica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/do-menor-dorica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-menor-dorica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-menor-dorica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-menor-dorica-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-menor-dorica-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-menor-dorica-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/do-menor-dorica-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/fa-menor-dorica-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/si-b-menor-dorica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-b-menor-dorica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-b-menor-dorica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-menor-dorica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-menor-dorica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-menor-dorica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-menor-dorica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-b-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-b-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-b-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escalas-menores/comparar-los-tipos-de-escalas-menores/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-menor-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-menor-armonica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-menor-melodica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-menor-dorica-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-menor-melodica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/si-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/si-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-menor-melodica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/fa-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-menor-melodica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/do-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-menor-melodica-con-armadura-2-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-menor-melodica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-menor-melodica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-menor-melodica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-m-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/re-m-armonica-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-menor-melodica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/re-menor-dorica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-m-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/sol-m-armonica-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-menor-melodica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/sol-menor-dorica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/do-m-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/do-m-armonica-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-menor-melodica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/do-menor-dorica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/fa-m-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/fa-m-armonica-con-armadura-1-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-menor-melodica-con-armadura-2-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/fa-menor-dorica-con-armadura-1-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/si-b-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/si-b-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-b-menor-melodica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/si-b-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-b-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/mi-b-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-b-menor-melodica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/mi-b-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-b-m-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/10/la-b-m-armonica-con-armadura-1024x120.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-b-menor-melodica-con-armadura-1024x121.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/11/la-b-menor-dorica-con-armadura-1024x121.png</image:loc></image:image>
+  </url>
 
   <!-- Otros tipos de escalas -->
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-cromatica/</loc><lastmod>2026-06-23</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-pentatonica/</loc><lastmod>2026-06-23</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-de-blues/</loc><lastmod>2026-06-23</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-de-tonos-enteros/</loc><lastmod>2026-06-23</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/modos-griegos/</loc><lastmod>2026-06-01</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/modos-gregorianos/</loc><lastmod>2026-06-02</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-hispano-arabe/</loc><lastmod>2026-06-23</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-oriental/</loc><lastmod>2026-06-23</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-cromatica/</loc><lastmod>2026-06-23</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/escala-cromatica-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/cromatica-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/cromatica-do-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/cromatica-re.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/cromatica-mi-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/cromatica-mi.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/cromatica-fa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/cromatica-fa-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/cromatica-sol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/cromatica-la-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/cromatica-la.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/cromatica-si-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/cromatica-si.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-pentatonica/</loc><lastmod>2026-06-23</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-mayor-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-menor-la.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-mayor-sol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-mayor-re.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-mayor-la.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-mayor-mi.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-mayor-si.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-mayor-fa-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-mayor-do-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-mayor-fa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-mayor-si-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-mayor-mi-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-mayor-la-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-mayor-re-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-mayor-sol-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-mayor-do-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-menor-mi.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-menor-si.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-menor-fa-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-menor-do-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-menor-sol-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-menor-re-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-menor-la-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-menor-re.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-menor-sol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-menor-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-menor-fa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-menor-si-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-menor-mi-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/pentatonica-menor-la-bemol.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-de-blues/</loc><lastmod>2026-06-23</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/blues-menor-la.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/blues-menor-mi.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/blues-menor-si.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/blues-menor-fa-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/blues-menor-do-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/blues-menor-sol-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/blues-menor-re-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/blues-menor-la-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/blues-menor-re.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/blues-menor-sol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/blues-menor-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/blues-menor-fa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/blues-menor-si-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/blues-menor-mi-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/blues-menor-la-bemol.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-de-tonos-enteros/</loc><lastmod>2026-06-23</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/tonos-enteros-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hexatona-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hexatona-do-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hexatona-re.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hexatona-mi-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hexatona-mi.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hexatona-fa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hexatona-fa-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hexatona-sol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hexatona-la-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hexatona-la.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hexatona-si-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hexatona-si.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/modos-griegos/</loc><lastmod>2026-06-01</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-mixolidio-griego-descendente.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-lidio-griego-descendente.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-frigio-griego-descendente.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-dorio-griego-descendente.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-hipolidio-griego-descendente.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-hipofrigio-griego-descendente.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-hipodorio-griego-descendente.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-jonico.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-dorico.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-frigio.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-lidio.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-mixolidio.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-eolico.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-locrio.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/modos-gregorianos/</loc><lastmod>2026-06-02</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-gregoriano-1.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-gregoriano-2.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-gregoriano-3.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-gregoriano-4.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-gregoriano-5.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-gregoriano-6.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-gregoriano-7.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/modo-gregoriano-8.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-hispano-arabe/</loc><lastmod>2026-06-23</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/escala-hispano-arabe-mi.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hispano-arabe-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hispano-arabe-sol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hispano-arabe-re.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hispano-arabe-la.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hispano-arabe-mi.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hispano-arabe-si.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hispano-arabe-fa-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hispano-arabe-do-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hispano-arabe-fa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hispano-arabe-si-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hispano-arabe-mi-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hispano-arabe-la-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hispano-arabe-re-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hispano-arabe-sol-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/hispano-arabe-do-bemol.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tonalidades/escala-oriental/</loc><lastmod>2026-06-23</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-sol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-re.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-la.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-mi.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-si.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-fa-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-do-sost.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-fa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-si-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-mi-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-la-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-re-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-sol-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-do-bemol.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/escala-oriental-do.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/oriental-persichetti-do.png</image:loc></image:image>
+  </url>
 
   <!-- ── HERRAMIENTAS ── -->
   <url><loc>https://www.teoriamusical.com.es/herramientas/</loc><lastmod>2026-05-29</lastmod></url>
@@ -187,17 +1393,64 @@
 
   <!-- ── BLOG ── -->
   <url><loc>https://www.teoriamusical.com.es/blog/</loc><lastmod>2026-06-17</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/blog/como-leer-cifrado-de-acordes/</loc><lastmod>2026-06-17</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/blog/como-calcular-intervalos-paso-a-paso/</loc><lastmod>2026-06-17</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/blog/trucos-memorizar-escalas-armaduras/</loc><lastmod>2026-06-17</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/blog/como-usar-el-metronomo/</loc><lastmod>2026-06-11</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/blog/himno-a-san-juan/</loc><lastmod>2026-05-29</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/blog/como-leer-cifrado-de-acordes/</loc><lastmod>2026-06-17</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triada-mayor.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/triada-menor.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/acordes/acorde-c5.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/blog/como-calcular-intervalos-paso-a-paso/</loc><lastmod>2026-06-17</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/blog-iv-do-la.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/blog-iv-re-fa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/blog-iv-fa-si.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/intervalos/blog-iv-do-mib.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/blog/trucos-memorizar-escalas-armaduras/</loc><lastmod>2026-06-17</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/armadura-sol-mayor.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/escalas/armadura-sib-mayor.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/blog/como-usar-el-metronomo/</loc><lastmod>2026-06-11</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/metronomo/ej-ritmo-negras.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/metronomo/ej-ritmo-corcheas.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/metronomo/ej-ritmo-corcheas-repetidas.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/metronomo/ej-ritmo-tresillos.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/metronomo/ej-ritmo-semicorcheas.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/metronomo/ej-ritmo-galopa.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/metronomo/ej-subdivisiones-piramide.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/blog/himno-a-san-juan/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2020/01/750px-UtQueantLaxis-Arezzo.svg.png</image:loc></image:image>
+  </url>
   <url><loc>https://www.teoriamusical.com.es/blog/armonia/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/blog/practica-no-4-a/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/blog/practica-no-4-b/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/blog/practica-no-4-c/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/blog/practica-no-5-a/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/blog/practica-no-5-b/</loc><lastmod>2026-05-29</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/blog/practica-no-4-a/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/Practica-no-4-a-enunciado-1-1-scaled.jpeg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/Practica_no_4_a_resolucion.png</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/blog/practica-no-4-b/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/Practica-4-b-enunciado-1024x757.jpeg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/solucion-practica-4b-2-scaled.jpeg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/blog/practica-no-4-c/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/Practica-4-c-enunciado-scaled.jpeg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/01/Practica-no-4-c-Solucion-scaled.jpeg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/blog/practica-no-5-a/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/02/Practica-5-a-ejercicio.jpeg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/02/Practica-5-a-Solucion.jpeg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/blog/practica-no-5-b/</loc><lastmod>2026-05-29</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/02/Practica-5-b-enunciado.jpeg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/2021/02/Practica-5-b-Solucion-scaled.jpeg</image:loc></image:image>
+  </url>
 
   <!-- ── EJERCICIOS ── -->
   <url><loc>https://www.teoriamusical.com.es/ejercicios/</loc><lastmod>2026-06-22</lastmod></url>
@@ -296,7 +1549,13 @@
 
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/sincopa/</loc><lastmod>2026-05-31</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/notas-a-contratiempo/</loc><lastmod>2026-05-31</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/anacrusa/</loc><lastmod>2026-06-19</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/compases/anacrusa/</loc><lastmod>2026-06-19</lastmod>
+  
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/anacrusa-comparacion.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/anacrusa-compas.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/anacrusa-cumpleanos.png</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/anacrusa-famosas.png</image:loc></image:image>
+  </url>
   <url><loc>https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-mayor-con-armadura/</loc><lastmod>2026-06-05</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-mixolidia-con-armadura/</loc><lastmod>2026-06-05</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-mayor-mixta-principal-con-armadura/</loc><lastmod>2026-06-05</lastmod></url>
