@@ -427,8 +427,14 @@
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/contrabajo/partes.jpg</image:loc></image:image>
   </url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-la-guitarra/</loc><lastmod>2026-07-27</lastmod>
-  
+
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/guitarra/instrumento.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-bajo-electrico/</loc><lastmod>2026-07-27</lastmod>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/bajo/instrumento.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-ukelele/</loc><lastmod>2026-07-27</lastmod>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/ukelele/instrumento.jpg</image:loc></image:image>
   </url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/instrumentos-de-cuerda-frotada/</loc><lastmod>2026-07-21</lastmod>
   
