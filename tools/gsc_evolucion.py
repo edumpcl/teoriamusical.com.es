@@ -1,16 +1,35 @@
 """
-Evolución Search Console — pre vs. post mejoras SEO
-Compara dos períodos de 28 días:
-  ANTES : 23 Mar – 19 Abr 2026
-  DESPUÉS: 22 Abr – 19 May 2026  (últimos 28 días antes del lag)
+Evolución Search Console — compara dos períodos consecutivos.
+
+Uso:
+  python gsc_evolucion.py            # últimos 7 días vs los 7 anteriores
+  python gsc_evolucion.py 28         # ventanas de 28 días
+  python gsc_evolucion.py 2026-03-23 2026-04-19 2026-04-22 2026-05-19   # fechas fijas
+
+La ventana "DESPUÉS" termina 3 días atrás para absorber el retardo de GSC.
 """
 
+import sys
+from datetime import date, timedelta
+
+sys.stdout.reconfigure(encoding="utf-8")
 from gsc_auth import get_service, SITE
 
-ANTES_START  = "2026-03-23"
-ANTES_END    = "2026-04-19"
-DESPUES_START= "2026-04-22"
-DESPUES_END  = "2026-05-19"
+
+def _periodos(argv):
+    """Devuelve (antes_start, antes_end, despues_start, despues_end)."""
+    if len(argv) >= 4:
+        return argv[0], argv[1], argv[2], argv[3]
+    dias = int(argv[0]) if argv else 7
+    fin_d = date.today() - timedelta(days=3)
+    ini_d = fin_d - timedelta(days=dias - 1)
+    fin_a = ini_d - timedelta(days=1)
+    ini_a = fin_a - timedelta(days=dias - 1)
+    return ini_a.isoformat(), fin_a.isoformat(), ini_d.isoformat(), fin_d.isoformat()
+
+
+ANTES_START, ANTES_END, DESPUES_START, DESPUES_END = _periodos(sys.argv[1:])
+VENTANA = (date.fromisoformat(DESPUES_END) - date.fromisoformat(DESPUES_START)).days + 1
 
 
 def q(svc, start, end, dims, limit=500, filters=None):
@@ -58,8 +77,8 @@ def main():
     sep("═")
     print(f"  EVOLUCIÓN SEARCH CONSOLE — teoriamusical.com.es")
     sep("═")
-    print(f"  ANTES  : {ANTES_START} → {ANTES_END}  (28 días)")
-    print(f"  DESPUÉS: {DESPUES_START} → {DESPUES_END}  (28 días)")
+    print(f"  ANTES  : {ANTES_START} → {ANTES_END}  ({VENTANA} días)")
+    print(f"  DESPUÉS: {DESPUES_START} → {DESPUES_END}  ({VENTANA} días)")
     sep()
     print(f"  {'MÉTRICA':<20} {'ANTES':>10} {'DESPUÉS':>10} {'ΔDELTA':>10}")
     sep()
