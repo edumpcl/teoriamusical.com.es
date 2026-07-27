@@ -400,6 +400,7 @@
        descendente o unísono según el texto; melódico ascendente por defecto. Ignora el teclado. */
     document.querySelectorAll('[data-tm-intervals] img').forEach(function (img) {
       var alt = img.getAttribute('alt') || '', s = alt.toLowerCase();
+      if (img.closest && img.closest('[data-tm-noplay]')) return;   // exclusión explícita (tablas resumen, pósters…)
       if (/teclado/.test(s) || /melod[ií]a/.test(s)) return;   // teclado no es pentagrama; melodías = contorno desconocido
       var host = (img.closest && (img.closest('figure') || img.closest('td'))) || img.parentElement;
       if (!host || host.querySelector('.tm-play-scale')) return;
