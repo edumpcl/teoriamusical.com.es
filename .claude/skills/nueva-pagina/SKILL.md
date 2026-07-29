@@ -34,17 +34,23 @@ El config admite: `dir, title, desc, h1, breadcrumb[{name,url}], body|bodyFile, 
 - Enlaza desde 1-2 **hermanas** relevantes (contextual, anchor descriptivo) y que ellas enlacen de vuelta.
 - Verifica que los enlaces internos que pones EXISTEN (ojo: escalas mayores/menores están en `/tonalidades/...`, ligaduras en `/diccionario-musical/ligaduras/`).
 
-## 5. OG, sitemap, validación
+## 5. ⚠️ Anuncios
+`python tools/insert_ads.py --apply <dir>/index.html` → inserta las 2 unidades de AdSense (tras el 2º `<h2>` de primer nivel y antes del `</article>` final). Es idempotente: limpia y reinserta, así que se puede volver a lanzar sin duplicar.
+- La salida debe decir `ok(h2#2)`. Si dice `ok(solo-ad2)` la página solo tiene un `<h2>` de primer nivel y se queda con una sola unidad.
+- Si dice `skip-landing` / `skip-rejilla`, la página **nace sin monetizar**: `skip-landing` = sin `<h2>` de prosa a nivel de `<article>`; `skip-rejilla` = el cuerpo tiene `tm-card`/`tm-grid`/`tm-hero`/`ej-cards`. Es correcto para hubs e índices, pero en una página de contenido normal significa que la estructura está mal — arréglala y repite.
+- Sin este paso la página queda fuera de AdSense indefinidamente (así se perdieron 33 páginas hasta 2026-07-29).
+
+## 6. OG, sitemap, validación
 - `python tools/gen_og_pages.py` (genera el OG desde H1+meta; el archivo `og-<dir-con-guiones>.png` debe existir después).
 - Añade la entrada `<url><loc>…/</loc><lastmod>HOY</lastmod></url>` a `sitemap.xml`.
 - `node tools/validate_jsonld.js <ruta>/index.html` → "All JSON-LD blocks are valid."
 
-## 6. Versionar y comprobar
+## 7. Versionar y comprobar
 - `node tools/version_assets.cjs` (actualiza los `?v=` de CSS/JS).
 - Sirve en localhost (`python -m http.server 8000`) y verifica con Playwright:
   - H1 correcto, **0 imágenes rotas** (haz scroll para forzar lazy-load).
   - ⚠️ **Móvil sin desbordamiento** `[[project-mobile-overflow-fix]]`: viewport 390, `document.documentElement.scrollWidth === clientWidth`.
 
-## 7. Cierre
+## 8. Cierre
 - Actualiza la memoria `project-gsc-opportunity-pages` con la página creada y la consulta objetivo.
 - **NO hagas commit**: el usuario hace siempre los commits él mismo.
