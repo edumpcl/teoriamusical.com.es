@@ -234,7 +234,9 @@
     '.tm-cl-play{width:34px;height:34px;border-radius:50%;border:none;background:#8b6914;color:#fff;font-size:.85rem;cursor:pointer;line-height:1;flex:0 0 auto;}',
     '.tm-cl-play:hover{background:#6b5010;}',
     '.tm-cl-staff{display:flex;justify-content:center;align-items:center;min-height:120px;}',
-    '.tm-cl-staff svg{max-width:100%;height:auto;}'
+    '.tm-cl-staff svg{max-width:100%;height:auto;}',
+    /* Móvil: mantener las 3 columnas (frente | dorso | meñiques) sin apilar, para que el diagrama quepa sin scroll y los botones queden a la vista. Va al final para ganar en cascada a las reglas base. */
+    '@media(max-width:600px){.tm-cl-photos{flex-wrap:nowrap;gap:6px;justify-content:center;}.tm-cl-photo,.tm-cl-front,.tm-cl-back,.tm-cl-pinky{min-width:0;}.tm-cl-front{flex:0 1 24%;}.tm-cl-front img{width:100%;height:auto;max-height:52vh;}.tm-cl-back{flex:0 1 20%;}.tm-cl-backsvg{width:100%;}.tm-cl-pinky{flex:0 1 30%;gap:6px;}.tm-cl-pksvg{width:100%;}.tm-cl-pkcap,.tm-cl-backcap{font-size:.6rem;max-width:100%;}}'
   ].join('');
 
   function injectCSS() {
