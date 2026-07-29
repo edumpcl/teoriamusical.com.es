@@ -18,14 +18,14 @@
   // están AUTODETECTADOS sobre la foto nítida; las llaves pequeñas, ajustadas a
   // mano). Trasera (foto propia): 170×334. r = radio; num = nº de agujero (1-6).
   var FRONT_KEYS = [
-    { id: 'GS',   x: 400, y: 400,  r: 24 },  // Sol♯ de garganta
+    { id: 'GS',   x: 641, y: 562,  r: 24 },  // Sol♯ de garganta
     { id: 'A',    x: 430, y: 545,  r: 26 },  // La de garganta
     { id: 'H1',   x: 452, y: 722,  r: 42, num: 1 },
     { id: 'H2',   x: 454, y: 1035, r: 42, num: 2 },
-    { id: 'EBBA', x: 250, y: 1190, r: 24 },  // banana Mi♭/Si♭ (entre 2 y 3)
+    { id: 'EBBA', x: 443, y: 1191, r: 24 },  // banana Mi♭/Si♭ (entre 2 y 3)
     { id: 'H3',   x: 455, y: 1353, r: 42, num: 3 },
     { id: 'H4',   x: 476, y: 1813, r: 42, num: 4 },
-    { id: 'SLI',  x: 610, y: 1980, r: 24 },  // deslizante Si/Fa♯ (entre 4 y 5)
+    { id: 'SLI',  x: 437, y: 2285, r: 24 },  // deslizante Si/Fa♯
     { id: 'H5',   x: 474, y: 2141, r: 42, num: 5 },
     { id: 'H6',   x: 473, y: 2441, r: 42, num: 6 }
   ];
@@ -36,38 +36,48 @@
   ];
   var BACK_W = 170, BACK_H = 334;
 
-  // Esquema de los racimos del MEÑIQUE (no se ven bien de frente), CALCADO de la
-  // forma real: el racimo IZQUIERDO (arriba, junto al agujero 4) son espátulas de
-  // gota apiladas; el DERECHO (abajo) son 4 palancas entrelazadas (2 arriba + 2
-  // abajo). GEOMETRÍA (dónde va cada espátula dibujada) va aquí; la ASIGNACIÓN de
-  // nota a cada espátula va en PINKY_MAP, separada, para poder cambiarla fácil.
-  var PINKY_VB = '-30 0 420 400';
-  var PINKY_SLOTS = [
-    // izquierdo (arriba) — 4 gotas apiladas a la izquierda del tubo
-    { slot: 'L1', cx: 110, cy: 60,  rx: 26, ry: 14, rot: -16 },
-    { slot: 'L2', cx: 98,  cy: 96,  rx: 26, ry: 14, rot: -10 },
-    { slot: 'L3', cx: 104, cy: 132, rx: 26, ry: 14, rot: -7 },
-    { slot: 'L4', cx: 110, cy: 168, rx: 26, ry: 14, rot: -4 },
-    // derecho (abajo) — 4 espátulas entrelazadas (2 arriba, 2 abajo) a la derecha
-    { slot: 'R1', cx: 210, cy: 250, rx: 25, ry: 15, rot: 18 },
-    { slot: 'R2', cx: 252, cy: 268, rx: 25, ry: 15, rot: 34 },
-    { slot: 'R3', cx: 206, cy: 302, rx: 25, ry: 15, rot: 10 },
-    { slot: 'R4', cx: 248, cy: 322, rx: 25, ry: 15, rot: 26 }
+  // Racimos del MEÑIQUE sobre RECORTES de la propia foto Yamaha en alta resolución
+  // (izquierdo = 4 espátulas del meñique izq.; derecho = 4 del meñique dcho.). Cada
+  // marcador se ilumina igual que en las fotos de frente/dorso (mismo .k-dot). Las
+  // coordenadas (x,y en el sistema del recorte) sitúan el marcador sobre su espátula;
+  // se pueden afinar con la herramienta de calibración. El id debe existir en FING.
+  // Racimos del MEÑIQUE dibujados como espátulas metálicas (paddles con degradado);
+  // la que se pulsa se ilumina en dorado. Geometría {id, cx, cy, w, h, a(ngulo)} en
+  // el sistema de cada SVG. id = llave de FING (debe existir).
+  var PK_IZQ_VB = '0 0 200 180', PK_DER_VB = '0 0 190 130';
+  var PK_IZQ = [
+    { id: 'CSGS', cx: 96,  cy: 50,  w: 58, h: 26, a: -20 },  // Do♯/Sol♯
+    { id: 'LFCS', cx: 120, cy: 78,  w: 58, h: 24, a: -8 },   // Fa♯/Do♯
+    { id: 'LEB',  cx: 80,  cy: 92,  w: 56, h: 24, a: -13 },  // Mi/Si
+    { id: 'LAB',  cx: 110, cy: 120, w: 54, h: 24, a: -5 }    // La♭/Mi♭
   ];
-  // ── MAPA DE NOTAS (fácil de cambiar) ──────────────────────────────────────
-  // Cada espátula (slot) → qué llave enciende (key, debe existir en FING) y qué
-  // etiqueta muestra (lbl). Para reasignar una nota a otra espátula, cambia aquí
-  // el par {key,lbl} del slot; NO hace falta tocar la geometría de arriba.
-  var PINKY_MAP = {
-    L1: { key: 'CSGS', lbl: 'Do♯/Sol♯' },
-    L2: { key: 'LFCS', lbl: 'Fa♯/Do♯' },
-    L3: { key: 'LAB',  lbl: 'La♭/Mi♭' },   // 4ª llave izq. (alternativa; en las digitaciones estándar se usa la del lado dcho.)
-    L4: { key: 'LEB',  lbl: 'Mi/Si' },
-    R1: { key: 'RFC',  lbl: 'Fa/Do' },
-    R2: { key: 'RAB',  lbl: 'La♭/Mi♭' },
-    R3: { key: 'REB',  lbl: 'Mi/Si' },
-    R4: { key: 'RFCS', lbl: 'Fa♯/Do♯' }
-  };
+  var PK_DER = [
+    { id: 'RFCS', cx: 74,  cy: 40, w: 56, h: 24, a: 12 },    // Fa♯/Do♯
+    { id: 'RAB',  cx: 132, cy: 50, w: 56, h: 24, a: 8 },     // La♭/Mi♭
+    { id: 'REB',  cx: 74,  cy: 82, w: 56, h: 24, a: 7 },     // Mi/Si
+    { id: 'RFC',  cx: 120, cy: 90, w: 56, h: 24, a: 4 }      // Fa/Do
+  ];
+  function pkGrad() {
+    return '<defs><linearGradient id="tmclPkMet" x1="0" y1="0" x2="0.4" y2="1">' +
+      '<stop offset="0" stop-color="#fdfdfe"/><stop offset="0.45" stop-color="#d8dae0"/>' +
+      '<stop offset="0.75" stop-color="#b3b6bd"/><stop offset="1" stop-color="#9a9da5"/></linearGradient>' +
+      '<linearGradient id="tmclPkMetOn" x1="0" y1="0" x2="0.4" y2="1">' +
+      '<stop offset="0" stop-color="#ffd98a"/><stop offset="0.5" stop-color="#ff9f1a"/>' +
+      '<stop offset="1" stop-color="#e07d00"/></linearGradient></defs>';
+  }
+  function pkSpat(s) {
+    var hw = s.w / 2, hh = s.h / 2;
+    return '<g class="tm-cl-key" data-k="' + s.id + '" transform="translate(' + s.cx + ' ' + s.cy + ') rotate(' + s.a + ')">' +
+      '<rect class="tm-cl-pk-pad" x="' + (-hw) + '" y="' + (-hh) + '" width="' + s.w + '" height="' + s.h + '" rx="' + hh + '"/>' +
+      '<rect class="tm-cl-pk-hl" x="' + (-hw + 5) + '" y="' + (-hh + 3) + '" width="' + (s.w - 10) + '" height="' + (s.h * 0.28).toFixed(1) + '" rx="' + (s.h * 0.14).toFixed(1) + '"/>' +
+      '</g>';
+  }
+  function buildPinkySvg(list, vb, label) {
+    return '<div class="tm-cl-pkcluster">' +
+      '<svg class="tm-cl-pksvg" viewBox="' + vb + '" role="img" aria-label="Espátulas del ' + label + '; la que se pulsa se ilumina en dorado">' +
+      pkGrad() + list.map(pkSpat).join('') + '</svg>' +
+      '<p class="tm-cl-pkcap">' + label + '</p></div>';
+  }
 
   var NAMES = {
     R: 'registro', T: 'pulgar', A: 'La (garganta)', GS: 'Sol♯ (garganta)',
@@ -193,22 +203,21 @@
     '.tm-cl-photo{position:relative;flex:0 0 auto;}',
     '.tm-cl-front img{display:block;height:min(50vh,440px);width:auto;border-radius:6px;}',
     '.tm-cl-back{display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;align-self:center;}',
-    '.tm-cl-backimg img{display:block;height:min(30vh,250px);width:auto;border-radius:6px;}',
+    '.tm-cl-backsvg{width:min(22vw,100px);height:auto;}',
+    '.tm-cl-holeD{fill:#241f1b;stroke:#0c0a08;stroke-width:2;transition:fill .15s,stroke .15s;}',
+    '.tm-cl-key.on .tm-cl-holeD{fill:#ff9f1a;stroke:#fff;}',
     '.tm-cl-img{display:block;border-radius:6px;}',
     '.tm-cl-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}',
     '.tm-cl-backcap{font-size:.8rem;color:#777;max-width:180px;text-align:center;margin:0;line-height:1.3;}',
     '.tm-cl-backcap strong{color:#555;}',
-    // esquema de meñiques
-    '.tm-cl-pinky{display:flex;flex-direction:column;align-items:center;flex:0 0 auto;align-self:center;}',
-    '.tm-cl-pk-svg{height:min(44vh,360px);width:auto;}',
-    '.tm-cl-pk-tube{fill:#241f1b;stroke:#0d0b0a;stroke-width:1;}',
-    '.tm-cl-pk-ring{fill:#d7d8dc;stroke:#9a9ca3;stroke-width:1;}',
-    '.tm-cl-pk-head{font-family:Arial,Helvetica,sans-serif;font-size:15px;fill:#8b6914;font-weight:bold;text-anchor:middle;}',
-    '.tm-cl-key .pk-sp{fill:#e9eaee;stroke:#8f9199;stroke-width:2;transition:all .16s;}',
-    '.tm-cl-key.on .pk-sp{fill:#ff9500;stroke:#fff;filter:drop-shadow(0 0 4px #ff9500);}',
-    '.tm-cl-pk-lbl{font-family:Arial,Helvetica,sans-serif;font-size:15px;fill:#555;dominant-baseline:central;transition:all .16s;}',
-    '.tm-cl-key.on .pk-lbl{fill:#3a2b00;font-weight:bold;}',
-    '.tm-cl-pkcap{font-size:.8rem;color:#777;max-width:200px;text-align:center;margin:2px 0 0;line-height:1.3;}',
+    // diagramas de meñiques (espátulas metálicas dibujadas, apiladas izq. arriba / dcho. abajo)
+    '.tm-cl-pinky{display:flex;flex-direction:column;align-items:center;flex:0 0 auto;align-self:center;gap:10px;}',
+    '.tm-cl-pkcluster{display:flex;flex-direction:column;align-items:center;gap:2px;}',
+    '.tm-cl-pksvg{width:min(38vw,170px);height:auto;}',
+    '.tm-cl-pk-pad{fill:url(#tmclPkMet);stroke:#7f828a;stroke-width:1.5;transition:fill .15s,stroke .15s;}',
+    '.tm-cl-key.on .tm-cl-pk-pad{fill:url(#tmclPkMetOn);stroke:#b06a00;}',
+    '.tm-cl-pk-hl{fill:#fff;opacity:.5;pointer-events:none;}',
+    '.tm-cl-pkcap{font-size:.8rem;color:#777;max-width:230px;text-align:center;margin:2px 0 0;line-height:1.3;}',
     // marcador: invisible en reposo, dorado brillante al pulsar
     '.tm-cl-key .k-dot{fill:#ff9500;fill-opacity:0;stroke:rgba(255,255,255,0);stroke-width:0;transition:all .16s;}',
     '.tm-cl-key.on .k-dot{fill:#ff9500;fill-opacity:.92;stroke:#fff;stroke-width:2.4;filter:drop-shadow(0 0 6px #ff9500);}',
@@ -244,24 +253,19 @@
     return s + '</g>';
   }
 
-  // Esquema de meñiques: tubo vertical con el racimo izquierdo arriba (espátulas
-  // hacia la derecha) y el derecho abajo (espátulas hacia la izquierda).
-  var PK_TUBE_X = 142, PK_TUBE_W = 36;   // tubo central del esquema
-  function pinkyDeco() {
-    return '<rect class="tm-cl-pk-tube" x="' + PK_TUBE_X + '" y="34" width="' + PK_TUBE_W + '" height="344" rx="14"/>' +
-      '<rect class="tm-cl-pk-ring" x="' + (PK_TUBE_X - 3) + '" y="200" width="' + (PK_TUBE_W + 6) + '" height="7" rx="2"/>' +
-      '<text class="tm-cl-pk-head" x="70" y="20">Meñique izq.</text>' +
-      '<text class="tm-cl-pk-head" x="250" y="396">Meñique dcho.</text>';
-  }
-  function keyShapePinky(s) {
-    var m = PINKY_MAP[s.slot] || {};
-    var left = s.slot.charAt(0) === 'L';
-    var lx = left ? s.cx - s.rx - 7 : s.cx + s.rx + 7;
-    var anchor = left ? 'end' : 'start';
-    var tr = s.rot ? ' transform="rotate(' + s.rot + ' ' + s.cx + ' ' + s.cy + ')"' : '';
-    return '<g class="tm-cl-key" data-k="' + (m.key || '') + '">' +
-      '<ellipse class="pk-sp" cx="' + s.cx + '" cy="' + s.cy + '" rx="' + s.rx + '" ry="' + s.ry + '"' + tr + '/>' +
-      '<text class="tm-cl-pk-lbl" x="' + lx + '" y="' + s.cy + '" text-anchor="' + anchor + '">' + (m.lbl || '') + '</text></g>';
+  // Parte de ATRÁS como diagrama: cuerpo oscuro + llave de registro (paleta metálica)
+  // + agujero del pulgar. Se iluminan igual que el resto (data-k = R / T).
+  function buildBack() {
+    return '<svg class="tm-cl-backsvg" viewBox="46 104 112 158" role="img" aria-label="Parte de atrás del clarinete (diagrama): la llave de registro (arriba) y el agujero del pulgar (abajo) se iluminan al usarse">' +
+      pkGrad() +
+      '<g class="tm-cl-key" data-k="R">' +                                              // llave de registro
+        '<rect class="tm-cl-pk-pad" x="70" y="118" width="62" height="20" rx="10" transform="rotate(-6 101 128)"/>' +
+        '<circle class="tm-cl-pk-pad" cx="84" cy="150" r="13"/>' +
+      '</g>' +
+      '<g class="tm-cl-key" data-k="T">' +                                              // agujero del pulgar
+        '<circle class="tm-cl-holeD" cx="91" cy="222" r="21"/>' +
+      '</g>' +
+      '</svg>';
   }
 
   function tmClarineteEngine(containerId) {
@@ -271,8 +275,8 @@
     var uid = containerId;
 
     var frontSvg = FRONT_KEYS.map(keyShape).join('');
-    var backSvg = BACK_KEYS.map(keyShape).join('');
-    var pinkySvg = pinkyDeco() + PINKY_SLOTS.map(keyShapePinky).join('');
+    var pinkyIzq = buildPinkySvg(PK_IZQ, PK_IZQ_VB, 'meñique izquierdo');
+    var pinkyDer = buildPinkySvg(PK_DER, PK_DER_VB, 'meñique derecho');
     var btns = ORDEN.map(function (n) {
       return '<button class="tm-cl-btn" data-n="' + n + '">' + label(n) + '</button>';
     }).join('');
@@ -288,19 +292,15 @@
               '<svg class="tm-cl-svg" viewBox="0 0 ' + FRONT_W + ' ' + FRONT_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Digitación del clarinete sobre una fotografía real (cara frontal)">' + frontSvg + '</svg>' +
             '</div>' +
             '<div class="tm-cl-back">' +
-              '<div class="tm-cl-photo tm-cl-backimg">' +
-                '<picture><source type="image/webp" srcset="/assets/img/clarinete/digitacion-dorso.webp">' +
-                '<img class="tm-cl-img" src="/assets/img/clarinete/digitacion-dorso.jpg" width="170" height="334" loading="lazy" alt="Detalle de la parte de atrás del clarinete: el agujero del pulgar y la llave de registro"></picture>' +
-                '<svg class="tm-cl-svg" viewBox="0 0 ' + BACK_W + ' ' + BACK_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Digitación del clarinete (cara trasera): pulgar y registro">' + backSvg + '</svg>' +
-              '</div>' +
+              buildBack() +
               '<p class="tm-cl-backcap"><strong>Parte de atrás</strong><br>el pulgar izquierdo tapa su agujero y aprieta la <strong>llave de registro</strong> (la 12ª).</p>' +
             '</div>' +
             '<div class="tm-cl-pinky">' +
-              '<svg class="tm-cl-pk-svg" viewBox="' + PINKY_VB + '" role="img" aria-label="Esquema de los racimos del meñique: las espátulas que se pulsan se iluminan">' + pinkySvg + '</svg>' +
-              '<p class="tm-cl-pkcap"><strong>Los meñiques</strong><br>racimos laterales que no se ven de frente.</p>' +
+              pinkyIzq + pinkyDer +
+              '<p class="tm-cl-pkcap">Los <strong>meñiques</strong>: racimos laterales que no se ven de frente.</p>' +
             '</div>' +
           '</div>' +
-          '<p class="tm-cl-credit">Foto (frente): clarinete Yamaha YCL-457II, Yamaha Corporation vía <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Clarinet_YCL-457II-22.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Trasera: foto propia.</p>' +
+          '<p class="tm-cl-credit">Foto del frente: clarinete Yamaha YCL-457II, Yamaha Corporation vía <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Clarinet_YCL-457II-22.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Trasera y meñiques: diagrama propio.</p>' +
         '</div>' +
         '<div class="tm-cl-btns">' + btns + '</div>' +
       '</div>';
