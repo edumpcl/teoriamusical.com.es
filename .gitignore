@@ -39,7 +39,11 @@ audit-mobile.js
 *.log
 .cache/
 
-# ----- Google Search Console / OAuth -----
+# ----- Credenciales de las APIs de Google (NUNCA versionar) -----
+# credentials.json = cliente OAuth de escritorio, compartido por GSC y AdSense.
+# gsc-service-account.json = cuenta de servicio, sirve para GSC y GA4.
+# *-token.json = tokens de usuario con refresh_token (acceso a la cuenta).
 tools/credentials.json
 tools/token.json
+tools/adsense-token.json
 tools/gsc-service-account.json

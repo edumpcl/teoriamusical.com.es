@@ -26,12 +26,70 @@ CLIENT     = "ca-pub-1186627650857489"
 SLOT_INTRO = "3473898651"   # TM - Tras intro
 SLOT_END   = "2439863051"   # TM - Fin de articulo
 
+# Unidades separadas para poder ATRIBUIR INGRESOS POR SECCION.
+# AdSense ya no permite crear canales de URL (retirados de la interfaz), asi que
+# la unica forma de saber que gana cada zona del sitio es darle su propia unidad
+# de anuncio y leerla con: python tools/adsense_report.py --unidades
+#
+# Rellenar con el data-ad-slot que da AdSense al crear cada bloque. Mientras
+# esten vacios se usa SLOT_INTRO y el script avisa, para que nunca se inserte
+# un slot inventado.
+#
+# COMO AMPLIAR (politica acordada 2026-07-30): cuando en Search Console o GA4
+# despunte una pagina o un grupo de paginas, se le crea su propio bloque en
+# AdSense y se anade aqui una linea. Asi la atribucion de ingresos sigue al
+# contenido que importa, en vez de decidirla de antemano.
+#
+# OJO AL ORDEN: gana la PRIMERA coincidencia de prefijo. Lo especifico va
+# ANTES que lo generico, o el generico se lo come. Con 'herramientas/' en la
+# lista, tendria que ir DESPUES de 'herramientas/metronomo'.
+SLOT_INTRO_SECCION = [
+    ("herramientas/metronomo", "3447571789", "TM - Tras intro - metronomo"),
+    ("herramientas/afinador",  "4070388314", "TM - Tras intro - afinador"),
+]
+
+_avisados = set()
+
+
+def slot_intro(rel):
+    """Slot de la unidad 1 segun la seccion a la que pertenece la pagina."""
+    ruta = rel.replace(os.sep, "/")
+    for prefijo, slot, nombre in SLOT_INTRO_SECCION:
+        if ruta.startswith(prefijo):
+            if slot:
+                return slot
+            if nombre not in _avisados:
+                _avisados.add(nombre)
+                print("AVISO: falta el data-ad-slot de '%s' en "
+                      "SLOT_INTRO_SECCION; se usa la unidad generica." % nombre)
+            return SLOT_INTRO
+    return SLOT_INTRO
+
 # Paginas que NO llevan anuncios (politica de AdSense / poco valor).
 EXCLUDE_RELPATHS = {
     os.path.normpath("aviso-legal/index.html"),
     os.path.normpath("politica-de-cookies/index.html"),
     os.path.normpath("politica-de-privacidad/index.html"),
 }
+
+# Paginas que usan marcadores de rejilla (tm-grid/tm-card...) pero SON contenido
+# real, no indices de navegacion: llevan prosa propia y tiempo de permanencia
+# alto. El veto GRID_RE las descartaba por el marcado, no por lo que son.
+# Es seguro saltarselo: el anclaje a <h2> de PRIMER NIVEL (toplevel_content_h2,
+# profundidad == 1) garantiza que el anuncio nunca cae dentro de una tarjeta,
+# que era el motivo original del veto.
+# Criterio para ampliar esta lista: >1 min de permanencia media en GA4
+# (python tools/ga4_report.py). Los hubs de paso se quedan fuera.
+INCLUDE_RELPATHS = {os.path.normpath(p) for p in (
+    "diccionario-musical/intervalos/intervalos-musicales/index.html",
+    "diccionario-musical/pentagramas/index.html",
+    "diccionario-musical/compases/index.html",
+    "diccionario-musical/acordes/index.html",
+    "diccionario-musical/tonalidades/index.html",
+    "diccionario-musical/tonalidades/escalas-mayores/index.html",
+    "diccionario-musical/tonalidades/escalas-menores/index.html",
+    "diccionario-musical/tonalidades/tipos-de-escalas/index.html",
+)}
 
 
 def ad_block(slot):
@@ -86,9 +144,11 @@ def toplevel_content_h2(region):
 GRID_RE = re.compile(r'ej-cards|tm-grid|tm-hero|tm-card')
 
 
-def process(html):
+def process(html, permitir_rejilla=False, slot1=SLOT_INTRO):
     """Reconcilia y auto-corrige: SIEMPRE limpia primero y reinserta donde toca,
-    asi se arreglan colocaciones viejas mal hechas. Devuelve (nuevo_html, estado)."""
+    asi se arreglan colocaciones viejas mal hechas. Devuelve (nuevo_html, estado).
+
+    permitir_rejilla: la pagina esta en INCLUDE_RELPATHS -> no aplicar GRID_RE."""
     original = html
     html = strip_ads(html)   # partir de cero (corrige inserciones previas)
 
@@ -102,7 +162,7 @@ def process(html):
         qualifies, reason = False, "listado"     # p.ej. blog/index
     else:
         region = html[m_art.start():ends[-1].start()]
-        if GRID_RE.search(region):
+        if GRID_RE.search(region) and not permitir_rejilla:
             qualifies, reason = False, "rejilla"  # indice/hub con tarjetas
         elif len(toplevel_content_h2(region)) == 0:
             qualifies, reason = False, "landing"  # sin prosa de primer nivel
@@ -119,7 +179,7 @@ def process(html):
 
     inserts = [(art_end, ad_block(SLOT_END))]  # Ad 2: antes de </article>
     if len(h2pos) >= 2:
-        inserts.append((art_start + h2pos[1], ad_block(SLOT_INTRO)))
+        inserts.append((art_start + h2pos[1], ad_block(slot1)))
         ad1 = "h2#2"
     else:
         ad1 = "solo-ad2"
@@ -158,7 +218,8 @@ def main():
             continue
         with open(path, "r", encoding="utf-8") as f:
             html = f.read()
-        new, status = process(html)
+        new, status = process(html, permitir_rejilla=rel in INCLUDE_RELPATHS,
+                              slot1=slot_intro(rel))
         counts[status.split("(")[0]] = counts.get(status.split("(")[0], 0) + 1
         if new != html:
             print("%-14s %s" % (status, rel))
