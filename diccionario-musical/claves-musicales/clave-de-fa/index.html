@@ -57,14 +57,22 @@
 <link rel="stylesheet" href="/assets/css/style.css?v=76a6eccc">
 <script src="/assets/js/tm-piano-audio.js?v=65a2b847" defer></script>
 
+<!-- Ejercicio interactivo embebido (lectura de notas) -->
+<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
+<script src="/assets/js/lectura-notas-engine.js?v=32c02a68" defer></script>
+<style>.tm-embed-quiz{min-height:400px;margin:18px 0}@media(max-width:600px){.tm-embed-quiz{min-height:470px}}.tm-embed-cap{font-size:.92rem;color:#555;margin-top:10px}</style>
+<script>
+document.addEventListener("DOMContentLoaded",function(){var els=[].slice.call(document.querySelectorAll("[data-tmnotas-clave]"));if(!els.length)return;function init(el){if(el.dataset.tmInit||typeof tmNotasEngine!=="function")return;el.dataset.tmInit="1";tmNotasEngine(el.id,{clave:el.getAttribute("data-tmnotas-clave")});}if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){init(e.target);io.unobserve(e.target);}});},{rootMargin:"250px 0px"});els.forEach(function(el){io.observe(el);});}else{els.forEach(init);}});
+</script>
+
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Article","headline":"Clave de Fa: qué es, notas y para qué sirve","description":"La clave de Fa en 4ª línea sitúa el Fa₃ en esa línea y se usa para los registros graves. Aprende a leer sus notas, el truco mnemotécnico y qué instrumentos la usan.","url":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-fa/","inLanguage":"es","isAccessibleForFree":true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-diccionario-musical-claves-musicales-clave-de-fa.png"},"author":{"@type":"Person","name":"Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},"datePublished":"2026-06-12","dateModified":"2026-06-12","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-fa/"},"publisher":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es","logo":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-diccionario.png"}}}
+{"@context":"https://schema.org","@type":"Article","headline":"Clave de Fa: qué es, notas y para qué sirve","description":"La clave de Fa en 4ª línea sitúa el Fa₃ en esa línea y se usa para los registros graves. Aprende a leer sus notas, el truco mnemotécnico y qué instrumentos la usan.","url":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-fa/","inLanguage":"es","isAccessibleForFree":true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-diccionario-musical-claves-musicales-clave-de-fa.png"},"author":{"@type":"Person","name":"Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},"datePublished":"2026-06-12","dateModified":"2026-07-31","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-fa/"},"publisher":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es","logo":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-diccionario.png"}}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://www.teoriamusical.com.es/"},{"@type":"ListItem","position":2,"name":"Diccionario Musical","item":"https://www.teoriamusical.com.es/diccionario-musical/"},{"@type":"ListItem","position":3,"name":"Claves Musicales","item":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/"},{"@type":"ListItem","position":4,"name":"Clave de Fa","item":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-fa/"}]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué es la clave de Fa?","acceptedAnswer":{"@type":"Answer","text":"La clave de Fa es el signo que se coloca al inicio del pentagrama y que sitúa la nota Fa₃ (el Fa por debajo del Do central) en la 4ª línea. Es la clave de los registros graves y la segunda más usada después de la clave de Sol."}},{"@type":"Question","name":"¿Dónde se coloca la clave de Fa?","acceptedAnswer":{"@type":"Answer","text":"La clave de Fa moderna se coloca en la 4ª línea del pentagrama: los dos puntos del signo quedan, uno encima y otro debajo, abrazando esa cuarta línea, que es donde está el Fa. Existe también la clave de Fa en 3ª línea (barítono), hoy poco frecuente."}},{"@type":"Question","name":"¿Cómo se leen las notas en clave de Fa?","acceptedAnswer":{"@type":"Answer","text":"Partiendo del Fa en la 4ª línea, las líneas de abajo arriba son Sol-Si-Re-Fa-La y los espacios de abajo arriba son La-Do-Mi-Sol. Por encima de la 5ª línea, en la primera línea adicional superior, está el Do central."}},{"@type":"Question","name":"¿Qué instrumentos usan la clave de Fa?","acceptedAnswer":{"@type":"Answer","text":"La usan los instrumentos y voces graves: el violonchelo, el contrabajo, el bajo eléctrico, el fagot, la tuba, el trombón, la mano izquierda del piano y la voz de bajo."}}]}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué es la clave de Fa?","acceptedAnswer":{"@type":"Answer","text":"La clave de Fa es el signo que se coloca al inicio del pentagrama y que sitúa la nota Fa₃ (el Fa por debajo del Do central) en la 4ª línea. Es la clave de los registros graves y la segunda más usada después de la clave de Sol."}},{"@type":"Question","name":"¿Dónde se coloca la clave de Fa?","acceptedAnswer":{"@type":"Answer","text":"La clave de Fa moderna se coloca en la 4ª línea del pentagrama: los dos puntos del signo quedan, uno encima y otro debajo, abrazando esa cuarta línea, que es donde está el Fa. Existe también la clave de Fa en 3ª línea (barítono), hoy poco frecuente."}},{"@type":"Question","name":"¿Cómo se leen las notas en clave de Fa?","acceptedAnswer":{"@type":"Answer","text":"Partiendo del Fa en la 4ª línea, las líneas de abajo arriba son Sol-Si-Re-Fa-La y los espacios de abajo arriba son La-Do-Mi-Sol. Por encima de la 5ª línea, en la primera línea adicional superior, está el Do central."}},{"@type":"Question","name":"¿Qué instrumentos usan la clave de Fa?","acceptedAnswer":{"@type":"Answer","text":"La usan los instrumentos y voces graves: el violonchelo, el contrabajo, el bajo eléctrico, el fagot, la tuba, el trombón, la mano izquierda del piano y la voz de bajo."}},{"@type":"Question","name":"¿Por qué la clave de Fa tiene dos puntos?","acceptedAnswer":{"@type":"Answer","text":"Los dos puntos son lo que queda de los brazos horizontales de la letra F medieval, de la que procede el símbolo. Por eso se colocan uno a cada lado de la línea del Fa: son los que señalan cuál es esa línea. Si se colocan alrededor de otra, la clave deja de ser una clave de Fa en 4ª."}},{"@type":"Question","name":"¿Cómo se dibuja la clave de Fa paso a paso?","acceptedAnswer":{"@type":"Answer","text":"Se empieza con un punto grueso sobre la 4ª línea, se sube curvando hacia la derecha en un arco que baja hasta cerca de la 1ª línea, como una coma grande, y se colocan los dos puntos a la derecha del gancho: uno en el espacio de encima de la 4ª línea y otro en el de debajo."}},{"@type":"Question","name":"¿Dónde está el Do central en clave de Fa?","acceptedAnswer":{"@type":"Answer","text":"En la primera línea adicional por encima del pentagrama. Es la misma nota que en clave de Sol aparece en la primera línea adicional por debajo: ese Do es la bisagra entre las dos claves y, en el piano, entre la mano izquierda y la derecha."}}]}
 </script>
 </head>
 <body class="tm-page">
@@ -194,8 +202,32 @@
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
 </div>
 
-<h2>Cómo leer las notas en clave de Fa</h2>
-<p>La nota de referencia es <strong>Fa</strong> en la 4ª línea. Es la clave de violonchelo, contrabajo, mano izquierda del piano y bajo eléctrico:</p>
+<h2>Por qué el símbolo tiene dos puntos: el origen de la clave de Fa</h2>
+<p>El signo de la clave de Fa es una <strong>letra F deformada</strong>. En la notación medieval se escribía al principio de la línea la letra de la nota que servía de referencia, y el Fa es la <strong>F</strong> en el sistema de letras. Aquella F, trazada deprisa una y otra vez, fue perdiendo el travesaño hasta quedar en el gancho que conocemos.</p>
+<p>Los <strong>dos puntos</strong> no son adorno: son lo que queda de los dos brazos horizontales de la F, y por eso se colocan uno a cada lado de la línea del Fa. Si al escribirla los pones en otro sitio, la clave deja de señalar lo que debe. En inglés se llama <em>F clef</em>, igual que la de Sol es <em>G clef</em>.</p>
+<p>El sistema procede del pentagrama que consolidó <strong>Guido d'Arezzo</strong> en el siglo XI. La de Fa es, de hecho, <strong>una de las dos claves más antiguas</strong>, junto con la de Do: la de Sol llegó después, aunque hoy sea la más común.</p>
+
+<h2>Cómo se dibuja la clave de Fa paso a paso</h2>
+<p>Es la más fácil de las tres, pero tiene un detalle que decide si está bien o mal:</p>
+<ol>
+  <li><strong>Empieza con un punto grueso</strong> sobre la 4ª línea, en el lado izquierdo del pentagrama.</li>
+  <li><strong>Sube y curva hacia la derecha</strong> formando un arco que baja hasta cerca de la 1ª línea, como una coma grande.</li>
+  <li><strong>Coloca los dos puntos</strong> a la derecha del gancho: uno en el espacio de encima de la 4ª línea y otro en el de debajo.</li>
+</ol>
+<p>Ese último paso es el que importa: <strong>los dos puntos deben abrazar la 4ª línea</strong>. Si quedan alrededor de la 3ª, lo que has escrito es una clave de Fa en 3ª (clave de barítono) y todas las notas cambian de nombre.</p>
+
+<h3>Ficha para imprimir: repasar la clave con ayuda decreciente</h3>
+<p>Para los más pequeños, leer la explicación no basta: hay que trazarla muchas veces. Esta ficha en PDF va retirando la ayuda poco a poco — primero el modelo, después la clave punteada para repasar encima, luego con los puntos cada vez más separados, después solo el punto que marca la 4ª línea, y al final el pentagrama vacío. El trazo es de <strong>una sola línea</strong>, la que hace el lápiz sin levantarlo.</p>
+
+<figure class="fig-sm">
+  <a href="/assets/img/claves/ficha-dibujar-clave-de-fa.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/claves/preview-ficha-clave-de-fa.webp"><img src="/assets/img/claves/preview-ficha-clave-de-fa.png" width="300" height="127" loading="lazy" alt="Ficha imprimible para aprender a dibujar la clave de Fa: pentagramas con la clave punteada para repasar encima"></picture></a>
+</figure>
+
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/claves/ficha-dibujar-clave-de-fa.pdf" target="_blank" rel="noopener">Descargar la ficha en PDF (A4)</a></p>
+<p>Puedes imprimirla y fotocopiarla libremente para el aula o para casa. También tienes la <a href="/diccionario-musical/claves-musicales/clave-de-sol/">ficha de la clave de Sol</a> y la de la <a href="/diccionario-musical/claves-musicales/clave-de-do/">clave de Do</a>.</p>
+
+<h2>Notas en clave de Fa: cómo leerlas todas</h2>
+<p>La nota de referencia es <strong>Fa</strong> en la 4ª línea. A partir de ahí, todas las notas en clave de Fa se leen subiendo o bajando de esa posición. Es la clave de violonchelo, contrabajo, mano izquierda del piano y bajo eléctrico:</p>
 
 <figure class="tm-staff" data-tm-notes data-tm-baseoct="2">
 <picture><source type="image/webp" srcset="/assets/img/claves/notas-clave-fa.webp"><img src="/assets/img/claves/notas-clave-fa.png" width="620" height="204" loading="lazy" alt="Notas en la clave de Fa en 4ª línea en el pentagrama: Sol, La, Si, Do, Re, Mi, Fa, Sol, La"></picture>
@@ -225,15 +257,62 @@
 <h2>Truco para memorizarlas</h2>
 <p>Un recurso mnemotécnico: las <strong>líneas</strong>, de abajo hacia arriba, son <strong>Sol–Si–Re–Fa–La</strong>; los <strong>espacios</strong>, de abajo hacia arriba, son <strong>La–Do–Mi–Sol</strong>. Fíjate en que el <strong>Do central</strong>, que en clave de Sol quedaba <em>debajo</em> del pentagrama, en clave de Fa queda <em>encima</em>: es la misma nota escrita en otro sitio. Para repasar las posiciones puedes apoyarte en <a href="/diccionario-musical/nombres-de-las-notas-musicales/">nombres de las notas musicales</a>.</p>
 
+<h2>Practica ahora: ¿qué nota es?</h2>
+<p>Saberse el truco no es lo mismo que leer con soltura, y en clave de Fa cuesta más porque casi nadie la practica tanto como la de Sol. Este ejercicio genera notas al azar sobre un pentagrama real y te corrige al instante:</p>
+
+<div class="tm-embed-quiz"><div id="tmqc-fa" data-tmnotas-clave="fa4"></div></div>
+<p class="tm-embed-cap">Practica también <a href="/ejercicios/escribir-notas/clave-de-fa-en-4/">escribiendo notas en clave de Fa</a> · <a href="/ejercicios/identificar-notas/clave-de-fa-en-4/">abrir el ejercicio a pantalla completa →</a></p>
+
+<h2>Notas fuera del pentagrama: las líneas adicionales</h2>
+<p>El pentagrama solo tiene cinco líneas, y el registro grave se sale por abajo con facilidad. Cuando una nota no cabe se le añade su propio fragmento de línea: una <strong>línea adicional</strong>. Se cuentan alejándose del pentagrama y hay que dibujar todas las intermedias.</p>
+
+<figure class="tm-staff">
+<picture><source type="image/webp" srcset="/assets/img/claves/lineas-adicionales-clave-fa.webp"><img src="/assets/img/claves/lineas-adicionales-clave-fa.png" width="683" height="143" loading="lazy" alt="Líneas adicionales en clave de Fa: Do₂, Re₂, Mi₂ y Fa₂ por debajo del pentagrama; Si₃, Do₄, Re₄ y Mi₄ por encima"></picture>
+<figcaption>Las notas con líneas adicionales más frecuentes en clave de Fa, por debajo y por encima del pentagrama.</figcaption>
+</figure>
+
+<ul>
+  <li><strong>El Do₄ (Do central)</strong> está en la primera línea adicional <em>superior</em>. Es el punto de encuentro con la <a href="/diccionario-musical/claves-musicales/clave-de-sol/">clave de Sol</a>, donde ese mismo Do aparece en la primera línea adicional <em>inferior</em>. Esa nota es la bisagra del piano: donde acaba la mano izquierda y empieza la derecha.</li>
+  <li><strong>El Fa₂ no lleva línea adicional</strong>: va en el espacio que queda bajo la 1ª línea. La primera nota que sí la necesita, bajando, es el Mi₂.</li>
+</ul>
+
+<h2>Diferencias entre la clave de Fa, la de Sol y la de Do</h2>
+<p>Las tres claves se reparten el registro. Cada una coloca su nota de referencia en una línea distinta para que la música de cada instrumento quepa en el pentagrama <strong>sin llenarse de líneas adicionales</strong>.</p>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead>
+    <tr><th>Clave</th><th>Nota que sitúa</th><th>Línea</th><th>Registro</th><th>Quién la usa</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Fa</strong></td><td>Fa₃</td><td>4ª</td><td>Grave</td><td>Violonchelo, contrabajo, tuba, mano izquierda del piano</td></tr>
+    <tr><td><strong>Sol</strong></td><td>Sol₄</td><td>2ª</td><td>Agudo y medio-agudo</td><td>Violín, flauta, trompeta, mano derecha del piano</td></tr>
+    <tr><td><strong>Do</strong></td><td>Do₄</td><td>3ª o 4ª</td><td>Medio</td><td>Viola, fagot y trombón (registro agudo)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>La consecuencia práctica cuesta al principio: <strong>una misma posición no es siempre la misma nota</strong>. La 4ª línea es Fa en clave de Fa, pero en clave de Sol es Re. Por eso no se «lee el pentagrama»: se lee el pentagrama <em>en una clave</em>. Puedes verlas comparadas en <a href="/diccionario-musical/claves-musicales/">claves musicales</a>.</p>
+
 <h2>¿Para qué sirve y qué instrumentos la usan?</h2>
 <p>La clave de Fa centra en el pentagrama los <strong>registros graves</strong>, que en clave de Sol obligarían a usar muchísimas líneas adicionales por debajo. La usan:</p>
 <ul>
-  <li><strong>Cuerda grave:</strong> violonchelo, contrabajo, bajo eléctrico.</li>
-  <li><strong>Viento grave:</strong> fagot, tuba, trombón, trompa (en parte).</li>
-  <li><strong>Teclado:</strong> la mano izquierda del piano (en el sistema de dos pentagramas).</li>
+  <li><strong>Cuerda grave:</strong> <a href="/diccionario-musical/notas-del-violonchelo/">violonchelo</a>, <a href="/diccionario-musical/notas-del-contrabajo/">contrabajo</a> y <a href="/diccionario-musical/notas-del-bajo-electrico/">bajo eléctrico</a>.</li>
+  <li><strong>Madera grave:</strong> <a href="/diccionario-musical/notas-del-fagot/">fagot</a> y <a href="/diccionario-musical/notas-del-contrafagot/">contrafagot</a>.</li>
+  <li><strong>Metal grave:</strong> <a href="/diccionario-musical/notas-de-la-tuba/">tuba</a>, <a href="/diccionario-musical/notas-del-trombon/">trombón</a>, <a href="/diccionario-musical/notas-del-trombon-bajo/">trombón bajo</a>, <a href="/diccionario-musical/notas-del-bombardino/">bombardino</a> y la <a href="/diccionario-musical/notas-de-la-trompa/">trompa</a> en su registro grave.</li>
+  <li><strong>Teclado:</strong> la mano izquierda del <a href="/diccionario-musical/notas-del-piano/">piano</a> (en el sistema de dos pentagramas).</li>
   <li><strong>Voces:</strong> bajo y barítono.</li>
 </ul>
-<p>Dominar la clave de Sol y la clave de Fa en 4ª permite leer la inmensa mayoría de la música occidental, ya que entre ambas cubren los registros agudo y grave.</p>
+<p>Dominar la clave de Sol y la clave de Fa en 4ª permite leer la inmensa mayoría de la música occidental, ya que entre ambas cubren los registros agudo y grave. Puedes ver las notas de cada instrumento en <a href="/diccionario-musical/notas-en-los-instrumentos/">notas en los instrumentos</a>.</p>
+
+<h2>Errores frecuentes al aprender la clave de Fa</h2>
+<ul>
+  <li><strong>Leerla como si fuera clave de Sol.</strong> Es el error número uno de quien viene del piano por la mano derecha: la misma posición suena distinta. La 4ª línea es Fa aquí y Re en clave de Sol.</li>
+  <li><strong>Poner los dos puntos alrededor de la 3ª línea.</strong> Eso convierte el signo en una clave de Fa en 3ª (barítono) y desplaza todas las notas.</li>
+  <li><strong>Buscar el Do central por debajo.</strong> En clave de Fa el Do₄ está <em>encima</em> del pentagrama, no debajo como en clave de Sol.</li>
+  <li><strong>Contar las líneas desde arriba.</strong> Se cuentan siempre desde abajo: la 4ª línea es la cuarta empezando por la de abajo del todo.</li>
+  <li><strong>Estudiarla solo de memoria.</strong> Con el truco mnemotécnico se localiza una nota suelta, pero leer de corrido exige repetición: para eso está el ejercicio de arriba.</li>
+</ul>
 
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
@@ -256,7 +335,20 @@
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">¿Qué instrumentos usan la clave de Fa?</div>
-      <div class="tm-faq-a">La usan los instrumentos y voces graves: el violonchelo, el contrabajo, el bajo eléctrico, el fagot, la tuba, el trombón, la mano izquierda del piano y la voz de bajo.</div>
+      <div class="tm-faq-a">La usan los instrumentos y voces graves: el violonchelo, el contrabajo, el bajo eléctrico, el fagot, la tuba, el trombón, la mano izquierda del piano y la voz de bajo.
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Por qué la clave de Fa tiene dos puntos?</div>
+      <div class="tm-faq-a">Los dos puntos son lo que queda de los brazos horizontales de la letra F medieval, de la que procede el símbolo. Por eso se colocan uno a cada lado de la línea del Fa: son los que señalan cuál es esa línea. Si se colocan alrededor de otra, la clave deja de ser una clave de Fa en 4ª.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Cómo se dibuja la clave de Fa paso a paso?</div>
+      <div class="tm-faq-a">Se empieza con un punto grueso sobre la 4ª línea, se sube curvando hacia la derecha en un arco que baja hasta cerca de la 1ª línea, como una coma grande, y se colocan los dos puntos a la derecha del gancho: uno en el espacio de encima de la 4ª línea y otro en el de debajo.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Dónde está el Do central en clave de Fa?</div>
+      <div class="tm-faq-a">En la primera línea adicional por encima del pentagrama. Es la misma nota que en clave de Sol aparece en la primera línea adicional por debajo: ese Do es la bisagra entre las dos claves y, en el piano, entre la mano izquierda y la derecha.</div>
+    </div>
+  </div>
     </div>
   </div>
 </div>

@@ -57,14 +57,22 @@
 <link rel="stylesheet" href="/assets/css/style.css?v=76a6eccc">
 <script src="/assets/js/tm-piano-audio.js?v=65a2b847" defer></script>
 
+<!-- Ejercicio interactivo embebido (lectura de notas) -->
+<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
+<script src="/assets/js/lectura-notas-engine.js?v=32c02a68" defer></script>
+<style>.tm-embed-quiz{min-height:400px;margin:18px 0}@media(max-width:600px){.tm-embed-quiz{min-height:470px}}.tm-embed-cap{font-size:.92rem;color:#555;margin-top:10px}</style>
+<script>
+document.addEventListener("DOMContentLoaded",function(){var els=[].slice.call(document.querySelectorAll("[data-tmnotas-clave]"));if(!els.length)return;function init(el){if(el.dataset.tmInit||typeof tmNotasEngine!=="function")return;el.dataset.tmInit="1";tmNotasEngine(el.id,{clave:el.getAttribute("data-tmnotas-clave")});}if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){init(e.target);io.unobserve(e.target);}});},{rootMargin:"250px 0px"});els.forEach(function(el){io.observe(el);});}else{els.forEach(init);}});
+</script>
+
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Article","headline":"Clave de Sol: qué es, notas y para qué sirve","description":"La clave de Sol en 2ª línea sitúa el Sol₄ en esa línea. Aprende a leer todas sus notas, el truco mnemotécnico y qué instrumentos la usan.","url":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-sol/","inLanguage":"es","isAccessibleForFree":true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-diccionario-musical-claves-musicales-clave-de-sol.png"},"author":{"@type":"Person","name":"Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},"datePublished":"2026-06-12","dateModified":"2026-06-12","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-sol/"},"publisher":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es","logo":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-diccionario.png"}}}
+{"@context":"https://schema.org","@type":"Article","headline":"Clave de Sol: qué es, notas y para qué sirve","description":"La clave de Sol en 2ª línea sitúa el Sol₄ en esa línea. Aprende a leer todas sus notas, el truco mnemotécnico y qué instrumentos la usan.","url":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-sol/","inLanguage":"es","isAccessibleForFree":true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-diccionario-musical-claves-musicales-clave-de-sol.png"},"author":{"@type":"Person","name":"Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},"datePublished":"2026-06-12","dateModified":"2026-07-30","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-sol/"},"publisher":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es","logo":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-diccionario.png"}}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://www.teoriamusical.com.es/"},{"@type":"ListItem","position":2,"name":"Diccionario Musical","item":"https://www.teoriamusical.com.es/diccionario-musical/"},{"@type":"ListItem","position":3,"name":"Claves Musicales","item":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/"},{"@type":"ListItem","position":4,"name":"Clave de Sol","item":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-sol/"}]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué es la clave de Sol?","acceptedAnswer":{"@type":"Answer","text":"La clave de Sol es el signo que se coloca al inicio del pentagrama y que sitúa la nota Sol₄ (el Sol central de la voz) en la 2ª línea. A partir de esa referencia se deducen el nombre y la altura de todas las demás notas. Es la clave más usada en la música occidental."}},{"@type":"Question","name":"¿Dónde se coloca la clave de Sol?","acceptedAnswer":{"@type":"Answer","text":"La clave de Sol se coloca sobre la 2ª línea del pentagrama (contando de abajo hacia arriba); por eso su nombre completo es «clave de Sol en 2ª línea». El bucle o espiral del signo rodea precisamente esa segunda línea, indicando que allí está el Sol."}},{"@type":"Question","name":"¿Cómo se leen las notas en clave de Sol?","acceptedAnswer":{"@type":"Answer","text":"Partiendo del Sol en la 2ª línea, las notas suben y bajan por orden alfabético musical. Las líneas, de abajo arriba, son Mi-Sol-Si-Re-Fa; los espacios, de abajo arriba, son Fa-La-Do-Mi. Por debajo de la 1ª línea, en la primera línea adicional inferior, está el Do central."}},{"@type":"Question","name":"¿Qué instrumentos usan la clave de Sol?","acceptedAnswer":{"@type":"Answer","text":"La usan los instrumentos y voces de registro agudo y medio-agudo: violín, guitarra, flauta, oboe, clarinete, trompeta, saxofón, la mano derecha del piano y las voces de soprano, contralto y tenor."}}]}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué es la clave de Sol?","acceptedAnswer":{"@type":"Answer","text":"La clave de Sol es el signo que se coloca al inicio del pentagrama y que sitúa la nota Sol₄ (el Sol central de la voz) en la 2ª línea. A partir de esa referencia se deducen el nombre y la altura de todas las demás notas. Es la clave más usada en la música occidental."}},{"@type":"Question","name":"¿Dónde se coloca la clave de Sol?","acceptedAnswer":{"@type":"Answer","text":"La clave de Sol se coloca sobre la 2ª línea del pentagrama (contando de abajo hacia arriba); por eso su nombre completo es «clave de Sol en 2ª línea». El bucle o espiral del signo rodea precisamente esa segunda línea, indicando que allí está el Sol."}},{"@type":"Question","name":"¿Cómo se leen las notas en clave de Sol?","acceptedAnswer":{"@type":"Answer","text":"Partiendo del Sol en la 2ª línea, las notas suben y bajan por orden alfabético musical. Las líneas, de abajo arriba, son Mi-Sol-Si-Re-Fa; los espacios, de abajo arriba, son Fa-La-Do-Mi. Por debajo de la 1ª línea, en la primera línea adicional inferior, está el Do central."}},{"@type":"Question","name":"¿Qué instrumentos usan la clave de Sol?","acceptedAnswer":{"@type":"Answer","text":"La usan los instrumentos y voces de registro agudo y medio-agudo: violín, guitarra, flauta, oboe, clarinete, trompeta, saxofón, la mano derecha del piano y las voces de soprano, contralto y tenor."}},{"@type":"Question","name":"¿Por qué la clave de Sol tiene esa forma?","acceptedAnswer":{"@type":"Answer","text":"El símbolo de la clave de Sol es una letra G estilizada. En la notación medieval se escribía al principio del pentagrama la letra que daba nombre a la nota de referencia, y en el sistema de letras el Sol es la G. Siglos de copia manuscrita fueron estirando esa G hasta convertirla en la espiral actual, cuyo bucle sigue rodeando la línea del Sol."}},{"@type":"Question","name":"¿Cómo se dibuja la clave de Sol paso a paso?","acceptedAnswer":{"@type":"Answer","text":"Se empieza abajo, en el espacio bajo la 1ª línea; se sube casi recto cruzando el pentagrama hasta sobrepasar la 5ª línea; se curva a la izquierda bajando en arco hasta la 2ª línea; y se cierra la espiral rodeando esa 2ª línea. Lo importante no es la estética: si el bucle no abraza la 2ª línea, deja de ser una clave de Sol en 2ª."}},{"@type":"Question","name":"¿Qué son las líneas adicionales en clave de Sol?","acceptedAnswer":{"@type":"Answer","text":"Son fragmentos de línea que se añaden por encima o por debajo del pentagrama para escribir notas que no caben en sus cinco líneas. Se cuentan alejándose del pentagrama y hay que dibujar todas las intermedias. En clave de Sol, el Do central (Do₄) está en la primera línea adicional inferior; hacia arriba, la primera nota que necesita línea adicional es el La₅, porque el Sol₅ todavía cabe en el espacio sobre la 5ª línea."}}]}
 </script>
 </head>
 <body class="tm-page">
@@ -194,8 +202,34 @@
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
 </div>
 
-<h2>Cómo leer las notas en clave de Sol</h2>
-<p>La nota de referencia es <strong>Sol</strong> en la 2ª línea. Las demás se leen subiendo o bajando de esa posición, por orden alfabético musical (Do-Re-Mi-Fa-Sol-La-Si):</p>
+<h2>Por qué el símbolo es una «G»: el origen de la clave de Sol</h2>
+<p>El signo de la clave de Sol no es un adorno caprichoso: es una <strong>letra G deformada por siglos de copia a mano</strong>. En la notación medieval, los copistas escribían al principio de la línea la letra que daba nombre a la nota de referencia, usando el sistema de letras que hoy llamamos cifrado anglosajón, donde el Sol es la <strong>G</strong>. De tanto trazarla deprisa con pluma, aquella G fue estirándose hasta convertirse en la espiral que conocemos.</p>
+<p>Por eso en inglés la clave de Sol se llama <em>G clef</em>, y por eso su bucle rodea justamente la línea del Sol: es el resto del círculo de la G original marcando su propia nota. Lo mismo ocurre con las otras dos claves, que vienen de la <strong>F</strong> (Fa) y la <strong>C</strong> (Do).</p>
+<p>El sistema viene del pentagrama que consolidó <strong>Guido d'Arezzo</strong> en el siglo XI: sobre las líneas se escribía la letra de la nota que servía de referencia, y de ahí salieron las claves. Curiosamente, <strong>la de Sol fue la última en aparecer</strong> —las primeras en usarse fueron las de Fa y Do—, y sin embargo hoy es la más común de las tres.</p>
+
+<h2>Cómo se dibuja la clave de Sol paso a paso</h2>
+<p>Dibujarla bien no es caligrafía: si la espiral no rodea la 2ª línea, la clave <strong>deja de significar lo que debe</strong>. Estos cuatro pasos, en este orden, salen siempre:</p>
+<ol>
+  <li><strong>Empieza por abajo</strong>, en el espacio bajo la 1ª línea, con un pequeño rabito hacia la izquierda.</li>
+  <li><strong>Sube en línea casi recta</strong> cruzando todo el pentagrama hasta sobrepasar la 5ª línea.</li>
+  <li><strong>Da la vuelta por arriba hacia la derecha</strong> y baja por el lado izquierdo, cruzando el trazo que acabas de hacer alrededor de la 4ª línea.</li>
+  <li><strong>Abre un arco amplio hacia la izquierda</strong> —la «barriga» de la clave— y vuelve hacia la derecha al llegar a la altura de la 2ª línea.</li>
+  <li><strong>Cierra la espiral</strong> girando alrededor de la 2ª línea, de manera que el bucle la abrace por completo.</li>
+</ol>
+<p>El error más común es cerrar el bucle sobre la 1ª o la 3ª línea. Si eso ocurre, lo que has escrito ya no es una clave de Sol en 2ª: comprueba siempre ese detalle antes de seguir.</p>
+
+<h3>Ficha para imprimir: repasar la clave con ayuda decreciente</h3>
+<p>Para los más pequeños, leer la explicación no basta: hay que trazarla muchas veces. Esta ficha en PDF va retirando la ayuda poco a poco — primero el modelo, después la clave punteada para repasar encima, luego con los puntos cada vez más separados, después solo el punto que marca la 2ª línea, y al final el pentagrama vacío para dibujarla solo. El trazo es de <strong>una sola línea</strong>, la que hace el lápiz sin levantarlo: en las partituras la clave se ve más gruesa porque está impresa.</p>
+
+<figure class="fig-sm">
+  <a href="/assets/img/claves/ficha-dibujar-clave-de-sol.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/claves/preview-ficha-clave-de-sol.webp"><img src="/assets/img/claves/preview-ficha-clave-de-sol.png" width="300" height="127" loading="lazy" alt="Ficha imprimible para aprender a dibujar la clave de Sol: pentagramas con la clave punteada para repasar encima"></picture></a>
+</figure>
+
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/claves/ficha-dibujar-clave-de-sol.pdf" target="_blank" rel="noopener">Descargar la ficha en PDF (A4)</a></p>
+<p>Puedes imprimirla y fotocopiarla libremente para el aula o para casa. También tienes la <a href="/diccionario-musical/claves-musicales/clave-de-fa/">ficha de la clave de Fa</a> y la de la <a href="/diccionario-musical/claves-musicales/clave-de-do/">clave de Do</a>.</p>
+
+<h2>Notas en clave de Sol: cómo leerlas todas</h2>
+<p>La nota de referencia es <strong>Sol</strong> en la 2ª línea. A partir de ahí, todas las notas en clave de Sol se leen subiendo o bajando de esa posición, por orden alfabético musical (Do-Re-Mi-Fa-Sol-La-Si):</p>
 
 <figure class="tm-staff" data-tm-notes data-tm-baseoct="4">
 <picture><source type="image/webp" srcset="/assets/img/claves/notas-clave-sol.webp"><img src="/assets/img/claves/notas-clave-sol.png" width="620" height="204" loading="lazy" alt="Notas en la clave de Sol en el pentagrama: Mi, Fa, Sol, La, Si, Do, Re, Mi, Fa"></picture>
@@ -225,15 +259,67 @@
 <h2>Truco para memorizarlas</h2>
 <p>Un recurso mnemotécnico muy extendido: las <strong>líneas</strong>, de abajo hacia arriba, son <strong>Mi–Sol–Si–Re–Fa</strong>; los <strong>espacios</strong>, de abajo hacia arriba, son <strong>Fa–La–Do–Mi</strong>. Memorizando esas dos secuencias se localiza cualquier nota de un vistazo. Para practicar la lectura puedes apoyarte en la página de <a href="/diccionario-musical/nombres-de-las-notas-musicales/">nombres de las notas musicales</a>.</p>
 
+<h2>Practica ahora: ¿qué nota es?</h2>
+<p>Saberse el truco no es lo mismo que leer con soltura. Lo segundo solo llega repitiendo. Este ejercicio genera notas al azar en clave de Sol sobre un pentagrama real y te corrige al instante:</p>
+
+<div class="tm-embed-quiz"><div id="tmqc-sol" data-tmnotas-clave="sol2"></div></div>
+<p class="tm-embed-cap">Practica también <a href="/ejercicios/escribir-notas/clave-de-sol/">escribiendo notas en clave de Sol</a> · <a href="/ejercicios/identificar-notas/clave-de-sol/">abrir el ejercicio a pantalla completa →</a></p>
+
+<h2>Notas fuera del pentagrama: las líneas adicionales</h2>
+<p>El pentagrama solo tiene cinco líneas, pero la música no se detiene ahí. Cuando una nota queda por encima o por debajo, se le añade un fragmento de línea propio: una <strong>línea adicional</strong>. Se cuentan siempre <strong>alejándose del pentagrama</strong>, y hay que dibujar todas las intermedias: para llegar a la segunda hay que trazar antes la primera.</p>
+
+<figure class="tm-staff">
+<picture><source type="image/webp" srcset="/assets/img/claves/lineas-adicionales-clave-sol.webp"><img src="/assets/img/claves/lineas-adicionales-clave-sol.png" width="643" height="139" loading="lazy" alt="Líneas adicionales en clave de Sol: La₃, Si₃ y Do₄ por debajo del pentagrama; Sol₅, La₅, Si₅ y Do₆ por encima"></picture>
+<figcaption>Las notas con líneas adicionales más frecuentes en clave de Sol, por debajo y por encima del pentagrama.</figcaption>
+</figure>
+
+<p>Dos detalles que conviene fijar desde el principio:</p>
+<ul>
+  <li><strong>El Do₄ (Do central)</strong> vive en la primera línea adicional inferior. Es la nota que une la clave de Sol con la <a href="/diccionario-musical/claves-musicales/clave-de-fa/">clave de Fa</a>: el mismo Do se escribe justo encima del pentagrama en clave de Fa y justo debajo en clave de Sol.</li>
+  <li><strong>El Sol₅ no lleva línea adicional.</strong> Va en el espacio que queda sobre la 5ª línea, todavía «dentro» del sistema. La primera nota superior que sí necesita línea es el La₅.</li>
+</ul>
+
+<h2>Diferencias entre la clave de Sol, la de Fa y la de Do</h2>
+<p>Las tres claves no compiten: se reparten el registro. Cada una coloca su nota de referencia en una línea distinta para que la música de cada instrumento quepa en el pentagrama <strong>sin llenarse de líneas adicionales</strong>.</p>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead>
+    <tr><th>Clave</th><th>Nota que sitúa</th><th>Línea</th><th>Registro</th><th>Quién la usa</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Sol</strong></td><td>Sol₄</td><td>2ª</td><td>Agudo y medio-agudo</td><td>Violín, flauta, trompeta, mano derecha del piano</td></tr>
+    <tr><td><strong>Fa</strong></td><td>Fa₃</td><td>4ª</td><td>Grave</td><td>Violonchelo, contrabajo, tuba, mano izquierda del piano</td></tr>
+    <tr><td><strong>Do</strong></td><td>Do₄</td><td>3ª o 4ª</td><td>Medio</td><td>Viola, fagot y trombón (registro agudo)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>La consecuencia práctica es la que más cuesta asimilar al principio: <strong>una misma posición en el pentagrama no es siempre la misma nota</strong>. La 2ª línea es Sol en clave de Sol, pero en clave de Fa en 4ª es Si. Por eso no se «lee el pentagrama»: se lee el pentagrama <em>en una clave</em>. Puedes ver las tres comparadas en <a href="/diccionario-musical/claves-musicales/">claves musicales</a>.</p>
+
 <h2>¿Para qué sirve y qué instrumentos la usan?</h2>
 <p>La clave de Sol cubre con comodidad los <strong>registros agudos y medio-agudos</strong>, dejando esas notas centradas en el pentagrama sin necesidad de muchas líneas adicionales. La usan:</p>
 <ul>
-  <li><strong>Cuerda:</strong> violín, guitarra.</li>
-  <li><strong>Viento:</strong> flauta, oboe, clarinete, trompeta, saxofón.</li>
-  <li><strong>Teclado:</strong> la mano derecha del piano (en el sistema de dos pentagramas).</li>
-  <li><strong>Voces:</strong> soprano, contralto y tenor (este último suena una octava más grave de lo escrito).</li>
+  <li><strong>Cuerda frotada:</strong> <a href="/diccionario-musical/notas-del-violin/">violín</a> y, en su registro agudo, la <a href="/diccionario-musical/notas-de-la-viola/">viola</a> y el <a href="/diccionario-musical/notas-del-violonchelo/">violonchelo</a>.</li>
+  <li><strong>Cuerda pulsada:</strong> <a href="/diccionario-musical/notas-de-la-guitarra/">guitarra</a>, <a href="/diccionario-musical/notas-del-ukelele/">ukelele</a>, mandolina, banjo y el pentagrama superior del arpa.</li>
+  <li><strong>Madera:</strong> <a href="/diccionario-musical/notas-de-la-flauta-travesera/">flauta travesera</a>, <a href="/diccionario-musical/notas-del-flautin/">flautín</a>, <a href="/diccionario-musical/notas-del-oboe/">oboe</a>, <a href="/diccionario-musical/notas-del-corno-ingles/">corno inglés</a>, todos los <a href="/diccionario-musical/tipos-de-clarinete/">clarinetes</a> y todos los <a href="/diccionario-musical/tipos-de-saxofon/">saxofones</a>.</li>
+  <li><strong>Metal:</strong> <a href="/diccionario-musical/notas-de-la-trompeta/">trompeta</a>, <a href="/diccionario-musical/notas-de-la-corneta/">corneta</a>, <a href="/diccionario-musical/notas-del-fliscorno/">fliscorno</a>, <a href="/diccionario-musical/notas-de-la-trompa/">trompa</a> y, en la tradición de banda, también el <a href="/diccionario-musical/notas-del-bombardino/">bombardino</a> cuando se escribe en Si♭.</li>
+  <li><strong>Teclado:</strong> la mano derecha del <a href="/diccionario-musical/notas-del-piano/">piano</a>, el órgano y el clave (en el sistema de dos pentagramas).</li>
+  <li><strong>Percusión de altura determinada:</strong> xilófono, vibráfono, marimba, glockenspiel y campanas.</li>
+  <li><strong>Voces:</strong> soprano, mezzosoprano, contralto y tenor. El tenor es la excepción que conviene recordar: <strong>suena una octava más grave de lo escrito</strong>.</li>
 </ul>
+<p>Esa lista explica por qué es la primera clave que se aprende: si tocas un instrumento de viento en una banda, casi con seguridad lees en clave de Sol. Puedes ver las notas de cada uno en <a href="/diccionario-musical/notas-en-los-instrumentos/">notas en los instrumentos</a>.</p>
 <p>Junto con la <a href="/diccionario-musical/claves-musicales/clave-de-fa/">clave de Fa en 4ª</a>, con la clave de Sol se puede leer más del 90 % de la música occidental.</p>
+
+<h2>Errores frecuentes al aprender la clave de Sol</h2>
+<p>Casi todos los fallos de principiante son los mismos cinco. Reconocerlos ahorra semanas:</p>
+<ul>
+  <li><strong>Contar las líneas desde arriba.</strong> En música se cuentan siempre <strong>desde abajo</strong>. La «2ª línea» es la segunda empezando por la de abajo del todo, no la segunda que ves al mirar la partitura.</li>
+  <li><strong>Cerrar la espiral en la línea equivocada.</strong> Si el bucle rodea la 1ª o la 3ª, lo escrito ya no es una clave de Sol en 2ª y todas las notas cambian de nombre.</li>
+  <li><strong>Buscar el Do central dentro del pentagrama.</strong> En clave de Sol el Do₄ está <em>fuera</em>, en la primera línea adicional inferior. Es la misma nota que en <a href="/diccionario-musical/claves-musicales/clave-de-fa/">clave de Fa</a> aparece justo por encima del pentagrama.</li>
+  <li><strong>Creer que todas las claves se leen igual.</strong> La 2ª línea es Sol en clave de Sol y Si en clave de Fa en 4ª. No se lee el pentagrama: se lee el pentagrama <em>en una clave</em>.</li>
+  <li><strong>Saltarse líneas adicionales al dibujarlas.</strong> Para escribir en la segunda hay que trazar antes la primera; si falta una, la nota que se lee no es la que se quería escribir.</li>
+</ul>
 
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
@@ -257,6 +343,18 @@
     <div class="tm-faq-item">
       <div class="tm-faq-q">¿Qué instrumentos usan la clave de Sol?</div>
       <div class="tm-faq-a">La usan los instrumentos y voces de registro agudo y medio: violín, guitarra, flauta, oboe, clarinete, trompeta, saxofón, la mano derecha del piano y las voces de soprano, contralto y tenor.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Por qué la clave de Sol tiene esa forma?</div>
+      <div class="tm-faq-a">El símbolo de la clave de Sol es una letra G estilizada. En la notación medieval se escribía al principio del pentagrama la letra que daba nombre a la nota de referencia, y en el sistema de letras el Sol es la G. Siglos de copia manuscrita fueron estirando esa G hasta convertirla en la espiral actual, cuyo bucle sigue rodeando la línea del Sol.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Cómo se dibuja la clave de Sol paso a paso?</div>
+      <div class="tm-faq-a">Se empieza abajo, en el espacio bajo la 1ª línea; se sube casi recto cruzando el pentagrama hasta sobrepasar la 5ª línea; se curva a la izquierda bajando en arco hasta la 2ª línea; y se cierra la espiral rodeando esa 2ª línea. Lo importante no es la estética: si el bucle no abraza la 2ª línea, deja de ser una clave de Sol en 2ª.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Qué son las líneas adicionales en clave de Sol?</div>
+      <div class="tm-faq-a">Son fragmentos de línea que se añaden por encima o por debajo del pentagrama para escribir notas que no caben en sus cinco líneas. Se cuentan alejándose del pentagrama y hay que dibujar todas las intermedias. En clave de Sol, el Do central (Do₄) está en la primera línea adicional inferior; hacia arriba, la primera nota que necesita línea adicional es el La₅, porque el Sol₅ todavía cabe en el espacio sobre la 5ª línea.</div>
     </div>
   </div>
 </div>

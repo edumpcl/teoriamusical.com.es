@@ -57,14 +57,22 @@
 <link rel="stylesheet" href="/assets/css/style.css?v=76a6eccc">
 <script src="/assets/js/tm-piano-audio.js?v=65a2b847" defer></script>
 
+<!-- Ejercicio interactivo embebido (lectura de notas) -->
+<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
+<script src="/assets/js/lectura-notas-engine.js?v=32c02a68" defer></script>
+<style>.tm-embed-quiz{min-height:400px;margin:18px 0}@media(max-width:600px){.tm-embed-quiz{min-height:470px}}.tm-embed-cap{font-size:.92rem;color:#555;margin-top:10px}</style>
+<script>
+document.addEventListener("DOMContentLoaded",function(){var els=[].slice.call(document.querySelectorAll("[data-tmnotas-clave]"));if(!els.length)return;function init(el){if(el.dataset.tmInit||typeof tmNotasEngine!=="function")return;el.dataset.tmInit="1";tmNotasEngine(el.id,{clave:el.getAttribute("data-tmnotas-clave")});}if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){init(e.target);io.unobserve(e.target);}});},{rootMargin:"250px 0px"});els.forEach(function(el){io.observe(el);});}else{els.forEach(init);}});
+</script>
+
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Article","headline":"Clave de Do: qué es, notas y las 4 posiciones","description":"La clave de Do sitúa el Do central sobre la línea que le da nombre. En 3ª línea es la clave de viola. Aprende a leer sus notas y sus cuatro posiciones.","url":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-do/","inLanguage":"es","isAccessibleForFree":true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-diccionario-musical-claves-musicales-clave-de-do.png"},"author":{"@type":"Person","name":"Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},"datePublished":"2026-06-12","dateModified":"2026-06-12","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-do/"},"publisher":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es","logo":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-diccionario.png"}}}
+{"@context":"https://schema.org","@type":"Article","headline":"Clave de Do: qué es, notas y las 4 posiciones","description":"La clave de Do sitúa el Do central sobre la línea que le da nombre. En 3ª línea es la clave de viola. Aprende a leer sus notas y sus cuatro posiciones.","url":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-do/","inLanguage":"es","isAccessibleForFree":true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-diccionario-musical-claves-musicales-clave-de-do.png"},"author":{"@type":"Person","name":"Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},"datePublished":"2026-06-12","dateModified":"2026-07-31","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-do/"},"publisher":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es","logo":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-diccionario.png"}}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://www.teoriamusical.com.es/"},{"@type":"ListItem","position":2,"name":"Diccionario Musical","item":"https://www.teoriamusical.com.es/diccionario-musical/"},{"@type":"ListItem","position":3,"name":"Claves Musicales","item":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/"},{"@type":"ListItem","position":4,"name":"Clave de Do","item":"https://www.teoriamusical.com.es/diccionario-musical/claves-musicales/clave-de-do/"}]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué es la clave de Do?","acceptedAnswer":{"@type":"Answer","text":"La clave de Do es el signo que sitúa el Do central (Do₄) sobre la línea del pentagrama que le da nombre. Sirve para escribir cómodamente los registros medios y puede colocarse en cuatro posiciones distintas; la más usada hoy es la clave de Do en 3ª línea, propia de la viola."}},{"@type":"Question","name":"¿Cuántas posiciones tiene la clave de Do?","acceptedAnswer":{"@type":"Answer","text":"La clave de Do puede colocarse en cuatro líneas: 1ª (soprano), 2ª (mezzosoprano), 3ª (contralto y viola) y 4ª (tenor). En todas, el Do central cae sobre la línea que da nombre a la clave."}},{"@type":"Question","name":"¿Qué instrumento usa la clave de Do?","acceptedAnswer":{"@type":"Answer","text":"El instrumento que usa la clave de Do de forma habitual es la viola, que lee en clave de Do en 3ª línea. La clave de Do en 4ª línea aparece además en pasajes agudos del violonchelo, el fagot y el trombón tenor."}},{"@type":"Question","name":"¿Para qué sirve la clave de Do?","acceptedAnswer":{"@type":"Answer","text":"Sirve para escribir los registros medios sin recurrir a un exceso de líneas adicionales. Situando el Do central sobre una línea interior del pentagrama, instrumentos como la viola quedan centrados y resultan más fáciles de leer que en clave de Sol o de Fa."}}]}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué es la clave de Do?","acceptedAnswer":{"@type":"Answer","text":"La clave de Do es el signo que sitúa el Do central (Do₄) sobre la línea del pentagrama que le da nombre. Sirve para escribir cómodamente los registros medios y puede colocarse en cuatro posiciones distintas; la más usada hoy es la clave de Do en 3ª línea, propia de la viola."}},{"@type":"Question","name":"¿Cuántas posiciones tiene la clave de Do?","acceptedAnswer":{"@type":"Answer","text":"La clave de Do puede colocarse en cuatro líneas: 1ª (soprano), 2ª (mezzosoprano), 3ª (contralto y viola) y 4ª (tenor). En todas, el Do central cae sobre la línea que da nombre a la clave."}},{"@type":"Question","name":"¿Qué instrumento usa la clave de Do?","acceptedAnswer":{"@type":"Answer","text":"El instrumento que usa la clave de Do de forma habitual es la viola, que lee en clave de Do en 3ª línea. La clave de Do en 4ª línea aparece además en pasajes agudos del violonchelo, el fagot y el trombón tenor."}},{"@type":"Question","name":"¿Para qué sirve la clave de Do?","acceptedAnswer":{"@type":"Answer","text":"Sirve para escribir los registros medios sin recurrir a un exceso de líneas adicionales. Situando el Do central sobre una línea interior del pentagrama, instrumentos como la viola quedan centrados y resultan más fáciles de leer que en clave de Sol o de Fa."}},{"@type":"Question","name":"¿Por qué la clave de Do tiene esa forma?","acceptedAnswer":{"@type":"Answer","text":"Es una letra C estilizada: en la notación medieval se escribía al principio de la línea la letra de la nota de referencia, y el Do es la C. Con el tiempo esa C se partió en dos mitades simétricas. El punto donde se juntan las dos curvas es el que señala la línea del Do."}},{"@type":"Question","name":"¿Cómo se dibuja la clave de Do paso a paso?","acceptedAnswer":{"@type":"Answer","text":"Se trazan dos líneas verticales pegadas a la izquierda del pentagrama, ocupando todo su alto; después la mitad superior, una curva que se abre a la derecha y vuelve al centro; y por último la mitad inferior, simétrica. Lo decisivo es que el punto de encuentro de ambas curvas caiga sobre la línea del Do: la 3ª o la 4ª según la posición."}},{"@type":"Question","name":"¿Qué diferencia hay entre la clave de Do en 3ª y en 4ª?","acceptedAnswer":{"@type":"Answer","text":"Solo cambia la línea sobre la que se coloca el Do central, pero eso desplaza el nombre de todas las notas un grado. La de 3ª es la clave de la viola; la de 4ª aparece en el registro agudo del violonchelo, el fagot y el trombón."}}]}
 </script>
 </head>
 <body class="tm-page">
@@ -187,7 +195,34 @@
 
 <p>La <strong>clave de Do</strong> es el signo que sitúa el <strong>Do central</strong> (Do₄) sobre la línea del pentagrama que le da nombre. Es la clave de los <strong>registros medios</strong> y, a diferencia de las otras dos, puede colocarse en <strong>cuatro posiciones</strong> distintas. Hoy su uso corriente se limita a la <strong>viola</strong> (clave de Do en 3ª), pero las demás posiciones son fundamentales en el estudio de conservatorio y en la lectura de partituras antiguas. Es una de las tres <a href="/diccionario-musical/claves-musicales/">claves musicales</a>, junto a la <a href="/diccionario-musical/claves-musicales/clave-de-sol/">clave de Sol</a> y la <a href="/diccionario-musical/claves-musicales/clave-de-fa/">clave de Fa</a>.</p>
 
-<h2>Cómo leer las notas en clave de Do en 3ª</h2>
+<h2>Por qué el símbolo es una «C»: el origen de la clave de Do</h2>
+<p>El signo de la clave de Do es una <strong>letra C estilizada</strong>. En la notación medieval se escribía al principio de la línea la letra de la nota de referencia, y el Do es la <strong>C</strong> en el sistema de letras. Con los siglos, aquella C manuscrita se fue partiendo en dos mitades simétricas hasta quedar en el signo actual, con sus dos curvas enfrentadas.</p>
+<p>Ese detalle explica cómo se lee: <strong>el punto donde se juntan las dos curvas señala la línea del Do</strong>. Por eso la clave de Do puede colocarse en líneas distintas sin cambiar de nombre — basta con mover el signo y el Do se muda con él, algo que no ocurre en la práctica con las otras dos.</p>
+<p>Es, junto con la <a href="/diccionario-musical/claves-musicales/clave-de-fa/">clave de Fa</a>, <strong>una de las dos claves más antiguas</strong>: ambas proceden del pentagrama que consolidó Guido d'Arezzo en el siglo XI. La <a href="/diccionario-musical/claves-musicales/clave-de-sol/">clave de Sol</a> llegó después.</p>
+
+<div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+
+<h2>Cómo se dibuja la clave de Do paso a paso</h2>
+<ol>
+  <li><strong>Traza dos líneas verticales</strong> pegadas, a la izquierda del pentagrama, que ocupen todo su alto.</li>
+  <li><strong>Dibuja la mitad superior</strong>: una curva que sale de arriba, se abre a la derecha y vuelve hacia el centro.</li>
+  <li><strong>Dibuja la mitad inferior</strong>, simétrica de la anterior, de modo que ambas se encuentren en el mismo punto.</li>
+</ol>
+<p>El paso que decide si está bien es el último: <strong>el punto de encuentro de las dos curvas debe caer sobre la línea del Do</strong>. En la clave de Do en 3ª, sobre la 3ª línea; en la de 4ª, sobre la cuarta. Si ese punto se desplaza, has escrito otra clave distinta.</p>
+
+<h3>Ficha para imprimir: repasar la clave con ayuda decreciente</h3>
+<p>Para los más pequeños, leer la explicación no basta: hay que trazarla muchas veces. Esta ficha en PDF va retirando la ayuda poco a poco — primero el modelo, después la clave punteada para repasar encima, luego con los puntos cada vez más separados, después solo el punto que marca la 3ª línea, y al final el pentagrama vacío. El trazo es de <strong>una sola línea</strong>, la que hace el lápiz sin levantarlo.</p>
+
+<figure class="fig-sm">
+  <a href="/assets/img/claves/ficha-dibujar-clave-de-do.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/claves/preview-ficha-clave-de-do.webp"><img src="/assets/img/claves/preview-ficha-clave-de-do.png" width="300" height="127" loading="lazy" alt="Ficha imprimible para aprender a dibujar la clave de Do: pentagramas con la clave punteada para repasar encima"></picture></a>
+</figure>
+
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/claves/ficha-dibujar-clave-de-do.pdf" target="_blank" rel="noopener">Descargar la ficha en PDF (A4)</a></p>
+<p>Puedes imprimirla y fotocopiarla libremente para el aula o para casa. También tienes la <a href="/diccionario-musical/claves-musicales/clave-de-sol/">ficha de la clave de Sol</a> y la de la <a href="/diccionario-musical/claves-musicales/clave-de-fa/">clave de Fa</a>.</p>
+
+<h2>Notas en clave de Do en 3ª: cómo leerlas todas</h2>
 <p>La posición más usada es la <strong>clave de Do en 3ª línea</strong>, la de la viola. La nota de referencia es el <strong>Do central</strong> en la 3ª línea:</p>
 
 <figure class="tm-staff" data-tm-notes data-tm-baseoct="3">
@@ -212,10 +247,6 @@
     <tr><td>1ª línea</td><td>Fa</td></tr>
   </tbody>
 </table>
-</div>
-
-<div class="tm-ad">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
 </div>
 
 <h2>Las 4 posiciones de la clave de Do</h2>
@@ -250,8 +281,57 @@
 </table>
 </div>
 
+<h2>Practica ahora: ¿qué nota es?</h2>
+<p>La clave de Do es la que menos se practica y la que más cuesta, precisamente por eso. Este ejercicio genera notas al azar en clave de Do en 3ª sobre un pentagrama real y te corrige al instante:</p>
+
+<div class="tm-embed-quiz"><div id="tmqc-do" data-tmnotas-clave="do3"></div></div>
+<p class="tm-embed-cap">Practica también en <a href="/ejercicios/identificar-notas/clave-de-do-en-4/">clave de Do en 4ª</a> · <a href="/ejercicios/identificar-notas/clave-de-do-en-3/">abrir el ejercicio a pantalla completa →</a></p>
+
+<h2>Notas fuera del pentagrama: las líneas adicionales</h2>
+<p>Al ser la clave del registro medio, la de Do es la que <strong>menos líneas adicionales necesita</strong> — esa es justamente su razón de ser. Aun así conviene saber leerlas:</p>
+
+<figure class="tm-staff">
+<picture><source type="image/webp" srcset="/assets/img/claves/lineas-adicionales-clave-do.webp"><img src="/assets/img/claves/lineas-adicionales-clave-do.png" width="683" height="138" loading="lazy" alt="Líneas adicionales en clave de Do en 3ª: Re₃, Mi₃ y Fa₃ por debajo del pentagrama; Sol₄, La₄, Si₄ y Do₅ por encima"></picture>
+<figcaption>Las notas con líneas adicionales más frecuentes en clave de Do en 3ª.</figcaption>
+</figure>
+
+<h2>Diferencias entre la clave de Do, la de Sol y la de Fa</h2>
+<p>Las tres claves se reparten el registro. Cada una coloca su nota de referencia en una línea distinta para que la música de cada instrumento quepa en el pentagrama <strong>sin llenarse de líneas adicionales</strong>.</p>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead>
+    <tr><th>Clave</th><th>Nota que sitúa</th><th>Línea</th><th>Registro</th><th>Quién la usa</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Do</strong></td><td>Do₄</td><td>3ª o 4ª</td><td>Medio</td><td>Viola, fagot y trombón (registro agudo)</td></tr>
+    <tr><td><strong>Sol</strong></td><td>Sol₄</td><td>2ª</td><td>Agudo y medio-agudo</td><td>Violín, flauta, trompeta, mano derecha del piano</td></tr>
+    <tr><td><strong>Fa</strong></td><td>Fa₃</td><td>4ª</td><td>Grave</td><td>Violonchelo, contrabajo, tuba, mano izquierda del piano</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>La consecuencia práctica cuesta al principio: <strong>una misma posición no es siempre la misma nota</strong>. La 3ª línea es Do en clave de Do en 3ª, pero en clave de Sol es Si y en clave de Fa en 4ª es Re. Por eso no se «lee el pentagrama»: se lee el pentagrama <em>en una clave</em>. Puedes verlas comparadas en <a href="/diccionario-musical/claves-musicales/">claves musicales</a>.</p>
+
 <h2>¿Para qué sirve la clave de Do?</h2>
 <p>La clave de Do sirve para escribir cómodamente los <strong>registros medios</strong> sin recurrir a un exceso de líneas adicionales. Instrumentos y voces como la viola, el violonchelo agudo o el tenor se mueven en la zona central del sonido: en <a href="/diccionario-musical/claves-musicales/clave-de-sol/">clave de Sol</a> quedarían demasiado bajos y en <a href="/diccionario-musical/claves-musicales/clave-de-fa/">clave de Fa</a> demasiado altos, llenando el pentagrama de líneas adicionales difíciles de leer. Situar el Do central sobre una línea interior del pentagrama deja ese registro centrado y legible.</p>
+
+<p>Quién la usa hoy:</p>
+<ul>
+  <li><strong>Clave de Do en 3ª:</strong> es la clave propia de la <a href="/diccionario-musical/notas-de-la-viola/">viola</a>. Tanto, que se la conoce simplemente como «clave de viola»: es el único instrumento que la lee de forma habitual.</li>
+  <li><strong>Clave de Do en 4ª:</strong> aparece en el registro agudo del <a href="/diccionario-musical/notas-del-violonchelo/">violonchelo</a>, el <a href="/diccionario-musical/notas-del-fagot/">fagot</a> y el <a href="/diccionario-musical/notas-del-trombon/">trombón</a>, para evitar llenar la partitura de líneas adicionales por encima del pentagrama.</li>
+  <li><strong>Clave de Do en 1ª y en 2ª:</strong> quedaron ligadas a las voces de soprano y mezzosoprano. Hoy no se usan salvo en música antigua y en el estudio de conservatorio.</li>
+</ul>
+<p>Puedes ver las notas de cada instrumento en <a href="/diccionario-musical/notas-en-los-instrumentos/">notas en los instrumentos</a>.</p>
+
+<h2>Errores frecuentes al aprender la clave de Do</h2>
+<ul>
+  <li><strong>Olvidar mirar en qué línea está.</strong> Es el error propio de esta clave: al ser la única que se usa en varias posiciones, hay que comprobar siempre dónde se juntan las dos curvas antes de leer una sola nota.</li>
+  <li><strong>Confundir la de 3ª con la de 4ª.</strong> Se parecen mucho y desplazan todas las notas un grado. Si algo «suena raro» al leer, es lo primero que hay que revisar.</li>
+  <li><strong>Leerla como clave de Sol.</strong> La 3ª línea es Do aquí y Si en clave de Sol; la 4ª es Mi aquí y Re allí.</li>
+  <li><strong>Contar las líneas desde arriba.</strong> Se cuentan siempre desde abajo, igual que en las otras dos claves.</li>
+  <li><strong>Darla por inútil.</strong> Quien toca viola la necesita a diario, y en los estudios reglados de música en España se exige leer en ella.</li>
+</ul>
 
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
@@ -274,7 +354,20 @@
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">¿Para qué sirve la clave de Do?</div>
-      <div class="tm-faq-a">Sirve para escribir los registros medios sin recurrir a un exceso de líneas adicionales. Situando el Do central sobre una línea interior del pentagrama, instrumentos como la viola quedan centrados y resultan más fáciles de leer que en clave de Sol o de Fa.</div>
+      <div class="tm-faq-a">Sirve para escribir los registros medios sin recurrir a un exceso de líneas adicionales. Situando el Do central sobre una línea interior del pentagrama, instrumentos como la viola quedan centrados y resultan más fáciles de leer que en clave de Sol o de Fa.
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Por qué la clave de Do tiene esa forma?</div>
+      <div class="tm-faq-a">Es una letra C estilizada: en la notación medieval se escribía al principio de la línea la letra de la nota de referencia, y el Do es la C. Con el tiempo esa C se partió en dos mitades simétricas. El punto donde se juntan las dos curvas es el que señala la línea del Do.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Cómo se dibuja la clave de Do paso a paso?</div>
+      <div class="tm-faq-a">Se trazan dos líneas verticales pegadas a la izquierda del pentagrama, ocupando todo su alto; después la mitad superior, una curva que se abre a la derecha y vuelve al centro; y por último la mitad inferior, simétrica. Lo decisivo es que el punto de encuentro de ambas curvas caiga sobre la línea del Do: la 3ª o la 4ª según la posición.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Qué diferencia hay entre la clave de Do en 3ª y en 4ª?</div>
+      <div class="tm-faq-a">Solo cambia la línea sobre la que se coloca el Do central, pero eso desplaza el nombre de todas las notas un grado. La de 3ª es la clave de la viola; la de 4ª aparece en el registro agudo del violonchelo, el fagot y el trombón.</div>
+    </div>
+  </div>
     </div>
   </div>
 </div>
