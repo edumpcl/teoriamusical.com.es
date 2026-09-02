@@ -67,11 +67,15 @@ def main():
     svc = get_service()
 
     # ── Resumen global ───────────────────────────────────────────────────────
+    # OJO: el total del sitio se pide con dimensions=[] y NO sumando filas de
+    # una dimension. GSC anonimiza las consultas de bajo volumen, asi que sumar
+    # por "query" se dejaba fuera ~2/3 del trafico real (medido 2026-08-25:
+    # 596 clics por query frente a 1.792 reales). Por "page" tampoco cuadra.
     ra = q(svc, ANTES_START,   ANTES_END,   ["query"])
     rd = q(svc, DESPUES_START, DESPUES_END, ["query"])
 
-    cla, ima, ctra, posa = totals(ra)
-    cld, imd, ctrd, posd = totals(rd)
+    cla, ima, ctra, posa = totals(q(svc, ANTES_START,   ANTES_END,   []))
+    cld, imd, ctrd, posd = totals(q(svc, DESPUES_START, DESPUES_END, []))
 
     print()
     sep("═")
