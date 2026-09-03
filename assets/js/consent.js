@@ -45,6 +45,26 @@
     document.head.appendChild(s);
   }
 
+  // Cede el hilo principal hasta DESPUES del siguiente pintado.
+  // rAF se ejecuta antes de pintar; el setTimeout de dentro, ya despues.
+  //
+  // POR QUE: arrancar los anuncios inyecta el script de AdSense y empuja todas
+  // las unidades. Hacerlo dentro del manejador del clic de cookies bloquea el
+  // pintado, y el usuario ve el banner congelado. Eso disparo el aviso de INP
+  // de Search Console del 2026-09-03 (grupo de 36 URLs, 223 ms en movil; el
+  // clic media 88 ms de retraso de PRESENTACION ya en CPU de escritorio).
+  // Aplazandolo, el banner se cierra al instante y los anuncios se cargan
+  // igual un frame despues: NO afecta a los ingresos.
+  // OJO: esto es INP, no LCP. Ver project-ads-perf-cost, que cerro que
+  // retrasar anuncios no mejora el LCP; es otra metrica y otro mecanismo.
+  function trasPintar(fn) {
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(function () { setTimeout(fn, 0); });
+    } else {
+      setTimeout(fn, 0);
+    }
+  }
+
   // Carga AdSense y rellena las unidades manuales (<ins class="adsbygoogle">).
   // Si no hay consentimiento publicitario, se piden anuncios NO personalizados
   // (contextuales, sin cookies). El push se hace una sola vez por unidad.
@@ -71,7 +91,7 @@
     // GA4 ya se carga siempre (Consent Mode v2 avanzado); aquí solo actualizamos
     // el estado de consentimiento, que es lo que controla si GA escribe cookies.
     // Los anuncios se sirven personalizados solo si el usuario lo ha aceptado.
-    startAds(!!prefs.advertising);
+    trasPintar(function () { startAds(!!prefs.advertising); });
   }
 
   var overlay, panel, btnAccept, btnNecessary, btnConfigure, btnSave;
@@ -151,7 +171,7 @@
     } else {
       // Visitante sin decisión previa: anuncios NO personalizados y mostramos
       // el banner de inmediato (RGPD).
-      startAds(false);
+      trasPintar(function () { startAds(false); });
       show();
     }
   }
