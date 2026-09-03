@@ -71,7 +71,7 @@ ${intro}
   <figcaption>${pie}</figcaption>
 </figure>
 <p><a class="tm-btn tm-btn-dorado" href="${url(modo, num, false)}" target="_blank" rel="noopener">Descargar la ficha (PDF A4)</a> <a class="tm-btn tm-btn-secondary" href="${url(modo, num, true)}" target="_blank" rel="noopener">Soluciones</a></p>
-<p>Se puede imprimir y fotocopiar libremente para el aula. La hoja de soluciones es esta misma ficha con la respuesta en rojo, así que se corrige superponiéndolas. También está la <a href="${otra}">${otraTexto}</a>, y el resto en <a href="/${BASE}/fichas-en-pdf/">ejercicios de intervalos en PDF</a>.</p>
+<p>Se puede imprimir y fotocopiar libremente para el aula. La hoja de soluciones es esta misma ficha con la respuesta en rojo, así que se corrige superponiéndolas. También está la <a href="${otra}">${otraTexto}</a>, y el resto en <a href="/ejercicios/ejercicios-de-intervalos-en-pdf/">ejercicios de intervalos en PDF</a>.</p>
 ${MARCA_FIN}
 `;
 }
