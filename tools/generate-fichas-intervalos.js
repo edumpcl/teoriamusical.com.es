@@ -123,9 +123,8 @@ function enumerarIntervalos(num) {
   return { nat, alt };
 }
 
-function generarEjercicios(num, total, seed) {
-  const rnd = mulberry32(seed);
-  const barajar = arr => {
+function barajarCon(rnd) {
+  return arr => {
     const a = arr.slice();
     for (let i = a.length - 1; i > 0; i--) {
       const j = Math.floor(rnd() * (i + 1));
@@ -133,6 +132,11 @@ function generarEjercicios(num, total, seed) {
     }
     return a;
   };
+}
+
+function generarEjercicios(num, total, seed) {
+  const rnd = mulberry32(seed);
+  const barajar = barajarCon(rnd);
 
   const { nat, alt } = enumerarIntervalos(num);
   const natAsc = barajar(nat.filter(e => e.dir > 0));
@@ -144,17 +148,18 @@ function generarEjercicios(num, total, seed) {
   const nNat = Math.min(Math.round(total * 0.45), nat.length);     // bloque sin alteraciones
   const out = [];
   const usados = new Set();
-  const meter = e => {
+  const meter = (e, fase) => {
     if (!e) return false;
     const k = e.n1.key + '>' + e.n2.key;
     if (usados.has(k)) return false;
     usados.add(k);
+    e.fase = fase;                    // para poder intercalar las fichas mixtas por fase
     out.push(e);
     return true;
   };
 
-  for (let i = 0; out.length < nAsc && i < natAsc.length; i++) meter(natAsc[i]);
-  for (let i = 0; out.length < nNat && i < natMix.length; i++) meter(natMix[i]);
+  for (let i = 0; out.length < nAsc && i < natAsc.length; i++) meter(natAsc[i], 'natAsc');
+  for (let i = 0; out.length < nNat && i < natMix.length; i++) meter(natMix[i], 'nat');
 
   // Resto: aleatorio con alteraciones. El reparto se hace por CUPOS y contando
   // lo que ya han aportado los naturales: la escala natural da muchas mas 2as
@@ -178,11 +183,30 @@ function generarEjercicios(num, total, seed) {
       if (!c) break;
       e = porCal[c.q].pop();
     }
-    meter(e);
+    meter(e, 'alt');
   }
 
   if (out.length < total) throw new Error('Solo hay ' + out.length + ' intervalos distintos de ' + num + 'a (pedidos ' + total + ')');
   return out;
+}
+
+/* Ficha acumulativa: varios numeros en la misma hoja (2a y 3a; de 2a a 4a...),
+   que es como se avanza en clase. Se genera la cuota de cada numero por
+   separado y luego se intercalan POR FASE, no de corrido: si se concatenaran
+   las listas, la hoja empezaria con todas las segundas y acabaria con todas las
+   quintas, y se perderia lo unico que importa, que la dificultad crezca. */
+function generarEjerciciosMixtos(nums, total, seed) {
+  const barajar = barajarCon(mulberry32(seed));
+  const base = Math.floor(total / nums.length);
+  const resto = total % nums.length;
+
+  const porFase = { natAsc: [], nat: [], alt: [] };
+  nums.forEach((num, i) => {
+    const cuota = base + (i < resto ? 1 : 0);
+    generarEjercicios(num, cuota, seed + num * 17).forEach(e => porFase[e.fase].push(e));
+  });
+
+  return [...barajar(porFase.natAsc), ...barajar(porFase.nat), ...barajar(porFase.alt)];
 }
 
 /* --------------------------------------------------------------- render */
@@ -258,16 +282,16 @@ function dibujarSistema(divId, ejercicios, opts) {
       dibujarNota(e.n2, izq + casilla * 0.66, '#c0392b');
     }
 
-    texto(izq + 5, yNum, String(opts.desde + i), 11, '#8b6914', 'bold', 'start');
+    texto(izq + 5, yNum, String(opts.desde + i), 10.5, '#9a7b28', null, 'start');
 
     if (opts.modo === 'analizar') {
       // La respuesta completa incluye la direccion: un intervalo melodico no
       // esta leido hasta decir si sube o baja.
       const flecha = e.dir > 0 ? '\\u2191' : '\\u2193';
-      if (opts.solucion) texto(cx, yPie + 4, e.etiqueta + ' ' + flecha, 14, '#c0392b', 'bold');
+      if (opts.solucion) texto(cx, yPie + 4, e.etiqueta + ' ' + flecha, 15, '#c0392b', '600');
       else linea(cx - casilla * 0.34, yPie, cx + casilla * 0.34, yPie, '#9a9a9a', 1);
     } else {
-      texto(cx, yPie + 4, e.etiqueta + ' ' + (e.dir > 0 ? '\\u2191' : '\\u2193'), 13, '#1a1a1a', 'bold');
+      texto(cx, yPie + 4, e.etiqueta + ' ' + (e.dir > 0 ? '\\u2191' : '\\u2193'), 14.5, '#1a1a1a', null);
     }
   });
 }
@@ -275,12 +299,20 @@ function dibujarSistema(divId, ejercicios, opts) {
 
 /* ----------------------------------------------------------------- html */
 
+const LOGO = path.join(ROOT, 'assets/img/2026/04/bach_favicon.png');   // el mismo Bach del sitio
+const LOGO_DATA_URI = 'data:image/png;base64,' + fs.readFileSync(LOGO).toString('base64');
+
 const CSS = `
   @page { size: A4; margin: 0; }
   * { box-sizing: border-box; }
   body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: #1a1a1a; background: #fff; }
   .hoja { width: 210mm; min-height: 297mm; padding: 10mm 14mm 6mm; }
   .cab { border-bottom: 2px solid #8b6914; padding-bottom: 6px; margin-bottom: 8px; }
+  .cab-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+  /* El logo va incrustado en base64: el PDF se genera con setContent, sin
+     servidor, y una ruta /assets/... no cargaria. 102 px de original a 34 de
+     ancho = 3x, suficiente para que imprima limpio. */
+  .logo { width: 34px; height: 35px; flex: none; margin-top: 1px; }
   .marca { font-size: 8.5pt; color: #8b6914; font-weight: bold; letter-spacing: .05em; }
   h1 { font-size: 16pt; margin: 3px 0 3px; }
   .instr { font-size: 9.5pt; margin: 0 0 5px; color: #333; line-height: 1.35; }
@@ -301,8 +333,13 @@ function construirHtml(cfg) {
   return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
-    <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE INTERVALOS</div>
-    <h1>${cfg.titulo}${cfg.solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+    <div class="cab-top">
+      <div>
+        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE INTERVALOS</div>
+        <h1>${cfg.titulo}${cfg.solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+      </div>
+      <img class="logo" src="${LOGO_DATA_URI}" width="34" height="35" alt="">
+    </div>
     <p class="instr">${cfg.instrucciones}</p>
     <p class="leyenda">${cfg.leyenda}</p>
     ${cfg.solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
@@ -318,22 +355,36 @@ function construirHtml(cfg) {
 const ANCHO = 688;          // A4 menos margenes, en px de pantalla (96 dpi)
 
 async function generarFicha(browser, opts) {
-  const { num, modo, solucion, ejercicios, porSistema, png } = opts;
+  const { nums, modo, solucion, ejercicios, porSistema, png } = opts;
   const sistemas = [];
   for (let i = 0; i < ejercicios.length; i += porSistema) sistemas.push(ejercicios.slice(i, i + porSistema));
 
   const esAnalizar = modo === 'analizar';
-  const titulo = (esAnalizar ? 'Analizar intervalos de ' : 'Escribir intervalos de ') + ORDINAL_ACC[num];
+  const unica = nums.length === 1;
+  const num = nums[0];
+  const ultimo = nums[nums.length - 1];
+  // "de tercera" en las de un solo numero; "de 2ª a 5ª" en las acumulativas.
+  const rotulo = unica ? ORDINAL_ACC[num] : `${nums[0]}ª a ${ultimo}ª`;
+  const slug = unica ? ORDINAL[num] : `${nums[0]}a-a-${ultimo}a`;
+
+  const titulo = (esAnalizar ? 'Analizar intervalos de ' : 'Escribir intervalos de ') + rotulo;
+  const ejemplo = unica ? `${num}ª M` : `${nums[0]}ª M`;
   const instrucciones = esAnalizar
-    ? `Todos los intervalos son <b>mel&oacute;dicos</b> y de <b>${ORDINAL_ACC[num]}</b>, en clave de sol. Escribe debajo de cada uno <b>qu&eacute; tipo de ${ORDINAL_ACC[num]} es y si es ascendente o descendente</b>, as&iacute;: ${num}ª M &uarr; / ${num}ª M &darr;.`
-    : `Escribe la <b>segunda nota</b> de cada intervalo mel&oacute;dico de <b>${ORDINAL_ACC[num]}</b>, en clave de sol. La flecha indica si es ascendente (&uarr;) o descendente (&darr;). No olvides la alteraci&oacute;n cuando haga falta.`;
-  const tipos = CALIDADES[num].map(c => `${num}ª ${c.q} = ${num}ª ${NOMBRE_CAL[c.q]}`).join(' &middot; ');
+    ? `Todos los intervalos son <b>mel&oacute;dicos</b>${unica ? ` y de <b>${rotulo}</b>` : `, <b>mezclados de ${rotulo}</b>`}, en clave de sol. Escribe debajo de cada uno <b>qu&eacute; intervalo es y si es ascendente o descendente</b>, as&iacute;: ${ejemplo} &uarr; / ${ejemplo} &darr;.`
+    : `Escribe la <b>segunda nota</b> de cada intervalo mel&oacute;dico${unica ? ` de <b>${rotulo}</b>` : `, <b>mezclados de ${rotulo}</b>`}, en clave de sol. La flecha indica si es ascendente (&uarr;) o descendente (&darr;). No olvides la alteraci&oacute;n cuando haga falta.`;
+  // En las acumulativas la lista de especies por numero seria kilometrica: se
+  // explican las abreviaturas una sola vez.
+  const tipos = unica
+    ? CALIDADES[num].map(c => `${num}ª ${c.q} = ${num}ª ${NOMBRE_CAL[c.q]}`).join(' &middot; ')
+    : 'M = Mayor &middot; m = menor &middot; J = justa &middot; A = aumentada &middot; d = disminuida';
   const leyenda = `${tipos} &middot; &uarr; ascendente &middot; &darr; descendente. `
     + `Los primeros ejercicios son de notas naturales; despu&eacute;s aparecen sostenidos y bemoles.`;
-  const pie = `Intervalos de ${ORDINAL_ACC[num]} &middot; ${esAnalizar ? 'analizar' : 'escribir'}`
+  const pie = `Intervalos de ${rotulo} &middot; ${esAnalizar ? 'analizar' : 'escribir'}`
     + (solucion ? ' &middot; soluciones' : '') + ` &middot; ${ejercicios.length} ejercicios`;
 
-  const page = await browser.newPage();
+  // Con --png la captura va a 3x: a 1x el texto sale emborronado y parece mas
+  // grueso de lo que es, y no se puede juzgar la tipografia de la ficha.
+  const page = await browser.newPage({ deviceScaleFactor: png ? 3 : 1 });
   await page.setViewportSize({ width: 850, height: 1200 });
   await page.setContent(construirHtml({ titulo, instrucciones, leyenda, pie, solucion, sistemas }));
   await page.addScriptTag({ path: VEXFLOW_PATH });
@@ -353,7 +404,7 @@ async function generarFicha(browser, opts) {
     desde += sistemas[i].length;
   }
 
-  const nombre = `ficha-${modo}-intervalos-de-${ORDINAL[num]}${solucion ? '-soluciones' : ''}`;
+  const nombre = `ficha-${modo}-intervalos-de-${slug}${solucion ? '-soluciones' : ''}`;
   const pdfPath = path.join(OUT_DIR, nombre + '.pdf');
   await page.pdf({
     path: pdfPath, format: 'A4', printBackground: true,
@@ -380,29 +431,44 @@ async function generarFicha(browser, opts) {
   return { pdfPath, overflow };
 }
 
-module.exports = { generarEjercicios, enumerarIntervalos };   // para tests y auditorias
+module.exports = { generarEjercicios, generarEjerciciosMixtos, enumerarIntervalos };  // tests y auditorias
 
 if (require.main !== module) return;
+
+/* Las hojas acumulativas, como se avanza en clase: primero 2as y 3as, y cada
+   nivel anade el siguiente numero sin soltar los anteriores. */
+const NIVELES = [[2, 3], [2, 3, 4], [2, 3, 4, 5], [2, 3, 4, 5, 6], [2, 3, 4, 5, 6, 7], [2, 3, 4, 5, 6, 7, 8]];
 
 (async () => {
   const args = process.argv.slice(2);
   const png = args.includes('--png');
-  const nums = args.filter(a => /^[2-8]$/.test(a)).map(Number);
-  const lista = nums.length ? nums : [2, 3, 4, 5, 6, 7, 8];
+  const soloSueltas = args.includes('--sueltas');
+  const soloMixtas = args.includes('--mixtas');
+  const pedidos = args.filter(a => /^[2-8]$/.test(a)).map(Number);
+  const lista = pedidos.length ? pedidos : [2, 3, 4, 5, 6, 7, 8];
   // Cuantos intervalos entran en cada pentagrama de la ficha de escribir; con
   // --esc=5 sale mas aireada (35 ejercicios en vez de 42).
   const esc = Number((args.find(a => /^--esc=\d$/.test(a)) || '--esc=6').slice(6));
 
+  // Una entrada por hoja: los numeros que lleva y la semilla (fija, para que
+  // regenerar no cambie los ejercicios de una ficha ya publicada).
+  const hojas = [];
+  if (!soloMixtas) lista.forEach(n => hojas.push({ nums: [n], seed: n * 1000 }));
+  if (!soloSueltas && !pedidos.length) NIVELES.forEach((ns, i) => hojas.push({ nums: ns, seed: 90000 + i * 1000 }));
+
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const browser = await chromium.launch();
 
-  for (const num of lista) {
+  for (const hoja of hojas) {
     for (const modo of ['analizar', 'escribir']) {
       const porSistema = modo === 'analizar' ? 6 : esc;
       const total = porSistema * 7;
-      const ejercicios = generarEjercicios(num, total, num * 1000 + (modo === 'analizar' ? 7 : 13));
+      const seed = hoja.seed + (modo === 'analizar' ? 7 : 13);
+      const ejercicios = hoja.nums.length === 1
+        ? generarEjercicios(hoja.nums[0], total, seed)
+        : generarEjerciciosMixtos(hoja.nums, total, seed);
       for (const solucion of [false, true]) {
-        const r = await generarFicha(browser, { num, modo, solucion, ejercicios, porSistema, png });
+        const r = await generarFicha(browser, { nums: hoja.nums, modo, solucion, ejercicios, porSistema, png });
         console.log('  ✓ ' + path.basename(r.pdfPath)
           + (r.overflow > 0 ? `  ATENCION: se sale ${Math.round(r.overflow)}px` : ''));
       }
