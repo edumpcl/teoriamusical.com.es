@@ -135,6 +135,13 @@
 
     // Cupos por especie, descontando lo que ya aportaron los naturales: sin esto
     // la escala natural inunda la hoja de una de las dos especies básicas.
+    //
+    // En "sin alteraciones" no se rellena: si no hay tantos intervalos naturales
+    // distintos como ejercicios se han pedido, la hoja sale más corta y la
+    // interfaz lo dice. Completarla con notas alteradas incumpliría justo lo
+    // que el usuario ha elegido.
+    if (dificultad === 'naturales') return out;
+
     var totPesos = CALIDADES[num].reduce(function (s, c) { return s + c.peso; }, 0);
     var cupos = [];
     CALIDADES[num].forEach(function (c) {
@@ -293,6 +300,10 @@
 
   var NUMS = [2, 3, 4, 5, 6, 7, 8];
   var ORD = { 2: '2ª', 3: '3ª', 4: '4ª', 5: '5ª', 6: '6ª', 7: '7ª', 8: '8ª' };
+
+  /* Expuesto para tools/verificar-fichas-intervalos.js --web: permite auditar
+     miles de hojas sin pasar por la interfaz. */
+  window.tmFichasGeneradorTest = { generarHoja: generarHoja };
 
   window.tmFichasGenerador = function (id) {
     var cont = document.getElementById(id);
