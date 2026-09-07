@@ -1,31 +1,40 @@
 /* Diagrama de digitaciones de la flauta travesera (sistema Boehm) — interactivo.
-   Dibujo horizontal realista PROPIO (mecanismo Boehm visible, platillos abiertos,
-   espátulas de pulgar); los datos de digitación no cambian.
-   Uso: <div id="x"></div><script>tmFlautaEngine('x');</script>
-   PROTOTIPO: solo notas confirmadas; el resto se marca "por confirmar". */
+   FOTOGRAFIA real (Yamaha YFL-372) con una capa SVG que ilumina la llave que se pulsa.
+   Los datos de digitación no cambian respecto al dibujo anterior.
+   Uso: <div id="x"></div><script>tmFlautaEngine('x');</script> */
 (function () {
   'use strict';
 
-  /* Modelo de llaves (anatomía estándar Boehm), de cabeza a pie.
-     sh -> forma: 'plate' platillo abierto con anillo, 'cup' copa cerrada,
-     'trill' llave de trino pequeña, 'loop' palanca ovalada, 'spat' espátula de pulgar. */
-  var KEYS = [
-    { id: 'T',   sh: 'spat',  x: 215, y: 156, w: 18, h: 11 }, // pulgar Si
-    { id: 'Tb',  sh: 'spat',  x: 243, y: 163, w: 15, h: 10 }, // pulgar Si♭
-    { id: 'LI',  sh: 'plate', x: 255, y: 120 },
-    { id: 'LM',  sh: 'plate', x: 290, y: 120 },
-    { id: 'LA',  sh: 'plate', x: 325, y: 120 },
-    { id: 'LG',  sh: 'loop',  x: 352, y: 150 },               // Sol#
-    { id: 'RI',  sh: 'plate', x: 415, y: 120 },
-    { id: 'Tr1', sh: 'trill', x: 432, y: 94 },
-    { id: 'Tr2', sh: 'trill', x: 467, y: 91 },
-    { id: 'RM',  sh: 'plate', x: 450, y: 120 },
-    { id: 'RA',  sh: 'plate', x: 485, y: 120 },
-    { id: 'REb', sh: 'loop',  x: 505, y: 152 },               // Mi♭
-    { id: 'RCs', sh: 'cup',   x: 555, y: 120 },               // pie Do#
-    { id: 'RC',  sh: 'cup',   x: 588, y: 120 }                // pie Do
-  ];
-  var SVG_W = 680, SVG_H = 220;
+  /* Coordenadas sobre la FOTO (viewBox 3200x230 = pixeles de digitacion.jpg).
+     Cabeza a la IZQUIERDA y pie a la DERECHA, que es como Yamaha publica sus fotos y
+     como se dibujan las cartas de digitacion. Calibradas a mano sobre la imagen.
+
+     Como identificarlas si hay que recalibrar:
+       - Los SEIS platos de dedo (LI LM LA / RI RM RA) tienen AGUJERO en el centro.
+       - Los DOS trinos van entre las dos manos y son platos CERRADOS, sin agujero.
+       - Las piezas puntiagudas que cuelgan entre plato y plato son BRAZOS del
+         mecanismo, no llaves: es el error facil de cometer.
+       - Sol# es la unica palanca curva del grupo izquierdo, por encima del tubo.
+     Las DOS del pulgar (T y Tb) NO salen: van en la cara oculta del tubo. Se dibujan
+     aparte en buildPulgar(), igual que la llave de octava del saxofon.
+     El tercer numero de cada llave es el radio del marcador, ajustado a su tamano real. */
+  var FOTO = {
+    img: 'digitacion', w: 3200, h: 230, margen: 14,
+    k: {
+      LI:  [1702, 113, 38], LM: [1806, 115, 38], LA: [1915,  86, 38],
+      LG:  [1915,  16, 24],
+      Tr1: [2022,  88, 34], Tr2:[2135, 100, 34],
+      RI:  [2265, 110, 38], RM: [2392, 109, 38], RA: [2531, 111, 38],
+      REb: [2685, 177, 30],
+      RCs: [2827, 187, 36], RC: [2995, 187, 36]
+    }
+  };
+  /* Ventanas del viewBox. En escritorio, una sola tira con la flauta entera. En movil
+     esa tira mide 26 px de alto y no se ve nada, asi que se parte en dos filas con solo
+     la mecanica (la cabeza no tiene ni una llave). Misma foto y mismas coordenadas. */
+  function ventana(x, ancho) {
+    return x + ' ' + (-FOTO.margen) + ' ' + ancho + ' ' + (FOTO.h + 2 * FOTO.margen);
+  }
 
   /* Notas confirmadas (primera pasada, naturales de la 1ª octava).
      Lista de llaves pulsadas. La llave de Mi♭ (REb) va pulsada en casi todo el registro. */
@@ -115,26 +124,40 @@
     '.tm-fl-readout{text-align:center;background:#fdfcf9;border:1px solid #e8e0cc;border-radius:8px;padding:14px;margin-bottom:12px;min-height:54px;}',
     '.tm-fl-note{font-size:1.5rem;font-weight:800;color:#1a1a1a;line-height:1.1;}',
     '.tm-fl-reg{font-size:.9rem;color:#666;margin-top:2px;}',
+    '.tm-fl-keysline{font-size:.88rem;color:#8b6914;margin-top:4px;}',
     '.tm-fl-hint{font-size:1.02rem;color:#999;font-weight:600;}',
-    '.tm-fl-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:6px;}',
-    '.tm-fl-svg{display:block;max-width:640px;width:100%;height:auto;margin:0 auto;}',
-    '.tm-fl-key .k-pad{fill:#e9eaee;stroke:#8f9199;stroke-width:1.5;}',
-    '.tm-fl-key.on .k-pad{fill:#8b6914;stroke:#6b5010;}',
-    '.tm-fl-key .k-ring{fill:none;stroke:#8f9199;stroke-width:1.2;}',
-    '.tm-fl-key.on .k-ring{stroke:#e8dcc0;}',
-    '.tm-fl-klab{font-family:Arial,Helvetica,sans-serif;font-size:11px;fill:#555;text-anchor:middle;}',
-    '.tm-fl-grp{font-family:Arial,Helvetica,sans-serif;font-size:12px;fill:#8b6914;text-anchor:middle;font-weight:bold;}',
+    '.tm-fl-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:10px 8px;}',
+    '.tm-fl-svg{display:block;width:100%;height:auto;}',
+    '.tm-fl-filas{display:none;}',
+    '.tm-fl-filas .tm-fl-svg + .tm-fl-svg{margin-top:8px;}',
+    // marcador: invisible en reposo, naranja intenso al pulsar. Va mas marcado que en el
+    // saxofon porque la flauta es plateada y sus llaves no contrastan con el tubo.
+    '.tm-fl-key .k-dot{fill:#ff7a00;fill-opacity:0;stroke:rgba(255,255,255,0);stroke-width:0;transition:all .16s;}',
+    '.tm-fl-key.on .k-dot{fill:#ff7a00;fill-opacity:.95;stroke:#fff;stroke-width:11;filter:drop-shadow(0 0 26px #ff6a00);}',
+    // panel del pulgar (dibujado): tubo apagado para que el naranja destaque
+    '.tm-fl-pulgar{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px;flex-wrap:wrap;}',
+    '.tm-fl-pulgarsvg{width:min(60vw,240px);height:auto;}',
+    '.tm-fl-pulgarcap{font-size:.8rem;color:#777;max-width:280px;margin:0;line-height:1.35;}',
+    '.tm-fl-pulgarcap strong{color:#555;}',
+    '.tm-fl-th-pad{fill:url(#tmFlMet);stroke:#7f828a;stroke-width:1.5;transition:fill .15s,stroke .15s;}',
+    '.tm-fl-key.on .tm-fl-th-pad{fill:url(#tmFlMetOn);stroke:#fff;stroke-width:2.4;filter:drop-shadow(0 0 6px #ff9500);}',
+    '.tm-fl-thlab{font-family:Arial,Helvetica,sans-serif;font-size:13px;fill:#555;text-anchor:middle;}',
+    '.tm-fl-credit{font-size:.72rem;color:#9a9a9a;text-align:center;margin-top:8px;}',
+    '.tm-fl-credit a{color:inherit;}',
     '.tm-fl-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}',
     '.tm-fl-btn{min-width:48px;padding:10px 12px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}',
     '.tm-fl-btn:hover{background:#fdf8ee;border-color:#8b6914;}',
     '.tm-fl-btn.sel{background:#8b6914;color:#fff;border-color:#8b6914;}',
-    '.tm-fl-btn.todo{opacity:.5;font-weight:500;}',
     '.tm-fl-noterow{display:flex;align-items:center;justify-content:center;gap:10px;}',
     '.tm-fl-play{width:34px;height:34px;border-radius:50%;border:none;background:#8b6914;color:#fff;font-size:.85rem;cursor:pointer;line-height:1;flex:0 0 auto;}',
     '.tm-fl-play:hover{background:#6b5010;}',
     '.tm-fl-staff{display:flex;justify-content:center;align-items:center;min-height:130px;}',
     '.tm-fl-staff svg{max-width:100%;height:auto;}',
-    '.tm-fl-intl{font-size:1.5rem;font-weight:800;color:#1a1a1a;line-height:1.1;}'
+    '.tm-fl-intl{font-size:1.5rem;font-weight:800;color:#1a1a1a;line-height:1.1;}',
+    /* Movil: la tira entera se queda en 26 px de alto y no se distingue una llave de
+       otra, asi que se cambia por dos filas con la mecanica ampliada. VA AL FINAL: los
+       media queries no suman especificidad y una regla base posterior les ganaria. */
+    '@media(max-width:600px){.tm-fl-tira{display:none;}.tm-fl-filas{display:block;}}'
   ].join('');
 
   function injectCSS() {
@@ -149,64 +172,54 @@
     if (!wrap) return;
     var uid = containerId;
 
-    /* Dibujo realista de la flauta (cabeza a la izq., pie a la dcha.), acabado plateado.
-       Varillas y etiquetas son estáticas; solo las llaves (KEYS) cambian de estado. */
-    var fluteBody =
-      '<defs><linearGradient id="tmFlMetal" x1="0" y1="0" x2="0" y2="1">' +
-        '<stop offset="0" stop-color="#ffffff"/><stop offset="0.35" stop-color="#e6e7ea"/>' +
-        '<stop offset="0.55" stop-color="#c7c9cf"/><stop offset="1" stop-color="#a9abb2"/>' +
-      '</linearGradient></defs>' +
-      // tubo principal + brillo
-      '<rect x="70" y="109" width="560" height="22" rx="11" fill="url(#tmFlMetal)" stroke="#8f9199" stroke-width="1.2"/>' +
-      '<rect x="76" y="112" width="548" height="3" rx="1.5" fill="#ffffff" opacity="0.6"/>' +
-      // corona (tapón) y boca abierta del pie
-      '<rect x="48" y="106" width="24" height="28" rx="8" fill="url(#tmFlMetal)" stroke="#8f9199" stroke-width="1.2"/>' +
-      '<ellipse cx="630" cy="120" rx="4.5" ry="11" fill="#6f7178"/>' +
-      // anillas de las uniones (cabeza-cuerpo y cuerpo-pie)
-      '<rect x="175" y="107" width="6" height="26" rx="2" fill="#cdced3" stroke="#9a9ca3" stroke-width="0.8"/>' +
-      '<rect x="520" y="107" width="6" height="26" rx="2" fill="#cdced3" stroke="#9a9ca3" stroke-width="0.8"/>' +
-      // placa de embocadura con agujero
-      '<ellipse cx="112" cy="120" rx="21" ry="12" fill="url(#tmFlMetal)" stroke="#8f9199" stroke-width="1.1"/>' +
-      '<ellipse cx="112" cy="120" rx="8" ry="5" fill="#5b5d63"/>' +
-      // eje longitudinal del mecanismo
-      '<line x1="190" y1="110" x2="615" y2="110" stroke="#b9bbc1" stroke-width="1.6"/>' +
-      // varillas: pulgar (T, Tb), Sol#, Mib, trinos
-      '<line x1="215" y1="131" x2="215" y2="151" stroke="#b9bbc1" stroke-width="1.4"/>' +
-      '<line x1="243" y1="131" x2="243" y2="158" stroke="#b9bbc1" stroke-width="1.4"/>' +
-      '<line x1="352" y1="131" x2="352" y2="144" stroke="#b9bbc1" stroke-width="1.4"/>' +
-      '<line x1="505" y1="131" x2="505" y2="146" stroke="#b9bbc1" stroke-width="1.4"/>' +
-      '<line x1="432" y1="109" x2="432" y2="99" stroke="#b9bbc1" stroke-width="1.4"/>' +
-      '<line x1="467" y1="109" x2="467" y2="96" stroke="#b9bbc1" stroke-width="1.4"/>' +
-      // etiquetas de llaves
-      '<text class="tm-fl-klab" x="112" y="150">Embocadura</text>' +
-      '<text class="tm-fl-klab" x="255" y="98">Í</text><text class="tm-fl-klab" x="290" y="98">M</text><text class="tm-fl-klab" x="325" y="98">A</text>' +
-      '<text class="tm-fl-klab" x="415" y="98">Í</text><text class="tm-fl-klab" x="450" y="98">M</text><text class="tm-fl-klab" x="485" y="98">A</text>' +
-      '<text class="tm-fl-klab" x="432" y="80">T1</text><text class="tm-fl-klab" x="467" y="77">T2</text>' +
-      '<text class="tm-fl-klab" x="555" y="98">Do♯</text><text class="tm-fl-klab" x="588" y="98">Do</text>' +
-      '<text class="tm-fl-klab" x="208" y="180">Si</text><text class="tm-fl-klab" x="250" y="184">Si♭</text>' +
-      '<text class="tm-fl-klab" x="352" y="172">Sol♯</text><text class="tm-fl-klab" x="505" y="172">Mi♭</text>' +
-      // etiquetas de grupo
-      '<text class="tm-fl-grp" x="215" y="212">Pulgar</text>' +
-      '<text class="tm-fl-grp" x="325" y="212">Mano izquierda</text>' +
-      '<text class="tm-fl-grp" x="490" y="212">Mano derecha · pie</text>';
-
-    var keysSvg = KEYS.map(function (k) {
-      var body;
-      if (k.sh === 'plate') {
-        body = '<circle class="k-pad" cx="' + k.x + '" cy="' + k.y + '" r="11"/>' +
-               '<circle class="k-ring" cx="' + k.x + '" cy="' + k.y + '" r="4.5"/>';
-      } else if (k.sh === 'cup') {
-        body = '<circle class="k-pad" cx="' + k.x + '" cy="' + k.y + '" r="9"/>';
-      } else if (k.sh === 'trill') {
-        body = '<circle class="k-pad" cx="' + k.x + '" cy="' + k.y + '" r="5"/>';
-      } else if (k.sh === 'loop') {
-        body = '<ellipse class="k-pad" cx="' + k.x + '" cy="' + k.y + '" rx="8" ry="6"/>';
-      } else { // spat
-        body = '<rect class="k-pad" x="' + (k.x - k.w / 2) + '" y="' + (k.y - k.h / 2) +
-               '" width="' + k.w + '" height="' + k.h + '" rx="5"/>';
+    // Los 12 marcadores sobre la foto. Se repiten en cada ventana (tira y filas):
+    // pick() enciende todas las copias a la vez con querySelectorAll.
+    function marcadores() {
+      var s = '';
+      for (var id in FOTO.k) {
+        var c = FOTO.k[id];
+        s += '<g class="tm-fl-key" data-k="' + id + '">' +
+             '<circle class="k-dot" cx="' + c[0] + '" cy="' + c[1] + '" r="' + c[2] + '"/></g>';
       }
-      return '<g class="tm-fl-key" data-k="' + k.id + '">' + body + '</g>';
-    }).join('');
+      return s;
+    }
+    function vista(x, ancho, etiqueta) {
+      return '<svg class="tm-fl-svg" viewBox="' + ventana(x, ancho) + '" role="img" aria-label="' + etiqueta + '">' +
+        '<image href="/assets/img/flauta/' + FOTO.img + '.jpg" x="0" y="0" width="' + FOTO.w + '" height="' + FOTO.h + '"/>' +
+        marcadores() + '</svg>';
+    }
+
+    // Las dos llaves del PULGAR van en la cara oculta del tubo y no salen en la foto:
+    // se dibujan aparte y se iluminan igual (data-k="T" y "Tb").
+    function buildPulgar() {
+      return '<svg class="tm-fl-pulgarsvg" viewBox="0 0 260 118" role="img" aria-label="Cara oculta de la flauta: las dos llaves del pulgar izquierdo se iluminan cuando hay que pulsarlas">' +
+        '<defs>' +
+          '<linearGradient id="tmFlMet" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0" stop-color="#f2f3f6"/><stop offset=".5" stop-color="#c9ccd3"/><stop offset="1" stop-color="#9fa3ab"/>' +
+          '</linearGradient>' +
+          '<linearGradient id="tmFlMetOn" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0" stop-color="#ffd08a"/><stop offset=".5" stop-color="#ffb347"/><stop offset="1" stop-color="#e08800"/>' +
+          '</linearGradient>' +
+          '<linearGradient id="tmFlTubo" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0" stop-color="#9a9da4"/><stop offset=".45" stop-color="#babdc4"/><stop offset="1" stop-color="#82858c"/>' +
+          '</linearGradient>' +
+        '</defs>' +
+        // trozo de tubo visto por detras (apagado: si va tan claro como la foto, el
+        // marcador naranja no destaca)
+        '<rect x="8" y="34" width="244" height="34" rx="17" fill="url(#tmFlTubo)" stroke="#6f7278" stroke-width="1.2"/>' +
+        // llave del pulgar Si (la grande, donde descansa el dedo)
+        '<g class="tm-fl-key" data-k="T">' +
+          '<rect class="tm-fl-th-pad" x="78" y="38" width="62" height="26" rx="12"/>' +
+        '</g>' +
+        // llave del pulgar Si bemol (la pequena, al lado)
+        '<g class="tm-fl-key" data-k="Tb">' +
+          '<rect class="tm-fl-th-pad" x="150" y="41" width="38" height="20" rx="10"/>' +
+        '</g>' +
+        '<text class="tm-fl-thlab" x="109" y="88">Si</text>' +
+        '<text class="tm-fl-thlab" x="169" y="88">Si♭</text>' +
+        '<text class="tm-fl-thlab" x="130" y="110" style="font-size:11px;fill:#888">pulgar izquierdo</text>' +
+        '</svg>';
+    }
 
     var btns = ORDEN.map(function (n) {
       var hasData = !!FING[n];
@@ -216,13 +229,23 @@
     wrap.innerHTML =
       '<div class="tm-fl-wrap">' +
         '<div class="tm-fl-readout" id="' + uid + '_ro"><span class="tm-fl-hint">Elige una nota para ver su digitación</span></div>' +
-        '<div class="tm-fl-diagram"><svg class="tm-fl-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" role="img" aria-label="Diagrama de digitación de la flauta">' +
-          fluteBody + keysSvg +
-        '</svg></div>' +
+        '<div class="tm-fl-diagram">' +
+          '<div class="tm-fl-tira">' +
+            vista(0, FOTO.w, 'Digitación de la flauta sobre una fotografía real: cabeza a la izquierda, pie a la derecha') +
+          '</div>' +
+          '<div class="tm-fl-filas">' +
+            vista(1250, 975, 'Mitad izquierda del mecanismo, ampliada') +
+            vista(2225, 975, 'Mitad derecha del mecanismo y el pie, ampliada') +
+          '</div>' +
+          '<div class="tm-fl-pulgar">' +
+            buildPulgar() +
+            '<p class="tm-fl-pulgarcap"><strong>Por detrás.</strong> Las dos llaves del <strong>pulgar izquierdo</strong> van en la cara oculta del tubo, así que no salen en la foto y se dibujan aparte.</p>' +
+          '</div>' +
+          '<p class="tm-fl-credit">Foto: flauta Yamaha YFL-372, Yamaha Corporation vía <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Flute_YFL-372.tif" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Llaves del pulgar: diagrama propio.</p>' +
+        '</div>' +
         '<div class="tm-fl-btns" id="' + uid + '_btns">' + btns + '</div>' +
       '</div>';
 
-    var svg = wrap.querySelector('.tm-fl-svg');
     var ro = document.getElementById(uid + '_ro');
     var audio = new Audio();
 
@@ -261,11 +284,10 @@
       wrap.querySelectorAll('.tm-fl-btn').forEach(function (b) { b.classList.remove('sel'); });
       if (btn) btn.classList.add('sel');
       var data = FING[n];
-      svg.querySelectorAll('.tm-fl-key').forEach(function (c) { c.classList.remove('on'); });
+      wrap.querySelectorAll('.tm-fl-key').forEach(function (c) { c.classList.remove('on'); });
       if (data) {
         data.keys.forEach(function (id) {
-          var c = svg.querySelector('.tm-fl-key[data-k="' + id + '"]');
-          if (c) c.classList.add('on');
+          wrap.querySelectorAll('.tm-fl-key[data-k="' + id + '"]').forEach(function (c) { c.classList.add('on'); });
         });
       }
       ro.innerHTML =
