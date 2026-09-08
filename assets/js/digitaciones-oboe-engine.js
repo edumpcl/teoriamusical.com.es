@@ -11,30 +11,45 @@
   // Elementos que se ENCIENDEN (data-k). El resto de la mecánica es decorativa (estática).
   // hole: 6 agujeros/platos (L1-L3 mano izq., R1-R3 mano der.). half: medio agujero sobre L1.
   // oct: llaves de octava. loop/spat: llaves de meñique y llave de Fa.
-  var KEYS = [
-    { id: 'OCT3', sh: 'oct',  x: 126, y: 93 },   // 3ª llave de octava (sobreagudo)
-    { id: 'OCT1', sh: 'oct',  x: 150, y: 88 },   // 1ª llave de octava
-    { id: 'OCT2', sh: 'oct',  x: 176, y: 83 },   // 2ª llave de octava
-    { id: 'L1',   sh: 'hole', x: 205, y: 120 },
-    { id: 'L1h',  sh: 'half', x: 205, y: 120 },  // medio agujero sobre L1
-    { id: 'L2',   sh: 'hole', x: 245, y: 120 },
-    { id: 'L3',   sh: 'hole', x: 285, y: 120 },
-    { id: 'R1',   sh: 'hole', x: 370, y: 120 },
-    { id: 'R2',   sh: 'hole', x: 410, y: 120 },
-    { id: 'R3',   sh: 'hole', x: 450, y: 120 },
-    { id: 'FK',   sh: 'loop', x: 430, y: 148 },  // llave de Fa
-    // Meñique izquierdo ARRIBA del tubo, como en la carta de Cdang rotada 90° CCW:
-    // elipse del Sol# aparte y tridente de tres bastones curvados desde un tronco común
-    // (la punta curvada mira a la caña; de arriba abajo: Sib, Si, Mib izq.).
-    { id: 'LP1',  sh: 'loop',  x: 270, y: 86 },  // Sol# (meñique izq.)
-    { id: 'LP4',  sh: 'prong', x: 302, y: 59 },  // Sib grave
-    { id: 'LP3',  sh: 'prong', x: 302, y: 73 },  // Si grave
-    { id: 'LP2',  sh: 'prong', x: 302, y: 87 },  // Mib izquierdo
-    { id: 'RP1',  sh: 'loop', x: 482, y: 153 },  // Do grave (meñique dcho.)
-    { id: 'RP2',  sh: 'loop', x: 506, y: 157 },  // Do#
-    { id: 'RP3',  sh: 'loop', x: 494, y: 170 }   // Mib
-  ];
-  var SVG_W = 680, SVG_H = 220;
+  /* Coordenadas sobre las DOS FOTOS del oboe (Yamaha YOB-831). El instrumento es
+     finisimo (proporcion 0,12): entero y en vertical se quedaria en 74 px de ancho, asi
+     que se parte por la union de las articulaciones y se muestran en dos columnas, que
+     ademas es como se dibujan las cartas de oboe.
+
+     Se calibro a mano. Detalles que costaron:
+       - El corte entre articulaciones va en y=1760 del original. En y=1830 partia por la
+         mitad el plato de R1 y lo dejaba pegado al borde.
+       - Los agujeros 1, 2, 3 y 6 son ANILLOS con el centro oscuro; el 4 y el 5 son platos
+         lisos. Por eso el oboe si se puede calibrar y el flautin no.
+       - La llave de Fa (FK) es la palanca alargada entre los agujeros 5 y 6.
+       - El racimo del menique izquierdo tiene CINCO palancas: Sol#, Mi bemol, Si y Si
+         bemol son cuatro de ellas; el Mi bemol es la que se separa hacia la izquierda.
+     La 1a llave de octava (OCT1) va en el pulgar, detras, y no sale en ninguna foto:
+     se dibuja aparte en buildPulgar(). El MEDIO AGUJERO (L1h) no es una llave: es el
+     agujero 1 tapado a medias, asi que se pinta como media luna sobre L1. */
+  var FOTOS = {
+    sup: {
+      img: 'digitacion-sup', w: 495, h: 1460,
+      titulo: 'Articulaci\u00f3n superior \u00b7 mano izquierda',
+      alt: 'Articulaci\u00f3n superior de un oboe vista de frente; las llaves que se pulsan se iluminan en dorado',
+      k: {
+        L1:  [251,  579, 26], L2: [248, 802, 26], L3: [248, 1021, 26],
+        OCT2:[250,  648, 16], OCT3:[401, 514, 16],
+        LP1: [395, 1059, 18], LP2:[341, 1155, 18], LP3:[423, 1133, 18], LP4:[460, 1171, 18]
+      }
+    },
+    inf: {
+      img: 'digitacion-inf', w: 495, h: 1340,
+      titulo: 'Articulaci\u00f3n inferior \u00b7 mano derecha',
+      alt: 'Articulaci\u00f3n inferior de un oboe vista de frente; las llaves que se pulsan se iluminan en dorado',
+      k: {
+        R1: [250,  77, 26], R2: [248, 187, 26], R3: [247, 387, 26],
+        FK: [248, 298, 20],
+        RP1:[ 76, 448, 18], RP2:[130, 505, 18], RP3:[ 46, 534, 18]
+      }
+    }
+  };
+  var ORDEN_FOTOS = ['sup', 'inf'];
 
   var ALL6 = ['L1', 'L2', 'L3', 'R1', 'R2', 'R3'];
   // Digitaciones verificadas contra la tabla de Cdang (Commons,
@@ -118,31 +133,48 @@
     '.tm-ob-wrap{margin:18px 0;}',
     '.tm-ob-readout{text-align:center;background:#fdfcf9;border:1px solid #e8e0cc;border-radius:8px;padding:14px;margin-bottom:12px;min-height:54px;}',
     '.tm-ob-reg{font-size:.9rem;color:#666;margin-top:2px;}',
-    '.tm-ob-prov{color:#b06a00;}',
+    '.tm-ob-keysline{font-size:.88rem;color:#8b6914;margin-top:4px;}',
     '.tm-ob-hint{font-size:1.02rem;color:#999;font-weight:600;}',
-    '.tm-ob-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:6px;display:flex;justify-content:center;}',
-    '.tm-ob-svg{display:block;height:min(72vh,560px);width:auto;max-width:100%;margin:0 auto;}',
-    '.tm-ob-key .k-pad{fill:#e9eaee;stroke:#8f9199;stroke-width:1.5;}',
-    '.tm-ob-key.on .k-pad{fill:#8b6914;stroke:#6b5010;}',
-    '.tm-ob-key .k-ring{fill:none;stroke:#8f9199;stroke-width:1.2;}',
-    '.tm-ob-key.on .k-ring{stroke:#e8dcc0;}',
-    '.tm-ob-half .k-pad{fill:transparent;stroke:none;}',
-    '.tm-ob-half.on .k-pad{fill:#8b6914;}',
-    '.tm-ob-trill{fill:#e9eaee;stroke:#8f9199;stroke-width:1.2;}',
-    '.tm-ob-trill-rod{stroke:#b9bbc1;stroke-width:1.2;}',
-    '.tm-ob-klab{font-family:Arial,Helvetica,sans-serif;font-size:11px;fill:#555;text-anchor:middle;}',
-    '.tm-ob-grp{font-family:Arial,Helvetica,sans-serif;font-size:12px;fill:#8b6914;text-anchor:middle;font-weight:bold;}',
+    '.tm-ob-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:10px 8px;}',
+    '.tm-ob-cols{display:flex;gap:14px;justify-content:center;align-items:flex-start;flex-wrap:nowrap;}',
+    '.tm-ob-col{position:relative;flex:0 1 auto;min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;}',
+    '.tm-ob-foto{position:relative;}',
+    // Se fija la ANCHURA, no la altura: las dos fotos son de 495 px de ancho, asi que
+    // asi las dos articulaciones salen a la MISMA escala y un mismo agujero mide igual
+    // en las dos. Fijando la altura, la inferior (mas larga) se encogia de ancho.
+    '.tm-ob-img{display:block;width:min(30vw,178px);height:auto;border-radius:6px;object-fit:contain;}',
+    '.tm-ob-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}',
+    '.tm-ob-cap{font-size:.75rem;color:#888;text-align:center;margin:0;line-height:1.3;}',
+    // marcador sobre la foto
+    '.tm-ob-key .k-dot{fill:#ff9500;fill-opacity:0;stroke:rgba(255,255,255,0);stroke-width:0;transition:all .16s;}',
+    '.tm-ob-key.on .k-dot{fill:#ff9500;fill-opacity:.92;stroke:#fff;stroke-width:5;filter:drop-shadow(0 0 14px #ff9500);}',
+    // medio agujero: media luna sobre el agujero 1
+    '.tm-ob-key .k-half{fill:#ff9500;fill-opacity:0;stroke:rgba(255,255,255,0);stroke-width:0;transition:all .16s;}',
+    '.tm-ob-key.on .k-half{fill:#ff9500;fill-opacity:.92;stroke:#fff;stroke-width:5;filter:drop-shadow(0 0 14px #ff9500);}',
+    // panel del pulgar (dibujado)
+    '.tm-ob-pulgar{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:12px;flex-wrap:wrap;}',
+    '.tm-ob-pulgarsvg{width:min(52vw,190px);height:auto;}',
+    '.tm-ob-pulgarcap{font-size:.8rem;color:#777;max-width:290px;margin:0;line-height:1.35;}',
+    '.tm-ob-pulgarcap strong{color:#555;}',
+    '.tm-ob-th-pad{fill:url(#tmObMet);stroke:#7f828a;stroke-width:1.5;transition:fill .15s,stroke .15s;}',
+    '.tm-ob-key.on .tm-ob-th-pad{fill:url(#tmObMetOn);stroke:#fff;stroke-width:2.4;filter:drop-shadow(0 0 6px #ff9500);}',
+    '.tm-ob-thlab{font-family:Arial,Helvetica,sans-serif;font-size:12px;fill:#666;text-anchor:middle;}',
+    '.tm-ob-credit{font-size:.72rem;color:#9a9a9a;text-align:center;margin-top:8px;}',
+    '.tm-ob-credit a{color:inherit;}',
     '.tm-ob-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}',
     '.tm-ob-btn{min-width:46px;padding:10px 12px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}',
     '.tm-ob-btn:hover{background:#fdf8ee;border-color:#8b6914;}',
     '.tm-ob-btn.sel{background:#8b6914;color:#fff;border-color:#8b6914;}',
-    '.tm-ob-btn.todo{opacity:.5;font-weight:500;}',
     '.tm-ob-noterow{display:flex;align-items:center;justify-content:center;gap:10px;}',
     '.tm-ob-intl{font-size:1.5rem;font-weight:800;color:#1a1a1a;line-height:1.1;}',
     '.tm-ob-play{width:34px;height:34px;border-radius:50%;border:none;background:#8b6914;color:#fff;font-size:.85rem;cursor:pointer;line-height:1;flex:0 0 auto;}',
     '.tm-ob-play:hover{background:#6b5010;}',
     '.tm-ob-staff{display:flex;justify-content:center;align-items:center;min-height:120px;}',
-    '.tm-ob-staff svg{max-width:100%;height:auto;}'
+    '.tm-ob-staff svg{max-width:100%;height:auto;}',
+    /* Movil: las dos columnas siguen en fila (si se apilan, el diagrama mide mas que la
+       pantalla). Ancho por flex-basis. VA AL FINAL: los media queries no suman
+       especificidad y una regla base posterior les ganaria en cascada. */
+    '@media(max-width:600px){.tm-ob-cols{gap:8px;}.tm-ob-col{flex:0 1 48%;min-width:0;}.tm-ob-img{width:100%;}.tm-ob-cap{font-size:.62rem;}}'
   ].join('');
 
   function injectCSS() {
@@ -151,88 +183,62 @@
     document.head.appendChild(s);
   }
 
-  // Dibujo estático del instrumento (horizontal): caña, cuerpo de granadillo,
-  // anillas de las uniones, eje de la mecánica, varillas y etiquetas.
-  var DECO =
-    '<defs><linearGradient id="tmObWood" x1="0" y1="0" x2="0" y2="1">' +
-      '<stop offset="0" stop-color="#5b5148"/><stop offset="0.28" stop-color="#37302a"/>' +
-      '<stop offset="0.55" stop-color="#1e1915"/><stop offset="1" stop-color="#0e0b09"/>' +
-    '</linearGradient></defs>' +
-    // caña (pala de color caña + atadura de hilo)
-    '<path d="M50 115.5 Q72 111.5 96 114 L96 126 Q72 128.5 50 124.5 Q45 120 50 115.5 Z" fill="#d9b26a" stroke="#a8843e" stroke-width="1"/>' +
-    '<line x1="50" y1="120" x2="96" y2="120" stroke="#b58f47" stroke-width="0.8"/>' +
-    '<rect x="96" y="111" width="20" height="18" rx="3" fill="#7a3040" stroke="#5e2432" stroke-width="1"/>' +
-    '<line x1="101" y1="112" x2="101" y2="128" stroke="#93465a" stroke-width="1"/>' +
-    '<line x1="106" y1="112" x2="106" y2="128" stroke="#93465a" stroke-width="1"/>' +
-    '<line x1="111" y1="112" x2="111" y2="128" stroke="#93465a" stroke-width="1"/>' +
-    // cuerpo cónico en tres piezas con campana
-    '<path d="M116 110 L300 108.5 L470 107 L556 105.5 C592 104.5 616 99 634 93 L634 147 C616 141 592 135.5 556 134.5 L470 133 L300 131.5 L116 130 Z" fill="url(#tmObWood)" stroke="#0c0a08" stroke-width="1"/>' +
-    '<ellipse cx="634" cy="120" rx="5.5" ry="27" fill="#17120e" stroke="#0c0a08" stroke-width="1"/>' +
-    '<ellipse cx="634" cy="120" rx="3" ry="20" fill="#3a2f26"/>' +
-    '<line x1="128" y1="112" x2="550" y2="109.5" stroke="#7d6f63" stroke-width="1" opacity="0.8"/>' +
-    // anillas metálicas de las uniones
-    '<rect x="116" y="108" width="6" height="23" rx="1.5" fill="#d7d8dc" stroke="#9a9ca3" stroke-width="0.8"/>' +
-    '<rect x="296" y="106" width="7" height="27" rx="1.5" fill="#d7d8dc" stroke="#9a9ca3" stroke-width="0.8"/>' +
-    '<rect x="466" y="105" width="7" height="29" rx="1.5" fill="#d7d8dc" stroke="#9a9ca3" stroke-width="0.8"/>' +
-    // eje longitudinal de la mecánica y varillas hacia las llaves
-    '<line x1="192" y1="110" x2="548" y2="108" stroke="#b9bbc1" stroke-width="1.6"/>' +
-    '<line x1="126" y1="101" x2="126" y2="110" stroke="#b9bbc1" stroke-width="1.6"/>' +
-    '<line x1="150" y1="96" x2="150" y2="110" stroke="#b9bbc1" stroke-width="1.6"/>' +
-    '<line x1="176" y1="91" x2="176" y2="110" stroke="#b9bbc1" stroke-width="1.6"/>' +
-    '<line x1="270" y1="109" x2="270" y2="93" stroke="#b9bbc1" stroke-width="1.4"/>' +
-    '<line x1="312" y1="109" x2="312" y2="56" stroke="#b9bbc1" stroke-width="1.6"/>' +
-    '<line x1="430" y1="131" x2="430" y2="143" stroke="#b9bbc1" stroke-width="1.4"/>' +
-    '<line x1="482" y1="133" x2="482" y2="148" stroke="#b9bbc1" stroke-width="1.4"/>' +
-    '<line x1="506" y1="133" x2="506" y2="152" stroke="#b9bbc1" stroke-width="1.4"/>' +
-    // llaves de trino (decorativas: un oboe real las lleva para trinos rápidos,
-    // pero no cambian ninguna digitación de esta tabla, así que nunca se encienden)
-    '<line class="tm-ob-trill-rod" x1="225" y1="99" x2="225" y2="110"/>' +
-    '<ellipse class="tm-ob-trill" cx="225" cy="99" rx="5" ry="4"/>' +
-    '<line class="tm-ob-trill-rod" x1="265" y1="99" x2="265" y2="110"/>' +
-    '<ellipse class="tm-ob-trill" cx="265" cy="99" rx="5" ry="4"/>' +
-    '<line class="tm-ob-trill-rod" x1="390" y1="97" x2="390" y2="109"/>' +
-    '<ellipse class="tm-ob-trill" cx="390" cy="97" rx="5" ry="4"/>' +
-    // etiquetas
-    '<text class="tm-ob-klab" x="163" y="66">Llaves de octava</text>' +
-    '<text class="tm-ob-klab" x="205" y="96">1</text><text class="tm-ob-klab" x="245" y="96">2</text><text class="tm-ob-klab" x="285" y="96">3</text>' +
-    '<text class="tm-ob-klab" x="370" y="96">4</text><text class="tm-ob-klab" x="410" y="96">5</text><text class="tm-ob-klab" x="450" y="96">6</text>' +
-    '<text class="tm-ob-klab" x="73" y="148">Caña</text>' +
-    '<text class="tm-ob-klab" x="600" y="172">Campana</text>' +
-    '<text class="tm-ob-klab" x="302" y="48">Meñique izq.</text>' +
-    '<text class="tm-ob-klab" x="494" y="192">Meñique dcho.</text>' +
-    '<text class="tm-ob-grp" x="245" y="212">Mano izquierda</text>' +
-    '<text class="tm-ob-grp" x="410" y="212">Mano derecha</text>';
+  // Un marcador por llave. El medio agujero se dibuja como media luna sobre el agujero 1.
+  function marcadores(cfg) {
+    var s = '';
+    for (var id in cfg.k) {
+      var c = cfg.k[id];
+      s += '<g class="tm-ob-key" data-k="' + id + '">' +
+           '<circle class="k-dot" cx="' + c[0] + '" cy="' + c[1] + '" r="' + c[2] + '"/></g>';
+      if (id === 'L1') {
+        // media luna inferior, del mismo radio: el agujero 1 tapado a medias
+        s += '<g class="tm-ob-key" data-k="L1h"><path class="k-half" d="M ' + (c[0] - c[2]) + ' ' + c[1] +
+             ' a ' + c[2] + ' ' + c[2] + ' 0 0 0 ' + (2 * c[2]) + ' 0 z"/></g>';
+      }
+    }
+    return s;
+  }
 
-  function keyShape(k) {
-    if (k.sh === 'half') {
-      // semicírculo superior de L1 (medio agujero); invisible salvo cuando está .on
-      return '<g class="tm-ob-key tm-ob-half" data-k="' + k.id + '">' +
-        '<path class="k-pad" d="M' + (k.x - 11) + ' ' + k.y + ' A11 11 0 0 1 ' + (k.x + 11) + ' ' + k.y + ' Z"/></g>';
-    }
-    var open = '<g class="tm-ob-key" data-k="' + k.id + '">', close = '</g>';
-    if (k.sh === 'prong') {
-      // bastón horizontal (palanca del meñique): barra con la punta izquierda curvada
-      // hacia abajo — el símbolo de la carta de Cdang rotado 90° CCW
-      var x = k.x, y = k.y;
-      return open + '<path class="k-pad" d="M' + (x + 10) + ' ' + (y - 3.5) +
-        ' L' + (x - 5) + ' ' + (y - 3.5) +
-        ' Q' + (x - 10) + ' ' + (y - 3.5) + ' ' + (x - 10) + ' ' + (y + 1) +
-        ' L' + (x - 10) + ' ' + (y + 6) +
-        ' Q' + (x - 10) + ' ' + (y + 9.5) + ' ' + (x - 6.5) + ' ' + (y + 9.5) +
-        ' Q' + (x - 3) + ' ' + (y + 9.5) + ' ' + (x - 3) + ' ' + (y + 6.5) +
-        ' L' + (x - 3) + ' ' + (y + 3.5) +
-        ' L' + (x + 10) + ' ' + (y + 3.5) + ' Z"/>' + close;
-    }
-    if (k.sh === 'oct') {
-      return open + '<ellipse class="k-pad" cx="' + k.x + '" cy="' + k.y + '" rx="6" ry="8"/>' + close;
-    }
-    if (k.sh === 'loop') {
-      return open + '<ellipse class="k-pad" cx="' + k.x + '" cy="' + k.y + '" rx="8" ry="6"/>' + close;
-    }
-    // hole: plato con anillo decorativo encima
-    return open +
-      '<circle class="k-pad" cx="' + k.x + '" cy="' + k.y + '" r="11"/>' +
-      '<circle class="k-ring" cx="' + k.x + '" cy="' + k.y + '" r="4.5"/>' + close;
+  function columna(cfg) {
+    // El viewBox tiene que coincidir EXACTAMENTE con la foto: aqui la imagen es un <img>
+    // aparte y el SVG se superpone encima, asi que cualquier margen cambia la proporcion
+    // y descoloca los marcadores. Lo que sobresale no se recorta porque .tm-ob-svg lleva
+    // overflow:visible.
+    var vb = '0 0 ' + cfg.w + ' ' + cfg.h;
+    return '<div class="tm-ob-col">' +
+      '<p class="tm-ob-cap">' + cfg.titulo + '</p>' +
+      '<div class="tm-ob-foto">' +
+        '<picture><source type="image/webp" srcset="/assets/img/oboe/' + cfg.img + '.webp">' +
+        '<img class="tm-ob-img" src="/assets/img/oboe/' + cfg.img + '.jpg" width="' + cfg.w + '" height="' + cfg.h + '" loading="lazy" alt="' + cfg.alt + '"></picture>' +
+        '<svg class="tm-ob-svg" viewBox="' + vb + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="' + cfg.alt + '">' + marcadores(cfg) + '</svg>' +
+      '</div>' +
+    '</div>';
+  }
+
+  // La 1a llave de octava va en el pulgar izquierdo, por detras: no sale en la foto.
+  function buildPulgar() {
+    return '<svg class="tm-ob-pulgarsvg" viewBox="0 0 200 120" role="img" aria-label="Cara oculta del oboe: la primera llave de octava, que acciona el pulgar izquierdo, se ilumina cuando hay que pulsarla">' +
+      '<defs>' +
+        '<linearGradient id="tmObMet" x1="0" y1="0" x2="1" y2="0">' +
+          '<stop offset="0" stop-color="#c9ccd3"/><stop offset=".45" stop-color="#f2f3f6"/><stop offset="1" stop-color="#9fa3ab"/>' +
+        '</linearGradient>' +
+        '<linearGradient id="tmObMetOn" x1="0" y1="0" x2="1" y2="0">' +
+          '<stop offset="0" stop-color="#ffb347"/><stop offset=".45" stop-color="#ffd08a"/><stop offset="1" stop-color="#e08800"/>' +
+        '</linearGradient>' +
+      '</defs>' +
+      // trozo de cuerpo visto por detras: granadillo, oscuro
+      '<rect x="72" y="6" width="56" height="108" rx="14" fill="#241f1d" stroke="#0f0d0c" stroke-width="1.2"/>' +
+      '<rect x="80" y="12" width="8" height="96" rx="4" fill="#3b3532" opacity=".8"/>' +
+      // varilla y gatillo de la 1a octava
+      '<line x1="100" y1="22" x2="100" y2="48" stroke="#b9bbc1" stroke-width="2.4"/>' +
+      '<g class="tm-ob-key" data-k="OCT1">' +
+        '<rect class="tm-ob-th-pad" x="66" y="46" width="68" height="22" rx="11"/>' +
+        '<ellipse fill="#fff" opacity=".45" cx="90" cy="53" rx="16" ry="4"/>' +
+      '</g>' +
+      // apoyo del pulgar (decorativo)
+      '<rect x="78" y="82" width="44" height="24" rx="8" fill="#4a4340" stroke="#2b2624" stroke-width="1"/>' +
+      '<text class="tm-ob-thlab" x="100" y="118">pulgar izquierdo</text>' +
+      '</svg>';
   }
 
   function tmOboeEngine(containerId) {
@@ -241,13 +247,6 @@
     if (!wrap) return;
     var uid = containerId;
 
-    var keysSvg = KEYS.map(keyShape).join('');
-    // Vertical (como se toca): el grupo gira 90° y cada etiqueta se contrarrota -90° para seguir legible.
-    var DECOV = DECO
-      .replace(/<text[^>]*>Mano izquierda<\/text>/, '')
-      .replace(/<text[^>]*>Mano derecha<\/text>/, '')
-      .replace(/<text class="([^"]+)" x="([\d.]+)" y="([\d.]+)">/g,
-        '<text class="$1" x="$2" y="$3" transform="rotate(-90 $2 $3)">');
     var btns = ORDEN.map(function (n) {
       var hasData = !!FING[n];
       return '<button class="tm-ob-btn' + (hasData ? '' : ' todo') + '" data-n="' + n + '">' + label(n) + '</button>';
@@ -255,14 +254,20 @@
 
     wrap.innerHTML =
       '<div class="tm-ob-wrap">' +
-        '<div class="tm-ob-readout" id="' + uid + '_ro"><span class="tm-ob-hint">Elige una nota para ver su digitación</span></div>' +
-        '<div class="tm-ob-diagram"><svg class="tm-ob-svg" viewBox="0 0 ' + (SVG_H + 20) + ' ' + SVG_W + '" role="img" aria-label="Diagrama de digitación del oboe: instrumento en vertical (como se toca) con caña a la izquierda y campana a la derecha; las llaves pulsadas se muestran en dorado">' +
-          '<g transform="rotate(90) translate(0,-' + (SVG_H + 20) + ')">' + DECOV + keysSvg + '</g>' +
-        '</svg></div>' +
+        '<div class="tm-ob-readout" id="' + uid + '_ro"><span class="tm-ob-hint">Elige una nota para ver su digitaci\u00f3n</span></div>' +
+        '<div class="tm-ob-diagram">' +
+          '<div class="tm-ob-cols">' +
+            ORDEN_FOTOS.map(function (n) { return columna(FOTOS[n]); }).join('') +
+          '</div>' +
+          '<div class="tm-ob-pulgar">' +
+            buildPulgar() +
+            '<p class="tm-ob-pulgarcap"><strong>Por detr\u00e1s.</strong> La <strong>1.\u00aa llave de octava</strong> la acciona el <strong>pulgar izquierdo</strong> en la cara oculta del tubo, as\u00ed que no sale en las fotos y se dibuja aparte.</p>' +
+          '</div>' +
+          '<p class="tm-ob-credit">Fotos: oboe Yamaha YOB-831, Yamaha Corporation v\u00eda <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Oboe_YOB-831.tif" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Llave de octava del pulgar: diagrama propio.</p>' +
+        '</div>' +
         '<div class="tm-ob-btns">' + btns + '</div>' +
       '</div>';
 
-    var svg = wrap.querySelector('.tm-ob-svg');
     var ro = document.getElementById(uid + '_ro');
     var audio = new Audio();
 
@@ -306,9 +311,9 @@
       wrap.querySelectorAll('.tm-ob-btn').forEach(function (b) { b.classList.remove('sel'); });
       if (btn) btn.classList.add('sel');
       var data = FING[n];
-      svg.querySelectorAll('.tm-ob-key').forEach(function (c) { c.classList.remove('on'); });
+      wrap.querySelectorAll('.tm-ob-key').forEach(function (c) { c.classList.remove('on'); });
       if (data) data.keys.forEach(function (id) {
-        var c = svg.querySelector('.tm-ob-key[data-k="' + id + '"]'); if (c) c.classList.add('on');
+        wrap.querySelectorAll('.tm-ob-key[data-k="' + id + '"]').forEach(function (c) { c.classList.add('on'); });
       });
       var estado = data ? '' : ' · <span class="tm-ob-prov">digitación por confirmar</span>';
       ro.innerHTML =
