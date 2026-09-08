@@ -1,7 +1,7 @@
 /* Diagrama de digitaciones del flautín / piccolo (sistema Boehm) — interactivo.
-   Flautín horizontal propio: cabeza de madera con embocadura a la izquierda y cuerpo
-   de granadillo SIN pata (el flautín no tiene las llaves de Do/Do♯ del pie de la
-   flauta). Llave plateada = abierta, llave dorada = pulsada.
+   FOTOGRAFIA real (Yamaha YPC-81, granadillo y plata) con una capa SVG que ilumina la
+   llave que se pulsa. El flautín no tiene pie, así que no lleva las llaves de Do/Do♯
+   de la flauta: son 12 controles en vez de 14.
    Uso: <div id="x"></div><script>tmFlautinEngine('x');</script>
    Digitaciones = las de la flauta travesera (mismo sistema Boehm, misma carta ya
    verificada en digitaciones-flauta-engine.js) para las notas escritas Re4–Do7;
@@ -12,21 +12,36 @@
 (function () {
   'use strict';
 
-  var KEYS = [
-    { id: 'T',   sh: 'spat',  x: 215, y: 156, w: 18, h: 11 }, // pulgar Si
-    { id: 'Tb',  sh: 'spat',  x: 243, y: 163, w: 15, h: 10 }, // pulgar Si♭
-    { id: 'LI',  sh: 'plate', x: 255, y: 120 },
-    { id: 'LM',  sh: 'plate', x: 290, y: 120 },
-    { id: 'LA',  sh: 'plate', x: 325, y: 120 },
-    { id: 'LG',  sh: 'loop',  x: 352, y: 150 },               // Sol#
-    { id: 'RI',  sh: 'plate', x: 415, y: 120 },
-    { id: 'Tr1', sh: 'trill', x: 432, y: 94 },
-    { id: 'Tr2', sh: 'trill', x: 467, y: 91 },
-    { id: 'RM',  sh: 'plate', x: 450, y: 120 },
-    { id: 'RA',  sh: 'plate', x: 485, y: 120 },
-    { id: 'REb', sh: 'loop',  x: 505, y: 152 }                // Mi♭
-  ];
-  var SVG_W = 680, SVG_H = 220;
+  /* Coordenadas sobre la FOTO (viewBox 1595x232 = pixeles de digitacion.jpg).
+     Cabeza a la IZQUIERDA y pie a la DERECHA. Las senalo Eduardo sobre la imagen.
+
+     El flautin es de PLATOS CERRADOS: todos los platillos son discos identicos, sin el
+     agujero que en la flauta delata cual se pulsa. No se puede calibrar "a ojo" ni por
+     analisis de imagen; hicieron falta seis intentos fallidos antes de aceptarlo.
+     Lo que SI cierra el reparto: entre LA y RI tiene que haber exactamente DOS platos,
+     que son los dos trinos. Medidos por perfil de brillo en 1115 y 1170, encajan.
+     OJO: un flautin NO es una flauta a escala. Sus manos van mas juntas, asi que el
+     hueco de los trinos es proporcionalmente mucho mas estrecho que en la flauta
+     (0,9 veces la separacion LI-LM, frente a 3,4 alli). Trasladar las proporciones de
+     la flauta da un reparto equivocado: ese fue el error que costo la tarde.
+
+     Las DOS del pulgar (T y Tb) no salen: van en la cara oculta. Se dibujan aparte. */
+  var FOTO = {
+    img: 'digitacion', w: 1595, h: 232, margen: 16,
+    k: {
+      LI:  [ 824, 133, 30], LM: [ 968, 130, 30], LA: [1079, 112, 30],
+      LG:  [1096,  30, 22],
+      Tr1: [1115, 126, 24], Tr2:[1170, 126, 24],
+      RI:  [1209, 130, 30], RM: [1312, 134, 30], RA: [1384, 141, 30],
+      REb: [1519, 160, 30]
+    }
+  };
+  // La tira usa el alto completo; las filas de movil recortan por arriba y por abajo,
+  // que en el flautin es casi todo tubo vacio y las dejaba en 200 px cada una.
+  function ventana(x, ancho, y, alto) {
+    if (y == null) { y = -FOTO.margen; alto = FOTO.h + 2 * FOTO.margen; }
+    return x + ' ' + y + ' ' + ancho + ' ' + alto;
+  }
 
   var NAMES = {
     T: 'pulgar (Si)', Tb: 'pulgar (Si♭)', LI: 'índice izq.', LM: 'medio izq.', LA: 'anular izq.',
@@ -121,27 +136,42 @@
   var CSS = [
     '.tm-fn-wrap{margin:18px 0;}',
     '.tm-fn-readout{text-align:center;background:#fdfcf9;border:1px solid #e8e0cc;border-radius:8px;padding:14px;margin-bottom:12px;min-height:54px;}',
+    '.tm-fn-note{font-size:1.5rem;font-weight:800;color:#1a1a1a;line-height:1.1;}',
     '.tm-fn-reg{font-size:.9rem;color:#666;margin-top:2px;}',
     '.tm-fn-keysline{font-size:.88rem;color:#8b6914;margin-top:4px;}',
     '.tm-fn-hint{font-size:1.02rem;color:#999;font-weight:600;}',
-    '.tm-fn-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:6px;display:flex;justify-content:center;}',
-    '.tm-fn-svg{display:block;max-width:640px;width:100%;height:auto;margin:0 auto;}',
-    '.tm-fn-key .k-pad{fill:#e9eaee;stroke:#8f9199;stroke-width:1.5;}',
-    '.tm-fn-key.on .k-pad{fill:#8b6914;stroke:#6b5010;}',
-    '.tm-fn-key .k-ring{fill:none;stroke:#8f9199;stroke-width:1.2;}',
-    '.tm-fn-key.on .k-ring{stroke:#e8dcc0;}',
-    '.tm-fn-klab{font-family:Arial,Helvetica,sans-serif;font-size:11px;fill:#555;text-anchor:middle;}',
-    '.tm-fn-grp{font-family:Arial,Helvetica,sans-serif;font-size:12px;fill:#8b6914;text-anchor:middle;font-weight:bold;}',
+    '.tm-fn-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:10px 8px;}',
+    '.tm-fn-svg{display:block;width:100%;height:auto;}',
+    '.tm-fn-filas{display:none;}',
+    '.tm-fn-filas .tm-fn-svg + .tm-fn-svg{margin-top:8px;}',
+    // marcador: invisible en reposo, naranja intenso al pulsar. Va mas marcado que en el
+    // saxofon: aqui el instrumento es pequeno y sale a poca altura en pantalla.
+    '.tm-fn-key .k-dot{fill:#ff7a00;fill-opacity:0;stroke:rgba(255,255,255,0);stroke-width:0;transition:all .16s;}',
+    '.tm-fn-key.on .k-dot{fill:#ff7a00;fill-opacity:.95;stroke:#fff;stroke-width:11;filter:drop-shadow(0 0 26px #ff6a00);}',
+    // panel del pulgar (dibujado): tubo apagado para que el naranja destaque
+    '.tm-fn-pulgar{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px;flex-wrap:wrap;}',
+    '.tm-fn-pulgarsvg{width:min(60vw,240px);height:auto;}',
+    '.tm-fn-pulgarcap{font-size:.8rem;color:#777;max-width:280px;margin:0;line-height:1.35;}',
+    '.tm-fn-pulgarcap strong{color:#555;}',
+    '.tm-fn-th-pad{fill:url(#tmFnMet);stroke:#7f828a;stroke-width:1.5;transition:fill .15s,stroke .15s;}',
+    '.tm-fn-key.on .tm-fn-th-pad{fill:url(#tmFnMetOn);stroke:#fff;stroke-width:2.4;filter:drop-shadow(0 0 6px #ff9500);}',
+    '.tm-fn-thlab{font-family:Arial,Helvetica,sans-serif;font-size:13px;fill:#555;text-anchor:middle;}',
+    '.tm-fn-credit{font-size:.72rem;color:#9a9a9a;text-align:center;margin-top:8px;}',
+    '.tm-fn-credit a{color:inherit;}',
     '.tm-fn-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}',
     '.tm-fn-btn{min-width:48px;padding:10px 12px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}',
     '.tm-fn-btn:hover{background:#fdf8ee;border-color:#8b6914;}',
     '.tm-fn-btn.sel{background:#8b6914;color:#fff;border-color:#8b6914;}',
     '.tm-fn-noterow{display:flex;align-items:center;justify-content:center;gap:10px;}',
-    '.tm-fn-intl{font-size:1.5rem;font-weight:800;color:#1a1a1a;line-height:1.1;}',
     '.tm-fn-play{width:34px;height:34px;border-radius:50%;border:none;background:#8b6914;color:#fff;font-size:.85rem;cursor:pointer;line-height:1;flex:0 0 auto;}',
     '.tm-fn-play:hover{background:#6b5010;}',
-    '.tm-fn-staff{display:flex;justify-content:center;align-items:center;min-height:120px;}',
-    '.tm-fn-staff svg{max-width:100%;height:auto;}'
+    '.tm-fn-staff{display:flex;justify-content:center;align-items:center;min-height:130px;}',
+    '.tm-fn-staff svg{max-width:100%;height:auto;}',
+    '.tm-fn-intl{font-size:1.5rem;font-weight:800;color:#1a1a1a;line-height:1.1;}',
+    /* Movil: la tira entera se queda en 26 px de alto y no se distingue una llave de
+       otra, asi que se cambia por dos filas con la mecanica ampliada. VA AL FINAL: los
+       media queries no suman especificidad y una regla base posterior les ganaria. */
+    '@media(max-width:600px){.tm-fn-tira{display:none;}.tm-fn-filas{display:block;}}'
   ].join('');
 
   function injectCSS() {
@@ -156,66 +186,54 @@
     if (!wrap) return;
     var uid = containerId;
 
-    /* Dibujo del flautín: cabeza y cuerpo de granadillo casi negro, mecánica plateada,
-       SIN pata (el tubo termina tras el anular derecho). */
-    var body =
-      '<defs><linearGradient id="tmFnWood" x1="0" y1="0" x2="0" y2="1">' +
-        '<stop offset="0" stop-color="#4a453f"/><stop offset="0.3" stop-color="#2c2825"/>' +
-        '<stop offset="0.6" stop-color="#1a1715"/><stop offset="1" stop-color="#0d0b0a"/>' +
-      '</linearGradient><linearGradient id="tmFnMetal" x1="0" y1="0" x2="0" y2="1">' +
-        '<stop offset="0" stop-color="#ffffff"/><stop offset="0.35" stop-color="#e6e7ea"/>' +
-        '<stop offset="0.55" stop-color="#c7c9cf"/><stop offset="1" stop-color="#a9abb2"/>' +
-      '</linearGradient></defs>' +
-      // cabeza de madera con corona
-      '<rect x="70" y="110" width="115" height="21" rx="10" fill="url(#tmFnWood)" stroke="#0d0b0a" stroke-width="1"/>' +
-      '<rect x="52" y="107" width="22" height="27" rx="7" fill="url(#tmFnWood)" stroke="#0d0b0a" stroke-width="1"/>' +
-      '<rect x="72" y="113" width="110" height="2.5" rx="1" fill="#6e655c" opacity="0.7"/>' +
-      // embocadura (óvalo tallado en la madera)
-      '<ellipse cx="118" cy="120" rx="17" ry="10" fill="url(#tmFnWood)" stroke="#3a332c" stroke-width="1.2"/>' +
-      '<ellipse cx="118" cy="120" rx="7" ry="4.5" fill="#0a0806"/>' +
-      // anilla de unión cabeza-cuerpo
-      '<rect x="185" y="107" width="7" height="27" rx="2" fill="#cdced3" stroke="#9a9ca3" stroke-width="0.8"/>' +
-      // cuerpo (termina SIN pata tras el anular derecho)
-      '<rect x="192" y="110" width="338" height="21" rx="6" fill="url(#tmFnWood)" stroke="#0d0b0a" stroke-width="1"/>' +
-      '<rect x="196" y="113" width="330" height="2.5" rx="1" fill="#6e655c" opacity="0.7"/>' +
-      '<rect x="524" y="108" width="7" height="25" rx="2" fill="#cdced3" stroke="#9a9ca3" stroke-width="0.8"/>' +
-      '<ellipse cx="531" cy="120.5" rx="3.5" ry="10" fill="#3a322b"/>' +
-      // eje longitudinal del mecanismo
-      '<line x1="200" y1="108" x2="520" y2="108" stroke="#b9bbc1" stroke-width="1.6"/>' +
-      // varillas: pulgar (T, Tb), Sol#, Mib, trinos
-      '<line x1="215" y1="131" x2="215" y2="151" stroke="#b9bbc1" stroke-width="1.4"/>' +
-      '<line x1="243" y1="131" x2="243" y2="158" stroke="#b9bbc1" stroke-width="1.4"/>' +
-      '<line x1="352" y1="131" x2="352" y2="144" stroke="#b9bbc1" stroke-width="1.4"/>' +
-      '<line x1="505" y1="131" x2="505" y2="146" stroke="#b9bbc1" stroke-width="1.4"/>' +
-      '<line x1="432" y1="109" x2="432" y2="99" stroke="#b9bbc1" stroke-width="1.4"/>' +
-      '<line x1="467" y1="109" x2="467" y2="96" stroke="#b9bbc1" stroke-width="1.4"/>' +
-      // etiquetas
-      '<text class="tm-fn-klab" x="118" y="150">Embocadura</text>' +
-      '<text class="tm-fn-klab" x="255" y="98">Í</text><text class="tm-fn-klab" x="290" y="98">M</text><text class="tm-fn-klab" x="325" y="98">A</text>' +
-      '<text class="tm-fn-klab" x="415" y="98">Í</text><text class="tm-fn-klab" x="450" y="98">M</text><text class="tm-fn-klab" x="485" y="98">A</text>' +
-      '<text class="tm-fn-klab" x="432" y="80">T1</text><text class="tm-fn-klab" x="467" y="77">T2</text>' +
-      '<text class="tm-fn-klab" x="208" y="180">Si</text><text class="tm-fn-klab" x="250" y="184">Si♭</text>' +
-      '<text class="tm-fn-klab" x="352" y="172">Sol♯</text><text class="tm-fn-klab" x="505" y="172">Mi♭</text>' +
-      '<text class="tm-fn-klab" x="600" y="124">sin pata</text>' +
-      '<text class="tm-fn-grp" x="215" y="212">Pulgar</text>' +
-      '<text class="tm-fn-grp" x="325" y="212">Mano izquierda</text>' +
-      '<text class="tm-fn-grp" x="470" y="212">Mano derecha</text>';
-
-    var keysSvg = KEYS.map(function (k) {
-      var b;
-      if (k.sh === 'plate') {
-        b = '<circle class="k-pad" cx="' + k.x + '" cy="' + k.y + '" r="11"/>' +
-            '<circle class="k-ring" cx="' + k.x + '" cy="' + k.y + '" r="4.5"/>';
-      } else if (k.sh === 'trill') {
-        b = '<circle class="k-pad" cx="' + k.x + '" cy="' + k.y + '" r="5"/>';
-      } else if (k.sh === 'loop') {
-        b = '<ellipse class="k-pad" cx="' + k.x + '" cy="' + k.y + '" rx="8" ry="6"/>';
-      } else { // spat
-        b = '<rect class="k-pad" x="' + (k.x - k.w / 2) + '" y="' + (k.y - k.h / 2) +
-            '" width="' + k.w + '" height="' + k.h + '" rx="5"/>';
+    // Los 10 marcadores sobre la foto. Se repiten en cada ventana (tira y filas):
+    // pick() enciende todas las copias a la vez con querySelectorAll.
+    function marcadores() {
+      var s = '';
+      for (var id in FOTO.k) {
+        var c = FOTO.k[id];
+        s += '<g class="tm-fn-key" data-k="' + id + '">' +
+             '<circle class="k-dot" cx="' + c[0] + '" cy="' + c[1] + '" r="' + c[2] + '"/></g>';
       }
-      return '<g class="tm-fn-key" data-k="' + k.id + '">' + b + '</g>';
-    }).join('');
+      return s;
+    }
+    function vista(x, ancho, etiqueta, y, alto) {
+      return '<svg class="tm-fn-svg" viewBox="' + ventana(x, ancho, y, alto) + '" role="img" aria-label="' + etiqueta + '">' +
+        '<image href="/assets/img/flautin/' + FOTO.img + '.jpg" x="0" y="0" width="' + FOTO.w + '" height="' + FOTO.h + '"/>' +
+        marcadores() + '</svg>';
+    }
+
+    // Las dos llaves del PULGAR van en la cara oculta del tubo y no salen en la foto:
+    // se dibujan aparte y se iluminan igual (data-k="T" y "Tb").
+    function buildPulgar() {
+      return '<svg class="tm-fn-pulgarsvg" viewBox="0 0 260 118" role="img" aria-label="Cara oculta del flautín: las dos llaves del pulgar izquierdo se iluminan cuando hay que pulsarlas">' +
+        '<defs>' +
+          '<linearGradient id="tmFnMet" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0" stop-color="#f2f3f6"/><stop offset=".5" stop-color="#c9ccd3"/><stop offset="1" stop-color="#9fa3ab"/>' +
+          '</linearGradient>' +
+          '<linearGradient id="tmFnMetOn" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0" stop-color="#ffd08a"/><stop offset=".5" stop-color="#ffb347"/><stop offset="1" stop-color="#e08800"/>' +
+          '</linearGradient>' +
+          '<linearGradient id="tmFlTubo" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0" stop-color="#9a9da4"/><stop offset=".45" stop-color="#babdc4"/><stop offset="1" stop-color="#82858c"/>' +
+          '</linearGradient>' +
+        '</defs>' +
+        // trozo de tubo visto por detras (apagado: si va tan claro como la foto, el
+        // marcador naranja no destaca)
+        '<rect x="8" y="34" width="244" height="34" rx="17" fill="url(#tmFlTubo)" stroke="#6f7278" stroke-width="1.2"/>' +
+        // llave del pulgar Si (la grande, donde descansa el dedo)
+        '<g class="tm-fn-key" data-k="T">' +
+          '<rect class="tm-fn-th-pad" x="78" y="38" width="62" height="26" rx="12"/>' +
+        '</g>' +
+        // llave del pulgar Si bemol (la pequena, al lado)
+        '<g class="tm-fn-key" data-k="Tb">' +
+          '<rect class="tm-fn-th-pad" x="150" y="41" width="38" height="20" rx="10"/>' +
+        '</g>' +
+        '<text class="tm-fn-thlab" x="109" y="88">Si</text>' +
+        '<text class="tm-fn-thlab" x="169" y="88">Si♭</text>' +
+        '<text class="tm-fn-thlab" x="130" y="110" style="font-size:11px;fill:#888">pulgar izquierdo</text>' +
+        '</svg>';
+    }
 
     var btns = ORDEN.map(function (n) {
       return '<button class="tm-fn-btn" data-n="' + n + '">' + label(n) + '</button>';
@@ -224,13 +242,23 @@
     wrap.innerHTML =
       '<div class="tm-fn-wrap">' +
         '<div class="tm-fn-readout" id="' + uid + '_ro"><span class="tm-fn-hint">Elige una nota para ver su digitación</span></div>' +
-        '<div class="tm-fn-diagram"><svg class="tm-fn-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" role="img" aria-label="Diagrama de digitación del flautín: instrumento horizontal con la embocadura a la izquierda y el cuerpo sin pata; las llaves pulsadas se muestran en dorado">' +
-          body + keysSvg +
-        '</svg></div>' +
-        '<div class="tm-fn-btns">' + btns + '</div>' +
+        '<div class="tm-fn-diagram">' +
+          '<div class="tm-fn-tira">' +
+            vista(0, FOTO.w, 'Digitación del flautín sobre una fotografía real: cabeza a la izquierda, pie a la derecha') +
+          '</div>' +
+          '<div class="tm-fn-filas">' +
+            vista(760, 420, 'Mitad izquierda del mecanismo, ampliada', 4, 198) +
+            vista(1180, 415, 'Mitad derecha del mecanismo, ampliada', 4, 198) +
+          '</div>' +
+          '<div class="tm-fn-pulgar">' +
+            buildPulgar() +
+            '<p class="tm-fn-pulgarcap"><strong>Por detrás.</strong> Las dos llaves del <strong>pulgar izquierdo</strong> van en la cara oculta del tubo, así que no salen en la foto y se dibujan aparte.</p>' +
+          '</div>' +
+          '<p class="tm-fn-credit">Foto: flautín Yamaha YPC-81, Yamaha Corporation vía <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Piccolo_YPC-81.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Llaves del pulgar: diagrama propio.</p>' +
+        '</div>' +
+        '<div class="tm-fn-btns" id="' + uid + '_btns">' + btns + '</div>' +
       '</div>';
 
-    var svg = wrap.querySelector('.tm-fn-svg');
     var ro = document.getElementById(uid + '_ro');
     var audio = new Audio();
 
@@ -274,10 +302,10 @@
       wrap.querySelectorAll('.tm-fn-btn').forEach(function (b) { b.classList.remove('sel'); });
       if (btn) btn.classList.add('sel');
       var data = FING[n];
-      svg.querySelectorAll('.tm-fn-key').forEach(function (c) { c.classList.remove('on'); });
+      wrap.querySelectorAll('.tm-fn-key').forEach(function (c) { c.classList.remove('on'); });
       var nombres = [];
       if (data) data.keys.forEach(function (id) {
-        var c = svg.querySelector('.tm-fn-key[data-k="' + id + '"]'); if (c) c.classList.add('on');
+        wrap.querySelectorAll('.tm-fn-key[data-k="' + id + '"]').forEach(function (c) { c.classList.add('on'); });
         if (NAMES[id]) nombres.push(NAMES[id]);
       });
       ro.innerHTML =
