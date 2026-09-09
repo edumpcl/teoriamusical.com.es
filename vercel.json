@@ -6,31 +6,119 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(self), geolocation=()" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(self), geolocation=()"
+        }
       ]
     },
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/assets/img/intervalos/fichas/(.*).pdf",
       "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex" }
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
       ]
     }
   ],
   "redirects": [
-    { "source": "/wp-content/uploads/:path*", "destination": "/assets/img/:path*", "permanent": true },
-    { "source": "/blog/historia/himno-a-san-juan/", "destination": "/blog/himno-a-san-juan/", "permanent": true },
-    { "source": "/diccionario-musical/tonalidades/orden-de-las-alteraciones-en-la-que-aparecen-las-armaduras/", "destination": "/diccionario-musical/tonalidades/orden-de-los-sostenidos-y-bemoles/", "permanent": true },
-    { "source": "/teoria-musical", "destination": "/", "permanent": true },
-    { "source": "/index.php", "destination": "/", "permanent": true },
-    { "source": "/wp-admin/:path*", "destination": "/", "permanent": false },
-    { "source": "/wp-login.php", "destination": "/", "permanent": false }
+    {
+      "source": "/wp-content/uploads/:path*",
+      "destination": "/assets/img/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/blog/historia/himno-a-san-juan/",
+      "destination": "/blog/himno-a-san-juan/",
+      "permanent": true
+    },
+    {
+      "source": "/diccionario-musical/tonalidades/orden-de-las-alteraciones-en-la-que-aparecen-las-armaduras/",
+      "destination": "/diccionario-musical/tonalidades/orden-de-los-sostenidos-y-bemoles/",
+      "permanent": true
+    },
+    {
+      "source": "/teoria-musical",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/index.php",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/wp-admin/:path*",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/wp-login.php",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/segundas",
+      "destination": "/ejercicios/ejercicios-de-intervalos-musicales/segundas/",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/terceras",
+      "destination": "/ejercicios/ejercicios-de-intervalos-musicales/terceras/",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/cuartas",
+      "destination": "/ejercicios/ejercicios-de-intervalos-musicales/cuartas/",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/quintas",
+      "destination": "/ejercicios/ejercicios-de-intervalos-musicales/quintas/",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/sextas",
+      "destination": "/ejercicios/ejercicios-de-intervalos-musicales/sextas/",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/septimas",
+      "destination": "/ejercicios/ejercicios-de-intervalos-musicales/septimas/",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/octavas",
+      "destination": "/ejercicios/ejercicios-de-intervalos-musicales/octavas/",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/semitono-y-enarmonicas",
+      "destination": "/ejercicios/ejercicios-de-intervalos-musicales/semitono-diatonico-semitono-cromatico-notas-enarmonicas-y-unisono/",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos",
+      "destination": "/ejercicios/ejercicios-de-intervalos-musicales/",
+      "permanent": true
+    }
   ]
 }

@@ -1504,6 +1504,7 @@
 
   <!-- Ejercicios: intervalos (análisis) -->
   <url><loc>https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/</loc><lastmod>2026-05-29</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/a-medida/</loc><lastmod>2026-09-09</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-en-pdf/</loc><lastmod>2026-09-02</lastmod></url>
 
   <url><loc>https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/analisis-completo-de-intervalos/</loc><lastmod>2026-05-29</lastmod></url>
@@ -1522,15 +1523,6 @@
   <url><loc>https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/semitono-diatonico-semitono-cromatico-notas-enarmonicas-y-unisono/</loc><lastmod>2026-05-29</lastmod></url>
 
   <!-- Ejercicios: construir intervalos -->
-  <url><loc>https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/</loc><lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/segundas/</loc><lastmod>2026-09-02</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/terceras/</loc><lastmod>2026-09-02</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/cuartas/</loc><lastmod>2026-09-02</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/quintas/</loc><lastmod>2026-09-02</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/sextas/</loc><lastmod>2026-09-02</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/septimas/</loc><lastmod>2026-09-02</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/octavas/</loc><lastmod>2026-09-02</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/semitono-y-enarmonicas/</loc><lastmod>2026-05-29</lastmod></url>
 
   <!-- Ejercicios: acordes -->
   <url><loc>https://www.teoriamusical.com.es/ejercicios/acordes/</loc><lastmod>2026-05-29</lastmod></url>
@@ -1574,4 +1566,5 @@
   <url><loc>https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-menor-dorica-con-armadura/</loc><lastmod>2026-06-05</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/ejercicios/escalas/escalas-mixolidia/</loc><lastmod>2026-06-05</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/ejercicios/escalas/escalas-menores-dorica/</loc><lastmod>2026-06-05</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-de-los-timbales/</loc><lastmod>2026-09-08</lastmod></url>
 </urlset>

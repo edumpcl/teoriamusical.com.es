@@ -192,15 +192,15 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Distancia de intervalos](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/distancia/): Calcular la distancia en tonos y semitonos de un intervalo.
 - [Intervalos consonantes y disonantes](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/intervalos-consonantes-y-disonantes/): Clasificar intervalos según su cualidad consonante o disonante.
 - [Semitono diatónico, cromático, enarmónicas y unísono](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/semitono-diatonico-semitono-cromatico-notas-enarmonicas-y-unisono/): Ejercicios combinados sobre tipos de semitono, notas enarmónicas e intervalos de unísono.
-- [Construir intervalos](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/): Portada de los ejercicios de construcción de intervalos sobre una nota dada.
-- [Construir segundas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/segundas/): Escribe la nota que forma una segunda mayor o menor sobre la nota indicada.
-- [Construir terceras](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/terceras/): Construir intervalos de tercera sobre una nota dada.
-- [Construir cuartas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/cuartas/): Construir intervalos de cuarta sobre una nota dada.
-- [Construir quintas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/quintas/): Construir intervalos de quinta sobre una nota dada.
-- [Construir sextas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/sextas/): Construir intervalos de sexta sobre una nota dada.
-- [Construir séptimas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/septimas/): Construir intervalos de séptima sobre una nota dada.
-- [Construir octavas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/octavas/): Construir intervalos de octava sobre una nota dada.
-- [Construir semitonos y enarmónicas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/semitono-y-enarmonicas/): Construir semitonos diatónicos, cromáticos y notas enarmónicas.
+- [Construir intervalos](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/): Portada de los ejercicios de construcción de intervalos sobre una nota dada.
+- [Construir segundas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/segundas/): Escribe la nota que forma una segunda mayor o menor sobre la nota indicada.
+- [Construir terceras](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/terceras/): Construir intervalos de tercera sobre una nota dada.
+- [Construir cuartas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/cuartas/): Construir intervalos de cuarta sobre una nota dada.
+- [Construir quintas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/quintas/): Construir intervalos de quinta sobre una nota dada.
+- [Construir sextas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/sextas/): Construir intervalos de sexta sobre una nota dada.
+- [Construir séptimas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/septimas/): Construir intervalos de séptima sobre una nota dada.
+- [Construir octavas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/octavas/): Construir intervalos de octava sobre una nota dada.
+- [Construir semitonos y enarmónicas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/semitono-diatonico-semitono-cromatico-notas-enarmonicas-y-unisono/): Construir semitonos diatónicos, cromáticos y notas enarmónicas.
 
 ### Escalas
 - [Ejercicios de escalas](https://www.teoriamusical.com.es/ejercicios/escalas/): Portada de todos los ejercicios de escalas musicales.

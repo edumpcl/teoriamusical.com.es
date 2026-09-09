@@ -375,7 +375,8 @@ async function generarFicha(browser, opts) {
   // En las acumulativas la lista de especies por numero seria kilometrica: se
   // explican las abreviaturas una sola vez.
   const tipos = unica
-    ? CALIDADES[num].map(c => `${num}ª ${c.q} = ${num}ª ${NOMBRE_CAL[c.q]}`).join(' &middot; ')
+    ? CALIDADES[num].slice().sort((x, y) => x.s - y.s)          // de la más pequeña a la más grande
+        .map(c => `${num}ª ${c.q} = ${num}ª ${NOMBRE_CAL[c.q]}`).join(' &middot; ')
     : 'M = Mayor &middot; m = menor &middot; J = justa &middot; A = aumentada &middot; d = disminuida';
   const leyenda = `${tipos} &middot; &uarr; ascendente &middot; &darr; descendente. `
     + `Los primeros ejercicios son de notas naturales; despu&eacute;s aparecen sostenidos y bemoles.`;
