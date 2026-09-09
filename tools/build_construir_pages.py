@@ -197,32 +197,54 @@ PAGES = [
 def esc(s):
     return s.replace('&', '&amp;').replace('"', '&quot;')
 
+GRADOS = ['1ª', '2ª', '3ª', '4ª', '5ª', '6ª', '7ª', '8ª']
+
+def etiqueta_corta(etq):
+    """De cabecera de columna solo cabe 'tonica + modo': repetir 'Mayor Mixta Principal'
+    en las tres columnas costaba 39 px y el titulo de encima ya nombra la escala."""
+    partes = etq.split()
+    if len(partes) > 2 and partes[1] in ('Mayor', 'Menor'):
+        return ' '.join(partes[:2])
+    if len(partes) > 1 and partes[1] not in ('Mayor', 'Menor'):
+        return partes[0]
+    return etq
+
+def envuelve(th, filas):
+    return ('<div class="tm-table-wrap">\n<table class="tm-table">\n  <thead>\n    <tr>\n      %s\n'
+            '    </tr>\n  </thead>\n  <tbody>%s\n  </tbody>\n</table>\n</div>' % (th, filas))
+
 def table_html(p):
+    """Los grados van en FILAS, no en columnas: en horizontal la tabla pedia 383 px y en
+    un movil hay 316, asi que las ultimas columnas quedaban fuera."""
     if p.get('is_seq'):
         return seq_table_html(p)
-    cols = ['1ª', '2ª', '3ª', '4ª', '5ª', '6ª', '7ª', '8ª']
-    th = ''.join('<th>%s</th>' % c for c in cols)
-    ivr = ''.join('<td>%s</td>' % v for v in p['intervals'])
-    rows = ''
+    ejemplos = []
     for ex in p['examples']:
         notes = disp_notes(p['datakey'], ex)
         if not notes:
             continue
-        label = ex.replace(' (ascendente)', ' ↑')
-        tds = ''.join('<td>%s</td>' % n for n in notes)
-        rows += '\n    <tr>\n      <td><strong>%s</strong></td>%s\n    </tr>' % (label, tds)
-    return ('<div class="tm-table-wrap">\n<table class="tm-table">\n  <thead>\n    <tr>\n      <th>Grado</th>%s\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><strong>Intervalo</strong></td>%s\n    </tr>%s\n  </tbody>\n</table>\n</div>' % (th, ivr, rows))
+        ejemplos.append((etiqueta_corta(ex.replace(' (ascendente)', ' ↑')), notes))
+    th = '<th>Grado</th><th>Intervalo</th>' + ''.join('<th>%s</th>' % lab for lab, _ in ejemplos)
+    filas = ''
+    for i, g in enumerate(GRADOS):
+        tds = ''.join('<td>%s</td>' % notas[i] for _, notas in ejemplos)
+        filas += ('\n    <tr>\n      <td><strong>%s</strong></td><td>%s</td>%s\n    </tr>'
+                  % (g, p['intervals'][i], tds))
+    return envuelve(th, filas)
 
 def seq_table_html(p):
-    """Tabla asc/desc para la melódica: una fila ascendente (8) y otra descendente (7)."""
+    """Melódica: el ascenso y el descenso, cada uno en su columna."""
     full = disp_notes(p['datakey'], p['examples'][0])
-    name = p['examples'][0]
     asc = full[:8]
-    desc = full[7:]  # desde la octava bajando (comparte la 8ª con el ascenso)
-    th = ''.join('<th>%s</th>' % c for c in ['1ª', '2ª', '3ª', '4ª', '5ª', '6ª', '7ª', '8ª'])
-    asc_tds = ''.join('<td>%s</td>' % n for n in asc)
-    desc_tds = ''.join('<td>%s</td>' % n for n in desc)
-    return ('<div class="tm-table-wrap">\n<table class="tm-table">\n  <thead>\n    <tr>\n      <th>%s</th>%s\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><strong>Ascendente ↑</strong></td>%s\n    </tr>\n    <tr>\n      <td><strong>Descendente ↓</strong></td>%s\n    </tr>\n  </tbody>\n</table>\n</div>' % (name, th, asc_tds, desc_tds))
+    # el descenso se guarda de la 8ª a la 1ª; al ir cada fila a un GRADO hay que darle
+    # la vuelta, para que la 6ª y la 7ª queden enfrentadas con sus versiones elevadas
+    desc = list(reversed(full[7:]))
+    th = '<th>Grado</th><th>Ascendente ↑</th><th>Descendente ↓</th>'
+    filas = ''
+    for i, g in enumerate(GRADOS):
+        filas += ('\n    <tr>\n      <td><strong>%s</strong></td><td>%s</td><td>%s</td>\n    </tr>'
+                  % (g, asc[i], desc[i]))
+    return envuelve(th, filas)
 
 def faq_html(p):
     items = ''

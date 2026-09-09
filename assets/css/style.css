@@ -1005,6 +1005,9 @@ figcaption, .wp-element-caption {
   background: #fdf5e8;
 }
 
+/* Un rango como Fa₃–Do₄ no debe partirse por el guion. */
+.tm-nb { white-space: nowrap; }
+
 /* Tablas en movil: sin esto, `white-space:nowrap` en los TH obliga a la tabla a ser mas
    ancha que la pantalla y las ultimas columnas se ven CORTADAS (la tabla scrollea, pero
    nadie lo adivina). Dejando que la cabecera parta y con menos padding, entran enteras. */
@@ -1012,6 +1015,12 @@ figcaption, .wp-element-caption {
   .tm-table { font-size: .86rem; }
   .tm-table th { white-space: normal; padding: .5rem .55rem; }
   .tm-table td { padding: .5rem .55rem; }
+}
+
+/* Moviles de 360 px (SE y Android antiguos): 14 px menos de padding es lo que separa
+   una tabla que entra de una que hay que arrastrar. */
+@media (max-width: 400px) {
+  .tm-table th, .tm-table td { padding: .45rem .4rem; }
 }
 
 /* Scrollable table wrapper */
