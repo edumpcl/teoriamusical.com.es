@@ -1005,6 +1005,15 @@ figcaption, .wp-element-caption {
   background: #fdf5e8;
 }
 
+/* Tablas en movil: sin esto, `white-space:nowrap` en los TH obliga a la tabla a ser mas
+   ancha que la pantalla y las ultimas columnas se ven CORTADAS (la tabla scrollea, pero
+   nadie lo adivina). Dejando que la cabecera parta y con menos padding, entran enteras. */
+@media (max-width: 600px) {
+  .tm-table { font-size: .86rem; }
+  .tm-table th { white-space: normal; padding: .5rem .55rem; }
+  .tm-table td { padding: .5rem .55rem; }
+}
+
 /* Scrollable table wrapper */
 .tm-table-wrap { overflow-x: auto; margin: 1.5rem 0; }
 
