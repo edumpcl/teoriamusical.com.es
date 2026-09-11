@@ -42,7 +42,7 @@
     '.tm-lm-lim{font:600 3px sans-serif;fill:#8a7f66;}',
     '.tm-lm-cap{font-size:.78rem;color:#8a7f66;text-align:center;margin-top:6px;}',
     /* foto real: se activa cuando hay imagen y láminas marcadas */
-    '.tm-lm-foto{margin:0 0 12px;line-height:0;}',
+    '.tm-lm-foto{margin:0 auto 12px;line-height:0;}',
     '.tm-lm-svgfoto{display:block;width:100%;height:auto;border-radius:8px;background:#faf8f3;}',
     '.tm-lm-partes{display:none;flex-direction:column;gap:8px;}',
     '.tm-lm-lam{fill:#ff9500;fill-opacity:0;stroke:#ff9500;stroke-width:0;vector-effect:non-scaling-stroke;transition:fill-opacity .18s;}',
@@ -56,8 +56,11 @@
     '.tm-lm-btn:disabled{opacity:.32;cursor:not-allowed;}',
     '.tm-lm-btn:focus-visible{outline:3px solid #8b6914;outline-offset:2px;}',
     '.tm-lm-oct .tm-lm-btn{min-width:52px;font-size:.85rem;}',
+    '.tm-lm-tramo{display:none;font-size:.72rem;color:#8a7f66;text-align:center;line-height:1.4;margin-top:5px;}',
     /* las @media al final: no añaden especificidad */
-    '@media(max-width:600px){.tm-lm-tira{display:none;}.tm-lm-partes{display:flex;}.tm-lm-nota{font-size:1.3rem;}.tm-lm-caja{min-width:88px;}.tm-lm-btn{min-width:40px;padding:8px;font-size:.85rem;}}',
+    /* En móvil se enseña SOLO el tramo donde está la lámina encendida: si se apilaran los
+       tres, la foto ocuparía casi dos pantallas y la marca podría quedar fuera de la vista. */
+    '@media(max-width:600px){.tm-lm-tira{display:none;}.tm-lm-partes{display:flex;}.tm-lm-partes>.tm-lm-svgfoto{display:none;}.tm-lm-partes>.tm-lm-svgfoto.act{display:block;}.tm-lm-tramo{display:block;}.tm-lm-nota{font-size:1.3rem;}.tm-lm-caja{min-width:88px;}.tm-lm-btn{min-width:40px;padding:8px;font-size:.85rem;}}',
     '@media(prefers-reduced-motion:reduce){.tm-lm-lam{transition:none;}}'
   ].join('');
 
@@ -121,21 +124,54 @@
       var imagen = '<image href="' + cfg.foto.base + '.jpg" x="0" y="0" width="' + cfg.foto.w +
                    '" height="' + cfg.foto.h + '"></image>';
 
-      function vista(x0, ancho, etiqueta) {
-        return '<svg class="tm-lm-svgfoto" viewBox="' + x0 + ' 0 ' + ancho + ' ' + cfg.foto.h + '" ' +
+      function vista(x0, ancho, etiqueta, extra) {
+        return '<svg class="tm-lm-svgfoto"' + (extra || '') + ' viewBox="' + x0 + ' 0 ' + ancho + ' ' + cfg.foto.h + '" ' +
                'preserveAspectRatio="xMidYMid meet" role="img" aria-label="' + etiqueta + '">' +
                imagen + marcas + '</svg>';
       }
 
       var alt = cfg.alt || ('Foto del ' + (cfg.nombre || 'instrumento'));
-      foto = '<figure class="tm-lm-foto"><div class="tm-lm-tira">' + vista(0, cfg.foto.w, alt) + '</div>';
+      /* que la foto no empuje los botones fuera de la pantalla */
+      var ALTO_MAX = 380;
+      var tope = Math.round(ALTO_MAX * cfg.foto.w / cfg.foto.h);
+      foto = '<figure class="tm-lm-foto" style="max-width:' + tope + 'px">' +
+             '<div class="tm-lm-tira">' + vista(0, cfg.foto.w, alt) + '</div>';
       if (cfg.foto.ventanas && cfg.foto.ventanas.length) {
         foto += '<div class="tm-lm-partes">' +
                 cfg.foto.ventanas.map(function (v, i) {
-                  return vista(v[0], v[1], alt + ' (parte ' + (i + 1) + ')');
-                }).join('') + '</div>';
+                  return vista(v[0], v[1], alt + ' (parte ' + (i + 1) + ')', ' data-tramo="' + i + '"');
+                }).join('') + '</div>' +
+                (cfg.foto.ventanas.length > 1
+                  ? '<div class="tm-lm-tramo" id="' + containerId + '_tr"></div>' : '');
       }
       foto += '</figure>';
+    }
+
+    /* Centro horizontal de cada marca: sirve para saber en qué tramo de la foto cae la
+       lámina encendida, que es el único que se enseña en móvil. */
+    var centroX = {};
+    if (hayFoto) {
+      Object.keys(cfg.marcas).forEach(function (m) {
+        var f = cfg.marcas[m];
+        if (typeof f === 'string') {
+          var xs = f.split(/\s+/).map(function (p) { return +p.split(',')[0]; });
+          centroX[m] = xs.reduce(function (a, b) { return a + b; }, 0) / xs.length;
+        } else {
+          centroX[m] = f.cx;
+        }
+      });
+    }
+    var varios = hayFoto && cfg.foto.ventanas && cfg.foto.ventanas.length > 1;
+
+    function tramoDe(m) {
+      var vs = cfg.foto.ventanas, x = centroX[m], mejor = 0, dist = Infinity;
+      if (x == null) return 0;
+      for (var i = 0; i < vs.length; i++) {
+        if (x >= vs[i][0] && x < vs[i][0] + vs[i][1]) return i;
+        var d = Math.min(Math.abs(x - vs[i][0]), Math.abs(x - vs[i][0] - vs[i][1]));
+        if (d < dist) { dist = d; mejor = i; }
+      }
+      return mejor;
     }
 
     /* Con foto real no se dibuja el teclado esquemático: sería la misma información dos veces. */
@@ -168,6 +204,7 @@
       '</div>';
 
     var ro = document.getElementById(containerId + '_ro');
+    var tramoEl = document.getElementById(containerId + '_tr');
     var audio = new Audio();
 
     function suena(m) {
@@ -184,6 +221,18 @@
       wrap.querySelectorAll('.tm-lm-nat, .tm-lm-alt, .tm-lm-lam').forEach(function (e) {
         e.classList.toggle('on', +e.dataset.m === actual);
       });
+      if (hayFoto && cfg.foto.ventanas && cfg.foto.ventanas.length) {
+        var t = tramoDe(actual);
+        /* el marcado va siempre, aunque solo haya un tramo: si no, en móvil se quedaría
+           sin foto, porque la regla que oculta los tramos inactivos también le afecta */
+        wrap.querySelectorAll('[data-tramo]').forEach(function (s) {
+          s.classList.toggle('act', +s.getAttribute('data-tramo') === t);
+        });
+        if (varios && tramoEl) {
+          tramoEl.textContent = 'Tramo ' + (t + 1) + ' de ' + cfg.foto.ventanas.length +
+            ': el trozo de la foto donde está la lámina encendida';
+        }
+      }
       wrap.querySelectorAll('[data-oct]').forEach(function (b) {
         b.classList.toggle('sel', +b.dataset.oct === octava(actual));
       });
