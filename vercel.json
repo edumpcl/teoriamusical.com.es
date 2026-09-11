@@ -30,7 +30,7 @@
       ]
     },
     {
-      "source": "/assets/img/intervalos/fichas/(.*).pdf",
+      "source": "/assets/img/(.*)/fichas/(.*).pdf",
       "headers": [
         {
           "key": "X-Robots-Tag",

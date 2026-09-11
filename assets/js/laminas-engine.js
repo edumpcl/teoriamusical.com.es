@@ -42,9 +42,9 @@
     '.tm-lm-lim{font:600 3px sans-serif;fill:#8a7f66;}',
     '.tm-lm-cap{font-size:.78rem;color:#8a7f66;text-align:center;margin-top:6px;}',
     /* foto real: se activa cuando hay imagen y láminas marcadas */
-    '.tm-lm-foto{position:relative;margin:0 0 12px;line-height:0;}',
-    '.tm-lm-foto img{display:block;width:100%;height:auto;border-radius:8px;}',
-    '.tm-lm-capa{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}',
+    '.tm-lm-foto{margin:0 0 12px;line-height:0;}',
+    '.tm-lm-svgfoto{display:block;width:100%;height:auto;border-radius:8px;background:#faf8f3;}',
+    '.tm-lm-partes{display:none;flex-direction:column;gap:8px;}',
     '.tm-lm-lam{fill:#ff9500;fill-opacity:0;stroke:#ff9500;stroke-width:0;vector-effect:non-scaling-stroke;transition:fill-opacity .18s;}',
     '.tm-lm-lam.on{fill-opacity:.45;stroke-width:2.5;filter:drop-shadow(0 0 8px rgba(255,149,0,.9));}',
     /* selector: octava + las doce notas */
@@ -57,7 +57,7 @@
     '.tm-lm-btn:focus-visible{outline:3px solid #8b6914;outline-offset:2px;}',
     '.tm-lm-oct .tm-lm-btn{min-width:52px;font-size:.85rem;}',
     /* las @media al final: no añaden especificidad */
-    '@media(max-width:600px){.tm-lm-nota{font-size:1.3rem;}.tm-lm-caja{min-width:88px;}.tm-lm-btn{min-width:40px;padding:8px;font-size:.85rem;}}',
+    '@media(max-width:600px){.tm-lm-tira{display:none;}.tm-lm-partes{display:flex;}.tm-lm-nota{font-size:1.3rem;}.tm-lm-caja{min-width:88px;}.tm-lm-btn{min-width:40px;padding:8px;font-size:.85rem;}}',
     '@media(prefers-reduced-motion:reduce){.tm-lm-lam{transition:none;}}'
   ].join('');
 
@@ -104,22 +104,42 @@
     var actual = cfg.inicial != null ? cfg.inicial : lo + Math.floor((hi - lo) / 2);
     var tec = teclado(lo, hi);
 
-    /* La foto solo se pinta cuando existe imagen Y láminas marcadas sobre ella. */
-    var hayFoto = !!(cfg.foto && cfg.laminas);
+    /* La foto se pinta solo cuando hay imagen Y marcas sobre ella. Cada marca puede ser
+       una elipse {cx,cy,rx,ry} o un polígono "x,y x,y …". */
+    var hayFoto = !!(cfg.foto && cfg.marcas);
     var foto = '';
     if (hayFoto) {
-      var formas = Object.keys(cfg.laminas).map(function (m) {
-        var l = cfg.laminas[m];
-        return '<polygon class="tm-lm-lam" data-m="' + m + '" points="' + l + '"></polygon>';
+      var marcas = Object.keys(cfg.marcas).map(function (m) {
+        var f = cfg.marcas[m];
+        if (typeof f === 'string') {
+          return '<polygon class="tm-lm-lam" data-m="' + m + '" points="' + f + '"></polygon>';
+        }
+        return '<ellipse class="tm-lm-lam" data-m="' + m + '" cx="' + f.cx + '" cy="' + f.cy +
+               '" rx="' + f.rx + '" ry="' + f.ry + '"></ellipse>';
       }).join('');
-      foto = '<figure class="tm-lm-foto">' +
-               '<picture><source srcset="' + cfg.foto.base + '.webp" type="image/webp">' +
-               '<img src="' + cfg.foto.base + '.jpg" width="' + cfg.foto.w + '" height="' + cfg.foto.h +
-               '" alt="' + (cfg.alt || '') + '"></picture>' +
-               '<svg class="tm-lm-capa" viewBox="0 0 ' + cfg.foto.w + ' ' + cfg.foto.h + '" ' +
-               'preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">' + formas + '</svg>' +
-             '</figure>';
+
+      var imagen = '<image href="' + cfg.foto.base + '.jpg" x="0" y="0" width="' + cfg.foto.w +
+                   '" height="' + cfg.foto.h + '"></image>';
+
+      function vista(x0, ancho, etiqueta) {
+        return '<svg class="tm-lm-svgfoto" viewBox="' + x0 + ' 0 ' + ancho + ' ' + cfg.foto.h + '" ' +
+               'preserveAspectRatio="xMidYMid meet" role="img" aria-label="' + etiqueta + '">' +
+               imagen + marcas + '</svg>';
+      }
+
+      var alt = cfg.alt || ('Foto del ' + (cfg.nombre || 'instrumento'));
+      foto = '<figure class="tm-lm-foto"><div class="tm-lm-tira">' + vista(0, cfg.foto.w, alt) + '</div>';
+      if (cfg.foto.ventanas && cfg.foto.ventanas.length) {
+        foto += '<div class="tm-lm-partes">' +
+                cfg.foto.ventanas.map(function (v, i) {
+                  return vista(v[0], v[1], alt + ' (parte ' + (i + 1) + ')');
+                }).join('') + '</div>';
+      }
+      foto += '</figure>';
     }
+
+    /* Con foto real no se dibuja el teclado esquemático: sería la misma información dos veces. */
+    var dibujarTeclado = cfg.teclado != null ? cfg.teclado : !hayFoto;
 
     var octs = [];
     for (var o = octava(lo); o <= octava(hi); o++) octs.push(o);
@@ -134,13 +154,15 @@
       '<div class="tm-lm-wrap">' +
         '<div class="tm-lm-readout" id="' + containerId + '_ro"></div>' +
         foto +
-        '<div class="tm-lm-teclado">' +
-          '<svg class="tm-lm-svg" viewBox="0 0 ' + tec.ancho + ' ' + tec.alto + '" ' +
-            'role="img" aria-label="Teclado de láminas del ' + (cfg.nombre || 'instrumento') + '">' +
-            tec.svg + '</svg>' +
-          '<div class="tm-lm-cap">De ' + nombre(lo) + ' a ' + nombre(hi) + ', ' +
-            (trans ? 'tal como se <strong>escribe</strong>' : 'tal como suena') + '</div>' +
-        '</div>' +
+        (dibujarTeclado
+          ? '<div class="tm-lm-teclado">' +
+              '<svg class="tm-lm-svg" viewBox="0 0 ' + tec.ancho + ' ' + tec.alto + '" ' +
+                'role="img" aria-label="Teclado de láminas del ' + (cfg.nombre || 'instrumento') + '">' +
+                tec.svg + '</svg>' +
+            '</div>'
+          : '') +
+        '<div class="tm-lm-cap">De ' + nombre(lo) + ' a ' + nombre(hi) + ', ' +
+          (trans ? 'tal como se <strong>escribe</strong>' : 'tal como suena') + '</div>' +
         '<div class="tm-lm-oct">' + octBtns + '</div>' +
         '<div class="tm-lm-notas">' + notaBtns + '</div>' +
       '</div>';
@@ -184,8 +206,8 @@
           '<button class="tm-lm-play" type="button" aria-label="Escuchar la nota">▶</button>' +
         '</div>' +
         '<div class="tm-lm-pie">' +
-          (salto ? 'En el pentagrama pone <strong>' + nombre(actual) + '</strong>, pero la lámina que golpeas suena <strong>' +
-                   nombre(son) + '</strong>: ' + salto + '.'
+          (salto ? 'En el pentagrama pone <strong>' + nombre(actual) + '</strong>, pero ' + (cfg.pieza || 'la lámina') +
+                   ' que golpeas suena <strong>' + nombre(son) + '</strong>: ' + salto + '.'
                  : (cfg.igual ||
                     (cfg.art || 'El') + ' ' + (cfg.nombre || 'instrumento') +
                     ' <strong>suena donde está escrito</strong>: la lámina de {n} da un {n}.'

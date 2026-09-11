@@ -479,4 +479,8 @@
   }
 
   window.tmCompasesEngine = tmCompasesEngine;
+  /* La tabla de compases y las figuras se exponen para que las fichas PDF
+     (tools/generate-fichas-compases.js) usen exactamente los mismos datos que
+     el test: si divergieran, la hoja y la pantalla darían respuestas distintas. */
+  window.tmCompasesData = COMPASES;
 })();

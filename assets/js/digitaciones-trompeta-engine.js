@@ -194,7 +194,11 @@
       var f = sampleFile(n);
       if (!f) return;
       try { audio.pause(); } catch (e) {}
-      audio.src = AUDIO_BASE + f + '.mp3?v=2';  // v2: samples normalizados a RMS común
+      // v2: samples normalizados a RMS común. v3: Sol#5 venía sin recortar de la
+      // librería y duraba 34 s, y el registro agudo estaba hasta 37 cents alto
+      // (se remuestreó con tools/afinar-muestras-audio.js). Hay que subir el
+      // número o el navegador sigue sirviendo los archivos viejos de su caché.
+      audio.src = AUDIO_BASE + f + '.mp3?v=3';
       audio.currentTime = 0;
       var pr = audio.play();
       if (pr && pr.catch) pr.catch(function () {});
