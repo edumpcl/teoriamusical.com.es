@@ -1,0 +1,574 @@
+{
+  "_nota": "Nombres de los instrumentos tal como aparecen en las partituras. 'abrev' es la abreviatura italiana habitual en partitura de orquesta; vacía si no hay una estándar. 'pagina' enlaza con la página de notas del instrumento cuando existe. 'aviso' marca los falsos amigos.",
+  "familias": [
+    {
+      "nombre": "Viento madera",
+      "instrumentos": [
+        {
+          "slug": "flautin",
+          "es": "Flautín",
+          "it": "ottavino (flauto piccolo)",
+          "en": "piccolo",
+          "de": "Piccoloflöte (kleine Flöte)",
+          "fr": "petite flûte",
+          "abrev": "Ott. (Picc.)",
+          "pagina": "/diccionario-musical/notas-del-flautin/"
+        },
+        {
+          "slug": "flauta-travesera",
+          "es": "Flauta travesera",
+          "it": "flauto (traverso)",
+          "en": "flute",
+          "de": "Flöte (Querflöte)",
+          "fr": "flûte (traversière)",
+          "abrev": "Fl.",
+          "pagina": "/diccionario-musical/notas-de-la-flauta-travesera/"
+        },
+        {
+          "slug": "flauta-dulce",
+          "es": "Flauta dulce",
+          "it": "flauto dolce (flauto a becco)",
+          "en": "recorder",
+          "de": "Blockflöte",
+          "fr": "flûte à bec",
+          "abrev": "",
+          "pagina": ""
+        },
+        {
+          "slug": "oboe",
+          "es": "Oboe",
+          "it": "oboe",
+          "en": "oboe",
+          "de": "Oboe",
+          "fr": "hautbois",
+          "abrev": "Ob.",
+          "pagina": "/diccionario-musical/notas-del-oboe/"
+        },
+        {
+          "slug": "corno-ingles",
+          "es": "Corno inglés",
+          "it": "corno inglese",
+          "en": "cor anglais (English horn)",
+          "de": "Englischhorn",
+          "fr": "cor anglais",
+          "abrev": "C. ingl.",
+          "pagina": "/diccionario-musical/notas-del-corno-ingles/",
+          "aviso": "Ni es corno ni es inglés: es un oboe alto en Fa. En inglés se le llama casi siempre por su nombre francés, cor anglais."
+        },
+        {
+          "slug": "fagot",
+          "es": "Fagot",
+          "it": "fagotto",
+          "en": "bassoon",
+          "de": "Fagott",
+          "fr": "basson",
+          "abrev": "Fg.",
+          "pagina": "/diccionario-musical/notas-del-fagot/",
+          "aviso": "«Bassoon» suena a bajo y no lo es: es el fagot. El bajo de la familia es el contrafagot."
+        },
+        {
+          "slug": "contrafagot",
+          "es": "Contrafagot",
+          "it": "controfagotto",
+          "en": "contrabassoon (double bassoon)",
+          "de": "Kontrafagott",
+          "fr": "contrebasson",
+          "abrev": "Cfg.",
+          "pagina": "/diccionario-musical/notas-del-contrafagot/"
+        },
+        {
+          "slug": "requinto",
+          "es": "Requinto (clarinete en Mi♭)",
+          "it": "clarinetto piccolo in mi bemolle",
+          "en": "E♭ clarinet",
+          "de": "Es-Klarinette",
+          "fr": "petite clarinette en mi♭",
+          "abrev": "Cl. picc.",
+          "pagina": "/diccionario-musical/notas-del-requinto/",
+          "aviso": "«Requinto» es nombre de banda española. En la partitura extranjera lo verás siempre como clarinete en Mi♭."
+        },
+        {
+          "slug": "clarinete",
+          "es": "Clarinete",
+          "it": "clarinetto",
+          "en": "clarinet",
+          "de": "Klarinette",
+          "fr": "clarinette",
+          "abrev": "Cl.",
+          "pagina": "/diccionario-musical/notas-del-clarinete/"
+        },
+        {
+          "slug": "clarinete-alto",
+          "es": "Clarinete alto",
+          "it": "clarinetto contralto",
+          "en": "alto clarinet",
+          "de": "Altklarinette",
+          "fr": "clarinette alto",
+          "abrev": "",
+          "pagina": "/diccionario-musical/notas-del-clarinete-alto/"
+        },
+        {
+          "slug": "clarinete-bajo",
+          "es": "Clarinete bajo",
+          "it": "clarinetto basso",
+          "en": "bass clarinet",
+          "de": "Bassklarinette",
+          "fr": "clarinette basse",
+          "abrev": "Cl. b.",
+          "pagina": "/diccionario-musical/notas-del-clarinete-bajo/"
+        },
+        {
+          "slug": "clarinete-contrabajo",
+          "es": "Clarinete contrabajo",
+          "it": "clarinetto contrabbasso",
+          "en": "contrabass clarinet",
+          "de": "Kontrabassklarinette",
+          "fr": "clarinette contrebasse",
+          "abrev": "",
+          "pagina": "/diccionario-musical/notas-del-clarinete-contrabajo/"
+        },
+        {
+          "slug": "saxofon",
+          "es": "Saxofón",
+          "it": "sassofono (sax)",
+          "en": "saxophone",
+          "de": "Saxophon",
+          "fr": "saxophone",
+          "abrev": "Sax.",
+          "pagina": "/diccionario-musical/notas-del-saxofon/"
+        },
+        {
+          "slug": "saxofon-soprano",
+          "es": "Saxofón soprano",
+          "it": "sassofono soprano",
+          "en": "soprano saxophone",
+          "de": "Sopransaxophon",
+          "fr": "saxophone soprano",
+          "abrev": "S. sax.",
+          "pagina": "/diccionario-musical/notas-del-saxofon/"
+        },
+        {
+          "slug": "saxofon-alto",
+          "es": "Saxofón alto",
+          "it": "sassofono contralto",
+          "en": "alto saxophone",
+          "de": "Altsaxophon",
+          "fr": "saxophone alto",
+          "abrev": "A. sax.",
+          "pagina": "/diccionario-musical/notas-del-saxofon/",
+          "aviso": "En italiano el alto es «contralto»: sassofono contralto. Si lees «sassofono alto» en una edición moderna es lo mismo."
+        },
+        {
+          "slug": "saxofon-tenor",
+          "es": "Saxofón tenor",
+          "it": "sassofono tenore",
+          "en": "tenor saxophone",
+          "de": "Tenorsaxophon",
+          "fr": "saxophone ténor",
+          "abrev": "T. sax.",
+          "pagina": "/diccionario-musical/notas-del-saxofon/"
+        },
+        {
+          "slug": "saxofon-baritono",
+          "es": "Saxofón barítono",
+          "it": "sassofono baritono",
+          "en": "baritone saxophone",
+          "de": "Baritonsaxophon",
+          "fr": "saxophone baryton",
+          "abrev": "Bar. sax.",
+          "pagina": "/diccionario-musical/notas-del-saxofon/"
+        }
+      ]
+    },
+    {
+      "nombre": "Viento metal",
+      "instrumentos": [
+        {
+          "slug": "trompa",
+          "es": "Trompa",
+          "it": "corno",
+          "en": "horn (French horn)",
+          "de": "Horn",
+          "fr": "cor",
+          "abrev": "Cor.",
+          "pagina": "/diccionario-musical/notas-de-la-trompa/",
+          "aviso": "El falso amigo más peligroso: «corno», «Horn» y «cor» son la TROMPA, no la corneta ni el corno inglés."
+        },
+        {
+          "slug": "trompeta",
+          "es": "Trompeta",
+          "it": "tromba",
+          "en": "trumpet",
+          "de": "Trompete",
+          "fr": "trompette",
+          "abrev": "Tr.",
+          "pagina": "/diccionario-musical/notas-de-la-trompeta/",
+          "aviso": "«Tromba» es trompeta; «trombone» es trombón. Se parecen y no son lo mismo."
+        },
+        {
+          "slug": "corneta",
+          "es": "Corneta",
+          "it": "cornetta",
+          "en": "cornet",
+          "de": "Kornett",
+          "fr": "cornet (à pistons)",
+          "abrev": "Cnt.",
+          "pagina": "/diccionario-musical/notas-de-la-corneta/"
+        },
+        {
+          "slug": "fliscorno",
+          "es": "Fliscorno",
+          "it": "flicorno (soprano)",
+          "en": "flugelhorn",
+          "de": "Flügelhorn",
+          "fr": "bugle",
+          "abrev": "",
+          "pagina": "/diccionario-musical/notas-del-fliscorno/",
+          "aviso": "En francés es «bugle» a secas; el «bugle» inglés (bugle call) es otra cosa: la corneta militar sin pistones."
+        },
+        {
+          "slug": "trombon",
+          "es": "Trombón",
+          "it": "trombone",
+          "en": "trombone",
+          "de": "Posaune",
+          "fr": "trombone",
+          "abrev": "Trb.",
+          "pagina": "/diccionario-musical/notas-del-trombon/",
+          "aviso": "En alemán no se parece en nada al resto: Posaune."
+        },
+        {
+          "slug": "trombon-bajo",
+          "es": "Trombón bajo",
+          "it": "trombone basso",
+          "en": "bass trombone",
+          "de": "Bassposaune",
+          "fr": "trombone basse",
+          "abrev": "",
+          "pagina": "/diccionario-musical/notas-del-trombon-bajo/"
+        },
+        {
+          "slug": "bombardino",
+          "es": "Bombardino",
+          "it": "eufonio (flicorno basso)",
+          "en": "euphonium",
+          "de": "Euphonium",
+          "fr": "euphonium (saxhorn basse)",
+          "abrev": "",
+          "pagina": "/diccionario-musical/notas-del-bombardino/",
+          "aviso": "Ojo con «bombardon»: en francés y en alemán no es el bombardino, es la tuba. Y el Baritonhorn alemán tampoco es exactamente un euphonium: es más estrecho y de cilindros, con un sonido menos ancho."
+        },
+        {
+          "slug": "tuba",
+          "es": "Tuba",
+          "it": "tuba",
+          "en": "tuba",
+          "de": "Tuba (Basstuba)",
+          "fr": "tuba",
+          "abrev": "Tb.",
+          "pagina": "/diccionario-musical/notas-de-la-tuba/"
+        }
+      ]
+    },
+    {
+      "nombre": "Cuerda frotada",
+      "instrumentos": [
+        {
+          "slug": "violin",
+          "es": "Violín",
+          "it": "violino",
+          "en": "violin",
+          "de": "Violine (Geige)",
+          "fr": "violon",
+          "abrev": "Vl.",
+          "pagina": "/diccionario-musical/notas-del-violin/"
+        },
+        {
+          "slug": "viola",
+          "es": "Viola",
+          "it": "viola",
+          "en": "viola",
+          "de": "Bratsche",
+          "fr": "alto",
+          "abrev": "Vla.",
+          "pagina": "/diccionario-musical/notas-de-la-viola/",
+          "aviso": "En francés la viola es «alto». Si en una partitura francesa lees «alto» entre el violín y el violonchelo, es la viola."
+        },
+        {
+          "slug": "violonchelo",
+          "es": "Violonchelo",
+          "it": "violoncello",
+          "en": "cello (violoncello)",
+          "de": "Violoncello",
+          "fr": "violoncelle",
+          "abrev": "Vc.",
+          "pagina": "/diccionario-musical/notas-del-violonchelo/"
+        },
+        {
+          "slug": "contrabajo",
+          "es": "Contrabajo",
+          "it": "contrabbasso",
+          "en": "double bass (contrabass)",
+          "de": "Kontrabass",
+          "fr": "contrebasse",
+          "abrev": "Cb.",
+          "pagina": "/diccionario-musical/notas-del-contrabajo/"
+        },
+        {
+          "slug": "arpa",
+          "es": "Arpa",
+          "it": "arpa",
+          "en": "harp",
+          "de": "Harfe",
+          "fr": "harpe",
+          "abrev": "Arp.",
+          "pagina": ""
+        }
+      ]
+    },
+    {
+      "nombre": "Cuerda pulsada",
+      "instrumentos": [
+        {
+          "slug": "guitarra",
+          "es": "Guitarra",
+          "it": "chitarra",
+          "en": "guitar",
+          "de": "Gitarre",
+          "fr": "guitare",
+          "abrev": "Chit.",
+          "pagina": "/diccionario-musical/notas-de-la-guitarra/"
+        },
+        {
+          "slug": "bajo-electrico",
+          "es": "Bajo eléctrico",
+          "it": "basso elettrico",
+          "en": "electric bass",
+          "de": "E-Bass",
+          "fr": "basse électrique",
+          "abrev": "",
+          "pagina": "/diccionario-musical/notas-del-bajo-electrico/"
+        },
+        {
+          "slug": "ukelele",
+          "es": "Ukelele",
+          "it": "ukulele",
+          "en": "ukulele",
+          "de": "Ukulele",
+          "fr": "ukulélé",
+          "abrev": "",
+          "pagina": "/diccionario-musical/notas-del-ukelele/"
+        }
+      ]
+    },
+    {
+      "nombre": "Percusión afinada",
+      "instrumentos": [
+        {
+          "slug": "timbales",
+          "es": "Timbales",
+          "it": "timpani",
+          "en": "timpani (kettledrums)",
+          "de": "Pauken",
+          "fr": "timbales",
+          "abrev": "Timp.",
+          "pagina": "/diccionario-musical/notas-de-los-timbales/",
+          "aviso": "En inglés, «timbales» son otra cosa: los timbales latinos de la percusión afrocubana. Los de orquesta son «timpani»."
+        },
+        {
+          "slug": "xilofono",
+          "es": "Xilófono",
+          "it": "xilofono (silofono)",
+          "en": "xylophone",
+          "de": "Xylophon",
+          "fr": "xylophone",
+          "abrev": "",
+          "pagina": "/diccionario-musical/notas-del-xilofono/"
+        },
+        {
+          "slug": "marimba",
+          "es": "Marimba",
+          "it": "marimba",
+          "en": "marimba",
+          "de": "Marimba (Marimbaphon)",
+          "fr": "marimba",
+          "abrev": "",
+          "pagina": "/diccionario-musical/notas-de-la-marimba/"
+        },
+        {
+          "slug": "vibrafono",
+          "es": "Vibráfono",
+          "it": "vibrafono",
+          "en": "vibraphone (vibes)",
+          "de": "Vibraphon",
+          "fr": "vibraphone",
+          "abrev": "",
+          "pagina": "/diccionario-musical/notas-del-vibrafono/"
+        },
+        {
+          "slug": "glockenspiel",
+          "es": "Lira (glockenspiel)",
+          "it": "campanelli",
+          "en": "glockenspiel (orchestral bells)",
+          "de": "Glockenspiel",
+          "fr": "jeu de timbres (carillon)",
+          "abrev": "",
+          "pagina": "/diccionario-musical/notas-del-glockenspiel/",
+          "aviso": "El francés «jeu de timbres» sí existe y es la lira; en castellano ese nombre no se usa. Cuidado además con «campanelli» (lira) frente a «campane» (campanas tubulares)."
+        },
+        {
+          "slug": "campanas-tubulares",
+          "es": "Campanas tubulares",
+          "it": "campane (tubolari)",
+          "en": "tubular bells (chimes)",
+          "de": "Röhrenglocken",
+          "fr": "cloches (tubulaires)",
+          "abrev": "",
+          "pagina": "/diccionario-musical/notas-de-las-campanas-tubulares/",
+          "aviso": "«Chimes» es ambiguo en inglés: unas veces son las campanas tubulares y otras la lira. El contexto y el rango lo resuelven."
+        },
+        {
+          "slug": "crotalos",
+          "es": "Crótalos",
+          "it": "crotali",
+          "en": "crotales (antique cymbals)",
+          "de": "Antike Zimbeln",
+          "fr": "crotales (cymbales antiques)",
+          "abrev": "",
+          "pagina": "/diccionario-musical/notas-de-los-crotalos/"
+        },
+        {
+          "slug": "celesta",
+          "es": "Celesta",
+          "it": "celesta",
+          "en": "celesta (celeste)",
+          "de": "Celesta",
+          "fr": "célesta",
+          "abrev": "Cel.",
+          "pagina": ""
+        }
+      ]
+    },
+    {
+      "nombre": "Percusión de altura indefinida",
+      "instrumentos": [
+        {
+          "slug": "caja",
+          "es": "Caja",
+          "it": "tamburo militare (cassa chiara)",
+          "en": "snare drum",
+          "de": "kleine Trommel",
+          "fr": "caisse claire",
+          "abrev": "Tamb.",
+          "pagina": ""
+        },
+        {
+          "slug": "bombo",
+          "es": "Bombo",
+          "it": "grancassa",
+          "en": "bass drum",
+          "de": "große Trommel",
+          "fr": "grosse caisse",
+          "abrev": "G. C.",
+          "pagina": ""
+        },
+        {
+          "slug": "platos",
+          "es": "Platos",
+          "it": "piatti",
+          "en": "cymbals",
+          "de": "Becken",
+          "fr": "cymbales",
+          "abrev": "Ptti.",
+          "pagina": ""
+        },
+        {
+          "slug": "triangulo",
+          "es": "Triángulo",
+          "it": "triangolo",
+          "en": "triangle",
+          "de": "Triangel",
+          "fr": "triangle",
+          "abrev": "Trgl.",
+          "pagina": ""
+        },
+        {
+          "slug": "pandereta",
+          "es": "Pandereta",
+          "it": "tamburello (basco)",
+          "en": "tambourine",
+          "de": "Schellentrommel (Tamburin)",
+          "fr": "tambour de basque",
+          "abrev": "",
+          "pagina": ""
+        },
+        {
+          "slug": "tam-tam",
+          "es": "Tam-tam (gong)",
+          "it": "tam-tam",
+          "en": "tam-tam (gong)",
+          "de": "Tamtam",
+          "fr": "tam-tam",
+          "abrev": "",
+          "pagina": ""
+        },
+        {
+          "slug": "bateria",
+          "es": "Batería",
+          "it": "batteria",
+          "en": "drum set (drum kit)",
+          "de": "Schlagzeug",
+          "fr": "batterie",
+          "abrev": "",
+          "pagina": "",
+          "aviso": "«Schlagzeug» en alemán vale para la batería y también para toda la sección de percusión."
+        }
+      ]
+    },
+    {
+      "nombre": "Teclado y otros",
+      "instrumentos": [
+        {
+          "slug": "piano",
+          "es": "Piano",
+          "it": "pianoforte",
+          "en": "piano",
+          "de": "Klavier",
+          "fr": "piano",
+          "abrev": "Pf.",
+          "pagina": "/diccionario-musical/notas-del-piano/"
+        },
+        {
+          "slug": "organo",
+          "es": "Órgano",
+          "it": "organo",
+          "en": "organ",
+          "de": "Orgel",
+          "fr": "orgue",
+          "abrev": "Org.",
+          "pagina": ""
+        },
+        {
+          "slug": "clave",
+          "es": "Clave (clavecín)",
+          "it": "clavicembalo",
+          "en": "harpsichord",
+          "de": "Cembalo",
+          "fr": "clavecin",
+          "abrev": "Cemb.",
+          "pagina": ""
+        },
+        {
+          "slug": "acordeon",
+          "es": "Acordeón",
+          "it": "fisarmonica",
+          "en": "accordion",
+          "de": "Akkordeon",
+          "fr": "accordéon",
+          "abrev": "",
+          "pagina": ""
+        }
+      ]
+    }
+  ]
+}
