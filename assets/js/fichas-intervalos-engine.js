@@ -378,13 +378,20 @@
     '.tm-fg-bien{color:#27ae60;background:#e8f5e9;border-radius:6px;padding:.35rem .8rem;}',
     '.tm-fg-mal{color:#c0392b;background:#ffebee;border-radius:6px;padding:.35rem .8rem;}',
     '.tm-fg-fallos{font-size:.9rem;color:#555;background:#fdf8ee;border-radius:6px;padding:.7rem .9rem;text-align:left;}',
+    /* Se imprime un CLON de la hoja colgado directamente de <body> y el resto se
+       quita con display:none. Con visibility:hidden la web oculta seguía
+       ocupando sitio y la ficha salía siempre en 7 páginas, 6 en blanco. */
+    '@media screen{.tm-fg-impresion{display:none!important;}}',
     '@media print{',
-    '  body.tm-fg-print *{visibility:hidden!important;}',
-    '  body.tm-fg-print .tm-fg-hoja,body.tm-fg-print .tm-fg-hoja *{visibility:visible!important;}',
-    '  body.tm-fg-print .tm-fg-hoja{position:absolute;left:0;top:0;width:100%;border:0;padding:0;margin:0;}',
-    '  body.tm-fg-print .tm-fg-datos{display:flex!important;gap:18px;font-size:.8rem;color:#666;margin:0 0 10px;}',
+    '  body.tm-fg-print > *:not(.tm-fg-impresion){display:none!important;}',
+    '  body.tm-fg-print .tm-fg-impresion{display:block!important;border:0;padding:0;margin:0;}',
+    '  body.tm-fg-print .tm-fg-datos{display:flex!important;gap:18px;font-size:.8rem;color:#666;margin:0 0 6px;}',
     '  body.tm-fg-print .tm-fg-datos span{flex:1;border-bottom:1px solid #bbb;}',
-    '  @page{size:A4;margin:12mm;}',
+    /* la hoja llena (42) medía unos píxeles más que el A4: se aprieta en papel */
+    '  body.tm-fg-print .tm-fg-cab{margin-bottom:6px;}',
+    '  body.tm-fg-print .tm-fg-instr{font-size:.78rem;margin:0 0 6px;}',
+    '  body.tm-fg-print .tm-fg-sis{margin-bottom:2px;}',
+    '  @page{size:A4;margin:10mm;}',
     '}'
   ].join('\n');
 
@@ -913,25 +920,36 @@
         btn.textContent = estado.solucion ? 'Ocultar soluciones' : 'Ver soluciones';
         pintar();
       } else if (accion === 'imprimir') {
-        document.body.classList.add('tm-fg-print');
+        prepararImpresion();
         window.print();
-        setTimeout(function () { document.body.classList.remove('tm-fg-print'); }, 500);
+        if (!('onafterprint' in window)) setTimeout(terminarImpresion, 1000);
       }
     });
 
-    // Al imprimir, la hoja ocupa el ancho del A4: se redibuja con seis ejercicios
-    // por pentagrama aunque en pantalla se estén viendo tres.
-    var anchoPantalla = null;
-    window.addEventListener('beforeprint', function () {
-      if (estado.salida !== 'ficha' || !document.body.classList.contains('tm-fg-print')) return;
-      anchoPantalla = elSis.clientWidth;
+    /* Al imprimir, la hoja se redibuja al ancho del A4 (seis ejercicios por
+       pentagrama aunque en pantalla se vean tres) y se clona como hija directa de
+       <body>. Se hace antes de print() y no en beforeprint, para no depender de
+       ese evento; el clon se retira en afterprint. */
+    function prepararImpresion() {
       elSis.style.width = '680px';
       pintar();
-    });
-    window.addEventListener('afterprint', function () {
-      if (estado.salida !== 'ficha') return;
+      var viejo = document.querySelector('.tm-fg-impresion');
+      if (viejo) viejo.parentNode.removeChild(viejo);
+      var clon = elHoja.cloneNode(true);
+      clon.classList.add('tm-fg-impresion');
+      clon.hidden = false;
+      document.body.appendChild(clon);
+      document.body.classList.add('tm-fg-print');
+    }
+    function terminarImpresion() {
+      document.body.classList.remove('tm-fg-print');
+      var clon = document.querySelector('.tm-fg-impresion');
+      if (clon) clon.parentNode.removeChild(clon);
       elSis.style.width = '';
-      if (anchoPantalla) pintar();
+      pintar();
+    }
+    window.addEventListener('afterprint', function () {
+      if (document.body.classList.contains('tm-fg-print')) terminarImpresion();
     });
 
     var reajuste;
