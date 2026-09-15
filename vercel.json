@@ -76,49 +76,54 @@
       "permanent": false
     },
     {
-      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/segundas",
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/segundas/",
       "destination": "/ejercicios/ejercicios-de-intervalos-musicales/segundas/",
       "permanent": true
     },
     {
-      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/terceras",
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/terceras/",
       "destination": "/ejercicios/ejercicios-de-intervalos-musicales/terceras/",
       "permanent": true
     },
     {
-      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/cuartas",
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/cuartas/",
       "destination": "/ejercicios/ejercicios-de-intervalos-musicales/cuartas/",
       "permanent": true
     },
     {
-      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/quintas",
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/quintas/",
       "destination": "/ejercicios/ejercicios-de-intervalos-musicales/quintas/",
       "permanent": true
     },
     {
-      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/sextas",
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/sextas/",
       "destination": "/ejercicios/ejercicios-de-intervalos-musicales/sextas/",
       "permanent": true
     },
     {
-      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/septimas",
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/septimas/",
       "destination": "/ejercicios/ejercicios-de-intervalos-musicales/septimas/",
       "permanent": true
     },
     {
-      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/octavas",
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/octavas/",
       "destination": "/ejercicios/ejercicios-de-intervalos-musicales/octavas/",
       "permanent": true
     },
     {
-      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/semitono-y-enarmonicas",
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/semitono-y-enarmonicas/",
       "destination": "/ejercicios/ejercicios-de-intervalos-musicales/semitono-diatonico-semitono-cromatico-notas-enarmonicas-y-unisono/",
       "permanent": true
     },
     {
-      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos",
+      "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/",
       "destination": "/ejercicios/ejercicios-de-intervalos-musicales/",
       "permanent": true
+    },
+    {
+      "source": "/ejercicios/compases/",
+      "destination": "/ejercicios/compases/analizar-compas/",
+      "permanent": false
     }
   ]
 }
