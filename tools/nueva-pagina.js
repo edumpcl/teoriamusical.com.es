@@ -144,6 +144,21 @@ function main() {
   };
   for (const [k, v] of Object.entries(subs)) html = html.split(k).join(v);
 
+  /* La plantilla marca «Diccionario Musical» como sección activa. Las páginas de
+     /ejercicios/ o /blog/ nacían con el menú equivocado (8 de ejercicios y 3 del
+     blog hasta el 15-09-2026). Se marca la sección según la primera carpeta. */
+  const SECCIONES = ['diccionario-musical', 'ejercicios', 'herramientas', 'blog', 'test-tecnico-de-laboratorio'];
+  const seccion = dir.split('/')[0];
+  if (SECCIONES.includes(seccion) && seccion !== 'diccionario-musical') {
+    const activo = 'href="/diccionario-musical/" class="is-active"';
+    const destino = `href="/${seccion}/" class=""`;
+    if (html.includes(activo) && html.includes(destino)) {
+      html = html.replace(activo, 'href="/diccionario-musical/" class=""').replace(destino, `href="/${seccion}/" class="is-active"`);
+    } else {
+      console.error('AVISO: no he podido marcar la sección activa del menú; revísalo a mano.');
+    }
+  }
+
   const outDir = path.join(ROOT, dir);
   fs.mkdirSync(outDir, { recursive: true });
   const outFile = path.join(outDir, 'index.html');
