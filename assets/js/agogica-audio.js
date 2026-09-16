@@ -29,7 +29,7 @@
     rubato: { de: 92, a: 92, dura: 10, rampa: 'rubato', etiqueta: 'Rubato: roba y devuelve' }
   };
 
-  var ctx = null, demo = null, siguiente = 0, t0 = 0, pulso = 0, temporizador = null, activo = null;
+  var ctx = null, demo = null, siguiente = 0, t0 = 0, pulso = 0, temporizador = null, activo = null, tipoActual = null;
   var registro = [];
 
   function contexto() {
@@ -87,6 +87,7 @@
     clearInterval(temporizador);
     temporizador = null;
     demo = null;
+    tipoActual = null;
     if (activo) {
       activo.setAttribute('aria-pressed', 'false');
       activo.querySelector('.tm-ag-txt').textContent = activo.dataset.txt;
@@ -94,21 +95,30 @@
     }
   }
 
-  function tocar(btn) {
+  /* Arranca una demostración. Sirve para los botones de la página de agógica y
+     también para los ejercicios de oído de /ejercicios/tempo/, que la piden por su
+     nombre y sin botón. */
+  function arrancar(tipo) {
     var c = contexto();
-    if (!c) return;
+    if (!c) return false;
     parar();
-    demo = DEMOS[btn.dataset.tipo];
-    if (!demo) return;
+    demo = DEMOS[tipo];
+    if (!demo) return false;
     registro = [];
     pulso = 0;
     t0 = c.currentTime + 0.08;
     siguiente = t0;
+    tipoActual = tipo;
+    planificar();
+    temporizador = setInterval(planificar, REVISION);
+    return true;
+  }
+
+  function tocar(btn) {
+    if (!arrancar(btn.dataset.tipo)) return;
     activo = btn;
     btn.setAttribute('aria-pressed', 'true');
     btn.querySelector('.tm-ag-txt').textContent = 'Parar';
-    planificar();
-    temporizador = setInterval(planificar, REVISION);
   }
 
   function preparar(btn) {
@@ -135,7 +145,8 @@
   window.tmAgogicaAudio = {
     DEMOS: DEMOS,
     parar: parar,
-    sonando: function () { return activo ? activo.dataset.tipo : null; },
+    tocarTipo: arrancar,
+    sonando: function () { return tipoActual; },
     pulsos: function () { return registro.slice(); }   // para el verificador
   };
 })();
