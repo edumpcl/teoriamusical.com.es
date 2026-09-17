@@ -234,6 +234,8 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Construir Escala Mayor con Armadura](https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-mayor-con-armadura/): Escribe primero la armadura y luego la escala mayor, como en clase. Ejercicio interactivo en dos pasos: armadura + escala.
 - [Escala Mixolidia](https://www.teoriamusical.com.es/ejercicios/escalas/escalas-mixolidia/): Ejercicios para identificar las escalas mixolidias en el pentagrama: la escala mayor con el 7º grado rebajado. Test interactivo gratuito.
 - [Test de Equivalencias de Notas: Español, Inglés y Alemán](https://www.teoriamusical.com.es/ejercicios/equivalencias-de-notas/): Ejercicio interactivo gratis para memorizar los nombres de las notas en español, inglés y alemán. Test de 10 preguntas, incluida la trampa del Si alemán (H y B).
+- [Ejercicios para Completar Compases Online con Soluciones](https://www.teoriamusical.com.es/ejercicios/compases/completar-compas/): Ejercicios para completar compases: qué figura o silencio falta en 2/4, 3/4, 4/4, 6/8, 9/8 y 12/8, con tres niveles, corrección al momento y ficha PDF con soluciones.
+- [Ejercicios para Reconocer Compases Online con Soluciones](https://www.teoriamusical.com.es/ejercicios/compases/reconocer-compas/): Ejercicios para reconocer compases: adivina el numerador y el denominador de 2/4, 3/4, 4/4, 6/8, 9/8 y 12/8 a partir del ritmo escrito, con corrección al momento y ficha PDF con soluciones.
 
 ## Blog
 

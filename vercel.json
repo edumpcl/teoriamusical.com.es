@@ -119,11 +119,6 @@
       "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/",
       "destination": "/ejercicios/ejercicios-de-intervalos-musicales/",
       "permanent": true
-    },
-    {
-      "source": "/ejercicios/compases/",
-      "destination": "/ejercicios/compases/analizar-compas/",
-      "permanent": false
     }
   ]
 }
