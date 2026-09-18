@@ -41,10 +41,14 @@ const TODOS = Object.keys(TIEMPO);
 /* Nunca se generan como base (no están en TODOS), pero se aceptan como lectura
    alternativa: 2/2 es, en compás simple, el mismo caso que 3/4↔6/8 (mismo
    compás sentido en tiempos de blanca en vez de negra). */
-const TIEMPO_EXTRA = { '2/2': 32 }, TIEMPOS_EXTRA = { '2/2': 2 };
+const TIEMPO_EXTRA = { '2/2': 32, '4/8': 8 }, TIEMPOS_EXTRA = { '2/2': 2, '4/8': 4 };
 const CANDIDATAS = TODOS.concat(Object.keys(TIEMPO_EXTRA));
 const tiempoDe = sig => TIEMPO[sig] !== undefined ? TIEMPO[sig] : TIEMPO_EXTRA[sig];
 const tiemposDe = sig => TIEMPOS[sig] !== undefined ? TIEMPOS[sig] : TIEMPOS_EXTRA[sig];
+// Doblados que se dan siempre por equivalentes, sin comprobar agrupación
+// (17 y 18-09-2026): 4/4↔2/2, 2/4↔4/8. El 3/4 NO está aquí: su doblado (6/8)
+// es un compás compuesto de verdad, esa equivalencia sí depende del ritmo.
+const DOBLADO_SIEMPRE = { '4/4': '2/2', '2/4': '4/8' };
 
 let fallos = 0;
 const mal = (donde, msg) => { if (fallos < 40) console.log(`  ✗ ${donde}: ${msg}`); fallos++; };
@@ -107,9 +111,7 @@ function equivalentesPropio(compasBase, conT) {
   const barrasBase = JSON.stringify(juntasPorBarra(conT, TIEMPO[compasBase]));
   const validos = [];
   CANDIDATAS.forEach(sig => {
-    // Regla simplificada a propósito (17-09-2026): todo 4/4 acepta también 2/2,
-    // sin comprobar agrupación.
-    if (compasBase === '4/4' && sig === '2/2') { validos.push(sig); return; }
+    if (DOBLADO_SIEMPRE[compasBase] === sig) { validos.push(sig); return; }
     const t = tiempoDe(sig);
     if (t * tiemposDe(sig) !== total) return;
     const sinCruces = conT.every(e => {
@@ -168,18 +170,24 @@ async function conVexFlow(browser, etiqueta, vexflow) {
       const delMotor = it.validos.slice().sort();
       if (JSON.stringify(propios) !== JSON.stringify(delMotor)) mal(donde, `motor dice válidos [${delMotor}] y el cálculo propio da [${propios}]`);
       if (propios.indexOf(it.compasBase) < 0) mal(donde, 'la propia cifra de partida no sale como válida (bug grave)');
-      // Regla simplificada a propósito: TODO 4/4 acepta también 2/2, sin excepciones.
+      // Reglas simplificadas a propósito: TODO 4/4 acepta también 2/2, y TODO
+      // 2/4 acepta también 4/8, sin excepciones.
       if (it.compasBase === '4/4' && JSON.stringify(propios) !== JSON.stringify(['2/2', '4/4'])) {
         mal(donde, `un 4/4 debería aceptar siempre también 2/2 y da [${propios}]`);
       }
-      // Con los 6 compases del sitio más 2/2 (solo como lectura, nunca como base),
-      // los únicos pares ambiguos posibles son 3/4↔6/8 y 4/4↔2/2.
+      if (it.compasBase === '2/4' && JSON.stringify(propios) !== JSON.stringify(['2/4', '4/8'])) {
+        mal(donde, `un 2/4 debería aceptar siempre también 4/8 y da [${propios}]`);
+      }
+      // Con los 6 compases del sitio más 2/2 y 4/8 (solo como lectura, nunca
+      // como base), los únicos pares ambiguos posibles son 3/4↔6/8 (depende
+      // del ritmo), 4/4↔2/2 y 2/4↔4/8 (siempre, dobladas).
       if (propios.length > 1) {
         ambiguos++;
         const es3468 = propios.indexOf('3/4') >= 0 && propios.indexOf('6/8') >= 0;
         const es4422 = propios.indexOf('4/4') >= 0 && propios.indexOf('2/2') >= 0;
-        if (es4422) ambiguos44++;
-        if (propios.length !== 2 || !(es3468 || es4422)) mal(donde, `combinación ambigua inesperada: [${propios}]`);
+        const es2448 = propios.indexOf('2/4') >= 0 && propios.indexOf('4/8') >= 0;
+        if (es4422 || es2448) ambiguos44++;
+        if (propios.length !== 2 || !(es3468 || es4422 || es2448)) mal(donde, `combinación ambigua inesperada: [${propios}]`);
       }
       // Lo dibujado: puntillos realmente pintados y el ritmo es el mismo con o sin cifra.
       const { sinCifra, conCifra } = lote.dibujos[i];
@@ -201,7 +209,7 @@ async function conVexFlow(browser, etiqueta, vexflow) {
   }
   await p.close();
   if (errs.length) mal(etiqueta, 'errores: ' + errs.slice(0, 3).join(' | '));
-  console.log(`  ${etiqueta}: ${medidas} medidas revisadas (${ambiguos} ambiguas: ${ambiguos - ambiguos44} de 3/4↔6/8, ${ambiguos44} de 4/4↔2/2)`);
+  console.log(`  ${etiqueta}: ${medidas} medidas revisadas (${ambiguos} ambiguas: ${ambiguos - ambiguos44} de 3/4↔6/8, ${ambiguos44} dobladas 4/4↔2/2 o 2/4↔4/8)`);
   return medidas;
 }
 

@@ -412,5 +412,11 @@
     inicio();
   };
 
-  window.tmGruposVETest = { GRUPOS_VE: GRUPOS_VE, generarLote: generarLote, explicar: explicar, dibujarConGrupo: dibujarConGrupo };
+  window.tmGruposVETest = {
+    GRUPOS_VE: GRUPOS_VE, generarLote: generarLote, explicar: explicar, dibujarConGrupo: dibujarConGrupo,
+    // Expuestas para /ejercicios/grupos-de-valoracion-especial/que-compas-es/,
+    // que arma sus propios compases con más de un grupo a la vez y necesita
+    // estas piezas sueltas sin repetir la tabla de reglas.
+    repartir: repartir, duracionDe: duracionDe
+  };
 })();

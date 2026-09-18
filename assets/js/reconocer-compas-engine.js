@@ -124,8 +124,15 @@
      pregunta), pero SÍ se aceptan como lectura alternativa cuando de verdad
      encajan. 2/2 es, en compás simple, el mismo caso que 3/4↔6/8: el mismo
      compás sentido en dos tiempos de blanca en vez de en cuatro de negra.
-     Eduardo, 17-09-2026, sobre un 4/4: «puede ser tanto 2/2 como 4/4». */
-  var EXTRA_CANDIDATAS = { '2/2': { tiempo: 32, tiempos: 2 } };
+     Eduardo, 17-09-2026, sobre un 4/4: «puede ser tanto 2/2 como 4/4». 4/8 es
+     el mismo doblado aplicado a 2/4 (Eduardo, 18-09-2026: «con el 2/4 y el
+     4/8 pasa lo mismo»). */
+  var EXTRA_CANDIDATAS = { '2/2': { tiempo: 32, tiempos: 2 }, '4/8': { tiempo: 8, tiempos: 4 } };
+  /* Pares que se dan siempre por equivalentes, sin comprobar agrupación: en la
+     práctica se usan indistintamente. El 3/4 NO tiene entrada aquí a
+     propósito: su doblado (6/8) es un compás compuesto de verdad y esa
+     equivalencia sí depende del ritmo (ver el resto de esta función). */
+  var DOBLADO_SIEMPRE = { '4/4': '2/2', '2/4': '4/8' };
 
   function equivalentes(compasBase, elems) {
     var COMP = D().COMPASES;
@@ -133,11 +140,10 @@
     var baseGrupos = gruposDeBarras(elems, COMP[compasBase].tiempo);
     var validos = [];
     Object.keys(COMP).concat(Object.keys(EXTRA_CANDIDATAS)).forEach(function (sig) {
-      // 4/4 y 2/2 se dan siempre por equivalentes, sin comprobar agrupación: en
-      // la práctica se usan indistintamente y no merece la pena afinar caso a
-      // caso (Eduardo, 17-09-2026: «para hacerlo rápido todo lo que sea 4/4 es
-      // 2/2»).
-      if (compasBase === '4/4' && sig === '2/2') { validos.push(sig); return; }
+      // Doblados que se dan siempre por equivalentes (Eduardo, 17 y
+      // 18-09-2026: «para hacerlo rápido todo lo que sea 4/4 es 2/2», «con el
+      // 2/4 y el 4/8 pasa lo mismo») — no merece la pena afinar caso a caso.
+      if (DOBLADO_SIEMPRE[compasBase] === sig) { validos.push(sig); return; }
       var d = COMP[sig] || EXTRA_CANDIDATAS[sig];
       if (d.tiempo * d.tiempos !== total) return;
       if (!sinCruces(elems, d.tiempo)) return;
@@ -171,6 +177,7 @@
   function unidadDe(sig) {
     var d = compasDe(sig);
     if (d.tiempo === 32) return 'blanca';
+    if (d.tiempo === 8) return 'corchea';
     return d.tiempo === 24 ? 'negra con puntillo' : 'negra';
   }
   function explicar(it) {
