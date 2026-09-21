@@ -299,9 +299,10 @@
     st1.addClef('treble').addKeySignature(it.tonalidad).addTimeSignature(it.compas);
     var st2 = new V.Stave(6 + w1, 6, w2, op);
     st1.setContext(ctx).draw();
+    if (opts.final) { var BT = V.BarlineType || (V.Barline && V.Barline.type); st2.setEndBarType(BT.END); }
     st2.setContext(ctx).draw();
 
-    var info = { barras: [], vigas: 0 };
+    var info = { barras: [], vigas: 0, final: !!opts.final };
     [[it.compases[0], st1], [it.compases[1], st2]].forEach(function (par) {
       var bar = par[0], stave = par[1], notas = [], datos = [], grupo = [], vigas = [];
       var d = D().COMPASES[it.compas];
@@ -478,5 +479,11 @@
     inicio();
   };
 
-  window.tmComienzoTest = { generarLote: generarLote, explicar: explicar, dibujar: dibujar, TIPOS: TIPOS, NOMBRE_TIPO: NOMBRE_TIPO };
+  /* Lo que reutiliza tipo-de-final-engine.js (final de frase): el mismo dibujo (con
+     opts.final = doble barra) y las mismas piezas de ritmo y melodía. */
+  window.tmComienzoTest = {
+    generarLote: generarLote, explicar: explicar, dibujar: dibujar, TIPOS: TIPOS, NOMBRE_TIPO: NOMBRE_TIPO,
+    segmento: segmento, descomponer: descomponer, caminar: caminar, TONALIDADES: TONALIDADES, FIG_U: FIG_U,
+    DESCOMP: DESCOMP, P_MIN: P_MIN, P_MAX: P_MAX, frase: frase, SIMPLES: SIMPLES, TODOS: TODOS
+  };
 })();
