@@ -218,7 +218,9 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Ejercicios de tonalidades vecinas](https://www.teoriamusical.com.es/ejercicios/tonalidades/tonalidades-vecinas/): Identificar las cinco tonalidades vecinas de una tonalidad dada.
 
 ### Acordes
-- [Ejercicios de acordes](https://www.teoriamusical.com.es/ejercicios/acordes/): Portada de todos los ejercicios de acordes (tríadas y acordes de séptima).
+- [Ejercicios de acordes](https://www.teoriamusical.com.es/ejercicios/acordes/): Selector entre tríadas y acordes de séptima.
+- [Ejercicios de acordes tríada](https://www.teoriamusical.com.es/ejercicios/acordes/triadas/): Portada de los ejercicios de tríadas (identificar, construir, fichas).
+- [Ejercicios de acordes de séptima](https://www.teoriamusical.com.es/ejercicios/acordes/septimas/): Portada de los ejercicios de séptima de dominante, de sensible y disminuida (identificar, construir, fichas).
 - [Tríadas en estado fundamental](https://www.teoriamusical.com.es/ejercicios/acordes/triadas-en-fundamental/): Identificar tríadas en posición fundamental.
 - [Tríadas en primera inversión](https://www.teoriamusical.com.es/ejercicios/acordes/triadas-en-primera-inversion/): Identificar tríadas en primera inversión (acorde de sexta).
 - [Tríadas en segunda inversión](https://www.teoriamusical.com.es/ejercicios/acordes/triadas-en-segunda-inversion/): Identificar tríadas en segunda inversión (acorde de cuarta y sexta).
@@ -227,6 +229,27 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Construir tríadas en primera inversión](https://www.teoriamusical.com.es/ejercicios/acordes/construir-triadas-primera-inversion/): Escribir tríadas en primera inversión.
 - [Construir tríadas en segunda inversión](https://www.teoriamusical.com.es/ejercicios/acordes/construir-triadas-segunda-inversion/): Escribir tríadas en segunda inversión.
 - [Construir tríadas en todas las posiciones](https://www.teoriamusical.com.es/ejercicios/acordes/construir-triadas-todas-posiciones/): Construir tríadas en cualquier posición indicada.
+- [Acordes de séptima en fundamental](https://www.teoriamusical.com.es/ejercicios/acordes/septimas-en-fundamental/): Identificar acordes de séptima (dominante, sensible, disminuida) en fundamental.
+- [Acordes de séptima en 1ª inversión](https://www.teoriamusical.com.es/ejercicios/acordes/septimas-en-primera-inversion/): Identificar acordes de séptima en primera inversión.
+- [Acordes de séptima en 2ª inversión](https://www.teoriamusical.com.es/ejercicios/acordes/septimas-en-segunda-inversion/): Identificar acordes de séptima en segunda inversión.
+- [Acordes de séptima en 3ª inversión](https://www.teoriamusical.com.es/ejercicios/acordes/septimas-en-tercera-inversion/): Identificar acordes de séptima en tercera inversión.
+- [Acordes de séptima en todas las posiciones](https://www.teoriamusical.com.es/ejercicios/acordes/septimas-todas-las-posiciones/): Identificar acordes de séptima mezclando las cuatro posiciones.
+- [Construir la séptima de dominante](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septima-de-dominante/): Escribir la séptima de dominante en fundamental.
+- [Construir la séptima de dominante en 1ª inversión](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septima-de-dominante-primera-inversion/): Escribir la séptima de dominante en primera inversión.
+- [Construir la séptima de dominante en 2ª inversión](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septima-de-dominante-segunda-inversion/): Escribir la séptima de dominante en segunda inversión.
+- [Construir la séptima de dominante en 3ª inversión](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septima-de-dominante-tercera-inversion/): Escribir la séptima de dominante en tercera inversión.
+- [Construir la séptima de dominante en todas las posiciones](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septima-de-dominante-todas-las-posiciones/): Escribir la séptima de dominante en cualquier posición indicada.
+- [Construir la séptima de sensible](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septima-de-sensible/): Escribir la séptima de sensible (semidisminuida) en fundamental.
+- [Construir la séptima de sensible en 1ª inversión](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septima-de-sensible-primera-inversion/): Escribir la séptima de sensible en primera inversión.
+- [Construir la séptima de sensible en 2ª inversión](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septima-de-sensible-segunda-inversion/): Escribir la séptima de sensible en segunda inversión.
+- [Construir la séptima de sensible en 3ª inversión](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septima-de-sensible-tercera-inversion/): Escribir la séptima de sensible en tercera inversión.
+- [Construir la séptima de sensible en todas las posiciones](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septima-de-sensible-todas-las-posiciones/): Escribir la séptima de sensible en cualquier posición indicada.
+- [Construir la séptima disminuida](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septima-disminuida/): Escribir la séptima disminuida en fundamental.
+- [Construir la séptima disminuida en 1ª inversión](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septima-disminuida-primera-inversion/): Escribir la séptima disminuida en primera inversión.
+- [Construir la séptima disminuida en 2ª inversión](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septima-disminuida-segunda-inversion/): Escribir la séptima disminuida en segunda inversión.
+- [Construir la séptima disminuida en 3ª inversión](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septima-disminuida-tercera-inversion/): Escribir la séptima disminuida en tercera inversión.
+- [Construir la séptima disminuida en todas las posiciones](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septima-disminuida-todas-las-posiciones/): Escribir la séptima disminuida en cualquier posición indicada.
+- [Construir acordes de séptima mezclados](https://www.teoriamusical.com.es/ejercicios/acordes/construir-septimas-mezcladas/): Escribir acordes de séptima mezclando tipo y posición al azar.
 
 ### Compases
 - [Ejercicios de Análisis de Compases](https://www.teoriamusical.com.es/ejercicios/compases/analizar-compas/): Practica el análisis de compases musicales: identifica si es simple o compuesto, el número de tiempos, el tipo de subdivisión y las unidades de tiempo, subdivisión y compás. Test online gratis.
@@ -252,6 +275,8 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Construir Escalas Menores Armónicas](https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-menor-armonica/): Construye las escalas menores armónicas en el pentagrama: la menor natural con la 7ª elevada (sensible) y su 2ª aumentada característica. Ejercicio interactivo gratuito.
 - [Construir Escalas Menores Melódicas](https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-menor-melodica/): Construye la escala menor melódica completa en el pentagrama: sube con la 6ª y la 7ª elevadas y baja volviendo a la menor natural. Ejercicio interactivo gratuito de 15 notas.
 - [Construir Escalas Dóricas](https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-menor-dorica/): Construye las escalas dóricas en el pentagrama: la menor natural con la 6ª elevada. Ejercicio interactivo gratuito para colocar las 8 notas siguiendo el patrón T-S-T-T-T-S-T.
+- [Ejercicios de Acordes Tríada](https://www.teoriamusical.com.es/ejercicios/acordes/triadas/): Ejercicios de acordes tríada: tests para identificar y construir mayor, menor, disminuido y aumentado, y un generador de fichas con soluciones para imprimir.
+- [Ejercicios de Acordes de Séptima](https://www.teoriamusical.com.es/ejercicios/acordes/septimas/): Ejercicios de acordes de séptima: tests para identificar y construir la séptima de dominante, de sensible (semidisminuida) y disminuida, con sus cuatro posiciones.
 
 ## Blog
 
