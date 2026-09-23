@@ -75,7 +75,7 @@ def build_melodic_seq(tonic):
     return seq, len(alts)
 
 def build_chromatic_seq(tonic, desc=False):
-    """Cromática en una sola dirección (13 notas) via scale_keys. Devuelve (seq, numAlts).
+    """Cromática en una sola dirección (13 notas) via scale_keys. Devuelve seq.
 
     sk.chromatic()/chromatic_desc() deletrean SIEMPRE con sostenidos (ascendente)
     o bemoles (descendente), así que en tónicas alteradas la última nota (la
@@ -89,9 +89,15 @@ def build_chromatic_seq(tonic, desc=False):
     tl, ta = tonic
     last = notes[-1]
     notes = notes[:-1] + [dict(letter=tl, alt=ta, octave=last['octave'])]
-    seq = [[n['letter'], str(n['octave']), n['alt']] for n in notes]
-    nalt = sum(1 for n in notes if n['alt'] != 0)
-    return seq, nalt
+    return [[n['letter'], str(n['octave']), n['alt']] for n in notes]
+
+
+def chromatic_difficulty(tonic):
+    """Dificultad de la cromática de una tónica: alteraciones de SU PROPIA armadura
+    mayor (no las alteraciones dibujadas en la cromática, que apenas varían entre
+    5 y 6 y dejarían los niveles fácil/medio con las mismas tonalidades)."""
+    r = build_scale(tonic, [0, 2, 4, 5, 7, 9, 11, 12])
+    return r[2] if r else 7
 
 
 def generate():
@@ -113,10 +119,11 @@ def generate():
         elif d.get('seq') == 'cromatica':
             for tonic in d['tonics']:
                 tname = sk.tonic_name(tonic)
-                for desc, dirlbl in ((False, 'ascendente'), (True, 'descendente')):
-                    seq, nalt = build_chromatic_seq(tonic, desc)
+                nalt = chromatic_difficulty(tonic)
+                for desc, dirlbl, dirkey in ((False, 'ascendente', 'asc'), (True, 'descendente', 'desc')):
+                    seq = build_chromatic_seq(tonic, desc)
                     name = tname + ' Cromática (' + dirlbl + ')'
-                    arr.append(dict(name=name, numAlts=nalt, seq=seq))
+                    arr.append(dict(name=name, numAlts=nalt, dir=dirkey, seq=seq))
         else:
             forms = d.get('forms') or [(d['offsets'], d['disp'])]
             for tonic in d['tonics']:

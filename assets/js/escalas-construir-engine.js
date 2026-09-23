@@ -92,8 +92,14 @@
   }
   /* Construye los 3 niveles adaptándose al juego de escalas: si el umbral base
      dejaría el grupo vacío se sube al mínimo disponible. Las descripciones
-     reflejan el umbral real (en alteraciones de armadura). */
-  function buildDifficulties(scales) {
+     reflejan el umbral real (en alteraciones de armadura). Cada nivel expone
+     un filtro(s) -> bool; es lo único que usa genQ() para elegir el fondo.
+
+     Si se pasan `grupos` (p.ej. ascendente/descendente/mezcladas para la
+     cromática, donde la dificultad real no depende de la tonalidad) se usan
+     tal cual en vez de calcular umbrales por nº de alteraciones. */
+  function buildDifficulties(scales, gruposCfg) {
+    if (gruposCfg) return gruposCfg;
     var minA = Math.min.apply(null, scales.map(diffMetric));
     return DIFF_BASE.map(function (b, i) {
       var last = i === DIFF_BASE.length - 1;
@@ -101,7 +107,7 @@
       var desc = last ? 'Todas las tonalidades'
                : maxA <= 1 ? 'Sin alteraciones o con 1'
                : 'Hasta ' + maxA + ' alteraciones';
-      return { lbl: DIFF_LBL[i], desc: desc, maxAlts: maxA };
+      return { lbl: DIFF_LBL[i], desc: desc, filtro: function (s) { return diffMetric(s) <= maxA; } };
     });
   }
 
@@ -200,9 +206,11 @@
     var uid = containerId;
 
     var totalQ = PREGUNTAS;
+    var TITULO = config.titulo || 'Escalas Mayores';
+    var SUBTITULO = config.subtitulo || 'Elige el nivel de dificultad';
     var SCALES = config.scales || SCALES_MAYOR;
-    var DIFICULTADES = buildDifficulties(SCALES);
-    var currentQ, score, maxAlts, cQ, answered, placedNotes, activeTool, lastLoupeKey, currentSvg;
+    var DIFICULTADES = buildDifficulties(SCALES, config.grupos);
+    var currentQ, score, poolFiltro, cQ, answered, placedNotes, activeTool, lastLoupeKey, currentSvg;
     var vW = SVG_W, vSW = STAVE_W;            // ancho del lienzo/pentagrama (mayor en secuencias)
     function targetLen() { return (cQ && cQ.seq) ? cQ.seq.length : 8; }
     function isSeq() { return !!(cQ && cQ.seq); }
@@ -211,8 +219,8 @@
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-iv-mode-screen">',
-            '<h2 class="tm-iv-title">Test — Construir Escalas Mayores</h2>',
-            '<p class="tm-iv-subtitle">Elige el nivel de dificultad — ' + totalQ + ' preguntas</p>',
+            '<h2 class="tm-iv-title">Test — Construir ' + TITULO + '</h2>',
+            '<p class="tm-iv-subtitle">' + SUBTITULO + ' — ' + totalQ + ' preguntas</p>',
             '<div class="tm-iv-modes">',
               DIFICULTADES.map(function (d, i) {
                 return '<button class="tm-iv-mode-btn" data-i="' + i + '"><span class="tm-iv-mode-icon">' + ICONOS[i] + '</span><span class="tm-iv-mode-lbl">' + d.lbl + '</span><span class="tm-iv-mode-desc">' + d.desc + '</span></button>';
@@ -223,7 +231,7 @@
       ].join('');
       wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
-          maxAlts = DIFICULTADES[parseInt(btn.dataset.i, 10)].maxAlts;
+          poolFiltro = DIFICULTADES[parseInt(btn.dataset.i, 10)].filtro;
           currentQ = 0; score = 0;
           startQuiz();
         });
@@ -295,12 +303,8 @@
     }
 
     function genQ() {
-      var pool = SCALES.filter(function (s) { return diffMetric(s) <= maxAlts; });
-      if (!pool.length) {
-        /* salvaguarda: nunca caer en TODAS las escalas; usar solo las más fáciles */
-        var minA = Math.min.apply(null, SCALES.map(diffMetric));
-        pool = SCALES.filter(function (s) { return diffMetric(s) === minA; });
-      }
+      var pool = SCALES.filter(poolFiltro);
+      if (!pool.length) pool = SCALES; /* salvaguarda: nunca quedarse sin fondo */
       cQ = pool[Math.floor(Math.random() * pool.length)];
       /* las secuencias (15 notas asc+desc) necesitan un pentagrama más ancho */
       if (cQ.seq) { vW = 940; vSW = 900; } else { vW = SVG_W; vSW = STAVE_W; }
@@ -511,12 +515,20 @@
       var expected = parseScale(cQ);
       var ok;
       if (isSeq()) {
-        /* secuencia: se respeta el orden de colocación y la octava */
+        /* Secuencia: importa el orden de colocación y en qué punto exacto se
+           sube (o baja) de octava, pero NO en qué octava concreta se empiece
+           — la misma escala vale empezando en cualquier registro. Se compara
+           la octava de cada nota relativa a la de la primera. */
         var placedS = placedNotes.slice();
         ok = placedS.length === expected.length && expected.every(function (e, i) {
-          return placedS[i].vfn === e.vfn && placedS[i].oct === e.oct && placedS[i].acc === e.acc;
+          return placedS[i].vfn === e.vfn
+              && placedS[i].acc === e.acc
+              && (placedS[i].oct - placedS[0].oct) === (e.oct - expected[0].oct);
         });
       } else {
+        /* Escala de 8 notas ordenada por altura: la nota+alteración de cada
+           grado, en orden ascendente, ya determina en qué punto sube la
+           octava — no hace falta fijar en qué registro concreto se empiece. */
         var placed = sortedByPitch(placedNotes);
         var ascending = placed.every(function (p, i) {
           return i === 0 || pitchVal(placed[i]) > pitchVal(placed[i - 1]);
