@@ -209,6 +209,9 @@
 <p><a class="tm-btn tm-btn-dorado" href="/assets/img/dinamica/fichas/ficha-dinamica.pdf" target="_blank" rel="noopener">Descargar la ficha (PDF A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/dinamica/fichas/ficha-dinamica-soluciones.pdf" target="_blank" rel="noopener">Soluciones</a></p>
 <p>Se puede imprimir y fotocopiar libremente para el aula.</p>
 
+<p>¿Necesitas más de una hoja? Aquí puedes generar <strong>más fichas</strong>, cada una con matices y series distintas, e imprimirlas directamente desde el navegador.</p>
+<div id="tmfd"></div>
+
 <h2>¿Por qué no hay ejercicio de oído?</h2>
 
 <p>Porque un ejercicio basado en el volumen de reproducción no sería fiable: depende de cada dispositivo, y lo que en un móvil suena <em>f</em>, en otro puede sonar <em>mp</em>. Se puede percibir si algo suena más fuerte o más suave, pero no decidir qué matiz es a partir del volumen de un altavoz. Los matices son relativos a la obra y al instrumento, y se aprenden tocando y escuchando en directo, no adivinando un volumen suelto.</p>
@@ -218,8 +221,10 @@
 <p>La teoría completa está en <a href="/diccionario-musical/dinamica-musical/">dinámica musical</a>: los ocho matices con su signo y su nombre, los reguladores y los cambios súbitos. Para el otro gran recurso expresivo, el tempo, están los <a href="/ejercicios/tempo/">ejercicios de tempo y agógica</a>.</p>
 
 <script src="/assets/js/dinamica-ejercicios.js?v=051e2df3" defer></script>
+<script src="/assets/js/ficha-dinamica-engine.js?v=fcc05fa9" defer></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    if (window.tmFichaDinamica) tmFichaDinamica('tmfd');
     if (window.tmDinamicaSignificados) tmDinamicaSignificados('tmdin1');
     if (window.tmDinamicaOrdenar) tmDinamicaOrdenar('tmdin2');
   });

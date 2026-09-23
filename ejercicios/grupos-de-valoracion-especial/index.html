@@ -215,6 +215,9 @@
 <p><a class="tm-btn tm-btn-dorado" href="/assets/img/compases/fichas/ficha-grupos-valoracion-especial.pdf" target="_blank" rel="noopener">Descargar la ficha (PDF A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/compases/fichas/ficha-grupos-valoracion-especial-soluciones.pdf" target="_blank" rel="noopener">Soluciones</a></p>
 <p>Se puede imprimir y fotocopiar libremente para el aula.</p>
 
+<p>¿Necesitas más de una hoja? Aquí puedes generar <strong>más fichas</strong>, cada una con compases distintos, e imprimirlas directamente desde el navegador.</p>
+<div id="tmfg"></div>
+
 <h2>Antes y después de este ejercicio</h2>
 
 <p>Conviene tener soltura con <a href="/ejercicios/figuras/valor-de-las-figuras/">el valor de las figuras en cada compás</a> antes de empezar. La teoría completa, con quintillo y septillo incluidos, está en <a href="/diccionario-musical/grupos-de-valoracion-especial/">grupos de valoración especial</a>. El siguiente paso es <a href="/ejercicios/grupos-de-valoracion-especial/que-compas-es/">¿qué compás es?</a>: usar esa equivalencia para adivinar el compás de una medida entera llena de grupos irregulares.</p>
@@ -222,8 +225,12 @@
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
 <script src="/assets/js/completar-compas-engine.js?v=2c5c4a63" defer></script>
 <script src="/assets/js/grupos-valoracion-especial-engine.js?v=94b4be66" defer></script>
+<script src="/assets/js/ficha-grupos-ve-engine.js?v=7a67dff7" defer></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function () { if (window.tmGruposVE) tmGruposVE('tmgv'); });
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.tmGruposVE) tmGruposVE('tmgv');
+    if (window.tmFichaGruposVE) tmFichaGruposVE('tmfg');
+  });
 </script>
 <div class="tm-ad">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>

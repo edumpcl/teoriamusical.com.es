@@ -209,6 +209,9 @@
 <p><a class="tm-btn tm-btn-dorado" href="/assets/img/compases/fichas/ficha-que-compas-es.pdf" target="_blank" rel="noopener">Descargar la ficha (PDF A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/compases/fichas/ficha-que-compas-es-soluciones.pdf" target="_blank" rel="noopener">Soluciones</a></p>
 <p>Se puede imprimir y fotocopiar libremente para el aula.</p>
 
+<p>¿Necesitas más de una hoja? Aquí puedes generar <strong>más fichas</strong>, cada una con compases distintos, e imprimirlas directamente desde el navegador.</p>
+<div id="tmfq"></div>
+
 <h2>Antes de este ejercicio</h2>
 
 <p>Conviene dominar primero <a href="/ejercicios/grupos-de-valoracion-especial/">a qué equivale cada grupo de valoración especial</a> por separado, y tener soltura reconociendo compases con ritmo normal en <a href="/ejercicios/compases/reconocer-compas/">reconocer compás</a>. La teoría completa está en <a href="/diccionario-musical/grupos-de-valoracion-especial/">grupos de valoración especial</a>.</p>
@@ -217,8 +220,12 @@
 <script src="/assets/js/completar-compas-engine.js?v=2c5c4a63" defer></script>
 <script src="/assets/js/grupos-valoracion-especial-engine.js?v=94b4be66" defer></script>
 <script src="/assets/js/que-compas-es-engine.js?v=19c83015" defer></script>
+<script src="/assets/js/ficha-que-compas-es-engine.js?v=ca70794d" defer></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function () { if (window.tmQueCompasEs) tmQueCompasEs('tmqc'); });
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.tmQueCompasEs) tmQueCompasEs('tmqc');
+    if (window.tmFichaQueCompasEs) tmFichaQueCompasEs('tmfq');
+  });
 </script>
 <section class="tm-seccion">
 <div class="tm-seccion-inner">

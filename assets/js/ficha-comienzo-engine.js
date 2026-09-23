@@ -1,0 +1,189 @@
+/* Generador de fichas de «¿cómo empieza la melodía?» para imprimir, con
+   botón «otra ficha». Uso: <div id="tmfm"></div><script>tmFichaComienzo('tmfm');</script>
+
+   Es la versión en el navegador de la ficha en PDF (tools/generate-fichas-
+   comienzo.js): tres niveles, seis de cada uno, reutilizando
+   window.tmComienzoTest (generarLote/dibujar/TIPOS/NOMBRE_TIPO). Sin lógica
+   de «no repetir»: el espacio de melodías posibles es enorme. Mismo patrón
+   de impresión que fichas-acordes-engine.js. */
+(function () {
+  'use strict';
+
+  function T() { return window.tmComienzoTest; }
+
+  var TIT = { 1: '1. Fácil (compases simples; silencio o anacrusa de un tiempo entero)', 2: '2. Medio (simples y compuestos; el silencio inicial puede no estar escrito)', 3: '3. Difícil (figuras muy pequeñas y silencios que despistan)' };
+  var LOTES = [[1, 6], [2, 6], [3, 6]];
+
+  var CSS = [
+    '.tm-fm{background:#fff;border:1px solid #d8d0b8;border-radius:12px;padding:20px;position:relative;box-shadow:0 10px 30px rgba(0,0,0,.05);}',
+    '.tm-fm::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:#8b6914;border-radius:12px 12px 0 0;}',
+    '.tm-fm-acciones{display:flex;flex-wrap:wrap;gap:10px;}',
+    '.tm-fm-btn{font-size:.95rem;font-weight:700;padding:12px 20px;border-radius:8px;border:1px solid transparent;cursor:pointer;font-family:inherit;}',
+    '.tm-fm-btn-1{background:#8b6914;color:#fff;}',
+    '.tm-fm-btn-2{background:#fff;color:#1a1a2e;border-color:#d8d0b8;}',
+    '.tm-fm-enlace{font-size:.82rem;color:#666;margin:10px 0 0;}',
+    '.tm-fm-hoja{margin-top:18px;background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:16px 14px 10px;}',
+    '.tm-fm-cab{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:2px solid #8b6914;padding-bottom:6px;margin-bottom:10px;flex-wrap:wrap;}',
+    '.tm-fm-tit{font-weight:700;font-size:1rem;color:#1a1a2e;margin:0;}',
+    '.tm-fm-ref{font-size:.75rem;color:#8a8a8a;}',
+    '.tm-fm-instr{font-size:.85rem;color:#555;margin:0 0 10px;}',
+    '.tm-fm-datos{display:none;}',
+    '.tm-fm-h2{font-size:.95rem;font-weight:700;color:#8b6914;margin:14px 0 7px;}',
+    '.tm-fm-rejilla{display:grid;grid-template-columns:repeat(var(--tm-fm-cols,2),minmax(0,1fr));gap:6px 10px;}',
+    '.tm-fm-celda{position:relative;min-width:0;border:1px solid #e8e0cc;border-radius:6px;padding:4px 6px;break-inside:avoid;}',
+    '.tm-fm-n{position:absolute;top:3px;left:6px;font-size:.72rem;font-weight:700;color:#9a7b28;}',
+    '.tm-fm-svg{display:block;margin:0 auto;}',
+    '.tm-fm-svg svg{display:block;margin:0 auto;height:auto!important;}',
+    '@media print{ .tm-fm-svg svg{height:60px!important;width:auto!important;max-width:100%!important;} }',
+    '.tm-fm-ops{display:flex;justify-content:space-between;gap:6px;font-size:.78rem;color:#333;padding:2px 2px 0;flex-wrap:wrap;}',
+    '.tm-fm-op{display:inline-flex;align-items:center;gap:4px;white-space:nowrap;}',
+    '.tm-fm-caja{display:inline-block;width:11px;height:11px;border:1.3px solid #777;border-radius:2px;text-align:center;line-height:9px;font-size:.7rem;font-weight:700;}',
+    '.tm-fm-op.tm-sol{color:#c0392b;font-weight:700;}',
+    '.tm-fm-op.tm-sol .tm-fm-caja{border-color:#c0392b;background:#c0392b;color:#fff;}',
+    '@media screen{.tm-fm-impresion{display:none!important;}}',
+    '@media print{',
+    '  body.tm-fm-print > *:not(.tm-fm-impresion){display:none!important;}',
+    '  body.tm-fm-print .tm-fm-impresion{display:block!important;border:0;padding:0;margin:0;}',
+    '  body.tm-fm-print .tm-fm-datos{display:flex!important;gap:18px;font-size:.8rem;color:#666;margin:6px 0 8px;}',
+    '  body.tm-fm-print .tm-fm-datos span{flex:1;border-bottom:1px solid #bbb;}',
+    '  body.tm-fm-print .tm-fm-cab{margin-bottom:6px;padding-bottom:4px;}',
+    '  body.tm-fm-print .tm-fm-instr{font-size:.78rem;margin:0 0 6px;}',
+    '  body.tm-fm-print .tm-fm-h2{margin:8px 0 4px;font-size:.85rem;}',
+    '  body.tm-fm-print .tm-fm-rejilla{gap:3px 8px;}',
+    '  body.tm-fm-print .tm-fm-celda{padding:2px 4px;}',
+    '  body.tm-fm-print .tm-fm-ops{flex-wrap:nowrap;gap:3px;padding:1px 2px 0;}',
+    '  body.tm-fm-print .tm-fm-op{font-size:.62rem;gap:2px;}',
+    '  body.tm-fm-print .tm-fm-caja{width:9px;height:9px;line-height:7px;}',
+    '  @page{size:A4;margin:10mm;}',
+    '}'
+  ].join('\n');
+
+  window.tmFichaComienzo = function (id) {
+    var cont = document.getElementById(id);
+    if (!cont || !T()) return;
+    if (!document.getElementById('tm-fm-css')) {
+      var st = document.createElement('style');
+      st.id = 'tm-fm-css';
+      st.textContent = CSS;
+      document.head.appendChild(st);
+    }
+
+    var semilla = 0, solucion = false;
+
+    cont.innerHTML = '<div class="tm-fm">'
+      + '<div class="tm-fm-acciones">'
+      + '<button type="button" class="tm-fm-btn tm-fm-btn-1" data-a="generar">Generar otra ficha</button>'
+      + '<button type="button" class="tm-fm-btn tm-fm-btn-2" data-a="soluciones">Ver soluciones</button>'
+      + '<button type="button" class="tm-fm-btn tm-fm-btn-2" data-a="imprimir">Imprimir</button>'
+      + '</div>'
+      + '<p class="tm-fm-enlace"></p>'
+      + '</div>'
+      + '<div class="tm-fm-hoja"><div class="tm-fm-cab"><p class="tm-fm-tit">¿Cómo empieza la melodía?</p><span class="tm-fm-ref"></span></div>'
+      + '<div class="tm-fm-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
+      + '<p class="tm-fm-instr">Marca el tipo de comienzo de cada melodía. Lo que decide es cuándo entra la música dentro del compás: tético (tiempo 1), acéfalo (después del tiempo fuerte pero antes de la mitad) o anacrúsico (en la mitad del compás o después, justo antes del siguiente tiempo fuerte).</p>'
+      + '<div class="tm-fm-cuerpo"></div></div>';
+
+    var elRef = cont.querySelector('.tm-fm-ref');
+    var elCuerpo = cont.querySelector('.tm-fm-cuerpo');
+    var anchoForzado = null;
+
+    function pintar() {
+      var Tt = T();
+      elCuerpo.innerHTML = '';
+      LOTES.forEach(function (lote, li) {
+        var nivel = lote[0], cuantos = lote[1];
+        var h = document.createElement('p'); h.className = 'tm-fm-h2'; h.textContent = TIT[nivel];
+        elCuerpo.appendChild(h);
+        var rej = document.createElement('div'); rej.className = 'tm-fm-rejilla'; elCuerpo.appendChild(rej);
+        Tt.generarLote({ nivel: nivel, n: cuantos }, semilla + li * 977).forEach(function (it) {
+          var c = document.createElement('div'); c.className = 'tm-fm-celda';
+          var ops = Tt.TIPOS.map(function (t) {
+            var nombre = Tt.NOMBRE_TIPO[t].charAt(0).toUpperCase() + Tt.NOMBRE_TIPO[t].slice(1);
+            var marcada = solucion && t === it.tipo;
+            return '<span class="tm-fm-op' + (marcada ? ' tm-sol' : '') + '"><span class="tm-fm-caja">' + (marcada ? '✓' : '') + '</span>' + nombre + '</span>';
+          }).join('');
+          c.innerHTML = '<span class="tm-fm-n"></span><div class="tm-fm-svg"></div><div class="tm-fm-ops">' + ops + '</div>';
+          rej.appendChild(c);
+          Tt.dibujar(c.querySelector('.tm-fm-svg'), it, { compacto: 0.85 });
+        });
+      });
+      var n = 0;
+      Array.prototype.forEach.call(cont.querySelectorAll('.tm-fm-celda'), function (c) { c.querySelector('.tm-fm-n').textContent = ++n; });
+      var ancho = anchoForzado || elCuerpo.clientWidth || 700;
+      var cols = ancho >= 480 ? 2 : 1;
+      Array.prototype.forEach.call(cont.querySelectorAll('.tm-fm-rejilla'), function (rej) {
+        rej.style.setProperty('--tm-fm-cols', cols);
+        var interior = Math.floor(ancho / cols) - 24;
+        var svgs = Array.prototype.slice.call(rej.querySelectorAll('svg'));
+        var anchos = svgs.map(function (s) { return Number(s.getAttribute('viewBox').split(' ')[2]); });
+        var K = Math.min(1, interior / Math.max.apply(null, anchos));
+        svgs.forEach(function (s, i) { s.style.width = (anchos[i] * K) + 'px'; s.style.maxWidth = 'none'; });
+      });
+      elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
+    }
+
+    function generar(semillaFija) {
+      var nueva;
+      if (semillaFija) nueva = semillaFija;
+      else { do { nueva = Math.floor(Math.random() * 90000 + 10000); } while (nueva === semilla); }
+      semilla = nueva;
+      solucion = false;
+      cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
+      pintar();
+      var a = cont.querySelector('.tm-fm-enlace');
+      var params = '?hoja=' + semilla;
+      a.innerHTML = 'Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.';
+    }
+
+    cont.addEventListener('click', function (ev) {
+      var btn = ev.target.closest('[data-a]');
+      if (!btn) return;
+      var accion = btn.getAttribute('data-a');
+      if (accion === 'generar') generar();
+      else if (accion === 'soluciones') {
+        solucion = !solucion;
+        btn.textContent = solucion ? 'Ocultar soluciones' : 'Ver soluciones';
+        pintar();
+      } else if (accion === 'imprimir') {
+        prepararImpresion();
+        window.print();
+        if (!('onafterprint' in window)) setTimeout(terminarImpresion, 1000);
+      }
+    });
+
+    function prepararImpresion() {
+      anchoForzado = 700;
+      pintar();
+      var viejo = document.querySelector('.tm-fm-impresion');
+      if (viejo) viejo.parentNode.removeChild(viejo);
+      var clon = cont.querySelector('.tm-fm-hoja').cloneNode(true);
+      clon.classList.add('tm-fm-impresion');
+      document.body.appendChild(clon);
+      document.body.classList.add('tm-fm-print');
+    }
+    function terminarImpresion() {
+      document.body.classList.remove('tm-fm-print');
+      var clon = document.querySelector('.tm-fm-impresion');
+      if (clon) clon.parentNode.removeChild(clon);
+      anchoForzado = null;
+      pintar();
+    }
+    window.addEventListener('afterprint', function () {
+      if (document.body.classList.contains('tm-fm-print')) terminarImpresion();
+    });
+
+    var reajuste, anchoPrevio = elCuerpo.clientWidth;
+    window.addEventListener('resize', function () {
+      clearTimeout(reajuste);
+      reajuste = setTimeout(function () {
+        if (elCuerpo.clientWidth === anchoPrevio) return;
+        anchoPrevio = elCuerpo.clientWidth;
+        pintar();
+      }, 250);
+    });
+
+    var q = new URLSearchParams(window.location.search);
+    var semillaURL = Number(q.get('hoja')) || null;
+    generar(semillaURL);
+  };
+})();

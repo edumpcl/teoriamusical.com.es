@@ -234,6 +234,9 @@
 <p><a class="tm-btn tm-btn-dorado" href="/assets/img/compases/fichas/ficha-reconocer-compases.pdf" target="_blank" rel="noopener">Descargar la ficha (PDF A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/compases/fichas/ficha-reconocer-compases-soluciones.pdf" target="_blank" rel="noopener">Soluciones</a></p>
 <p>Se puede imprimir y fotocopiar libremente para el aula.</p>
 
+<p>¿Necesitas más de una hoja? Aquí puedes generar <strong>más fichas</strong>, cada una con compases distintos, e imprimirlas directamente desde el navegador.</p>
+<div id="tmfr"></div>
+
 <h2>Antes de este ejercicio</h2>
 
 <p>Si cuesta reconocer los tiempos, conviene pasar antes por <a href="/ejercicios/compases/analizar-compas/">analizar compases</a>, donde se explica qué dice cada cifra, y por <a href="/ejercicios/figuras/valor-de-las-figuras/">el valor de las figuras en cada compás</a>. La teoría completa está en <a href="/diccionario-musical/compases/">compases musicales</a>.</p>
@@ -241,8 +244,10 @@
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
 <script src="/assets/js/completar-compas-engine.js?v=2c5c4a63" defer></script>
 <script src="/assets/js/reconocer-compas-engine.js?v=351de94c" defer></script>
+<script src="/assets/js/ficha-reconocer-compas-engine.js?v=1117ad74" defer></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    if (window.tmFichaReconocerCompas) tmFichaReconocerCompas('tmfr');
     if (window.tmReconocerCompas) tmReconocerCompas('tmrc');
     if (window.tmCompletarCompasData) {
       var D = window.tmCompletarCompasData;

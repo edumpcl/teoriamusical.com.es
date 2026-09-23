@@ -209,6 +209,9 @@
 <p><a class="tm-btn tm-btn-dorado" href="/assets/img/final/fichas/ficha-final-frase.pdf" target="_blank" rel="noopener">Descargar la ficha (PDF A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/final/fichas/ficha-final-frase-soluciones.pdf" target="_blank" rel="noopener">Soluciones</a></p>
 <p>Está pensada para trabajar sin ordenador, como ejercicio de clase, tarea o repaso. Se puede imprimir y fotocopiar libremente para el aula.</p>
 
+<p>¿Necesitas más de una hoja? Aquí puedes generar <strong>más fichas</strong>, cada una con melodías distintas, e imprimirlas directamente desde el navegador.</p>
+<div id="tmff"></div>
+
 <h2>Antes y después de este ejercicio</h2>
 
 <p>Para saber qué tiempo es el fuerte en cada compás conviene pasar antes por <a href="/ejercicios/compases/analizar-compas/">analizar compases</a>. La otra mitad de la frase, su principio, se trabaja en <a href="/ejercicios/comienzo-tetico-anacrusico-acefalo/">comienzo tético, anacrúsico y acéfalo</a>.</p>
@@ -217,8 +220,12 @@
 <script src="/assets/js/completar-compas-engine.js?v=2c5c4a63" defer></script>
 <script src="/assets/js/tipo-de-comienzo-engine.js?v=6d67d8d0" defer></script>
 <script src="/assets/js/tipo-de-final-engine.js?v=95261782" defer></script>
+<script src="/assets/js/ficha-final-frase-engine.js?v=4de976be" defer></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function () { if (window.tmFinal) tmFinal('tmfi'); });
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.tmFinal) tmFinal('tmfi');
+    if (window.tmFichaFinalFrase) tmFichaFinalFrase('tmff');
+  });
 </script>
 <div class="tm-ad">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>

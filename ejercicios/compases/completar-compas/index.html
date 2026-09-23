@@ -209,14 +209,21 @@
 <p><a class="tm-btn tm-btn-dorado" href="/assets/img/compases/fichas/ficha-completar-compases.pdf" target="_blank" rel="noopener">Descargar la ficha (PDF A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/compases/fichas/ficha-completar-compases-soluciones.pdf" target="_blank" rel="noopener">Soluciones</a></p>
 <p>Se puede imprimir y fotocopiar libremente para el aula.</p>
 
+<p>¿Necesitas más de una hoja? Aquí puedes generar <strong>más fichas</strong>, cada una con compases distintos, e imprimirlas directamente desde el navegador.</p>
+<div id="tmfc"></div>
+
 <h2>Antes de este ejercicio</h2>
 
 <p>Si cuesta, conviene pasar antes por <a href="/ejercicios/figuras/valor-de-las-figuras/">el valor de las figuras en cada compás</a> y por <a href="/ejercicios/figuras/sumar-figuras-en-un-compas/">sumar las figuras de un compás</a>. Para entender qué dice la cifra de compás está el ejercicio de <a href="/ejercicios/compases/analizar-compas/">analizar compases</a>, y la teoría en <a href="/diccionario-musical/compases/">compases musicales</a>. Cuando esto ya sale bien, <a href="/ejercicios/compases/reconocer-compas/">reconocer compás</a> pone a prueba lo aprendido al revés: adivinar la cifra a partir del ritmo escrito.</p>
 
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
 <script src="/assets/js/completar-compas-engine.js?v=2c5c4a63" defer></script>
+<script src="/assets/js/ficha-completar-compas-engine.js?v=ee957ae7" defer></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function () { if (window.tmCompletarCompas) tmCompletarCompas('tmcc'); });
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.tmCompletarCompas) tmCompletarCompas('tmcc');
+    if (window.tmFichaCompletarCompas) tmFichaCompletarCompas('tmfc');
+  });
 </script>
 <section class="tm-seccion">
 <div class="tm-seccion-inner">

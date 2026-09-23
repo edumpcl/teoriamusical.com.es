@@ -211,6 +211,9 @@
 <p><a class="tm-btn tm-btn-dorado" href="/assets/img/comienzo/fichas/ficha-comienzo.pdf" target="_blank" rel="noopener">Descargar la ficha (PDF A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/comienzo/fichas/ficha-comienzo-soluciones.pdf" target="_blank" rel="noopener">Soluciones</a></p>
 <p>Está pensada para trabajar sin ordenador, como ejercicio de clase, tarea o repaso. Se puede imprimir y fotocopiar libremente para el aula.</p>
 
+<p>¿Necesitas más de una hoja? Aquí puedes generar <strong>más fichas</strong>, cada una con melodías distintas, e imprimirlas directamente desde el navegador.</p>
+<div id="tmfm"></div>
+
 <h2>Antes de este ejercicio</h2>
 
 <p>Para saber cuál es el tiempo fuerte de cada compás conviene pasar antes por <a href="/ejercicios/compases/analizar-compas/">analizar compases</a>, y para manejar bien lo que dura cada compás, por <a href="/ejercicios/compases/completar-compas/">completar compases</a>. La otra mitad de la frase, su final, se trabaja en <a href="/ejercicios/final-tiempo-fuerte-y-debil/">final de frase en tiempo fuerte y débil</a>.</p>
@@ -218,8 +221,12 @@
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
 <script src="/assets/js/completar-compas-engine.js?v=2c5c4a63" defer></script>
 <script src="/assets/js/tipo-de-comienzo-engine.js?v=6d67d8d0" defer></script>
+<script src="/assets/js/ficha-comienzo-engine.js?v=5dfbfcda" defer></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function () { if (window.tmComienzo) tmComienzo('tmcm'); });
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.tmComienzo) tmComienzo('tmcm');
+    if (window.tmFichaComienzo) tmFichaComienzo('tmfm');
+  });
 </script>
 <div class="tm-ad">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>

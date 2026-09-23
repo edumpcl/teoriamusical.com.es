@@ -215,6 +215,9 @@
 <p><a class="tm-btn tm-btn-dorado" href="/assets/img/tempo/fichas/ficha-tempo.pdf" target="_blank" rel="noopener">Descargar la ficha (PDF A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/tempo/fichas/ficha-tempo-soluciones.pdf" target="_blank" rel="noopener">Soluciones</a></p>
 <p>Se puede imprimir y fotocopiar libremente para el aula.</p>
 
+<p>¿Necesitas más de una hoja? Aquí puedes generar <strong>más fichas</strong>, cada una con términos y series distintas, e imprimirlas directamente desde el navegador.</p>
+<div id="tmft"></div>
+
 <h2>Cómo repasar antes de empezar</h2>
 
 <p>Si fallas más de la cuenta, el repaso rápido está en las dos páginas de teoría:</p>
@@ -228,8 +231,10 @@
 
 <script src="/assets/js/agogica-audio.js?v=356755c7" defer></script>
 <script src="/assets/js/tempo-ejercicios.js?v=182fa18b" defer></script>
+<script src="/assets/js/ficha-tempo-engine.js?v=4a0405e1" defer></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    if (window.tmFichaTempo) tmFichaTempo('tmft');
     if (window.tmTempoSignificados) tmTempoSignificados('tmtempo1');
     if (window.tmTempoOrdenar) tmTempoOrdenar('tmtempo2');
     if (window.tmTempoOido) tmTempoOido('tmtempo3');
