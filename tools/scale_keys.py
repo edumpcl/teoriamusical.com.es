@@ -122,6 +122,36 @@ def chromatic(tonic):
     return out
 
 
+def chromatic_desc(tonic):
+    """Cromática descendente desde la tónica (12 + octava), deletreo con bemoles."""
+    tl, ta = tonic
+    start = pc(tl, ta)
+    octave = 4
+    prev_li = None
+    seq = [(tl, ta)]
+    for i in range(1, 13):
+        target = (start - i) % 12
+        chosen = None
+        for L in LETTERS:
+            if NAT[L] == target:
+                chosen = (L, 0); break
+        if chosen is None:
+            for L in LETTERS:
+                if (NAT[L] - 1) % 12 == target:
+                    chosen = (L, -1); break
+        seq.append(chosen)
+    out = []
+    for letter, alt in seq:
+        li = LETTERS.index(letter)
+        if prev_li is not None and li > prev_li:
+            octave -= 1
+        prev_li = li
+        disp = ES[letter] + ACC_ES[alt]
+        vex = letter + ACC_VEX[alt] + '/' + str(octave)
+        out.append(dict(disp=disp, vex=vex, letter=letter, alt=alt, octave=octave))
+    return out
+
+
 def tonic_name(tonic):
     return ES[tonic[0]] + ACC_ES[tonic[1]]
 

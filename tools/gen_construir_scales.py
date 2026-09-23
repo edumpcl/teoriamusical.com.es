@@ -15,6 +15,7 @@ TYPES = {
     'menor-armonica':    dict(offsets=[0,2,3,5,7,8,11,12],  disp='Menor Armónica',          tonics=sk.KEYS15_MIN),
     'menor-melodica':    dict(tonics=sk.KEYS15_MIN, disp='Menor Melódica', seq='melodica'),
     'menor-dorica':      dict(offsets=[0,2,3,5,7,9,10,12],  disp='Menor Dórica',            tonics=sk.KEYS15_MIN),
+    'cromatica':         dict(tonics=sk.KEYS12, disp='Cromática', seq='cromatica'),
 }
 LSTEPS = [0,1,2,3,4,5,6,7]
 
@@ -73,6 +74,26 @@ def build_melodic_seq(tonic):
     alts = set((L, O, A) for (L, A, O) in full if A != 0)
     return seq, len(alts)
 
+def build_chromatic_seq(tonic, desc=False):
+    """Cromática en una sola dirección (13 notas) via scale_keys. Devuelve (seq, numAlts).
+
+    sk.chromatic()/chromatic_desc() deletrean SIEMPRE con sostenidos (ascendente)
+    o bemoles (descendente), así que en tónicas alteradas la última nota (la
+    octava) puede salir con el nombre enarmónico en vez del de la tónica (p.ej.
+    Si♭ ascendente cierra en "La♯" en vez de "Si♭"). Se corrige aquí forzando
+    la última nota al nombre de la tónica: cae siempre en la misma octava
+    porque nunca cruza el "do" que es el único punto donde el motor cambia de
+    octava (ver sk.chromatic).
+    """
+    notes = sk.chromatic_desc(tonic) if desc else sk.chromatic(tonic)
+    tl, ta = tonic
+    last = notes[-1]
+    notes = notes[:-1] + [dict(letter=tl, alt=ta, octave=last['octave'])]
+    seq = [[n['letter'], str(n['octave']), n['alt']] for n in notes]
+    nalt = sum(1 for n in notes if n['alt'] != 0)
+    return seq, nalt
+
+
 def generate():
     """Devuelve (out, report): out = {slug: [scale,...]}, report = {slug: (n, skipped)}."""
     out = {}
@@ -89,6 +110,13 @@ def generate():
                     continue
                 seq, nalt = r
                 arr.append(dict(name=name, numAlts=nalt, seq=seq))
+        elif d.get('seq') == 'cromatica':
+            for tonic in d['tonics']:
+                tname = sk.tonic_name(tonic)
+                for desc, dirlbl in ((False, 'ascendente'), (True, 'descendente')):
+                    seq, nalt = build_chromatic_seq(tonic, desc)
+                    name = tname + ' Cromática (' + dirlbl + ')'
+                    arr.append(dict(name=name, numAlts=nalt, seq=seq))
         else:
             forms = d.get('forms') or [(d['offsets'], d['disp'])]
             for tonic in d['tonics']:
