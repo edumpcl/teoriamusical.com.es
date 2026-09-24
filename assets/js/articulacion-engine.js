@@ -21,7 +21,6 @@
     { id: 'mix', lbl: 'Mezclado', desc: 'Los dos sentidos, al azar' }
   ];
 
-  var PREGUNTAS_POR_TEST = 10;
   var ICONOS = ['🔤', '🎼', '🔀'];
 
   var CSS = [
@@ -31,6 +30,7 @@
     '.tm-iv-wrap .tm-construir-q{text-align:center;font-size:1.15rem;font-weight:700;margin:10px 0;color:#1a1a2e;}',
     '.tm-iv-wrap .tm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:10px;}',
     '.tm-iv-wrap .tm-grid-signos{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:10px;}',
+    '.tm-iv-wrap .tm-grid-list{display:flex;flex-direction:column;gap:10px;margin-top:10px;}',
     '.tm-iv-wrap .tm-opt{font-size:.9rem;font-weight:700;padding:12px;border:1px solid #d8d0b8;background:#f5f2ea;cursor:pointer;border-radius:6px;transition:0.2s;text-align:center;font-family:inherit;}',
     '.tm-iv-wrap .tm-opt-signo{padding:4px;border:1px solid #d8d0b8;background:#fdfcf9;cursor:pointer;border-radius:6px;transition:0.2s;}',
     '.tm-iv-wrap .tm-opt-signo .tm-mini{background:#fff;border-radius:4px;}',
@@ -120,18 +120,31 @@
     wrap.className = 'tm-iv-wrap';
     var uid = containerId;
 
-    var totalQ = PREGUNTAS_POR_TEST;
+    var totalQ, queue;
     var currentQ, score, cQ, selAns, answered, modoElegido;
+
+    /* Solo hay 5 articulaciones: para que no se repitan, la cola de
+       preguntas cubre cada combinación (articulación, sentido) una sola
+       vez — 5 preguntas en un sentido único, 10 en el mezclado. */
+    function buildQueue(modo) {
+      var sentidos = modo === 'mix' ? ['n2s', 's2n'] : [modo];
+      var combos = [];
+      sentidos.forEach(function (s) {
+        ARTICULACIONES.forEach(function (a) { combos.push({ art: a, sentido: s }); });
+      });
+      return shuffled(combos);
+    }
 
     function showModeScreen() {
       var btns = MODOS.map(function (m, i) {
-        return '<button class="tm-iv-mode-btn" data-i="' + i + '"><span class="tm-iv-mode-icon">' + ICONOS[i] + '</span><span class="tm-iv-mode-lbl">' + m.lbl + '</span><span class="tm-iv-mode-desc">' + m.desc + '</span></button>';
+        var n = (m.id === 'mix' ? ARTICULACIONES.length * 2 : ARTICULACIONES.length);
+        return '<button class="tm-iv-mode-btn" data-i="' + i + '"><span class="tm-iv-mode-icon">' + ICONOS[i] + '</span><span class="tm-iv-mode-lbl">' + m.lbl + '</span><span class="tm-iv-mode-desc">' + m.desc + ' · ' + n + ' preguntas</span></button>';
       }).join('');
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-iv-mode-screen">',
             '<h2 class="tm-iv-title">Test — Articulación Musical</h2>',
-            '<p class="tm-iv-subtitle">Elige el sentido del test — ' + totalQ + ' preguntas</p>',
+            '<p class="tm-iv-subtitle">Elige el sentido del test — sin preguntas repetidas</p>',
             '<div class="tm-iv-modes">' + btns + '</div>',
           '</div>',
         '</div>'
@@ -139,6 +152,8 @@
       wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
           modoElegido = MODOS[parseInt(btn.dataset.i, 10)].id;
+          queue = buildQueue(modoElegido);
+          totalQ = queue.length;
           currentQ = 0; score = 0;
           startQuiz();
         });
@@ -168,11 +183,7 @@
       nextQ();
     }
 
-    function genQ() {
-      var art = ARTICULACIONES[Math.floor(Math.random() * ARTICULACIONES.length)];
-      var sentido = modoElegido === 'mix' ? (Math.random() < 0.5 ? 'n2s' : 's2n') : modoElegido;
-      cQ = { art: art, sentido: sentido };
-    }
+    function genQ() { cQ = queue[currentQ - 1]; }
 
     function shuffled(arr) { return arr.slice().sort(function () { return Math.random() - 0.5; }); }
 
@@ -284,6 +295,183 @@
     else { window.addEventListener('vexflow-ready', init, { once: true }); }
   }
 
+  /* ---- Segundo test: definición <-> nombre (sin pentagrama) ---- */
+  var MODOS_DEF = [
+    { id: 'n2d', lbl: 'Nombre → Definición', desc: 'Se da el nombre, elige qué significa' },
+    { id: 'd2n', lbl: 'Definición → Nombre', desc: 'Se da el significado, elige el nombre' },
+    { id: 'mix', lbl: 'Mezclado', desc: 'Los dos sentidos, al azar' }
+  ];
+  var ICONOS_DEF = ['🔤', '📖', '🔀'];
+
+  function tmArticulacionDefEngine(containerId) {
+    injectCSS();
+
+    var wrap = document.getElementById(containerId);
+    if (!wrap) return;
+    wrap.className = 'tm-iv-wrap';
+    var uid = containerId;
+
+    var totalQ, queue;
+    var currentQ, score, cQ, selAns, answered, modoElegido;
+
+    /* Solo hay 5 articulaciones: para que no se repitan, la cola de
+       preguntas cubre cada combinación (articulación, sentido) una sola
+       vez — 5 preguntas en un sentido único, 10 en el mezclado. */
+    function buildQueue(modo) {
+      var sentidos = modo === 'mix' ? ['n2d', 'd2n'] : [modo];
+      var combos = [];
+      sentidos.forEach(function (s) {
+        ARTICULACIONES.forEach(function (a) { combos.push({ art: a, sentido: s }); });
+      });
+      return shuffled(combos);
+    }
+
+    function showModeScreen() {
+      var btns = MODOS_DEF.map(function (m, i) {
+        var n = (m.id === 'mix' ? ARTICULACIONES.length * 2 : ARTICULACIONES.length);
+        return '<button class="tm-iv-mode-btn" data-i="' + i + '"><span class="tm-iv-mode-icon">' + ICONOS_DEF[i] + '</span><span class="tm-iv-mode-lbl">' + m.lbl + '</span><span class="tm-iv-mode-desc">' + m.desc + ' · ' + n + ' preguntas</span></button>';
+      }).join('');
+      wrap.innerHTML = [
+        '<div class="tm-card">',
+          '<div class="tm-iv-mode-screen">',
+            '<h2 class="tm-iv-title">Test — Definiciones de Articulación</h2>',
+            '<p class="tm-iv-subtitle">Elige el sentido del test — sin preguntas repetidas</p>',
+            '<div class="tm-iv-modes">' + btns + '</div>',
+          '</div>',
+        '</div>'
+      ].join('');
+      wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          modoElegido = MODOS_DEF[parseInt(btn.dataset.i, 10)].id;
+          queue = buildQueue(modoElegido);
+          totalQ = queue.length;
+          currentQ = 0; score = 0;
+          startQuiz();
+        });
+      });
+    }
+
+    function startQuiz() {
+      wrap.innerHTML = [
+        '<div class="tm-card">',
+          '<div class="tm-iv-header">',
+            '<div class="tm-iv-progress-wrap">',
+              '<div class="tm-iv-bar"><div class="tm-iv-fill" id="' + uid + '_fill"></div></div>',
+              '<span class="tm-iv-counter" id="' + uid + '_cnt">1 / ' + totalQ + '</span>',
+            '</div>',
+            '<span class="tm-iv-badge" id="' + uid + '_badge">✓ 0</span>',
+          '</div>',
+          '<p class="tm-construir-q" id="' + uid + '_q"></p>',
+          '<div id="' + uid + '_opts"></div>',
+          '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>',
+          '<div id="' + uid + '_fb" class="tm-fb"></div>',
+          '<button id="' + uid + '_nxt" class="tm-nxt">Siguiente →</button>',
+        '</div>'
+      ].join('');
+      document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
+      document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
+      nextQ();
+    }
+
+    function genQ() { cQ = queue[currentQ - 1]; }
+
+    function shuffled(arr) { return arr.slice().sort(function () { return Math.random() - 0.5; }); }
+
+    function renderPregunta() {
+      var elQ = document.getElementById(uid + '_q');
+      var elOpts = document.getElementById(uid + '_opts');
+      selAns = null;
+      document.getElementById(uid + '_btn').classList.remove('tm-ready');
+
+      if (cQ.sentido === 'n2d') {
+        elQ.textContent = '¿Cuál es el efecto de ' + cQ.art.nombre.toUpperCase() + '?';
+        elOpts.className = 'tm-grid-list';
+        elOpts.innerHTML = shuffled(ARTICULACIONES).map(function (a) {
+          return '<button class="tm-opt" data-v="' + a.id + '">' + a.efecto + '</button>';
+        }).join('');
+      } else {
+        elQ.innerHTML = '¿Qué articulación tiene este efecto?<br>«' + cQ.art.efecto + '»';
+        elOpts.className = 'tm-grid';
+        elOpts.innerHTML = shuffled(ARTICULACIONES).map(function (a) {
+          return '<button class="tm-opt" data-v="' + a.id + '">' + a.nombre + '</button>';
+        }).join('');
+      }
+      elOpts.querySelectorAll('.tm-opt').forEach(function (btn) {
+        btn.addEventListener('click', function () { selectOpt(btn); });
+      });
+    }
+
+    function selectOpt(btn) {
+      if (answered) return;
+      document.getElementById(uid + '_opts').querySelectorAll('[data-v]').forEach(function (b) { b.classList.remove('tm-sel'); });
+      btn.classList.add('tm-sel');
+      selAns = btn.dataset.v;
+      document.getElementById(uid + '_btn').classList.add('tm-ready');
+    }
+
+    function checkAnswer() {
+      var elBtn = document.getElementById(uid + '_btn');
+      if (!elBtn.classList.contains('tm-ready')) return;
+      answered = true;
+      elBtn.style.display = 'none';
+      document.getElementById(uid + '_nxt').className = 'tm-nxt tm-show';
+
+      var correcto = selAns === cQ.art.id;
+      if (correcto) score++;
+
+      var elFb = document.getElementById(uid + '_fb');
+      elFb.className = 'tm-fb tm-show ' + (correcto ? 'tm-ok' : 'tm-ko');
+      elFb.innerHTML = correcto
+        ? ('<strong>¡Correcto!</strong> ' + cQ.art.nombre + ': ' + cQ.art.efecto + '.')
+        : ('<strong>Incorrecto.</strong> Era ' + cQ.art.nombre + ': ' + cQ.art.efecto + '.');
+
+      document.getElementById(uid + '_badge').textContent = '✓ ' + score;
+
+      document.getElementById(uid + '_opts').querySelectorAll('[data-v]').forEach(function (b) {
+        b.style.pointerEvents = 'none';
+        if (b.dataset.v === cQ.art.id) b.classList.add('tm-ok');
+        else if (b.classList.contains('tm-sel')) b.classList.add('tm-ko');
+      });
+    }
+
+    function nextQ() {
+      if (currentQ >= totalQ) { showResults(); return; }
+      currentQ++;
+      answered = false;
+
+      document.getElementById(uid + '_fill').style.width = ((currentQ - 1) / totalQ * 100) + '%';
+      document.getElementById(uid + '_cnt').textContent = currentQ + ' / ' + totalQ;
+      var elBtn = document.getElementById(uid + '_btn');
+      elBtn.style.display = '';
+      elBtn.classList.remove('tm-ready');
+      document.getElementById(uid + '_fb').className = 'tm-fb';
+      document.getElementById(uid + '_nxt').className = 'tm-nxt';
+
+      genQ();
+      renderPregunta();
+    }
+
+    function showResults() {
+      var pct = Math.round(score / totalQ * 100);
+      wrap.innerHTML = [
+        '<div class="tm-card">',
+          '<div class="tm-iv-score-box">',
+            '<div class="tm-iv-score-num">' + score + '/' + totalQ + '</div>',
+            '<div class="tm-iv-score-pct">' + pct + '%</div>',
+          '</div>',
+          '<button class="tm-submit tm-ready" id="' + uid + '_restart">Hacer otro test</button>',
+        '</div>'
+      ].join('');
+      document.getElementById(uid + '_restart').addEventListener('click', function () {
+        currentQ = 0; score = 0;
+        showModeScreen();
+      });
+    }
+
+    showModeScreen();
+  }
+
   window.tmArticulacionEngine = tmArticulacionEngine;
+  window.tmArticulacionDefEngine = tmArticulacionDefEngine;
   window.tmArticulaciones = ARTICULACIONES;
 })();
