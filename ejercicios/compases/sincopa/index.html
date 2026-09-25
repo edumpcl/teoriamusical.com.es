@@ -56,7 +56,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
 <script src="/assets/js/sincopa-engine.js?v=5" defer></script>
-<script src="/assets/js/ficha-sincopa-engine.js?v=1" defer></script>
+<script src="/assets/js/ficha-sincopa-engine.js?v=2" defer></script>
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LearningResource","name":"Ejercicios de Síncopas","description":"Ejercicio interactivo de síncopas: toca en el pentagrama la nota donde empieza la síncopa, o «no hay síncopa» si el ritmo no la tiene.","url":"https://www.teoriamusical.com.es/ejercicios/compases/sincopa/","educationalLevel":"beginner","inLanguage":"es","isAccessibleForFree":true,"teaches":"Reconocer la síncopa de tiempo, de parte y de compás en un ritmo escrito, y distinguirla de un ritmo recto, de una nota larga escrita con ligadura y de un contratiempo.","datePublished":"2026-09-24","dateModified":"2026-09-24","provider":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es"}}
@@ -206,6 +206,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     if (window.tmSincopaEngine) tmSincopaEngine("tmsi");
     if (window.tmFichaSincopa) tmFichaSincopa("tmfs");
+    if (window.tmFichaSincopa) tmFichaSincopa("tmfsd", { dificil: true });
   });
 </script>
 
@@ -226,6 +227,18 @@
 
 <p>¿Necesitas más de una hoja? Aquí puedes generar <strong>más fichas</strong>, cada una con fragmentos distintos, e imprimirlas directamente desde el navegador.</p>
 <div id="tmfs"></div>
+
+<h2>Ficha del modo difícil (PDF)</h2>
+<p>La versión avanzada en papel: <strong>diez fragmentos</strong> de 2 a 4 compases, donde puede haber varias síncopas a la vez, o ninguna. El alumno rodea con un círculo todas las notas donde crea que empieza una síncopa, o marca la casilla «No hay síncopa». Con <strong>hoja de soluciones</strong> aparte, con cada síncopa en rojo.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/compases/fichas/ficha-sincopa-dificil.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/compases/fichas/preview-ficha-sincopa-dificil.webp"><img src="/assets/img/compases/fichas/preview-ficha-sincopa-dificil.png" width="300" height="424" loading="lazy" alt="Ficha imprimible en PDF para el ejercicio de síncopa, nivel difícil"></picture></a>
+  <figcaption>Hoja A4 con diez fragmentos de 2 a 4 compases.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/compases/fichas/ficha-sincopa-dificil.pdf" target="_blank" rel="noopener">Descargar la ficha (PDF A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/compases/fichas/ficha-sincopa-dificil-soluciones.pdf" target="_blank" rel="noopener">Soluciones</a></p>
+<p>Se puede imprimir y fotocopiar libremente para el aula.</p>
+
+<p>Aquí puedes generar más fichas del modo difícil, cada una con fragmentos distintos.</p>
+<div id="tmfsd"></div>
 
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
@@ -273,6 +286,7 @@
   <ul>
     <li><a href="/diccionario-musical/compases/sincopa/">Síncopa musical</a></li>
     <li><a href="/diccionario-musical/compases/notas-a-contratiempo/">Notas a contratiempo</a></li>
+    <li><a href="/ejercicios/compases/contratiempo/">Ejercicios de contratiempo</a></li>
     <li><a href="/ejercicios/compases/">Ejercicios de compases</a></li>
     <li><a href="/ejercicios/figuras/">Ejercicios de figuras y ritmo</a></li>
   </ul>

@@ -23,6 +23,26 @@
 
   var ICONOS = ['🔤', '🎼', '🔀'];
 
+  function shuffled(arr) { return arr.slice().sort(function () { return Math.random() - 0.5; }); }
+
+  /* En el modo mezclado cada articulación aparece dos veces en la cola
+     (una por cada sentido), así que una baraja al azar sin más puede
+     dejar la misma articulación en dos preguntas seguidas. Se reintenta
+     la baraja hasta que no haya dos elementos adyacentes de la misma
+     articulación (con solo 5 articulaciones y como mucho 2 repeticiones
+     cada una, casi siempre se consigue en el primer o segundo intento). */
+  function sinRepetirSeguidas(combos) {
+    for (var intento = 0; intento < 100; intento++) {
+      var arr = shuffled(combos);
+      var ok = true;
+      for (var i = 1; i < arr.length; i++) {
+        if (arr[i].art.id === arr[i - 1].art.id) { ok = false; break; }
+      }
+      if (ok) return arr;
+    }
+    return arr;
+  }
+
   var CSS = [
     '.tm-iv-wrap .tm-card{background:#fff;border:1px solid #d8d0b8;border-radius:12px;padding:24px;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.05);}',
     '.tm-iv-wrap .tm-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:#8b6914;border-radius:12px 12px 0 0;}',
@@ -132,7 +152,7 @@
       sentidos.forEach(function (s) {
         ARTICULACIONES.forEach(function (a) { combos.push({ art: a, sentido: s }); });
       });
-      return shuffled(combos);
+      return sinRepetirSeguidas(combos);
     }
 
     function showModeScreen() {
@@ -184,8 +204,6 @@
     }
 
     function genQ() { cQ = queue[currentQ - 1]; }
-
-    function shuffled(arr) { return arr.slice().sort(function () { return Math.random() - 0.5; }); }
 
     function renderPregunta() {
       var elStaff = document.getElementById(uid + '_staff');
@@ -323,7 +341,7 @@
       sentidos.forEach(function (s) {
         ARTICULACIONES.forEach(function (a) { combos.push({ art: a, sentido: s }); });
       });
-      return shuffled(combos);
+      return sinRepetirSeguidas(combos);
     }
 
     function showModeScreen() {
@@ -374,8 +392,6 @@
     }
 
     function genQ() { cQ = queue[currentQ - 1]; }
-
-    function shuffled(arr) { return arr.slice().sort(function () { return Math.random() - 0.5; }); }
 
     function renderPregunta() {
       var elQ = document.getElementById(uid + '_q');

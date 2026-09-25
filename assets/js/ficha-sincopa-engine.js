@@ -1,11 +1,16 @@
 /* Generador de fichas de «síncopa» para imprimir, con botón «otra ficha».
    Uso: <div id="tmfs"></div><script>tmFichaSincopa('tmfs');</script>
+   Modo difícil: <script>tmFichaSincopa('tmfsd', { dificil: true });</script>
 
    Es la versión en el navegador de la ficha en PDF (tools/generate-fichas-
-   sincopa.js): 10 fragmentos por hoja, reutilizando window.tmSincopaGenerar
-   / tmSincopaMulberry32 / tmSincopaDibujarImpresion (mismo motor que el
-   test interactivo: cada fragmento sortea compás —2/4, 3/4 o 4/4— y molde
-   por separado, con sus propias alturas), así que la probabilidad de dos
+   sincopa.js / generate-fichas-sincopa-dificil.js): 10 fragmentos por hoja,
+   reutilizando window.tmSincopaGenerar / tmSincopaGenerarDificil /
+   tmSincopaMulberry32 / tmSincopaDibujarImpresion (mismo motor que el test
+   interactivo). En modo normal cada fragmento sortea compás y molde por
+   separado, como mucho una síncopa; en modo difícil cada fragmento tiene de
+   2 a 4 compases y puede tener varias síncopas a la vez, o ninguna — por
+   eso en difícil todas las celdas van en una sola columna (los fragmentos
+   son siempre anchos). Con alturas también al azar, la probabilidad de dos
    fichas calcadas es prácticamente nula. Mismo patrón de impresión que
    ficha-completar-compas-engine.js. */
 (function () {
@@ -28,6 +33,7 @@
     '.tm-sf-instr{font-size:.85rem;color:#555;margin:0 0 10px;}',
     '.tm-sf-datos{display:none;}',
     '.tm-sf-rejilla{display:grid;grid-template-columns:repeat(var(--tm-sf-cols,2),minmax(0,1fr));gap:6px 10px;}',
+    '.tm-sf-lista{display:flex;flex-direction:column;gap:6px;}',
     '.tm-sf-celda{position:relative;min-width:0;border:1px solid #e8e0cc;border-radius:6px;padding:4px 6px 6px;break-inside:avoid;}',
     '.tm-sf-celda.ancha{grid-column:1 / -1;}',
     '.tm-sf-n{position:absolute;top:3px;left:6px;font-size:.72rem;font-weight:700;color:#9a7b28;}',
@@ -45,20 +51,23 @@
     '  body.tm-sf-print .tm-sf-cab{margin-bottom:6px;padding-bottom:4px;}',
     '  body.tm-sf-print .tm-sf-instr{font-size:.78rem;margin:0 0 6px;}',
     '  body.tm-sf-print .tm-sf-rejilla{gap:3px 8px;}',
+    '  body.tm-sf-print .tm-sf-lista{gap:3px;}',
     '  body.tm-sf-print .tm-sf-celda{padding:2px 4px;}',
     '  @page{size:A4;margin:10mm;}',
     '}'
   ].join('\n');
 
-  function generarFicha(semilla) {
+  function generarFicha(semilla, dificil) {
     var rng = window.tmSincopaMulberry32(semilla);
     var frags = [];
-    for (var i = 0; i < PREGUNTAS_POR_FICHA; i++) frags.push(window.tmSincopaGenerar(rng));
+    var gen = dificil ? window.tmSincopaGenerarDificil : window.tmSincopaGenerar;
+    for (var i = 0; i < PREGUNTAS_POR_FICHA; i++) frags.push(gen(rng));
     return frags;
   }
 
-  window.tmFichaSincopa = function (id) {
+  window.tmFichaSincopa = function (id, opts) {
     var cont = document.getElementById(id);
+    var dificil = !!(opts && opts.dificil);
     if (!cont || !window.tmSincopaGenerar) return;
     if (!document.getElementById('tm-sf-css')) {
       var st = document.createElement('style');
@@ -68,6 +77,10 @@
     }
 
     var semilla = 0, solucion = false;
+    var titulo = dificil ? 'Síncopa — nivel difícil' : 'Síncopa';
+    var instr = dificil
+      ? 'Cada fragmento tiene de 2 a 4 compases. Rodea con un círculo TODAS las notas donde crees que empieza una síncopa (puede haber varias, o ninguna), o marca la casilla «No hay síncopa» si el fragmento no tiene ninguna.'
+      : 'Rodea con un círculo la nota donde crees que empieza la síncopa, o marca la casilla «No hay síncopa» si el fragmento no la tiene.';
 
     cont.innerHTML = '<div class="tm-sf">'
       + '<div class="tm-sf-acciones">'
@@ -77,9 +90,9 @@
       + '</div>'
       + '<p class="tm-sf-enlace"></p>'
       + '</div>'
-      + '<div class="tm-sf-hoja"><div class="tm-sf-cab"><p class="tm-sf-tit">Síncopa</p><span class="tm-sf-ref"></span></div>'
+      + '<div class="tm-sf-hoja"><div class="tm-sf-cab"><p class="tm-sf-tit">' + titulo + '</p><span class="tm-sf-ref"></span></div>'
       + '<div class="tm-sf-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
-      + '<p class="tm-sf-instr">Rodea con un círculo la nota donde crees que empieza la síncopa, o marca la casilla «No hay síncopa» si el fragmento no la tiene.</p>'
+      + '<p class="tm-sf-instr">' + instr + '</p>'
       + '<div class="tm-sf-cuerpo"></div></div>';
 
     var elRef = cont.querySelector('.tm-sf-ref');
@@ -87,27 +100,44 @@
     var anchoForzado = null;
     var fragmentosActuales = [];
 
+    function celdaHTML(frag, i) {
+      var noSincopa = frag.correctas.length === 0;
+      return '<span class="tm-sf-n">' + (i + 1) + '</span><div class="tm-sf-svg"></div>'
+        + '<div class="tm-sf-chk' + (solucion && noSincopa ? ' sol' : '') + '">' + (solucion && noSincopa ? '☒' : '☐') + ' No hay síncopa</div>';
+    }
+
     function pintar() {
       elCuerpo.innerHTML = '';
-      var rej = document.createElement('div'); rej.className = 'tm-sf-rejilla'; elCuerpo.appendChild(rej);
-      fragmentosActuales.forEach(function (frag, i) {
-        var dosCompases = frag.notas.some(function (n) { return n.measure === 1; });
-        var noSincopa = frag.correctas.length === 0;
-        var c = document.createElement('div'); c.className = 'tm-sf-celda' + (dosCompases ? ' ancha' : '');
-        c.innerHTML = '<span class="tm-sf-n">' + (i + 1) + '</span><div class="tm-sf-svg"></div>'
-          + '<div class="tm-sf-chk' + (solucion && noSincopa ? ' sol' : '') + '">' + (solucion && noSincopa ? '☒' : '☐') + ' No hay síncopa</div>';
-        rej.appendChild(c);
-        window.tmSincopaDibujarImpresion(c.querySelector('.tm-sf-svg'), frag, solucion);
-      });
-      var ancho = anchoForzado || elCuerpo.clientWidth || 700;
-      var cols = ancho >= 420 ? 2 : 1;
-      rej.style.setProperty('--tm-sf-cols', cols);
-      var interior = Math.floor(ancho / cols) - 24;
-      var svgs = Array.prototype.slice.call(rej.querySelectorAll('.tm-sf-celda:not(.ancha) svg'));
-      if (svgs.length) {
-        var anchos = svgs.map(function (s) { return Number(s.getAttribute('viewBox').split(' ')[2]); });
-        var K = Math.min(1, interior / Math.max.apply(null, anchos));
-        svgs.forEach(function (s, i) { s.style.width = (anchos[i] * K) + 'px'; s.style.maxWidth = 'none'; });
+      if (dificil) {
+        // Modo difícil: todos los fragmentos son de 2 a 4 compases (siempre
+        // anchos), así que van en una sola columna; el propio SVG ya trae
+        // width:100% + max-width del motor, no hace falta reescalar a mano.
+        var lista = document.createElement('div'); lista.className = 'tm-sf-lista'; elCuerpo.appendChild(lista);
+        fragmentosActuales.forEach(function (frag, i) {
+          var c = document.createElement('div'); c.className = 'tm-sf-celda';
+          c.innerHTML = celdaHTML(frag, i);
+          lista.appendChild(c);
+          window.tmSincopaDibujarImpresion(c.querySelector('.tm-sf-svg'), frag, solucion);
+        });
+      } else {
+        var rej = document.createElement('div'); rej.className = 'tm-sf-rejilla'; elCuerpo.appendChild(rej);
+        fragmentosActuales.forEach(function (frag, i) {
+          var dosCompases = frag.notas.some(function (n) { return n.measure === 1; });
+          var c = document.createElement('div'); c.className = 'tm-sf-celda' + (dosCompases ? ' ancha' : '');
+          c.innerHTML = celdaHTML(frag, i);
+          rej.appendChild(c);
+          window.tmSincopaDibujarImpresion(c.querySelector('.tm-sf-svg'), frag, solucion);
+        });
+        var ancho = anchoForzado || elCuerpo.clientWidth || 700;
+        var cols = ancho >= 420 ? 2 : 1;
+        rej.style.setProperty('--tm-sf-cols', cols);
+        var interior = Math.floor(ancho / cols) - 24;
+        var svgs = Array.prototype.slice.call(rej.querySelectorAll('.tm-sf-celda:not(.ancha) svg'));
+        if (svgs.length) {
+          var anchos = svgs.map(function (s) { return Number(s.getAttribute('viewBox').split(' ')[2]); });
+          var K = Math.min(1, interior / Math.max.apply(null, anchos));
+          svgs.forEach(function (s, i) { s.style.width = (anchos[i] * K) + 'px'; s.style.maxWidth = 'none'; });
+        }
       }
       elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
     }
@@ -119,11 +149,11 @@
       semilla = nueva;
       solucion = false;
       cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
-      fragmentosActuales = generarFicha(semilla);
+      fragmentosActuales = generarFicha(semilla, dificil);
       pintar();
       var a = cont.querySelector('.tm-sf-enlace');
-      var params = '?hoja=' + semilla;
-      a.innerHTML = 'Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.';
+      var params = '?' + (dificil ? 'hojad' : 'hoja') + '=' + semilla;
+      a.innerHTML = 'Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#' + id + '">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.';
     }
 
     cont.addEventListener('click', function (ev) {
@@ -175,7 +205,7 @@
 
     function init() {
       var q = new URLSearchParams(window.location.search);
-      var semillaURL = Number(q.get('hoja')) || null;
+      var semillaURL = Number(q.get(dificil ? 'hojad' : 'hoja')) || null;
       generar(semillaURL);
     }
     if (typeof Vex !== 'undefined') { init(); }
