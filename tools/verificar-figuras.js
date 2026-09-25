@@ -130,7 +130,10 @@ async function auditar(browser, etiqueta, vexflow) {
   for (const lote of lotes) {
     const ref = `${etiqueta} ${lote.tipo} ${JSON.stringify(lote.nivel)} #${lote.semilla}`;
     // Un lote puede quedarse corto si no hay bastantes preguntas distintas, pero no mucho.
-    if (lote.items.length < Math.min(20, lote.n)) mal(ref, `solo ${lote.items.length} preguntas de ${lote.n}`);
+    // "puntillo" es la excepción a propósito: su montón de casos es pequeño
+    // (como mucho 7 o 14) y nunca repite una pregunta, así que un test de
+    // ese tipo sale corto por diseño, no por fallo.
+    if (lote.tipo !== 'puntillo' && lote.items.length < Math.min(20, lote.n)) mal(ref, `solo ${lote.items.length} preguntas de ${lote.n}`);
     lote.items.forEach((it, i) => {
       preguntas++;
       const dib = lote.dibujos[i], tx = lote.textos[i];

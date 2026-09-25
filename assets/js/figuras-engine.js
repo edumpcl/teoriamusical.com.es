@@ -121,8 +121,26 @@
     };
   }
 
-  /* Reparte n preguntas de un montón sin repetir hasta que se agota. */
-  function tomar(pool, n, A, clave) {
+  /* Reparte n preguntas de un montón, evitando en lo posible que dos
+     preguntas seguidas compartan "clave" (mismo concepto).
+     Por defecto puede repetir elementos si hacen falta más de los que
+     hay en el montón (comportamiento histórico). Con sinRepetir=true,
+     cada elemento se usa como mucho una vez y el test sale más corto si
+     el montón es más pequeño que n, en vez de repetir una pregunta
+     (decisión de Eduardo para «puntillo», cuyo montón de casos es muy
+     pequeño y una repetición dentro del mismo test se nota demasiado). */
+  function tomar(pool, n, A, clave, sinRepetir) {
+    if (sinRepetir) {
+      var bolsa2 = A.barajar(pool), out2 = [], intentos = 0;
+      while (out2.length < n && bolsa2.length) {
+        var y = bolsa2.shift();
+        if (out2.length && clave(out2[out2.length - 1]) === clave(y) && bolsa2.length && intentos <= bolsa2.length) {
+          bolsa2.push(y); intentos++; continue;
+        }
+        out2.push(y); intentos = 0;
+      }
+      return out2;
+    }
     var out = [], bolsa = [];
     while (out.length < n && pool.length) {
       if (!bolsa.length) bolsa = A.barajar(pool);
@@ -376,7 +394,7 @@
       var sentidos = o.clase === 'aLigadura' ? ['aLigadura'] : o.clase === 'aFigura' ? ['aFigura'] : ['aLigadura', 'aFigura'];
       sentidos.forEach(function (sentido) { pool.push({ caso: caso, sentido: sentido }); });
     });
-    return tomar(pool, o.n, A, function (x) { return x.caso.f + x.caso.p; }).map(function (x) {
+    return tomar(pool, o.n, A, function (x) { return x.caso.f + x.caso.p; }, true).map(function (x) {
       var caso = x.caso, sim = { f: caso.f, p: caso.p, s: false };
       var grupo = grupoDePuntillo(caso), ties = tiesDePuntillo(caso);
       var otras = A.barajar(CASOS_PUNTILLO.filter(function (c) { return c !== caso; })).slice(0, 3);
@@ -650,6 +668,14 @@
     '.tm-fg-op.tm-ok{border-color:#27ae60!important;background:#27ae60!important;color:#fff!important;}',
     '.tm-fg-op.tm-ko{border-color:#c0392b!important;background:#c0392b!important;color:#fff!important;}',
     '.tm-fg-op.tm-buena{border-color:#27ae60!important;background:#e8f5e9!important;color:#2e7d32!important;}',
+    /* Las opciones con un dibujo (figura o grupo ligado) llevan tinta
+       negra encima: un fondo sólido y oscuro la deja invisible. Aquí el
+       color va solo en el borde, con un fondo claro de fondo (como ya
+       hacen los carriles de síncopa/contratiempo, translúcidos en vez de
+       sólidos), para que la partitura se siga viendo. */
+    '.tm-fg-op-fig.tm-sel,.tm-fg-op-grupo.tm-sel{background:#fdf3df!important;border-color:#8b6914!important;color:#1a1208!important;}',
+    '.tm-fg-op-fig.tm-ok,.tm-fg-op-grupo.tm-ok{background:#e8f5e9!important;border-color:#27ae60!important;color:#1a1208!important;}',
+    '.tm-fg-op-fig.tm-ko,.tm-fg-op-grupo.tm-ko{background:#ffebee!important;border-color:#c0392b!important;color:#1a1208!important;}',
     '.tm-fg-op[disabled]{cursor:default;}',
     '.tm-fg-op-fig{display:flex;flex-direction:column;align-items:center;padding:6px 10px;min-width:96px;flex:1 1 calc(50% - 10px);}',
     '.tm-fg-op-fig .tm-fg-mini{width:72px;}',

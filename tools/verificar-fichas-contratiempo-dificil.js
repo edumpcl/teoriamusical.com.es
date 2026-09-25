@@ -48,7 +48,8 @@ function fuerzaTiempo(notas, idx, fuerzas) {
     for (let j = 1; j < f.notas.length; j++) {
       if (f.notas[j].measure !== f.notas[j - 1].measure) continue;
       if (esSilencio(f.notas[j]) || !esSilencio(f.notas[j - 1])) continue;
-      if (fuerzaTiempo(f.notas, j - 1, fuerzas) > fuerzaTiempo(f.notas, j, fuerzas)) esperadas.push(j);
+      const fB = fuerzaTiempo(f.notas, j, fuerzas);
+      if (fB === 0 || fB === 1) esperadas.push(j);
     }
     const marcadas = f.correctas.map(c => c[0]);
     const errs = [];

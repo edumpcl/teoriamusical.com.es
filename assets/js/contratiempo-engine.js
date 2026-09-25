@@ -2,24 +2,22 @@
    (1 o más compases) y hay que CLICAR la nota que está a contratiempo, o el
    botón "No hay contratiempo" si el fragmento no tiene ninguna.
 
-   Un contratiempo es una nota que ataca en una parte débil mientras la
-   parte fuerte inmediatamente anterior está en SILENCIO, sin ligadura
-   (eso es lo que lo distingue de la síncopa, donde la parte débil se
-   PROLONGA con ligadura sobre la fuerte). IMPORTANTE: la nota del
-   contratiempo no puede sonar sobre la parte fuerte siguiente sin
-   re-atacar —eso, se escriba con ligadura o como una sola figura de
-   mayor duración, es rítmicamente una síncopa, no un contratiempo—, así
-   que su duración nunca cruza el límite de la parte fuerte que silencia.
+   Un contratiempo es una nota que ataca en un tiempo o parte DÉBIL con un
+   silencio inmediatamente antes, sin ligadura (eso es lo que lo distingue
+   de la síncopa, donde la parte débil se PROLONGA con ligadura sobre la
+   fuerte, no la precede un silencio). No hace falta que el silencio sea
+   más fuerte que la nota: basta con que la nota caiga en una parte débil
+   y tenga un silencio justo antes — por ejemplo, en 3/4 (fuerte-débil-
+   débil) un silencio en el tiempo 2 seguido de una nota en el tiempo 3
+   TAMBIÉN es contratiempo, aunque los dos tiempos pesen igual.
    El motor genera los mismos tres compases que el de síncopa (2/4, 3/4,
    4/4), con dos moldes reales de contratiempo —de parte ("y" de un
    tiempo) y de tiempo entero— y distractores: ritmo recto sin silencios,
-   un silencio en la parte DÉBIL seguido de nota en la fuerte (entrada
-   normal, no contratiempo), una síncopa real (ligadura, no silencio) y un
-   silencio que no cae en una parte más fuerte que la nota siguiente. Cada
-   compás tiene su propia tabla de fuerza métrica, así que no todos los
-   moldes existen en todos los compases (en 2/4, por ejemplo, no hay
-   distractor de "silencio no descendente"). Mismo patrón que
-   sincopa-engine.js, con la misma variedad de alturas al azar. */
+   un silencio en la parte débil seguido de nota en un tiempo NO débil
+   (entrada normal, no contratiempo) y una síncopa real (ligadura, no
+   silencio). Cada compás tiene su propia tabla de fuerza métrica, así
+   que no todos los moldes existen en todos los compases. Mismo patrón
+   que sincopa-engine.js, con la misma variedad de alturas al azar. */
 (function () {
   'use strict';
 
@@ -66,20 +64,22 @@
   ];
   function compasAlAzar(rng) { return COMPASES[Math.floor(rng() * COMPASES.length)]; }
 
-  /* Pares de tiempos adyacentes i→i+1 donde el tiempo i pesa MÁS que el
-     i+1 (hueco para un contratiempo de tiempo: silencio en el fuerte,
-     nota en el débil siguiente). Siempre existe al menos t.1→t.2. */
-  function paresDescendentes(compas) {
+  /* Pares de tiempos adyacentes i→i+1 donde el i+1 es DÉBIL (fuerza 1):
+     hueco para un contratiempo de tiempo (silencio en el tiempo i, nota
+     en el i+1). No importa la fuerza de i — el contratiempo no exige que
+     el silencio sea más fuerte que la nota, solo que la nota caiga en
+     una parte débil. Siempre existe al menos t.1→t.2. */
+  function paresHaciaDebil(compas) {
     var out = [];
-    for (var i = 0; i < compas.tiempos - 1; i++) if (compas.fuerzas[i] > compas.fuerzas[i + 1]) out.push(i);
+    for (var i = 0; i < compas.tiempos - 1; i++) if (compas.fuerzas[i + 1] === 1) out.push(i);
     return out;
   }
-  /* Pares donde el tiempo i NO pesa más que el i+1 (igual o ascendente):
-     hueco para el distractor "silencio que no cae en el fuerte". No
-     existe en 2/4. */
-  function paresNoDescendentes(compas) {
+  /* Pares donde el i+1 NO es débil (fuerte o semifuerte): hueco para el
+     distractor "silencio seguido de entrada normal en tiempo fuerte". No
+     existe en 2/4 ni en 3/4 (todos sus tiempos interiores son débiles). */
+  function paresHaciaNoDebil(compas) {
     var out = [];
-    for (var i = 0; i < compas.tiempos - 1; i++) if (compas.fuerzas[i] <= compas.fuerzas[i + 1]) out.push(i);
+    for (var i = 0; i < compas.tiempos - 1; i++) if (compas.fuerzas[i + 1] !== 1) out.push(i);
     return out;
   }
   /* Pares donde el tiempo i pesa MENOS que el i+1 (ascendente): el mismo
@@ -113,10 +113,11 @@
     };
   }
 
-  // -- contratiempo de tiempo: un tiempo entero en silencio (el más
-  //    fuerte de un par), nota en el tiempo siguiente (más débil) --
+  // -- contratiempo de tiempo: un tiempo entero en silencio, nota en el
+  //    tiempo siguiente, que es débil (no hace falta que el silencio sea
+  //    más fuerte: basta con que la nota caiga en un tiempo débil) --
   function contratiempoTiempo(rng, compas) {
-    var i = elegir(paresDescendentes(compas), rng);
+    var i = elegir(paresHaciaDebil(compas), rng);
     var p = alturas(compas.tiempos - 1, rng);
     var notas = [], pIdx = 0, idxNota = -1;
     for (var t = 0; t < compas.tiempos; t++) {
@@ -126,7 +127,7 @@
     }
     return {
       tipo: 'contratiempo', notas: notas, ligaduras: [], correctas: [[idxNota]],
-      explicacion: 'El tiempo ' + (i + 1) + ' (más fuerte) está en silencio y la nota ataca en el tiempo ' + (i + 2) + ' (más débil): es un contratiempo de tiempo.'
+      explicacion: 'El tiempo ' + (i + 1) + ' está en silencio y la nota ataca en el tiempo ' + (i + 2) + ' (débil): es un contratiempo de tiempo.'
     };
   }
 
@@ -143,10 +144,12 @@
     return { tipo: 'ninguna', notas: notas, ligaduras: [], correctas: [], explicacion: 'No hay ningún silencio en parte fuerte seguido de nota en parte débil: no hay contratiempo.' };
   }
 
-  // -- ninguna: silencio en la parte DÉBIL (el "y") seguido de nota en la
-  //    parte fuerte siguiente — es una entrada normal, no contratiempo --
+  // -- ninguna: silencio en la parte débil (el "y") de un tiempo, con el
+  //    tiempo SIGUIENTE eligiéndose para que no sea débil (fuerte o
+  //    semifuerte) — hay silencio justo antes, pero la nota no cae en
+  //    parte débil, así que no es contratiempo --
   function pickupDebil(rng, compas) {
-    var i = Math.floor(rng() * (compas.tiempos - 1));
+    var i = elegir(paresHaciaNoDebil(compas), rng);
     var p = alturas(compas.tiempos, rng);
     var notas = [], pIdx = 0;
     for (var t = 0; t < compas.tiempos; t++) {
@@ -159,7 +162,7 @@
     }
     return {
       tipo: 'ninguna', notas: notas, ligaduras: [], correctas: [],
-      explicacion: 'Hay un silencio, pero está en la parte débil (el «y») del tiempo ' + (i + 1) + ', no en la fuerte: la nota del tiempo ' + (i + 2) + ' entra con normalidad, no es un contratiempo.'
+      explicacion: 'Hay un silencio justo antes (el «y» del tiempo ' + (i + 1) + '), pero la nota del tiempo ' + (i + 2) + ' no cae en una parte débil: no es un contratiempo.'
     };
   }
 
@@ -182,29 +185,14 @@
     };
   }
 
-  // -- ninguna: silencio en un tiempo que NO es más fuerte que el
-  //    siguiente (igual o más débil) — no es contratiempo --
-  function silencioNoDescendente(rng, compas) {
-    var i = elegir(paresNoDescendentes(compas), rng);
-    var p = alturas(compas.tiempos - 1, rng);
-    var notas = [], pIdx = 0;
-    for (var t = 0; t < compas.tiempos; t++) {
-      if (t === i) { notas.push(nota(SILENCIO, 'qr', 0)); }
-      else { notas.push(nota(p[pIdx++], 'q', 0)); }
-    }
-    return {
-      tipo: 'ninguna', notas: notas, ligaduras: [], correctas: [],
-      explicacion: 'El tiempo ' + (i + 1) + ' está en silencio, pero el tiempo ' + (i + 2) + ' no es más fuerte (pesa igual o menos): no es un contratiempo, porque la nota no cae en una parte más débil que el silencio.'
-    };
-  }
-
   /* Los moldes válidos dependen del compás: en 2/4 no cabe la síncopa
-     ligada ni el silencio "no descendente" (con solo 2 tiempos, fuerte
-     seguido de débil, no hay hueco para ninguno de los dos). */
+     ligada, y "pickupDebil" (silencio antes de un tiempo NO débil) solo
+     cabe en 4/4 — en 2/4 y 3/4 todos sus tiempos interiores son débiles,
+     así que cualquier silencio antes de uno de ellos ya sería contratiempo. */
   function poolInterior(compas) {
-    var pool = [contratiempoParte, contratiempoTiempo, recto, pickupDebil];
+    var pool = [contratiempoParte, contratiempoTiempo, recto];
     if (paresAscendentes(compas).length) pool.push(sincopaLigada);
-    if (paresNoDescendentes(compas).length) pool.push(silencioNoDescendente);
+    if (paresHaciaNoDebil(compas).length) pool.push(pickupDebil);
     return pool;
   }
 

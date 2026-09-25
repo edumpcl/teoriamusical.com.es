@@ -3,8 +3,11 @@
    fragmentos al azar (modo normal y difícil) y, para cada nota, recalcula
    desde cero (sin usar las etiquetas del propio motor) si está a
    contratiempo: la nota anterior en el mismo compás tiene que ser un
-   silencio, y la fuerza métrica de ese silencio tiene que ser mayor que
-   la de la nota. Compara el resultado contra frag.correctas. */
+   silencio, y la propia nota tiene que caer en un tiempo o parte débil
+   (fuerza 0 o 1). No hace falta que el silencio sea más fuerte que la
+   nota — esa restricción se quitó a petición de Eduardo: un silencio en
+   un tiempo débil seguido de una nota en otro tiempo igual de débil
+   también es contratiempo. Compara el resultado contra frag.correctas. */
 const path = require('path');
 const { chromium } = require('playwright');
 
@@ -36,9 +39,8 @@ function comprobarFragmento(f, fuerzas) {
     if (f.notas[i].measure !== f.notas[i - 1].measure) continue;
     if (esSilencio(f.notas[i])) continue;
     if (!esSilencio(f.notas[i - 1])) continue;
-    const fA = fuerzaTiempo(f.notas, i - 1, fuerzas);
     const fB = fuerzaTiempo(f.notas, i, fuerzas);
-    if (fA > fB) esperadas.push(i);
+    if (fB === 0 || fB === 1) esperadas.push(i);
   }
   const marcadas = f.correctas.map(function (c) { return c[0]; });
   esperadas.forEach(function (i) {
