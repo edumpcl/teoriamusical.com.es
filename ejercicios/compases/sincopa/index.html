@@ -55,7 +55,7 @@
 <link rel="stylesheet" href="/assets/css/style.css?v=894c9b82">
 
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
-<script src="/assets/js/sincopa-engine.js?v=5" defer></script>
+<script src="/assets/js/sincopa-engine.js?v=6" defer></script>
 <script src="/assets/js/ficha-sincopa-engine.js?v=2" defer></script>
 
 <script type="application/ld+json">
@@ -65,7 +65,7 @@
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://www.teoriamusical.com.es/"},{"@type":"ListItem","position":2,"name":"Ejercicios","item":"https://www.teoriamusical.com.es/ejercicios/"},{"@type":"ListItem","position":3,"name":"Compases","item":"https://www.teoriamusical.com.es/ejercicios/compases/"},{"@type":"ListItem","position":4,"name":"Síncopa","item":"https://www.teoriamusical.com.es/ejercicios/compases/sincopa/"}]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Una ligadura siempre forma una síncopa?","acceptedAnswer":{"@type":"Answer","text":"No. Para que haya síncopa, la nota tiene que empezar en una parte débil y prolongarse con ligadura sobre una parte fuerte. Una ligadura que empieza en una parte fuerte solo indica que una nota se mantiene durante el tiempo siguiente: es una nota larga escrita en dos partes, no una síncopa."}},{"@type":"Question","name":"¿Qué tipos de síncopa aparecen?","acceptedAnswer":{"@type":"Answer","text":"Los tres tipos: síncopa de tiempo (tiempo 2 ligado al 3), síncopa de parte (el «y» de un tiempo ligado al tiempo entero siguiente) y síncopa de compás (el último tiempo de un compás ligado al primero del siguiente)."}},{"@type":"Question","name":"¿Por qué algunos fragmentos con ligadura no son síncopa?","acceptedAnswer":{"@type":"Answer","text":"Porque la ligadura empieza en un tiempo fuerte, no débil: eso es solo una nota larga escrita en dos partes, no una síncopa. También se incluye el caso contrario, el contratiempo: una nota que ataca en parte débil pero sin ligadura al tiempo fuerte siguiente."}},{"@type":"Question","name":"¿Cuál es la diferencia entre síncopa y contratiempo?","acceptedAnswer":{"@type":"Answer","text":"En la síncopa la nota débil se prolonga con ligadura sobre el tiempo fuerte, que queda absorbido. En el contratiempo la nota ataca en la parte débil pero el tiempo fuerte se vuelve a atacar (o hay un silencio), sin ligadura."}},{"@type":"Question","name":"¿Hay ficha para imprimir?","acceptedAnswer":{"@type":"Answer","text":"Sí, una ficha A4 con diecisiete fragmentos y su hoja de soluciones en PDF, que se puede imprimir y fotocopiar libremente para el aula. Además se pueden generar más fichas distintas directamente desde el navegador."}},{"@type":"Question","name":"¿En qué se diferencia el modo difícil del normal?","acceptedAnswer":{"@type":"Answer","text":"En el modo normal cada fragmento tiene como mucho una síncopa. En el modo difícil el fragmento dura de 2 a 4 compases y puede tener varias síncopas a la vez (o ninguna): hay que tocar todas las notas donde empiece cada una."}}]}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Una ligadura siempre forma una síncopa?","acceptedAnswer":{"@type":"Answer","text":"No. Para que haya síncopa, la nota tiene que empezar en una parte débil y prolongarse con ligadura sobre una parte fuerte. Una ligadura que empieza en una parte fuerte solo indica que una nota se mantiene durante el tiempo siguiente: es una nota larga escrita en dos partes, no una síncopa."}},{"@type":"Question","name":"¿Qué tipos de síncopa aparecen?","acceptedAnswer":{"@type":"Answer","text":"Los tres tipos: síncopa de tiempo (tiempo 2 ligado al 3), síncopa de parte (el «y» de un tiempo ligado al tiempo entero siguiente) y síncopa de compás (el último tiempo de un compás ligado al primero del siguiente)."}},{"@type":"Question","name":"¿Por qué algunos fragmentos con ligadura no son síncopa?","acceptedAnswer":{"@type":"Answer","text":"Porque la ligadura empieza en un tiempo fuerte, no débil: eso es solo una nota larga escrita en dos partes, no una síncopa. También se incluye el caso contrario, el contratiempo: una nota que ataca en parte débil pero sin ligadura al tiempo fuerte siguiente."}},{"@type":"Question","name":"¿Cuál es la diferencia entre síncopa y contratiempo?","acceptedAnswer":{"@type":"Answer","text":"En la síncopa la nota débil se prolonga con ligadura sobre el tiempo fuerte, que queda absorbido. En el contratiempo la nota ataca en la parte débil pero el tiempo fuerte se vuelve a atacar (o hay un silencio), sin ligadura."}},{"@type":"Question","name":"¿Hay ficha para imprimir?","acceptedAnswer":{"@type":"Answer","text":"Sí, una ficha A4 con diecisiete fragmentos y su hoja de soluciones en PDF, que se puede imprimir y fotocopiar libremente para el aula. Además se pueden generar más fichas distintas directamente desde el navegador."}},{"@type":"Question","name":"¿En qué se diferencia el modo difícil del normal?","acceptedAnswer":{"@type":"Answer","text":"En el modo normal cada fragmento tiene como mucho una síncopa. En el modo difícil el fragmento dura 2 compases y puede tener varias síncopas a la vez (o ninguna): hay que tocar todas las notas donde empiece cada una."}}]}
 </script>
 </head>
 <a class="tm-skip" href="#main">Saltar al contenido</a>
@@ -210,7 +210,7 @@
   });
 </script>
 
-<p><strong>Cómo usar el ejercicio:</strong> elige entre el modo <strong>normal</strong> (un fragmento de uno o dos compases, con ninguna síncopa o como mucho una) y el modo <strong>difícil</strong> (fragmentos de 2 a 4 compases, donde puede haber varias síncopas a la vez, o ninguna). Toca la nota o notas donde creas que empieza cada síncopa, o «No hay síncopa» si el fragmento no la tiene, y pulsa Comprobar. La app corrige al momento y explica por qué es o no es síncopa. Cada test tiene 10 preguntas generadas por ordenador con notas al azar, así que prácticamente nunca sale el mismo fragmento dos veces.</p>
+<p><strong>Cómo usar el ejercicio:</strong> elige entre el modo <strong>normal</strong> (un fragmento de uno o dos compases, con ninguna síncopa o como mucho una) y el modo <strong>difícil</strong> (fragmentos de 2 compases, donde puede haber varias síncopas a la vez, o ninguna). Toca la nota o notas donde creas que empieza cada síncopa, o «No hay síncopa» si el fragmento no la tiene, y pulsa Comprobar. La app corrige al momento y explica por qué es o no es síncopa. Cada test tiene 10 preguntas generadas por ordenador con notas al azar, así que prácticamente nunca sale el mismo fragmento dos veces.</p>
 
 <p><strong>Qué se practica:</strong> distinguir una síncopa real de dos distractores clásicos: una nota larga escrita con ligadura que empieza en tiempo <em>fuerte</em> (no es síncopa), y un <a href="/diccionario-musical/compases/notas-a-contratiempo/">contratiempo</a> (ataca en parte débil pero sin ligadura, así que el tiempo fuerte sí se vuelve a atacar). <strong>Pista:</strong> no busques solo una ligadura; primero localiza dónde empieza la nota. Si empieza en una parte débil y se prolonga sobre una parte fuerte, ahí puede haber síncopa.</p>
 
@@ -229,10 +229,10 @@
 <div id="tmfs"></div>
 
 <h2>Ficha del modo difícil (PDF)</h2>
-<p>La versión avanzada en papel: <strong>diez fragmentos</strong> de 2 a 4 compases, donde puede haber varias síncopas a la vez, o ninguna. El alumno rodea con un círculo todas las notas donde crea que empieza una síncopa, o marca la casilla «No hay síncopa». Con <strong>hoja de soluciones</strong> aparte, con cada síncopa en rojo.</p>
+<p>La versión avanzada en papel: <strong>diez fragmentos</strong> de 2 compases, donde puede haber varias síncopas a la vez, o ninguna. El alumno rodea con un círculo todas las notas donde crea que empieza una síncopa, o marca la casilla «No hay síncopa». Con <strong>hoja de soluciones</strong> aparte, con cada síncopa en rojo.</p>
 <figure class="tm-staff">
   <a href="/assets/img/compases/fichas/ficha-sincopa-dificil.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/compases/fichas/preview-ficha-sincopa-dificil.webp"><img src="/assets/img/compases/fichas/preview-ficha-sincopa-dificil.png" width="300" height="424" loading="lazy" alt="Ficha imprimible en PDF para el ejercicio de síncopa, nivel difícil"></picture></a>
-  <figcaption>Hoja A4 con diez fragmentos de 2 a 4 compases.</figcaption>
+  <figcaption>Hoja A4 con diez fragmentos de 2 compases.</figcaption>
 </figure>
 <p><a class="tm-btn tm-btn-dorado" href="/assets/img/compases/fichas/ficha-sincopa-dificil.pdf" target="_blank" rel="noopener">Descargar la ficha (PDF A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/compases/fichas/ficha-sincopa-dificil-soluciones.pdf" target="_blank" rel="noopener">Soluciones</a></p>
 <p>Se puede imprimir y fotocopiar libremente para el aula.</p>
@@ -269,7 +269,7 @@
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">¿En qué se diferencia el modo difícil del normal?</div>
-      <div class="tm-faq-a">En el modo normal cada fragmento tiene como mucho una síncopa. En el modo difícil el fragmento dura de 2 a 4 compases y puede tener varias síncopas a la vez (o ninguna): hay que tocar todas las notas donde empiece cada una.</div>
+      <div class="tm-faq-a">En el modo normal cada fragmento tiene como mucho una síncopa. En el modo difícil el fragmento dura 2 compases y puede tener varias síncopas a la vez (o ninguna): hay que tocar todas las notas donde empiece cada una.</div>
     </div>
   </div>
 </div>

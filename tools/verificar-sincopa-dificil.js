@@ -1,5 +1,5 @@
 'use strict';
-/* Verificador independiente del nivel difícil (2 a 4 compases, 0 a varias
+/* Verificador independiente del nivel difícil (2 compases, 0 a varias
    síncopas, compás y figuras variables): genera 300 fragmentos al azar y
    comprueba, sin fiarse del motor, que cada ligadura está clasificada
    correctamente según la fuerza métrica real del compás del fragmento. */
@@ -53,6 +53,16 @@ function fuerzaTiempo(notas, idx, fuerzas) {
     f.ligaduras.forEach(function (par) {
       var k1 = f.notas[par[0]].keys[0], k2 = f.notas[par[1]].keys[0];
       if (k1 !== k2) { console.log(`#${fi} ERROR (${f.compasTxt}): ligadura ${JSON.stringify(par)} une alturas distintas (${k1} vs ${k2})`); errores++; }
+    });
+
+    // 1b) ninguna ligadura conecta con un silencio (bug real: se vio en
+    //     producción una ligadura "de compás" cayendo sobre el silencio
+    //     inicial del distractor "contratiempo" cuando ese molde empezaba
+    //     justo en el primer tiempo del compás siguiente)
+    f.ligaduras.forEach(function (par) {
+      if (f.notas[par[0]].duration.slice(-1) === 'r' || f.notas[par[1]].duration.slice(-1) === 'r') {
+        console.log(`#${fi} ERROR (${f.compasTxt}): ligadura ${JSON.stringify(par)} conecta con un silencio`); errores++;
+      }
     });
 
     // 2) cada ligadura en "correctas" es realmente síncopa, y viceversa

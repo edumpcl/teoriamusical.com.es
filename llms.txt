@@ -283,6 +283,10 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Ejercicios de Articulación Musical](https://www.teoriamusical.com.es/ejercicios/articulacion/): Test de articulación musical: legato, staccato, acento, tenuto y marcato. Da el nombre y adivina el signo en el pentagrama, o al revés. Gratis y online.
 - [Ejercicios de Síncopas Online](https://www.teoriamusical.com.es/ejercicios/compases/sincopa/): Ejercicio interactivo de síncopas: toca en el pentagrama la nota donde empieza la síncopa, o «no hay síncopa» si el ritmo no la tiene. Síncopa de tiempo, de parte y de compás. Gratis.
 - [Ejercicios de Notas a Contratiempo Online](https://www.teoriamusical.com.es/ejercicios/compases/contratiempo/): Ejercicio interactivo de notas a contratiempo: toca en el pentagrama la nota que está a contratiempo, o «no hay contratiempo» si el ritmo no la tiene. Contratiempo de parte y de tiempo. Gratis.
+- [Ejercicio: el Puntillo es una Ligadura](https://www.teoriamusical.com.es/ejercicios/figuras/puntillo-y-ligadura/): Ejercicio interactivo: toda figura con puntillo suena igual que una pareja de figuras ligadas. Reconoce la equivalencia en los dos sentidos, con puntillo simple y doble.
+- [Equivalencias de Figuras Musicales](https://www.teoriamusical.com.es/ejercicios/figuras/equivalencias-de-figuras/): Ejercicios de equivalencias entre figuras musicales: cuántas corcheas hay en una blanca con puntillo o qué figura equivale a tres negras. Con ficha PDF.
+- [Ejercicios de Ligadura de Unión y de Expresión](https://www.teoriamusical.com.es/ejercicios/figuras/ligaduras-de-union-y-expresion/): Ejercicio para distinguir la ligadura de unión de la de expresión y calcular cuánto dura la nota ligada en cada compás. Test online y ficha PDF.
+- [Ejercicio: el Puntillo es una Ligadura](https://www.teoriamusical.com.es/ejercicios/figuras/puntillo-y-ligadura/): Ejercicio interactivo: toda figura con puntillo suena igual que una pareja de figuras ligadas (con doble puntillo, un trío). Reconoce la equivalencia en los dos sentidos.
 
 ## Blog
 

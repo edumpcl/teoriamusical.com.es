@@ -67,6 +67,7 @@ const CASOS = [
   ['equivalencias', [{ clase: 'cuantas' }, { clase: 'que' }, { clase: 'mezcla' }]],
   ['sumar', [{ grupo: 'simples' }, { grupo: 'compuestos' }, { grupo: 'mezcla' }]],
   ['ligaduras', [{ grupo: 'simples' }, { grupo: 'compuestos' }, { grupo: 'mezcla' }]],
+  ['puntillo', [{ clase: 'aLigadura' }, { clase: 'aFigura' }, { clase: 'mezcla' }]],
 ];
 const SEMILLAS = 12;
 
@@ -197,6 +198,41 @@ async function auditar(browser, etiqueta, vexflow) {
         if (tx.correcta !== tiempoTexto(a, b)) mal(donde, `se escribe «${tx.correcta}» y debería ser «${tiempoTexto(a, b)}»`);
         if (!tx.explicacion.includes(tiempoTexto(a, b))) mal(donde, `la explicación no llega a «${tiempoTexto(a, b)}»`);
         revisarOpcionesFr(donde, it, esperada);
+        return;
+      }
+
+      if (it.tipo === 'puntillo') {
+        const valorSim = s => DUR[LETRA_FIG[s.f]] * [1, 1.5, 1.75][s.p];
+        const valorGrupo = g => g.reduce((a, e) => a + DUR[LETRA_FIG[e.f]], 0);
+        if (it.opciones.length !== 4) mal(donde, `${it.opciones.length} opciones`);
+        if (it.opciones.indexOf(it.correcta) < 0) mal(donde, 'la correcta no está entre las opciones (por referencia)');
+        if (it.sentido === 'aLigadura') {
+          if (notas.length !== 1) return mal(donde, `${notas.length} símbolos dibujados (esperaba 1)`);
+          if (notas[0].duracion !== LETRA_FIG[it.sim.f] || notas[0].puntillos !== it.sim.p) mal(donde, `se dibuja ${nombreDibujado(notas[0])} y el motor dice ${nombreDibujado({ duracion: LETRA_FIG[it.sim.f], puntillos: it.sim.p })}`);
+          const objetivo = valorSim(it.sim);
+          const buenas = it.opciones.filter(o => valorGrupo(o.grupo) === objetivo);
+          if (buenas.length !== 1) mal(donde, `${buenas.length} opciones valen lo mismo que ${nombreDibujado(notas[0])}`);
+          if (valorGrupo(it.correcta.grupo) !== objetivo) mal(donde, 'la respuesta marcada como correcta no vale lo mismo que la figura con puntillo');
+          if (new Set(it.opciones.map(o => valorGrupo(o.grupo))).size !== it.opciones.length) mal(donde, 'dos opciones con el mismo valor');
+          it.opciones.forEach(o => { if (o.ties.length !== o.grupo.length - 1) mal(donde, 'número de ligaduras no coincide con el número de figuras del grupo'); });
+        } else {
+          const esperado = it.sim.p + 1;
+          if (notas.length !== esperado) return mal(donde, `${notas.length} notas dibujadas, esperaba ${esperado}`);
+          notas.forEach((x, i) => {
+            if (x.duracion !== LETRA_FIG[it.grupo[i].f] || x.puntillos) mal(donde, `nota ${i + 1} dibujada como ${nombreDibujado(x)}, esperaba ${NOMBRE[LETRA_FIG[it.grupo[i].f]]}`);
+          });
+          if (dib.curvas.length !== it.ties.length) mal(donde, `${dib.curvas.length} ligaduras dibujadas, esperaba ${it.ties.length}`);
+          dib.curvas.forEach((c, i) => {
+            if (c.desde !== it.ties[i][0] || c.hasta !== it.ties[i][1]) mal(donde, `ligadura ${i + 1} conecta ${c.desde}-${c.hasta}, esperaba ${it.ties[i][0]}-${it.ties[i][1]}`);
+            const alturas = notas.slice(c.desde, c.hasta + 1).map(x => x.claves[0]);
+            if (new Set(alturas).size !== 1) mal(donde, `ligadura ${i + 1} entre alturas distintas: no sería una ligadura de unión`);
+          });
+          const objetivo = valorGrupo(it.grupo);
+          const buenas = it.opciones.filter(o => valorSim(o.sim) === objetivo);
+          if (buenas.length !== 1) mal(donde, `${buenas.length} opciones valen lo mismo que el grupo ligado`);
+          if (valorSim(it.correcta.sim) !== objetivo) mal(donde, 'la respuesta marcada como correcta no vale lo mismo que el grupo ligado');
+          if (new Set(it.opciones.map(o => valorSim(o.sim))).size !== it.opciones.length) mal(donde, 'dos opciones con el mismo valor');
+        }
         return;
       }
 

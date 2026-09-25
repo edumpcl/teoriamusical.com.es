@@ -220,15 +220,18 @@
     return frag;
   }
 
-  /* Nivel difícil: 2 a 4 compases (todos del mismo compás), cada uno con
-     un molde válido sorteado por separado. El número de contratiempos no
-     está fijado: puede haber 0, 1, 2, 3 o más según lo que toque en cada
-     compás. */
+  /* Nivel difícil: 2 compases (del mismo compás), cada uno con un molde
+     válido sorteado por separado. El número de contratiempos no está
+     fijado: puede haber 0, 1, 2 o más según lo que toque en cada compás. */
   function generarFragmentoDificil(rng) {
     rng = rng || Math.random;
     var compas = compasAlAzar(rng);
     var interioresPosibles = poolInterior(compas);
-    var numCompases = 2 + Math.floor(rng() * 3); // 2, 3 o 4
+    /* Siempre 2 compases: en pantallas de móvil no conviene depender del
+       desplazamiento horizontal para ver fragmentos más largos (3-4
+       compases), así que el modo difícil se queda en el ancho que cabe
+       encogido sin perder legibilidad. */
+    var numCompases = 2;
     var notas = [], correctas = [], resumen = [];
     var offset = 0;
 
@@ -465,7 +468,7 @@
             '<p class="tm-ct-mode-subtitle">Elige la dificultad — ' + PREGUNTAS_POR_TEST + ' preguntas</p>',
             '<div class="tm-ct-modes">',
               '<button class="tm-ct-mode-btn" data-modo="normal"><span class="tm-ct-mode-lbl">Normal</span><span class="tm-ct-mode-desc">Un fragmento de un compás: ningún contratiempo o como mucho uno</span></button>',
-              '<button class="tm-ct-mode-btn" data-modo="dificil"><span class="tm-ct-mode-lbl">Difícil</span><span class="tm-ct-mode-desc">Fragmentos de 2 a 4 compases: puede haber varios contratiempos a la vez, o ninguno</span></button>',
+              '<button class="tm-ct-mode-btn" data-modo="dificil"><span class="tm-ct-mode-lbl">Difícil</span><span class="tm-ct-mode-desc">Fragmentos de 2 compases: puede haber varios contratiempos a la vez, o ninguno</span></button>',
             '</div>',
           '</div>',
         '</div>'

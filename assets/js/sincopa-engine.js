@@ -236,7 +236,7 @@
     return frag;
   }
 
-  /* Nivel difícil: 2 a 4 compases (todos del mismo compás: 2/4, 3/4 o
+  /* Nivel difícil: 2 compases (del mismo compás: 2/4, 3/4 o
      4/4), cada uno con uno de los moldes válidos para ese compás (todos
      menos "compás cruzado", que ya es de dos), y además, entre compás y
      compás, puede aparecer —al azar— una síncopa DE COMPÁS (último
@@ -251,14 +251,22 @@
     return !enTie && frag.notas[last].duration === 'q';
   }
   function primeraLibre(frag) {
-    return !(frag.ligaduras || []).some(function (p) { return p[0] === 0; });
+    // Tiene que ser una negra suelta: si el compás empieza con el silencio
+    // del distractor "contratiempo" (o con la primera parte de un grupo de
+    // "parte"), no se puede ligar ahí — saldría una ligadura sobre un
+    // silencio o sobre una corchea suelta.
+    return frag.notas[0].duration === 'q' && !(frag.ligaduras || []).some(function (p) { return p[0] === 0; });
   }
 
   function generarFragmentoDificil(rng) {
     rng = rng || Math.random;
     var compas = compasAlAzar(rng);
     var interioresPosibles = poolInterior(compas);
-    var numCompases = 2 + Math.floor(rng() * 3); // 2, 3 o 4
+    /* Siempre 2 compases: en pantallas de móvil no conviene depender del
+       desplazamiento horizontal para ver fragmentos más largos (3-4
+       compases), así que el modo difícil se queda en el ancho que cabe
+       encogido sin perder legibilidad. */
+    var numCompases = 2;
     var notas = [], ligaduras = [], correctas = [], resumen = [], beams = [];
     var offset = 0, finLibreAnterior = false, idxFinAnterior = -1;
 
@@ -536,8 +544,8 @@
     /* Modo normal: cada pregunta sortea compás (2/4, 3/4 o 4/4) y molde
        por separado, con sus propias alturas aleatorias, así que nunca
        sale el mismo fragmento dos veces. Modo difícil: cada pregunta es
-       un fragmento de 2 a 4 compases (del mismo compás) con 0, 1, 2, 3
-       o más síncopas — hay que tocarlas todas. */
+       un fragmento de 2 compases (del mismo compás) con 0, 1, 2 o más
+       síncopas — hay que tocarlas todas. */
     function buildQueue() {
       var q = [];
       for (var i = 0; i < PREGUNTAS_POR_TEST; i++) {
@@ -554,7 +562,7 @@
             '<p class="tm-si-mode-subtitle">Elige la dificultad — ' + PREGUNTAS_POR_TEST + ' preguntas</p>',
             '<div class="tm-si-modes">',
               '<button class="tm-si-mode-btn" data-modo="normal"><span class="tm-si-mode-lbl">Normal</span><span class="tm-si-mode-desc">Un fragmento de un compás (o dos, si cruza la barra): ninguna síncopa o como mucho una</span></button>',
-              '<button class="tm-si-mode-btn" data-modo="dificil"><span class="tm-si-mode-lbl">Difícil</span><span class="tm-si-mode-desc">Fragmentos de 2 a 4 compases: puede haber varias síncopas a la vez, o ninguna</span></button>',
+              '<button class="tm-si-mode-btn" data-modo="dificil"><span class="tm-si-mode-lbl">Difícil</span><span class="tm-si-mode-desc">Fragmentos de 2 compases: puede haber varias síncopas a la vez, o ninguna</span></button>',
             '</div>',
           '</div>',
         '</div>'

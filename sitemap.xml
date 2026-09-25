@@ -758,7 +758,7 @@
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/dosillo-comparacion.png</image:loc></image:image>
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/compases/tipos-de-dosillo.png</image:loc></image:image>
   </url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/puntillo/</loc><lastmod>2026-06-02</lastmod>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/puntillo/</loc><lastmod>2026-09-25</lastmod>
   
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-negra-puntillo.png</image:loc></image:image>
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/figuras/figura-redonda-puntillo.png</image:loc></image:image>
@@ -1573,15 +1573,16 @@
   <url><loc>https://www.teoriamusical.com.es/ejercicios/comienzo-tetico-anacrusico-acefalo/</loc><lastmod>2026-09-21</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/ejercicios/final-tiempo-fuerte-y-debil/</loc><lastmod>2026-09-21</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/ejercicios/cadencias/</loc><lastmod>2026-09-22</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/ejercicios/figuras/</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/ejercicios/figuras/</loc><lastmod>2026-09-25</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/ejercicios/tempo/</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/ejercicios/dinamica/</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/ejercicios/articulacion/</loc><lastmod>2026-09-24</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/ejercicios/figuras/identificar-figuras-y-silencios/</loc><lastmod>2026-09-15</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/ejercicios/figuras/equivalencias-de-figuras/</loc><lastmod>2026-09-15</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/ejercicios/figuras/valor-de-las-figuras/</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/ejercicios/figuras/equivalencias-de-figuras/</loc><lastmod>2026-09-25</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/ejercicios/figuras/valor-de-las-figuras/</loc><lastmod>2026-09-25</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/ejercicios/figuras/sumar-figuras-en-un-compas/</loc><lastmod>2026-09-15</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/ejercicios/figuras/ligaduras-de-union-y-expresion/</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/ejercicios/figuras/ligaduras-de-union-y-expresion/</loc><lastmod>2026-09-25</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/ejercicios/figuras/puntillo-y-ligadura/</loc><lastmod>2026-09-25</lastmod></url>
 
   <!-- ── TEST TÉCNICO ── -->
   <url><loc>https://www.teoriamusical.com.es/test-tecnico-de-laboratorio/</loc><lastmod>2026-05-29</lastmod></url>

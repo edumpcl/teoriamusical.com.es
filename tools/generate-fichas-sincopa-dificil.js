@@ -1,8 +1,8 @@
 'use strict';
 /**
  * Ficha imprimible de «síncopa — nivel difícil» (A4, una cara) con su hoja
- * de soluciones. Cada fragmento tiene de 2 a 4 compases y puede tener 0, 1,
- * 2, 3 o más síncopas a la vez (a diferencia de la ficha normal, donde cada
+ * de soluciones. Cada fragmento tiene 2 compases y puede tener 0, 1, 2 o
+ * más síncopas a la vez (a diferencia de la ficha normal, donde cada
  * fragmento tiene como mucho una).
  *
  *   node tools/generate-fichas-sincopa-dificil.js            -> ficha + soluciones + preview
@@ -67,7 +67,7 @@ function html(solucion) {
       </div>
       <img class="logo" src="${LOGO}" width="34" height="35" alt="">
     </div>
-    <p class="instr">Cada fragmento tiene de 2 a 4 compases. Rodea con un círculo TODAS las notas donde crees que empieza una síncopa (puede haber varias, o ninguna), o marca la casilla «No hay síncopa» si el fragmento no tiene ninguna.</p>
+    <p class="instr">Cada fragmento tiene 2 compases. Rodea con un círculo TODAS las notas donde crees que empieza una síncopa (puede haber varias, o ninguna), o marca la casilla «No hay síncopa» si el fragmento no tiene ninguna.</p>
     ${solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
   </div>
   <div id="cuerpo" class="lista"></div>

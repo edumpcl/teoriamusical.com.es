@@ -346,7 +346,56 @@
     return out;
   }
 
-  var GENERADORES = { identificar: genIdentificar, valor: genValor, equivalencias: genEquivalencias, sumar: genSumar, ligaduras: genLigaduras };
+  /* ---- 6. El puntillo es una ligadura ---- */
+  /* Toda figura con puntillo suena exactamente igual que una pareja de
+     figuras ligadas (con doble puntillo, un trío): el puntillo no es más
+     que una forma abreviada de escribir esa ligadura. Es una equivalencia
+     que NO depende del compás (a diferencia de «valor»), así que aquí no
+     se pregunta compás ni tiempos, solo qué figuras la forman.
+     Limitado a la redonda-blanca-negra-corchea (con puntillo simple) y
+     redonda-blanca-negra (con doble puntillo): igual que en «equivalencias»
+     y «valor», el ejercicio no baja de la semicorchea, así que no entran
+     casos cuya pareja necesitaría una fusa. */
+  var CASOS_PUNTILLO = [
+    { f: 'r', p: 1 }, { f: 'b', p: 1 }, { f: 'n', p: 1 }, { f: 'c', p: 1 },
+    { f: 'r', p: 2 }, { f: 'b', p: 2 }, { f: 'n', p: 2 }
+  ];
+  function grupoDePuntillo(caso) {
+    var i = ORDEN.indexOf(caso.f), out = [{ f: caso.f, p: 0, s: false }];
+    for (var k = 1; k <= caso.p; k++) out.push({ f: ORDEN[i + k], p: 0, s: false });
+    return out;
+  }
+  function tiesDePuntillo(caso) {
+    var out = [];
+    for (var k = 0; k < caso.p; k++) out.push([k, k + 1]);
+    return out;
+  }
+  function genPuntillo(o, rnd) {
+    var A = azar(rnd), pool = [];
+    CASOS_PUNTILLO.forEach(function (caso) {
+      var sentidos = o.clase === 'aLigadura' ? ['aLigadura'] : o.clase === 'aFigura' ? ['aFigura'] : ['aLigadura', 'aFigura'];
+      sentidos.forEach(function (sentido) { pool.push({ caso: caso, sentido: sentido }); });
+    });
+    return tomar(pool, o.n, A, function (x) { return x.caso.f + x.caso.p; }).map(function (x) {
+      var caso = x.caso, sim = { f: caso.f, p: caso.p, s: false };
+      var grupo = grupoDePuntillo(caso), ties = tiesDePuntillo(caso);
+      var otras = A.barajar(CASOS_PUNTILLO.filter(function (c) { return c !== caso; })).slice(0, 3);
+      if (x.sentido === 'aLigadura') {
+        var opsG = A.barajar([{ grupo: grupo, ties: ties, correcta: true }].concat(otras.map(function (c) {
+          return { grupo: grupoDePuntillo(c), ties: tiesDePuntillo(c), correcta: false };
+        })));
+        var correctaG = opsG.filter(function (op) { return op.correcta; })[0];
+        return { tipo: 'puntillo', sentido: 'aLigadura', sim: sim, opciones: opsG, correcta: correctaG };
+      }
+      var opsF = A.barajar([{ sim: sim, correcta: true }].concat(otras.map(function (c) {
+        return { sim: { f: c.f, p: c.p, s: false }, correcta: false };
+      })));
+      var correctaF = opsF.filter(function (op) { return op.correcta; })[0];
+      return { tipo: 'puntillo', sentido: 'aFigura', sim: sim, grupo: grupo, ties: ties, opciones: opsF, correcta: correctaF };
+    });
+  }
+
+  var GENERADORES = { identificar: genIdentificar, valor: genValor, equivalencias: genEquivalencias, sumar: genSumar, ligaduras: genLigaduras, puntillo: genPuntillo };
 
   function generar(tipo, o, semilla) {
     return GENERADORES[tipo](o, mulberry32(semilla || Math.floor(Math.random() * 1e9)));
@@ -406,6 +455,17 @@
       return (item.clase === 'cuantas'
         ? 'En una ' + frase(a) + ' hay ' + total + ' ' + FIG[item.b].plural + '.'
         : total + ' ' + FIG[item.b].plural + ' valen lo mismo que una ' + frase(a) + '.') + detalle;
+    }
+    if (item.tipo === 'puntillo') {
+      var grupoPuntillo = item.sentido === 'aLigadura' ? item.correcta.grupo : item.grupo;
+      var nombresGrupo = grupoPuntillo.map(function (e) { return FIG[e.f].nombre; });
+      var ligado = nombresGrupo.length === 2
+        ? 'una ' + nombresGrupo[0] + ' ligada a una ' + nombresGrupo[1]
+        : 'una ' + nombresGrupo[0] + ' ligada a una ' + nombresGrupo[1] + ' ligada a una ' + nombresGrupo[2];
+      var razon = item.sim.p === 1
+        ? 'El puntillo añade la mitad del valor de la figura'
+        : 'El primer puntillo añade la mitad del valor de la figura, y el segundo, la mitad de lo que añade el primero';
+      return conArticulo(item.sim).charAt(0).toUpperCase() + conArticulo(item.sim).slice(1) + ' dura exactamente lo mismo que ' + ligado + '. ' + razon + ': por eso el puntillo no es más que una forma abreviada de escribir esa ligadura.';
     }
     var t = COMPASES[item.compas].tiempo;
     var uT = 'En ' + item.compas + ' el tiempo es la ' + (COMPASES[item.compas].compuesto ? 'negra con puntillo' : 'negra') + '.';
@@ -485,6 +545,15 @@
       }).setContext(ctx).draw();
       curvas.push({ clase: 'union', desde: i0, hasta: i1 });
     }
+    // spec.ties: varias ligaduras de unión seguidas (p.ej. el trío del doble
+    // puntillo: nota1-nota2-nota3), a diferencia de spec.tie, que es una sola.
+    (spec.ties || []).forEach(function (par) {
+      new V.StaveTie({
+        first_note: notas[par[0]], last_note: notas[par[1]], first_indices: [0], last_indices: [0],
+        firstNote: notas[par[0]], lastNote: notas[par[1]], firstIndexes: [0], lastIndexes: [0]
+      }).setContext(ctx).draw();
+      curvas.push({ clase: 'union', desde: par[0], hasta: par[1] });
+    });
     if (spec.slur) {
       var j0 = spec.slur[0], j1 = spec.slur[1];
       new V.Curve(notas[j0], notas[j1], { cps: [{ x: 0, y: 12 }, { x: 0, y: 12 }] }).setContext(ctx).draw();
@@ -526,6 +595,7 @@
       return s;
     }
     if (item.tipo === 'equivalencias') return { elems: [item.clase === 'cuantas' ? item.a : { f: item.b, p: 0, s: false }] };
+    if (item.tipo === 'puntillo') return item.sentido === 'aLigadura' ? { elems: [item.sim] } : { elems: item.grupo, ties: item.ties };
     return null;
   }
 
@@ -537,6 +607,9 @@
         ? '¿Cuántas ' + FIG[item.b].plural + ' hay en una ' + frase(item.a) + '?'
         : '¿Qué figura equivale a ' + item.k + ' ' + FIG[item.b].plural + '?';
       case 'sumar': return 'En ' + item.compas + ', ¿cuántos tiempos suman estas figuras?';
+      case 'puntillo': return item.sentido === 'aLigadura'
+        ? '¿Qué pareja de figuras ligadas dura lo mismo que ' + conArticulo(item.sim) + '?'
+        : '¿Qué figura con puntillo dura lo mismo que estas notas ligadas?';
       default: return 'En ' + item.compas + ', ¿qué ligadura es y cuánto dura la primera nota?';
     }
   }
@@ -581,6 +654,8 @@
     '.tm-fg-op-fig{display:flex;flex-direction:column;align-items:center;padding:6px 10px;min-width:96px;flex:1 1 calc(50% - 10px);}',
     '.tm-fg-op-fig .tm-fg-mini{width:72px;}',
     '.tm-fg-op-fig small{font-size:.72rem;font-weight:600;line-height:1.2;}',
+    '.tm-fg-op-grupo{min-width:150px;flex:1 1 calc(50% - 10px);}',
+    '.tm-fg-op-grupo .tm-fg-mini{width:150px;}',
     '.tm-fg-fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1;font-size:.8em;}',
     '.tm-fg-fr sup,.tm-fg-fr sub{position:static;font-size:1em;line-height:1.05;}',
     '.tm-fg-fr sup{border-bottom:1.5px solid currentColor;padding:0 1px;}',
@@ -643,6 +718,15 @@
         { v: { grupo: 'compuestos' }, t: 'Compases compuestos', d: '6/8, 9/8 y 12/8' },
         { v: { grupo: 'mezcla' }, t: 'Simples y compuestos', d: '' }
       ]
+    },
+    puntillo: {
+      tit: 'El puntillo es una ligadura',
+      sub: 'Toda figura con puntillo suena exactamente igual que una pareja de figuras ligadas (con doble puntillo, un trío). No depende del compás.',
+      modos: [
+        { v: { clase: 'aLigadura' }, t: 'De puntillo a ligadura', d: 'Se ve la figura con puntillo: hay que elegir la pareja ligada equivalente' },
+        { v: { clase: 'aFigura' }, t: 'De ligadura a puntillo', d: 'Se ven las notas ligadas: hay que elegir la figura con puntillo equivalente' },
+        { v: { clase: 'mezcla' }, t: 'Los dos sentidos mezclados', d: '' }
+      ]
     }
   };
   var PREGUNTAS = 10;
@@ -651,6 +735,12 @@
     var d = document.createElement('div');
     d.className = 'tm-fg-mini';
     dibujar(d, { elems: [sim], w: 96 });
+    return d;
+  }
+  function miniGrupo(elems, ties) {
+    var d = document.createElement('div');
+    d.className = 'tm-fg-mini tm-fg-mini-grupo';
+    dibujar(d, { elems: elems, ties: ties });
     return d;
   }
 
@@ -706,6 +796,8 @@
         secciones.push({ g: 'val', q: 'Respuesta', ops: item.opciones.map(String) });
       } else if (tipo === 'equivalencias') {
         secciones.push({ g: 'val', q: 'Elige la figura', figs: item.opciones });
+      } else if (tipo === 'puntillo') {
+        secciones.push({ g: 'val', q: 'Elige la que dura lo mismo', dibujos: item.opciones });
       } else {
         secciones.push({ g: 'val', q: 'Respuesta', html: botonesFr(item, 'val') });
       }
@@ -718,6 +810,8 @@
         + secciones.map(function (s) {
           var ops = s.html || (s.figs ? s.figs.map(function (f, i) {
             return '<button type="button" class="tm-fg-op tm-fg-op-fig" data-g="val" data-i="' + i + '"><span class="tm-fg-hueco"></span><small>' + frase(f) + '</small></button>';
+          }).join('') : s.dibujos ? s.dibujos.map(function (d, i) {
+            return '<button type="button" class="tm-fg-op tm-fg-op-fig' + (d.grupo ? ' tm-fg-op-grupo' : '') + '" data-g="' + s.g + '" data-i="' + i + '"><span class="tm-fg-hueco"></span></button>';
           }).join('') : s.ops.map(function (t, i) {
             return '<button type="button" class="tm-fg-op" data-g="' + s.g + '" data-i="' + i + '">' + t + '</button>';
           }).join(''));
@@ -730,6 +824,11 @@
       if (spec) dibujar(cont.querySelector('.tm-fg-dibujo > div'), spec);
       if (secciones[0].figs) {
         Array.prototype.forEach.call(cont.querySelectorAll('.tm-fg-hueco'), function (h, i) { h.appendChild(mini(item.opciones[i])); });
+      } else if (secciones[0].dibujos) {
+        Array.prototype.forEach.call(cont.querySelectorAll('.tm-fg-hueco'), function (h, i) {
+          var d = item.opciones[i];
+          h.appendChild(d.grupo ? miniGrupo(d.grupo, d.ties) : mini(d.sim));
+        });
       }
 
       var sel = {};
@@ -769,6 +868,7 @@
       if (tipo === 'ligaduras' && g === 'clase') return item.clase === 'union' ? 0 : 1;
       if (tipo === 'equivalencias' && item.clase === 'cuantas') return item.opciones.indexOf(item.correcta);
       if (tipo === 'equivalencias') return item.opciones.indexOf(item.correcta);
+      if (tipo === 'puntillo') return item.opciones.indexOf(item.correcta);
       for (var i = 0; i < item.opciones.length; i++) if (igual(item.opciones[i], item.correcta)) return i;
       return -1;
     }

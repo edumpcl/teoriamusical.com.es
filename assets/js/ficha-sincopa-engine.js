@@ -7,10 +7,10 @@
    reutilizando window.tmSincopaGenerar / tmSincopaGenerarDificil /
    tmSincopaMulberry32 / tmSincopaDibujarImpresion (mismo motor que el test
    interactivo). En modo normal cada fragmento sortea compás y molde por
-   separado, como mucho una síncopa; en modo difícil cada fragmento tiene de
-   2 a 4 compases y puede tener varias síncopas a la vez, o ninguna — por
-   eso en difícil todas las celdas van en una sola columna (los fragmentos
-   son siempre anchos). Con alturas también al azar, la probabilidad de dos
+   separado, como mucho una síncopa; en modo difícil cada fragmento tiene 2
+   compases y puede tener varias síncopas a la vez, o ninguna — por eso en
+   difícil todas las celdas van en una sola columna (los fragmentos son
+   siempre anchos). Con alturas también al azar, la probabilidad de dos
    fichas calcadas es prácticamente nula. Mismo patrón de impresión que
    ficha-completar-compas-engine.js. */
 (function () {
@@ -79,7 +79,7 @@
     var semilla = 0, solucion = false;
     var titulo = dificil ? 'Síncopa — nivel difícil' : 'Síncopa';
     var instr = dificil
-      ? 'Cada fragmento tiene de 2 a 4 compases. Rodea con un círculo TODAS las notas donde crees que empieza una síncopa (puede haber varias, o ninguna), o marca la casilla «No hay síncopa» si el fragmento no tiene ninguna.'
+      ? 'Cada fragmento tiene 2 compases. Rodea con un círculo TODAS las notas donde crees que empieza una síncopa (puede haber varias, o ninguna), o marca la casilla «No hay síncopa» si el fragmento no tiene ninguna.'
       : 'Rodea con un círculo la nota donde crees que empieza la síncopa, o marca la casilla «No hay síncopa» si el fragmento no la tiene.';
 
     cont.innerHTML = '<div class="tm-sf">'
@@ -109,7 +109,7 @@
     function pintar() {
       elCuerpo.innerHTML = '';
       if (dificil) {
-        // Modo difícil: todos los fragmentos son de 2 a 4 compases (siempre
+        // Modo difícil: todos los fragmentos son de 2 compases (siempre
         // anchos), así que van en una sola columna; el propio SVG ya trae
         // width:100% + max-width del motor, no hace falta reescalar a mano.
         var lista = document.createElement('div'); lista.className = 'tm-sf-lista'; elCuerpo.appendChild(lista);

@@ -8,9 +8,9 @@
    tmContratiempoGenerarDificil / tmContratiempoMulberry32 /
    tmContratiempoDibujarImpresion (mismo motor que el test interactivo). En
    modo normal cada fragmento tiene como mucho un contratiempo y cabe en
-   una columna estrecha; en modo difícil cada fragmento tiene de 2 a 4
-   compases (siempre ancho) y puede tener varios contratiempos a la vez, o
-   ninguno. Mismo patrón que ficha-sincopa-engine.js. */
+   una columna estrecha; en modo difícil cada fragmento tiene 2 compases
+   (siempre ancho) y puede tener varios contratiempos a la vez, o ninguno.
+   Mismo patrón que ficha-sincopa-engine.js. */
 (function () {
   'use strict';
 
@@ -77,7 +77,7 @@
     var semilla = 0, solucion = false;
     var titulo = dificil ? 'Contratiempo — nivel difícil' : 'Nota a contratiempo';
     var instr = dificil
-      ? 'Cada fragmento tiene de 2 a 4 compases. Rodea con un círculo TODAS las notas que estén a contratiempo (puede haber varias, o ninguna), o marca la casilla «No hay contratiempo» si el fragmento no tiene ninguna.'
+      ? 'Cada fragmento tiene 2 compases. Rodea con un círculo TODAS las notas que estén a contratiempo (puede haber varias, o ninguna), o marca la casilla «No hay contratiempo» si el fragmento no tiene ninguna.'
       : 'Rodea con un círculo la nota que está a contratiempo, o marca la casilla «No hay contratiempo» si el fragmento no lo tiene.';
 
     cont.innerHTML = '<div class="tm-fc">'
