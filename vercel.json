@@ -119,6 +119,16 @@
       "source": "/ejercicios/ejercicios-de-intervalos-musicales/construir-intervalos/",
       "destination": "/ejercicios/ejercicios-de-intervalos-musicales/",
       "permanent": true
+    },
+    {
+      "source": "/diccionario-musical/tonalidades/escalas-mixolidia/escalas-mixolidia-naturales/",
+      "destination": "/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-mixolidias/",
+      "permanent": true
+    },
+    {
+      "source": "/diccionario-musical/tonalidades/escalas-mixolidia/",
+      "destination": "/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-mixolidias/",
+      "permanent": true
     }
   ]
 }
