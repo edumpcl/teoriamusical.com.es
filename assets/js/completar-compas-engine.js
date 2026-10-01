@@ -178,6 +178,9 @@
 
   function mcd(a, b) { return b ? mcd(b, a % b) : a; }
   function enTiempos(u, c) {
+    // Caso borde: en el nivel 3 el hueco puede ocupar el compás entero, y
+    // entonces "lo escrito" es 0 (no hay mcd útil con 0 — salía en blanco).
+    if (!u) return '0 tiempos';
     var t = COMPASES[c].tiempo, g = mcd(u, t), n = u / g, d = t / g;
     var ent = Math.floor(n / d), resto = n % d;
     var G = { '1/2': '½', '1/4': '¼', '3/4': '¾', '1/3': '⅓', '2/3': '⅔', '1/6': '⅙', '5/6': '⅚' };
@@ -282,10 +285,13 @@
 
     var svg = div.querySelector('svg');
     // El hueco: una línea debajo y un interrogante, para que se vea dónde falta.
+    // Mientras se está respondiendo (parcial) se mantiene siempre, aunque ya se
+    // haya rellenado del todo o de más: solo desaparece al corregir (Eduardo).
     var fantasmas = info.map(function (x, k) { return x.fantasma ? k : -1; }).filter(function (k) { return k >= 0; });
-    if (fantasmas.length) {
-      var x1 = notas[fantasmas[0]].getAbsoluteX() - 4;
-      var sig = fantasmas[fantasmas.length - 1] + 1;
+    var marcar = opts.parcial ? info.map(function (x, k) { return x.hueco ? k : -1; }).filter(function (k) { return k >= 0; }) : fantasmas;
+    if (marcar.length) {
+      var x1 = notas[marcar[0]].getAbsoluteX() - 4;
+      var sig = marcar[marcar.length - 1] + 1;
       var x2 = (sig < notas.length ? notas[sig].getAbsoluteX() : stave.getX() + stave.getWidth()) - 12;
       if (x2 < x1 + 18) x2 = x1 + 18;
       var y = stave.getYForLine(4) + 14;
@@ -546,7 +552,9 @@
         if (!c || corregida) return;
         var i = Number(c.getAttribute('data-i'));
         if (nivel === 3) {
-          if (suma() + FIG[cartas[i].f].u > it.valor) { c.classList.add('tm-ko'); setTimeout(function () { c.classList.remove('tm-ko'); }, 500); return; }
+          // Se puede poner más de lo que cabe: Eduardo quiere que se pueda
+          // escribir cualquier cantidad, aunque esté mal, y que se avise al
+          // comprobar (no al teclear).
           puestos.push(cartas[i]);
           pintarCesta();
         } else {
