@@ -67,6 +67,8 @@ def slot_intro(rel):
 
 # Paginas que NO llevan anuncios (politica de AdSense / poco valor).
 EXCLUDE_RELPATHS = {
+    # Panel interno: no lleva anuncios ni debe tocarlo ningun script del sitio.
+    os.path.normpath("panel/index.html"),
     os.path.normpath("aviso-legal/index.html"),
     os.path.normpath("politica-de-cookies/index.html"),
     os.path.normpath("politica-de-privacidad/index.html"),

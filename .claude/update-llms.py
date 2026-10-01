@@ -12,6 +12,7 @@ SKIP = [
     'assets', 'node_modules',
     'aviso-legal', 'politica-de-privacidad', 'politica-de-cookies', 'contacto',
     'test-tecnico-de-laboratorio',
+    'panel',   # panel interno: noindex y con contrasena, no se anuncia a nadie
 ]
 
 SECTION_MAP = [
