@@ -15,9 +15,9 @@
   --line:#dde2e9; --line-soft:#e9ecf1;
   --ink:#0e1318; --ink-2:#48505c; --ink-3:#79828f;
   --accent:#a86c13; --accent-2:#d8a84e;
-  --gsc:#1d5f9c;  --gsc-wash:#e3edf7;
-  --ga4:#7a4396;  --ga4-wash:#f0e8f6;
-  --ads:#1b7148;  --ads-wash:#e4f0e9;
+  --gsc:#1d5f9c;  --gsc-wash:#e3edf7;  --gsc-b:#5591c6; --gsc-c:#a8c6e0;
+  --ga4:#7a4396;  --ga4-wash:#f0e8f6;  --ga4-b:#a87cc0; --ga4-c:#d2b9e0;
+  --ads:#1b7148;  --ads-wash:#e4f0e9;  --ads-b:#57a67e; --ads-c:#a3cdb8;
   --good:#1b7148; --bad:#a63827;
   --warn:#8d6310; --warn-wash:#f6eedd;
   --grid:#e6e9ee;
@@ -28,9 +28,9 @@
   --line:#2a313a; --line-soft:#222931;
   --ink:#e9edf2; --ink-2:#a9b2be; --ink-3:#737c88;
   --accent:#dfa741; --accent-2:#8a6c2e;
-  --gsc:#6aa9e0;  --gsc-wash:#16242f;
-  --ga4:#bb90d8;  --ga4-wash:#241a2c;
-  --ads:#5cbf8a;  --ads-wash:#16271f;
+  --gsc:#6aa9e0;  --gsc-wash:#16242f;  --gsc-b:#4178ab; --gsc-c:#2b5171;
+  --ga4:#bb90d8;  --ga4-wash:#241a2c;  --ga4-b:#8b63a6; --ga4-c:#5e4371;
+  --ads:#5cbf8a;  --ads-wash:#16271f;  --ads-b:#3d8a62; --ads-c:#2a5c42;
   --good:#5cbf8a; --bad:#e0867a;
   --warn:#d6a549; --warn-wash:#262016;
   --grid:#262d35;
@@ -41,9 +41,9 @@
   --line:#2a313a; --line-soft:#222931;
   --ink:#e9edf2; --ink-2:#a9b2be; --ink-3:#737c88;
   --accent:#dfa741; --accent-2:#8a6c2e;
-  --gsc:#6aa9e0;  --gsc-wash:#16242f;
-  --ga4:#bb90d8;  --ga4-wash:#241a2c;
-  --ads:#5cbf8a;  --ads-wash:#16271f;
+  --gsc:#6aa9e0;  --gsc-wash:#16242f;  --gsc-b:#4178ab; --gsc-c:#2b5171;
+  --ga4:#bb90d8;  --ga4-wash:#241a2c;  --ga4-b:#8b63a6; --ga4-c:#5e4371;
+  --ads:#5cbf8a;  --ads-wash:#16271f;  --ads-b:#3d8a62; --ads-c:#2a5c42;
   --good:#5cbf8a; --bad:#e0867a;
   --warn:#d6a549; --warn-wash:#262016;
   --grid:#262d35;
@@ -121,6 +121,18 @@ svg{ display:block; width:100%; height:auto; overflow:visible; }
 .track{ height:7px; background:var(--surface-2); border-radius:99px; overflow:hidden; }
 .fill{ height:100%; border-radius:99px; background:var(--accent); }
 .fill.c-gsc{ background:var(--gsc); } .fill.c-ga4{ background:var(--ga4); } .fill.c-ads{ background:var(--ads); }
+
+.donut{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+.donut svg{ width:132px; height:132px; flex:none; }
+.donut .leyenda{ display:flex; flex-direction:column; gap:9px; flex:1 1 150px; min-width:0; }
+.lrow{ display:flex; align-items:baseline; gap:8px; font-size:12.5px; min-width:0; }
+.lrow .sw{ width:9px; height:9px; border-radius:2px; flex:none; align-self:center; }
+.lrow .nm{ flex:1 1 auto; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.lrow .pc{ font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:13px; }
+.lrow .ab{ font-family:"IBM Plex Mono",monospace; color:var(--ink-3); font-size:11.5px; white-space:nowrap; }
+[data-modo="editorial"] .donut{ gap:26px; }
+[data-modo="editorial"] .donut svg{ width:164px; height:164px; }
+[data-modo="editorial"] .lrow{ font-size:14px; }
 
 .tabla-caja{ overflow-x:auto; }
 table{ border-collapse:collapse; width:100%; font-size:12.5px; }
@@ -359,6 +371,49 @@ function tabla(nodo,cols,filas,visiblesEnEditorial){
     +'</tbody></table></div>';
 }
 
+/** Donut de reparto. filas: [{t, v}]. Para 2-4 trozos; con más, barras.
+    El porcentaje manda sobre la cantidad: es lo que se quiere leer aquí. */
+function donut(nodo,filas,fmt,fuente){
+  if(!filas||!filas.length){ nodo.innerHTML='<p class="vacio">Sin datos en este periodo.</p>'; return; }
+  const tonos=["var(--"+fuente+")","var(--"+fuente+"-b)","var(--"+fuente+"-c)","var(--ink-3)"];
+  const total=filas.reduce((a,f)=>a+f.v,0)||1;
+  const R=54, GR=17, C=2*Math.PI*R, HUECO=2;   // 2 px de aire entre trozos
+
+  nodo.innerHTML='<div class="donut"></div>';
+  const caja=nodo.firstChild;
+  const svg=el("svg",{viewBox:"0 0 132 132",role:"img"});
+  svg.setAttribute("aria-label","Reparto: "+filas.map(f=>f.t+" "+n1.format(f.v/total*100)+" %").join(", "));
+  caja.appendChild(svg);
+
+  const g=el("g",{transform:"rotate(-90 66 66)"});
+  svg.appendChild(g);
+  g.appendChild(el("circle",{cx:66,cy:66,r:R,fill:"none",stroke:"var(--surface-2)","stroke-width":GR}));
+  let acum=0;
+  filas.forEach((f,i)=>{
+    const frac=f.v/total, largo=Math.max(0,frac*C-HUECO);
+    const arco=el("circle",{cx:66,cy:66,r:R,fill:"none",stroke:tonos[Math.min(i,3)],
+      "stroke-width":GR,"stroke-dasharray":largo+" "+(C-largo),
+      "stroke-dashoffset":(-acum*C)+"","stroke-linecap":"butt"});
+    conTip(arco,f.t+": "+n1.format(frac*100)+" % · "+fmt(f.v));
+    g.appendChild(arco); acum+=frac;
+  });
+  const t1=el("text",{x:66,y:63,"text-anchor":"middle",fill:"var(--ink)","font-size":15,
+    "font-weight":600,"font-family":"IBM Plex Mono, monospace"});
+  t1.textContent=fmt(total); svg.appendChild(t1);
+  const t2=el("text",{x:66,y:77,"text-anchor":"middle",fill:"var(--ink-3)","font-size":9,
+    "font-family":"Archivo, sans-serif"});
+  t2.textContent="en total"; svg.appendChild(t2);
+
+  const ley=document.createElement("div");
+  ley.className="leyenda";
+  ley.innerHTML=filas.map((f,i)=>
+    '<div class="lrow"><span class="sw" style="background:'+tonos[Math.min(i,3)]+'"></span>'
+    +'<span class="nm" title="'+esc(f.t)+'">'+esc(f.t)+'</span>'
+    +'<span class="pc">'+n1.format(f.v/total*100)+' %</span>'
+    +'<span class="ab">'+fmt(f.v)+'</span></div>').join("");
+  caja.appendChild(ley);
+}
+
 /** Serie diaria en área+línea. puntos: [{d,v}] */
 function serieDiaria(nodo,puntos,fmt,alto,color,invertido){
   nodo.innerHTML="";
@@ -384,10 +439,31 @@ function serieDiaria(nodo,puntos,fmt,alto,color,invertido){
     fill:color,"fill-opacity":.10}));
   svg.appendChild(el("path",{d:"M"+pts.map(p=>p.join(",")).join(" L"),fill:"none",
     stroke:color,"stroke-width":1.8,"stroke-linejoin":"round","stroke-linecap":"round"}));
+  // Guia vertical y punto que siguen al raton: sin esto hay que adivinar a que
+  // dia corresponde el valor del globo.
+  const guia=el("line",{y1:pt,y2:pt+ih,stroke:"var(--ink-3)","stroke-width":1,
+    "stroke-dasharray":"3 3",opacity:0,"pointer-events":"none"});
+  const halo=el("circle",{r:6.5,fill:"var(--surface)",opacity:0,"pointer-events":"none"});
+  const punto=el("circle",{r:4,fill:color,stroke:"var(--surface)","stroke-width":2,
+    opacity:0,"pointer-events":"none"});
+  svg.appendChild(guia); svg.appendChild(halo); svg.appendChild(punto);
+
   const paso=iw/Math.max(1,puntos.length-1);
   puntos.forEach((p,i)=>{
-    const r=el("rect",{x:x(i)-paso/2,y:pt,width:Math.max(paso,2),height:ih,fill:"transparent"});
-    conTip(r,bonita(p.d)+": "+fmt(p.v)); svg.appendChild(r);
+    const px=x(i), py=y(p.v);
+    const r=el("rect",{x:px-paso/2,y:pt,width:Math.max(paso,2),height:ih,fill:"transparent"});
+    const marcar=()=>{
+      guia.setAttribute("x1",px); guia.setAttribute("x2",px); guia.setAttribute("opacity",.45);
+      halo.setAttribute("cx",px); halo.setAttribute("cy",py); halo.setAttribute("opacity",1);
+      punto.setAttribute("cx",px); punto.setAttribute("cy",py); punto.setAttribute("opacity",1);
+    };
+    r.addEventListener("mouseenter",e=>{ marcar(); verTip(e,bonita(p.d)+": "+fmt(p.v)); });
+    r.addEventListener("mousemove",e=>{ marcar(); verTip(e,bonita(p.d)+": "+fmt(p.v)); });
+    svg.appendChild(r);
+  });
+  svg.addEventListener("mouseleave",()=>{
+    guia.setAttribute("opacity",0); halo.setAttribute("opacity",0); punto.setAttribute("opacity",0);
+    ocultarTip();
   });
   [0,puntos.length-1].forEach((i,k)=>{
     if(puntos.length<2&&k) return;
@@ -428,7 +504,8 @@ function montar(){
       ${tarjeta("tConsultas","Qué buscan","Search Console","f-gsc","dimensión: query","",
         "Las 25 consultas con más clics. Google oculta las de muy poco volumen, así que no suman el total.")}
       ${tarjeta("tPaginas","Qué páginas entran","Search Console","f-gsc","dimensión: page")}
-      ${tarjeta("bDisp","Por dispositivo","Search Console","f-gsc","dimensión: device")}
+      ${tarjeta("bDisp","Por dispositivo","Search Console","f-gsc","dimensión: device","",
+        "Reparto de los clics. El móvil suele ser mayoría en un público escolar.")}
       ${tarjeta("bPais","Por país","Search Console","f-gsc","dimensión: country")}
     </div>
   </div>
@@ -447,7 +524,8 @@ function montar(){
     <div class="sub">Reparto dentro del periodo</div>
     <div class="cols">
       ${tarjeta("bCanal","De dónde llegan","GA4","f-ga4","dimensión: sessionDefaultChannelGroup")}
-      ${tarjeta("bDispGa","Con qué entran","GA4","f-ga4","dimensión: deviceCategory")}
+      ${tarjeta("bDispGa","Con qué entran","GA4","f-ga4","dimensión: deviceCategory","",
+        "Reparto de las sesiones.")}
       ${tarjeta("bPaisGa","Desde dónde","GA4","f-ga4","dimensión: country")}
       ${tarjeta("tPagGa","Páginas más vistas","GA4","f-ga4","dimensión: pagePath")}
     </div>
@@ -471,7 +549,8 @@ function montar(){
       ${tarjeta("tUnidades","Qué bloque gana más","AdSense","f-ads","dimensión: AD_UNIT_NAME","",
         "Aquí se ve si el ancla sigue siendo el que paga la fiesta.")}
       ${tarjeta("tFormatos","Por formato","AdSense","f-ads","dimensión: AD_FORMAT_NAME")}
-      ${tarjeta("bPlataforma","Por plataforma","AdSense","f-ads","dimensión: PLATFORM_TYPE_NAME")}
+      ${tarjeta("bPlataforma","Por plataforma","AdSense","f-ads","dimensión: PLATFORM_TYPE_NAME","",
+        "Reparto de los ingresos, no de las visitas: aquí se ve si el móvil paga en proporción a lo que trae.")}
       ${tarjeta("bPaisAds","Por país","AdSense","f-ads","dimensión: COUNTRY_NAME")}
     </div>
   </div>
@@ -641,8 +720,8 @@ function pintarDesglose(){
     tabla($("tPaginas"),
       [{t:"Página"},{t:"Clics",num:1},{t:"Impr.",num:1},{t:"CTR",num:1},{t:"Pos.",num:1}],
       g.paginas.map(f=>[esc(rutaCorta(f.k[0])),nf.format(f.c),nf.format(f.i),n2.format(f.ctr)+" %",n1.format(f.p)]));
-    barras($("bDisp"),g.dispositivos.map(f=>({t:nombreDisp(f.k[0]),v:f.c,extra:"CTR "+n2.format(f.ctr)+" %"})),
-      v=>nf.format(v)+" clics","c-gsc");
+    donut($("bDisp"),g.dispositivos.map(f=>({t:nombreDisp(f.k[0]),v:f.c})),
+      v=>nf.format(Math.round(v)),"gsc");
     barras($("bPais"),g.paises.map(f=>({t:nombrePais(f.k[0]),v:f.c,extra:"pos. "+n1.format(f.p)})),
       v=>nf.format(v)+" clics","c-gsc");
   } else desgloseParcial(["tConsultas","tPaginas","bDisp","bPais"]);
@@ -650,8 +729,8 @@ function pintarDesglose(){
   if(n){
     barras($("bCanal"),n.canales.map(f=>({t:nombreCanal(f.k[0]),v:f.m[0],extra:nf.format(f.m[1])+" págs."})),
       v=>nf.format(Math.round(v))+" sesiones","c-ga4");
-    barras($("bDispGa"),n.dispositivos.map(f=>({t:nombreDisp(f.k[0]),v:f.m[0],extra:nf.format(f.m[1])+" págs."})),
-      v=>nf.format(Math.round(v))+" sesiones","c-ga4");
+    donut($("bDispGa"),n.dispositivos.map(f=>({t:nombreDisp(f.k[0]),v:f.m[0]})),
+      v=>nf.format(Math.round(v)),"ga4");
     barras($("bPaisGa"),n.paises.map(f=>({t:f.k[0]==="(not set)"?"Sin identificar":f.k[0],v:f.m[0]})),
       v=>nf.format(Math.round(v))+" sesiones","c-ga4");
     tabla($("tPagGa"),[{t:"Página"},{t:"Páginas vistas",num:1},{t:"Sesiones",num:1}],
@@ -664,8 +743,8 @@ function pintarDesglose(){
     const colsAds=[{t:"Bloque"},{t:"Ingresos",num:1},{t:"Impr.",num:1},{t:"Clics",num:1},{t:"CTR",num:1},{t:"RPM",num:1}];
     tabla($("tUnidades"),colsAds,a.unidades.map(filasAds));
     tabla($("tFormatos"),[{t:"Formato"}].concat(colsAds.slice(1)),a.formatos.map(filasAds));
-    barras($("bPlataforma"),a.plataformas.map(f=>({t:f.k[0],v:f.m[0],extra:"RPM "+n2.format(f.m[4])+" €"})),
-      v=>n2.format(v)+" €","c-ads");
+    donut($("bPlataforma"),a.plataformas.map(f=>({t:f.k[0],v:f.m[0]})),
+      v=>n2.format(v)+" €","ads");
     barras($("bPaisAds"),a.paises.map(f=>({t:f.k[0],v:f.m[0],extra:"RPM "+n2.format(f.m[4])+" €"})),
       v=>n2.format(v)+" €","c-ads");
   } else desgloseParcial(["tUnidades","tFormatos","bPlataforma","bPaisAds"]);
