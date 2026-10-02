@@ -264,13 +264,14 @@ function bonita(f){ const d=new Date(f+"T12:00:00");
 
 /* ---- agregación de un rango ---- */
 function agregar(a,b){
-  const t={clics:0,imp:0,posPond:0,eur:0,apv:0,pv:0,ses:0,visPond:0,visImp:0,dias:0,conGsc:0};
+  const t={clics:0,imp:0,posPond:0,eur:0,apv:0,pv:0,ses:0,dias:0,conGsc:0};
   for(const d of DIAS){
     if(d.d<a||d.d>b) continue;
     t.dias++;
+    // La posicion media se pondera por impresiones: la media de las medias
+    // diarias le daria el mismo peso a un domingo flojo que a un martes fuerte.
     if(d.c!=null){ t.clics+=d.c; t.imp+=d.i; t.posPond+=d.p*d.i; t.conGsc++; }
-    if(d.eur!=null){ t.eur+=d.eur; t.apv+=d.apv||0;
-      if(d.vis!=null&&d.imp!=null){ t.visPond+=d.vis*(d.imp||0); t.visImp+=(d.imp||0); } }
+    if(d.eur!=null){ t.eur+=d.eur; t.apv+=d.apv||0; }
     if(d.pv!=null){ t.pv+=d.pv; t.ses+=d.ses||0; }
   }
   t.pos = t.imp? t.posPond/t.imp : null;
@@ -454,12 +455,40 @@ function marcarPresets(){
     b.setAttribute("aria-pressed", b.dataset.id===presetActivo));
 }
 
-/* ---- arranque ---- */
-fetch("datos.json?v="+Date.now()).then(r=>r.json()).then(j=>{
-  DIAS=j.dias; META=j.hasta;
+/* ---- arranque ----
+   Dos fuentes, a propósito:
+     datos.json       histórico completo, servido como fichero (siempre funciona)
+     /panel/datos-vivo/  los últimos meses preguntados a Google en el momento
+   El vivo se pega ENCIMA del histórico campo a campo, así que si la consulta
+   falla el panel sigue mostrando el histórico en vez de quedarse en blanco.   */
+
+const CAMPOS=["c","i","p","eur","apv","vis","pv","ses","usr"];
+function fusionar(nuevos){
+  const idx={}; DIAS.forEach((d,i)=>idx[d.d]=i);
+  let tocados=0;
+  for(const n of nuevos){
+    if(idx[n.d]===undefined){ DIAS.push(n); idx[n.d]=DIAS.length-1; tocados++; continue; }
+    const d=DIAS[idx[n.d]]; let cambio=false;
+    for(const k of CAMPOS) if(n[k]!=null && n[k]!==d[k]){ d[k]=n[k]; cambio=true; }
+    if(cambio) tocados++;
+  }
+  DIAS.sort((a,b)=>a.d<b.d?-1:1);
+  return tocados;
+}
+
+function limitesFecha(){
+  const dDesde=document.getElementById("desde"), dHasta=document.getElementById("hasta");
+  dDesde.min=dHasta.min=DIAS[0].d; dDesde.max=dHasta.max=DIAS[DIAS.length-1].d;
+}
+
+function sello(txt,aviso){
+  document.getElementById("sello").textContent=txt;
+  document.getElementById("sello").style.color=aviso?"var(--warn)":"";
+}
+
+function arrancarUI(){
   document.getElementById("cargando").hidden=true;
   document.getElementById("app").hidden=false;
-  document.getElementById("sello").textContent="datos hasta "+bonita(META.gsc)+" (Search Console)";
 
   document.getElementById("presets").innerHTML=PRESETS.map(p=>
     `<button data-id="${p[0]}" aria-pressed="false">${p[1]}</button>`).join("");
@@ -467,7 +496,7 @@ fetch("datos.json?v="+Date.now()).then(r=>r.json()).then(j=>{
     b.addEventListener("click",()=>aplicarPreset(b.dataset.id)));
 
   const dDesde=document.getElementById("desde"), dHasta=document.getElementById("hasta");
-  dDesde.min=dHasta.min=DIAS[0].d; dDesde.max=dHasta.max=DIAS[DIAS.length-1].d;
+  limitesFecha();
   const manual=()=>{ if(!dDesde.value||!dHasta.value) return;
     rango={a:dDesde.value<=dHasta.value?dDesde.value:dHasta.value,
            b:dDesde.value<=dHasta.value?dHasta.value:dDesde.value};
@@ -483,9 +512,43 @@ fetch("datos.json?v="+Date.now()).then(r=>r.json()).then(j=>{
   document.getElementById("pie").textContent=NOTAS.pie;
 
   aplicarPreset("28d");
-}).catch(e=>{
-  document.getElementById("cargando").textContent="No se han podido cargar los datos: "+e;
-});
+}
+
+async function cargar(){
+  // 1) histórico
+  try{
+    const j=await (await fetch("datos.json?v="+Date.now())).json();
+    DIAS=j.dias||[]; META=j.hasta||{};
+  }catch(e){ DIAS=[]; META={}; }
+
+  if(DIAS.length){ arrancarUI(); sello("histórico · consultando a Google…"); }
+  else document.getElementById("cargando").textContent="Consultando a Google…";
+
+  // 2) en vivo
+  try{
+    const r=await fetch("datos-vivo/",{cache:"no-store"});
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    const v=await r.json();
+    const n=fusionar(v.dias||[]);
+    for(const k of ["gsc","adsense","ga4"]) if(v.hasta&&v.hasta[k]) META[k]=v.hasta[k];
+    if(document.getElementById("app").hidden) arrancarUI(); else { limitesFecha(); pintar(); }
+    const hora=new Date().toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"});
+    if(v.errores){
+      sello("en vivo a las "+hora+" · falla "+Object.keys(v.errores).join(", "),true);
+      console.warn("panel · errores del servidor:",v.errores);
+    } else {
+      sello("en vivo a las "+hora+" · Search Console hasta "+bonita(META.gsc));
+    }
+  }catch(e){
+    if(DIAS.length){
+      sello("histórico hasta "+bonita(META.gsc)+" · sin conexión en vivo",true);
+      console.warn("panel · no se pudo consultar en vivo:",e);
+    } else {
+      document.getElementById("cargando").textContent="No se han podido cargar los datos: "+e;
+    }
+  }
+}
+cargar();
 
 /* ---- modo ---- */
 const bD=document.getElementById("bDenso"), bE=document.getElementById("bEdit");

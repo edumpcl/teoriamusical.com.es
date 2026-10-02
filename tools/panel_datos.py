@@ -9,6 +9,11 @@ Por que diario y no agregados: guardando el dato de cada dia, el panel puede
 sumar CUALQUIER rango en el navegador (julio, un trimestre, los ultimos 28
 dias...) sin volver a pedir nada y sin credenciales en la pagina.
 
+Esto es el HISTORICO. Los ultimos meses los pregunta el panel a Google en el
+momento, por /panel/datos-vivo/ (api/panel-datos.js), y los pega encima. Asi
+que este fichero no hace falta regenerarlo a diario: basta de vez en cuando,
+para que el historico lejano siga ahi si la consulta en vivo falla.
+
 Las tres fuentes llevan su propio retardo; el panel avisa de hasta donde llega
 cada una:
   - Search Console: ~2-3 dias

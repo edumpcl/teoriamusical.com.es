@@ -23,9 +23,11 @@
  */
 
 export const config = {
-  // Tambien /api/panel-datos: es la funcion que consulta Google en vivo, y sin
-  // esta linea quedaria accesible sin contrasena aunque el panel si lo pida.
-  matcher: ['/panel/:path*', '/api/panel-datos'],
+  // /api/* entero y no solo /api/panel-datos: con trailingSlash activado la ruta
+  // puede llegar con barra final y un matcher exacto se la perderia, dejando la
+  // funcion accesible sin contrasena. Hoy solo existe esa funcion; si algun dia
+  // se anade una API publica, habra que sacarla de aqui a mano.
+  matcher: ['/panel/:path*', '/api/:path*'],
 };
 
 /** Comparación en tiempo constante: no revela cuántos caracteres se acertaron. */
