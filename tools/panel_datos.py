@@ -52,18 +52,20 @@ def dias_adsense(ini, fin):
         startDate_year=a.year, startDate_month=a.month, startDate_day=a.day,
         endDate_year=b.year, endDate_month=b.month, endDate_day=b.day,
         dimensions=["DATE"],
-        metrics=["ESTIMATED_EARNINGS", "PAGE_VIEWS", "IMPRESSIONS",
-                 "CLICKS", "ACTIVE_VIEW_VIEWABILITY"],
+        metrics=["ESTIMATED_EARNINGS", "PAGE_VIEWS", "IMPRESSIONS", "CLICKS",
+                 "ACTIVE_VIEW_VIEWABILITY", "AD_REQUESTS", "AD_REQUESTS_COVERAGE"],
     ).execute()
     out = {}
     for f in r.get("rows", []):
         c = [x.get("value", "") for x in f["cells"]]
         out[c[0]] = {
             "eur": round(float(c[1] or 0), 4),
-            "pv": int(float(c[2] or 0)),
-            "imp": int(float(c[3] or 0)),
-            "clic": int(float(c[4] or 0)),
+            "apv": int(float(c[2] or 0)),
+            "aimp": int(float(c[3] or 0)),
+            "aclic": int(float(c[4] or 0)),
             "vis": round(float(c[5] or 0), 4),
+            "areq": int(float(c[6] or 0)),
+            "cob": round(float(c[7] or 0), 4),
         }
     return out
 
@@ -75,7 +77,8 @@ def dias_ga4(ini, fin):
         "dateRanges": [{"startDate": ini, "endDate": fin}],
         "dimensions": [{"name": "date"}],
         "metrics": [{"name": "screenPageViews"}, {"name": "sessions"},
-                    {"name": "activeUsers"}],
+                    {"name": "activeUsers"}, {"name": "newUsers"},
+                    {"name": "engagementRate"}, {"name": "averageSessionDuration"}],
         "limit": 100000,
     })
     out = {}
@@ -86,6 +89,9 @@ def dias_ga4(ini, fin):
             "pv": int(float(mets[0])),
             "ses": int(float(mets[1])),
             "usr": int(float(mets[2])),
+            "nusr": int(float(mets[3])),
+            "eng": round(float(mets[4]) * 100, 2),
+            "dur": round(float(mets[5]), 1),
         }
     return out
 
@@ -110,18 +116,16 @@ def main():
     dias = []
     for f in fechas:
         g = fuentes["gsc"].get(f); a = fuentes["adsense"].get(f); n = fuentes["ga4"].get(f)
-        dias.append({
-            "d": f,
-            "c":   g["c"] if g else None,
-            "i":   g["i"] if g else None,
-            "p":   g["p"] if g else None,
-            "eur": a["eur"] if a else None,
-            "apv": a["pv"] if a else None,
-            "vis": a["vis"] if a else None,
-            "pv":  n["pv"] if n else None,
-            "ses": n["ses"] if n else None,
-            "usr": n["usr"] if n else None,
-        })
+        fila = {"d": f}
+        # Mismos nombres de campo que api/panel-datos.js, o el panel no podria
+        # pegar lo de hoy encima del historico.
+        for clave in ("c", "i", "p"):
+            fila[clave] = g[clave] if g else None
+        for clave in ("eur", "apv", "aimp", "aclic", "vis", "areq", "cob"):
+            fila[clave] = a[clave] if a else None
+        for clave in ("pv", "ses", "usr", "nusr", "eng", "dur"):
+            fila[clave] = n[clave] if n else None
+        dias.append(fila)
 
     def ultimo(clave):
         v = [x["d"] for x in dias if x.get(clave) is not None]

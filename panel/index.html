@@ -15,8 +15,10 @@
   --line:#dde2e9; --line-soft:#e9ecf1;
   --ink:#0e1318; --ink-2:#48505c; --ink-3:#79828f;
   --accent:#a86c13; --accent-2:#d8a84e;
-  --good:#1b7148; --good-wash:#e4f0e9;
-  --bad:#a63827; --bad-wash:#f7e7e4;
+  --gsc:#1d5f9c;  --gsc-wash:#e3edf7;
+  --ga4:#7a4396;  --ga4-wash:#f0e8f6;
+  --ads:#1b7148;  --ads-wash:#e4f0e9;
+  --good:#1b7148; --bad:#a63827;
   --warn:#8d6310; --warn-wash:#f6eedd;
   --grid:#e6e9ee;
 }
@@ -26,8 +28,10 @@
   --line:#2a313a; --line-soft:#222931;
   --ink:#e9edf2; --ink-2:#a9b2be; --ink-3:#737c88;
   --accent:#dfa741; --accent-2:#8a6c2e;
-  --good:#5cbf8a; --good-wash:#16271f;
-  --bad:#e0867a; --bad-wash:#2a1b19;
+  --gsc:#6aa9e0;  --gsc-wash:#16242f;
+  --ga4:#bb90d8;  --ga4-wash:#241a2c;
+  --ads:#5cbf8a;  --ads-wash:#16271f;
+  --good:#5cbf8a; --bad:#e0867a;
   --warn:#d6a549; --warn-wash:#262016;
   --grid:#262d35;
 }}
@@ -37,8 +41,10 @@
   --line:#2a313a; --line-soft:#222931;
   --ink:#e9edf2; --ink-2:#a9b2be; --ink-3:#737c88;
   --accent:#dfa741; --accent-2:#8a6c2e;
-  --good:#5cbf8a; --good-wash:#16271f;
-  --bad:#e0867a; --bad-wash:#2a1b19;
+  --gsc:#6aa9e0;  --gsc-wash:#16242f;
+  --ga4:#bb90d8;  --ga4-wash:#241a2c;
+  --ads:#5cbf8a;  --ads-wash:#16271f;
+  --good:#5cbf8a; --bad:#e0867a;
   --warn:#d6a549; --warn-wash:#262016;
   --grid:#262d35;
 }
@@ -48,7 +54,6 @@ body{ background:var(--bg); color:var(--ink); font-size:14px; line-height:1.5;
       font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif; -webkit-font-smoothing:antialiased; }
 .mono{ font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums; }
 h1,h2,h3{ margin:0; text-wrap:balance; } p{ margin:0; }
-table{ border-collapse:collapse; width:100%; }
 
 .bar{ position:sticky; top:0; z-index:20; background:var(--bg); border-bottom:1px solid var(--line);
       padding:0 20px; padding-top:env(safe-area-inset-top,0px); }
@@ -62,7 +67,6 @@ table{ border-collapse:collapse; width:100%; }
 
 .wrap{ max-width:1240px; margin:0 auto; padding-inline:20px; padding-block:22px 64px; }
 
-/* --- selector de rango --- */
 .rango{ background:var(--surface); border:1px solid var(--line); border-radius:9px; padding:12px 14px;
         display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
 .presets{ display:flex; gap:6px; flex-wrap:wrap; }
@@ -73,43 +77,65 @@ table{ border-collapse:collapse; width:100%; }
 .fechas{ display:flex; gap:7px; align-items:center; margin-left:auto; font-size:12.5px; color:var(--ink-3); flex-wrap:wrap; }
 .fechas input{ font:inherit; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--ink);
   background:var(--surface-2); border:1px solid var(--line); border-radius:6px; padding:5px 8px; }
-.aviso{ margin-top:9px; font-size:12px; color:var(--warn); background:var(--warn-wash);
-        border-radius:6px; padding:7px 10px; }
+.aviso{ margin-top:9px; font-size:12px; color:var(--warn); background:var(--warn-wash); border-radius:6px; padding:7px 10px; }
+.periodo{ margin-top:14px; font-size:13px; color:var(--ink-2); }
+.periodo b{ color:var(--ink); }
 
-.sec{ margin-top:26px; }
-.sec-h{ display:flex; align-items:baseline; gap:12px; margin-bottom:11px; flex-wrap:wrap; }
-.sec-h h2{ font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-3); }
-.sec-h .hint{ font-size:12px; color:var(--ink-3); }
+/* ---- cabecera de sección, con la fuente bien visible ---- */
+.sec{ margin-top:34px; }
+.sec-h{ margin-bottom:12px; }
+.sec-h .linea{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.sec-h h2{ font-size:16px; font-weight:700; letter-spacing:-.01em; }
+.sec-h .hint{ display:block; margin-top:5px; font-size:12.5px; color:var(--ink-3); max-width:72ch; }
+.fuente{ display:inline-flex; align-items:center; gap:5px; font-size:10.5px; font-weight:700;
+  letter-spacing:.06em; text-transform:uppercase; padding:3px 8px; border-radius:4px; white-space:nowrap; }
+.fuente::before{ content:""; width:6px; height:6px; border-radius:50%; background:currentColor; }
+.f-gsc{ color:var(--gsc); background:var(--gsc-wash); }
+.f-ga4{ color:var(--ga4); background:var(--ga4-wash); }
+.f-ads{ color:var(--ads); background:var(--ads-wash); }
+.f-mix{ color:var(--ink-2); background:var(--surface-2); }
+
+.sub{ margin:18px 0 10px; font-size:11px; font-weight:700; letter-spacing:.1em;
+      text-transform:uppercase; color:var(--ink-3); }
 
 .kpis{ display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--line);
        border-radius:9px; overflow:hidden; background:var(--surface); }
 .kpi{ padding:12px 14px 13px; border-right:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); }
-.kpi .k{ font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); font-weight:600; }
-.kpi .v{ font-size:23px; font-weight:600; letter-spacing:-.02em; margin-top:3px; white-space:nowrap; }
-.kpi .d{ font-size:11.5px; color:var(--ink-3); margin-top:2px; white-space:nowrap; }
+.kpi .k{ font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-3); font-weight:600; }
+.kpi .v{ font-size:22px; font-weight:600; letter-spacing:-.02em; margin-top:3px; white-space:nowrap; }
+.kpi .d{ font-size:11px; color:var(--ink-3); margin-top:2px; white-space:nowrap; }
 .delta{ font-weight:600; } .delta.up{ color:var(--good); } .delta.down{ color:var(--bad); }
 
 .cols{ display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr)); }
-.chart{ background:var(--surface); border:1px solid var(--line); border-radius:9px; padding:14px 15px 10px; }
-.chart-h{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:8px; }
-.chart-h h3{ font-size:13px; font-weight:600; }
-.chart-h .meta{ font-size:11px; color:var(--ink-3); font-family:"IBM Plex Mono",monospace; }
+.card{ background:var(--surface); border:1px solid var(--line); border-radius:9px; padding:14px 15px 11px; min-width:0; }
+.card-h{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:9px; flex-wrap:wrap; }
+.card-h h3{ font-size:13px; font-weight:600; }
+.card-h .meta{ font-size:11px; color:var(--ink-3); font-family:"IBM Plex Mono",monospace; }
+.card .pie{ font-size:11.5px; color:var(--ink-3); margin-top:9px; }
 svg{ display:block; width:100%; height:auto; overflow:visible; }
-.foot{ font-size:11.5px; color:var(--ink-3); margin-top:9px; }
 
-.bars{ display:flex; flex-direction:column; gap:10px; }
-.brow .t{ display:flex; justify-content:space-between; gap:10px; font-size:13px; margin-bottom:4px; align-items:baseline; }
-.brow .t b{ font-weight:500; }
-.brow .t span{ font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:12.5px; }
-.track{ height:8px; background:var(--surface-2); border-radius:99px; overflow:hidden; }
-.fill{ height:100%; background:var(--accent); border-radius:99px; }
-.fill.b{ background:var(--accent-2); }
+.bars{ display:flex; flex-direction:column; gap:9px; }
+.brow .t{ display:flex; justify-content:space-between; gap:10px; font-size:12.5px; margin-bottom:4px; align-items:baseline; }
+.brow .t b{ font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.brow .t span{ font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:12px; white-space:nowrap; }
+.track{ height:7px; background:var(--surface-2); border-radius:99px; overflow:hidden; }
+.fill{ height:100%; border-radius:99px; background:var(--accent); }
+.fill.c-gsc{ background:var(--gsc); } .fill.c-ga4{ background:var(--ga4); } .fill.c-ads{ background:var(--ads); }
+
+.tabla-caja{ overflow-x:auto; }
+table{ border-collapse:collapse; width:100%; font-size:12.5px; }
+th,td{ text-align:right; padding:5px 8px; border-bottom:1px solid var(--line-soft); white-space:nowrap; }
+th{ font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3); font-weight:600; }
+th:first-child,td:first-child{ text-align:left; white-space:normal; min-width:180px; max-width:460px; }
+td.n{ font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; }
+tbody tr:last-child td{ border-bottom:0; }
+.vacio{ font-size:12.5px; color:var(--ink-3); padding:10px 0; }
 
 .sts{ display:grid; gap:10px; grid-template-columns:repeat(4,1fr); }
 .st{ background:var(--surface); border:1px solid var(--line); border-radius:9px; padding:13px 14px; }
 .st .tag{ display:inline-block; font-size:10px; letter-spacing:.08em; text-transform:uppercase;
           font-weight:700; padding:3px 7px; border-radius:4px; margin-bottom:8px; }
-.tag.ok{ background:var(--good-wash); color:var(--good); }
+.tag.ok{ background:var(--ads-wash); color:var(--ads); }
 .tag.w{ background:var(--warn-wash); color:var(--warn); }
 .tag.c{ background:var(--surface-2); color:var(--ink-2); }
 .st h3{ font-size:13.5px; font-weight:600; } .st p{ font-size:12.5px; color:var(--ink-2); margin-top:4px; }
@@ -117,28 +143,29 @@ svg{ display:block; width:100%; height:auto; overflow:visible; }
 .pill{ font-size:12px; background:var(--surface); border:1px solid var(--line); border-radius:99px; padding:5px 11px; color:var(--ink-2); }
 .pill b{ color:var(--ink); font-family:"IBM Plex Mono",monospace; font-weight:600; }
 footer{ margin-top:40px; padding-top:16px; border-top:1px solid var(--line); font-size:12px; color:var(--ink-3); }
+footer .ficha{ margin-top:12px; font-size:11.5px; line-height:1.7; }
+footer .ficha code{ font-family:"IBM Plex Mono",monospace; color:var(--ink-2); }
 
 /* ---- modo editorial ---- */
-[data-modo="editorial"] .wrap{ max-width:900px; padding-block:34px 80px; }
-[data-modo="editorial"] .sec{ margin-top:48px; }
-[data-modo="editorial"] .sec-h{ display:block; margin-bottom:16px; }
-[data-modo="editorial"] .sec-h h2{ font-family:"Newsreader",Georgia,serif; font-size:26px; font-weight:500;
-  text-transform:none; letter-spacing:-.01em; color:var(--ink); }
-[data-modo="editorial"] .sec-h .hint{ display:block; margin-top:6px; font-family:"Newsreader",Georgia,serif;
-  font-size:16px; line-height:1.6; color:var(--ink-2); max-width:36em; }
-[data-modo="editorial"] .kpis{ grid-template-columns:repeat(4,1fr); }
+[data-modo="editorial"] .wrap{ max-width:940px; padding-block:34px 80px; }
+[data-modo="editorial"] .sec{ margin-top:54px; }
+[data-modo="editorial"] .sec-h h2{ font-family:"Newsreader",Georgia,serif; font-size:27px; font-weight:500; letter-spacing:-.01em; }
+[data-modo="editorial"] .sec-h .hint{ font-family:"Newsreader",Georgia,serif; font-size:16px; line-height:1.6; margin-top:8px; color:var(--ink-2); }
 [data-modo="editorial"] .kpi{ padding:17px 18px 18px; }
-[data-modo="editorial"] .kpi .v{ font-size:30px; }
+[data-modo="editorial"] .kpi .v{ font-size:29px; }
 [data-modo="editorial"] .cols{ grid-template-columns:1fr; gap:16px; }
-[data-modo="editorial"] .chart{ padding:19px 20px 13px; }
-[data-modo="editorial"] .chart-h h3{ font-family:"Newsreader",Georgia,serif; font-size:19px; font-weight:500; }
-[data-modo="editorial"] .foot{ font-size:13px; font-family:"Newsreader",Georgia,serif; line-height:1.55; }
+[data-modo="editorial"] .card{ padding:19px 20px 14px; }
+[data-modo="editorial"] .card-h h3{ font-family:"Newsreader",Georgia,serif; font-size:19px; font-weight:500; }
+[data-modo="editorial"] .card .pie{ font-size:13px; font-family:"Newsreader",Georgia,serif; line-height:1.55; }
 [data-modo="editorial"] .sts{ grid-template-columns:repeat(2,1fr); }
 [data-modo="editorial"] .st p{ font-size:13.5px; line-height:1.55; }
 [data-modo="editorial"] footer{ font-family:"Newsreader",Georgia,serif; font-size:15px; line-height:1.6; }
+/* En editorial se recorta la cola de las tablas largas: la lectura manda. */
+[data-modo="editorial"] tr.cola{ display:none; }
+[data-modo="editorial"] .solo-denso{ display:none; }
 
 @media (max-width:860px){
-  .kpis,[data-modo="editorial"] .kpis{ grid-template-columns:repeat(2,1fr); }
+  .kpis{ grid-template-columns:repeat(2,1fr); }
   .sts,[data-modo="editorial"] .sts{ grid-template-columns:repeat(2,1fr); }
   .fechas{ margin-left:0; }
 }
@@ -166,64 +193,16 @@ footer{ margin-top:40px; padding-top:16px; border-top:1px solid var(--line); fon
 
 <div class="wrap">
   <div id="cargando">Cargando datos…</div>
-
-  <div id="app" hidden>
-    <div class="rango">
-      <div class="presets" id="presets" role="group" aria-label="Periodos"></div>
-      <div class="fechas">
-        <label for="desde">del</label><input type="date" id="desde">
-        <label for="hasta">al</label><input type="date" id="hasta">
-      </div>
-    </div>
-    <div class="aviso" id="aviso" hidden></div>
-
-    <div class="sec">
-      <div class="sec-h"><h2 id="tituloRango">Periodo</h2><span class="hint" id="comparacion"></span></div>
-      <div class="kpis" id="kpis"></div>
-    </div>
-
-    <div class="sec">
-      <div class="sec-h"><h2>Evolución diaria</h2><span class="hint">Dentro del periodo elegido.</span></div>
-      <div class="cols">
-        <div class="chart">
-          <div class="chart-h"><h3>Clics</h3><span class="meta" id="mClics"></span></div>
-          <svg id="gClics" role="img" aria-label="Clics por día en el periodo seleccionado."></svg>
-        </div>
-        <div class="chart">
-          <div class="chart-h"><h3>Ingresos</h3><span class="meta" id="mEuros"></span></div>
-          <svg id="gEuros" role="img" aria-label="Ingresos por día en el periodo seleccionado."></svg>
-        </div>
-      </div>
-    </div>
-
-    <div class="sec">
-      <div class="sec-h"><h2>Todos los meses</h2><span class="hint">El periodo elegido queda resaltado. Octubre y noviembre son el pico del año; diciembre baja por Navidad.</span></div>
-      <div class="chart">
-        <div class="chart-h"><h3>Clics por mes</h3><span class="meta" id="mMeses"></span></div>
-        <svg id="gMeses" role="img" aria-label="Clics por mes en todo el histórico disponible."></svg>
-      </div>
-    </div>
-
-    <div class="sec">
-      <div class="sec-h"><h2>De dónde sale el cambio</h2>
-        <span class="hint">Se calcula solo: cuánto del cambio en clics viene de aparecer más y cuánto de que te pulsen más.</span></div>
-      <div class="chart"><div class="bars" id="descomp"></div><p class="foot" id="footDescomp"></p></div>
-    </div>
-
-    <div class="sec">
-      <div class="sec-h"><h2>Notas de la última revisión</h2><span class="hint" id="fechaNotas"></span></div>
-      <div class="sts" id="estado"></div>
-      <div class="pills" id="proximas" style="margin-top:12px"></div>
-    </div>
-
-    <footer id="pie"></footer>
-  </div>
+  <div id="app" hidden></div>
 </div>
 
 <div id="tip" role="status" aria-live="polite"></div>
 
 <script>
-/* ===== notas cualitativas: lo único que se escribe a mano cada semana ===== */
+/* ======================================================================
+   NOTAS: lo único que se escribe a mano en cada revisión. Todo lo demás
+   sale de las APIs.
+   ====================================================================== */
 const NOTAS = {
   fecha: "1 de octubre de 2026",
   estado: [
@@ -241,117 +220,384 @@ const NOTAS = {
   pie: "El mes contra mes lo infla la vuelta al cole. El interanual no: septiembre de 2025 fueron 374 clics en posición 11,9; septiembre de 2026, 3.789 en posición 7,2."
 };
 
+/* ======================================================================
+   Utilidades
+   ====================================================================== */
 const NS="http://www.w3.org/2000/svg";
-const tip=document.getElementById("tip");
 const nf=new Intl.NumberFormat("es-ES");
 const n1=new Intl.NumberFormat("es-ES",{minimumFractionDigits:1,maximumFractionDigits:1});
 const n2=new Intl.NumberFormat("es-ES",{minimumFractionDigits:2,maximumFractionDigits:2});
 const MESES=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
 
-let DIAS=[], META={}, rango={a:null,b:null}, presetActivo="28d";
+const ent=nfx=>nf.format(Math.round(nfx||0));
+const eur=v=>n2.format(v||0)+" €";
+const pct=(v,d)=>(d===1?n1:n2).format(v||0)+" %";
+const seg=v=>{ v=Math.round(v||0); const m=Math.floor(v/60); return m+" min "+String(v%60).padStart(2,"0")+" s"; };
 
-function el(n,a){ const e=document.createElementNS(NS,n); for(const k in a) e.setAttribute(k,a[k]); return e; }
+let DIAS=[], META={}, DESGLOSE=null, errDesglose=null;
+let rango={a:null,b:null}, presetActivo="28d", peticion=0;
+
+const $=id=>document.getElementById(id);
+const el=(n,a)=>{ const e=document.createElementNS(NS,n); for(const k in a) e.setAttribute(k,a[k]); return e; };
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const tip=$("tip");
 function verTip(ev,t){ tip.textContent=t; tip.style.left=ev.clientX+"px"; tip.style.top=ev.clientY+"px"; tip.style.opacity="1"; }
-function ocultar(){ tip.style.opacity="0"; }
+function ocultarTip(){ tip.style.opacity="0"; }
 function conTip(nodo,txt){ nodo.addEventListener("mouseenter",e=>verTip(e,txt));
-  nodo.addEventListener("mousemove",e=>verTip(e,txt)); nodo.addEventListener("mouseleave",ocultar); }
+  nodo.addEventListener("mousemove",e=>verTip(e,txt)); nodo.addEventListener("mouseleave",ocultarTip); }
+
+/* Techo "redondo" para que los ejes no caigan en 4244 o 12,22 €. */
 function techo(v){ if(!(v>0)) return 1; const b=Math.pow(10,Math.floor(Math.log10(v)));
   for(const m of [1,1.2,1.5,2,2.5,3,4,5,6,8,10]){ if(m*b>=v) return m*b; } return 10*b; }
+
 function iso(d){ return d.toISOString().slice(0,10); }
 function masDias(f,n){ const d=new Date(f+"T12:00:00"); d.setDate(d.getDate()+n); return iso(d); }
-function bonita(f){ const d=new Date(f+"T12:00:00");
+function bonita(f){ if(!f) return "—"; const d=new Date(f+"T12:00:00");
   return d.getDate()+" "+MESES[d.getMonth()]+" "+d.getFullYear(); }
+function corta(f){ const d=new Date(f+"T12:00:00"); return d.getDate()+" "+MESES[d.getMonth()]; }
 
-/* ---- agregación de un rango ---- */
+/* Nombres legibles de lo que devuelven las APIs en inglés o en código ISO. */
+const PAIS={esp:"España",mex:"México",arg:"Argentina",col:"Colombia",per:"Perú",chl:"Chile",
+  usa:"Estados Unidos",ven:"Venezuela",ecu:"Ecuador",bol:"Bolivia",ury:"Uruguay",pry:"Paraguay",
+  cri:"Costa Rica",pan:"Panamá",gtm:"Guatemala",hnd:"Honduras",slv:"El Salvador",nic:"Nicaragua",
+  dom:"Rep. Dominicana",cub:"Cuba",pri:"Puerto Rico",fra:"Francia",deu:"Alemania",ita:"Italia",
+  gbr:"Reino Unido",prt:"Portugal",bra:"Brasil",can:"Canadá",mar:"Marruecos",and:"Andorra"};
+const DISPOSITIVO={MOBILE:"Móvil",DESKTOP:"Ordenador",TABLET:"Tableta",
+  mobile:"Móvil",desktop:"Ordenador",tablet:"Tableta"};
+const CANAL={"Organic Search":"Búsqueda orgánica","Direct":"Directo","Referral":"Enlaces de otras webs",
+  "Organic Social":"Redes sociales","Organic Video":"Vídeo","Email":"Correo","Paid Search":"Búsqueda de pago",
+  "Unassigned":"Sin asignar","Display":"Display","Affiliates":"Afiliados"};
+const nombrePais=c=>PAIS[String(c).toLowerCase()]||(c==="zzz"?"Sin identificar":String(c).toUpperCase());
+const nombreDisp=d=>DISPOSITIVO[d]||d;
+const nombreCanal=c=>CANAL[c]||c;
+const rutaCorta=u=>String(u).replace(/^https?:\/\/[^/]+/,"")||"/";
+
+/* ======================================================================
+   Agregación de un rango: sumas y medias ponderadas
+   ====================================================================== */
 function agregar(a,b){
-  const t={clics:0,imp:0,posPond:0,eur:0,apv:0,pv:0,ses:0,dias:0,conGsc:0};
+  const t={clics:0,imp:0,_posImp:0,
+           eur:0,apv:0,aimp:0,aclic:0,areq:0,_visImp:0,_cobReq:0,
+           pv:0,ses:0,usr:0,nusr:0,_engSes:0,_durSes:0,
+           dias:0,diasGsc:0};
   for(const d of DIAS){
     if(d.d<a||d.d>b) continue;
     t.dias++;
-    // La posicion media se pondera por impresiones: la media de las medias
-    // diarias le daria el mismo peso a un domingo flojo que a un martes fuerte.
-    if(d.c!=null){ t.clics+=d.c; t.imp+=d.i; t.posPond+=d.p*d.i; t.conGsc++; }
-    if(d.eur!=null){ t.eur+=d.eur; t.apv+=d.apv||0; }
-    if(d.pv!=null){ t.pv+=d.pv; t.ses+=d.ses||0; }
+    // La posición media se pondera por impresiones: la media de las medias
+    // diarias daría el mismo peso a un domingo flojo que a un martes fuerte.
+    if(d.c!=null){ t.clics+=d.c; t.imp+=d.i||0; t._posImp+=(d.p||0)*(d.i||0); t.diasGsc++; }
+    if(d.eur!=null){
+      t.eur+=d.eur; t.apv+=d.apv||0; t.aimp+=d.aimp||0; t.aclic+=d.aclic||0; t.areq+=d.areq||0;
+      if(d.vis!=null) t._visImp+=d.vis*(d.aimp||0);
+      if(d.cob!=null) t._cobReq+=d.cob*(d.areq||0);
+    }
+    if(d.pv!=null){
+      t.pv+=d.pv; t.ses+=d.ses||0; t.usr+=d.usr||0; t.nusr+=d.nusr||0;
+      if(d.eng!=null) t._engSes+=d.eng*(d.ses||0);
+      if(d.dur!=null) t._durSes+=d.dur*(d.ses||0);
+    }
   }
-  t.pos = t.imp? t.posPond/t.imp : null;
-  t.ctr = t.imp? t.clics/t.imp*100 : null;
-  t.rpm = t.apv? t.eur/t.apv*1000 : null;
-  t.pps = t.ses? t.pv/t.ses : null;
+  t.pos = t.imp ? t._posImp/t.imp : null;
+  t.ctr = t.imp ? t.clics/t.imp*100 : null;
+  t.rpm = t.apv ? t.eur/t.apv*1000 : null;
+  t.actr = t.aimp ? t.aclic/t.aimp*100 : null;
+  t.vis = t.aimp ? t._visImp/t.aimp*100 : null;
+  t.cob = t.areq ? t._cobReq/t.areq*100 : null;
+  t.pps = t.ses ? t.pv/t.ses : null;
+  t.eng = t.ses ? t._engSes/t.ses : null;
+  t.dur = t.ses ? t._durSes/t.ses : null;
+  t.rec = t.usr - t.nusr;
   return t;
 }
 
 function delta(ahora,antes){
-  if(antes==null||ahora==null||!isFinite(antes)||antes===0) return null;
+  if(ahora==null||antes==null||!isFinite(antes)||antes===0) return null;
   return (ahora-antes)/antes*100;
 }
 function chip(v,invertir){
   if(v==null) return '<span class="delta">—</span>';
   const bueno = invertir ? v<0 : v>0;
-  const s=(v>0?"+":"")+n1.format(v)+" %";
-  return `<span class="delta ${bueno?"up":"down"}">${s}</span>`;
+  return '<span class="delta '+(bueno?"up":"down")+'">'+(v>0?"+":"")+n1.format(v)+" %</span>";
 }
 
-/* ---- pintar KPIs ---- */
-function pintarKpis(A,B){
-  const f=[
-    ["Clics",          nf.format(A.clics), delta(A.clics,B.clics), false, nf.format(B.clics)],
-    ["Impresiones",    nf.format(A.imp),   delta(A.imp,B.imp),     false, nf.format(B.imp)],
-    ["CTR",            A.ctr!=null?n2.format(A.ctr)+" %":"—", delta(A.ctr,B.ctr), false, B.ctr!=null?n2.format(B.ctr)+" %":"—"],
-    ["Posición media", A.pos!=null?n1.format(A.pos):"—", delta(A.pos,B.pos), true, B.pos!=null?n1.format(B.pos):"—"],
-    ["Ingresos",       n2.format(A.eur)+" €", delta(A.eur,B.eur), false, n2.format(B.eur)+" €"],
-    ["RPM por página", A.rpm!=null?n2.format(A.rpm)+" €":"—", delta(A.rpm,B.rpm), false, B.rpm!=null?n2.format(B.rpm)+" €":"—"],
-    ["Páginas vistas", nf.format(A.pv), delta(A.pv,B.pv), false, nf.format(B.pv)],
-    ["Págs. / sesión", A.pps!=null?n2.format(A.pps):"—", delta(A.pps,B.pps), false, B.pps!=null?n2.format(B.pps):"—"]
-  ];
-  document.getElementById("kpis").innerHTML=f.map(x=>`
-    <div class="kpi"><div class="k">${x[0]}</div><div class="v mono">${x[1]}</div>
-    <div class="d mono">${chip(x[2],x[3])} · antes ${x[4]}</div></div>`).join("");
+/* ======================================================================
+   Piezas de interfaz
+   ====================================================================== */
+function cabecera(titulo,fuente,clase,explicacion){
+  return '<div class="sec-h"><div class="linea"><h2>'+titulo+'</h2>'
+    +'<span class="fuente '+clase+'">'+fuente+'</span></div>'
+    +'<span class="hint">'+explicacion+'</span></div>';
 }
 
-/* ---- gráfico de serie diaria ---- */
-function serieDiaria(id, puntos, fmt, alto){
-  const svg=document.getElementById(id); while(svg.firstChild) svg.removeChild(svg.firstChild);
-  const W=440,H=alto,pl=46,pr=10,pt=14,pb=22;
-  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+function tarjeta(id,titulo,fuente,clase,meta,cuerpo,pie){
+  return '<div class="card"><div class="card-h"><h3>'+titulo+'</h3>'
+    +'<span class="fuente '+clase+'" title="'+esc(meta||"")+'">'+fuente+'</span></div>'
+    +'<div id="'+id+'">'+(cuerpo||"")+'</div>'
+    +(pie?'<p class="pie">'+pie+'</p>':'')+'</div>';
+}
+
+/** Barras horizontales. filas: [{t:texto, v:valor, extra:texto}] */
+function barras(nodo,filas,fmt,color){
+  if(!filas||!filas.length){ nodo.innerHTML='<p class="vacio">Sin datos en este periodo.</p>'; return; }
+  const max=Math.max(...filas.map(f=>f.v))||1;
+  nodo.innerHTML='<div class="bars">'+filas.map(f=>
+    '<div class="brow"><div class="t"><b title="'+esc(f.t)+'">'+esc(f.t)+'</b>'
+    +'<span>'+fmt(f.v)+(f.extra?' <span style="color:var(--ink-3);font-weight:400">'+esc(f.extra)+'</span>':'')+'</span></div>'
+    +'<div class="track"><div class="fill '+color+'" style="width:'+(f.v/max*100).toFixed(1)+'%"></div></div></div>'
+  ).join("")+'</div>';
+}
+
+/** Tabla. cols: [{t:titulo, f:formateador, num:bool}] ; filas: arrays */
+function tabla(nodo,cols,filas,visiblesEnEditorial){
+  if(!filas||!filas.length){ nodo.innerHTML='<p class="vacio">Sin datos en este periodo.</p>'; return; }
+  const corte=visiblesEnEditorial||10;
+  nodo.innerHTML='<div class="tabla-caja"><table><thead><tr>'
+    +cols.map(c=>'<th>'+c.t+'</th>').join("")+'</tr></thead><tbody>'
+    +filas.map((f,i)=>'<tr'+(i>=corte?' class="cola"':'')+'>'
+      +f.map((v,j)=>'<td'+(cols[j].num?' class="n"':'')+'>'+v+'</td>').join("")+'</tr>').join("")
+    +'</tbody></table></div>';
+}
+
+/** Serie diaria en área+línea. puntos: [{d,v}] */
+function serieDiaria(nodo,puntos,fmt,alto,color,invertido){
+  nodo.innerHTML="";
+  if(!puntos.length){ nodo.innerHTML='<p class="vacio">Sin datos en este periodo.</p>'; return; }
+  const svg=el("svg",{}); nodo.appendChild(svg);
+  const W=440,H=alto,pl=48,pr=10,pt=14,pb=22;
+  svg.setAttribute("viewBox","0 0 "+W+" "+H);
+  svg.setAttribute("role","img");
   const iw=W-pl-pr, ih=H-pt-pb;
   const vals=puntos.map(p=>p.v);
-  if(!vals.length){ return; }
   const max=techo(Math.max(...vals,0.0001));
   const x=i=>pl+(puntos.length<2?iw/2:iw*i/(puntos.length-1));
-  const y=v=>pt+ih-ih*(v/max);
+  const y=v=>invertido ? pt+ih*(v/max) : pt+ih-ih*(v/max);
   [0,.5,1].forEach(f=>{
-    const yy=pt+ih-ih*f;
+    const yy=invertido ? pt+ih*f : pt+ih-ih*f;
     svg.appendChild(el("line",{x1:pl,y1:yy,x2:W-pr,y2:yy,stroke:"var(--grid)","stroke-width":1}));
     const t=el("text",{x:pl-6,y:yy+3.5,"text-anchor":"end",fill:"var(--ink-3)","font-size":9,
       "font-family":"IBM Plex Mono, monospace"}); t.textContent=fmt(max*f); svg.appendChild(t);
   });
   const pts=puntos.map((p,i)=>[x(i),y(p.v)]);
-  svg.appendChild(el("path",{d:`M${pl},${pt+ih} L`+pts.map(p=>p.join(",")).join(" L")+` L${x(puntos.length-1)},${pt+ih} Z`,
-    fill:"var(--accent)","fill-opacity":.10}));
+  const base=invertido?pt:pt+ih;
+  svg.appendChild(el("path",{d:"M"+pl+","+base+" L"+pts.map(p=>p.join(",")).join(" L")+" L"+x(puntos.length-1)+","+base+" Z",
+    fill:color,"fill-opacity":.10}));
   svg.appendChild(el("path",{d:"M"+pts.map(p=>p.join(",")).join(" L"),fill:"none",
-    stroke:"var(--accent)","stroke-width":1.8,"stroke-linejoin":"round","stroke-linecap":"round"}));
-  // zona sensible por punto, sin dibujar un circulo en cada dia
+    stroke:color,"stroke-width":1.8,"stroke-linejoin":"round","stroke-linecap":"round"}));
   const paso=iw/Math.max(1,puntos.length-1);
   puntos.forEach((p,i)=>{
     const r=el("rect",{x:x(i)-paso/2,y:pt,width:Math.max(paso,2),height:ih,fill:"transparent"});
     conTip(r,bonita(p.d)+": "+fmt(p.v)); svg.appendChild(r);
   });
   [0,puntos.length-1].forEach((i,k)=>{
+    if(puntos.length<2&&k) return;
     const t=el("text",{x:x(i),y:H-6,"text-anchor":k?"end":"start",fill:"var(--ink-3)","font-size":9,
-      "font-family":"Archivo, sans-serif"});
-    t.textContent=bonita(puntos[i].d).replace(/ \d{4}$/,""); svg.appendChild(t);
+      "font-family":"Archivo, sans-serif"}); t.textContent=corta(puntos[i].d); svg.appendChild(t);
   });
 }
 
-/* ---- barras por mes ---- */
+/* ======================================================================
+   El esqueleto de la página (se monta una vez)
+   ====================================================================== */
+function montar(){
+  $("app").innerHTML = `
+  <div class="rango">
+    <div class="presets" id="presets" role="group" aria-label="Periodos"></div>
+    <div class="fechas">
+      <label for="desde">del</label><input type="date" id="desde">
+      <label for="hasta">al</label><input type="date" id="hasta">
+    </div>
+  </div>
+  <div class="aviso" id="aviso" hidden></div>
+  <p class="periodo" id="periodo"></p>
+
+  <div class="sec">
+    ${cabecera("Búsqueda en Google","Search Console","f-gsc",
+      "Lo que pasa <b>antes</b> de que entren: cuántas veces sales en Google, cuántos pulsan y en qué puesto. Son datos de la API de Search Console (<code>searchanalytics</code>). Van 2–3 días por detrás.")}
+    <div class="kpis" id="kGsc"></div>
+    <div class="sub">Evolución día a día</div>
+    <div class="cols">
+      ${tarjeta("gClics","Clics","Search Console","f-gsc","métrica: clicks")}
+      ${tarjeta("gImp","Impresiones","Search Console","f-gsc","métrica: impressions")}
+      ${tarjeta("gPos","Posición media","Search Console","f-gsc","métrica: position","",
+        "Eje invertido: cuanto más arriba, mejor puesto.")}
+      ${tarjeta("gCtr","CTR","Search Console","f-gsc","clicks ÷ impressions")}
+    </div>
+    <div class="sub">Reparto dentro del periodo</div>
+    <div class="cols">
+      ${tarjeta("tConsultas","Qué buscan","Search Console","f-gsc","dimensión: query","",
+        "Las 25 consultas con más clics. Google oculta las de muy poco volumen, así que no suman el total.")}
+      ${tarjeta("tPaginas","Qué páginas entran","Search Console","f-gsc","dimensión: page")}
+      ${tarjeta("bDisp","Por dispositivo","Search Console","f-gsc","dimensión: device")}
+      ${tarjeta("bPais","Por país","Search Console","f-gsc","dimensión: country")}
+    </div>
+  </div>
+
+  <div class="sec">
+    ${cabecera("Visitas en la web","Analytics (GA4)","f-ga4",
+      "Lo que pasa <b>dentro</b> de la web: cuánta gente entra, de dónde viene y cuánto se queda. Datos de la API de GA4 (<code>runReport</code>), propiedad 253765232. Al día.")}
+    <div class="kpis" id="kGa4"></div>
+    <div class="sub">Evolución día a día</div>
+    <div class="cols">
+      ${tarjeta("gPv","Páginas vistas","GA4","f-ga4","métrica: screenPageViews")}
+      ${tarjeta("gSes","Sesiones","GA4","f-ga4","métrica: sessions")}
+      ${tarjeta("gUsr","Usuarios","GA4","f-ga4","métrica: activeUsers")}
+      ${tarjeta("gDur","Duración media de sesión","GA4","f-ga4","métrica: averageSessionDuration")}
+    </div>
+    <div class="sub">Reparto dentro del periodo</div>
+    <div class="cols">
+      ${tarjeta("bCanal","De dónde llegan","GA4","f-ga4","dimensión: sessionDefaultChannelGroup")}
+      ${tarjeta("bDispGa","Con qué entran","GA4","f-ga4","dimensión: deviceCategory")}
+      ${tarjeta("bPaisGa","Desde dónde","GA4","f-ga4","dimensión: country")}
+      ${tarjeta("tPagGa","Páginas más vistas","GA4","f-ga4","dimensión: pagePath")}
+    </div>
+  </div>
+
+  <div class="sec">
+    ${cabecera("Ingresos por publicidad","AdSense","f-ads",
+      "Lo que se gana y por qué. Datos de la API de AdSense (<code>reports:generate</code>), cuenta de Eduardo. Al día, pero son estimaciones hasta el cierre del mes.")}
+    <div class="kpis" id="kAds"></div>
+    <div class="sub">Evolución día a día</div>
+    <div class="cols">
+      ${tarjeta("gEur","Ingresos","AdSense","f-ads","métrica: ESTIMATED_EARNINGS")}
+      ${tarjeta("gRpm","RPM por página","AdSense","f-ads","ESTIMATED_EARNINGS ÷ PAGE_VIEWS × 1000","",
+        "Lo que se gana por cada mil páginas vistas. Es la palanca que no depende de tener más visitas.")}
+      ${tarjeta("gAimp","Impresiones de anuncios","AdSense","f-ads","métrica: IMPRESSIONS")}
+      ${tarjeta("gCob","Cobertura","AdSense","f-ads","métrica: AD_REQUESTS_COVERAGE","",
+        "De cada hueco que se pide, cuántos Google llega a llenar.")}
+    </div>
+    <div class="sub">Reparto dentro del periodo</div>
+    <div class="cols">
+      ${tarjeta("tUnidades","Qué bloque gana más","AdSense","f-ads","dimensión: AD_UNIT_NAME","",
+        "Aquí se ve si el ancla sigue siendo el que paga la fiesta.")}
+      ${tarjeta("tFormatos","Por formato","AdSense","f-ads","dimensión: AD_FORMAT_NAME")}
+      ${tarjeta("bPlataforma","Por plataforma","AdSense","f-ads","dimensión: PLATFORM_TYPE_NAME")}
+      ${tarjeta("bPaisAds","Por país","AdSense","f-ads","dimensión: COUNTRY_NAME")}
+    </div>
+  </div>
+
+  <div class="sec">
+    ${cabecera("De dónde sale el cambio","Search Console","f-gsc",
+      "Se calcula solo, comparando con el periodo anterior: cuántos clics vienen de aparecer más veces y cuántos de que te pulsen más cuando apareces.")}
+    <div class="card"><div id="descomp"></div><p class="pie" id="pieDescomp"></p></div>
+  </div>
+
+  <div class="sec">
+    ${cabecera("Todos los meses","Search Console","f-gsc",
+      "El histórico completo mes a mes, con el periodo elegido resaltado. Octubre y noviembre son el pico del año escolar; diciembre baja por Navidad.")}
+    <div class="card"><div class="card-h"><h3>Clics por mes</h3><span class="meta" id="mMeses"></span></div>
+      <div id="gMeses"></div></div>
+  </div>
+
+  <div class="sec">
+    ${cabecera("Notas de la última revisión","Escritas a mano","f-mix",
+      "Lo único del panel que no sale de una API: el criterio. Fecha: <b id='fechaNotas'></b>.")}
+    <div class="sts" id="estado"></div>
+    <div class="pills" id="proximas" style="margin-top:12px"></div>
+  </div>
+
+  <footer>
+    <p id="pie"></p>
+    <div class="ficha" id="ficha"></div>
+  </footer>`;
+}
+
+/* ======================================================================
+   Pintado
+   ====================================================================== */
+function pintarKpis(id,filas){ $(id).outerHTML='<div class="kpis" id="'+id+'">'
+  +filas.map(f=>'<div class="kpi"><div class="k">'+f[0]+'</div><div class="v mono">'+f[1]+'</div>'
+  +'<div class="d mono">'+chip(f[2],f[3])+' · antes '+f[4]+'</div></div>').join("")+'</div>'; }
+
+function pintarTodo(){
+  const editorial=document.body.dataset.modo==="editorial";
+  const altoG=editorial?190:150;
+  const A=agregar(rango.a,rango.b);
+  const dur=Math.round((new Date(rango.b)-new Date(rango.a))/86400000)+1;
+  const bAnt=masDias(rango.a,-1), aAnt=masDias(rango.a,-dur);
+  const B=agregar(aAnt,bAnt);
+
+  $("periodo").innerHTML="Periodo: <b>"+bonita(rango.a)+" – "+bonita(rango.b)+"</b> · "+dur
+    +" días · comparado con "+bonita(aAnt)+" – "+bonita(bAnt);
+
+  /* --- Search Console --- */
+  pintarKpis("kGsc",[
+    ["Clics",          ent(A.clics), delta(A.clics,B.clics), false, ent(B.clics)],
+    ["Impresiones",    ent(A.imp),   delta(A.imp,B.imp),     false, ent(B.imp)],
+    ["CTR",            A.ctr!=null?pct(A.ctr):"—", delta(A.ctr,B.ctr), false, B.ctr!=null?pct(B.ctr):"—"],
+    ["Posición media", A.pos!=null?n1.format(A.pos):"—", delta(A.pos,B.pos), true, B.pos!=null?n1.format(B.pos):"—"]
+  ]);
+  const d=DIAS.filter(x=>x.d>=rango.a&&x.d<=rango.b);
+  const serie=(k)=>d.filter(x=>x[k]!=null).map(x=>({d:x.d,v:x[k]}));
+  serieDiaria($("gClics"),serie("c"),v=>ent(v),altoG,"var(--gsc)");
+  serieDiaria($("gImp"),serie("i"),v=>ent(v),altoG,"var(--gsc)");
+  serieDiaria($("gPos"),serie("p"),v=>n1.format(v),altoG,"var(--gsc)",true);
+  serieDiaria($("gCtr"),d.filter(x=>x.c!=null&&x.i).map(x=>({d:x.d,v:x.c/x.i*100})),
+    v=>pct(v),altoG,"var(--gsc)");
+
+  /* --- GA4 --- */
+  pintarKpis("kGa4",[
+    ["Páginas vistas", ent(A.pv),  delta(A.pv,B.pv),   false, ent(B.pv)],
+    ["Sesiones",       ent(A.ses), delta(A.ses,B.ses), false, ent(B.ses)],
+    ["Usuarios",       ent(A.usr), delta(A.usr,B.usr), false, ent(B.usr)],
+    ["Usuarios nuevos",ent(A.nusr),delta(A.nusr,B.nusr),false,ent(B.nusr)],
+    ["Recurrentes",    ent(A.rec), delta(A.rec,B.rec), false, ent(B.rec)],
+    ["Páginas / sesión",A.pps!=null?n2.format(A.pps):"—", delta(A.pps,B.pps), false, B.pps!=null?n2.format(B.pps):"—"],
+    ["Duración media", A.dur!=null?seg(A.dur):"—", delta(A.dur,B.dur), false, B.dur!=null?seg(B.dur):"—"],
+    ["Con interacción",A.eng!=null?pct(A.eng,1):"—", delta(A.eng,B.eng), false, B.eng!=null?pct(B.eng,1):"—"]
+  ]);
+  serieDiaria($("gPv"),serie("pv"),v=>ent(v),altoG,"var(--ga4)");
+  serieDiaria($("gSes"),serie("ses"),v=>ent(v),altoG,"var(--ga4)");
+  serieDiaria($("gUsr"),serie("usr"),v=>ent(v),altoG,"var(--ga4)");
+  serieDiaria($("gDur"),serie("dur"),v=>Math.round(v)+" s",altoG,"var(--ga4)");
+
+  /* --- AdSense --- */
+  pintarKpis("kAds",[
+    ["Ingresos",       eur(A.eur), delta(A.eur,B.eur), false, eur(B.eur)],
+    ["RPM por página", A.rpm!=null?eur(A.rpm):"—", delta(A.rpm,B.rpm), false, B.rpm!=null?eur(B.rpm):"—"],
+    ["Páginas vistas (AdSense)", ent(A.apv), delta(A.apv,B.apv), false, ent(B.apv)],
+    ["Impresiones de anuncios",  ent(A.aimp),delta(A.aimp,B.aimp),false, ent(B.aimp)],
+    ["Clics en anuncios",ent(A.aclic), delta(A.aclic,B.aclic), false, ent(B.aclic)],
+    ["CTR de anuncios", A.actr!=null?pct(A.actr):"—", delta(A.actr,B.actr), false, B.actr!=null?pct(B.actr):"—"],
+    ["Cobertura",       A.cob!=null?pct(A.cob,1):"—", delta(A.cob,B.cob), false, B.cob!=null?pct(B.cob,1):"—"],
+    ["Visibilidad",     A.vis!=null?pct(A.vis,1):"—", delta(A.vis,B.vis), false, B.vis!=null?pct(B.vis,1):"—"]
+  ]);
+  serieDiaria($("gEur"),serie("eur"),v=>eur(v),altoG,"var(--ads)");
+  serieDiaria($("gRpm"),d.filter(x=>x.eur!=null&&x.apv).map(x=>({d:x.d,v:x.eur/x.apv*1000})),
+    v=>eur(v),altoG,"var(--ads)");
+  serieDiaria($("gAimp"),serie("aimp"),v=>ent(v),altoG,"var(--ads)");
+  serieDiaria($("gCob"),d.filter(x=>x.cob!=null).map(x=>({d:x.d,v:x.cob*100})),
+    v=>pct(v,1),altoG,"var(--ads)");
+
+  pintarDescomp(A,B);
+  barrasMeses(editorial?250:205);
+  pintarDesglose();
+}
+
+function pintarDescomp(A,B){
+  const cont=$("descomp"), pie=$("pieDescomp");
+  if(!B.imp||!B.clics){ cont.innerHTML='<p class="vacio">No hay periodo anterior con el que comparar.</p>'; pie.textContent=""; return; }
+  const ctrB=B.clics/B.imp;
+  const porVis=A.imp*ctrB-B.clics;
+  const porCtr=A.clics-A.imp*ctrB;
+  barras(cont,[
+    {t:"Por aparecer más (visibilidad)",v:Math.abs(porVis),extra:(porVis>=0?"+":"−")+ent(Math.abs(porVis))+" clics"},
+    {t:"Por mejor CTR",v:Math.abs(porCtr),extra:(porCtr>=0?"+":"−")+ent(Math.abs(porCtr))+" clics"}
+  ],()=>"","c-gsc");
+  pie.textContent="Las impresiones "+(porVis>=0?"suman":"restan")+" "+ent(Math.abs(porVis))+" clics; el CTR ("
+    +n2.format(ctrB*100)+" % → "+n2.format(A.ctr)+" %) "+(porCtr>=0?"suma":"resta")+" "+ent(Math.abs(porCtr))
+    +". Cambio total: "+(A.clics-B.clics>0?"+":"")+nf.format(A.clics-B.clics)+" clics.";
+}
+
 function barrasMeses(alto){
-  const svg=document.getElementById("gMeses"); while(svg.firstChild) svg.removeChild(svg.firstChild);
+  const nodo=$("gMeses"); nodo.innerHTML="";
   const m={};
-  for(const d of DIAS){ if(d.c==null) continue; const k=d.d.slice(0,7); m[k]=(m[k]||0)+d.c; }
+  for(const x of DIAS){ if(x.c==null) continue; const k=x.d.slice(0,7); m[k]=(m[k]||0)+x.c; }
   const claves=Object.keys(m).sort();
-  const W=940,H=alto,pl=42,pr=10,pt=18,pb=30;
-  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  if(!claves.length){ nodo.innerHTML='<p class="vacio">Sin datos.</p>'; return; }
+  const svg=el("svg",{}); nodo.appendChild(svg);
+  const W=940,H=alto,pl=44,pr=10,pt=18,pb=30;
+  svg.setAttribute("viewBox","0 0 "+W+" "+H);
   const iw=W-pl-pr, ih=H-pt-pb, n=claves.length, hueco=3;
   const bw=(iw-hueco*(n-1))/n, max=techo(Math.max(...claves.map(k=>m[k])));
   [0,.5,1].forEach(f=>{
@@ -363,204 +609,231 @@ function barrasMeses(alto){
   claves.forEach((k,i)=>{
     const v=m[k], bx=pl+i*(bw+hueco), h=Math.max(2,ih*(v/max)), by=pt+ih-h;
     const dentro = k>=rango.a.slice(0,7) && k<=rango.b.slice(0,7);
-    const r=el("rect",{x:bx,y:by,width:bw,height:h,rx:2.5,
-      fill:dentro?"var(--accent)":"var(--accent-2)","fill-opacity":dentro?1:.55});
-    const [yy,mm]=k.split("-");
-    conTip(r,MESES[+mm-1]+" "+yy+": "+nf.format(v)+" clics"); svg.appendChild(r);
+    const r=el("rect",{x:bx,y:by,width:bw,height:h,rx:2.5,fill:"var(--gsc)","fill-opacity":dentro?1:.38});
+    const p=k.split("-");
+    conTip(r,MESES[+p[1]-1]+" "+p[0]+": "+nf.format(v)+" clics"); svg.appendChild(r);
     const t=el("text",{x:bx+bw/2,y:H-16,"text-anchor":"middle",fill:dentro?"var(--ink-2)":"var(--ink-3)",
-      "font-size":9.5,"font-family":"Archivo, sans-serif"}); t.textContent=MESES[+mm-1]; svg.appendChild(t);
-    if(mm==="01"||i===0){
+      "font-size":9.5,"font-family":"Archivo, sans-serif"}); t.textContent=MESES[+p[1]-1]; svg.appendChild(t);
+    if(p[1]==="01"||i===0){
       const a=el("text",{x:bx+bw/2,y:H-4,"text-anchor":"middle",fill:"var(--ink-3)","font-size":9,
-        "font-weight":600,"font-family":"IBM Plex Mono, monospace"}); a.textContent=yy; svg.appendChild(a);
+        "font-weight":600,"font-family":"IBM Plex Mono, monospace"}); a.textContent=p[0]; svg.appendChild(a);
     }
   });
-  document.getElementById("mMeses").textContent=claves.length+" meses";
+  $("mMeses").textContent=claves.length+" meses";
 }
 
-/* ---- descomposición del cambio ---- */
-function pintarDescomp(A,B){
-  const cont=document.getElementById("descomp"), pie=document.getElementById("footDescomp");
-  if(!B.imp||!B.clics){ cont.innerHTML=""; pie.textContent="No hay periodo anterior con el que comparar."; return; }
-  const ctrB=B.clics/B.imp;
-  const porVis=A.imp*ctrB-B.clics;
-  const porCtr=A.clics-A.imp*ctrB;
-  const tot=Math.abs(porVis)+Math.abs(porCtr)||1;
-  const fila=(t,v)=>`<div class="brow"><div class="t"><b>${t}</b><span>${v>0?"+":""}${nf.format(Math.round(v))}</span></div>
-    <div class="track"><div class="fill${t.includes("CTR")?" b":""}" style="width:${(Math.abs(v)/tot*100).toFixed(1)}%"></div></div></div>`;
-  cont.innerHTML=fila("Por aparecer más (visibilidad)",porVis)+fila("Por mejor CTR",porCtr);
-  pie.textContent=`Las impresiones ${porVis>=0?"suman":"restan"} ${nf.format(Math.abs(Math.round(porVis)))} clics; `
-    +`el CTR (${n2.format(B.clics/B.imp*100)} % → ${n2.format(A.ctr)} %), ${porCtr>=0?"suma":"resta"} ${nf.format(Math.abs(Math.round(porCtr)))}. `
-    +`Cambio total: ${A.clics-B.clics>0?"+":""}${nf.format(A.clics-B.clics)} clics.`;
+/* ---- los repartos, que vienen del servidor para el rango exacto ---- */
+const CARGANDO='<p class="vacio">Consultando a Google…</p>';
+const IDS_DESGLOSE=["tConsultas","tPaginas","bDisp","bPais","bCanal","bDispGa","bPaisGa","tPagGa",
+                    "tUnidades","tFormatos","bPlataforma","bPaisAds"];
+
+function desgloseCargando(){ for(const id of IDS_DESGLOSE){ const n=$(id); if(n) n.innerHTML=CARGANDO; } }
+function desgloseFallo(msg){ for(const id of IDS_DESGLOSE){ const n=$(id); if(n) n.innerHTML='<p class="vacio">'+esc(msg)+'</p>'; } }
+
+function pintarDesglose(){
+  if(!DESGLOSE){ if(errDesglose) desgloseFallo(errDesglose); else desgloseCargando(); return; }
+  const g=DESGLOSE.gsc, a=DESGLOSE.adsense, n=DESGLOSE.ga4;
+
+  if(g){
+    tabla($("tConsultas"),
+      [{t:"Consulta"},{t:"Clics",num:1},{t:"Impr.",num:1},{t:"CTR",num:1},{t:"Pos.",num:1}],
+      g.consultas.map(f=>[esc(f.k[0]),nf.format(f.c),nf.format(f.i),n2.format(f.ctr)+" %",n1.format(f.p)]));
+    tabla($("tPaginas"),
+      [{t:"Página"},{t:"Clics",num:1},{t:"Impr.",num:1},{t:"CTR",num:1},{t:"Pos.",num:1}],
+      g.paginas.map(f=>[esc(rutaCorta(f.k[0])),nf.format(f.c),nf.format(f.i),n2.format(f.ctr)+" %",n1.format(f.p)]));
+    barras($("bDisp"),g.dispositivos.map(f=>({t:nombreDisp(f.k[0]),v:f.c,extra:"CTR "+n2.format(f.ctr)+" %"})),
+      v=>nf.format(v)+" clics","c-gsc");
+    barras($("bPais"),g.paises.map(f=>({t:nombrePais(f.k[0]),v:f.c,extra:"pos. "+n1.format(f.p)})),
+      v=>nf.format(v)+" clics","c-gsc");
+  } else desgloseParcial(["tConsultas","tPaginas","bDisp","bPais"]);
+
+  if(n){
+    barras($("bCanal"),n.canales.map(f=>({t:nombreCanal(f.k[0]),v:f.m[0],extra:nf.format(f.m[1])+" págs."})),
+      v=>nf.format(Math.round(v))+" sesiones","c-ga4");
+    barras($("bDispGa"),n.dispositivos.map(f=>({t:nombreDisp(f.k[0]),v:f.m[0],extra:nf.format(f.m[1])+" págs."})),
+      v=>nf.format(Math.round(v))+" sesiones","c-ga4");
+    barras($("bPaisGa"),n.paises.map(f=>({t:f.k[0]==="(not set)"?"Sin identificar":f.k[0],v:f.m[0]})),
+      v=>nf.format(Math.round(v))+" sesiones","c-ga4");
+    tabla($("tPagGa"),[{t:"Página"},{t:"Páginas vistas",num:1},{t:"Sesiones",num:1}],
+      n.paginas.map(f=>[esc(f.k[0]),nf.format(Math.round(f.m[0])),nf.format(Math.round(f.m[1]))]));
+  } else desgloseParcial(["bCanal","bDispGa","bPaisGa","tPagGa"]);
+
+  if(a){
+    const filasAds=f=>[esc(f.k[0]),n2.format(f.m[0])+" €",nf.format(Math.round(f.m[1])),
+      nf.format(Math.round(f.m[2])),n2.format(f.m[3]*100)+" %",n2.format(f.m[4])+" €"];
+    const colsAds=[{t:"Bloque"},{t:"Ingresos",num:1},{t:"Impr.",num:1},{t:"Clics",num:1},{t:"CTR",num:1},{t:"RPM",num:1}];
+    tabla($("tUnidades"),colsAds,a.unidades.map(filasAds));
+    tabla($("tFormatos"),[{t:"Formato"}].concat(colsAds.slice(1)),a.formatos.map(filasAds));
+    barras($("bPlataforma"),a.plataformas.map(f=>({t:f.k[0],v:f.m[0],extra:"RPM "+n2.format(f.m[4])+" €"})),
+      v=>n2.format(v)+" €","c-ads");
+    barras($("bPaisAds"),a.paises.map(f=>({t:f.k[0],v:f.m[0],extra:"RPM "+n2.format(f.m[4])+" €"})),
+      v=>n2.format(v)+" €","c-ads");
+  } else desgloseParcial(["tUnidades","tFormatos","bPlataforma","bPaisAds"]);
 }
+function desgloseParcial(ids){ for(const id of ids){ const x=$(id); if(x) x.innerHTML='<p class="vacio">Esta fuente no ha respondido.</p>'; } }
 
-/* ---- repintado completo ---- */
-function pintar(){
-  const editorial=document.body.dataset.modo==="editorial";
-  const A=agregar(rango.a,rango.b);
-  const dur=Math.round((new Date(rango.b)-new Date(rango.a))/86400000)+1;
-  const bAnt=masDias(rango.a,-1), aAnt=masDias(rango.a,-dur);
-  const B=agregar(aAnt,bAnt);
+/* ======================================================================
+   Rango de fechas
+   ====================================================================== */
+const PRESETS=[["7d","7 días"],["28d","28 días"],["90d","90 días"],
+  ["mes","Este mes"],["mesAnt","Mes pasado"],["año","Este año"],["todo","Todo"]];
 
-  document.getElementById("tituloRango").textContent=bonita(rango.a)+" – "+bonita(rango.b);
-  document.getElementById("comparacion").textContent=
-    `${dur} días · comparado con ${bonita(aAnt)} – ${bonita(bAnt)}`;
-  pintarKpis(A,B);
-
-  const dentro=DIAS.filter(d=>d.d>=rango.a&&d.d<=rango.b);
-  serieDiaria("gClics", dentro.filter(d=>d.c!=null).map(d=>({d:d.d,v:d.c})),
-    v=>nf.format(Math.round(v)), editorial?200:150);
-  serieDiaria("gEuros", dentro.filter(d=>d.eur!=null).map(d=>({d:d.d,v:d.eur})),
-    v=>n2.format(v)+" €", editorial?200:150);
-  document.getElementById("mClics").textContent=nf.format(A.clics)+" en total";
-  document.getElementById("mEuros").textContent=n2.format(A.eur)+" € en total";
-  barrasMeses(editorial?260:210);
-  pintarDescomp(A,B);
-
-  // aviso de frescura: Search Console va con retraso
-  const av=document.getElementById("aviso");
-  if(rango.b>META.gsc){
-    av.hidden=false;
-    av.textContent="Search Console solo tiene datos hasta el "+bonita(META.gsc)
-      +". Los días posteriores del periodo elegido cuentan como cero en clics, impresiones y posición.";
-  } else av.hidden=true;
-}
-
-/* ---- presets ---- */
-const PRESETS=[
-  ["7d","7 días"],["28d","28 días"],["90d","90 días"],
-  ["mes","Este mes"],["mesAnt","Mes pasado"],["año","Este año"],["todo","Todo"]
-];
 function aplicarPreset(id){
   presetActivo=id;
   const ultimo=DIAS.length?DIAS[DIAS.length-1].d:iso(new Date());
   const hoy=new Date(ultimo+"T12:00:00");
   let a,b=ultimo;
-  if(id==="7d")      a=masDias(b,-6);
-  else if(id==="28d")a=masDias(b,-27);
-  else if(id==="90d")a=masDias(b,-89);
-  else if(id==="mes"){ a=iso(new Date(hoy.getFullYear(),hoy.getMonth(),1)); }
-  else if(id==="mesAnt"){
-    const p=new Date(hoy.getFullYear(),hoy.getMonth()-1,1);
-    a=iso(p); b=iso(new Date(hoy.getFullYear(),hoy.getMonth(),0));
-  }
-  else if(id==="año") a=iso(new Date(hoy.getFullYear(),0,1));
-  else { a=DIAS[0].d; }
+  if(id==="7d")        a=masDias(b,-6);
+  else if(id==="28d")  a=masDias(b,-27);
+  else if(id==="90d")  a=masDias(b,-89);
+  else if(id==="mes")  a=iso(new Date(hoy.getFullYear(),hoy.getMonth(),1));
+  else if(id==="mesAnt"){ a=iso(new Date(hoy.getFullYear(),hoy.getMonth()-1,1));
+                          b=iso(new Date(hoy.getFullYear(),hoy.getMonth(),0)); }
+  else if(id==="año")  a=iso(new Date(hoy.getFullYear(),0,1));
+  else                 a=DIAS[0].d;
+  cambiarRango(a,b);
+}
+
+function cambiarRango(a,b){
   rango={a,b};
-  document.getElementById("desde").value=a;
-  document.getElementById("hasta").value=b;
-  marcarPresets(); pintar();
-}
-function marcarPresets(){
-  [...document.querySelectorAll("#presets button")].forEach(b=>
-    b.setAttribute("aria-pressed", b.dataset.id===presetActivo));
+  $("desde").value=a; $("hasta").value=b;
+  [...document.querySelectorAll("#presets button")].forEach(x=>
+    x.setAttribute("aria-pressed", x.dataset.id===presetActivo));
+  const av=$("aviso");
+  if(META.gsc && b>META.gsc){
+    av.hidden=false;
+    av.textContent="Search Console solo tiene datos hasta el "+bonita(META.gsc)
+      +". Los días posteriores cuentan como cero en clics, impresiones y posición, así que el final de las curvas azules no es una caída real.";
+  } else av.hidden=true;
+  DESGLOSE=null; errDesglose=null;
+  pintarTodo();
+  pedirDesglose();
 }
 
-/* ---- arranque ----
-   Dos fuentes, a propósito:
-     datos.json       histórico completo, servido como fichero (siempre funciona)
-     /panel/datos-vivo/  los últimos meses preguntados a Google en el momento
-   El vivo se pega ENCIMA del histórico campo a campo, así que si la consulta
-   falla el panel sigue mostrando el histórico en vez de quedarse en blanco.   */
+let temporizador=null;
+function pedirDesglose(){
+  clearTimeout(temporizador);
+  const mio=++peticion, a=rango.a, b=rango.b;
+  temporizador=setTimeout(async ()=>{
+    try{
+      const r=await fetch("datos-vivo/?modo=desglose&desde="+a+"&hasta="+b,{cache:"no-store"});
+      if(!r.ok) throw new Error("HTTP "+r.status);
+      const j=await r.json();
+      if(mio!==peticion) return;                 // llegó tarde, ya hay otro rango
+      DESGLOSE=j; errDesglose=null;
+      if(j.errores) console.warn("panel · desglose con fallos:",j.errores);
+      pintarDesglose();
+    }catch(e){
+      if(mio!==peticion) return;
+      errDesglose="No se han podido pedir los repartos a Google ("+e.message+").";
+      console.warn("panel · desglose:",e);
+      pintarDesglose();
+    }
+  },350);
+}
 
-const CAMPOS=["c","i","p","eur","apv","vis","pv","ses","usr"];
+/* ======================================================================
+   Arranque: histórico de fichero + cola reciente en vivo
+   ====================================================================== */
+const CAMPOS=["c","i","p","eur","apv","aimp","aclic","vis","areq","cob","pv","ses","usr","nusr","eng","dur"];
 function fusionar(nuevos){
-  const idx={}; DIAS.forEach((d,i)=>idx[d.d]=i);
-  let tocados=0;
+  const idx={}; DIAS.forEach((x,i)=>idx[x.d]=i);
   for(const n of nuevos){
-    if(idx[n.d]===undefined){ DIAS.push(n); idx[n.d]=DIAS.length-1; tocados++; continue; }
-    const d=DIAS[idx[n.d]]; let cambio=false;
-    for(const k of CAMPOS) if(n[k]!=null && n[k]!==d[k]){ d[k]=n[k]; cambio=true; }
-    if(cambio) tocados++;
+    if(idx[n.d]===undefined){ DIAS.push(n); idx[n.d]=DIAS.length-1; continue; }
+    const x=DIAS[idx[n.d]];
+    for(const k of CAMPOS) if(n[k]!=null) x[k]=n[k];
   }
-  DIAS.sort((a,b)=>a.d<b.d?-1:1);
-  return tocados;
+  DIAS.sort((p,q)=>p.d<q.d?-1:1);
 }
 
-function limitesFecha(){
-  const dDesde=document.getElementById("desde"), dHasta=document.getElementById("hasta");
-  dDesde.min=dHasta.min=DIAS[0].d; dDesde.max=dHasta.max=DIAS[DIAS.length-1].d;
-}
-
-function sello(txt,aviso){
-  document.getElementById("sello").textContent=txt;
-  document.getElementById("sello").style.color=aviso?"var(--warn)":"";
-}
+function sello(txt,aviso){ $("sello").textContent=txt; $("sello").style.color=aviso?"var(--warn)":""; }
 
 function arrancarUI(){
-  document.getElementById("cargando").hidden=true;
-  document.getElementById("app").hidden=false;
-
-  document.getElementById("presets").innerHTML=PRESETS.map(p=>
-    `<button data-id="${p[0]}" aria-pressed="false">${p[1]}</button>`).join("");
+  $("cargando").hidden=true; $("app").hidden=false;
+  montar();
+  $("presets").innerHTML=PRESETS.map(p=>
+    '<button data-id="'+p[0]+'" aria-pressed="false">'+p[1]+'</button>').join("");
   document.querySelectorAll("#presets button").forEach(b=>
     b.addEventListener("click",()=>aplicarPreset(b.dataset.id)));
-
-  const dDesde=document.getElementById("desde"), dHasta=document.getElementById("hasta");
-  limitesFecha();
+  const dDesde=$("desde"), dHasta=$("hasta");
+  dDesde.min=dHasta.min=DIAS[0].d; dDesde.max=dHasta.max=DIAS[DIAS.length-1].d;
   const manual=()=>{ if(!dDesde.value||!dHasta.value) return;
-    rango={a:dDesde.value<=dHasta.value?dDesde.value:dHasta.value,
-           b:dDesde.value<=dHasta.value?dHasta.value:dDesde.value};
-    presetActivo=null; marcarPresets(); pintar(); };
+    presetActivo=null;
+    cambiarRango(dDesde.value<=dHasta.value?dDesde.value:dHasta.value,
+                 dDesde.value<=dHasta.value?dHasta.value:dDesde.value); };
   dDesde.addEventListener("change",manual); dHasta.addEventListener("change",manual);
 
-  document.getElementById("fechaNotas").textContent=NOTAS.fecha;
+  $("fechaNotas").textContent=NOTAS.fecha;
   const NOM={ok:"Resuelto",w:"Vigilar",c:"Cerrado"};
-  document.getElementById("estado").innerHTML=NOTAS.estado.map(e=>
-    `<div class="st"><span class="tag ${e.t}">${NOM[e.t]}</span><h3>${e.h}</h3><p>${e.p}</p></div>`).join("");
-  document.getElementById("proximas").innerHTML=NOTAS.proximas.map(p=>
-    `<span class="pill"><b>${p[0]}</b> · ${p[1]}</span>`).join("");
-  document.getElementById("pie").textContent=NOTAS.pie;
-
+  $("estado").innerHTML=NOTAS.estado.map(e=>
+    '<div class="st"><span class="tag '+e.t+'">'+NOM[e.t]+'</span><h3>'+e.h+'</h3><p>'+e.p+'</p></div>').join("");
+  $("proximas").innerHTML=NOTAS.proximas.map(p=>
+    '<span class="pill"><b>'+p[0]+'</b> · '+p[1]+'</span>').join("");
+  $("pie").textContent=NOTAS.pie;
   aplicarPreset("28d");
 }
 
+function pintarFicha(){
+  $("ficha").innerHTML=
+    '<b>De dónde sale cada cosa.</b> '
+    +'<span class="fuente f-gsc">Search Console</span> clics, impresiones, CTR y posición, por la API '
+    +'<code>searchanalytics.query</code> del sitio <code>www.teoriamusical.com.es</code>; va 2–3 días por detrás '
+    +'y oculta las consultas de muy poco volumen, por eso las tablas no suman el total. '
+    +'<span class="fuente f-ga4">GA4</span> visitas, sesiones, usuarios y duración, por <code>runReport</code> '
+    +'de la propiedad <code>253765232</code>. '
+    +'<span class="fuente f-ads">AdSense</span> ingresos, RPM, impresiones y cobertura, por '
+    +'<code>reports:generate</code>; son estimaciones hasta el cierre de mes.<br>'
+    +'Las curvas diarias se calculan en el navegador a partir de <code>panel/datos.json</code> (histórico) '
+    +'más los últimos 120 días pedidos en vivo. Los repartos (consultas, páginas, países, bloques) se piden '
+    +'a Google para el rango exacto que tienes en pantalla, porque no se pueden obtener sumando días. '
+    +'Datos hasta: Search Console <b>'+bonita(META.gsc)+'</b>, AdSense <b>'+bonita(META.adsense)
+    +'</b>, GA4 <b>'+bonita(META.ga4)+'</b>.';
+}
+
 async function cargar(){
-  // 1) histórico
   try{
     const j=await (await fetch("datos.json?v="+Date.now())).json();
     DIAS=j.dias||[]; META=j.hasta||{};
   }catch(e){ DIAS=[]; META={}; }
 
   if(DIAS.length){ arrancarUI(); sello("histórico · consultando a Google…"); }
-  else document.getElementById("cargando").textContent="Consultando a Google…";
+  else $("cargando").textContent="Consultando a Google…";
 
-  // 2) en vivo
   try{
-    const r=await fetch("datos-vivo/",{cache:"no-store"});
+    const r=await fetch("datos-vivo/?modo=serie",{cache:"no-store"});
     if(!r.ok) throw new Error("HTTP "+r.status);
     const v=await r.json();
-    const n=fusionar(v.dias||[]);
+    fusionar(v.dias||[]);
     for(const k of ["gsc","adsense","ga4"]) if(v.hasta&&v.hasta[k]) META[k]=v.hasta[k];
-    if(document.getElementById("app").hidden) arrancarUI(); else { limitesFecha(); pintar(); }
+    if($("app").hidden) arrancarUI();
+    else { $("desde").max=$("hasta").max=DIAS[DIAS.length-1].d; pintarTodo(); }
     const hora=new Date().toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"});
-    if(v.errores){
-      sello("en vivo a las "+hora+" · falla "+Object.keys(v.errores).join(", "),true);
-      console.warn("panel · errores del servidor:",v.errores);
-    } else {
-      sello("en vivo a las "+hora+" · Search Console hasta "+bonita(META.gsc));
-    }
+    if(v.errores){ sello("en vivo a las "+hora+" · falla "+Object.keys(v.errores).join(", "),true);
+                   console.warn("panel · errores del servidor:",v.errores); }
+    else sello("en vivo a las "+hora+" · Search Console hasta "+bonita(META.gsc));
   }catch(e){
-    if(DIAS.length){
-      sello("histórico hasta "+bonita(META.gsc)+" · sin conexión en vivo",true);
-      console.warn("panel · no se pudo consultar en vivo:",e);
-    } else {
-      document.getElementById("cargando").textContent="No se han podido cargar los datos: "+e;
-    }
+    if(DIAS.length){ sello("histórico hasta "+bonita(META.gsc)+" · sin conexión en vivo",true);
+                     console.warn("panel · sin vivo:",e); }
+    else { $("cargando").textContent="No se han podido cargar los datos: "+e; return; }
   }
+  pintarFicha();
 }
 cargar();
 
 /* ---- modo ---- */
-const bD=document.getElementById("bDenso"), bE=document.getElementById("bEdit");
+const bD=$("bDenso"), bE=$("bEdit");
 function modo(m){ document.body.dataset.modo=m;
   bD.setAttribute("aria-pressed",m==="denso"); bE.setAttribute("aria-pressed",m==="editorial");
   try{ localStorage.setItem("tm-panel-modo",m); }catch(e){}
-  if(DIAS.length) pintar();
+  if(DIAS.length && !$("app").hidden) pintarTodo();
 }
 bD.addEventListener("click",()=>modo("denso")); bE.addEventListener("click",()=>modo("editorial"));
-let g="denso"; try{ g=localStorage.getItem("tm-panel-modo")||"denso"; }catch(e){}
-modo(g==="editorial"?"editorial":"denso");
-addEventListener("resize",()=>{ clearTimeout(window.__t); window.__t=setTimeout(()=>{ if(DIAS.length) pintar(); },160); });
+let guardado="denso"; try{ guardado=localStorage.getItem("tm-panel-modo")||"denso"; }catch(e){}
+document.body.dataset.modo = guardado==="editorial" ? "editorial" : "denso";
+bD.setAttribute("aria-pressed",guardado!=="editorial"); bE.setAttribute("aria-pressed",guardado==="editorial");
+
+addEventListener("resize",()=>{ clearTimeout(window.__r);
+  window.__r=setTimeout(()=>{ if(DIAS.length && !$("app").hidden) pintarTodo(); },180); });
 </script>
 </body>
 </html>
