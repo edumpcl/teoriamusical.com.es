@@ -15,9 +15,17 @@
   --line:#dde2e9; --line-soft:#e9ecf1;
   --ink:#0e1318; --ink-2:#48505c; --ink-3:#79828f;
   --accent:#a86c13; --accent-2:#d8a84e;
-  --gsc:#1d5f9c;  --gsc-wash:#e3edf7;  --gsc-b:#5591c6; --gsc-c:#a8c6e0;
-  --ga4:#7a4396;  --ga4-wash:#f0e8f6;  --ga4-b:#a87cc0; --ga4-c:#d2b9e0;
-  --ads:#1b7148;  --ads-wash:#e4f0e9;  --ads-b:#57a67e; --ads-c:#a3cdb8;
+  --gsc:#1d5f9c;  --gsc-wash:#e3edf7;
+  --ga4:#7a4396;  --ga4-wash:#f0e8f6;
+  --ads:#1b7148;  --ads-wash:#e4f0e9;
+  /* Trios de reparto (donuts). NO elegidos a ojo: salen de buscar el menor
+     giro de tono dentro de cada familia que pasa el validador de paletas
+     (banda de luminosidad, croma minimo, separacion para daltonismo y
+     separacion para vision normal >= 15). Los de antes fallaban: dos azules
+     a 13,9 de distancia, indistinguibles. */
+  --gsc-1:#18558c; --gsc-2:#57b7e3; --gsc-3:#516cf8;
+  --ga4-1:#673e7d; --ga4-2:#ad9dea; --ga4-3:#c13db1;
+  --ads-1:#036d42; --ads-2:#60c729; --ads-3:#15a49b;
   --good:#1b7148; --bad:#a63827;
   --warn:#8d6310; --warn-wash:#f6eedd;
   --grid:#e6e9ee;
@@ -28,9 +36,12 @@
   --line:#2a313a; --line-soft:#222931;
   --ink:#e9edf2; --ink-2:#a9b2be; --ink-3:#737c88;
   --accent:#dfa741; --accent-2:#8a6c2e;
-  --gsc:#6aa9e0;  --gsc-wash:#16242f;  --gsc-b:#4178ab; --gsc-c:#2b5171;
-  --ga4:#bb90d8;  --ga4-wash:#241a2c;  --ga4-b:#8b63a6; --ga4-c:#5e4371;
-  --ads:#5cbf8a;  --ads-wash:#16271f;  --ads-b:#3d8a62; --ads-c:#2a5c42;
+  --gsc:#6aa9e0;  --gsc-wash:#16242f;
+  --ga4:#bb90d8;  --ga4-wash:#241a2c;
+  --ads:#5cbf8a;  --ads-wash:#16271f;
+  --gsc-1:#27629a; --gsc-2:#3da0ca; --gsc-3:#646cfc;
+  --ga4-1:#ab7fc4; --ga4-2:#6936c8; --ga4-3:#b62899;
+  --ads-1:#0d7146; --ads-2:#48a30e; --ads-3:#15a8ab;
   --good:#5cbf8a; --bad:#e0867a;
   --warn:#d6a549; --warn-wash:#262016;
   --grid:#262d35;
@@ -41,9 +52,12 @@
   --line:#2a313a; --line-soft:#222931;
   --ink:#e9edf2; --ink-2:#a9b2be; --ink-3:#737c88;
   --accent:#dfa741; --accent-2:#8a6c2e;
-  --gsc:#6aa9e0;  --gsc-wash:#16242f;  --gsc-b:#4178ab; --gsc-c:#2b5171;
-  --ga4:#bb90d8;  --ga4-wash:#241a2c;  --ga4-b:#8b63a6; --ga4-c:#5e4371;
-  --ads:#5cbf8a;  --ads-wash:#16271f;  --ads-b:#3d8a62; --ads-c:#2a5c42;
+  --gsc:#6aa9e0;  --gsc-wash:#16242f;
+  --ga4:#bb90d8;  --ga4-wash:#241a2c;
+  --ads:#5cbf8a;  --ads-wash:#16271f;
+  --gsc-1:#27629a; --gsc-2:#3da0ca; --gsc-3:#646cfc;
+  --ga4-1:#ab7fc4; --ga4-2:#6936c8; --ga4-3:#b62899;
+  --ads-1:#0d7146; --ads-2:#48a30e; --ads-3:#15a8ab;
   --good:#5cbf8a; --bad:#e0867a;
   --warn:#d6a549; --warn-wash:#262016;
   --grid:#262d35;
@@ -392,7 +406,7 @@ function tabla(nodo,cols,filas,visiblesEnEditorial){
     El porcentaje manda sobre la cantidad: es lo que se quiere leer aquí. */
 function donut(nodo,filas,fmt,fuente){
   if(!filas||!filas.length){ nodo.innerHTML='<p class="vacio">Sin datos en este periodo.</p>'; return; }
-  const tonos=["var(--"+fuente+")","var(--"+fuente+"-b)","var(--"+fuente+"-c)","var(--ink-3)"];
+  const tonos=["var(--"+fuente+"-1)","var(--"+fuente+"-2)","var(--"+fuente+"-3)","var(--ink-3)"];
   const total=filas.reduce((a,f)=>a+f.v,0)||1;
   const R=54, GR=17, C=2*Math.PI*R, HUECO=2;   // 2 px de aire entre trozos
 
