@@ -658,23 +658,23 @@
     '.tm-fg-dibujo{display:flex;justify-content:center;margin:0 auto 10px;}',
     '.tm-fg-dibujo > div{width:100%;display:flex;justify-content:center;}',
     '.tm-fg-seccion{margin:12px 0;padding:14px;background:#faf7f2;border:1px solid #e8e0cc;border-radius:8px;}',
-    '.tm-fg-seccion.tm-ok{border-color:#27ae60;background:#f0faf2;}',
+    '.tm-fg-seccion.tm-ok{border-color:#1c7e46;background:#f0faf2;}',
     '.tm-fg-seccion.tm-ko{border-color:#c0392b;background:#fff5f5;}',
     '.tm-fg-q{font-size:.78rem;font-weight:700;color:#8b6914;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;}',
     '.tm-fg-ops{display:flex;gap:10px;flex-wrap:wrap;}',
     '.tm-fg-op{border:2px solid #d8d0b8;background:#fff;border-radius:8px;padding:10px 16px;cursor:pointer;font-weight:600;font-size:.95rem;color:#514232;font-family:inherit;min-height:44px;transition:all .15s;}',
     '.tm-fg-op:hover:not([disabled]){border-color:#8b6914;}',
     '.tm-fg-op.tm-sel{border-color:#8b6914;background:#8b6914;color:#fff;}',
-    '.tm-fg-op.tm-ok{border-color:#27ae60!important;background:#27ae60!important;color:#fff!important;}',
+    '.tm-fg-op.tm-ok{border-color:#1c7e46!important;background:#1c7e46!important;color:#fff!important;}',
     '.tm-fg-op.tm-ko{border-color:#c0392b!important;background:#c0392b!important;color:#fff!important;}',
-    '.tm-fg-op.tm-buena{border-color:#27ae60!important;background:#e8f5e9!important;color:#2e7d32!important;}',
+    '.tm-fg-op.tm-buena{border-color:#1c7e46!important;background:#e8f5e9!important;color:#2e7d32!important;}',
     /* Las opciones con un dibujo (figura o grupo ligado) llevan tinta
        negra encima: un fondo sólido y oscuro la deja invisible. Aquí el
        color va solo en el borde, con un fondo claro de fondo (como ya
        hacen los carriles de síncopa/contratiempo, translúcidos en vez de
        sólidos), para que la partitura se siga viendo. */
     '.tm-fg-op-fig.tm-sel,.tm-fg-op-grupo.tm-sel{background:#fdf3df!important;border-color:#8b6914!important;color:#1a1208!important;}',
-    '.tm-fg-op-fig.tm-ok,.tm-fg-op-grupo.tm-ok{background:#e8f5e9!important;border-color:#27ae60!important;color:#1a1208!important;}',
+    '.tm-fg-op-fig.tm-ok,.tm-fg-op-grupo.tm-ok{background:#e8f5e9!important;border-color:#1c7e46!important;color:#1a1208!important;}',
     '.tm-fg-op-fig.tm-ko,.tm-fg-op-grupo.tm-ko{background:#ffebee!important;border-color:#c0392b!important;color:#1a1208!important;}',
     '.tm-fg-op[disabled]{cursor:default;}',
     '.tm-fg-op-fig{display:flex;flex-direction:column;align-items:center;padding:6px 10px;min-width:96px;flex:1 1 calc(50% - 10px);}',

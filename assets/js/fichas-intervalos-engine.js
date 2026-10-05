@@ -360,7 +360,7 @@
     '.tm-fg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(74px,1fr));gap:8px;margin-bottom:10px;}',
     '.tm-fg-resp{font-size:.92rem;font-weight:700;padding:11px 8px;border:1px solid #d8d0b8;background:#f5f2ea;color:#1a1a2e;border-radius:6px;cursor:pointer;font-family:inherit;min-height:44px;}',
     '.tm-fg-resp[aria-pressed="true"]{background:#8b6914;color:#fff;border-color:#8b6914;}',
-    '.tm-fg-resp.ok{background:#27ae60!important;color:#fff!important;border-color:#27ae60!important;}',
+    '.tm-fg-resp.ok{background:#1c7e46!important;color:#fff!important;border-color:#1c7e46!important;}',
     '.tm-fg-resp.ko{background:#c0392b!important;color:#fff!important;border-color:#c0392b!important;}',
     '.tm-fg-loupe{position:fixed;display:none;pointer-events:none;z-index:9999;background:#fdfcf9;border:2px solid #333;border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,.35);transform:translate(-50%,calc(-100% - 18px));}',
     '.tm-fg-loupe::after{content:"";position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);border:11px solid transparent;border-top-color:#333;border-bottom:none;}',
@@ -375,7 +375,7 @@
     '.tm-fg-nota{font-size:2.4rem;font-weight:800;color:#8b6914;line-height:1;}',
     '.tm-fg-final p{color:#555;margin:.4rem 0 1rem;}',
     '.tm-fg-marcas{display:flex;justify-content:center;gap:14px;margin:.6rem 0 .2rem;font-weight:700;font-size:1rem;flex-wrap:wrap;}',
-    '.tm-fg-bien{color:#27ae60;background:#e8f5e9;border-radius:6px;padding:.35rem .8rem;}',
+    '.tm-fg-bien{color:#1c7e46;background:#e8f5e9;border-radius:6px;padding:.35rem .8rem;}',
     '.tm-fg-mal{color:#c0392b;background:#ffebee;border-radius:6px;padding:.35rem .8rem;}',
     '.tm-fg-fallos{font-size:.9rem;color:#555;background:#fdf8ee;border-radius:6px;padding:.7rem .9rem;text-align:left;}',
     /* Se imprime un CLON de la hoja colgado directamente de <body> y el resto se
@@ -744,7 +744,7 @@
         // Al corregir se enseña siempre la nota correcta, esté bien o mal la del
         // alumno; si falló, la suya se queda debajo en rojo como referencia.
         pintarConstruir(elStaff, e, hecho ? sol : (pr.fila === null ? null : notaElegida()),
-          hecho ? (pr.acierto ? '#27ae60' : '#c0392b') : '#8b6914');
+          hecho ? (pr.acierto ? '#1c7e46' : '#c0392b') : '#8b6914');
         if (!hecho) engancharStaff(elStaff, e);
       }
 

@@ -93,7 +93,7 @@
   --gold: #d4af37;
   --accent: #2a7a6e;
   --danger: #c0392b;
-  --success: #27ae60;
+  --success: #1c7e46;
 
   --radius: 12px;
   --radius-sm: 6px;
@@ -900,7 +900,7 @@ figcaption, .wp-element-caption {
   margin: 0 0 1.4rem;
   text-align: center;
 }
-#tm-cookie-desc a { color: #b8860b; text-decoration: underline; }
+#tm-cookie-desc a { color: #946c09; text-decoration: underline; }
 
 #tm-cookie-panel {
   border-top: 1px solid rgba(184,134,11,.2);
@@ -947,7 +947,7 @@ figcaption, .wp-element-caption {
   transition: transform .2s;
   box-shadow: 0 1px 3px rgba(0,0,0,.2);
 }
-.tm-toggle-wrap input:checked + .tm-switch-label { background: #b8860b; }
+.tm-toggle-wrap input:checked + .tm-switch-label { background: #946c09; }
 .tm-toggle-wrap input:checked + .tm-switch-label::after { transform: translateX(18px); }
 .tm-toggle-forced .tm-switch-label { opacity: .55; cursor: not-allowed; }
 
@@ -968,11 +968,11 @@ figcaption, .wp-element-caption {
   transition: opacity .15s, background .15s;
   white-space: nowrap;
 }
-.tm-btn-primary { background: #b8860b; color: #faf8f4; font-weight: 700; letter-spacing: .025em; }
+.tm-btn-primary { background: #946c09; color: #faf8f4; font-weight: 700; letter-spacing: .025em; }
 .tm-btn-primary:hover { opacity: .87; }
 .tm-btn-secondary { background: transparent; color: #1a1814; border: 1px solid rgba(26,24,20,.3); }
 .tm-btn-secondary:hover { background: rgba(26,24,20,.05); }
-.tm-btn-link { background: transparent; color: #b8860b; text-decoration: underline; padding: .6rem .4rem; }
+.tm-btn-link { background: transparent; color: #946c09; text-decoration: underline; padding: .6rem .4rem; }
 .tm-btn-link:hover { opacity: .72; }
 
 #tm-cookie-trigger {
@@ -982,7 +982,7 @@ figcaption, .wp-element-caption {
   background: #faf8f4;
   border: 1px solid rgba(184,134,11,.45);
   border-radius: 50%;
-  color: #b8860b;
+  color: #946c09;
   cursor: pointer;
   align-items: center;
   justify-content: center;
@@ -1084,7 +1084,7 @@ figcaption, .wp-element-caption {
 .tm-faq-q {
   padding:14px 18px 14px 14px; font-weight:700; color:#3a1a00;
   font-size:1rem; line-height:1.4;
-  border-left:4px solid #b8860b;
+  border-left:4px solid #946c09;
   background:#fdf5e8;
   cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:12px;
   user-select:none;
@@ -1092,7 +1092,7 @@ figcaption, .wp-element-caption {
 .tm-faq-q::after {
   content:''; display:block; flex-shrink:0;
   width:10px; height:10px;
-  border-right:2px solid #b8860b; border-bottom:2px solid #b8860b;
+  border-right:2px solid #946c09; border-bottom:2px solid #946c09;
   transform:rotate(45deg); margin-top:-4px; transition:transform .25s;
 }
 .tm-faq-item.open .tm-faq-q::after { transform:rotate(-135deg); margin-top:4px; }
