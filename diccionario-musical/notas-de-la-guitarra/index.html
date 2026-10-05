@@ -65,11 +65,30 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Cuáles son las notas de las cuerdas de la guitarra?","acceptedAnswer":{"@type":"Answer","text":"De la sexta cuerda (la más gruesa) a la primera (la más fina): Mi₂, La₂, Re₃, Sol₃, Si₃ y Mi₄. Una regla para recordarlas de la 6ª a la 1ª es «Mi Amigo Roberto Se Sienta Mal» (Mi-La-Re-Sol-Si-Mi). Están afinadas por cuartas justas, salvo entre la tercera y la segunda (Sol-Si), donde hay una tercera mayor."}},{"@type":"Question","name":"¿Qué es un traste y cómo funciona en la guitarra?","acceptedAnswer":{"@type":"Answer","text":"Un traste es cada una de las barritas metálicas del mástil. Al pisar la cuerda justo detrás de un traste acortas su longitud vibrante y subes la nota. Cada traste sube exactamente un semitono: del traste 0 (cuerda al aire) al 1 hay un semitono, del 1 al 2 otro, y así sucesivamente. Doce trastes equivalen a una octava, por eso en el traste 12 vuelve a sonar la misma nota que al aire, una octava más aguda."}},{"@type":"Question","name":"¿Qué es la tablatura de guitarra y cómo se lee?","acceptedAnswer":{"@type":"Answer","text":"La tablatura (o «tab») es una forma de escribir música específica de la guitarra que no necesita saber solfeo. Son seis líneas, una por cuerda: la de arriba es la primera cuerda (Mi agudo) y la de abajo la sexta (Mi grave). El número escrito sobre una línea indica en qué traste pisar esa cuerda; un 0 significa tocarla al aire. Dice dónde poner los dedos, pero no el ritmo, así que suele acompañar a la partitura."}},{"@type":"Question","name":"¿Por qué la misma nota se puede tocar en varios sitios de la guitarra?","acceptedAnswer":{"@type":"Answer","text":"Porque las cuerdas se solapan. Por ejemplo, el Mi₄ es la primera cuerda al aire, pero también el traste 5 de la segunda cuerda y el 9 de la tercera. Son la misma altura, pero no suenan igual: al aire la cuerda es más brillante y no admite vibrato; pisada en una cuerda más gruesa suena más redonda y cálida. Elegir dónde tocarla es una decisión de digitación y de color."}},{"@type":"Question","name":"¿La guitarra suena como está escrita?","acceptedAnswer":{"@type":"Answer","text":"No. La guitarra es un instrumento transpositor de octava: se escribe en clave de sol pero suena una octava más grave de lo que aparece en el papel. Por eso su clave lleva a menudo un pequeño 8 debajo (clave de sol octavada). Se hace así para no llenar la partitura de líneas adicionales por debajo del pentagrama, ya que la guitarra es un instrumento bastante grave."}},{"@type":"Question","name":"¿Cómo se afina la guitarra?","acceptedAnswer":{"@type":"Answer","text":"La afinación estándar es, de la sexta a la primera cuerda, Mi₂-La₂-Re₃-Sol₃-Si₃-Mi₄. Se puede afinar con un afinador cromático cuerda por cuerda, o al oído: pisando el traste 5 de una cuerda debe sonar igual que la cuerda siguiente al aire, salvo entre la tercera y la segunda, donde la referencia es el traste 4. La sexta y la primera cuerda son ambas un Mi, con dos octavas de diferencia."}}]}
 </script>
-<style>.tm-trastes th, .tm-trastes td { text-align: center; white-space: nowrap; padding: 6px 8px; }
-.tm-trastes th[scope="row"] { text-align: left; white-space: nowrap; }
+<style>/* Esta tabla usa border-collapse: separate, al contrario que el resto de .tm-table.
+   No es capricho: Chrome ignora position:sticky en celdas cuando la tabla va con
+   border-collapse: collapse, y aqui hace falta que la columna de la cuerda se
+   quede fija. Con separate hay que dibujar los bordes a mano (derecha y abajo en
+   cada celda, izquierda y arriba en la tabla) o saldrian dobles. */
+.tm-trastes { border-collapse: separate; border-spacing: 0;
+  border-left: 1px solid var(--border); border-top: 1px solid var(--border); }
+.tm-trastes th, .tm-trastes td {
+  border: 0; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  text-align: center; white-space: nowrap; padding: 6px 8px; }
+.tm-trastes thead th { border-right-color: var(--brand-dark); border-bottom-color: var(--brand-dark); }
+/* La columna de la cuerda se queda fija al desplazar: con 13 columnas en un
+   movil, si se va de pantalla ya no sabes que fila estas leyendo. */
+.tm-trastes th[scope="row"] {
+  text-align: left; position: sticky; left: 0; z-index: 1;
+  background: var(--surface); color: inherit;
+  border-right: 1px solid var(--border-strong); }
 .tm-trastes small { display: block; font-size: .78em; opacity: .62; font-weight: 400; }
 .tm-trastes-aire { font-weight: 400; opacity: .72; }
-.tm-trastes td.tm-trastes-oct { background: var(--bg-alt); font-weight: 600; }
+/* El traste 12 se marca con una linea, no con fondo: el fondo chocaba con el de
+   las filas alternas y la columna se perdia. La linea doble es ademas lo que
+   lleva el mastil real en ese traste. */
+.tm-trastes td.tm-trastes-oct, .tm-trastes th.tm-trastes-oct {
+  border-left: 3px double var(--accent); font-weight: 600; }
 .tm-nota-tabla { font-size: .94rem; }</style>
 </head>
 <body class="tm-page">
@@ -274,7 +293,7 @@
 <th scope="col">9 ·</th>
 <th scope="col">10</th>
 <th scope="col">11</th>
-<th scope="col">12 ·</th>
+<th scope="col" class="tm-trastes-oct">12 ·</th>
 </tr></thead><tbody>
 <tr><th scope="row">6.ª <span class="tm-trastes-aire">(Mi₂)</span></th>
 <td>Mi₂</td>

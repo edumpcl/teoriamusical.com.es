@@ -86,7 +86,8 @@ def tabla():
     a("<thead><tr><th scope=\"col\">Cuerda</th><th scope=\"col\">Al aire</th>")
     for n in range(1, NFRETS + 1):
         punto = " ·" if n in PUNTOS else ""
-        a('<th scope="col">%d%s</th>' % (n, punto))
+        clase = ' class="tm-trastes-oct"' if n == 12 else ""
+        a('<th scope="col"%s>%d%s</th>' % (clase, n, punto))
     a("</tr></thead><tbody>")
 
     # La 6.a arriba y la 1.a abajo, igual que la foto del mastil del diagrama
@@ -117,11 +118,30 @@ def tabla():
 
 
 CSS = """
-.tm-trastes th, .tm-trastes td { text-align: center; white-space: nowrap; padding: 6px 8px; }
-.tm-trastes th[scope="row"] { text-align: left; white-space: nowrap; }
+/* Esta tabla usa border-collapse: separate, al contrario que el resto de .tm-table.
+   No es capricho: Chrome ignora position:sticky en celdas cuando la tabla va con
+   border-collapse: collapse, y aqui hace falta que la columna de la cuerda se
+   quede fija. Con separate hay que dibujar los bordes a mano (derecha y abajo en
+   cada celda, izquierda y arriba en la tabla) o saldrian dobles. */
+.tm-trastes { border-collapse: separate; border-spacing: 0;
+  border-left: 1px solid var(--border); border-top: 1px solid var(--border); }
+.tm-trastes th, .tm-trastes td {
+  border: 0; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  text-align: center; white-space: nowrap; padding: 6px 8px; }
+.tm-trastes thead th { border-right-color: var(--brand-dark); border-bottom-color: var(--brand-dark); }
+/* La columna de la cuerda se queda fija al desplazar: con 13 columnas en un
+   movil, si se va de pantalla ya no sabes que fila estas leyendo. */
+.tm-trastes th[scope="row"] {
+  text-align: left; position: sticky; left: 0; z-index: 1;
+  background: var(--surface); color: inherit;
+  border-right: 1px solid var(--border-strong); }
 .tm-trastes small { display: block; font-size: .78em; opacity: .62; font-weight: 400; }
 .tm-trastes-aire { font-weight: 400; opacity: .72; }
-.tm-trastes td.tm-trastes-oct { background: var(--bg-alt); font-weight: 600; }
+/* El traste 12 se marca con una linea, no con fondo: el fondo chocaba con el de
+   las filas alternas y la columna se perdia. La linea doble es ademas lo que
+   lleva el mastil real en ese traste. */
+.tm-trastes td.tm-trastes-oct, .tm-trastes th.tm-trastes-oct {
+  border-left: 3px double var(--accent); font-weight: 600; }
 .tm-nota-tabla { font-size: .94rem; }
 """
 
