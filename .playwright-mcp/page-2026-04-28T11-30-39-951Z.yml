@@ -1,0 +1,217 @@
+- generic [active] [ref=e1]:
+  - link "Saltar al contenido" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - button "Gestionar cookies" [ref=e3] [cursor=pointer]:
+    - img [ref=e4]
+  - banner [ref=e11]:
+    - generic [ref=e12]:
+      - link "Teoría Musical Teoría Musical" [ref=e13] [cursor=pointer]:
+        - /url: /
+        - img "Teoría Musical" [ref=e15]
+        - generic [ref=e16]: Teoría Musical
+      - button "Menú" [ref=e17] [cursor=pointer]
+      - text: ▾
+  - main [ref=e21]:
+    - article [ref=e23]:
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - paragraph [ref=e27]: Teoría Musical Online
+          - heading "Aprende música desde sus fundamentos" [level=1] [ref=e28]
+          - paragraph [ref=e29]: Diccionario completo, ejercicios interactivos y guías paso a paso. Todo lo que necesitas para entender el lenguaje musical.
+          - generic [ref=e30]:
+            - link "Explorar el diccionario" [ref=e31] [cursor=pointer]:
+              - /url: /diccionario-musical/
+            - link "Practicar ejercicios" [ref=e32] [cursor=pointer]:
+              - /url: /ejercicios/
+        - generic [ref=e34]:
+          - paragraph [ref=e35]: ★ Sección destacada
+          - heading "Intervalos Musicales" [level=2] [ref=e36]
+          - paragraph [ref=e37]: Domina los intervalos con ejercicios interactivos. Distancia, consonancia, inversión y más.
+          - link "Ver intervalos →" [ref=e38] [cursor=pointer]:
+            - /url: /diccionario-musical/intervalos/
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - heading "Diccionario Musical" [level=2] [ref=e42]
+          - link "Ver todo →" [ref=e43] [cursor=pointer]:
+            - /url: /diccionario-musical/
+        - generic [ref=e44]:
+          - link "𝄞 Pentagramas Líneas, espacios, clave de sol y clave de fa. La base de la escritura musical." [ref=e45] [cursor=pointer]:
+            - /url: /diccionario-musical/pentagramas/
+            - generic [ref=e46]: 𝄞
+            - generic [ref=e47]: Pentagramas
+            - generic [ref=e48]: Líneas, espacios, clave de sol y clave de fa. La base de la escritura musical.
+          - link "♩ Las Notas Nombres, altura y su representación en el pentagrama." [ref=e49] [cursor=pointer]:
+            - /url: /diccionario-musical/nombres-de-las-notas-musicales/
+            - generic [ref=e50]: ♩
+            - generic [ref=e51]: Las Notas
+            - generic [ref=e52]: Nombres, altura y su representación en el pentagrama.
+          - link "♬ Intervalos La distancia entre dos notas. Clasificación, inversión y uso armónico." [ref=e53] [cursor=pointer]:
+            - /url: /diccionario-musical/intervalos/intervalos-musicales/
+            - generic [ref=e54]: ♬
+            - generic [ref=e55]: Intervalos
+            - generic [ref=e56]: La distancia entre dos notas. Clasificación, inversión y uso armónico.
+          - link "𝄵 Compases Binario, ternario, cuaternario. Pulso, tiempo fuerte y subdivisión." [ref=e57] [cursor=pointer]:
+            - /url: /diccionario-musical/compases/
+            - generic [ref=e58]: 𝄵
+            - generic [ref=e59]: Compases
+            - generic [ref=e60]: Binario, ternario, cuaternario. Pulso, tiempo fuerte y subdivisión.
+          - link "♯ Tonalidades Escalas mayores y menores, armaduras y el círculo de quintas." [ref=e61] [cursor=pointer]:
+            - /url: /diccionario-musical/tonalidades/
+            - generic [ref=e62]: ♯
+            - generic [ref=e63]: Tonalidades
+            - generic [ref=e64]: Escalas mayores y menores, armaduras y el círculo de quintas.
+          - link "🎵 Acordes Tríadas, séptimas, inversiones y funciones armónicas básicas." [ref=e65] [cursor=pointer]:
+            - /url: /diccionario-musical/acordes/
+            - generic [ref=e66]: 🎵
+            - generic [ref=e67]: Acordes
+            - generic [ref=e68]: Tríadas, séptimas, inversiones y funciones armónicas básicas.
+      - generic [ref=e70]:
+        - generic [ref=e71]:
+          - heading "Ejercicios Interactivos" [level=2] [ref=e72]
+          - link "Ver todos →" [ref=e73] [cursor=pointer]:
+            - /url: /ejercicios/
+        - generic [ref=e74]:
+          - link "♩ Segundas Básico Mayor y menor segunda. El paso más pequeño entre notas de la escala." [ref=e75] [cursor=pointer]:
+            - /url: /ejercicios/ejercicios-de-intervalos-musicales/segundas/
+            - generic [ref=e76]: ♩
+            - generic [ref=e77]:
+              - text: Segundas
+              - generic [ref=e78]: Básico
+            - generic [ref=e79]: Mayor y menor segunda. El paso más pequeño entre notas de la escala.
+          - link "♬ Terceras Popular Mayores y menores. La base de la construcción de acordes." [ref=e80] [cursor=pointer]:
+            - /url: /ejercicios/ejercicios-de-intervalos-musicales/terceras/
+            - generic [ref=e81]: ♬
+            - generic [ref=e82]:
+              - text: Terceras
+              - generic [ref=e83]: Popular
+            - generic [ref=e84]: Mayores y menores. La base de la construcción de acordes.
+          - link "𝄽 Cuartas Justa y aumentada. Incluye el tritono, el intervalo más tenso." [ref=e85] [cursor=pointer]:
+            - /url: /ejercicios/ejercicios-de-intervalos-musicales/cuartas/
+            - generic [ref=e86]: 𝄽
+            - generic [ref=e87]: Cuartas
+            - generic [ref=e88]: Justa y aumentada. Incluye el tritono, el intervalo más tenso.
+          - link "♯ Quintas Justa, disminuida y aumentada. El intervalo más estable de la armonía." [ref=e89] [cursor=pointer]:
+            - /url: /ejercicios/ejercicios-de-intervalos-musicales/quintas/
+            - generic [ref=e90]: ♯
+            - generic [ref=e91]: Quintas
+            - generic [ref=e92]: Justa, disminuida y aumentada. El intervalo más estable de la armonía.
+          - link "♮ Sextas Mayor y menor. Inversas de las terceras, muy usadas en melodías vocales." [ref=e93] [cursor=pointer]:
+            - /url: /ejercicios/ejercicios-de-intervalos-musicales/sextas/
+            - generic [ref=e94]: ♮
+            - generic [ref=e95]: Sextas
+            - generic [ref=e96]: Mayor y menor. Inversas de las terceras, muy usadas en melodías vocales.
+          - link "𝄻 Séptimas Mayor, menor y disminuida. La tensión de los acordes con séptima." [ref=e97] [cursor=pointer]:
+            - /url: /ejercicios/ejercicios-de-intervalos-musicales/septimas/
+            - generic [ref=e98]: 𝄻
+            - generic [ref=e99]: Séptimas
+            - generic [ref=e100]: Mayor, menor y disminuida. La tensión de los acordes con séptima.
+          - link "𝄞 Octavas El intervalo perfecto que completa el ciclo de la escala." [ref=e101] [cursor=pointer]:
+            - /url: /ejercicios/ejercicios-de-intervalos-musicales/octavas/
+            - generic [ref=e102]: 𝄞
+            - generic [ref=e103]: Octavas
+            - generic [ref=e104]: El intervalo perfecto que completa el ciclo de la escala.
+          - link "🎼 Armónicos y Melódicos Extra ¿Suenan las notas juntas o en secuencia?" [ref=e105] [cursor=pointer]:
+            - /url: /ejercicios/ejercicios-de-intervalos-musicales/armonicos-y-melodicos/
+            - generic [ref=e106]: 🎼
+            - generic [ref=e107]:
+              - text: Armónicos y Melódicos
+              - generic [ref=e108]: Extra
+            - generic [ref=e109]: ¿Suenan las notas juntas o en secuencia?
+          - 'link "↕ Ascendentes y Descendentes La dirección del intervalo melódico: hacia arriba o hacia abajo." [ref=e110] [cursor=pointer]':
+            - /url: /ejercicios/ejercicios-de-intervalos-musicales/ascendentes-y-descendentes/
+            - generic [ref=e111]: ↕
+            - generic [ref=e112]: Ascendentes y Descendentes
+            - generic [ref=e113]: "La dirección del intervalo melódico: hacia arriba o hacia abajo."
+          - link "〰 Conjuntos y Disjuntos ¿Las notas son vecinas (paso conjunto) o saltan más de un grado?" [ref=e114] [cursor=pointer]:
+            - /url: /ejercicios/ejercicios-de-intervalos-musicales/conjuntos-y-disjuntos/
+            - generic [ref=e115]: 〰
+            - generic [ref=e116]: Conjuntos y Disjuntos
+            - generic [ref=e117]: ¿Las notas son vecinas (paso conjunto) o saltan más de un grado?
+          - link "↔ Distancia Cuenta los semitonos entre dos notas y calcula la distancia exacta." [ref=e118] [cursor=pointer]:
+            - /url: /ejercicios/ejercicios-de-intervalos-musicales/distancia/
+            - generic [ref=e119]: ↔
+            - generic [ref=e120]: Distancia
+            - generic [ref=e121]: Cuenta los semitonos entre dos notas y calcula la distancia exacta.
+          - link "⚖ Consonantes y Disonantes Intervalos que reposan o que generan tensión armónica." [ref=e122] [cursor=pointer]:
+            - /url: /ejercicios/ejercicios-de-intervalos-musicales/intervalos-consonantes-y-disonantes/
+            - generic [ref=e123]: ⚖
+            - generic [ref=e124]: Consonantes y Disonantes
+            - generic [ref=e125]: Intervalos que reposan o que generan tensión armónica.
+      - generic [ref=e127]:
+        - generic [ref=e128]:
+          - heading "Del Blog" [level=2] [ref=e129]
+          - link "Ver todos →" [ref=e130] [cursor=pointer]:
+            - /url: /blog/
+        - generic [ref=e131]:
+          - link "Historia Historia Himno a San Juan Blog" [ref=e132] [cursor=pointer]:
+            - /url: /blog/himno-a-san-juan/
+            - generic [ref=e134]: Historia
+            - generic [ref=e135]:
+              - paragraph [ref=e136]: Historia
+              - heading "Himno a San Juan" [level=3] [ref=e137]
+              - paragraph [ref=e138]: Blog
+          - link "Armonía Armonía Prácticas de Armonía 5 ejercicios disponibles" [ref=e139] [cursor=pointer]:
+            - /url: /blog/armonia/
+            - generic [ref=e141]: Armonía
+            - generic [ref=e142]:
+              - paragraph [ref=e143]: Armonía
+              - heading "Prácticas de Armonía" [level=3] [ref=e144]
+              - paragraph [ref=e145]: 5 ejercicios disponibles
+          - link "Próximamente Fundamentos Más artículos en camino Próximamente" [ref=e146] [cursor=pointer]:
+            - /url: /blog/
+            - generic [ref=e148]: Próximamente
+            - generic [ref=e149]:
+              - paragraph [ref=e150]: Fundamentos
+              - heading "Más artículos en camino" [level=3] [ref=e151]
+              - paragraph [ref=e152]: Próximamente
+      - generic [ref=e154]:
+        - heading "¿Listo para aprender teoría musical?" [level=2] [ref=e155]
+        - paragraph [ref=e156]: Explora el diccionario completo, practica con los ejercicios interactivos y construye una base musical sólida a tu propio ritmo.
+        - generic [ref=e157]:
+          - link "Comenzar ahora" [ref=e158] [cursor=pointer]:
+            - /url: /diccionario-musical/
+          - link "Ver ejercicios" [ref=e159] [cursor=pointer]:
+            - /url: /ejercicios/
+  - contentinfo [ref=e160]:
+    - generic [ref=e161]:
+      - generic [ref=e162]:
+        - heading "Teoría Musical" [level=3] [ref=e163]
+        - paragraph [ref=e164]: "Aprende música desde sus fundamentos: diccionario, ejercicios interactivos y herramientas gratuitas."
+      - generic [ref=e165]:
+        - heading "Secciones" [level=3] [ref=e166]
+        - list [ref=e167]:
+          - listitem [ref=e168]:
+            - link "Diccionario Musical" [ref=e169] [cursor=pointer]:
+              - /url: /diccionario-musical/
+          - listitem [ref=e170]:
+            - link "Ejercicios Musicales" [ref=e171] [cursor=pointer]:
+              - /url: /ejercicios/
+          - listitem [ref=e172]:
+            - link "Herramientas ▾" [ref=e173] [cursor=pointer]:
+              - /url: /herramientas/
+            - list [ref=e174]:
+              - listitem [ref=e175]:
+                - link "Metrónomo" [ref=e176] [cursor=pointer]:
+                  - /url: /herramientas/metronomo/
+              - listitem [ref=e177]:
+                - link "Afinador" [ref=e178] [cursor=pointer]:
+                  - /url: /herramientas/afinador/
+          - listitem [ref=e179]:
+            - link "Blog" [ref=e180] [cursor=pointer]:
+              - /url: /blog/
+      - generic [ref=e181]:
+        - heading "Información" [level=3] [ref=e182]
+        - list [ref=e183]:
+          - listitem [ref=e184]:
+            - link "Contacto" [ref=e185] [cursor=pointer]:
+              - /url: /contacto/
+          - listitem [ref=e186]:
+            - link "Aviso legal" [ref=e187] [cursor=pointer]:
+              - /url: /aviso-legal/
+          - listitem [ref=e188]:
+            - link "Política de privacidad" [ref=e189] [cursor=pointer]:
+              - /url: /politica-de-privacidad/
+          - listitem [ref=e190]:
+            - link "Política de cookies" [ref=e191] [cursor=pointer]:
+              - /url: /politica-de-cookies/
+    - paragraph [ref=e193]: © 2026 Teoría Musical — Eduardo Escrig Zomeño. Todos los derechos reservados.

@@ -1,0 +1,310 @@
+- generic [active] [ref=e1]:
+  - link "Saltar al contenido" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - button "Gestionar cookies" [ref=e3] [cursor=pointer]:
+    - img [ref=e4]
+  - banner [ref=e11]:
+    - generic [ref=e12]:
+      - link "Teoría Musical Teoría Musical" [ref=e13] [cursor=pointer]:
+        - /url: /
+        - img "Teoría Musical" [ref=e15]
+        - generic [ref=e16]: Teoría Musical
+      - button "Menú" [ref=e17] [cursor=pointer]
+  - main [ref=e21]:
+    - navigation "Migas" [ref=e22]:
+      - generic [ref=e23]:
+        - link "Inicio" [ref=e24] [cursor=pointer]:
+          - /url: /
+        - text: ›
+        - link "Herramientas" [ref=e25] [cursor=pointer]:
+          - /url: /herramientas/
+        - text: ›Metrónomo Online
+    - heading "Metrónomo Online" [level=1] [ref=e28]
+    - article [ref=e30]:
+      - generic [ref=e32]:
+        - generic [ref=e33]:
+          - generic [ref=e34]: Tempo
+          - generic [ref=e35]:
+            - button "Menos BPM" [ref=e36] [cursor=pointer]: −
+            - generic [ref=e37]: "120"
+            - button "Más BPM" [ref=e38] [cursor=pointer]: +
+          - generic [ref=e39]: Allegro
+          - slider [ref=e40] [cursor=pointer]: "120"
+          - generic [ref=e41]:
+            - generic [ref=e42]: "15"
+            - generic [ref=e43]: "300"
+        - generic [ref=e44]:
+          - generic [ref=e45]: Péndulo
+          - img [ref=e47]
+          - generic [ref=e51]:
+            - generic [ref=e53] [cursor=pointer]:
+              - generic: "1"
+              - generic: Fuerte
+            - generic [ref=e55] [cursor=pointer]:
+              - generic: "2"
+              - generic: Débil
+        - generic [ref=e56]:
+          - generic [ref=e57]: Control
+          - button "Play/Stop" [ref=e59] [cursor=pointer]:
+            - img
+          - button "TAP (T)" [ref=e60] [cursor=pointer]
+          - button "RESET" [ref=e61] [cursor=pointer]
+        - generic [ref=e62]:
+          - generic [ref=e63]: Compás
+          - generic [ref=e64]:
+            - generic [ref=e65]: Simples
+            - generic [ref=e66]:
+              - generic [ref=e67] [cursor=pointer]: 1/4
+              - generic [ref=e68] [cursor=pointer]: 2/4
+              - generic [ref=e69] [cursor=pointer]: 3/4
+              - generic [ref=e70] [cursor=pointer]: 4/4
+              - generic [ref=e71] [cursor=pointer]: 5/4
+          - generic [ref=e72]:
+            - generic [ref=e73]: Compuestos
+            - generic [ref=e74]:
+              - generic [ref=e75] [cursor=pointer]: 3/8
+              - generic [ref=e76] [cursor=pointer]: 6/8
+              - generic [ref=e77] [cursor=pointer]: 9/8
+              - generic [ref=e78] [cursor=pointer]: 12/8
+              - generic [ref=e79] [cursor=pointer]: 15/8
+          - generic [ref=e80]:
+            - generic [ref=e81]: Libre
+            - generic [ref=e82]:
+              - button "+1" [ref=e83] [cursor=pointer]
+              - button "+2" [ref=e84] [cursor=pointer]
+              - button "+3" [ref=e85] [cursor=pointer]
+              - button "←" [ref=e86] [cursor=pointer]
+              - button "APLICAR" [ref=e87] [cursor=pointer]
+              - button "BORRAR" [ref=e88] [cursor=pointer]
+            - generic [ref=e90]: Sin grupos
+        - generic [ref=e91]:
+          - generic [ref=e92]: Subdivisión
+          - generic [ref=e93]:
+            - button "♩ Negra" [ref=e94] [cursor=pointer]:
+              - generic [ref=e95]: ♩
+              - generic [ref=e96]: Negra
+            - button "♪♪ Corchea" [ref=e97] [cursor=pointer]:
+              - generic [ref=e98]: ♪♪
+              - generic [ref=e99]: Corchea
+            - button "♪♪♪ Tresillo" [ref=e100] [cursor=pointer]:
+              - generic [ref=e101]: ♪♪♪
+              - generic [ref=e102]: Tresillo
+            - button "𝅘𝅥𝅯 Semicorch." [ref=e103] [cursor=pointer]:
+              - generic [ref=e104]: 𝅘𝅥𝅯
+              - generic [ref=e105]: Semicorch.
+            - button "6 Sextillo" [ref=e106] [cursor=pointer]:
+              - generic [ref=e107]: "6"
+              - generic [ref=e108]: Sextillo
+            - button "5 Quintillo" [ref=e109] [cursor=pointer]:
+              - generic [ref=e110]: "5"
+              - generic [ref=e111]: Quintillo
+            - button "7 Septillo" [ref=e112] [cursor=pointer]:
+              - generic [ref=e113]: "7"
+              - generic [ref=e114]: Septillo
+            - button "×8 ×8" [ref=e115] [cursor=pointer]:
+              - generic [ref=e116]: ×8
+              - generic [ref=e117]: ×8
+        - generic [ref=e118]:
+          - generic [ref=e119]: Volúmenes
+          - generic [ref=e120]:
+            - generic [ref=e121]: Click
+            - slider [ref=e122] [cursor=pointer]: "80"
+            - generic [ref=e123]: "80"
+          - generic [ref=e124]:
+            - generic [ref=e125]: Acento
+            - slider [ref=e126] [cursor=pointer]: "100"
+            - generic [ref=e127]: "100"
+        - generic [ref=e128]:
+          - generic [ref=e129]: Stats
+          - generic [ref=e130]:
+            - generic [ref=e131]:
+              - generic [ref=e132]: —
+              - generic [ref=e133]: Beat
+            - generic [ref=e134]:
+              - generic [ref=e135]: —
+              - generic [ref=e136]: Compás
+            - generic [ref=e137]:
+              - generic [ref=e138]: —
+              - generic [ref=e139]: ms/beat
+            - generic [ref=e140]:
+              - generic [ref=e141]: "0"
+              - generic [ref=e142]: Total
+        - generic [ref=e143]:
+          - generic [ref=e144]: Modo Ensayo
+          - generic [ref=e145]:
+            - generic [ref=e146]:
+              - generic [ref=e147]: Compases
+              - spinbutton [ref=e148]: "8"
+            - generic [ref=e149]:
+              - generic [ref=e150]: BPM inicio
+              - spinbutton [ref=e151]: "60"
+            - generic [ref=e152]:
+              - generic [ref=e153]: BPM final
+              - spinbutton [ref=e154]: "120"
+          - button "INICIAR ENSAYO" [ref=e156] [cursor=pointer]
+        - generic [ref=e157]:
+          - generic [ref=e158]: Caja de Ritmos
+          - generic [ref=e159]:
+            - generic [ref=e160] [cursor=pointer]: "Off"
+            - generic [ref=e161] [cursor=pointer]: Marcha
+            - generic [ref=e162] [cursor=pointer]: Polka
+            - generic [ref=e163] [cursor=pointer]: Custom
+          - generic [ref=e164]:
+            - generic [ref=e165]:
+              - generic [ref=e166]: KICK
+              - slider [ref=e176] [cursor=pointer]: "80"
+            - generic [ref=e177]:
+              - generic [ref=e178]: SNARE
+              - slider [ref=e188] [cursor=pointer]: "70"
+            - generic [ref=e189]:
+              - generic [ref=e190]: HH-C
+              - slider [ref=e200] [cursor=pointer]: "60"
+            - generic [ref=e201]:
+              - generic [ref=e202]: HH-O
+              - slider [ref=e212] [cursor=pointer]: "50"
+        - generic [ref=e213]:
+          - generic [ref=e214]: Atajos de teclado
+          - generic [ref=e215]:
+            - generic [ref=e216]:
+              - generic [ref=e217]: Space
+              - generic [ref=e218]: Play / Stop
+            - generic [ref=e219]:
+              - generic [ref=e220]: T
+              - generic [ref=e221]: Tap tempo
+            - generic [ref=e222]:
+              - generic [ref=e223]: ↑
+              - text: /
+              - generic [ref=e224]: ↓
+              - generic [ref=e225]: ±1 BPM
+            - generic [ref=e226]:
+              - generic [ref=e227]: ⇧↑
+              - text: /
+              - generic [ref=e228]: ⇧↓
+              - generic [ref=e229]: ±5 BPM
+            - generic [ref=e230]:
+              - generic [ref=e231]: Ctrl ⇧↑
+              - generic [ref=e232]: Win
+              - text: /
+              - generic [ref=e233]: ⌘⇧↑
+              - generic [ref=e234]: Mac
+              - generic [ref=e235]: +10 BPM
+            - generic [ref=e236]:
+              - generic [ref=e237]: Ctrl ⇧↓
+              - generic [ref=e238]: Win
+              - text: /
+              - generic [ref=e239]: ⌘⇧↓
+              - generic [ref=e240]: Mac
+              - generic [ref=e241]: −10 BPM
+      - paragraph [ref=e242]:
+        - text: Pocas habilidades separan a un músico aficionado de un profesional tanto como la capacidad de mantener un
+        - emphasis [ref=e243]: tempo
+        - text: firme y estable. Ya sea que estés practicando escalas en el piano, rasgueos complejos en la guitarra, o secuencias largas en el violín, nuestro
+        - strong [ref=e244]: metrónomo online
+        - text: está diseñado para ser tu acompañante ideal, directo desde tu navegador y sin instalaciones.
+      - paragraph [ref=e245]: A continuación, hemos preparado una guía completa sobre qué es, por qué deberías usarlo siempre, y cómo nuestra herramienta te ayudará a llevar tu sentido del ritmo al siguiente nivel.
+      - heading "¿Qué es un metrónomo y por qué es fundamental?" [level=2] [ref=e246]
+      - paragraph [ref=e247]:
+        - text: Un metrónomo es un dispositivo (o en este caso, una herramienta web) que produce una señal visual y acústica a intervalos de tiempo perfectamente regulares. Estos intervalos se miden en
+        - strong [ref=e248]: BPM
+        - text: (del inglés,
+        - emphasis [ref=e249]: Beats Per Minute
+        - text: o Pulsos Por Minuto).
+      - paragraph [ref=e250]: Por ejemplo, si configuras un metrónomo a 60 BPM, escucharás exactamente un pulso por segundo (como el segundero de un reloj). Si lo subes a 120 BPM, el ritmo será el doble de rápido, con dos pulsos por segundo.
+      - paragraph [ref=e251]: "Practicar con una herramienta base como esta te aporta tres beneficios imprescindibles:"
+      - list [ref=e252]:
+        - listitem [ref=e253]:
+          - strong [ref=e254]: "Precisión rítmica implacable:"
+          - text: Elimina la tendencia natural del ser humano a acelerarse en las partes fáciles de una partitura y a frenarse en los compases más difíciles.
+        - listitem [ref=e255]:
+          - strong [ref=e256]: "Medición del progreso:"
+          - text: Te permite saber exactamente si estás mejorando en velocidad al tocar ese pasaje técnico que tanto te cuesta.
+        - listitem [ref=e257]:
+          - strong [ref=e258]:
+            - text: Conciencia del
+            - emphasis [ref=e259]: groove
+            - text: ":"
+          - text: Especialmente en estilos contemporáneos, tocar "en el bolsillo" (exactamente en el tiempo correcto) hace que la música suene profesional.
+      - heading "Cómo usar nuestro Metrónomo Virtual (Guía Paso a Paso)" [level=2] [ref=e260]
+      - paragraph [ref=e261]: "Usar el metrónomo de Teoría Musical es extremadamente sencillo:"
+      - list [ref=e262]:
+        - listitem [ref=e263]:
+          - strong [ref=e264]: "Ajusta el Tempo (BPM):"
+          - text: Usa los controles deslizantes o los botones de "+" y "-" para buscar la velocidad deseada. Si es tu primera vez practicando una canción, te sugerimos empezar entre 60 y 70 BPM.
+        - listitem [ref=e265]:
+          - strong [ref=e266]: "Selecciona la Subdivisión (opcional):"
+          - text: Dependiendo de la herramienta, podrás elegir si quieres escuchar cada pulso principal (negras) o si quieres subdivisiones (corcheas, semicorcheas o tresillos).
+        - listitem [ref=e267]:
+          - strong [ref=e268]: "Establece el Compás:"
+          - text: Si tu partitura está en 4/4 (compás cuaternario), ajústalo a 4. El metrónomo hará un sonido distinto (a menudo más agudo o llamado "campana") en el primer pulso de cada compás, ayudándote a saber siempre dónde estás.
+        - listitem [ref=e269]:
+          - strong [ref=e270]: ¡Dale al Play!
+      - heading "3 Ejercicios Rítmicos para Empezar Hoy Mismo" [level=2] [ref=e271]
+      - paragraph [ref=e272]: "Si no sabes por dónde comenzar, prueba estos tres ejercicios:"
+      - heading "1. La Regla del 50%" [level=3] [ref=e273]
+      - paragraph [ref=e274]: Encuentra la velocidad máxima a la que puedes tocar correctamente una canción sin equivocarte en ninguna nota (supongamos que es 100 BPM). Ahora, baja el metrónomo a exactamente la mitad (50 BPM) y tócalo completo 3 veces seguidas sin errores. Esto cimentará tu memoria muscular.
+      - heading "2. El Juego del Pulso Desaparecido" [level=3] [ref=e275]
+      - paragraph [ref=e276]: "Pon el metrónomo a una velocidad cómoda (ej. 80 BPM). Toca una escala o ejercicio de calentamiento durante 4 compases. Luego, la prueba real: silencia mentalmente o baja el volumen del metrónomo durante los siguientes dos compases, e intenta mantener el ritmo exacto. Cuando vuelvas a prestar atención a la herramienta, verifica si te habías adelantado o retrasado."
+      - heading "3. Acentos de Compás" [level=3] [ref=e277]
+      - paragraph [ref=e278]: Ajusta la herramienta en compás de 4/4 a 60 BPM. Golpea sobre tu mesa o toca una nota en tu instrumento. Primero, asegúrate de tocar exactamente a la vez que el "clic". Luego, intenta poner tu acento (la nota más fuerte) intencionadamente en el pulso 2 y 4, a la manera del jazz y el reggae tradicional.
+      - heading "Preguntas Frecuentes (FAQ) sobre el uso del Metrónomo" [level=2] [ref=e279]
+      - paragraph [ref=e280]:
+        - strong [ref=e281]: ¿Debo usar el metrónomo todo el tiempo que practico?
+        - text: No necesariamente. Es ideal usarlo durante el calentamiento de técnica (escalas o arpegios) o cuando estás trabajando un pasaje difícil para mantener el rigor. Sin embargo, también debes dedicar tiempo a tocar "libre" (rubato) para desarrollar tu expresividad musical.
+      - paragraph [ref=e282]:
+        - strong [ref=e283]:
+          - text: ¿Qué significan términos italianos como
+          - emphasis [ref=e284]: Allegro
+          - text: o
+          - emphasis [ref=e285]: Andante
+          - text: en número de BPM?
+        - text: Aunque las asignaciones pueden variar según el compositor, generalmente
+        - emphasis [ref=e286]: Andante
+        - text: (paso de caminata) suele rondar los 76-108 BPM, mientras que
+        - emphasis [ref=e287]: Allegro
+        - text: (rápido y alegre) indica un rango entre 120-156 BPM.
+      - paragraph [ref=e288]:
+        - strong [ref=e289]: Practicar tan lento me aburre, ¿qué hago?
+        - text: La velocidad no es más que la consecuencia inevitable de la precisión. Al tocar lento, programa tu cerebro de forma correcta. Para no aburrirte, concéntrate de forma casi obsesiva en la calidad del tono de tu instrumento, la postura de tus manos y tu respiración. Cuando subas la velocidad, te asombrará la facilidad.
+  - contentinfo [ref=e290]:
+    - generic [ref=e291]:
+      - generic [ref=e292]:
+        - heading "Teoría Musical" [level=3] [ref=e293]
+        - paragraph [ref=e294]: "Aprende música desde sus fundamentos: diccionario, ejercicios interactivos y herramientas gratuitas."
+      - generic [ref=e295]:
+        - heading "Secciones" [level=3] [ref=e296]
+        - list [ref=e297]:
+          - listitem [ref=e298]:
+            - link "Diccionario Musical" [ref=e299] [cursor=pointer]:
+              - /url: /diccionario-musical/
+          - listitem [ref=e300]:
+            - link "Ejercicios Musicales" [ref=e301] [cursor=pointer]:
+              - /url: /ejercicios/
+          - listitem [ref=e302]:
+            - link "Herramientas ▾" [ref=e303] [cursor=pointer]:
+              - /url: /herramientas/
+            - list [ref=e304]:
+              - listitem [ref=e305]:
+                - link "Metrónomo" [ref=e306] [cursor=pointer]:
+                  - /url: /herramientas/metronomo/
+              - listitem [ref=e307]:
+                - link "Afinador" [ref=e308] [cursor=pointer]:
+                  - /url: /herramientas/afinador/
+          - listitem [ref=e309]:
+            - link "Blog" [ref=e310] [cursor=pointer]:
+              - /url: /blog/
+      - generic [ref=e311]:
+        - heading "Información" [level=3] [ref=e312]
+        - list [ref=e313]:
+          - listitem [ref=e314]:
+            - link "Contacto" [ref=e315] [cursor=pointer]:
+              - /url: /contacto/
+          - listitem [ref=e316]:
+            - link "Aviso legal" [ref=e317] [cursor=pointer]:
+              - /url: /aviso-legal/
+          - listitem [ref=e318]:
+            - link "Política de privacidad" [ref=e319] [cursor=pointer]:
+              - /url: /politica-de-privacidad/
+          - listitem [ref=e320]:
+            - link "Política de cookies" [ref=e321] [cursor=pointer]:
+              - /url: /politica-de-cookies/
+    - paragraph [ref=e323]: © 2026 Teoría Musical — Eduardo Escrig Zomeño. Todos los derechos reservados.

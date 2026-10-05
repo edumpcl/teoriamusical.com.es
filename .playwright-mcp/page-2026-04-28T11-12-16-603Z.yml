@@ -1,0 +1,155 @@
+- generic [active] [ref=e1]:
+  - link "Saltar al contenido" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - button "Gestionar cookies" [ref=e3] [cursor=pointer]:
+    - img [ref=e4]
+  - banner [ref=e11]:
+    - generic [ref=e12]:
+      - link "Teoría Musical Teoría Musical" [ref=e13] [cursor=pointer]:
+        - /url: /
+        - img "Teoría Musical" [ref=e15]
+        - generic [ref=e16]: Teoría Musical
+      - button "Menú" [ref=e17] [cursor=pointer]
+      - text: ▾
+  - main [ref=e21]:
+    - navigation "Migas" [ref=e22]:
+      - generic [ref=e23]:
+        - link "Inicio" [ref=e24] [cursor=pointer]:
+          - /url: /
+        - text: ›
+        - link "Ejercicios Musicales" [ref=e25] [cursor=pointer]:
+          - /url: /ejercicios/
+        - text: ›
+        - link "Tonalidades" [ref=e26] [cursor=pointer]:
+          - /url: /ejercicios/tonalidades/
+        - text: ›Tonalidades Vecinas
+    - heading "Tonalidades Vecinas" [level=1] [ref=e29]
+    - article [ref=e31]:
+      - paragraph [ref=e32]:
+        - text: Dos tonalidades son
+        - strong [ref=e33]: vecinas
+        - text: cuando sus armaduras difieren en, como máximo, una alteración. Eso garantiza que comparten seis de sus siete notas, lo que hace que la modulación entre ellas suene completamente natural. Cada tonalidad tiene exactamente
+        - strong [ref=e34]: cinco vecinas
+        - text: ": su relativa (misma armadura) y las dos tonalidades del quinto superior e inferior junto con sus relativas."
+      - heading "Ejercicio 1 — Completa la tabla de vecinas" [level=2] [ref=e35]
+      - paragraph [ref=e36]:
+        - text: Se muestra una tonalidad. Escribe las 5 tonalidades vecinas en sus celdas correspondientes y pulsa
+        - emphasis [ref=e37]: Comprobar
+        - text: . Puedes moverte entre celdas con Enter.
+      - generic [ref=e38]:
+        - generic [ref=e39]:
+          - generic [ref=e40]: "Dificultad:"
+          - button "Fácil" [ref=e41] [cursor=pointer]
+          - button "Medio" [ref=e42] [cursor=pointer]
+          - button "Difícil" [ref=e43] [cursor=pointer]
+        - generic [ref=e44]:
+          - generic [ref=e45]:
+            - generic [ref=e46]: "0"
+            - generic [ref=e47]: Tablas
+          - generic [ref=e48]:
+            - generic [ref=e49]: "0"
+            - generic [ref=e50]: Perfectas
+          - generic [ref=e51]:
+            - generic [ref=e52]: —
+            - generic [ref=e53]: Aciertos
+          - generic [ref=e54]:
+            - generic [ref=e55]: "0"
+            - generic [ref=e56]: Racha
+        - generic [ref=e58]:
+          - generic [ref=e59]: Tabla 1
+          - generic [ref=e60]: "Toca cada celda para escribir las 5 tonalidades vecinas:"
+          - generic [ref=e62]:
+            - generic [ref=e63]:
+              - generic [ref=e64]: Rel. subdominante
+              - generic [ref=e65] [cursor=pointer]: toca para rellenar
+            - generic [ref=e66]:
+              - generic [ref=e67]: Relativa
+              - generic [ref=e68] [cursor=pointer]: toca para rellenar
+            - generic [ref=e69]:
+              - generic [ref=e70]: Rel. dominante
+              - generic [ref=e71] [cursor=pointer]: toca para rellenar
+            - generic [ref=e72]:
+              - generic [ref=e73]: Subdominante
+              - generic [ref=e74] [cursor=pointer]: toca para rellenar
+            - generic [ref=e75]: Sol menor
+            - generic [ref=e76]:
+              - generic [ref=e77]: Dominante
+              - generic [ref=e78] [cursor=pointer]: toca para rellenar
+          - button "Comprobar →" [ref=e79] [cursor=pointer]
+      - heading "Ejercicio 2 — ¿Son vecinas?" [level=2] [ref=e80]
+      - paragraph [ref=e81]: Se muestran dos tonalidades. Decide si son vecinas (difieren en 0 o 1 alteración en la armadura) o si son lejanas (difieren en 2 o más).
+      - generic [ref=e82]:
+        - generic [ref=e83]:
+          - generic [ref=e84]:
+            - generic [ref=e85]: "0"
+            - generic [ref=e86]: Preguntas
+          - generic [ref=e87]:
+            - generic [ref=e88]: "0"
+            - generic [ref=e89]: Correctas
+          - generic [ref=e90]:
+            - generic [ref=e91]: —
+            - generic [ref=e92]: Acierto
+          - generic [ref=e93]:
+            - generic [ref=e94]: "0"
+            - generic [ref=e95]: Racha
+        - generic [ref=e97]:
+          - generic [ref=e98]: Pregunta 1
+          - generic [ref=e99]:
+            - text: ¿Son estas dos tonalidades
+            - strong [ref=e100]: vecinas
+            - text: "?"
+          - generic [ref=e101]:
+            - generic [ref=e102]: Fa# menor
+            - generic [ref=e103]: ↔
+            - generic [ref=e104]: Mi Mayor
+          - generic [ref=e105]:
+            - button "✓ Sí, son vecinas" [ref=e106] [cursor=pointer]
+            - button "✗ No, son lejanas" [ref=e107] [cursor=pointer]
+      - paragraph [ref=e109]:
+        - text: ¿Necesitas repasar la teoría? Consulta la guía completa sobre
+        - link "tonalidades vecinas" [ref=e110] [cursor=pointer]:
+          - /url: /diccionario-musical/tonalidades/tonalidades-vecinas/
+        - text: antes de practicar.
+  - contentinfo [ref=e111]:
+    - generic [ref=e112]:
+      - generic [ref=e113]:
+        - heading "Teoría Musical" [level=3] [ref=e114]
+        - paragraph [ref=e115]: "Aprende música desde sus fundamentos: diccionario, ejercicios interactivos y herramientas gratuitas."
+      - generic [ref=e116]:
+        - heading "Secciones" [level=3] [ref=e117]
+        - list [ref=e118]:
+          - listitem [ref=e119]:
+            - link "Diccionario Musical" [ref=e120] [cursor=pointer]:
+              - /url: /diccionario-musical/
+          - listitem [ref=e121]:
+            - link "Ejercicios Musicales" [ref=e122] [cursor=pointer]:
+              - /url: /ejercicios/
+          - listitem [ref=e123]:
+            - link "Herramientas ▾" [ref=e124] [cursor=pointer]:
+              - /url: /herramientas/
+            - list [ref=e125]:
+              - listitem [ref=e126]:
+                - link "Metrónomo" [ref=e127] [cursor=pointer]:
+                  - /url: /herramientas/metronomo/
+              - listitem [ref=e128]:
+                - link "Afinador" [ref=e129] [cursor=pointer]:
+                  - /url: /herramientas/afinador/
+          - listitem [ref=e130]:
+            - link "Blog" [ref=e131] [cursor=pointer]:
+              - /url: /blog/
+      - generic [ref=e132]:
+        - heading "Información" [level=3] [ref=e133]
+        - list [ref=e134]:
+          - listitem [ref=e135]:
+            - link "Contacto" [ref=e136] [cursor=pointer]:
+              - /url: /contacto/
+          - listitem [ref=e137]:
+            - link "Aviso legal" [ref=e138] [cursor=pointer]:
+              - /url: /aviso-legal/
+          - listitem [ref=e139]:
+            - link "Política de privacidad" [ref=e140] [cursor=pointer]:
+              - /url: /politica-de-privacidad/
+          - listitem [ref=e141]:
+            - link "Política de cookies" [ref=e142] [cursor=pointer]:
+              - /url: /politica-de-cookies/
+    - paragraph [ref=e144]: © 2026 Teoría Musical — Eduardo Escrig Zomeño. Todos los derechos reservados.

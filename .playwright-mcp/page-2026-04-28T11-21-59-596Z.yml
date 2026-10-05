@@ -1,0 +1,215 @@
+- generic [active] [ref=e1]:
+  - link "Saltar al contenido" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - button "Gestionar cookies" [ref=e3] [cursor=pointer]:
+    - img [ref=e4]
+  - banner [ref=e11]:
+    - generic [ref=e12]:
+      - link "Teoría Musical Teoría Musical" [ref=e13] [cursor=pointer]:
+        - /url: /
+        - img "Teoría Musical" [ref=e15]
+        - generic [ref=e16]: Teoría Musical
+      - button "Menú" [ref=e17] [cursor=pointer]
+  - main [ref=e21]:
+    - navigation "Migas" [ref=e22]:
+      - generic [ref=e23]:
+        - link "Inicio" [ref=e24] [cursor=pointer]:
+          - /url: /
+        - text: ›
+        - link "Herramientas" [ref=e25] [cursor=pointer]:
+          - /url: /herramientas/
+        - text: ›Afinador Online
+    - heading "Afinador Online" [level=1] [ref=e28]
+    - article [ref=e30]:
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - generic [ref=e33]: Afinación
+          - generic [ref=e35]:
+            - generic [ref=e36]: Nota real
+            - generic [ref=e37]: —
+          - img [ref=e39]
+          - generic [ref=e45]: — ¢
+          - generic [ref=e46]:
+            - generic [ref=e47]: −50¢
+            - generic [ref=e48]: −25¢
+            - generic [ref=e49]: "0"
+            - generic [ref=e50]: +25¢
+            - generic [ref=e51]: +50¢
+          - button "🎙 Activar" [ref=e53] [cursor=pointer]:
+            - generic [ref=e54]: 🎙
+            - generic [ref=e55]: Activar
+        - generic [ref=e56]:
+          - generic [ref=e57]: Referencia A4
+          - generic [ref=e58]:
+            - generic [ref=e59]: La4 =
+            - button "−" [ref=e60] [cursor=pointer]
+            - generic [ref=e61]: 442 Hz
+            - button "+" [ref=e62] [cursor=pointer]
+        - generic [ref=e63]:
+          - generic [ref=e64]: Instrumento transpositor
+          - generic [ref=e65]:
+            - generic [ref=e66] [cursor=pointer]: C (Concert)
+            - generic [ref=e67] [cursor=pointer]: Sib (Bb)
+            - generic [ref=e68] [cursor=pointer]: La (A)
+            - generic [ref=e69] [cursor=pointer]: Mib (Eb)
+            - generic [ref=e70] [cursor=pointer]: Fa (F)
+            - generic [ref=e71] [cursor=pointer]: Sol (G)
+            - generic [ref=e72] [cursor=pointer]: Re (D)
+          - generic [ref=e73]:
+            - button "−" [ref=e74] [cursor=pointer]
+            - generic [ref=e75]: 0 st
+            - button "+" [ref=e76] [cursor=pointer]
+        - generic [ref=e77]:
+          - generic [ref=e78]: Notas de referencia — pulsa para escuchar
+          - generic [ref=e79]:
+            - generic [ref=e80] [cursor=pointer]:
+              - generic [ref=e81]: Do
+              - generic [ref=e82]: "4"
+            - generic [ref=e83] [cursor=pointer]:
+              - generic [ref=e84]: Re
+              - generic [ref=e85]: "4"
+            - generic [ref=e86] [cursor=pointer]:
+              - generic [ref=e87]: Mi
+              - generic [ref=e88]: "4"
+            - generic [ref=e89] [cursor=pointer]:
+              - generic [ref=e90]: Fa
+              - generic [ref=e91]: "4"
+            - generic [ref=e92] [cursor=pointer]:
+              - generic [ref=e93]: Sol
+              - generic [ref=e94]: "4"
+            - generic [ref=e95] [cursor=pointer]:
+              - generic [ref=e96]: La
+              - generic [ref=e97]: "4"
+            - generic [ref=e98] [cursor=pointer]:
+              - generic [ref=e99]: Si
+              - generic [ref=e100]: "4"
+            - generic [ref=e101] [cursor=pointer]:
+              - generic [ref=e102]: Do
+              - generic [ref=e103]: "5"
+            - generic [ref=e104] [cursor=pointer]:
+              - generic [ref=e105]: Re
+              - generic [ref=e106]: "5"
+            - generic [ref=e107] [cursor=pointer]:
+              - generic [ref=e108]: Mi
+              - generic [ref=e109]: "5"
+            - generic [ref=e110] [cursor=pointer]:
+              - generic [ref=e111]: Fa
+              - generic [ref=e112]: "5"
+            - generic [ref=e113] [cursor=pointer]:
+              - generic [ref=e114]: Sol
+              - generic [ref=e115]: "5"
+        - generic [ref=e116]:
+          - generic [ref=e117]: Información
+          - generic [ref=e118]:
+            - generic [ref=e119]:
+              - generic [ref=e120]: —
+              - generic [ref=e121]: Nota
+            - generic [ref=e122]:
+              - generic [ref=e123]: —
+              - generic [ref=e124]: Hz
+            - generic [ref=e125]:
+              - generic [ref=e126]: —
+              - generic [ref=e127]: Cents
+      - generic [ref=e129]:
+        - heading "¿Cómo funciona este afinador?" [level=2] [ref=e131]
+        - generic [ref=e132]:
+          - generic [ref=e133]:
+            - generic [ref=e134]: 🎙️
+            - heading "1. Usa el micrófono" [level=3] [ref=e135]
+            - paragraph [ref=e136]: Pulsa en "Activar" dentro del afinador. Tu navegador te pedirá permiso para usar el micrófono temporalmente.
+          - generic [ref=e137]:
+            - generic [ref=e138]: 🎸
+            - heading "2. Toca una cuerda" [level=3] [ref=e139]
+            - paragraph [ref=e140]: Haz sonar una nota clara. Verás en la pantalla final qué nota es (como Do o Mi) y hacia dónde se mueve la aguja.
+          - generic [ref=e141]:
+            - generic [ref=e142]: 🎯
+            - heading "3. Ajusta al centro" [level=3] [ref=e143]
+            - paragraph [ref=e144]: Si la aguja se queda a la izquierda, tensa la cuerda (es grave). Si se va a la derecha, aflójala (es aguda).
+      - generic [ref=e147]:
+        - heading "Notas para Guitarra Estándar" [level=2] [ref=e148]
+        - paragraph [ref=e149]: Si afinas a 440 Hz (la referencia habitual), busca acercarte a estas frecuencias cuando toques cada cuerda al aire.
+        - generic [ref=e150]:
+          - generic [ref=e151]:
+            - strong [ref=e152]: 1ª – Mi (Agudo)
+            - text: 329.6 Hz
+          - generic [ref=e153]:
+            - strong [ref=e154]: 2ª – Si
+            - text: 246.9 Hz
+          - generic [ref=e155]:
+            - strong [ref=e156]: 3ª – Sol
+            - text: 196.0 Hz
+          - generic [ref=e157]:
+            - strong [ref=e158]: 4ª – Re
+            - text: 146.8 Hz
+          - generic [ref=e159]:
+            - strong [ref=e160]: 5ª – La
+            - text: 110.0 Hz
+          - generic [ref=e161]:
+            - strong [ref=e162]: 6ª – Mi (Grave)
+            - text: 82.4 Hz
+      - generic [ref=e164]:
+        - heading "Preguntas Frecuentes" [level=2] [ref=e166]
+        - generic [ref=e167]:
+          - generic [ref=e168]:
+            - heading "¿ Cómo funciona el afinador online?" [level=3] [ref=e169]:
+              - strong [ref=e170]: ¿
+              - text: Cómo funciona el afinador online?
+            - paragraph [ref=e171]: Simplemente pulsa el botón de micrófono y otorga el permiso de audio a tu navegador. Toca una cuerda o nota de tu instrumento y el afinador detectará automáticamente la nota musical (Do, Re, Mi, Fa, Sol, La, Si). Ajusta la tensión hasta que el medidor quede afinado en el centro.
+          - generic [ref=e172]:
+            - heading "¿ Es gratis usar este afinador musical?" [level=3] [ref=e173]:
+              - strong [ref=e174]: ¿
+              - text: Es gratis usar este afinador musical?
+            - paragraph [ref=e175]: Sí, este afinador interactivo es 100% gratuito. No requiere suscripciones, pagos ni descargas de ninguna aplicación externa. Puedes usar la herramienta tantas veces como necesites directamente desde la web.
+          - generic [ref=e176]:
+            - heading "¿ Funciona en teléfonos móviles y ordenadores?" [level=3] [ref=e177]:
+              - strong [ref=e178]: ¿
+              - text: Funciona en teléfonos móviles y ordenadores?
+            - paragraph [ref=e179]: Absolutamente. Es totalmente compatible con cualquier dispositivo moderno que cuente con un navegador actualizado (Chrome, Safari, Mozilla, Edge) y un micrófono. Funciona de manera impecable tanto en Android e iPhone como en sistemas Windows y Mac.
+          - generic [ref=e180]:
+            - heading "¿ Qué instrumentos puedo afinar acá?" [level=3] [ref=e181]:
+              - strong [ref=e182]: ¿
+              - text: Qué instrumentos puedo afinar acá?
+            - paragraph [ref=e183]: Nuestro afinador cubre un rango frecuencial completo y dispone de ajuste de transposición. Gracias a esto, puedes afinar guitarras (clásicas, acústicas o eléctricas), ukeleles, bajos, violines, violonchelos y la inmensa mayoría de instrumentos acústicos siempre que tu micrófono recoja el sonido.
+  - contentinfo [ref=e184]:
+    - generic [ref=e185]:
+      - generic [ref=e186]:
+        - heading "Teoría Musical" [level=3] [ref=e187]
+        - paragraph [ref=e188]: "Aprende música desde sus fundamentos: diccionario, ejercicios interactivos y herramientas gratuitas."
+      - generic [ref=e189]:
+        - heading "Secciones" [level=3] [ref=e190]
+        - list [ref=e191]:
+          - listitem [ref=e192]:
+            - link "Diccionario Musical" [ref=e193] [cursor=pointer]:
+              - /url: /diccionario-musical/
+          - listitem [ref=e194]:
+            - link "Ejercicios Musicales" [ref=e195] [cursor=pointer]:
+              - /url: /ejercicios/
+          - listitem [ref=e196]:
+            - link "Herramientas ▾" [ref=e197] [cursor=pointer]:
+              - /url: /herramientas/
+            - list [ref=e198]:
+              - listitem [ref=e199]:
+                - link "Metrónomo" [ref=e200] [cursor=pointer]:
+                  - /url: /herramientas/metronomo/
+              - listitem [ref=e201]:
+                - link "Afinador" [ref=e202] [cursor=pointer]:
+                  - /url: /herramientas/afinador/
+          - listitem [ref=e203]:
+            - link "Blog" [ref=e204] [cursor=pointer]:
+              - /url: /blog/
+      - generic [ref=e205]:
+        - heading "Información" [level=3] [ref=e206]
+        - list [ref=e207]:
+          - listitem [ref=e208]:
+            - link "Contacto" [ref=e209] [cursor=pointer]:
+              - /url: /contacto/
+          - listitem [ref=e210]:
+            - link "Aviso legal" [ref=e211] [cursor=pointer]:
+              - /url: /aviso-legal/
+          - listitem [ref=e212]:
+            - link "Política de privacidad" [ref=e213] [cursor=pointer]:
+              - /url: /politica-de-privacidad/
+          - listitem [ref=e214]:
+            - link "Política de cookies" [ref=e215] [cursor=pointer]:
+              - /url: /politica-de-cookies/
+    - paragraph [ref=e217]: © 2026 Teoría Musical — Eduardo Escrig Zomeño. Todos los derechos reservados.
