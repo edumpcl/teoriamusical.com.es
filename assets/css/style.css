@@ -133,7 +133,10 @@ ul, ol { padding-left: 1.4em; }
 li { margin-bottom: .3em; }
 hr { border: 0; border-top: 1px solid var(--border); margin: 2.5rem 0; }
 blockquote { border-left: 4px solid var(--brand); margin: 1.5em 0; padding: .5em 1.2em; background: var(--bg-alt); color: var(--text); font-style: italic; border-radius: var(--radius-sm); }
-code, pre { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .92em; background: var(--surface-alt); padding: .1em .35em; border-radius: 4px; }
+/* color explicito a proposito: sin el, un <code> dentro de un panel oscuro
+   hereda el texto claro de ese panel y queda ilegible sobre su fondo claro.
+   Pasaba en el bloque de insertar el metronomo: 2,64:1. */
+code, pre { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .92em; color: var(--text); background: var(--surface-alt); padding: .1em .35em; border-radius: 4px; }
 pre { padding: 1em; overflow-x: auto; }
 figure { margin: 1.5em 0; }
 figcaption { font-size: .9em; color: var(--text-muted); margin-top: .4em; text-align: center; }
@@ -900,7 +903,7 @@ figcaption, .wp-element-caption {
   margin: 0 0 1.4rem;
   text-align: center;
 }
-#tm-cookie-desc a { color: #946c09; text-decoration: underline; }
+#tm-cookie-desc a { color: #8c6609; text-decoration: underline; }
 
 #tm-cookie-panel {
   border-top: 1px solid rgba(184,134,11,.2);
@@ -947,7 +950,7 @@ figcaption, .wp-element-caption {
   transition: transform .2s;
   box-shadow: 0 1px 3px rgba(0,0,0,.2);
 }
-.tm-toggle-wrap input:checked + .tm-switch-label { background: #946c09; }
+.tm-toggle-wrap input:checked + .tm-switch-label { background: #8c6609; }
 .tm-toggle-wrap input:checked + .tm-switch-label::after { transform: translateX(18px); }
 .tm-toggle-forced .tm-switch-label { opacity: .55; cursor: not-allowed; }
 
@@ -968,11 +971,11 @@ figcaption, .wp-element-caption {
   transition: opacity .15s, background .15s;
   white-space: nowrap;
 }
-.tm-btn-primary { background: #946c09; color: #faf8f4; font-weight: 700; letter-spacing: .025em; }
+.tm-btn-primary { background: #8c6609; color: #faf8f4; font-weight: 700; letter-spacing: .025em; }
 .tm-btn-primary:hover { opacity: .87; }
 .tm-btn-secondary { background: transparent; color: #1a1814; border: 1px solid rgba(26,24,20,.3); }
 .tm-btn-secondary:hover { background: rgba(26,24,20,.05); }
-.tm-btn-link { background: transparent; color: #946c09; text-decoration: underline; padding: .6rem .4rem; }
+.tm-btn-link { background: transparent; color: #8c6609; text-decoration: underline; padding: .6rem .4rem; }
 .tm-btn-link:hover { opacity: .72; }
 
 #tm-cookie-trigger {
@@ -982,7 +985,7 @@ figcaption, .wp-element-caption {
   background: #faf8f4;
   border: 1px solid rgba(184,134,11,.45);
   border-radius: 50%;
-  color: #946c09;
+  color: #8c6609;
   cursor: pointer;
   align-items: center;
   justify-content: center;
@@ -1084,7 +1087,7 @@ figcaption, .wp-element-caption {
 .tm-faq-q {
   padding:14px 18px 14px 14px; font-weight:700; color:#3a1a00;
   font-size:1rem; line-height:1.4;
-  border-left:4px solid #946c09;
+  border-left:4px solid #8c6609;
   background:#fdf5e8;
   cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:12px;
   user-select:none;
@@ -1092,7 +1095,7 @@ figcaption, .wp-element-caption {
 .tm-faq-q::after {
   content:''; display:block; flex-shrink:0;
   width:10px; height:10px;
-  border-right:2px solid #946c09; border-bottom:2px solid #946c09;
+  border-right:2px solid #8c6609; border-bottom:2px solid #8c6609;
   transform:rotate(45deg); margin-top:-4px; transition:transform .25s;
 }
 .tm-faq-item.open .tm-faq-q::after { transform:rotate(-135deg); margin-top:4px; }
