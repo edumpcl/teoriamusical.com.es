@@ -123,6 +123,24 @@ body {
 img, video, iframe { max-width: 100%; height: auto; display: block; }
 a { color: var(--brand); text-decoration: none; transition: color .15s ease; }
 a:hover { color: var(--brand-dark); text-decoration: underline; }
+
+/* Los enlaces del TEXTO CORRIDO van subrayados a proposito. Si solo se
+   distinguen por el color, quien no distingue el dorado no los ve: Lighthouse
+   lo marca como "los enlaces dependen del color", porque el dorado solo tiene
+   1,89:1 contra el texto que lo rodea y el minimo sin subrayado es 3:1.
+
+   El :not([class]) es la clave: dentro de un articulo, los enlaces CON clase
+   son botones y tarjetas (tm-btn, tm-card-dic, ej-btn...), que ya se ven como
+   lo que son y no deben llevar subrayado. Los de texto corrido no llevan clase. */
+.tm-article p a:not([class]),
+.tm-article li a:not([class]),
+.tm-article td a:not([class]),
+.tm-article dd a:not([class]),
+.tm-article figcaption a:not([class]) {
+  text-decoration: underline;
+  text-decoration-thickness: .06em;
+  text-underline-offset: .15em;
+}
 h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); line-height: 1.2; margin: 1.6em 0 .6em; color: var(--text); font-weight: 700; }
 h1 { font-size: clamp(1.8rem, 1.2rem + 2vw, 2.6rem); }
 h2 { font-size: clamp(1.45rem, 1rem + 1.5vw, 2rem); }

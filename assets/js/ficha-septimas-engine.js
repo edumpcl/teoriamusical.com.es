@@ -97,7 +97,7 @@
     '.tm-fs-hoja{margin-top:18px;background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:16px 14px 10px;}',
     '.tm-fs-cab{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:2px solid #8b6914;padding-bottom:6px;margin-bottom:10px;flex-wrap:wrap;}',
     '.tm-fs-tit{font-weight:700;font-size:1rem;color:#1a1a2e;margin:0;}',
-    '.tm-fs-ref{font-size:.75rem;color:#8a8a8a;}',
+    '.tm-fs-ref{font-size:.75rem;color:#6f6f6f;}',
     '.tm-fs-instr{font-size:.85rem;color:#555;margin:0 0 10px;}',
     '.tm-fs-datos{display:none;}',
     '.tm-fs-h2{font-size:.82rem;font-weight:700;color:#8b6914;margin:12px 0 5px;text-transform:uppercase;letter-spacing:.03em;}',

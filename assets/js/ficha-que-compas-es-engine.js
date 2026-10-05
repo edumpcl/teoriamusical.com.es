@@ -28,7 +28,7 @@
     '.tm-fq-hoja{margin-top:18px;background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:16px 14px 10px;}',
     '.tm-fq-cab{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:2px solid #8b6914;padding-bottom:6px;margin-bottom:10px;flex-wrap:wrap;}',
     '.tm-fq-tit{font-weight:700;font-size:1rem;color:#1a1a2e;margin:0;}',
-    '.tm-fq-ref{font-size:.75rem;color:#8a8a8a;}',
+    '.tm-fq-ref{font-size:.75rem;color:#6f6f6f;}',
     '.tm-fq-instr{font-size:.85rem;color:#555;margin:0 0 10px;}',
     '.tm-fq-datos{display:none;}',
     '.tm-fq-h2{font-size:.95rem;font-weight:700;color:#8b6914;margin:14px 0 7px;}',

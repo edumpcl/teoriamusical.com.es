@@ -29,7 +29,7 @@
     '.tm-sf-hoja{margin-top:18px;background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:16px 14px 10px;}',
     '.tm-sf-cab{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:2px solid #8b6914;padding-bottom:6px;margin-bottom:10px;flex-wrap:wrap;}',
     '.tm-sf-tit{font-weight:700;font-size:1rem;color:#1a1a2e;margin:0;}',
-    '.tm-sf-ref{font-size:.75rem;color:#8a8a8a;}',
+    '.tm-sf-ref{font-size:.75rem;color:#6f6f6f;}',
     '.tm-sf-instr{font-size:.85rem;color:#555;margin:0 0 10px;}',
     '.tm-sf-datos{display:none;}',
     '.tm-sf-rejilla{display:grid;grid-template-columns:repeat(var(--tm-sf-cols,2),minmax(0,1fr));gap:6px 10px;}',

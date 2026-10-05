@@ -135,7 +135,10 @@ CSS = """
   text-align: left; position: sticky; left: 0; z-index: 1;
   background: var(--surface); color: inherit;
   border-right: 1px solid var(--border-strong); }
-.tm-trastes small { display: block; font-size: .78em; opacity: .62; font-weight: 400; }
+/* Color explicito en vez de opacity: con .62 el nombre enarmonico se quedaba
+   en 4,33:1 sobre la fila alterna, por debajo del minimo. Asi sigue siendo
+   secundario pero se lee. */
+.tm-trastes small { display: block; font-size: .8em; color: #7f683f; font-weight: 400; }
 .tm-trastes-aire { font-weight: 400; opacity: .72; }
 /* El traste 12 se marca con una linea, no con fondo: el fondo chocaba con el de
    las filas alternas y la columna se perdia. La linea doble es ademas lo que
