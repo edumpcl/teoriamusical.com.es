@@ -187,7 +187,16 @@
     "templeblock"!==H&&e.set("sound",H),
     x.length>0&&e.set("groups",x.join("-"));
     const t=e.toString();
-    history.replaceState(null,"",location.pathname+(t?"?"+t:""))
+    /* La URL se escribe con retardo A PROPOSITO. Antes se llamaba a
+       replaceState en CADA cambio de BPM, y la medicion mejorada de GA4 cuenta
+       cada evento del historial como una pagina vista: arrastrar el deslizador
+       generaba cientos. El 29-09-2026 salieron 1.306 paginas vistas de 5
+       sesiones. AdSense no se vio afectado (no recuenta con replaceState).
+       Con el retardo solo se escribe cuando el usuario deja de tocar. */
+    clearTimeout(Y._t);
+    Y._t=setTimeout(()=>{
+      try{ history.replaceState(null,"",location.pathname+(t?"?"+t:"")) }catch(e){}
+    },700)
   }function J(){
     return C||(C=new(window.AudioContext||window.webkitAudioContext)({latencyHint:.2}),M=C.createDynamicsCompressor(),M.threshold.value=-2,M.knee.value=0,M.ratio.value=12,M.attack.value=.001,M.release.value=.12,q=C.createGain(),q.gain.value=1,M.connect(q),q.connect(C.destination),function(){try{const e=C.createBuffer(1,1,C.sampleRate),t=C.createBufferSource();t.buffer=e,t.connect(C.destination),t.start(0)}catch(e){}}(),C.addEventListener("statechange",()=>{
       h&&"running"!==C.state&&C.resume().catch(()=>{})
