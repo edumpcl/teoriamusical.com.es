@@ -274,7 +274,7 @@
     '.tm-fe-tit{font-weight:700;font-size:1rem;color:#1a1a2e;margin:0;}',
     '.tm-fe-ref{font-size:.75rem;color:#6f6f6f;}',
     '.tm-fe-instr{font-size:.85rem;color:#555;margin:0 0 4px;}',
-    '.tm-fe-ley{font-size:.78rem;color:#777;margin:0 0 10px;}',
+    '.tm-fe-ley{font-size:.78rem;color:#686868;margin:0 0 10px;}',
     '.tm-fe-datos{display:none;}',
     '.tm-fe-fila{position:relative;border:1px solid #e8e0cc;border-radius:6px;padding:3px 6px 4px;margin-bottom:5px;break-inside:avoid;page-break-inside:avoid;}',
     '.tm-fe-fila svg{display:block;}',

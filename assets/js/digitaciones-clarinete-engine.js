@@ -196,7 +196,7 @@
     '.tm-cl-readout{text-align:center;background:#fdfcf9;border:1px solid #e8e0cc;border-radius:8px;padding:14px;margin-bottom:12px;min-height:54px;}',
     '.tm-cl-reg{font-size:.9rem;color:#666;margin-top:2px;}',
     '.tm-cl-keysline{font-size:.88rem;color:#8b6914;margin-top:4px;}',
-    '.tm-cl-hint{font-size:1.02rem;color:#999;font-weight:600;}',
+    '.tm-cl-hint{font-size:1.02rem;color:#686868;font-weight:600;}',
     '.tm-cl-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:10px 8px;}',
     // dos fotos verticales, una al lado de la otra
     '.tm-cl-photos{display:flex;gap:16px;justify-content:center;align-items:flex-start;flex-wrap:wrap;}',
@@ -208,7 +208,7 @@
     '.tm-cl-key.on .tm-cl-holeD{fill:#ff9f1a;stroke:#fff;}',
     '.tm-cl-img{display:block;border-radius:6px;}',
     '.tm-cl-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}',
-    '.tm-cl-backcap{font-size:.8rem;color:#777;max-width:180px;text-align:center;margin:0;line-height:1.3;}',
+    '.tm-cl-backcap{font-size:.8rem;color:#686868;max-width:180px;text-align:center;margin:0;line-height:1.3;}',
     '.tm-cl-backcap strong{color:#555;}',
     // diagramas de meñiques (espátulas metálicas dibujadas, apiladas izq. arriba / dcho. abajo)
     '.tm-cl-pinky{display:flex;flex-direction:column;align-items:center;flex:0 0 auto;align-self:center;gap:10px;}',
@@ -217,7 +217,7 @@
     '.tm-cl-pk-pad{fill:url(#tmclPkMet);stroke:#7f828a;stroke-width:1.5;transition:fill .15s,stroke .15s;}',
     '.tm-cl-key.on .tm-cl-pk-pad{fill:url(#tmclPkMetOn);stroke:#b06a00;}',
     '.tm-cl-pk-hl{fill:#fff;opacity:.5;pointer-events:none;}',
-    '.tm-cl-pkcap{font-size:.8rem;color:#777;max-width:230px;text-align:center;margin:2px 0 0;line-height:1.3;}',
+    '.tm-cl-pkcap{font-size:.8rem;color:#686868;max-width:230px;text-align:center;margin:2px 0 0;line-height:1.3;}',
     // marcador: invisible en reposo, dorado brillante al pulsar
     '.tm-cl-key .k-dot{fill:#ff9500;fill-opacity:0;stroke:rgba(255,255,255,0);stroke-width:0;transition:all .16s;}',
     '.tm-cl-key.on .k-dot{fill:#ff9500;fill-opacity:.92;stroke:#fff;stroke-width:2.4;filter:drop-shadow(0 0 6px #ff9500);}',

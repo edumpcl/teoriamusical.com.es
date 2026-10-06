@@ -41,7 +41,7 @@
     '.tm-cp-note.tm-correct{border-color:#1c7e46!important;background:#e8f5e9!important;}',
     '.tm-cp-note.tm-disabled{cursor:default;}',
     '.tm-cp-note svg{display:block;margin:0 auto;height:62px;width:auto;}',
-    '.tm-cp-note-lbl{font-size:.55rem;color:#777;margin-top:3px;line-height:1.2;white-space:nowrap;}',
+    '.tm-cp-note-lbl{font-size:.55rem;color:#686868;margin-top:3px;line-height:1.2;white-space:nowrap;}',
     /* ligadura */
     '.tm-cp-liga-row{display:flex;align-items:center;gap:8px;margin:12px 0 0;cursor:pointer;}',
     '.tm-cp-liga-row input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:#8b6914;flex-shrink:0;}',
@@ -54,7 +54,7 @@
     '.tm-cp-fb.tm-ok{background:#e8f5e9;color:#2e7d32;}',
     '.tm-cp-fb.tm-ko{background:#ffebee;color:#c62828;}',
     /* buttons */
-    '.tm-cp-submit{width:100%;padding:14px;margin-top:16px;border:none;border-radius:8px;font-size:1rem;font-weight:700;background:#d8d0b8;color:#999;cursor:not-allowed;transition:all .2s;}',
+    '.tm-cp-submit{width:100%;padding:14px;margin-top:16px;border:none;border-radius:8px;font-size:1rem;font-weight:700;background:#d8d0b8;color:#686868;cursor:not-allowed;transition:all .2s;}',
     '.tm-cp-submit.tm-ready{background:#8b6914;color:#fff;cursor:pointer;}',
     /* results */
     '.tm-cp-results{text-align:center;padding:10px 0;}',

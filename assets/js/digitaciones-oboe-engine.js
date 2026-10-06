@@ -134,7 +134,7 @@
     '.tm-ob-readout{text-align:center;background:#fdfcf9;border:1px solid #e8e0cc;border-radius:8px;padding:14px;margin-bottom:12px;min-height:54px;}',
     '.tm-ob-reg{font-size:.9rem;color:#666;margin-top:2px;}',
     '.tm-ob-keysline{font-size:.88rem;color:#8b6914;margin-top:4px;}',
-    '.tm-ob-hint{font-size:1.02rem;color:#999;font-weight:600;}',
+    '.tm-ob-hint{font-size:1.02rem;color:#686868;font-weight:600;}',
     '.tm-ob-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:10px 8px;}',
     '.tm-ob-cols{display:flex;gap:14px;justify-content:center;align-items:flex-start;flex-wrap:nowrap;}',
     '.tm-ob-col{position:relative;flex:0 1 auto;min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;}',
@@ -154,7 +154,7 @@
     // panel del pulgar (dibujado)
     '.tm-ob-pulgar{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:12px;flex-wrap:wrap;}',
     '.tm-ob-pulgarsvg{width:min(52vw,190px);height:auto;}',
-    '.tm-ob-pulgarcap{font-size:.8rem;color:#777;max-width:290px;margin:0;line-height:1.35;}',
+    '.tm-ob-pulgarcap{font-size:.8rem;color:#686868;max-width:290px;margin:0;line-height:1.35;}',
     '.tm-ob-pulgarcap strong{color:#555;}',
     '.tm-ob-th-pad{fill:url(#tmObMet);stroke:#7f828a;stroke-width:1.5;transition:fill .15s,stroke .15s;}',
     '.tm-ob-key.on .tm-ob-th-pad{fill:url(#tmObMetOn);stroke:#fff;stroke-width:2.4;filter:drop-shadow(0 0 6px #ff9500);}',

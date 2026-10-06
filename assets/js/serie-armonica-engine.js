@@ -63,7 +63,7 @@
     '.tm-ha-string .st-line{stroke:#c9b78a;stroke-width:1;}',
     '.tm-ha-string .st-wave{fill:none;stroke:#8b6914;stroke-width:2.5;}',
     '.tm-ha-string .st-node{fill:#6b5010;}',
-    '.tm-ha-hint{font-size:1.02rem;color:#999;font-weight:600;text-align:center;}',
+    '.tm-ha-hint{font-size:1.02rem;color:#686868;font-weight:600;text-align:center;}',
     '.tm-ha-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;}',
     '@media(max-width:560px){.tm-ha-grid{grid-template-columns:repeat(4,1fr);}}',
     '.tm-ha-cell{border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;padding:7px 3px;cursor:pointer;text-align:center;font-family:inherit;line-height:1.15;}',

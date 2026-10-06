@@ -162,7 +162,7 @@
     '.tm-cf-readout{text-align:center;background:#fdfcf9;border:1px solid #e8e0cc;border-radius:8px;padding:14px;margin-bottom:12px;min-height:54px;}',
     '.tm-cf-reg{font-size:.9rem;color:#666;margin-top:2px;}',
     '.tm-cf-keysline{font-size:.88rem;color:#8b6914;margin-top:4px;}',
-    '.tm-cf-hint{font-size:1.02rem;color:#999;font-weight:600;}',
+    '.tm-cf-hint{font-size:1.02rem;color:#686868;font-weight:600;}',
     '.tm-cf-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:6px;display:flex;justify-content:center;}',
     '.tm-cf-svg{display:block;max-width:300px;width:100%;height:auto;margin:0 auto;}',
     '.tm-cf-key .k-pad{fill:#e9eaee;stroke:#8f9199;stroke-width:1.5;}',

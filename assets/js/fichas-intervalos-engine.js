@@ -355,7 +355,7 @@
     '.tm-fg-relleno{height:100%;background:#8b6914;border-radius:3px;transition:width .35s ease;}',
     '.tm-fg-marcador{display:flex;justify-content:space-between;font-size:.82rem;color:#666;margin-bottom:12px;}',
     '.tm-fg-enunciado{text-align:center;font-size:1.05rem;color:#1a1a2e;margin:0 0 6px;}',
-    '.tm-fg-pista{text-align:center;font-size:.85rem;color:#777;margin:0 0 10px;}',
+    '.tm-fg-pista{text-align:center;font-size:.85rem;color:#686868;margin:0 0 10px;}',
     '.tm-fg-staff{display:flex;justify-content:center;background:#fdfcf9;border:1px solid #e8e0cc;border-radius:8px;padding:6px 0;margin-bottom:12px;}',
     '.tm-fg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(74px,1fr));gap:8px;margin-bottom:10px;}',
     '.tm-fg-resp{font-size:.92rem;font-weight:700;padding:11px 8px;border:1px solid #d8d0b8;background:#f5f2ea;color:#1a1a2e;border-radius:6px;cursor:pointer;font-family:inherit;min-height:44px;}',

@@ -125,7 +125,7 @@
     '.tm-fl-note{font-size:1.5rem;font-weight:800;color:#1a1a1a;line-height:1.1;}',
     '.tm-fl-reg{font-size:.9rem;color:#666;margin-top:2px;}',
     '.tm-fl-keysline{font-size:.88rem;color:#8b6914;margin-top:4px;}',
-    '.tm-fl-hint{font-size:1.02rem;color:#999;font-weight:600;}',
+    '.tm-fl-hint{font-size:1.02rem;color:#686868;font-weight:600;}',
     '.tm-fl-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:10px 8px;}',
     '.tm-fl-svg{display:block;width:100%;height:auto;}',
     '.tm-fl-filas{display:none;}',
@@ -137,7 +137,7 @@
     // panel del pulgar (dibujado): tubo apagado para que el naranja destaque
     '.tm-fl-pulgar{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px;flex-wrap:wrap;}',
     '.tm-fl-pulgarsvg{width:min(60vw,240px);height:auto;}',
-    '.tm-fl-pulgarcap{font-size:.8rem;color:#777;max-width:280px;margin:0;line-height:1.35;}',
+    '.tm-fl-pulgarcap{font-size:.8rem;color:#686868;max-width:280px;margin:0;line-height:1.35;}',
     '.tm-fl-pulgarcap strong{color:#555;}',
     '.tm-fl-th-pad{fill:url(#tmFlMet);stroke:#7f828a;stroke-width:1.5;transition:fill .15s,stroke .15s;}',
     '.tm-fl-key.on .tm-fl-th-pad{fill:url(#tmFlMetOn);stroke:#fff;stroke-width:2.4;filter:drop-shadow(0 0 6px #ff9500);}',

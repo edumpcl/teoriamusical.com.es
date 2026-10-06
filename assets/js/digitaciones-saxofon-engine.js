@@ -200,7 +200,7 @@
     '.tm-sx-readout{text-align:center;background:#fdfcf9;border:1px solid #e8e0cc;border-radius:8px;padding:14px;margin-bottom:12px;min-height:54px;}',
     '.tm-sx-reg{font-size:.9rem;color:#666;margin-top:2px;}',
     '.tm-sx-keysline{font-size:.88rem;color:#8b6914;margin-top:4px;}',
-    '.tm-sx-hint{font-size:1.02rem;color:#999;font-weight:600;}',
+    '.tm-sx-hint{font-size:1.02rem;color:#686868;font-weight:600;}',
     '.tm-sx-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:10px 8px;}',
     // dos columnas: la foto de frente y el pulgar (llave de octava, que va detrás)
     '.tm-sx-photos{display:flex;gap:18px;justify-content:center;align-items:flex-start;flex-wrap:wrap;}',
@@ -214,7 +214,7 @@
     '.tm-sx-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}',
     '.tm-sx-back{display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;align-self:center;}',
     '.tm-sx-backsvg{width:min(26vw,120px);height:auto;}',
-    '.tm-sx-backcap{font-size:.8rem;color:#777;max-width:190px;text-align:center;margin:0;line-height:1.3;}',
+    '.tm-sx-backcap{font-size:.8rem;color:#686868;max-width:190px;text-align:center;margin:0;line-height:1.3;}',
     '.tm-sx-backcap strong{color:#555;}',
     '.tm-sx-oct-pad{fill:url(#tmSxMet);stroke:#7f828a;stroke-width:1.5;transition:fill .15s,stroke .15s;}',
     '.tm-sx-key.on .tm-sx-oct-pad{fill:url(#tmSxMetOn);stroke:#fff;stroke-width:2.4;filter:drop-shadow(0 0 6px #ff9500);}',
