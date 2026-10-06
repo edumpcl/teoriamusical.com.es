@@ -86,7 +86,7 @@
     '.tm-bo-key.on .k-cap{fill:#ff9500;fill-opacity:.92;stroke:#fff;stroke-width:5;filter:drop-shadow(0 0 9px #ff9500);}',
     '.tm-bo-key .k-num{font-family:Arial,Helvetica,sans-serif;font-size:24px;font-weight:bold;fill:#fff;fill-opacity:.5;text-anchor:middle;dominant-baseline:central;transition:all .15s;}',
     '.tm-bo-key.on .k-num{fill:#3a2b00;fill-opacity:1;}',
-    '.tm-bo-credit{font-size:.72rem;color:#9a9a9a;text-align:center;margin-top:6px;}',
+    '.tm-bo-credit{font-size:.72rem;color:#686868;text-align:center;margin-top:6px;}',
     '.tm-bo-credit a{color:inherit;}',
     '.tm-bo-btns{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px;}',
     '.tm-bo-btn{min-width:44px;padding:9px 11px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}',

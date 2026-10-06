@@ -159,7 +159,7 @@
     '.tm-ob-th-pad{fill:url(#tmObMet);stroke:#7f828a;stroke-width:1.5;transition:fill .15s,stroke .15s;}',
     '.tm-ob-key.on .tm-ob-th-pad{fill:url(#tmObMetOn);stroke:#fff;stroke-width:2.4;filter:drop-shadow(0 0 6px #ff9500);}',
     '.tm-ob-thlab{font-family:Arial,Helvetica,sans-serif;font-size:12px;fill:#666;text-anchor:middle;}',
-    '.tm-ob-credit{font-size:.72rem;color:#9a9a9a;text-align:center;margin-top:8px;}',
+    '.tm-ob-credit{font-size:.72rem;color:#686868;text-align:center;margin-top:8px;}',
     '.tm-ob-credit a{color:inherit;}',
     '.tm-ob-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}',
     '.tm-ob-btn{min-width:46px;padding:10px 12px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}',

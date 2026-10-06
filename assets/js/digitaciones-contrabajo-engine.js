@@ -127,7 +127,7 @@
     '.tm-cb-btn.sel{background:#8b6914;color:#fff;border-color:#8b6914;}',
     '.tm-cb-legend{text-align:center;font-size:.76rem;color:#686868;margin-top:10px;}',
     '.tm-cb-sw{display:inline-block;width:11px;height:11px;border-radius:50%;margin:0 4px 0 10px;vertical-align:-1px;}',
-    '.tm-cb-credit{font-size:.72rem;color:#9a9a9a;text-align:center;margin-top:8px;}',
+    '.tm-cb-credit{font-size:.72rem;color:#686868;text-align:center;margin-top:8px;}',
     '.tm-cb-credit a{color:inherit;}',
     '@media (max-width:560px){' +
       '.tm-cb-main{gap:8px;}' +

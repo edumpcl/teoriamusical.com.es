@@ -211,7 +211,7 @@
     '.tm-cb-key.on .k-dot{fill:#ff9500;fill-opacity:.92;stroke:#fff;stroke-width:2.4;filter:drop-shadow(0 0 6px #ff9500);}',
     '.tm-cb-key .k-num{font-family:Arial,Helvetica,sans-serif;font-weight:bold;fill:#fff;fill-opacity:.55;text-anchor:middle;dominant-baseline:central;paint-order:stroke;stroke:#000;stroke-width:.6px;stroke-opacity:.5;transition:all .16s;pointer-events:none;}',
     '.tm-cb-key.on .k-num{fill:#3a2b00;fill-opacity:1;stroke-opacity:0;}',
-    '.tm-cb-credit{font-size:.72rem;color:#9a9a9a;text-align:center;margin-top:8px;}',
+    '.tm-cb-credit{font-size:.72rem;color:#686868;text-align:center;margin-top:8px;}',
     '.tm-cb-credit a{color:inherit;}',
     '.tm-cb-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}',
     '.tm-cb-btn{min-width:46px;padding:10px 12px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}',

@@ -156,7 +156,7 @@
     '.tm-fn-th-pad{fill:url(#tmFnMet);stroke:#7f828a;stroke-width:1.5;transition:fill .15s,stroke .15s;}',
     '.tm-fn-key.on .tm-fn-th-pad{fill:url(#tmFnMetOn);stroke:#fff;stroke-width:2.4;filter:drop-shadow(0 0 6px #ff9500);}',
     '.tm-fn-thlab{font-family:Arial,Helvetica,sans-serif;font-size:13px;fill:#555;text-anchor:middle;}',
-    '.tm-fn-credit{font-size:.72rem;color:#9a9a9a;text-align:center;margin-top:8px;}',
+    '.tm-fn-credit{font-size:.72rem;color:#686868;text-align:center;margin-top:8px;}',
     '.tm-fn-credit a{color:inherit;}',
     '.tm-fn-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}',
     '.tm-fn-btn{min-width:48px;padding:10px 12px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}',

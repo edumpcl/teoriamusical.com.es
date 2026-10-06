@@ -130,7 +130,7 @@
     '.tm-tr-key.on .k-btn{fill:#ff9500;fill-opacity:.92;stroke:#fff;stroke-width:5;filter:drop-shadow(0 0 12px #ff9500);}',
     '.tm-tr-key .k-num{font-family:Arial,Helvetica,sans-serif;font-size:34px;font-weight:bold;fill:#fff;fill-opacity:.42;text-anchor:middle;dominant-baseline:central;transition:all .15s;}',
     '.tm-tr-key.on .k-num{fill:#3a2b00;fill-opacity:1;}',
-    '.tm-tr-credit{font-size:.72rem;color:#9a9a9a;text-align:center;margin-top:6px;}',
+    '.tm-tr-credit{font-size:.72rem;color:#686868;text-align:center;margin-top:6px;}',
     '.tm-tr-credit a{color:inherit;}',
     '.tm-tr-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}',
     '.tm-tr-btn{min-width:46px;padding:10px 12px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}',

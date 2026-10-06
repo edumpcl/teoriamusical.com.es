@@ -109,7 +109,7 @@
     '.tm-vl-mk.aire circle{fill:#4da3ff;}',
     '.tm-vl-legend{text-align:center;font-size:.78rem;color:#686868;margin-top:8px;}',
     '.tm-vl-sw{display:inline-block;width:11px;height:11px;border-radius:50%;margin:0 4px 0 10px;vertical-align:-1px;}',
-    '.tm-vl-credit{font-size:.72rem;color:#9a9a9a;text-align:center;margin-top:6px;}',
+    '.tm-vl-credit{font-size:.72rem;color:#686868;text-align:center;margin-top:6px;}',
     '.tm-vl-credit a{color:inherit;}',
     '.tm-vl-modo{display:flex;gap:0;justify-content:center;margin:12px 0 0;}',
     '.tm-vl-modo button{padding:7px 16px;border:1px solid #d8d0b8;background:#f5f2ea;font-family:inherit;font-weight:600;cursor:pointer;}',
