@@ -1,0 +1,145 @@
+<svg id="w51fjm9" viewBox="0 0 575 80" width="878" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Fa menor melódica con armadura de 4 bemoles: ascendente: Fa, Sol, La♭, Si♭, Do, Re♮, Mi♮, Fa; descendente: Mi♭, Re♭, Do, Si♭, La♭, Sol, Fa. En rojo, las notas que cambian respecto a la escala menor natural: Re♮, Mi♮, Mi♭, Re♭.</title>
+   <defs>
+      <g id="E050-w51fjm9">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E260-w51fjm9">
+         <path transform="scale(1,-1)" d="M132 40v11c0 21 -3 55 -39 55c-40 0 -55 -29 -57 -38l-3 -195c58 46 99 88 99 167zM120 155c59 0 83 -49 83 -101c0 -103 -90 -185 -176 -228c-2 -1 -6 -2 -8 -2c-8 0 -14 6 -14 14l-5 601c0 8 6 14 14 14h12c8 0 14 -6 14 -14l-4 -321c5 6 34 37 84 37z" />
+      </g>
+      <g id="E0A2-w51fjm9">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+      <g id="E261-w51fjm9">
+         <path transform="scale(1,-1)" d="M28 -97l116 32v165l-116 -33v-164zM166 183c3 -2 5 -7 5 -11v-495h-27v175l-126 -35h-4c-8 0 -14 5 -14 13v495h28v-175l126 35c1 0 3 1 4 1c3 0 6 -1 8 -3z" />
+      </g>
+   </defs>
+   <style type="text/css">#w51fjm9 g.ending, #w51fjm9 g.fing, #w51fjm9 g.reh, #w51fjm9 g.tempo {font-weight:bold;}#w51fjm9 g.dir, #w51fjm9 g.dynam, #w51fjm9 g.mNum {font-style:italic;}#w51fjm9 g.label {font-weight:normal;}#w51fjm9 ellipse, #w51fjm9 path, #w51fjm9 polygon, #w51fjm9 polyline, #w51fjm9 rect {stroke:currentColor}#w51fjm9 g.cursor {fill:dodgerblue; color:dodgerblue;}#w51fjm9 g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 14360 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="x1lhdrx5" class="mdiv pageMilestone" />
+         <g id="ykrj9jv" class="score pageMilestone" />
+         <g id="vto7n63" class="system">
+            <g id="m1eq55i0" class="section systemMilestone" />
+            <g id="n1xku6e0" class="measure">
+               <g id="w46l8xb" class="staff">
+                  <path d="M0 540 L14163 540" stroke-width="13" />
+                  <path d="M0 720 L14163 720" stroke-width="13" />
+                  <path d="M0 900 L14163 900" stroke-width="13" />
+                  <path d="M0 1080 L14163 1080" stroke-width="13" />
+                  <path d="M0 1260 L14163 1260" stroke-width="13" />
+                  <g id="e13a42tk" class="clef">
+                     <use href="#E050-w51fjm9" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="f104pvmb" class="keySig">
+                     <g id="g3qz2l3" class="keyAccid">
+                        <use href="#E260-w51fjm9" transform="translate(730, 900) scale(0.72, 0.72)" />
+                     </g>
+                     <g id="h1bpzh6o" class="keyAccid">
+                        <use href="#E260-w51fjm9" transform="translate(919, 630) scale(0.72, 0.72)" />
+                     </g>
+                     <g id="iuo5kar" class="keyAccid">
+                        <use href="#E260-w51fjm9" transform="translate(1108, 990) scale(0.72, 0.72)" />
+                     </g>
+                     <g id="j4tj1py" class="keyAccid">
+                        <use href="#E260-w51fjm9" transform="translate(1297, 720) scale(0.72, 0.72)" />
+                     </g>
+                  </g>
+                  <g id="x1l3g8ab" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-w51fjm9" transform="translate(1713, 1170) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-w51fjm9" transform="translate(2543, 1080) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-w51fjm9" transform="translate(3373, 990) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-w51fjm9" transform="translate(4203, 900) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n4" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-w51fjm9" transform="translate(5033, 810) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n5" class="note" color="#d00000" fill="#d00000">
+                        <g class="notehead">
+                           <use href="#E0A2-w51fjm9" transform="translate(5863, 720) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="e1opga7v" class="accid">
+                           <use href="#E261-w51fjm9" transform="translate(5695, 720) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n6" class="note" color="#d00000" fill="#d00000">
+                        <g class="notehead">
+                           <use href="#E0A2-w51fjm9" transform="translate(6693, 630) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="g20tczo" class="accid">
+                           <use href="#E261-w51fjm9" transform="translate(6525, 630) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n7" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-w51fjm9" transform="translate(7523, 540) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n8" class="note" color="#d00000" fill="#d00000">
+                        <g class="notehead">
+                           <use href="#E0A2-w51fjm9" transform="translate(8353, 630) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="j9nitx4" class="accid">
+                           <use href="#E260-w51fjm9" transform="translate(8162, 630) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n9" class="note" color="#d00000" fill="#d00000">
+                        <g class="notehead">
+                           <use href="#E0A2-w51fjm9" transform="translate(9183, 720) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="lm6mxiw" class="accid">
+                           <use href="#E260-w51fjm9" transform="translate(8992, 720) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n10" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-w51fjm9" transform="translate(10013, 810) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n11" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-w51fjm9" transform="translate(10843, 900) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n12" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-w51fjm9" transform="translate(11673, 990) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n13" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-w51fjm9" transform="translate(12503, 1080) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n14" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-w51fjm9" transform="translate(13333, 1170) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="v1mednwa" class="barLine" />
+            </g>
+            <g id="yjzjc3u" class="systemMilestoneEnd m1eq55i0" />
+         </g>
+         <g id="z3hh3z0" class="pageMilestoneEnd ykrj9jv" />
+         <g id="a1y1ep5n" class="pageMilestoneEnd x1lhdrx5" />
+      </g>
+   </svg>
+</svg>

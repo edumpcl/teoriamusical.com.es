@@ -1,0 +1,82 @@
+<svg id="cyj26ws" viewBox="0 0 550 80" width="840" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Modo lidio griego descendente, Do a Do: Do, Si, La, Sol, Fa, Mi, Re, Do.</title>
+   <defs>
+      <g id="E050-cyj26ws">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A2-cyj26ws">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#cyj26ws g.ending, #cyj26ws g.fing, #cyj26ws g.reh, #cyj26ws g.tempo {font-weight:bold;}#cyj26ws g.dir, #cyj26ws g.dynam, #cyj26ws g.mNum {font-style:italic;}#cyj26ws g.label {font-weight:normal;}#cyj26ws ellipse, #cyj26ws path, #cyj26ws polygon, #cyj26ws polyline, #cyj26ws rect {stroke:currentColor}#cyj26ws g.cursor {fill:dodgerblue; color:dodgerblue;}#cyj26ws g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 13740 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="ddmnfqb" class="mdiv pageMilestone" />
+         <g id="e104fs7p" class="score pageMilestone" />
+         <g id="pj342fm" class="system">
+            <g id="r1m9dzwq" class="section systemMilestone" />
+            <g id="s1o7su36" class="measure">
+               <g id="bddranj" class="staff">
+                  <path d="M0 540 L13540 540" stroke-width="13" />
+                  <path d="M0 720 L13540 720" stroke-width="13" />
+                  <path d="M0 900 L13540 900" stroke-width="13" />
+                  <path d="M0 1080 L13540 1080" stroke-width="13" />
+                  <path d="M0 1260 L13540 1260" stroke-width="13" />
+                  <g id="i1ha27jk" class="clef">
+                     <use href="#E050-cyj26ws" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="j1ntyqxw" class="keySig" />
+                  <g class="ledgerLines below">
+                     <path d="M11902 1440 L12266 1440" stroke-width="22" />
+                  </g>
+                  <g id="c7z3eov" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-cyj26ws" transform="translate(820, 810) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-cyj26ws" transform="translate(2410, 900) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-cyj26ws" transform="translate(4000, 990) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-cyj26ws" transform="translate(5590, 1080) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n4" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-cyj26ws" transform="translate(7180, 1170) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n5" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-cyj26ws" transform="translate(8770, 1260) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n6" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-cyj26ws" transform="translate(10360, 1350) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n7" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-cyj26ws" transform="translate(11950, 1440) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="at5wvve" class="barLine" />
+            </g>
+            <g id="s187nrgs" class="systemMilestoneEnd r1m9dzwq" />
+         </g>
+         <g id="ttf35a3" class="pageMilestoneEnd e104fs7p" />
+         <g id="u1inwq4o" class="pageMilestoneEnd ddmnfqb" />
+      </g>
+   </svg>
+</svg>

@@ -1,0 +1,98 @@
+<svg id="hzy4olb" viewBox="0 0 590 80" width="901" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Do♯ menor natural con armadura de 4 sostenidos: Do♯, Re♯, Mi, Fa♯, Sol♯, La, Si, Do♯.</title>
+   <defs>
+      <g id="E050-hzy4olb">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E262-hzy4olb">
+         <path transform="scale(1,-1)" d="M78 74v-166l89 19v165zM233 105l-38 -7v-165l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14l-38 -7v-147h-28v141l-89 -18v-155h-28v149l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v165l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v147h28v-141 l89 18v155h28v-149l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14z" />
+      </g>
+      <g id="E0A2-hzy4olb">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#hzy4olb g.ending, #hzy4olb g.fing, #hzy4olb g.reh, #hzy4olb g.tempo {font-weight:bold;}#hzy4olb g.dir, #hzy4olb g.dynam, #hzy4olb g.mNum {font-style:italic;}#hzy4olb g.label {font-weight:normal;}#hzy4olb ellipse, #hzy4olb path, #hzy4olb polygon, #hzy4olb polyline, #hzy4olb rect {stroke:currentColor}#hzy4olb g.cursor {fill:dodgerblue; color:dodgerblue;}#hzy4olb g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 14730 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="irrto" class="mdiv pageMilestone" />
+         <g id="jv30ooa" class="score pageMilestone" />
+         <g id="v1curfxs" class="system">
+            <g id="xt293zk" class="section systemMilestone" />
+            <g id="y1lemhys" class="measure">
+               <g id="h22a74t" class="staff">
+                  <path d="M0 540 L14531 540" stroke-width="13" />
+                  <path d="M0 720 L14531 720" stroke-width="13" />
+                  <path d="M0 900 L14531 900" stroke-width="13" />
+                  <path d="M0 1080 L14531 1080" stroke-width="13" />
+                  <path d="M0 1260 L14531 1260" stroke-width="13" />
+                  <g id="x1l7moj8" class="clef">
+                     <use href="#E050-hzy4olb" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="y123ec47" class="keySig">
+                     <g id="z189mq0l" class="keyAccid">
+                        <use href="#E262-hzy4olb" transform="translate(730, 540) scale(0.72, 0.72)" />
+                     </g>
+                     <g id="aef3iw" class="keyAccid">
+                        <use href="#E262-hzy4olb" transform="translate(942, 810) scale(0.72, 0.72)" />
+                     </g>
+                     <g id="b57kfcc" class="keyAccid">
+                        <use href="#E262-hzy4olb" transform="translate(1154, 450) scale(0.72, 0.72)" />
+                     </g>
+                     <g id="c1evn7t7" class="keyAccid">
+                        <use href="#E262-hzy4olb" transform="translate(1366, 720) scale(0.72, 0.72)" />
+                     </g>
+                  </g>
+                  <g class="ledgerLines below">
+                     <path d="M1763 1440 L2127 1440" stroke-width="22" />
+                  </g>
+                  <g id="i1fu7lls" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-hzy4olb" transform="translate(1811, 1440) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-hzy4olb" transform="translate(3401, 1350) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-hzy4olb" transform="translate(4991, 1260) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-hzy4olb" transform="translate(6581, 1170) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n4" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-hzy4olb" transform="translate(8171, 1080) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n5" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-hzy4olb" transform="translate(9761, 990) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n6" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-hzy4olb" transform="translate(11351, 900) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n7" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-hzy4olb" transform="translate(12941, 810) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="g1kwjq7g" class="barLine" />
+            </g>
+            <g id="y1906oip" class="systemMilestoneEnd xt293zk" />
+         </g>
+         <g id="zmt03a3" class="pageMilestoneEnd jv30ooa" />
+         <g id="acyoqs5" class="pageMilestoneEnd irrto" />
+      </g>
+   </svg>
+</svg>
