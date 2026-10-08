@@ -5,7 +5,7 @@
  *   node tools/build-notacion.js sincopa                        -> verifica y dibuja, solo informa
  *   node tools/build-notacion.js sincopa --poner                -> escribe en la pagina
  *   node tools/build-notacion.js sincopa --poner --quitar-vexflow
- *   node tools/build-notacion.js sincopa --poner --pagina=pruebas/sincopa-verovio
+ *   node tools/build-notacion.js sincopa --poner --pagina=ruta/de/la/pagina
  *
  * DE DONDE SALE LA MUSICA (tools/notacion/):
  *   <conjunto>/            una carpeta con un fichero por ejemplo, escrito en MuseScore y
