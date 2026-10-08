@@ -1,0 +1,84 @@
+<svg id="h8j7ymh" viewBox="0 0 165 80" width="252" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Un compás de 9/8 con tres negras con puntillo, que representan sus tres tiempos</title>
+   <defs>
+      <g id="E050-h8j7ymh">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E089-h8j7ymh">
+         <path transform="scale(1,-1)" d="M192 204c-33 0 -61 -46 -61 -102s28 -101 61 -101s60 45 60 101s-27 102 -60 102zM155 -47c-63 0 -140 37 -140 135c0 116 131 157 166 157s72 -2 130 -46c59 -52 76 -121 76 -182c0 -56 -15 -105 -25 -129c-20 -46 -85 -132 -175 -132c-100 0 -142 53 -155 89 c-4 8 -6 23 -6 32v3c0 36 29 64 65 64s64 -28 64 -64c0 -23 -17 -50 -38 -59c10 -11 25 -19 50 -19c70 0 90 74 90 131c0 16 -2 32 -5 53c-14 -15 -36 -33 -97 -33z" />
+      </g>
+      <g id="E088-h8j7ymh">
+         <path transform="scale(1,-1)" d="M268 45c18 9 40 32 40 80c0 46 -42 75 -104 75c-43 0 -79 -16 -79 -55c0 -45 75 -78 143 -100zM204 -192c63 0 98 35 98 62c0 55 -97 89 -165 112c0 0 -52 -16 -52 -83c0 -56 55 -91 119 -91zM324 18c52 -27 69 -72 69 -120c0 -81 -85 -146 -189 -146s-189 65 -189 146 c0 48 25 85 70 111c-47 30 -57 66 -57 106c0 72 79 131 176 131s176 -59 176 -131c0 -40 -23 -72 -56 -97z" />
+      </g>
+      <g id="E0A4-h8j7ymh">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+   </defs>
+   <style type="text/css">#h8j7ymh g.ending, #h8j7ymh g.fing, #h8j7ymh g.reh, #h8j7ymh g.tempo {font-weight:bold;}#h8j7ymh g.dir, #h8j7ymh g.dynam, #h8j7ymh g.mNum {font-style:italic;}#h8j7ymh g.label {font-weight:normal;}#h8j7ymh ellipse, #h8j7ymh path, #h8j7ymh polygon, #h8j7ymh polyline, #h8j7ymh rect {stroke:currentColor}#h8j7ymh g.cursor {fill:dodgerblue; color:dodgerblue;}#h8j7ymh g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 4120 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="i2hr6u3" class="mdiv pageMilestone" />
+         <g id="j1k6wi6v" class="score pageMilestone" />
+         <g id="qvsq74x" class="system">
+            <g id="x1ow0ko0" class="section systemMilestone" />
+            <g id="y1o8t8c5" class="measure">
+               <g id="h1sh1eol" class="staff">
+                  <path d="M0 540 L3925 540" stroke-width="13" />
+                  <path d="M0 720 L3925 720" stroke-width="13" />
+                  <path d="M0 900 L3925 900" stroke-width="13" />
+                  <path d="M0 1080 L3925 1080" stroke-width="13" />
+                  <path d="M0 1260 L3925 1260" stroke-width="13" />
+                  <g id="q10lh6c4" class="clef">
+                     <use href="#E050-h8j7ymh" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="rxtfc7o" class="keySig" />
+                  <g id="s1gjsrgp" class="meterSig">
+                     <use href="#E089-h8j7ymh" transform="translate(722, 720) scale(0.72, 0.72)" />
+                     <use href="#E088-h8j7ymh" transform="translate(720, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="ikd3k0a" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-h8j7ymh" transform="translate(1272, 1080) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="z1umlxww" class="dots">
+                           <ellipse cx="1596" cy="990" rx="36" ry="36" />
+                        </g>
+                        <g id="y14xlcjq" class="stem">
+                           <path d="M1496 1052 L1496 450" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-h8j7ymh" transform="translate(2152, 1080) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="b1hvmea1" class="dots">
+                           <ellipse cx="2476" cy="990" rx="36" ry="36" />
+                        </g>
+                        <g id="aazh7e6" class="stem">
+                           <path d="M2376 1052 L2376 450" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-h8j7ymh" transform="translate(3032, 1080) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="d1tha1hk" class="dots">
+                           <ellipse cx="3356" cy="990" rx="36" ry="36" />
+                        </g>
+                        <g id="c1hmpvje" class="stem">
+                           <path d="M3256 1052 L3256 450" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="g18xtkd0" class="barLine">
+                  <path d="M3912 540 L3912 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="t163i8ao" class="systemMilestoneEnd x1ow0ko0" />
+         </g>
+         <g id="ucjnlvs" class="pageMilestoneEnd j1k6wi6v" />
+         <g id="v5ivr26" class="pageMilestoneEnd i2hr6u3" />
+      </g>
+   </svg>
+</svg>
