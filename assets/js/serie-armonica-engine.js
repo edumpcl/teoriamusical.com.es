@@ -138,32 +138,9 @@
 
     function renderStaff(h) {
       var el = document.getElementById(uid + '_staff');
-      if (!el) return; el.innerHTML = '';
-      if (typeof Vex === 'undefined') return;
-      var V = Vex.Flow;
-      var r = new V.Renderer(el, V.Renderer.Backends.SVG);
-      r.resize(140, 150);
-      var ctx = r.getContext(); ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(2, 30, 124);
-      stave.addClef(h.clef).setContext(ctx).draw();
-      var note = new V.StaveNote({ keys: [h.key], duration: 'w', clef: h.clef });
-      if (h.acc) note.addModifier(new V.Accidental(h.acc), 0);
-      var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([note]);
-      new V.Formatter().joinVoices([voice]).format([voice], 70);
-      voice.draw(ctx, stave);
-      var s = el.querySelector('svg');
-      // cabeza rellena (negra) para los armónicos desafinados, como en la notación clásica
-      if (s && h.det) {
-        try {
-          var head = note.noteHeads[0];
-          var e = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-          e.setAttribute('cx', head.getAbsoluteX() + head.getWidth() / 2);
-          e.setAttribute('cy', note.getYs()[0]);
-          e.setAttribute('rx', 6.2); e.setAttribute('ry', 4.7); e.setAttribute('fill', '#1a1a1a');
-          s.appendChild(e);
-        } catch (err) {}
-      }
-      if (s) { s.setAttribute('viewBox', '0 0 140 150'); s.style.width = '130px'; s.style.maxWidth = '100%'; s.style.height = 'auto'; }
+      if (!el) return;
+      // SVG generado al construir con Verovio (tools/gen-pentagramas-verovio.js serie-armonica-explorador)
+      el.innerHTML = '<img src="/assets/img/notacion/serie-armonica/armonico-' + h.n + '.svg" alt="Armónico ' + h.n + ': ' + h.es + ' en el pentagrama" width="130" style="width:130px;max-width:100%;height:auto">';
     }
 
     function noteName(h) { return h.es + (h.n === 1 ? '₂' : '') ; }

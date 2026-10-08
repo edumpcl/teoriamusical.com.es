@@ -384,6 +384,13 @@ const PASO_Y = ESPACIO / 2;
 const paso = (n) => n.octava * 7 + LETRAS.indexOf(n.letra);
 const PASO_E4 = 4 * 7 + LETRAS.indexOf('e');
 
+/** Las notas y lineas viven dentro de <g class="page-margin" transform="translate(mx, my)">: todo lo que se anade
+ *  encima (rotulos, corchetes, numeros) tiene que llevar el MISMO desplazamiento o queda corrido. */
+function conMargen(svg, grupo) {
+  const pm = /class="page-margin"[^>]*transform="translate[(]([0-9.]+), ([0-9.]+)[)]"/.exec(svg);
+  return pm ? '<g transform="translate(' + pm[1] + ' ' + pm[2] + ')">' + grupo + '</g>' : grupo;
+}
+
 function conCorchetes(svg, notas, corch, etiquetas) {
   const pos = cabezas(svg);
   if (pos.length !== notas.length) throw new Error(`Verovio ha dibujado ${pos.length} cabezas, no ${notas.length}`);
@@ -421,7 +428,7 @@ function conCorchetes(svg, notas, corch, etiquetas) {
   let s = svg.replace(/(<svg class="definition-scale"[^>]*viewBox="0 0 \d+ )\d+(")/, `$1${alto}$2`);
   s = s.replace(/^(<svg viewBox="0 0 \d+ )\d+(")/, `$1${altoExt}$2`);
   const i = s.lastIndexOf('</svg>', s.lastIndexOf('</svg>') - 1);
-  return s.slice(0, i) + grupo + s.slice(i);
+  return s.slice(0, i) + conMargen(s, grupo) + s.slice(i);
 }
 
 function preparar(svg, alt) {

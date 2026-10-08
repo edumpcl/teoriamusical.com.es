@@ -3,17 +3,20 @@
 // pack de imágenes de Google ("tabla/cuadro de intervalos"). Render con Playwright
 // para un acabado on-brand. Salida: assets/img/intervalos/tabla-de-intervalos-musicales.png
 // (luego convert_to_webp.py). Datos espejo de la tabla HTML de la página.
-// Incluye el ejemplo en pentagrama: ejecuta antes generate-intervalos-ejemplos.js.
+// Los pentagramas de ejemplo son SVG de Verovio (assets/img/notacion/intervalos/ejemplo-do-*.svg, generados con
+// tools/gen-pentagramas-verovio.js intervalos-musicales): en vector, nitidos a cualquier tamaño y en el PDF.
+// Salidas: PNG (descarga), PDF A3, y las versiones de 900 px que muestra la pagina (el .webp se saca con PIL).
 const { chromium } = require('playwright');
 const path = require('path');
 const fs = require('fs');
 
 const OUTPUT_DIR = path.join(__dirname, 'assets/img/intervalos');
+const STAFF_DIR = path.join(__dirname, 'assets/img/notacion/intervalos');
 fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 // Incrusta los PNG del pentagrama como data URI (Chromium bloquea file:// en setContent).
 function dataUri(name) {
-  const b64 = fs.readFileSync(path.join(OUTPUT_DIR, name + '.png')).toString('base64');
-  return 'data:image/png;base64,' + b64;
+  const b64 = fs.readFileSync(path.join(STAFF_DIR, name + '.svg')).toString('base64');
+  return 'data:image/svg+xml;base64,' + b64;
 }
 // Favicon de Bach (mascota del sitio), el mismo que usan las imágenes OG.
 const BACH_URI = 'data:image/png;base64,' +
@@ -109,6 +112,17 @@ async function main() {
   const card = await page.$('#card');
   await card.screenshot({ path: path.join(OUTPUT_DIR, 'tabla-de-intervalos-musicales.png') });
   console.log('  ok tabla-de-intervalos-musicales.png');
+  // PDF A3 de una pagina: la tarjeta (1000x1414 px, proporcion A3) escalada para llenar la hoja; los pentagramas siguen en vector
+  await page.pdf({ path: path.join(OUTPUT_DIR, 'tabla-de-intervalos-musicales.pdf'), format: 'A3', printBackground: true, margin: { top: 0, right: 0, bottom: 0, left: 0 }, scale: 1.1225, pageRanges: '1' });
+  console.log('  ok tabla-de-intervalos-musicales.pdf');
+  // version de 900 px de ancho para la pagina
+  const ctx9 = await browser.newContext({ deviceScaleFactor: 0.9 });
+  const p9 = await ctx9.newPage();
+  await p9.setViewportSize({ width: 1080, height: 1480 });
+  await p9.setContent(HTML);
+  await p9.waitForTimeout(400);
+  await (await p9.$('#card')).screenshot({ path: path.join(OUTPUT_DIR, 'tabla-de-intervalos-musicales-900.png') });
+  console.log('  ok tabla-de-intervalos-musicales-900.png');
   await browser.close();
 }
 main().catch((e) => { console.error(e); process.exit(1); });

@@ -69,7 +69,7 @@ function aMEI(compases, clave, hueco) {
   let k = 0;
   const ms = compases.map((m, i) => {
     const evs = m.map((e) => {
-      const ns = e.notas.map((n) => `<note xml:id="n${k++}" pname="${n.letra}" oct="${n.octava}"${n.muestra ? ` accid="${ALT_MEI[n.alt]}"` : ''}${n.color ? ` color="${n.color}"` : ''}${e.notas.length > 1 ? '' : ` dur="${DUR_MEI[e.d]}"`}/>`).join('');
+      const ns = e.notas.map((n) => `<note xml:id="n${k++}" pname="${n.letra}" oct="${n.octava}"${n.muestra ? ` accid="${ALT_MEI[n.alt]}"` : ''}${n.color ? ` color="${n.color}"` : ''}${n.rellena ? ' head.fill="solid"' : ''}${e.notas.length > 1 ? '' : ` dur="${DUR_MEI[e.d]}"`}/>`).join('');
       return e.notas.length > 1 ? `<chord dur="${DUR_MEI[e.d]}">${ns}</chord>` : ns;
     }).join('');
     const der = i === compases.length - 1 ? ' right="invis"' : '';
@@ -174,6 +174,27 @@ function coherenciaInversion(spec, compasesAlt) {
   return err;
 }
 
+/** Cadencias en Do mayor: el alt dice «V7-I», «IV-I»...; cada acorde dibujado tiene que ser ese grado. */
+const GRADOS_DO = { I: ['c', 'mayor'], IV: ['f', 'mayor'], V: ['g', 'mayor'], V7: ['g', 'septima-dominante'], VI: ['a', 'menor'] };
+function coherenciaProgresion(spec, compasesAlt, alt) {
+  const err = [];
+  if (!spec.progresion) return err;
+  const m = /(?:^|[ ])(V7|VI|IV|V|I)-(V7|VI|IV|V|I)(?![A-Za-z0-9])/.exec(alt);
+  if (!m) return ['el alt no dice la progresion (p. ej. «V7-I»)'];
+  const eventos = compasesAlt.flat();
+  if (eventos.length !== 2) return ['una cadencia son dos acordes'];
+  [m[1], m[2]].forEach((g, k) => {
+    const [raiz, calidad] = GRADOS_DO[g];
+    const unicas = eventos[k].notas.filter((n, i, a) => a.findIndex((x) => x.letra === n.letra && x.alt === n.alt) === i);   // sin duplicar la fundamental
+    const an = analizarAcorde(unicas);
+    if (!an) { err.push(`el acorde ${k + 1} no es de terceras apiladas`); return; }
+    if (an.raiz.letra !== raiz || an.raiz.alt !== 0) err.push(`el acorde ${k + 1} es de ${nombre(an.raiz)} y el grado ${g} en Do mayor es de ${NOMBRE[raiz]}`);
+    if (nombreCalidad(an.semitonos) !== calidad) err.push(`el acorde ${k + 1} (${g}) deberia ser «${calidad}» y es «${nombreCalidad(an.semitonos)}»`);
+    if (an.inversion !== 0) err.push(`el acorde ${k + 1} deberia estar en estado fundamental`);
+  });
+  return err;
+}
+
 /** Errores de coherencia entre el dibujo previsto y el alt de la pagina. */
 function coherenciaConAlt(spec, notasPlanas, alt) {
   const err = [];
@@ -183,11 +204,12 @@ function coherenciaConAlt(spec, notasPlanas, alt) {
   if (spec.sinAlt) return err;
   if (unison && nombradas.length === 1) {
     if (!esperadas.every((n) => n.letra === nombradas[0].letra && n.alt === nombradas[0].alt)) err.push(`el alt dice unisono de ${NOMBRE[nombradas[0].letra]} y el dibujo es ${esperadas.map(nombre).join(', ')}`);
-  } else if (nombradas.length >= 2 && !spec.altLibre) {
+  } else if (nombradas.length >= 2 && !spec.altLibre && !spec.sinNombres) {
     if (JSON.stringify(nombradas) !== JSON.stringify(esperadas)) err.push(`el alt nombra ${nombradas.map(nombre).join(', ')} y el dibujo es ${esperadas.map(nombre).join(', ')}`);
   }
   err.push(...coherenciaAcorde(spec, notasPlanas, alt));
   err.push(...coherenciaCifrado(spec, notasPlanas));
+  if (nombradas.length === 1 && esperadas.length === 1 && !spec.altLibre && !spec.sinNombres && !unison && (nombradas[0].letra !== esperadas[0].letra || nombradas[0].alt !== esperadas[0].alt)) err.push(`el alt nombra ${nombre(nombradas[0])} y el dibujo es ${nombre(esperadas[0])}`);
   const iv = intervaloDelAlt(alt);
   if (iv && (spec.par || notasPlanas.length === 2) && !spec.altLibre && spec.regla !== 'sin-intervalo') {
     const a = spec.par ? notasPlanas[spec.par[0]] : notasPlanas[0], b = spec.par ? notasPlanas[spec.par[1]] : notasPlanas[notasPlanas.length - 1];
@@ -327,6 +349,54 @@ function ajustar(svg, anchoPx, extraAbajo, extraArriba) {
   return s;
 }
 
+/* ---------- signos de alteracion en los rotulos: glifos de la fuente musical, no texto ---------- */
+// ♯ ♭ ♮ del cifrado o de «Do♯» NO se escriben como caracteres (dependerian de la fuente del navegador):
+// se incrustan los mismos glifos Leland que usa Verovio para las alteraciones de las notas.
+const SIGNOS = { '♯': 'E262', '♭': 'E260', '♮': 'E261', '𝄪': 'E263' };
+const AVANCE_SIGNO = { E262: 285, E260: 235, E261: 215, E263: 300 };   // anchura aproximada, en unidades del glifo
+let GLIFOS = null;
+function cargarGlifos(tk) {
+  const mei = '<?xml version="1.0" encoding="UTF-8"?><mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="5.0"><meiHead><fileDesc><titleStmt><title/></titleStmt><pubStmt/></fileDesc></meiHead><music><body><mdiv><score><scoreDef><staffGrp><staffDef n="1" lines="5" clef.shape="G" clef.line="2"/></staffGrp></scoreDef><section><measure n="1"><staff n="1"><layer n="1">'
+    + '<note pname="c" oct="4" dur="1" accid="f"/><note pname="d" oct="4" dur="1" accid="n"/><note pname="e" oct="4" dur="1" accid="s"/><note pname="f" oct="4" dur="1" accid="x"/>'
+    + '</layer></staff></measure></section></score></mdiv></body></music></mei>';
+  tk.setOptions(Object.assign({}, OPCIONES, { xmlIdSeed: 4242 }));
+  tk.loadData(mei);
+  const svg = tk.renderToSVG(1);
+  GLIFOS = {};
+  for (const m of svg.matchAll(/<g id="(E26[0-3])-[^"]*">([\s\S]*?)<\/g>/g)) GLIFOS[m[1]] = { inner: m[2] };
+  for (const c of Object.values(SIGNOS)) if (!GLIFOS[c]) throw new Error('no he podido obtener el glifo ' + c);
+}
+const RE_SIGNO = /([♯♭♮]|𝄪)/u;
+/** Trozos de un texto: [{texto}] y [{signo:'E262'}] en orden. */
+function trozosDe(texto) {
+  return texto.split(RE_SIGNO).filter(Boolean).map((t) => (SIGNOS[t] ? { signo: SIGNOS[t] } : { texto: t }));
+}
+const textosDe = (texto) => trozosDe(texto).filter((t) => t.texto).map((t) => t.texto);
+const signosDe = (texto) => trozosDe(texto).filter((t) => t.signo).map((t) => t.signo);
+const USADOS = new Set();
+/** Fila de texto con glifos: devuelve el marcado o null si no lleva signos. */
+function filaConGlifos(e, x, y, estilo) {
+  const trozos = trozosDe(e.texto);
+  if (!trozos.some((t) => t.signo)) return null;
+  const S = e.size || 300, gs = (0.98 * S) / 700, hueco = 0.05 * S, ancho = (t) => (t.signo ? AVANCE_SIGNO[t.signo] * gs : t.texto.length * 0.6 * S);
+  const total = trozos.reduce((a, t) => a + ancho(t), 0) + hueco * (trozos.length - 1);
+  let cx = x - total / 2, out = '';
+  const color = e.color || '#1a1a1a';
+  for (const t of trozos) {
+    if (t.signo) { USADOS.add(t.signo); out += `<use class="tm-glifo" href="#tmg-${t.signo}" fill="${color}" transform="translate(${Math.round(cx)} ${Math.round(y - (t.signo === 'E260' ? 0.08 : 0.33) * S)}) scale(${gs.toFixed(3)})"/>`; }
+    else out += `<text x="${Math.round(cx)}" y="${y}" text-anchor="start" fill="${color}"${estilo}>${t.texto}</text>`;
+    cx += ancho(t) + hueco;
+  }
+  return out;
+}
+
+/** Las notas y lineas viven dentro de <g class="page-margin" transform="translate(mx, my)">: todo lo que se anade
+ *  encima (rotulos, corchetes, numeros) tiene que llevar el MISMO desplazamiento o queda corrido. */
+function conMargen(svg, grupo) {
+  const pm = /class="page-margin"[^>]*transform="translate[(]([0-9.]+), ([0-9.]+)[)]"/.exec(svg);
+  return pm ? '<g transform="translate(' + pm[1] + ' ' + pm[2] + ')">' + grupo + '</g>' : grupo;
+}
+
 function conExtras(svg, spec, notas, cabs) {
   // etiquetas de texto y flechas: se colocan sobre las cabezas reales
   const lineas = lineasPentagrama(svg);
@@ -341,9 +411,13 @@ function conExtras(svg, spec, notas, cabs) {
       if (e.ref === 'arriba') arriba = Math.min(arriba, y - 300); else abajo = Math.max(abajo, y);
       const estilo = (e.size ? ` font-size="${e.size}"` : '') + (e.weight ? ` font-weight="${e.weight}"` : '') + (e.family ? ` font-family="${e.family}"` : '');
       const tach = e.tachado ? `<path class="tm-tachado" fill="none" stroke="${e.color || '#1a1a1a'}" stroke-width="40" stroke-linecap="round" d="M${x - 180} ${y - 20}L${x + 180} ${y - 320}"/>` : '';
+      const conSignos = filaConGlifos(e, x + (e.dx || 0), y, estilo);
+      if (conSignos) return conSignos + tach;
       return `<text x="${x + (e.dx || 0)}" y="${y}" fill="${e.color || '#1a1a1a'}"${estilo}>${e.texto}</text>${tach}`;
     }).join('');
-    grupo += `<g class="tm-etiquetas" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="300" text-anchor="middle">${ts}</g>`;
+    const defs = USADOS.size ? `<defs>${[...USADOS].map((c) => `<g id="tmg-${c}">${GLIFOS[c].inner}</g>`).join('')}</defs>` : '';
+    USADOS.clear();
+    grupo += `<g class="tm-etiquetas" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="300" text-anchor="middle">${defs}${ts}</g>`;
   }
   if (spec.flecha) {   // flecha de sentido (ascendente/descendente), dibujada como trazo
     const x = Math.round(cabs[cabs.length - 1].x + 700), sube = spec.flecha === 'sube';
@@ -373,10 +447,11 @@ function conExtras(svg, spec, notas, cabs) {
     s = s.replace(/^(<svg viewBox="0 0 \d+ )(\d+)(")/, (m, a, h, c) => `${a}${Math.round((Number(h) + d / 25))}${c}`);
   }
   const i = s.lastIndexOf('</svg>', s.lastIndexOf('</svg>') - 1);
-  return s.slice(0, i) + grupo + s.slice(i);
+  return s.slice(0, i) + conMargen(s, grupo) + s.slice(i);
 }
 
 /* ---------- verificacion del SVG ---------- */
+function eventos0(compasesAlt, k) { let i = 0; for (const c of compasesAlt) for (const e of c) { const n = e.notas.length; if (k < i + n) return e; i += n; } return null; }
 function verificarSVG(svg, spec, planas, compasesAlt, cabs) {
   const err = [];
   const cuenta = (re) => (svg.match(re) || []).length;
@@ -400,6 +475,8 @@ function verificarSVG(svg, spec, planas, compasesAlt, cabs) {
       if (n && c.y !== quiere) err.push(`la nota ${k + 1} (${nombre(n)}${n.octava}) esta a y=${c.y} y le corresponde y=${quiere}`);
     });
   }
+  // cabezas: blanca (E0A2) o rellena (E0FA) segun lo previsto, en las redondas
+  cabs.forEach((c, k) => { const n = planas[k]; const e = eventos0(compasesAlt, k); if (e && e.d === 'w' && c.g !== (n.rellena ? 'E0FA' : 'E0A2')) err.push('la cabeza ' + (k + 1) + ' es ' + c.g + ' y deberia ser ' + (n.rellena ? 'rellena' : 'blanca')); });
   // plicas: una por evento que no sea redonda
   const eventos = spec.compases.flat();
   const plicas = eventos.filter((e) => e.d !== 'w').length;
@@ -413,8 +490,13 @@ function verificarSVG(svg, spec, planas, compasesAlt, cabs) {
   if (JSON.stringify(Object.entries(dib).sort()) !== JSON.stringify(Object.entries(quiereAcc).sort())) err.push(`signos dibujados ${JSON.stringify(dib)}, previstos ${JSON.stringify(quiereAcc)}`);
   // texto: solo las etiquetas previstas
   const textos = (svg.match(/<text[^>]*>[^<]*<\/text>/g) || []).map((t) => t.replace(/<[^>]+>/g, ''));
-  const quiereT = (spec.etiquetas || []).map((e) => e.texto);
+  const quiereT = (spec.etiquetas || []).flatMap((e) => textosDe(e.texto));
   if (JSON.stringify(textos) !== JSON.stringify(quiereT)) err.push(`texto ${JSON.stringify(textos)}, previsto ${JSON.stringify(quiereT)}`);
+  // los signos ♯♭♮ del rotulo son glifos (no caracteres): tienen que salir todos y con su signo
+  const quiereG = (spec.etiquetas || []).flatMap((e) => signosDe(e.texto)).sort();
+  const dibujadosG = [...svg.matchAll(/class="tm-glifo" href="#tmg-(E26[0-3])"/g)].map((m) => m[1]).sort();
+  if (JSON.stringify(dibujadosG) !== JSON.stringify(quiereG)) err.push(`glifos de rotulo ${JSON.stringify(dibujadosG)}, previstos ${JSON.stringify(quiereG)}`);
+  if (/[♯♭♮]/.test(textos.join(''))) err.push('un signo ♯♭♮ ha quedado como texto');
   if (cuenta(/class="tm-tachado"/g) !== (spec.etiquetas || []).filter((e) => e.tachado).length) err.push('numero de cifras tachadas distinto del previsto');
   const colores = [...new Set((svg.match(/color="#[0-9a-fA-F]{6}"/g) || []).map((c) => c.slice(7, 14).toLowerCase()))];
   const quiereColor = spec.resaltar ? ['#d00000'] : [];
@@ -445,6 +527,8 @@ const CONJUNTOS = {
   'septima-dominante':        { pagina: 'diccionario-musical/acordes/acorde-de-septima-de-dominante', datos: 'acordes-septimas' },
   'septima-sensible':         { pagina: 'diccionario-musical/acordes/acorde-de-septima-de-sensible', datos: 'acordes-septimas' },
   'septima-disminuida':       { pagina: 'diccionario-musical/acordes/acorde-de-septima-disminuida', datos: 'acordes-septimas' },
+  'serie-armonica-explorador': { pagina: null, datos: 'serie-armonica' },
+  'cadencias':                { pagina: 'diccionario-musical/cadencias', datos: 'cadencias' },
   'acordes-triadas':          { pagina: 'diccionario-musical/acordes/acordes-triadas', datos: 'acordes' },
 };
 
@@ -460,12 +544,13 @@ async function main() {
   const porArchivo = new Map();
   datos.forEach((d) => (d.archivos || []).forEach((a) => porArchivo.set(norm(a), d)));
 
-  const htmlPath = path.join(RAIZ, cfg.pagina, 'index.html');
-  let html = fs.readFileSync(htmlPath, 'utf8');
+  const htmlPath = cfg.pagina ? path.join(RAIZ, cfg.pagina, 'index.html') : null;
+  let html = htmlPath ? fs.readFileSync(htmlPath, 'utf8') : '';
   const reImg = /(?:<a [^>]*>)?(?:<picture>(?:<source[^>]*>)*)?<img\b[^>]*>(?:<\/picture>)?(?:<\/a>)?/g;
   const imgs = [];
   let m;
-  while ((m = reImg.exec(html))) {
+  if (!cfg.pagina) datos.forEach((spec) => imgs.push({ trozo: null, spec, alt: spec.alt || '', src: '' }));   // imagenes que no estan en ninguna pagina
+  while (cfg.pagina && (m = reImg.exec(html))) {
     const src = (/src="([^"]+)"/.exec(m[0]) || [])[1] || '';
     const alt = ((/alt="([^"]*)"/.exec(m[0]) || [])[1] || '').replace(/&amp;/g, '&');
     const base = norm(decodeURIComponent(src.split('/').pop()));
@@ -480,6 +565,7 @@ async function main() {
   const createVerovioModule = (await import('verovio/wasm')).default;
   const { VerovioToolkit } = await import('verovio/esm');
   const tk = new VerovioToolkit(await createVerovioModule());
+  cargarGlifos(tk);
   fs.mkdirSync(path.join(RAIZ, SALIDA, cfg.datos), { recursive: true });
 
   const hechos = new Map();
@@ -491,6 +577,7 @@ async function main() {
     try {
       const compasesAlt = conAlteraciones(spec.compases);
       const planas = compasesAlt.flat().flatMap((e) => e.notas);
+      if (spec.rellena) planas.forEach((n) => { n.rellena = true; });
       if (spec.resaltar) {
         planas.forEach((n, k) => { n.color = spec.par.includes(k) ? '#d00000' : undefined; });
         const iv = nombreIntervalo(planas[spec.par[0]], planas[spec.par[1]]);
@@ -500,6 +587,7 @@ async function main() {
       const mei = aMEI(compasesAlt, spec.clave, !!spec.resaltar);
       const e = coherenciaConAlt(im.spec, planas, im.alt);
       e.push(...coherenciaInversion(im.spec, compasesAlt));
+      e.push(...coherenciaProgresion(im.spec, compasesAlt, im.alt));
       // MEI releido = lo previsto
       const leido = leerMEI(mei);
       compasesAlt.forEach((c, i) => c.forEach((ev, j) => {
@@ -526,7 +614,7 @@ async function main() {
   }
   if (fallos) { console.log(`\n${fallos} imagen(es) no pasan la verificacion: no se toca la pagina`); process.exit(1); }
 
-  if (poner) {
+  if (poner && cfg.pagina) {
     for (const im of imgs) {
       const h = im.hecho;
       const alt = (/alt="([^"]*)"/.exec(im.trozo) || [])[0] || 'alt=""';

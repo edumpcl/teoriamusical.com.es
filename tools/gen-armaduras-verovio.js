@@ -36,6 +36,13 @@ function dibujar(tk, q, semilla) {
   return tk.renderToSVG(1);
 }
 
+/** Las notas y lineas viven dentro de <g class="page-margin" transform="translate(mx, my)">: todo lo que se anade
+ *  encima (rotulos, corchetes, numeros) tiene que llevar el MISMO desplazamiento o queda corrido. */
+function conMargen(svg, grupo) {
+  const pm = /class="page-margin"[^>]*transform="translate[(]([0-9.]+), ([0-9.]+)[)]"/.exec(svg);
+  return pm ? '<g transform="translate(' + pm[1] + ' ' + pm[2] + ')">' + grupo + '</g>' : grupo;
+}
+
 /** Separa las alteraciones (solo en x; la altura la decide Verovio) y rotula debajo de cada una. */
 function ajustar(svg, q, etiquetas, separar) {
   const t = q > 0 ? SOSTENIDOS : BEMOLES;
@@ -59,7 +66,7 @@ function ajustar(svg, q, etiquetas, separar) {
   const alto = Math.round(base + 300), altoExt = Math.round(alto / 25);
   s = s.replace(/(<svg class="definition-scale"[^>]*viewBox="0 0 \d+ )\d+(")/, `$1${alto}$2`).replace(/^(<svg viewBox="0 0 \d+ )\d+(")/, `$1${altoExt}$2`);
   const i = s.lastIndexOf('</svg>', s.lastIndexOf('</svg>') - 1);
-  return { svg: s.slice(0, i) + grupo + s.slice(i), xs };
+  return { svg: s.slice(0, i) + conMargen(s, grupo) + s.slice(i), xs };
 }
 
 function verificar(svg, q, etiquetas, separar) {

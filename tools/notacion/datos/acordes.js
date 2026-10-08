@@ -37,7 +37,7 @@ for (const c of CIFRADOS) {
   const notas = c.keys.map((k, i) => { const kk = clave(k); return kk[0] + (c.accs[i] || '') + kk.slice(1); });
   const cifrado = c.figures.map((f) => ({ t: f.t, tachado: !!f.crossed }));
   datos.push({
-    slug: c.file, archivos: [c.file + '.png'], clave: 'sol', ancho: 220, sinAlt: false,
+    slug: c.file, archivos: [c.file + '.png'], clave: 'sol', ancho: 220, sinAlt: false, sensible: /sensible/.test(c.file) ? 'fundamental' : 'tercera',
     compases: [[{ n: notas, d: 'w' }]],
     cifrado,
     etiquetas: cifrado.map((f, k) => ({ nota: 0, texto: f.t, tachado: f.tachado, dy: 1000 + 560 * k, size: 460, weight: 700, family: 'Georgia, &quot;Times New Roman&quot;, serif' })),

@@ -197,7 +197,7 @@
 <p>Si tomamos como fundamental un <strong>Do₂</strong> (65,4 Hz) y vamos multiplicando, aparecen estas notas. Fíjate en un detalle clave: los intervalos entre armónicos consecutivos <strong>se van encogiendo</strong> a medida que subimos (octava, quinta, cuarta, tercera mayor, tercera menor…).</p>
 
 <figure style="margin:18px auto;text-align:center;">
-<picture><source type="image/webp" srcset="/assets/img/serie-armonica/serie-completa.webp"><img src="/assets/img/serie-armonica/serie-completa.png" width="920" height="304" loading="lazy" alt="Los 16 primeros armónicos sobre Do 2 en un pentagrama doble: Do, Do, Sol, Do, Mi, Sol, Si bemol, Do, Re, Mi, Fa sostenido, Sol, La bemol, Si bemol, Si, Do" style="max-width:100%;height:auto"></picture>
+<img src="/assets/img/serie-armonica/serie-completa.svg" width="898" height="293" loading="lazy" alt="Los 16 primeros armónicos sobre Do 2 en un pentagrama doble: Do, Do, Sol, Do, Mi, Sol, Si bemol, Do, Re, Mi, Fa sostenido, Sol, La bemol, Si bemol, Si, Do" style="max-width:100%;height:auto">
 <figcaption style="font-size:.85rem;color:#686868;margin-top:6px">Los 16 primeros armónicos del Do₂. Los intervalos se estrechan al subir. Los que van con la <strong>cabeza rellena</strong> (7º, 11º, 13º y 14º) no encajan en nuestra afinación: son las notas «entre teclas».</figcaption>
 </figure>
 
@@ -206,8 +206,7 @@
 <p>Este es el corazón de la página. Pulsa cada armónico para oírlo y verlo en el pentagrama; verás también la <strong>cuerda vibrando</strong> en ese número de partes. Con los botones puedes recorrer <strong>la serie entera</strong> de grave a agudo, o hacer <strong>sonar todos los armónicos a la vez</strong> —eso es, básicamente, un timbre—.</p>
 
 <div id="tmarmonicos"></div>
-<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js" defer></script>
-<script src="/assets/js/serie-armonica-engine.js?v=e42f347a" defer></script>
+<script src="/assets/js/serie-armonica-engine.js?v=0089e20b" defer></script>
 <script>document.addEventListener("DOMContentLoaded",function(){if(window.tmSerieArmonicaEngine)tmSerieArmonicaEngine("tmarmonicos");});</script>
 
 <p class="tm-embed-cap" style="font-size:.9rem;color:#686868">Los armónicos se sintetizan a partir de sus frecuencias exactas (múltiplos del Do₂). El explorador funciona con el sonido del navegador; no necesita micrófono.</p>

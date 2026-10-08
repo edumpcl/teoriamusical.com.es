@@ -67,5 +67,9 @@
          <g id="idknsli" class="pageMilestoneEnd v19ce75k" />
          <g id="j1lg7aje" class="pageMilestoneEnd u15iqvk1" />
       </g>
-   <g class="tm-etiquetas" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="300" text-anchor="middle"><text x="1367" y="2260" fill="#1a1a1a" font-size="460" font-weight="700" font-family="Georgia, &quot;Times New Roman&quot;, serif">♭5</text><text x="1367" y="2820" fill="#1a1a1a" font-size="460" font-weight="700" font-family="Georgia, &quot;Times New Roman&quot;, serif">♯</text></g></svg>
+   <g transform="translate(100 100)"><g class="tm-etiquetas" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="300" text-anchor="middle"><defs><g id="tmg-E260">
+         <path transform="scale(1,-1)" d="M132 40v11c0 21 -3 55 -39 55c-40 0 -55 -29 -57 -38l-3 -195c58 46 99 88 99 167zM120 155c59 0 83 -49 83 -101c0 -103 -90 -185 -176 -228c-2 -1 -6 -2 -8 -2c-8 0 -14 6 -14 14l-5 601c0 8 6 14 14 14h12c8 0 14 -6 14 -14l-4 -321c5 6 34 37 84 37z" />
+      </g><g id="tmg-E262">
+         <path transform="scale(1,-1)" d="M78 74v-166l89 19v165zM233 105l-38 -7v-165l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14l-38 -7v-147h-28v141l-89 -18v-155h-28v149l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v165l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v147h28v-141 l89 18v155h28v-149l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14z" />
+      </g></defs><use class="tm-glifo" href="#tmg-E260" fill="#1a1a1a" transform="translate(1142 2223) scale(0.644)"/><text x="1316" y="2260" text-anchor="start" fill="#1a1a1a" font-size="460" font-weight="700" font-family="Georgia, &quot;Times New Roman&quot;, serif">5</text><use class="tm-glifo" href="#tmg-E262" fill="#1a1a1a" transform="translate(1275 2668) scale(0.644)"/></g></g></svg>
 </svg>

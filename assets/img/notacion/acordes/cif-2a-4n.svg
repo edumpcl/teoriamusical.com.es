@@ -58,5 +58,7 @@
          <g id="z1mxl1t4" class="pageMilestoneEnd nkbsvnt" />
          <g id="avv6kib" class="pageMilestoneEnd m1rd8mm5" />
       </g>
-   <g class="tm-etiquetas" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="300" text-anchor="middle"><text x="1140" y="2260" fill="#1a1a1a" font-size="460" font-weight="700" font-family="Georgia, &quot;Times New Roman&quot;, serif">6</text><text x="1140" y="2820" fill="#1a1a1a" font-size="460" font-weight="700" font-family="Georgia, &quot;Times New Roman&quot;, serif">♮4</text></g></svg>
+   <g transform="translate(100 100)"><g class="tm-etiquetas" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="300" text-anchor="middle"><defs><g id="tmg-E261">
+         <path transform="scale(1,-1)" d="M28 -97l116 32v165l-116 -33v-164zM166 183c3 -2 5 -7 5 -11v-495h-27v175l-126 -35h-4c-8 0 -14 5 -14 13v495h28v-175l126 35c1 0 3 1 4 1c3 0 6 -1 8 -3z" />
+      </g></defs><text x="1140" y="2260" fill="#1a1a1a" font-size="460" font-weight="700" font-family="Georgia, &quot;Times New Roman&quot;, serif">6</text><use class="tm-glifo" href="#tmg-E261" fill="#1a1a1a" transform="translate(921 2668) scale(0.644)"/><text x="1083" y="2820" text-anchor="start" fill="#1a1a1a" font-size="460" font-weight="700" font-family="Georgia, &quot;Times New Roman&quot;, serif">4</text></g></g></svg>
 </svg>
