@@ -1,0 +1,50 @@
+<svg id="i3dc43w" viewBox="0 0 132 80" width="202" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Armadura de La mayor en clave de sol: 3 sostenidos (Fa♯, Do♯, Sol♯).</title>
+   <defs>
+      <g id="E050-i3dc43w">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E262-i3dc43w">
+         <path transform="scale(1,-1)" d="M78 74v-166l89 19v165zM233 105l-38 -7v-165l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14l-38 -7v-147h-28v141l-89 -18v-155h-28v149l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v165l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v147h28v-141 l89 18v155h28v-149l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14z" />
+      </g>
+   </defs>
+   <style type="text/css">#i3dc43w g.ending, #i3dc43w g.fing, #i3dc43w g.reh, #i3dc43w g.tempo {font-weight:bold;}#i3dc43w g.dir, #i3dc43w g.dynam, #i3dc43w g.mNum {font-style:italic;}#i3dc43w g.label {font-weight:normal;}#i3dc43w ellipse, #i3dc43w path, #i3dc43w polygon, #i3dc43w polyline, #i3dc43w rect {stroke:currentColor}#i3dc43w g.cursor {fill:dodgerblue; color:dodgerblue;}#i3dc43w g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 3290 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="j1f2gmy7" class="mdiv pageMilestone" />
+         <g id="k1pj2290" class="score pageMilestone" />
+         <g id="p19y0scw" class="system">
+            <g id="y6g8h1g" class="section systemMilestone" />
+            <g id="z1xvrj08" class="measure">
+               <g id="ibpfcru" class="staff">
+                  <path d="M0 540 L3099 540" stroke-width="13" />
+                  <path d="M0 720 L3099 720" stroke-width="13" />
+                  <path d="M0 900 L3099 900" stroke-width="13" />
+                  <path d="M0 1080 L3099 1080" stroke-width="13" />
+                  <path d="M0 1260 L3099 1260" stroke-width="13" />
+                  <g id="w1r4jh7t" class="clef">
+                     <use href="#E050-i3dc43w" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="x17y2s46" class="keySig">
+                     <g id="ytf6c7f" class="keyAccid">
+                        <use href="#E262-i3dc43w" transform="translate(730, 540) scale(0.72, 0.72)" />
+                     </g>
+                     <g id="zwx3sup" class="keyAccid">
+                        <use href="#E262-i3dc43w" transform="translate(942, 810) scale(0.72, 0.72)" />
+                     </g>
+                     <g id="a1y8ulcm" class="keyAccid">
+                        <use href="#E262-i3dc43w" transform="translate(1154, 450) scale(0.72, 0.72)" />
+                     </g>
+                  </g>
+                  <g id="j1keyvht" class="layer">
+                     <g id="k3wpx2r" class="space" />
+                  </g>
+               </g>
+               <g id="h277gts" class="barLine" />
+            </g>
+            <g id="s1e28r3l" class="systemMilestoneEnd y6g8h1g" />
+         </g>
+         <g id="t22e6fr" class="pageMilestoneEnd k1pj2290" />
+         <g id="uaw6a72" class="pageMilestoneEnd j1f2gmy7" />
+      </g>
+   </svg>
+</svg>

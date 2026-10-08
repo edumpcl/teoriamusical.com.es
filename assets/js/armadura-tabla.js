@@ -1,38 +1,24 @@
 /* Selector de "Armadura de cada tonalidad" — /diccionario-musical/tonalidades/tonalidades-y-armaduras/
    Las 15 tarjetas (.tm-key-card) ya están en el HTML con su texto completo (para que
-   Google las indexe aunque no ejecute el JS); este script solo: 1) dibuja el pentagrama
-   de cada una con VexFlow, 2) muestra una sola tarjeta a la vez con un selector de
-   botones, y 3) hace que los enlaces de la tabla de arriba bajen y seleccionen la
-   tarjeta correcta. */
+   Google las indexe aunque no ejecute el JS), y cada una lleva ya su pentagrama como SVG
+   (assets/img/armaduras/, generado con tools/gen-armaduras-verovio.js: no hace falta
+   ninguna librería de notación). Este script solo: 1) muestra una sola tarjeta a la vez
+   con un selector de botones, y 2) hace que los enlaces de la tabla de arriba bajen y
+   seleccionen la tarjeta correcta. */
 (function () {
   'use strict';
 
   function init() {
-    var VF = (window.Vex && window.Vex.Flow) || window.VexFlow;
-    if (!VF) return;
-
     var cards = Array.prototype.slice.call(document.querySelectorAll('.tm-key-card'));
     var botones = Array.prototype.slice.call(document.querySelectorAll('#tm-key-selector button[data-key]'));
     if (!cards.length || !botones.length) return;
-
-    function dibujar(card) {
-      var div = card.querySelector('.tm-key-svg');
-      if (!div || div.childNodes.length) return;
-      var rend = new VF.Renderer(div, VF.Renderer.Backends.SVG);
-      rend.resize(200, 130);
-      var ctx = rend.getContext();
-      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new VF.Stave(10, 25, 180);
-      stave.addClef('treble').addKeySignature(card.getAttribute('data-vex'));
-      stave.setContext(ctx).draw();
-    }
 
     function mostrar(key, scroll) {
       var encontrada = null;
       cards.forEach(function (c) {
         var es = c.id === key;
         c.hidden = !es;
-        if (es) { encontrada = c; dibujar(c); }
+        if (es) encontrada = c;
       });
       botones.forEach(function (b) { b.setAttribute('aria-current', b.getAttribute('data-key') === key ? 'true' : 'false'); });
       if (scroll && encontrada) encontrada.scrollIntoView({ behavior: 'smooth', block: 'center' });

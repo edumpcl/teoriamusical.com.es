@@ -409,9 +409,13 @@ function conCorchetes(svg, notas, corch, etiquetas) {
   if (hayEt) {
     // letra bajo la nota (Arial en negrita, ~18 px): unico texto que lleva el SVG
     const base = yL + 4.4 * ESPACIO;
-    const ts = etiquetas.map((e) => `<text x="${Math.round(pos[e.indice].x)}" y="${Math.round(base)}" fill="${e.color}">${e.texto}</text>`).join('');
+    // cada etiqueta puede traer su propio estilo (dy, size, family, weight); por defecto, Arial negrita 18 px
+    const ts = etiquetas.map((e) => {
+      const estilo = (e.size ? ` font-size="${e.size}"` : '') + (e.family ? ` font-family="${e.family}"` : '') + (e.weight ? ` font-weight="${e.weight}"` : '');
+      return `<text x="${Math.round(pos[e.indice].x)}" y="${Math.round(base + (e.dy || 0))}" fill="${e.color}"${estilo}>${e.texto}</text>`;
+    }).join('');
     grupo += `<g class="tm-etiquetas" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="300" text-anchor="middle">${ts}</g>`;
-    fondo = Math.max(fondo, base);
+    fondo = Math.max(fondo, base + Math.max(0, ...etiquetas.map((e) => e.dy || 0)));
   }
   const alto = Math.round(fondo + 240), altoExt = Math.round(alto / 25);
   let s = svg.replace(/(<svg class="definition-scale"[^>]*viewBox="0 0 \d+ )\d+(")/, `$1${alto}$2`);
@@ -474,6 +478,30 @@ const CONJUNTOS = {
   'oriental':            { pagina: base + 'escala-oriental', tablaTipo: 'oriental' },
   'modos-griegos':       { pagina: base + 'modos-griegos' },
   'modos-gregorianos':   { pagina: base + 'modos-gregorianos' },
+  'tono-y-semitono':     { pagina: 'diccionario-musical/intervalos/tono-y-semitono', corchetes: ['mayor'] },
+  'grados':              { pagina: 'diccionario-musical/nombres-de-los-grados-de-la-escala', rotulos: 'grados', separacion: 0.3 },
+};
+
+/**
+ * Rotulos propios de una imagen (numeros romanos y nombres de los grados). Los nombres se
+ * COMPARAN con los que ya decia la pagina en el alt de la imagen antigua: si no coinciden, falla.
+ */
+const GRADOS_ROMANOS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+const GRADOS_NOMBRES = ['Tónica', 'Supertónica', 'Mediante', 'Subdominante', 'Dominante', 'Superdominante', 'Sensible', 'Tónica'];
+const ROTULOS = {
+  grados(notas, altPrevio) {
+    const err = [];
+    const pares = [...altPrevio.matchAll(/(VIII|VII|VI|IV|V|III|II|I) ([A-ZÁÉÍÓÚ][a-záéíóúñ]+)/g)].map((m) => `${m[1]} ${m[2]}`);
+    const quiere = GRADOS_ROMANOS.map((r, k) => `${r} ${GRADOS_NOMBRES[k]}`);
+    if (pares.length && JSON.stringify(pares) !== JSON.stringify(quiere)) err.push(`los grados del alt de la pagina (${pares.join(', ')}) no coinciden con los de la definicion`);
+    const etiquetas = [];
+    notas.forEach((n, k) => {
+      etiquetas.push({ indice: k, texto: GRADOS_ROMANOS[k], color: '#8a5a00', family: 'Georgia, &quot;Times New Roman&quot;, serif', size: 360, dy: 150 });
+      etiquetas.push({ indice: k, texto: GRADOS_NOMBRES[k], color: '#1a1a1a', size: 250, dy: 600 });
+    });
+    const alt = `Escala de Do mayor con sus siete grados rotulados: ${quiere.slice(0, 7).join(', ')} y ${quiere[7]}.`;
+    return { etiquetas, alt, err };
+  },
 };
 
 /** Tonica del alt: "Sol Mayor…", "Fa# Mayor…", "Si bemol menor…", "Escala de La menor…". */
@@ -557,7 +585,7 @@ async function main() {
     if (modoEsp) { figuras.push({ trozo: m[0], src, especial: modoEsp, modo: 'dentro' }); continue; }
     const ton = leerTonica(alt), tipo = leerTipo(alt);
     if (!ton || !tipo) continue;
-    figuras.push({ trozo: m[0], src, tipo, modo: /con armadura/i.test(alt) ? 'armadura' : 'dentro', ...ton });
+    figuras.push({ trozo: m[0], src, tipo, altPrevio: alt, modo: /con armadura/i.test(alt) ? 'armadura' : 'dentro', ...ton });
   }
   if (!figuras.length) throw new Error('no he encontrado ninguna imagen de escala en la pagina');
 
@@ -569,7 +597,7 @@ async function main() {
   const hechos = new Map();
   let fallos = 0;
   for (const f of figuras) {
-    const clave = f.especial ? Modos.clave(f.especial) : `${NOMBRE[f.tonica].toLowerCase()}${ALT_ARCHIVO[f.alt]}-${f.tipo}-${f.modo}`;
+    const clave = (f.especial ? Modos.clave(f.especial) : `${NOMBRE[f.tonica].toLowerCase()}${ALT_ARCHIVO[f.alt]}-${f.tipo}-${f.modo}`) + (cfg.rotulos ? '-' + cfg.rotulos : '');
     f.clave = clave;
     if (hechos.has(clave)) { f.hecho = hechos.get(clave); continue; }
     try {
@@ -603,14 +631,16 @@ async function main() {
       const mei = aMEI(notas, q);
       const tabla = (cfg.tablaTipo || cfg.tabla) === f.tipo ? tablaPagina : null;
       const e1 = verificarEscala(notas, f.tonica, f.alt, f.tipo, mei, tabla);
-      tk.setOptions(Object.assign({}, OPCIONES, { xmlIdSeed: hash(clave), spacingLinear: separacionDe(f.tipo) }));
+      const rot = cfg.rotulos ? ROTULOS[cfg.rotulos](notas, f.altPrevio || '') : null;
+      if (rot) e1.push(...rot.err);
+      tk.setOptions(Object.assign({}, OPCIONES, { xmlIdSeed: hash(clave), spacingLinear: cfg.separacion || separacionDe(f.tipo) }));
       if (!tk.loadData(mei)) throw new Error('Verovio no lee el MEI');
       if (tk.getPageCount() !== 1) e1.push('sale en mas de una pagina');
       const dibujo = tk.renderToSVG(1);
       if (Number(/viewBox="0 0 ([\d.]+) /.exec(dibujo)[1]) * PX_POR_UNIDAD > ANCHO_MAX) e1.push('el dibujo es demasiado ancho');
-      const svg = conCorchetes(dibujo, notas, corch);
-      const e2 = verificarSVG(svg, notas, f.tonica, f.alt, f.tipo, f.modo, corch);
-      const altNuevo = describir(notas, f.tonica, f.alt, f.tipo, f.modo);
+      const svg = conCorchetes(dibujo, notas, corch, rot && rot.etiquetas);
+      const e2 = verificarSVG(svg, notas, f.tonica, f.alt, f.tipo, f.modo, corch, rot && rot.etiquetas);
+      const altNuevo = rot ? rot.alt : describir(notas, f.tonica, f.alt, f.tipo, f.modo);
       const listo = preparar(svg, altNuevo);
       const errores = e1.concat(e2);
       if (errores.length) throw new Error(errores.join('\n   - '));
@@ -640,4 +670,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error('✗', e.message); process.exit(1); });
-module.exports = { construir, conRojo, conAlteraciones, aMEI, leerAlturas, verificarEscala, TIPOS };
+module.exports = { construir, conRojo, conAlteraciones, aMEI, leerAlturas, verificarEscala, TIPOS, preparar, OPCIONES, PX_POR_UNIDAD, hash, escAttr, quintasMayor, alteracionesArmadura, NOMBRE, LETRA_DE, LETRAS, GLIFO, ESPACIO, SALIDA, RAIZ };

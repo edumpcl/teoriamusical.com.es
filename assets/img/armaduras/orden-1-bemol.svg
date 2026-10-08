@@ -1,0 +1,44 @@
+<svg id="o1e1bvrc" viewBox="0 0 246 94" width="376" height="144" role="img" xmlns="http://www.w3.org/2000/svg"><title>Armadura con 1 bemol en clave de sol: Si♭. Bajo cada alteración está escrito su nombre.</title>
+   <defs>
+      <g id="E050-o1e1bvrc">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E260-o1e1bvrc">
+         <path transform="scale(1,-1)" d="M132 40v11c0 21 -3 55 -39 55c-40 0 -55 -29 -57 -38l-3 -195c58 46 99 88 99 167zM120 155c59 0 83 -49 83 -101c0 -103 -90 -185 -176 -228c-2 -1 -6 -2 -8 -2c-8 0 -14 6 -14 14l-5 601c0 8 6 14 14 14h12c8 0 14 -6 14 -14l-4 -321c5 6 34 37 84 37z" />
+      </g>
+   </defs>
+   <style type="text/css">#o1e1bvrc g.ending, #o1e1bvrc g.fing, #o1e1bvrc g.reh, #o1e1bvrc g.tempo {font-weight:bold;}#o1e1bvrc g.dir, #o1e1bvrc g.dynam, #o1e1bvrc g.mNum {font-style:italic;}#o1e1bvrc g.label {font-weight:normal;}#o1e1bvrc ellipse, #o1e1bvrc path, #o1e1bvrc polygon, #o1e1bvrc polyline, #o1e1bvrc rect {stroke:currentColor}#o1e1bvrc g.cursor {fill:dodgerblue; color:dodgerblue;}#o1e1bvrc g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 6150 2352">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="pgef5sj" class="mdiv pageMilestone" />
+         <g id="qpqe84k" class="score pageMilestone" />
+         <g id="v1o6x2oz" class="system">
+            <g id="e57wcib" class="section systemMilestone" />
+            <g id="fdrx2kb" class="measure">
+               <g id="o1lb15jv" class="staff">
+                  <path d="M0 540 L5950 540" stroke-width="13" />
+                  <path d="M0 720 L5950 720" stroke-width="13" />
+                  <path d="M0 900 L5950 900" stroke-width="13" />
+                  <path d="M0 1080 L5950 1080" stroke-width="13" />
+                  <path d="M0 1260 L5950 1260" stroke-width="13" />
+                  <g id="c6nwekk" class="clef">
+                     <use href="#E050-o1e1bvrc" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="d15lhjr" class="keySig">
+                     <g id="e1t4c4ug" class="keyAccid">
+                        <use href="#E260-o1e1bvrc" transform="translate(730, 900) scale(0.72, 0.72)" />
+                     </g>
+                  </g>
+                  <g id="pw2u2gp" class="layer">
+                     <g id="qk6yqtw" class="space" />
+                  </g>
+               </g>
+               <g id="n1t3cra4" class="barLine" />
+            </g>
+            <g id="y1m59wwk" class="systemMilestoneEnd e57wcib" />
+         </g>
+         <g id="z43et9s" class="pageMilestoneEnd qpqe84k" />
+         <g id="agcuoq5" class="pageMilestoneEnd pgef5sj" />
+      </g>
+   <g class="tm-etiquetas" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="300" text-anchor="middle"><text x="815" y="2052" fill="#1a1a1a">si</text></g></svg>
+</svg>

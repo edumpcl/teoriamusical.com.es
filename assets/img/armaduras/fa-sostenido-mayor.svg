@@ -1,0 +1,59 @@
+<svg id="d1oikbgc" viewBox="0 0 158 80" width="241" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Armadura de Fa♯ mayor en clave de sol: 6 sostenidos (Fa♯, Do♯, Sol♯, Re♯, La♯, Mi♯).</title>
+   <defs>
+      <g id="E050-d1oikbgc">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E262-d1oikbgc">
+         <path transform="scale(1,-1)" d="M78 74v-166l89 19v165zM233 105l-38 -7v-165l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14l-38 -7v-147h-28v141l-89 -18v-155h-28v149l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v165l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v147h28v-141 l89 18v155h28v-149l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14z" />
+      </g>
+   </defs>
+   <style type="text/css">#d1oikbgc g.ending, #d1oikbgc g.fing, #d1oikbgc g.reh, #d1oikbgc g.tempo {font-weight:bold;}#d1oikbgc g.dir, #d1oikbgc g.dynam, #d1oikbgc g.mNum {font-style:italic;}#d1oikbgc g.label {font-weight:normal;}#d1oikbgc ellipse, #d1oikbgc path, #d1oikbgc polygon, #d1oikbgc polyline, #d1oikbgc rect {stroke:currentColor}#d1oikbgc g.cursor {fill:dodgerblue; color:dodgerblue;}#d1oikbgc g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 3930 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="esrwys4" class="mdiv pageMilestone" />
+         <g id="fvcxa07" class="score pageMilestone" />
+         <g id="k1f7ykcu" class="system">
+            <g id="t11d1mcg" class="section systemMilestone" />
+            <g id="u166gqq2" class="measure">
+               <g id="dfq8xxz" class="staff">
+                  <path d="M0 540 L3735 540" stroke-width="13" />
+                  <path d="M0 720 L3735 720" stroke-width="13" />
+                  <path d="M0 900 L3735 900" stroke-width="13" />
+                  <path d="M0 1080 L3735 1080" stroke-width="13" />
+                  <path d="M0 1260 L3735 1260" stroke-width="13" />
+                  <g id="e1uygxij" class="clef">
+                     <use href="#E050-d1oikbgc" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="fnhfxox" class="keySig">
+                     <g id="g1w7wwvv" class="keyAccid">
+                        <use href="#E262-d1oikbgc" transform="translate(730, 540) scale(0.72, 0.72)" />
+                     </g>
+                     <g id="h1nak484" class="keyAccid">
+                        <use href="#E262-d1oikbgc" transform="translate(942, 810) scale(0.72, 0.72)" />
+                     </g>
+                     <g id="i6xlywp" class="keyAccid">
+                        <use href="#E262-d1oikbgc" transform="translate(1154, 450) scale(0.72, 0.72)" />
+                     </g>
+                     <g id="jmu9zxa" class="keyAccid">
+                        <use href="#E262-d1oikbgc" transform="translate(1366, 720) scale(0.72, 0.72)" />
+                     </g>
+                     <g id="kom0mmg" class="keyAccid">
+                        <use href="#E262-d1oikbgc" transform="translate(1578, 990) scale(0.72, 0.72)" />
+                     </g>
+                     <g id="ljdzw6s" class="keyAccid">
+                        <use href="#E262-d1oikbgc" transform="translate(1790, 630) scale(0.72, 0.72)" />
+                     </g>
+                  </g>
+                  <g id="ew26tqv" class="layer">
+                     <g id="f1ig0b8h" class="space" />
+                  </g>
+               </g>
+               <g id="csr1gb9" class="barLine" />
+            </g>
+            <g id="n1y8fas" class="systemMilestoneEnd t11d1mcg" />
+         </g>
+         <g id="o10l4fw7" class="pageMilestoneEnd fvcxa07" />
+         <g id="p5bsop3" class="pageMilestoneEnd esrwys4" />
+      </g>
+   </svg>
+</svg>

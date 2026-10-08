@@ -1,0 +1,47 @@
+<svg id="u1tff0ja" viewBox="0 0 124 80" width="189" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Armadura de Re mayor en clave de sol: 2 sostenidos (Fa♯, Do♯).</title>
+   <defs>
+      <g id="E050-u1tff0ja">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E262-u1tff0ja">
+         <path transform="scale(1,-1)" d="M78 74v-166l89 19v165zM233 105l-38 -7v-165l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14l-38 -7v-147h-28v141l-89 -18v-155h-28v149l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v165l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v147h28v-141 l89 18v155h28v-149l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14z" />
+      </g>
+   </defs>
+   <style type="text/css">#u1tff0ja g.ending, #u1tff0ja g.fing, #u1tff0ja g.reh, #u1tff0ja g.tempo {font-weight:bold;}#u1tff0ja g.dir, #u1tff0ja g.dynam, #u1tff0ja g.mNum {font-style:italic;}#u1tff0ja g.label {font-weight:normal;}#u1tff0ja ellipse, #u1tff0ja path, #u1tff0ja polygon, #u1tff0ja polyline, #u1tff0ja rect {stroke:currentColor}#u1tff0ja g.cursor {fill:dodgerblue; color:dodgerblue;}#u1tff0ja g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 3080 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="vkuysoh" class="mdiv pageMilestone" />
+         <g id="wmgpyv" class="score pageMilestone" />
+         <g id="b1lwv62j" class="system">
+            <g id="k1shj60l" class="section systemMilestone" />
+            <g id="l12umtxk" class="measure">
+               <g id="u9azyoo" class="staff">
+                  <path d="M0 540 L2887 540" stroke-width="13" />
+                  <path d="M0 720 L2887 720" stroke-width="13" />
+                  <path d="M0 900 L2887 900" stroke-width="13" />
+                  <path d="M0 1080 L2887 1080" stroke-width="13" />
+                  <path d="M0 1260 L2887 1260" stroke-width="13" />
+                  <g id="v1c1h9sk" class="clef">
+                     <use href="#E050-u1tff0ja" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="wzzal2i" class="keySig">
+                     <g id="x1kubaki" class="keyAccid">
+                        <use href="#E262-u1tff0ja" transform="translate(730, 540) scale(0.72, 0.72)" />
+                     </g>
+                     <g id="y1riuo0g" class="keyAccid">
+                        <use href="#E262-u1tff0ja" transform="translate(942, 810) scale(0.72, 0.72)" />
+                     </g>
+                  </g>
+                  <g id="v1uswu7g" class="layer">
+                     <g id="w1rakuph" class="space" />
+                  </g>
+               </g>
+               <g id="t1x7h8tf" class="barLine" />
+            </g>
+            <g id="eil97w3" class="systemMilestoneEnd k1shj60l" />
+         </g>
+         <g id="f150dwp7" class="pageMilestoneEnd wmgpyv" />
+         <g id="g1q7acwz" class="pageMilestoneEnd vkuysoh" />
+      </g>
+   </svg>
+</svg>

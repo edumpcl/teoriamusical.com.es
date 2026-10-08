@@ -1,0 +1,82 @@
+<svg id="e1xk7hsp" viewBox="0 0 652 116" width="996" height="177" role="img" xmlns="http://www.w3.org/2000/svg"><title>Escala de Do mayor con sus siete grados rotulados: I Tónica, II Supertónica, III Mediante, IV Subdominante, V Dominante, VI Superdominante, VII Sensible y VIII Tónica.</title>
+   <defs>
+      <g id="E050-e1xk7hsp">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A2-e1xk7hsp">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#e1xk7hsp g.ending, #e1xk7hsp g.fing, #e1xk7hsp g.reh, #e1xk7hsp g.tempo {font-weight:bold;}#e1xk7hsp g.dir, #e1xk7hsp g.dynam, #e1xk7hsp g.mNum {font-style:italic;}#e1xk7hsp g.label {font-weight:normal;}#e1xk7hsp ellipse, #e1xk7hsp path, #e1xk7hsp polygon, #e1xk7hsp polyline, #e1xk7hsp rect {stroke:currentColor}#e1xk7hsp g.cursor {fill:dodgerblue; color:dodgerblue;}#e1xk7hsp g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 16300 2892">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="f718z41" class="mdiv pageMilestone" />
+         <g id="g1nw1lrp" class="score pageMilestone" />
+         <g id="re6n98d" class="system">
+            <g id="t82d65e" class="section systemMilestone" />
+            <g id="u1ibcowm" class="measure">
+               <g id="d7askq1" class="staff">
+                  <path d="M0 540 L16100 540" stroke-width="13" />
+                  <path d="M0 720 L16100 720" stroke-width="13" />
+                  <path d="M0 900 L16100 900" stroke-width="13" />
+                  <path d="M0 1080 L16100 1080" stroke-width="13" />
+                  <path d="M0 1260 L16100 1260" stroke-width="13" />
+                  <g id="k1f4npp9" class="clef">
+                     <use href="#E050-e1xk7hsp" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="l19c017i" class="keySig" />
+                  <g class="ledgerLines below">
+                     <path d="M772 1440 L1136 1440" stroke-width="22" />
+                  </g>
+                  <g id="e11vjkhv" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-e1xk7hsp" transform="translate(820, 1440) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-e1xk7hsp" transform="translate(2730, 1350) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-e1xk7hsp" transform="translate(4640, 1260) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-e1xk7hsp" transform="translate(6550, 1170) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n4" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-e1xk7hsp" transform="translate(8460, 1080) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n5" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-e1xk7hsp" transform="translate(10370, 990) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n6" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-e1xk7hsp" transform="translate(12280, 900) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n7" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-e1xk7hsp" transform="translate(14190, 810) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="c1yr0geb" class="barLine" />
+            </g>
+            <g id="u7rio1g" class="systemMilestoneEnd t82d65e" />
+         </g>
+         <g id="v1c3rb01" class="pageMilestoneEnd g1nw1lrp" />
+         <g id="w1s5exoi" class="pageMilestoneEnd f718z41" />
+      </g>
+   <g class="tm-etiquetas" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="300" text-anchor="middle"><text x="972" y="2202" fill="#8a5a00" font-size="360" font-family="Georgia, &quot;Times New Roman&quot;, serif">I</text><text x="972" y="2652" fill="#1a1a1a" font-size="250">Tónica</text><text x="2882" y="2202" fill="#8a5a00" font-size="360" font-family="Georgia, &quot;Times New Roman&quot;, serif">II</text><text x="2882" y="2652" fill="#1a1a1a" font-size="250">Supertónica</text><text x="4792" y="2202" fill="#8a5a00" font-size="360" font-family="Georgia, &quot;Times New Roman&quot;, serif">III</text><text x="4792" y="2652" fill="#1a1a1a" font-size="250">Mediante</text><text x="6702" y="2202" fill="#8a5a00" font-size="360" font-family="Georgia, &quot;Times New Roman&quot;, serif">IV</text><text x="6702" y="2652" fill="#1a1a1a" font-size="250">Subdominante</text><text x="8612" y="2202" fill="#8a5a00" font-size="360" font-family="Georgia, &quot;Times New Roman&quot;, serif">V</text><text x="8612" y="2652" fill="#1a1a1a" font-size="250">Dominante</text><text x="10522" y="2202" fill="#8a5a00" font-size="360" font-family="Georgia, &quot;Times New Roman&quot;, serif">VI</text><text x="10522" y="2652" fill="#1a1a1a" font-size="250">Superdominante</text><text x="12432" y="2202" fill="#8a5a00" font-size="360" font-family="Georgia, &quot;Times New Roman&quot;, serif">VII</text><text x="12432" y="2652" fill="#1a1a1a" font-size="250">Sensible</text><text x="14342" y="2202" fill="#8a5a00" font-size="360" font-family="Georgia, &quot;Times New Roman&quot;, serif">VIII</text><text x="14342" y="2652" fill="#1a1a1a" font-size="250">Tónica</text></g></svg>
+</svg>
