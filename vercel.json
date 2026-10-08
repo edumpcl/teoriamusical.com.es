@@ -39,6 +39,15 @@
       ]
     },
     {
+      "source": "/pruebas/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
       "source": "/panel/(.*)",
       "headers": [
         {
