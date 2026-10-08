@@ -1,0 +1,62 @@
+<svg id="pk52z0x" viewBox="0 0 170 100" width="260" height="153" role="img" xmlns="http://www.w3.org/2000/svg"><title>Cuarta aumentada en la 3ª inversión del acorde de séptima de dominante</title>
+   <defs>
+      <g id="E050-pk52z0x">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A2-pk52z0x">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#pk52z0x g.ending, #pk52z0x g.fing, #pk52z0x g.reh, #pk52z0x g.tempo {font-weight:bold;}#pk52z0x g.dir, #pk52z0x g.dynam, #pk52z0x g.mNum {font-style:italic;}#pk52z0x g.label {font-weight:normal;}#pk52z0x ellipse, #pk52z0x path, #pk52z0x polygon, #pk52z0x polyline, #pk52z0x rect {stroke:currentColor}#pk52z0x g.cursor {fill:dodgerblue; color:dodgerblue;}#pk52z0x g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 4250 2500">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="q1jvuqg8" class="mdiv pageMilestone" />
+         <g id="r10k7nqe" class="score pageMilestone" />
+         <g id="a1bnh5pm" class="system">
+            <g id="ezfnmdt" class="section systemMilestone" />
+            <g id="f1cu410u" class="measure">
+               <g id="ozsafb3" class="staff">
+                  <path d="M0 540 L4050 540" stroke-width="13" />
+                  <path d="M0 720 L4050 720" stroke-width="13" />
+                  <path d="M0 900 L4050 900" stroke-width="13" />
+                  <path d="M0 1080 L4050 1080" stroke-width="13" />
+                  <path d="M0 1260 L4050 1260" stroke-width="13" />
+                  <g id="mwd8lj6" class="clef">
+                     <use href="#E050-pk52z0x" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="n1jrnu3t" class="keySig" />
+                  <g id="puceq43" class="layer">
+                     <g id="q4dgegy" class="space" />
+                     <g id="r86msxc" class="chord">
+                        <g id="n0" class="note" color="#d00000" fill="#d00000">
+                           <g class="notehead">
+                              <use href="#E0A2-pk52z0x" transform="translate(1780, 1170) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="n1" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-pk52z0x" transform="translate(2030, 1080) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="n2" class="note" color="#d00000" fill="#d00000">
+                           <g class="notehead">
+                              <use href="#E0A2-pk52z0x" transform="translate(1780, 900) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="n3" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-pk52z0x" transform="translate(1780, 720) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="n1droxku" class="barLine" />
+            </g>
+            <g id="dd1qyoe" class="systemMilestoneEnd ezfnmdt" />
+         </g>
+         <g id="ed103gq" class="pageMilestoneEnd r10k7nqe" />
+         <g id="f161iler" class="pageMilestoneEnd q1jvuqg8" />
+      </g>
+   <g class="tm-etiquetas" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="300" text-anchor="middle"><text x="2125" y="2160" fill="#1a1a1a" font-size="500" font-weight="400" font-family="Georgia, &quot;Times New Roman&quot;, serif">4ª Aumentada</text></g><path class="tm-corchete" fill="none" stroke="#1a1a1a" stroke-width="34" stroke-linejoin="miter" d="M1700 750H1570V1320H1700"/></svg>
+</svg>

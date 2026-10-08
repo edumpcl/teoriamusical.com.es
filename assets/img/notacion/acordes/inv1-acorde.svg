@@ -1,0 +1,56 @@
+<svg id="y98bt1q" viewBox="0 0 144 80" width="220" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Primera inversión de Do mayor: Mi, Sol y Do</title>
+   <defs>
+      <g id="E050-y98bt1q">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A2-y98bt1q">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#y98bt1q g.ending, #y98bt1q g.fing, #y98bt1q g.reh, #y98bt1q g.tempo {font-weight:bold;}#y98bt1q g.dir, #y98bt1q g.dynam, #y98bt1q g.mNum {font-style:italic;}#y98bt1q g.label {font-weight:normal;}#y98bt1q ellipse, #y98bt1q path, #y98bt1q polygon, #y98bt1q polyline, #y98bt1q rect {stroke:currentColor}#y98bt1q g.cursor {fill:dodgerblue; color:dodgerblue;}#y98bt1q g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 3585 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="z1948n25" class="mdiv pageMilestone" />
+         <g id="aa0br3v" class="score pageMilestone" />
+         <g id="hftoh44" class="system">
+            <g id="nc5u0hs" class="section systemMilestone" />
+            <g id="o136174b" class="measure">
+               <g id="x1rjd561" class="staff">
+                  <path d="M0 540 L3385 540" stroke-width="13" />
+                  <path d="M0 720 L3385 720" stroke-width="13" />
+                  <path d="M0 900 L3385 900" stroke-width="13" />
+                  <path d="M0 1080 L3385 1080" stroke-width="13" />
+                  <path d="M0 1260 L3385 1260" stroke-width="13" />
+                  <g id="tozlo8r" class="clef">
+                     <use href="#E050-y98bt1q" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="u1svisma" class="keySig" />
+                  <g id="ytybrto" class="layer">
+                     <g id="z1mlwj4o" class="chord">
+                        <g id="n0" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-y98bt1q" transform="translate(820, 1260) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="n1" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-y98bt1q" transform="translate(820, 1080) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="n2" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-y98bt1q" transform="translate(820, 810) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="wn9x6rg" class="barLine" />
+            </g>
+            <g id="knt6hvz" class="systemMilestoneEnd nc5u0hs" />
+         </g>
+         <g id="l16ob0w3" class="pageMilestoneEnd aa0br3v" />
+         <g id="meo5mex" class="pageMilestoneEnd z1948n25" />
+      </g>
+   </svg>
+</svg>

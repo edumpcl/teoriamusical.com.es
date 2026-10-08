@@ -96,7 +96,7 @@
     {
       "@type": "Question",
       "name": "¿Qué es la inversión de un intervalo?",
-      "acceptedAnswer": {"@type": "Answer", "text": "Invertir un intervalo consiste en subir una 8ª la nota más baja (o bajar una 8ª la más alta). El resultado es un nuevo intervalo cuyo número más el original suman 9 en los simples, y cuya calidad se complementa: mayor ↔ menor, aumentada ↔ disminuida, justa ↔ justa."}
+      "acceptedAnswer": {"@type": "Answer", "text": "Invertir un intervalo consiste en dejar fija la primera nota y mover la segunda una 8ª en sentido contrario al del intervalo (si asciende, la segunda baja; si desciende, la segunda sube). El resultado es un nuevo intervalo cuyo número más el original suman 9 en los simples, y cuya calidad se complementa: mayor ↔ menor, aumentada ↔ disminuida, justa ↔ justa."}
     },
     {
       "@type": "Question",
@@ -106,7 +106,7 @@
     {
       "@type": "Question",
       "name": "¿Cómo se invierte un intervalo compuesto?",
-      "acceptedAnswer": {"@type": "Answer", "text": "Se sube una 15ª la nota más baja (o se baja una 15ª la más alta). El número del original y su inversión suman 23, y la regla de calidades es la misma: mayor ↔ menor, aumentada ↔ disminuida, justa ↔ justa."}
+      "acceptedAnswer": {"@type": "Answer", "text": "La primera nota se queda fija y la segunda se mueve tres octavas (una 22ª) en sentido contrario al del intervalo. El número del original y su inversión suman 23, y la regla de calidades es la misma: mayor ↔ menor, aumentada ↔ disminuida, justa ↔ justa."}
     },
     {
       "@type": "Question",
@@ -133,7 +133,7 @@
   ]
 }
 </script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Cómo invertir un intervalo musical","description":"Pasos para calcular la inversión de un intervalo simple o compuesto y verificar que el resultado es correcto.","inLanguage":"es","step":[{"@type":"HowToStep","name":"Determinar si el intervalo es simple o compuesto","text":"Un intervalo es simple si abarca una 8ª o menos. Es compuesto si supera la 8ª (9ª, 10ª, etc.)."},{"@type":"HowToStep","name":"Invertir el intervalo","text":"Para un intervalo simple, subir la nota más grave una 8ª (o bajar la más aguda una 8ª). Para un intervalo compuesto, subir la nota más grave una 15ª (dos octavas)."},{"@type":"HowToStep","name":"Calcular el número del intervalo resultante","text":"Para simples: restar el número del intervalo original a 9. Ejemplo: invertir una 3ª da 9−3=6ª. Para compuestos: restar el número original a 23."},{"@type":"HowToStep","name":"Determinar la calidad del intervalo resultante","text":"La calidad se complementa: Mayor ↔ menor, Aumentada ↔ disminuida, Justa ↔ justa. Ejemplo: una 3ª mayor invertida da una 6ª menor."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Cómo invertir un intervalo musical","description":"Pasos para calcular la inversión de un intervalo simple o compuesto y verificar que el resultado es correcto.","inLanguage":"es","step":[{"@type":"HowToStep","name":"Determinar si el intervalo es simple o compuesto","text":"Un intervalo es simple si abarca una 8ª o menos. Es compuesto si supera la 8ª (9ª, 10ª, etc.)."},{"@type":"HowToStep","name":"Invertir el intervalo","text":"Dejar fija la primera nota y mover la segunda en sentido contrario al del intervalo: una 8ª si es simple, tres octavas (una 22ª) si es compuesto. Si el intervalo es ascendente, la segunda nota baja; si es descendente, sube."},{"@type":"HowToStep","name":"Calcular el número del intervalo resultante","text":"Para simples: restar el número del intervalo original a 9. Ejemplo: invertir una 3ª da 9−3=6ª. Para compuestos: restar el número original a 23."},{"@type":"HowToStep","name":"Determinar la calidad del intervalo resultante","text":"La calidad se complementa: Mayor ↔ menor, Aumentada ↔ disminuida, Justa ↔ justa. Ejemplo: una 3ª mayor invertida da una 6ª menor."}]}</script>
 <style>.tm-article figure img { border-radius: 4px; }</style>
 </head>
 <body class="tm-page">
@@ -250,7 +250,7 @@
 <div class="tm-container tm-article-wrap">
   <article class="tm-article" data-tm-intervals>
     
-<p>Invertir un intervalo consiste en desplazar una de sus notas una octava: la nota más baja sube una 8ª, o la más alta baja una 8ª. La regla clave es que el número del intervalo original y su inversión siempre suman 9 (en simples) y la calidad se complementa: mayor ↔ menor, aumentada ↔ disminuida, justa ↔ justa.</p>
+<p>Invertir un intervalo consiste en dejar fija la primera nota y desplazar la segunda una octava en sentido contrario al del intervalo: si el intervalo es ascendente, la segunda nota baja una 8ª; si es descendente, la segunda nota sube una 8ª. La regla clave es que el número del intervalo original y su inversión siempre suman 9 (en simples) y la calidad se complementa: mayor ↔ menor, aumentada ↔ disminuida, justa ↔ justa.</p>
 
 <h2>Tabla de inversiones de intervalos simples</h2>
 
@@ -260,21 +260,22 @@
   </thead>
   <tbody>
     <tr><td>Unísono (1ª)</td><td>Justa</td><td>Octava (8ª)</td><td>Justa</td><td>Do–Do → Do–Do (8ª sup.)</td></tr>
-    <tr><td>Segunda (2ª)</td><td>Mayor</td><td>Séptima (7ª)</td><td>Menor</td><td>Do–Re → Re–Do</td></tr>
-    <tr><td>Segunda (2ª)</td><td>Menor</td><td>Séptima (7ª)</td><td>Mayor</td><td>Mi–Fa → Fa–Mi</td></tr>
-    <tr><td>Tercera (3ª)</td><td>Mayor</td><td>Sexta (6ª)</td><td>Menor</td><td>Do–Mi → Mi–Do</td></tr>
-    <tr><td>Tercera (3ª)</td><td>Menor</td><td>Sexta (6ª)</td><td>Mayor</td><td>Re–Fa → Fa–Re</td></tr>
-    <tr><td>Cuarta (4ª)</td><td>Justa</td><td>Quinta (5ª)</td><td>Justa</td><td>Do–Fa → Fa–Do</td></tr>
-    <tr><td>Cuarta (4ª)</td><td>Aumentada</td><td>Quinta (5ª)</td><td>Disminuida</td><td>Fa–Si → Si–Fa</td></tr>
-    <tr><td>Quinta (5ª)</td><td>Justa</td><td>Cuarta (4ª)</td><td>Justa</td><td>Do–Sol → Sol–Do</td></tr>
-    <tr><td>Quinta (5ª)</td><td>Disminuida</td><td>Cuarta (4ª)</td><td>Aumentada</td><td>Si–Fa → Fa–Si</td></tr>
-    <tr><td>Sexta (6ª)</td><td>Mayor</td><td>Tercera (3ª)</td><td>Menor</td><td>Do–La → La–Do</td></tr>
-    <tr><td>Sexta (6ª)</td><td>Menor</td><td>Tercera (3ª)</td><td>Mayor</td><td>Mi–Do → Do–Mi</td></tr>
-    <tr><td>Séptima (7ª)</td><td>Mayor</td><td>Segunda (2ª)</td><td>Menor</td><td>Do–Si → Si–Do</td></tr>
-    <tr><td>Séptima (7ª)</td><td>Menor</td><td>Segunda (2ª)</td><td>Mayor</td><td>Sol–Fa → Fa–Sol</td></tr>
-    <tr><td>Octava (8ª)</td><td>Justa</td><td>Unísono (1ª)</td><td>Justa</td><td>Do–Do (8ª) → Do–Do</td></tr>
+    <tr><td>Segunda (2ª)</td><td>Mayor</td><td>Séptima (7ª)</td><td>Menor</td><td>Do–Re → Do–Re (8ª inf.)</td></tr>
+    <tr><td>Segunda (2ª)</td><td>Menor</td><td>Séptima (7ª)</td><td>Mayor</td><td>Mi–Fa → Mi–Fa (8ª inf.)</td></tr>
+    <tr><td>Tercera (3ª)</td><td>Mayor</td><td>Sexta (6ª)</td><td>Menor</td><td>Do–Mi → Do–Mi (8ª inf.)</td></tr>
+    <tr><td>Tercera (3ª)</td><td>Menor</td><td>Sexta (6ª)</td><td>Mayor</td><td>Re–Fa → Re–Fa (8ª inf.)</td></tr>
+    <tr><td>Cuarta (4ª)</td><td>Justa</td><td>Quinta (5ª)</td><td>Justa</td><td>Do–Fa → Do–Fa (8ª inf.)</td></tr>
+    <tr><td>Cuarta (4ª)</td><td>Aumentada</td><td>Quinta (5ª)</td><td>Disminuida</td><td>Fa–Si → Fa–Si (8ª inf.)</td></tr>
+    <tr><td>Quinta (5ª)</td><td>Justa</td><td>Cuarta (4ª)</td><td>Justa</td><td>Do–Sol → Do–Sol (8ª inf.)</td></tr>
+    <tr><td>Quinta (5ª)</td><td>Disminuida</td><td>Cuarta (4ª)</td><td>Aumentada</td><td>Si–Fa → Si–Fa (8ª inf.)</td></tr>
+    <tr><td>Sexta (6ª)</td><td>Mayor</td><td>Tercera (3ª)</td><td>Menor</td><td>Do–La → Do–La (8ª inf.)</td></tr>
+    <tr><td>Sexta (6ª)</td><td>Menor</td><td>Tercera (3ª)</td><td>Mayor</td><td>Mi–Do → Mi–Do (8ª inf.)</td></tr>
+    <tr><td>Séptima (7ª)</td><td>Mayor</td><td>Segunda (2ª)</td><td>Menor</td><td>Do–Si → Do–Si (8ª inf.)</td></tr>
+    <tr><td>Séptima (7ª)</td><td>Menor</td><td>Segunda (2ª)</td><td>Mayor</td><td>Sol–Fa → Sol–Fa (8ª inf.)</td></tr>
+    <tr><td>Octava (8ª)</td><td>Justa</td><td>Unísono (1ª)</td><td>Justa</td><td>Do–Do (8ª) → Do–Do (8ª inf.)</td></tr>
   </tbody>
 </table></div>
+<p>En los ejemplos, la primera nota se queda fija y la segunda baja una octava («8ª inf.»); si el intervalo fuera descendente, la segunda subiría una octava.</p>
 
 <div class="tm-ad">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
@@ -292,10 +293,10 @@
 
 <h2>¿Cómo invertir intervalos simples?</h2>
 
-<p>Para invertir un intervalo simple hay que subir una 8ª la nota más baja, o bajar una 8ª la más alta. Los dos procedimientos son equivalentes.</p>
+<p>Para invertir un intervalo simple la primera nota se queda fija y la segunda se mueve una 8ª en sentido contrario al del intervalo: si el intervalo es ascendente, la segunda nota baja una 8ª; si es descendente, la segunda nota sube una 8ª.</p>
 
-<figure><picture><source type="image/webp" srcset="/assets/img/2020/10/Inversion-intervalo-simple-2-2-1024x143.webp"><img src="/assets/img/2020/10/Inversion-intervalo-simple-2-2-1024x143.png" width="1024" height="143" alt="Inversión de intervalo simple: subir la nota más baja una octava" loading="lazy"></picture></figure>
-<figure><picture><source type="image/webp" srcset="/assets/img/2020/10/Inversion-intervalo-simple-3-1024x143.webp"><img src="/assets/img/2020/10/Inversion-intervalo-simple-3-1024x143.png" width="1024" height="143" alt="Segundo ejemplo de inversión de intervalo simple" loading="lazy"></picture></figure>
+<figure><img src="/assets/img/notacion/intervalos/inversion-simple-1.svg" width="480" height="159" alt="Inversión de intervalo simple: la segunda nota baja una octava" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/intervalos/inversion-simple-2.svg" width="480" height="165" alt="Segundo ejemplo de inversión de intervalo simple" loading="lazy" decoding="async"></figure>
 
 <h3>¿Cómo comprobar que la inversión es correcta?</h3>
 
@@ -311,10 +312,10 @@
 
 <h2>¿Cómo invertir intervalos compuestos?</h2>
 
-<p>Para invertir un intervalo compuesto hay que subir una 15ª (dos octavas) la nota más baja, o bajar una 15ª la más alta.</p>
+<p>Para invertir un intervalo compuesto la primera nota se queda fija y la segunda se mueve tres octavas (una 22ª) en sentido contrario al del intervalo: si el intervalo es ascendente, la segunda nota baja una 22ª; si es descendente, la segunda nota sube una 22ª.</p>
 
-<figure><picture><source type="image/webp" srcset="/assets/img/2020/10/Inversion-intervalo-compuesto-2-1024x143.webp"><img src="/assets/img/2020/10/Inversion-intervalo-compuesto-2-1024x143.png" width="1024" height="143" alt="Inversión de intervalo compuesto: subir la nota más baja una 15ª" loading="lazy"></picture></figure>
-<figure><picture><source type="image/webp" srcset="/assets/img/2020/10/Inversion-intervalo-compuesto-1024x143.webp"><img src="/assets/img/2020/10/Inversion-intervalo-compuesto-1024x143.png" width="1024" height="143" alt="Segundo ejemplo de inversión de intervalo compuesto" loading="lazy"></picture></figure>
+<figure><img src="/assets/img/notacion/intervalos/inversion-compuesto-1.svg" width="480" height="197" alt="Inversión de intervalo compuesto: la segunda nota baja tres octavas (22ª)" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/intervalos/inversion-compuesto-2.svg" width="480" height="202" alt="Segundo ejemplo de inversión de intervalo compuesto" loading="lazy" decoding="async"></figure>
 
 <h3>¿Cómo comprobar que la inversión es correcta?</h3>
 
@@ -337,7 +338,7 @@
 <div class="tm-faq-list">
   <div class="tm-faq-item">
     <div class="tm-faq-q">¿Qué es la inversión de un intervalo?</div>
-    <div class="tm-faq-a">Invertir un intervalo consiste en subir una 8ª la nota más baja (o bajar una 8ª la más alta). El resultado es un nuevo intervalo cuyo número más el original suman 9 en los simples, y cuya calidad se complementa: mayor ↔ menor, aumentada ↔ disminuida, justa ↔ justa.</div>
+    <div class="tm-faq-a">Invertir un intervalo consiste en dejar fija la primera nota y mover la segunda una 8ª en sentido contrario al del intervalo (si asciende, la segunda baja; si desciende, la segunda sube). El resultado es un nuevo intervalo cuyo número más el original suman 9 en los simples, y cuya calidad se complementa: mayor ↔ menor, aumentada ↔ disminuida, justa ↔ justa.</div>
   </div>
   <div class="tm-faq-item">
     <div class="tm-faq-q">¿Cuánto suman el número de un intervalo simple y su inversión?</div>
@@ -345,7 +346,7 @@
   </div>
   <div class="tm-faq-item">
     <div class="tm-faq-q">¿Cómo se invierte un intervalo compuesto?</div>
-    <div class="tm-faq-a">Se sube una 15ª la nota más baja (o se baja una 15ª la más alta). El número del original y su inversión suman 23, y la regla de calidades es la misma: mayor ↔ menor, aumentada ↔ disminuida, justa ↔ justa.</div>
+    <div class="tm-faq-a">La primera nota se queda fija y la segunda se mueve tres octavas (una 22ª) en sentido contrario al del intervalo. El número del original y su inversión suman 23, y la regla de calidades es la misma: mayor ↔ menor, aumentada ↔ disminuida, justa ↔ justa.</div>
   </div>
   <div class="tm-faq-item">
     <div class="tm-faq-q">¿Cómo cambia la calidad de un intervalo al invertirlo?</div>

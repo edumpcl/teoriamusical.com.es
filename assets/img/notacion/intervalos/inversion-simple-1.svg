@@ -1,0 +1,73 @@
+<svg id="tznn57l" viewBox="0 0 314 104" width="480" height="159" role="img" xmlns="http://www.w3.org/2000/svg"><title>Inversión de intervalo simple: la segunda nota baja una octava</title>
+   <defs>
+      <g id="E050-tznn57l">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A2-tznn57l">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#tznn57l g.ending, #tznn57l g.fing, #tznn57l g.reh, #tznn57l g.tempo {font-weight:bold;}#tznn57l g.dir, #tznn57l g.dynam, #tznn57l g.mNum {font-style:italic;}#tznn57l g.label {font-weight:normal;}#tznn57l ellipse, #tznn57l path, #tznn57l polygon, #tznn57l polyline, #tznn57l rect {stroke:currentColor}#tznn57l g.cursor {fill:dodgerblue; color:dodgerblue;}#tznn57l g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 -610 7850 2610">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="u1jq34bd" class="mdiv pageMilestone" />
+         <g id="v1gbx0li" class="score pageMilestone" />
+         <g id="n1mlq9bt" class="system">
+            <g id="i5t5vjg" class="section systemMilestone" />
+            <g id="j1vebve1" class="measure">
+               <g id="sx7uy9x" class="staff">
+                  <path d="M0 540 L4013 540" stroke-width="13" />
+                  <path d="M0 720 L4013 720" stroke-width="13" />
+                  <path d="M0 900 L4013 900" stroke-width="13" />
+                  <path d="M0 1080 L4013 1080" stroke-width="13" />
+                  <path d="M0 1260 L4013 1260" stroke-width="13" />
+                  <g id="e11dy2z3" class="clef">
+                     <use href="#E050-tznn57l" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="fcv98qd" class="keySig" />
+                  <g id="t133n83f" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-tznn57l" transform="translate(820, 810) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-tznn57l" transform="translate(2410, 630) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="r1pqqczg" class="barLine">
+                  <path d="M4000 540 L4000 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="wk6t0iu" class="measure">
+               <g id="f9b8vpq" class="staff">
+                  <path d="M4013 540 L7653 540" stroke-width="13" />
+                  <path d="M4013 720 L7653 720" stroke-width="13" />
+                  <path d="M4013 900 L7653 900" stroke-width="13" />
+                  <path d="M4013 1080 L7653 1080" stroke-width="13" />
+                  <path d="M4013 1260 L7653 1260" stroke-width="13" />
+                  <g id="g4um0qy" class="layer">
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-tznn57l" transform="translate(4193, 810) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-tznn57l" transform="translate(5783, 1260) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="e8q73ho" class="barLine" />
+            </g>
+            <g id="q9cjra4" class="systemMilestoneEnd i5t5vjg" />
+         </g>
+         <g id="r1t56c0a" class="pageMilestoneEnd v1gbx0li" />
+         <g id="s2elan2" class="pageMilestoneEnd u1jq34bd" />
+      </g>
+   <g class="tm-etiquetas" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="300" text-anchor="middle"><text x="2412" y="-110" fill="#1a1a1a" font-size="300">3ª Mayor</text><text x="5785" y="-110" fill="#1a1a1a" font-size="300">6ª menor</text></g></svg>
+</svg>
