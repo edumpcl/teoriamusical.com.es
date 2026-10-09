@@ -28,7 +28,7 @@ const { RAIZ, ESPACIO, OPCIONES, hash, preparar, escAttr } = G;
 const SALIDA = 'assets/img/notacion';
 const carpetaDe = (spec) => spec.carpeta || 'compases';   // assets/img/notacion/<carpeta>/<slug>.svg
 const aFilas = (s) => (s.filas ? s : { ...s, tipo: 'cifra', filas: [{ num: s.num, den: s.den, simbolo: s.corte ? 'cut' : null, compases: s.compases }] });
-const DATOS = [...require('./notacion/datos/compases-cifra.js'), ...require('./notacion/datos/compases-rotulados.js'), ...require('./notacion/datos/ritmo-figuras.js'), ...require('./notacion/datos/ritmo-grupos.js'), ...require('./notacion/datos/ritmo-signos.js'), ...require('./notacion/datos/ritmo-ornamentos.js'), ...require('./notacion/datos/ritmo-repeticion.js'), ...require('./notacion/datos/ritmo-frase.js'), ...require('./notacion/datos/tesituras.js'), ...require('./notacion/datos/claves.js'), ...require('./notacion/datos/grados.js')].map(aFilas);
+const DATOS = [...require('./notacion/datos/compases-cifra.js'), ...require('./notacion/datos/compases-rotulados.js'), ...require('./notacion/datos/ritmo-figuras.js'), ...require('./notacion/datos/ritmo-grupos.js'), ...require('./notacion/datos/ritmo-signos.js'), ...require('./notacion/datos/ritmo-ornamentos.js'), ...require('./notacion/datos/ritmo-repeticion.js'), ...require('./notacion/datos/ritmo-frase.js'), ...require('./notacion/datos/tesituras.js'), ...require('./notacion/datos/claves.js'), ...require('./notacion/datos/grados.js'), ...require('./notacion/datos/intervalos-blog.js')].map(aFilas);
 // todas las paginas del diccionario (el generador solo toca las que llevan imagenes suyas)
 const PAGINAS = (function buscar(dir) {
   const res = [];
@@ -39,7 +39,15 @@ const PAGINAS = (function buscar(dir) {
     res.push(...buscar(r));
   }
   return res;
-})('diccionario-musical');
+})('diccionario-musical').concat((function buscar(dir) {   // y las entradas del blog
+  const res = [];
+  for (const d of fs.readdirSync(path.join(RAIZ, dir), { withFileTypes: true })) {
+    if (!d.isDirectory()) continue;
+    const r = dir + '/' + d.name;
+    if (fs.existsSync(path.join(RAIZ, r, 'index.html'))) res.push(r);
+  }
+  return res;
+})('blog'));
 
 const DUR = { w: 64, h: 32, q: 16, 8: 8, 16: 4, 32: 2, 64: 1 };
 const DUR_MEI = { w: 1, h: 2, q: 4, 8: 8, 16: 16, 32: 32, 64: 64 };
@@ -391,6 +399,30 @@ const REVISORES = {
     if (grupos !== f.textos.map((x) => x.texto).join('+')) err.push('los rotulos no son el reparto 3+3+2 del alt');
     // cada rotulo = numero de corcheas que dura su figura
     evs.forEach((e, i) => { if (durTotal(e) / 8 !== Number(f.textos[i].texto)) err.push(`el rotulo ${f.textos[i].texto} no es la duracion en corcheas de la figura ${i + 1}`); });
+    return err;
+  },
+  'intervalo-melodico'(spec, leido, alt) {
+    const err = [], evs = leido[0].flat();
+    if (evs.length !== 2 || evs.some((e) => e.d !== 'h')) return ['un intervalo melodico son dos blancas seguidas'];
+    // 1) las notas que nombra el alt: «de Do a Mi bemol»
+    const NOTAS = { Do: 'c', Re: 'd', Mi: 'e', Fa: 'f', Sol: 'g', La: 'a', Si: 'b' };
+    const n = (m, i) => NOTAS[m[i]] + (m[i + 1] === ' bemol' ? 'b' : m[i + 1] === ' sostenido' ? '#' : '');
+    const mm = /de (Do|Re|Mi|Fa|Sol|La|Si)( bemol| sostenido)? a (Do|Re|Mi|Fa|Sol|La|Si)( bemol| sostenido)?/.exec(alt);
+    if (!mm) return ['el alt ya no dice «de <nota> a <nota>»'];
+    const quiere = [n(mm, 1), n(mm, 3)];
+    const dibujo = evs.map((e) => e.key.replace(/\/\d$/, ''));
+    if (quiere.join() !== dibujo.join()) err.push(`el alt dice ${quiere.join(' a ')} y el dibujo ${dibujo.join(' a ')}`);
+    // 2) el intervalo que dice el alt, calculado de lo dibujado: grados (letras) y semitonos (altura real)
+    const PC = { c: 0, d: 2, e: 4, f: 5, g: 7, a: 9, b: 11 };
+    const semis = (k) => { const p = parseKey(k); return (p.oct + 1) * 12 + PC[p.letra] + p.alt; };
+    const num = pasoDe(evs[1].key) - pasoDe(evs[0].key) + 1, st = semis(evs[1].key) - semis(evs[0].key);
+    if (num < 1 || num > 8) return err.concat('solo se comprueban intervalos simples ascendentes');
+    const BASE = [0, 2, 4, 5, 7, 9, 11, 12][num - 1], justo = [1, 4, 5, 8].includes(num), dif = st - BASE;
+    const calidad = justo ? ({ 0: 'justa', 1: 'aumentada', '-1': 'disminuida' })[dif] : ({ 0: 'mayor', '-1': 'menor', 1: 'aumentada', '-2': 'disminuida' })[dif];
+    const im = /\((\d)ª (justa|mayor|menor|aumentada|disminuida)/.exec(alt);
+    if (!im) err.push('el alt ya no dice «(<n>ª <calidad>)»');
+    else if (Number(im[1]) !== num || im[2] !== calidad) err.push(`el alt dice ${im[1]}ª ${im[2]} y lo dibujado es una ${num}ª ${calidad}`);
+    if (/tritono/.test(alt) && st !== 6) err.push('el tritono son 6 semitonos');
     return err;
   },
   'nombres-notas'(spec, leido, alt) {
@@ -1207,6 +1239,8 @@ const SABOTAJES_DIBUJO = [
   ['apoyatura con rayita', (mei) => mei.replace('grace="acc"', 'grace="unacc"'), /rayita de las notas de adorno/, 'apoyatura'],
   ['otro grupeto', (mei) => mei.replace('form="upper"', 'form="lower"'), /ornamentos dibujados/, 'grupeto'],
   ['trino perdido', (mei) => mei.replace(new RegExp('<trill [^>]*/>'), ''), /ornamentos dibujados/, 'trino'],
+  ['intervalo con la nota aguda movida', (mei) => mei.replace('pname="a"', 'pname="b"'), /esta a y/, 'blog-iv-do-la'],
+  ['intervalo sin el bemol', (mei) => mei.replace(' accid="f"', ''), /alteraciones dibujadas/, 'blog-iv-do-mib'],
   ['clave en otra linea', (mei) => mei.replace('clef.line="3"', 'clef.line="2"'), /la clave esta a y|esta a y|clave dibujada/, 'nombres-clave-de-do-en-3'],
   ['clave de fa dibujada como de sol', (mei) => mei.replace('clef.shape="F"', 'clef.shape="G"').replace('clef.line="4"', 'clef.line="2"'), /clave dibujada/, 'glifo-clave-fa'],
   ['sin armadura', (mei) => mei.replace(' key.sig="3f"', ''), /armadura dibujada|alteraciones dibujadas/, 'grados-tonales-menor'],
@@ -1228,6 +1262,11 @@ const SABOTAJES_LEYENDA = [
   ['leyenda de tabla con otro rango', 'Medio | Do₅–Re₆ | | Brillante', /la leyenda de la pagina dice que acaba en d\/6/, 'flauta-tesitura-medio'],
 ];
 const SABOTAJES_DATOS = [
+  ['intervalo de otra calidad (6ª menor en vez de mayor)', (s) => { s.filas[0].compases[0][1].key = 'ab/4'; }, /el alt dice|lo dibujado es una 6ª menor/, 'blog-iv-do-la'],
+  ['intervalo con otra nota (7ª en vez de 6ª)', (s) => { s.filas[0].compases[0][1].key = 'b/4'; }, /el alt dice/, 'blog-iv-do-la'],
+  ['tritono de 5 semitonos', (s) => { s.filas[0].compases[0][1].key = 'b/4'; s.filas[0].compases[0][0].key = 'g/4'; }, /el alt dice/, 'blog-iv-fa-si'],
+  ['tercera menor sin el bemol', (s) => { s.filas[0].compases[0][1].key = 'e/4'; }, /el alt dice/, 'blog-iv-do-mib'],
+  ['intervalo descendente', (s) => { s.filas[0].compases[0].reverse(); }, /el alt dice|solo se comprueban/, 'blog-iv-re-fa'],
   ['nombres: la clave de Sol dibujada en Do 3', (s) => { s.filas[0].clave = 'do3'; }, /el alt habla de la clave de sol/, 'nombres-clave-de-sol'],
   ['nombres: una nota de la escala cambiada', (s) => { s.filas[0].compases[0][3].key = 'g/4'; }, /deberia ser la escala de Do/, 'nombres-clave-de-do-en-3'],
   ['nombres: rotulo de otra nota', (s) => { s.filas[0].textos[2].texto = 'Re'; }, /el rotulo de la nota 3/, 'nombres-clave-de-do-en-3'],
