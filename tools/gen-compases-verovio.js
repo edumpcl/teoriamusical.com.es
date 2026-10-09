@@ -49,145 +49,22 @@ const PAGINAS = (function buscar(dir) {
   return res;
 })('blog'));
 
-const DUR = { w: 64, h: 32, q: 16, 8: 8, 16: 4, 32: 2, 64: 1 };
-const DUR_MEI = { w: 1, h: 2, q: 4, 8: 8, 16: 16, 32: 32, 64: 64 };
+const M = require('../assets/js/tm-mei.js');   // constructor de MEI compartido con los motores de ejercicios (navegador)
+const { DUR, DUR_MEI, LETRAS, PASO_Y, REF_CLAVE, mkClave, CLAVES, claveDe, ACC_MEI, MEI_ACC, ACC_TXT, ACC_GLIFO, durTotal, parseKey, pasoDe, ORDEN_SOSTENIDOS, ORDEN_BEMOLES, altArmadura, armaduraMEI, alteraciones, GLIFO_ARTIC, ORNA, ornaMEI, ornaLeida, articDe, tuplasDe, factorEvento, duracionBarra, aMEI } = M;
 const GLIFO_CABEZA = { w: 'E0A2', h: 'E0A3', q: 'E0A4', 8: 'E0A4', 16: 'E0A4', 32: 'E0A4', 64: 'E0A4' };
 const GLIFO_SILENCIO = { w: 'E4E3', h: 'E4E4', q: 'E4E5', 8: 'E4E6', 16: 'E4E7', 32: 'E4E8', 64: 'E4E9' };
 const BANDERA = { arriba: { 8: 'E240', 16: 'E242', 32: 'E244', 64: 'E246' }, abajo: { 8: 'E241', 16: 'E243', 32: 'E245', 64: 'E247' } };
 const TUPLA_GLIFO = (n) => String(n).split('').map((d) => 'E88' + d);
 const ANCHO_CABEZA = { E0A2: 304, E0A3: 212, E0A4: 212 };   // anchura de cada cabeza, en unidades del dibujo
 const anchoCab = (g) => ANCHO_CABEZA[g] || 250;              // (un silencio mide unos 250)
-const LETRAS = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
-const PASO_Y = ESPACIO / 2;
-/**
- * Las claves se definen por lo que SON: una clave de Sol en la linea L pone el Sol 4 en esa linea; una de Do, el Do 4; una de Fa, el Fa 3.
- * De ahi sale la nota de la linea inferior (`paso` = octava*7 + letra, con Do = 0), que es contra lo que se mide el dibujo.
- */
-const REF_CLAVE = { sol: { shape: 'G', glifo: 'E050', ref: 4 * 7 + 4, texto: 'sol' }, do: { shape: 'C', glifo: 'E05C', ref: 4 * 7, texto: 'do' }, fa: { shape: 'F', glifo: 'E062', ref: 3 * 7 + 3, texto: 'fa' } };
-const mkClave = (tipo, linea, nombre) => ({ shape: REF_CLAVE[tipo].shape, line: linea, glifo: REF_CLAVE[tipo].glifo, paso: REF_CLAVE[tipo].ref - 2 * (linea - 1), nombre, tipo });
-const CLAVES = {
-  sol: mkClave('sol', 2, 'clave de sol'),
-  do1: mkClave('do', 1, 'clave de do en primera'), do2: mkClave('do', 2, 'clave de do en segunda'), do3: mkClave('do', 3, 'clave de do en tercera'), do4: mkClave('do', 4, 'clave de do en cuarta'),
-  fa3: mkClave('fa', 3, 'clave de fa en tercera'), fa: mkClave('fa', 4, 'clave de fa en cuarta'),
-};
-CLAVES.tenor = CLAVES.do4;   // nombre antiguo (fagot y contrafagot)
-const claveDe = (fila) => CLAVES[fila.clave || 'sol'];
-const ACC_MEI = { 1: 's', '-1': 'f', 0: 'n', 2: 'x', '-2': 'ff' };   // OJO: «ss» en MEI son dos sostenidos juntos; el doble sostenido es «x»
-const MEI_ACC = { s: 1, f: -1, n: 0, x: 2, ff: -2 };
-const ACC_TXT = { 1: '#', '-1': 'b', 0: '', 2: '##', '-2': 'bb' };
-const ACC_GLIFO = { 1: 'E262', '-1': 'E260', 0: 'E261', 2: 'E263', '-2': 'E264' };
 // paginas con cambios sin commit de Eduardo (digitaciones): el generador no las toca salvo con --incluir-pausadas
 const PAUSADAS = ['notas-de-la-trompeta', 'notas-de-la-tuba', 'notas-del-bombardino', 'notas-del-fliscorno'];
 const norm = (s) => String(s).normalize('NFC');
 const sinTildes = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-const durTotal = (e) => (e.gracia ? 0 : DUR[e.d] * (e.puntillo ? 1.5 : 1));   // una nota de adorno no ocupa tiempo
 const NUM = { un: 1, una: 1, dos: 2, tres: 3, cuatro: 4, cinco: 5, seis: 6, siete: 7, ocho: 8, nueve: 9, diez: 10, doce: 12 };
 const FIGURA_ALT = { negra: 'q', corchea: '8', blanca: 'h', semicorchea: '16', redonda: 'w' };
 
-/** 'd#/5' -> { letra: 'd', alt: 1, oct: 5 } */
-function parseKey(key) {
-  const m = /^([a-g])(##|bb|#|b)?\/(\d)$/.exec(key);
-  if (!m) throw new Error('nota mal escrita: ' + key);
-  return { letra: m[1], alt: { '##': 2, '#': 1, '': 0, b: -1, bb: -2 }[m[2] || ''], oct: Number(m[3]) };
-}
-const pasoDe = (key) => { const k = parseKey(key); return k.oct * 7 + LETRAS.indexOf(k.letra); };
 
-const ORDEN_SOSTENIDOS = 'fcgdaeb', ORDEN_BEMOLES = 'beadgcf';
-/** Alteracion que la armadura da a una letra (+1 sostenido, -1 bemol, 0 ninguna). */
-const altArmadura = (n, letra) => (n > 0 && ORDEN_SOSTENIDOS.slice(0, n).includes(letra) ? 1 : n < 0 && ORDEN_BEMOLES.slice(0, -n).includes(letra) ? -1 : 0);
-const armaduraMEI = (n) => (n > 0 ? ` key.sig="${n}s"` : n < 0 ? ` key.sig="${-n}f"` : '');
-/** Alteracion que se escribe en cada nota (regla del compas: vale hasta la barra). [compas][evento] -> 's' | 'f' | 'n' | null */
-function alteraciones(fila) {
-  return fila.compases.map((c) => {
-    const estado = {};
-    return c.map((e) => {
-      if (e.silencio) return null;
-      const k = parseKey(e.key), id = k.letra + k.oct;
-      const vigente = id in estado ? estado[id] : altArmadura(fila.armadura || 0, k.letra);
-      const muestra = k.alt !== vigente || !!e.becuadro;
-      estado[id] = k.alt;
-      return muestra ? ACC_MEI[k.alt] : null;
-    });
-  });
-}
-
-/** Tresillos, seisillos...: fila.tuplets = [{ c: compas, ini, fin, num, numbase }] (ini..fin = eventos del compas). */
-const GLIFO_ARTIC = { acc: { above: 'E4A0', below: 'E4A1' }, stacc: { above: 'E4A2', below: 'E4A3' }, ten: { above: 'E4A4', below: 'E4A5' }, marc: { above: 'E4AC', below: 'E4AD' } };
-/** Ornamentos: lo que se escribe en el MEI y el glifo que tiene que salir. */
-const ORNA = {
-  mordente: { tag: 'mordent', form: 'upper', glifo: 'E56C' },
-  'mordente-inf': { tag: 'mordent', form: 'lower', glifo: 'E56D' },
-  grupeto: { tag: 'turn', form: 'upper', glifo: 'E567' },
-  'grupeto-inf': { tag: 'turn', form: 'lower', glifo: 'E568' },
-  'grupeto-inf-raya': { tag: 'turn', form: 'lower', glyphName: 'ornamentTurnSlash', glifo: 'E569' },
-  trino: { tag: 'trill', glifo: 'E566' },
-};
-const ornaMEI = (k) => { const o = ORNA[k]; return `<${o.tag} startid="#@ID@"${o.form ? ` form="${o.form}"` : ''}${o.glyphName ? ` glyph.name="${o.glyphName}" glyph.auth="smufl"` : ''} place="above"/>`; };
-const ornaLeida = (tag, form, glyphName) => Object.keys(ORNA).find((k) => ORNA[k].tag === tag && (ORNA[k].form || undefined) === (form || undefined) && (ORNA[k].glyphName || undefined) === (glyphName || undefined)) || ('desconocido:' + tag + ':' + form + ':' + glyphName);
-const articDe = (e) => (e.artic ? e.artic : e.acento ? { tipo: 'acc', lugar: 'above' } : null);
-const tuplasDe = (fila, c) => (fila.tuplets || []).filter((t) => t.c === c);
-const factorEvento = (fila, c, j) => { const t = tuplasDe(fila, c).find((x) => j >= x.ini && j <= x.fin); return t ? t.numbase / t.num : 1; };
-const duracionBarra = (fila, c) => Math.round(fila.compases[c].reduce((a, e, j) => a + durTotal(e) * factorEvento(fila, c, j), 0) * 1e6) / 1e6;
-
-/* ---------- MEI ---------- */
-function aMEI(fila) {
-  let k = 0;
-  const acc = alteraciones(fila);
-  const ids = {};
-  const ornamentos = [];
-  const total = fila.num ? fila.num * (64 / fila.den) : null;
-  const ms = fila.compases.map((c, i) => {
-    const evento = (x, j) => {
-      const id = `n${k++}`;
-      ids[`${i},${j}`] = id;
-      if (x.orna) ornamentos.push({ en: i, txt: ornaMEI(x.orna).replace('@ID@', id) });
-      if (x.signo) ornamentos.push({ en: i, txt: `<repeatMark func="${x.signo}" startid="#${id}" place="above"/>` });
-      const dur = `dur="${DUR_MEI[x.d]}"${x.puntillo ? ' dots="1"' : ''}${x.gracia ? ` grace="${x.gracia}"` : ''}`;
-      if (x.silencio) return `<rest xml:id="${id}" ${dur}/>`;
-      const p = parseKey(x.key), a = acc[i][j];
-      return `<note xml:id="${id}" pname="${p.letra}" oct="${p.oct}" ${dur}${a ? ` accid="${a}"` : ''}${x.color ? ` color="${x.color}"` : ''}${x.plica ? ` stem.dir="${x.plica}"` : ''}${x.union ? ` tie="${x.union}"` : ''}>${articDe(x) ? `<artic artic="${articDe(x).tipo}" place="${articDe(x).lugar}"/>` : ''}</note>`;
-    };
-    // unidades: un evento suelto o un grupo con barra
-    const unidades = [];
-    for (let j = 0; j < c.length;) {
-      const e = c[j];
-      if (e.barra === undefined) { unidades.push({ ini: j, fin: j, txt: evento(e, j) }); j++; continue; }
-      let f = j; const grupo = [];
-      while (f < c.length && c[f].barra === e.barra) { grupo.push(evento(c[f], f)); f++; }
-      unidades.push({ ini: j, fin: f - 1, txt: grupo.length > 1 ? `<beam>${grupo.join('')}</beam>` : grupo[0] });
-      j = f;
-    }
-    // tresillos: envuelven las unidades que cubren; no pueden partir un grupo con barra
-    let cuerpo = unidades;
-    for (const t of tuplasDe(fila, i)) {
-      const dentro = cuerpo.filter((u) => u.ini >= t.ini && u.fin <= t.fin && !u.envuelto);
-      const parte = cuerpo.filter((u) => u.fin >= t.ini && u.ini <= t.fin);
-      if (!dentro.length || dentro.length !== parte.length) throw new Error('el grupo de valoracion especial parte un grupo con barra');
-      const abre = `<tuplet num="${t.num}" numbase="${t.numbase}" num.visible="true" num.place="above" bracket.visible="${t.corchete === false ? 'false' : 'true'}" bracket.place="above">`;
-      const nuevo = { ini: dentro[0].ini, fin: dentro[dentro.length - 1].fin, txt: abre + dentro.map((u) => u.txt).join('') + '</tuplet>', envuelto: true };
-      const pos = cuerpo.indexOf(dentro[0]);
-      cuerpo = [...cuerpo.slice(0, pos), nuevo, ...cuerpo.slice(pos + dentro.length)];
-    }
-    let texto = cuerpo.map((u) => u.txt).join('');
-    if (!c.length) texto = '<space dur="1"/>';
-    const ultimo = i === fila.compases.length - 1;
-    const b = (fila.barras || [])[i] || {};
-    const izq = i === 0 && b.ini === 'rpt' ? ' left="rptstart"' : '';
-    const derB = b.fin === 'rpt' ? ' right="rptend"' : b.fin === 'end' ? ' right="end"' : ultimo ? (fila.sinBarraFinal ? ' right="invis"' : fila.barraFinal === 'end' ? ' right="end"' : '') : '';
-    const der = izq + derB;
-    const incompleto = total && c.length && duracionBarra(fila, i) !== total ? ' metcon="false"' : '';
-    return { i, der, incompleto, texto, casilla: b.casilla };
-  });
-  // ligaduras de expresion: eventos de control que apuntan a las notas
-  const slurs = (fila.slurs || []).map((s) => ({ en: s.de[0], txt: `<slur startid="#${ids[s.de.join(',')]}" endid="#${ids[s.a.join(',')]}" curvedir="${s.curva || 'above'}"/>` }));
-  const medidas = ms.map((m) => {
-    const medida = `<measure n="${m.i + 1}"${m.der}${m.incompleto}><staff n="1"><layer n="1">${m.texto}</layer></staff>${slurs.filter((s) => s.en === m.i).map((s) => s.txt).join('')}${ornamentos.filter((o) => o.en === m.i).map((o) => o.txt).join('')}</measure>`;
-    return m.casilla ? `<ending xml:id="casilla${m.i}" n="${m.casilla.n}" label="${m.casilla.label}">${medida}</ending>` : medida;
-  }).join('');
-  const metro = !fila.num ? '' : fila.simbolo ? ` meter.count="${fila.num}" meter.unit="${fila.den}" meter.sym="${fila.simbolo}"` : ` meter.count="${fila.num}" meter.unit="${fila.den}"`;
-  return '<?xml version="1.0" encoding="UTF-8"?><mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="5.0"><meiHead><fileDesc><titleStmt><title/></titleStmt><pubStmt/></fileDesc></meiHead><music><body><mdiv><score><scoreDef><staffGrp>'
-    + `<staffDef n="1" lines="5" clef.shape="${claveDe(fila).shape}" clef.line="${claveDe(fila).line}"${armaduraMEI(fila.armadura || 0)}${metro}/></staffGrp></scoreDef><section>${medidas}</section></score></mdiv></body></music></mei>`;
-}
 
 /**
  * Lee el MEI como lo leeria un musico: por compas, [{id, silencio, key, d, puntillo, acento, grupo, plica, union, tupla}]

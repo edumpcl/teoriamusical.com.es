@@ -84,6 +84,34 @@
     '.tm-iv-wrap .tm-iv-loupe-staff{line-height:0;}'
   ].join('');
 
+  /* ---- Dibujo con Verovio (tm-mei.js + tm-notacion.js) ---- */
+  var CLAVE_MEI = { sol2: 'sol', fa3: 'fa3', fa4: 'fa', do1: 'do1', do2: 'do2', do3: 'do3', do4: 'do4' };
+  var DORADO = '#8b6914';
+
+  /* Pentagrama de una clave con una redonda (o vacío si idx es null). */
+  function filaNota(clave, idx, color) {
+    var ev = idx == null ? [] : [{ key: vfnOf(idx) + '/' + octOf(idx), d: 'w', color: color }];
+    return { clave: CLAVE_MEI[clave.id], compases: [ev] };
+  }
+
+  /* Dibuja y alinea: la línea superior queda siempre a `top` px del borde del contenedor, sea cual sea la altura de la nota
+     (Verovio recorta el SVG al contenido, y una nota con líneas adicionales lo alargaría y movería el pentagrama). */
+  function dibujarPentagrama(el, fila, op) {
+    var r = tmNotacion.dibujarSync(el, fila, op);
+    var svg = r.elemento, g = r.geometria();
+    svg.style.display = 'block'; svg.style.margin = '0 auto';
+    if (g.lineas) svg.style.marginTop = Math.round(op.top - g.lineas[0]) + 'px';
+    return r;
+  }
+
+  /* Carga Verovio (una vez; se cachea) y entonces arranca el ejercicio. */
+  function cargarVerovio(wrap, init) {
+    wrap.innerHTML = '<div class="tm-card"><p class="tm-hint">Cargando el ejercicio…</p></div>';
+    tmNotacion.listo().then(init).catch(function () {
+      wrap.innerHTML = '<div class="tm-card"><p class="tm-hint">No se ha podido cargar el ejercicio. Recarga la página.</p></div>';
+    });
+  }
+
   function injectCSS() {
     if (document.getElementById('tm-iv-css')) return;
     var s = document.createElement('style');
@@ -167,22 +195,11 @@
 
     function drawStaff() {
       var el = document.getElementById(uid + '_not');
-      el.innerHTML = '';
-      if (typeof Vex === 'undefined') return;
-      var V = Vex.Flow;
-      var r = new V.Renderer(el, V.Renderer.Backends.SVG);
-      r.resize(280, 150);
-      var ctx = r.getContext();
-      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(10, 22, 250);
-      stave.addClef(cQ.clave.clef).setContext(ctx).draw();
-      var key = vfnOf(cQ.idx) + '/' + octOf(cQ.idx);
-      var note = new V.StaveNote({ keys: [key], duration: 'w', clef: cQ.clave.clef });
-      var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([note]);
-      new V.Formatter().joinVoices([voice]).format([voice], 150);
-      voice.draw(ctx, stave);
-      var svg = el.querySelector('svg');
-      if (svg) { svg.setAttribute('viewBox', '0 0 280 150'); svg.style.width = '280px'; svg.style.maxWidth = '100%'; svg.style.height = 'auto'; }
+      el.style.width = '100%'; el.style.height = '130px';
+      dibujarPentagrama(el, filaNota(cQ.clave, cQ.idx), {
+        escala: 1.3, separacion: 0.5, top: 42, id: uid,
+        alt: 'Pentagrama en ' + cQ.clave.label.toLowerCase() + ' con una nota redonda'
+      });
     }
 
     function renderOptions() {
@@ -262,8 +279,7 @@
       if (lockedMode) { modeClave = lockedMode; startQuiz(); } else showModeScreen();
     }
 
-    if (typeof Vex !== 'undefined') init();
-    else window.addEventListener('vexflow-ready', init, { once: true });
+    cargarVerovio(wrap, init);
   }
 
   /* ================================================================
@@ -278,9 +294,6 @@
     var uid = containerId;
     var totalQ = PREGUNTAS_POR_TEST;
     var currentQ, score, modeClave, cQ, answered, placed, placedStyle, currentSvg, lastLoupeKey;
-    /* VexFlow añade space_above/below_staff_ln (4+4 líneas = 80px) de relleno por defecto.
-       Lo reducimos a 2 líneas y separamos STAVE_Y (construcción) de TOPY (línea superior real). */
-    var SVG_W = 300, SVG_H = 84, STAVE_Y = 2, STAVE_W = 280, SPACE_LN = 2, TOPY = STAVE_Y + SPACE_LN * 10;
 
     function showModeScreen() {
       var modes = CLAVE_ORDER.map(function (k) {
@@ -338,32 +351,22 @@
     function getRow(clientY) {
       var rows = cQ.rows, mid = rows[Math.floor(rows.length / 2)];
       if (!currentSvg) return mid;
-      var sr = currentSvg.getBoundingClientRect();
-      if (!sr.width) return mid;
-      var scale = sr.width / SVG_W;
-      var svgY = (clientY - sr.top) / scale;
-      var idx = Math.round((svgY - TOPY - rows[0].line * 10) / 5);
+      var sr = currentSvg.getBoundingClientRect(), g = tmNotacion.geometria(currentSvg);
+      if (!sr.width || !g.lineas) return mid;
+      var sp = (g.lineas[4] - g.lineas[0]) / 4;               /* px entre líneas */
+      var L = (clientY - sr.top - g.lineas[0]) / sp;          /* posición en líneas desde la superior */
+      var idx = Math.round((L - rows[0].line) * 2);
       return rows[Math.max(0, Math.min(rows.length - 1, idx))];
     }
 
     function drawLoupe(row) {
       var elL = document.getElementById(uid + '_lstaff');
-      if (!elL || typeof Vex === 'undefined') return;
-      var key = cQ.clave.clef + '|' + row.idx;
+      if (!elL) return;
+      var key = cQ.clave.id + '|' + row.idx;
       if (key === lastLoupeKey) return;
       lastLoupeKey = key;
-      elL.innerHTML = '';
-      var V = Vex.Flow;
-      var r = new V.Renderer(elL, V.Renderer.Backends.SVG); r.resize(300, 160);
-      var ctx = r.getContext(); ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(10, 20, 280); stave.addClef(cQ.clave.clef).setContext(ctx).draw();
-      var note = new V.StaveNote({ keys: [row.vfn + '/' + row.oct], duration: 'w', clef: cQ.clave.clef });
-      if (note.setKeyStyle) note.setKeyStyle(0, { fillStyle: '#8b6914', strokeStyle: '#8b6914' });
-      var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([note]);
-      new V.Formatter().joinVoices([voice]).format([voice], 180);
-      voice.draw(ctx, stave);
-      var svg = elL.querySelector('svg');
-      if (svg) { svg.setAttribute('viewBox', '0 0 300 160'); svg.setAttribute('width', '190'); svg.setAttribute('height', '101'); }
+      elL.style.width = "200px"; elL.style.height = "125px";
+      dibujarPentagrama(elL, filaNota(cQ.clave, row.idx, DORADO), { escala: 1.5, separacion: 0.4, top: 38, id: uid + 'l', alt: '' });
     }
 
     function updateBtn() {
@@ -381,8 +384,8 @@
         var cx = e.touches ? e.changedTouches[0].clientX : e.clientX;
         var cy = e.touches ? e.changedTouches[0].clientY : e.clientY;
         var row = getRow(cy); best = row;
-        var sr = currentSvg.getBoundingClientRect(), wr = elWrap.getBoundingClientRect(), scale = sr.width / SVG_W;
-        var lineY = (sr.top - wr.top) + (TOPY + row.line * 10) * scale;
+        var sr = currentSvg.getBoundingClientRect(), wr = elWrap.getBoundingClientRect(), g = tmNotacion.geometria(currentSvg);
+        var lineY = (sr.top - wr.top) + g.lineas[0] + row.line * (g.lineas[4] - g.lineas[0]) / 4;
         elHigh.style.display = 'block'; elHigh.style.top = (lineY - 1) + 'px';
         elLoupe.style.transform = ''; elLoupe.style.left = cx + 'px'; elLoupe.style.top = cy + 'px'; elLoupe.style.display = 'block';
         drawLoupe(row);
@@ -407,22 +410,13 @@
     }
 
     function drawStaff() {
-      var el = document.getElementById(uid + '_not'); el.innerHTML = '';
-      if (typeof Vex === 'undefined') return;
-      var V = Vex.Flow;
-      var r = new V.Renderer(el, V.Renderer.Backends.SVG); r.resize(SVG_W, SVG_H);
-      var ctx = r.getContext(); ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(10, STAVE_Y, STAVE_W, { space_above_staff_ln: SPACE_LN, space_below_staff_ln: SPACE_LN });
-      stave.addClef(cQ.clave.clef).setContext(ctx).draw();
-      if (placed) {
-        var note = new V.StaveNote({ keys: [placed.vfn + '/' + placed.oct], duration: 'w', clef: cQ.clave.clef });
-        if (note.setKeyStyle) note.setKeyStyle(0, placedStyle || { fillStyle: '#8b6914', strokeStyle: '#8b6914' });
-        var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([note]);
-        new V.Formatter().joinVoices([voice]).format([voice], 150);
-        voice.draw(ctx, stave);
-      }
-      var svg = el.querySelector('svg');
-      if (svg) { svg.setAttribute('viewBox', '0 0 ' + SVG_W + ' ' + SVG_H); svg.style.width = '100%'; svg.style.height = 'auto'; currentSvg = svg; }
+      var el = document.getElementById(uid + '_not');
+      el.style.height = '150px';
+      var r =dibujarPentagrama(el, filaNota(cQ.clave, placed ? placed.idx : null, placed ? (placedStyle ? placedStyle.fillStyle : DORADO) : null), {
+        escala: 1.5, separacion: 0.5, top: 38, id: uid,
+        alt: 'Pentagrama en ' + cQ.clave.label.toLowerCase() + (placed ? ' con tu nota colocada' : ' vacío')
+      });
+      currentSvg = r.elemento;
     }
 
     function checkAnswer() {
@@ -467,8 +461,7 @@
     }
 
     function init() { currentQ = 0; score = 0; if (lockedMode) { modeClave = lockedMode; startQuiz(); } else showModeScreen(); }
-    if (typeof Vex !== 'undefined') init();
-    else window.addEventListener('vexflow-ready', init, { once: true });
+    cargarVerovio(wrap, init);
   }
 
   window.tmNotasEngine = tmNotasEngine;

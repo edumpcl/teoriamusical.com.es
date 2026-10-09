@@ -1,0 +1,6 @@
+Verovio 6.3.0 (compilado a WebAssembly) — https://www.verovio.org · https://github.com/rism-digital/verovio
+Licencia: GNU LGPL v3 (https://www.gnu.org/licenses/lgpl-3.0.html). Se usa sin modificar; el codigo fuente completo esta en el
+repositorio indicado. Incluye la fuente musical Leland (Matthias Schaeffer / MuseScore), con licencia SIL Open Font License 1.1.
+
+Los ficheros son los de node_modules/verovio/dist (verovio-module.mjs = motor + fuente; verovio.mjs = envoltorio JavaScript).
+Los carga assets/js/tm-notacion.js bajo demanda, solo en las paginas de ejercicios que dibujan partituras.
