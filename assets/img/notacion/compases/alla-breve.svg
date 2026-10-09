@@ -1,0 +1,43 @@
+<svg id="kn88z5g" viewBox="0 0 122 80" width="186" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Símbolo de compás partido o alla breve (C tachada) en el pentagrama, equivalente a 2/2</title>
+   <defs>
+      <g id="E050-kn88z5g">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E08B-kn88z5g">
+         <path transform="scale(1,-1)" d="M136 102v-191c0 -66 23 -109 71 -126v432c-57 -16 -71 -68 -71 -115zM424 -83h13c5 0 8 -3 8 -8c-4 -107 -81 -165 -180 -165h-9v-109c0 -6 -5 -11 -11 -11h-27c-6 0 -11 5 -11 11v112c-195 21 -207 156 -207 265c0 61 22 225 207 244v121c0 6 5 11 11 11h27 c6 0 11 -5 11 -11v-120c159 -4 196 -93 205 -134c1 -4 2 -11 2 -15v-6c0 -50 -40 -90 -90 -90h-10c-41 5 -75 37 -80 78c-1 4 -1 8 -1 12c0 32 18 61 43 77c2 1 2 2 2 4c0 1 0 2 -1 4c-10 16 -29 33 -70 35v-446h9c88 0 147 50 151 133c0 4 4 8 8 8z" />
+      </g>
+   </defs>
+   <style type="text/css">#kn88z5g g.ending, #kn88z5g g.fing, #kn88z5g g.reh, #kn88z5g g.tempo {font-weight:bold;}#kn88z5g g.dir, #kn88z5g g.dynam, #kn88z5g g.mNum {font-style:italic;}#kn88z5g g.label {font-weight:normal;}#kn88z5g ellipse, #kn88z5g path, #kn88z5g polygon, #kn88z5g polyline, #kn88z5g rect {stroke:currentColor}#kn88z5g g.cursor {fill:dodgerblue; color:dodgerblue;}#kn88z5g g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 3030 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="l6j5uha" class="mdiv pageMilestone" />
+         <g id="m1n1fei3" class="score pageMilestone" />
+         <g id="r1vvyq9w" class="system">
+            <g id="a3fyvrj" class="section systemMilestone" />
+            <g id="b1fw1svu" class="measure">
+               <g id="k37las8" class="staff">
+                  <path d="M0 540 L2833 540" stroke-width="13" />
+                  <path d="M0 720 L2833 720" stroke-width="13" />
+                  <path d="M0 900 L2833 900" stroke-width="13" />
+                  <path d="M0 1080 L2833 1080" stroke-width="13" />
+                  <path d="M0 1260 L2833 1260" stroke-width="13" />
+                  <g id="l134z0hd" class="clef">
+                     <use href="#E050-kn88z5g" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="m13b296q" class="keySig" />
+                  <g id="ns1qnbq" class="meterSig">
+                     <use href="#E08B-kn88z5g" transform="translate(730, 900) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="l1en8gat" class="layer">
+                     <g id="m1wo80hh" class="space" />
+                  </g>
+               </g>
+               <g id="jeobpnd" class="barLine" />
+            </g>
+            <g id="u1xy5x97" class="systemMilestoneEnd a3fyvrj" />
+         </g>
+         <g id="v19fhe4x" class="pageMilestoneEnd m1n1fei3" />
+         <g id="w19wvyc9" class="pageMilestoneEnd l6j5uha" />
+      </g>
+   </svg>
+</svg>

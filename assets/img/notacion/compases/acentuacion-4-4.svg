@@ -1,0 +1,86 @@
+<svg id="a1rt0d62" viewBox="0 0 284 98" width="434" height="150" role="img" xmlns="http://www.w3.org/2000/svg"><title>Acentuación del compás de 4/4: fuerte, débil, semifuerte y débil</title>
+   <defs>
+      <g id="E050-a1rt0d62">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E084-a1rt0d62">
+         <path transform="scale(1,-1)" d="M208 -127h-172c-9 0 -11 6 -11 6s-7 11 -10 18c-1 2 -1 4 -1 6c0 6 3 11 3 11c26 37 56 87 82 168s31 155 31 155c1 6 6 12 13 12h149c4 0 7 -2 10 -4l22 -22c1 -1 3 -5 3 -10c0 -4 -1 -9 -5 -14c-118 -158 -230 -278 -230 -278h116v82c0 4 1 8 4 11l91 83c3 3 7 3 11 3 c2 0 3 0 5 -1l12 -6c4 -2 7 -7 7 -13v-159h90c8 0 14 -7 14 -14v-19c0 -8 -6 -15 -14 -15h-90v-74h90c8 0 14 -6 14 -14v-19c0 -8 -6 -14 -14 -14h-303c-7 0 -14 6 -14 14v19c0 8 7 14 14 14h83v74z" />
+      </g>
+      <g id="E0A4-a1rt0d62">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+      <g id="E4A0-a1rt0d62">
+         <path transform="scale(1,-1)" d="M18 234l333 -103c5 -2 10 -7 10 -13s-5 -12 -10 -14l-333 -103c-1 0 -3 -1 -4 -1c-8 0 -14 6 -14 14v23c0 6 5 11 10 13l214 68l-214 67c-5 2 -10 7 -10 13v23c0 8 6 14 14 14c1 0 3 -1 4 -1z" />
+      </g>
+   </defs>
+   <style type="text/css">#a1rt0d62 g.ending, #a1rt0d62 g.fing, #a1rt0d62 g.reh, #a1rt0d62 g.tempo {font-weight:bold;}#a1rt0d62 g.dir, #a1rt0d62 g.dynam, #a1rt0d62 g.mNum {font-style:italic;}#a1rt0d62 g.label {font-weight:normal;}#a1rt0d62 ellipse, #a1rt0d62 path, #a1rt0d62 polygon, #a1rt0d62 polyline, #a1rt0d62 rect {stroke:currentColor}#a1rt0d62 g.cursor {fill:dodgerblue; color:dodgerblue;}#a1rt0d62 g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 7080 2450">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="blm9y47" class="mdiv pageMilestone" />
+         <g id="c188tnto" class="score pageMilestone" />
+         <g id="l1mbq1du" class="system">
+            <g id="qypcrhm" class="section systemMilestone" />
+            <g id="r1mpyv99" class="measure">
+               <g id="a245p5g" class="staff">
+                  <path d="M0 540 L6881 540" stroke-width="13" />
+                  <path d="M0 720 L6881 720" stroke-width="13" />
+                  <path d="M0 900 L6881 900" stroke-width="13" />
+                  <path d="M0 1080 L6881 1080" stroke-width="13" />
+                  <path d="M0 1260 L6881 1260" stroke-width="13" />
+                  <g id="j10l8ntz" class="clef">
+                     <use href="#E050-a1rt0d62" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="ki5s32l" class="keySig" />
+                  <g id="l2h5p6j" class="meterSig">
+                     <use href="#E084-a1rt0d62" transform="translate(720, 720) scale(0.72, 0.72)" />
+                     <use href="#E084-a1rt0d62" transform="translate(720, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="b1cztwow" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-a1rt0d62" transform="translate(1308, 900) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="t9f0lvw" class="stem">
+                           <path d="M1317 930 L1317 1500" stroke-width="18" />
+                        </g>
+                        <g id="dqe8xm3" class="artic">
+                           <use href="#E4A0-a1rt0d62" transform="translate(1296, 473) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-a1rt0d62" transform="translate(2698, 900) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="ucw75jm" class="stem">
+                           <path d="M2707 930 L2707 1500" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-a1rt0d62" transform="translate(4088, 900) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="v6ph6up" class="stem">
+                           <path d="M4097 930 L4097 1500" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-a1rt0d62" transform="translate(5478, 900) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="wgh6pf" class="stem">
+                           <path d="M5487 930 L5487 1500" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="zjmnmiy" class="barLine">
+                  <path d="M6868 540 L6868 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="o187ui5z" class="systemMilestoneEnd qypcrhm" />
+         </g>
+         <g id="p152b9u9" class="pageMilestoneEnd c188tnto" />
+         <g id="quh6ioe" class="pageMilestoneEnd blm9y47" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="1414" y="2110" text-anchor="middle">Fuerte</text><text x="2804" y="2110" text-anchor="middle">Débil</text><text x="4194" y="2110" text-anchor="middle">Semifuerte</text><text x="5584" y="2110" text-anchor="middle">Débil</text></g></g></svg>
+</svg>

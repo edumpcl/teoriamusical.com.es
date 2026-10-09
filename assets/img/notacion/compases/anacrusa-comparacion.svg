@@ -1,0 +1,181 @@
+<svg id="tm-c2019273393" viewBox="0 0 411 318" width="411" height="318" role="img" xmlns="http://www.w3.org/2000/svg"><title>Comparación de una melodía sin anacrusa (empieza en el tiempo fuerte) y con anacrusa (una nota de impulso antes del primer tiempo fuerte)</title><svg id="jtgppva" x="0" y="0" width="338" height="159" viewBox="0 0 221 104">
+   <defs>
+      <g id="E050-jtgppva">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E084-jtgppva">
+         <path transform="scale(1,-1)" d="M208 -127h-172c-9 0 -11 6 -11 6s-7 11 -10 18c-1 2 -1 4 -1 6c0 6 3 11 3 11c26 37 56 87 82 168s31 155 31 155c1 6 6 12 13 12h149c4 0 7 -2 10 -4l22 -22c1 -1 3 -5 3 -10c0 -4 -1 -9 -5 -14c-118 -158 -230 -278 -230 -278h116v82c0 4 1 8 4 11l91 83c3 3 7 3 11 3 c2 0 3 0 5 -1l12 -6c4 -2 7 -7 7 -13v-159h90c8 0 14 -7 14 -14v-19c0 -8 -6 -15 -14 -15h-90v-74h90c8 0 14 -6 14 -14v-19c0 -8 -6 -14 -14 -14h-303c-7 0 -14 6 -14 14v19c0 8 7 14 14 14h83v74z" />
+      </g>
+      <g id="E0A4-jtgppva">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+   </defs>
+   <style type="text/css">#jtgppva g.ending, #jtgppva g.fing, #jtgppva g.reh, #jtgppva g.tempo {font-weight:bold;}#jtgppva g.dir, #jtgppva g.dynam, #jtgppva g.mNum {font-style:italic;}#jtgppva g.label {font-weight:normal;}#jtgppva ellipse, #jtgppva path, #jtgppva polygon, #jtgppva polyline, #jtgppva rect {stroke:currentColor}#jtgppva g.cursor {fill:dodgerblue; color:dodgerblue;}#jtgppva g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 -600 5520 2600">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="k2adp7a" class="mdiv pageMilestone" />
+         <g id="lweyzob" class="score pageMilestone" />
+         <g id="t1jijwxj" class="system">
+            <g id="z9g21qr" class="section systemMilestone" />
+            <g id="aylrfi0" class="measure">
+               <g id="j1rxnnca" class="staff">
+                  <path d="M0 540 L5321 540" stroke-width="13" />
+                  <path d="M0 720 L5321 720" stroke-width="13" />
+                  <path d="M0 900 L5321 900" stroke-width="13" />
+                  <path d="M0 1080 L5321 1080" stroke-width="13" />
+                  <path d="M0 1260 L5321 1260" stroke-width="13" />
+                  <g id="r1t147xb" class="clef">
+                     <use href="#E050-jtgppva" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="s1f9a5dj" class="keySig" />
+                  <g id="t1gnqz80" class="meterSig">
+                     <use href="#E084-jtgppva" transform="translate(720, 720) scale(0.72, 0.72)" />
+                     <use href="#E084-jtgppva" transform="translate(720, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="kq2yrlt" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-jtgppva" transform="translate(1308, 810) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="beobcc0" class="stem">
+                           <path d="M1317 840 L1317 1440" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-jtgppva" transform="translate(2308, 720) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="c1s11f2l" class="stem">
+                           <path d="M2317 750 L2317 1350" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-jtgppva" transform="translate(3308, 630) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="d12vbok6" class="stem">
+                           <path d="M3317 660 L3317 1260" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-jtgppva" transform="translate(4308, 540) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="ey42z0z" class="stem">
+                           <path d="M4317 570 L4317 1170" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="iwds4rv" class="barLine">
+                  <path d="M5308 540 L5308 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="whc67a6" class="systemMilestoneEnd z9g21qr" />
+         </g>
+         <g id="x1t4w0cj" class="pageMilestoneEnd lweyzob" />
+         <g id="y1f4hyud" class="pageMilestoneEnd k2adp7a" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="60" y="-100" text-anchor="start">Sin anacrusa · comienzo tético</text></g></g></svg>
+</svg><svg id="iyzfipx" x="0" y="159" width="411" height="159" viewBox="0 0 269 104">
+   <defs>
+      <g id="E050-iyzfipx">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E084-iyzfipx">
+         <path transform="scale(1,-1)" d="M208 -127h-172c-9 0 -11 6 -11 6s-7 11 -10 18c-1 2 -1 4 -1 6c0 6 3 11 3 11c26 37 56 87 82 168s31 155 31 155c1 6 6 12 13 12h149c4 0 7 -2 10 -4l22 -22c1 -1 3 -5 3 -10c0 -4 -1 -9 -5 -14c-118 -158 -230 -278 -230 -278h116v82c0 4 1 8 4 11l91 83c3 3 7 3 11 3 c2 0 3 0 5 -1l12 -6c4 -2 7 -7 7 -13v-159h90c8 0 14 -7 14 -14v-19c0 -8 -6 -15 -14 -15h-90v-74h90c8 0 14 -6 14 -14v-19c0 -8 -6 -14 -14 -14h-303c-7 0 -14 6 -14 14v19c0 8 7 14 14 14h83v74z" />
+      </g>
+      <g id="E0A4-iyzfipx">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+   </defs>
+   <style type="text/css">#iyzfipx g.ending, #iyzfipx g.fing, #iyzfipx g.reh, #iyzfipx g.tempo {font-weight:bold;}#iyzfipx g.dir, #iyzfipx g.dynam, #iyzfipx g.mNum {font-style:italic;}#iyzfipx g.label {font-weight:normal;}#iyzfipx ellipse, #iyzfipx path, #iyzfipx polygon, #iyzfipx polyline, #iyzfipx rect {stroke:currentColor}#iyzfipx g.cursor {fill:dodgerblue; color:dodgerblue;}#iyzfipx g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 -600 6710 2600">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="j1qeb76i" class="mdiv pageMilestone" />
+         <g id="k1v3awhe" class="score pageMilestone" />
+         <g id="e1ustexy" class="system">
+            <g id="y1ojullt" class="section systemMilestone" />
+            <g id="z1u9ijlc" class="measure">
+               <g id="i1dmmsop" class="staff">
+                  <path d="M0 540 L2321 540" stroke-width="13" />
+                  <path d="M0 720 L2321 720" stroke-width="13" />
+                  <path d="M0 900 L2321 900" stroke-width="13" />
+                  <path d="M0 1080 L2321 1080" stroke-width="13" />
+                  <path d="M0 1260 L2321 1260" stroke-width="13" />
+                  <g id="fc98lim" class="clef">
+                     <use href="#E050-iyzfipx" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="g1kpw82m" class="keySig" />
+                  <g id="h10ybjn1" class="meterSig">
+                     <use href="#E084-iyzfipx" transform="translate(720, 720) scale(0.72, 0.72)" />
+                     <use href="#E084-iyzfipx" transform="translate(720, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="j1rxwb67" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-iyzfipx" transform="translate(1308, 1080) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="ob0e4cn" class="stem">
+                           <path d="M1532 1052 L1532 450" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="h1lwj2w3" class="barLine">
+                  <path d="M2308 540 L2308 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="l10rsmcm" class="measure">
+               <g id="u1b55qa8" class="staff">
+                  <path d="M2321 540 L6514 540" stroke-width="13" />
+                  <path d="M2321 720 L6514 720" stroke-width="13" />
+                  <path d="M2321 900 L6514 900" stroke-width="13" />
+                  <path d="M2321 1080 L6514 1080" stroke-width="13" />
+                  <path d="M2321 1260 L6514 1260" stroke-width="13" />
+                  <g id="v1lbazdc" class="layer">
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-iyzfipx" transform="translate(2501, 810) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="p188bqmh" class="stem">
+                           <path d="M2510 840 L2510 1440" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-iyzfipx" transform="translate(3501, 720) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="qf7fo2x" class="stem">
+                           <path d="M3510 750 L3510 1350" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-iyzfipx" transform="translate(4501, 630) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="rs0u24a" class="stem">
+                           <path d="M4510 660 L4510 1260" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n4" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-iyzfipx" transform="translate(5501, 540) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="sfvwzfg" class="stem">
+                           <path d="M5510 570 L5510 1170" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="tomlul8" class="barLine">
+                  <path d="M6501 540 L6501 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="hy9j92d" class="systemMilestoneEnd y1ojullt" />
+         </g>
+         <g id="i5pgfzx" class="pageMilestoneEnd k1v3awhe" />
+         <g id="jr2v7rc" class="pageMilestoneEnd j1qeb76i" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="60" y="-100" text-anchor="start">Con anacrusa</text></g></g></svg>
+</svg></svg>

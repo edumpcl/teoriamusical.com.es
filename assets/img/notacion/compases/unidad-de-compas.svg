@@ -1,0 +1,53 @@
+<svg id="i1hin3l1" viewBox="0 0 125 80" width="191" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Compás de 4/4 con una redonda, que es la unidad de compás</title>
+   <defs>
+      <g id="E050-i1hin3l1">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E084-i1hin3l1">
+         <path transform="scale(1,-1)" d="M208 -127h-172c-9 0 -11 6 -11 6s-7 11 -10 18c-1 2 -1 4 -1 6c0 6 3 11 3 11c26 37 56 87 82 168s31 155 31 155c1 6 6 12 13 12h149c4 0 7 -2 10 -4l22 -22c1 -1 3 -5 3 -10c0 -4 -1 -9 -5 -14c-118 -158 -230 -278 -230 -278h116v82c0 4 1 8 4 11l91 83c3 3 7 3 11 3 c2 0 3 0 5 -1l12 -6c4 -2 7 -7 7 -13v-159h90c8 0 14 -7 14 -14v-19c0 -8 -6 -15 -14 -15h-90v-74h90c8 0 14 -6 14 -14v-19c0 -8 -6 -14 -14 -14h-303c-7 0 -14 6 -14 14v19c0 8 7 14 14 14h83v74z" />
+      </g>
+      <g id="E0A2-i1hin3l1">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#i1hin3l1 g.ending, #i1hin3l1 g.fing, #i1hin3l1 g.reh, #i1hin3l1 g.tempo {font-weight:bold;}#i1hin3l1 g.dir, #i1hin3l1 g.dynam, #i1hin3l1 g.mNum {font-style:italic;}#i1hin3l1 g.label {font-weight:normal;}#i1hin3l1 ellipse, #i1hin3l1 path, #i1hin3l1 polygon, #i1hin3l1 polyline, #i1hin3l1 rect {stroke:currentColor}#i1hin3l1 g.cursor {fill:dodgerblue; color:dodgerblue;}#i1hin3l1 g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 3110 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="j206nc9" class="mdiv pageMilestone" />
+         <g id="kl9rkw6" class="score pageMilestone" />
+         <g id="p14l9ck6" class="system">
+            <g id="yvue4gk" class="section systemMilestone" />
+            <g id="z1ge5ell" class="measure">
+               <g id="id2ier" class="staff">
+                  <path d="M0 540 L2911 540" stroke-width="13" />
+                  <path d="M0 720 L2911 720" stroke-width="13" />
+                  <path d="M0 900 L2911 900" stroke-width="13" />
+                  <path d="M0 1080 L2911 1080" stroke-width="13" />
+                  <path d="M0 1260 L2911 1260" stroke-width="13" />
+                  <g id="ku1vpsk" class="clef">
+                     <use href="#E050-i1hin3l1" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="l1mu6vyf" class="keySig" />
+                  <g id="m8xlga" class="meterSig">
+                     <use href="#E084-i1hin3l1" transform="translate(720, 720) scale(0.72, 0.72)" />
+                     <use href="#E084-i1hin3l1" transform="translate(720, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="j1ofsebk" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-i1hin3l1" transform="translate(1308, 900) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="hpb4tn6" class="barLine">
+                  <path d="M2898 540 L2898 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="swb941h" class="systemMilestoneEnd yvue4gk" />
+         </g>
+         <g id="t1jzyzkh" class="pageMilestoneEnd kl9rkw6" />
+         <g id="u1menso5" class="pageMilestoneEnd j206nc9" />
+      </g>
+   </svg>
+</svg>
