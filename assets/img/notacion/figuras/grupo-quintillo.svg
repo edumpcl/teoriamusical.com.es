@@ -1,0 +1,100 @@
+<svg id="i1qjhz3m" viewBox="0 0 107 80" width="245" height="183" role="img" xmlns="http://www.w3.org/2000/svg"><title>Quintillo: cinco semicorcheas con el número 5</title>
+   <defs>
+      <g id="E050-i1qjhz3m">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A4-i1qjhz3m">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+      <g id="E885-i1qjhz3m">
+         <path transform="scale(1,-1)" d="M54 201l47 163c42 -10 79 -15 113 -15c28 0 49 5 72 14c3 1 5 1 6 1c2 0 3 -1 3 -4c0 -16 -14 -42 -30 -56c-22 -19 -50 -27 -91 -27c-23 0 -23 0 -64 9l-20 -67c26 10 45 14 68 14c63 0 104 -36 104 -93c0 -84 -66 -146 -156 -146c-65 0 -106 32 -106 81 c0 31 18 52 47 52c25 0 41 -16 41 -39c0 -20 -10 -33 -30 -40c-5 -2 -6 -3 -6 -6c0 -11 20 -22 43 -22c46 0 82 50 82 113c0 42 -19 67 -52 67c-13 0 -21 -2 -47 -13c-3 -20 -12 -30 -27 -30c-10 0 -17 8 -17 18c0 11 7 20 20 26z" />
+      </g>
+   </defs>
+   <style type="text/css">#i1qjhz3m g.ending, #i1qjhz3m g.fing, #i1qjhz3m g.reh, #i1qjhz3m g.tempo {font-weight:bold;}#i1qjhz3m g.dir, #i1qjhz3m g.dynam, #i1qjhz3m g.mNum {font-style:italic;}#i1qjhz3m g.label {font-weight:normal;}#i1qjhz3m ellipse, #i1qjhz3m path, #i1qjhz3m polygon, #i1qjhz3m polyline, #i1qjhz3m rect {stroke:currentColor}#i1qjhz3m g.cursor {fill:dodgerblue; color:dodgerblue;}#i1qjhz3m g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2660 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="jn015x0" class="mdiv pageMilestone" />
+         <g id="k43u8vu" class="score pageMilestone" />
+         <g id="unl983m" class="system">
+            <g id="x1664r43" class="section systemMilestone" />
+            <g id="ykbox9k" class="measure">
+               <g id="h1rtr44o" class="staff">
+                  <path d="M0 540 L2467 540" stroke-width="13" />
+                  <path d="M0 720 L2467 720" stroke-width="13" />
+                  <path d="M0 900 L2467 900" stroke-width="13" />
+                  <path d="M0 1080 L2467 1080" stroke-width="13" />
+                  <path d="M0 1260 L2467 1260" stroke-width="13" />
+                  <g id="mjg2st4" class="clef">
+                     <use href="#E050-i1qjhz3m" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="n1n2k6wh" class="keySig" />
+                  <g id="i1th18qv" class="layer">
+                     <g id="jag7esu" class="tuplet">
+                        <g id="d1kmhj4" class="tupletNum">
+                           <use href="#E885-i1qjhz3m" transform="translate(1479, 313) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="cwklbu6" class="tupletBracket">
+                           <polyline stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter" fill="none" points="829,313 829,180 1434,180 " />
+                           <polyline stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter" fill="none" points="2341,313 2341,180 1736,180 " />
+                        </g>
+                        <g id="k123af7k" class="beam">
+                           <polygon points="1035,360 2349,360 2349,450 1035,450" />
+                           <polygon points="1035,495 1368,495 1368,585 1035,585" />
+                           <polygon points="1368,495 1692,495 1692,585 1368,585" />
+                           <polygon points="1692,495 2016,495 2016,585 1692,585" />
+                           <polygon points="2016,495 2349,495 2349,585 2016,585" />
+                           <g id="n0" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-i1qjhz3m" transform="translate(820, 990) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="e15j1233" class="stem">
+                                 <path d="M1044 962 L1044 378" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n1" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-i1qjhz3m" transform="translate(1144, 990) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="fxjrjhu" class="stem">
+                                 <path d="M1368 962 L1368 378" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n2" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-i1qjhz3m" transform="translate(1468, 990) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="gkjpttm" class="stem">
+                                 <path d="M1692 962 L1692 378" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n3" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-i1qjhz3m" transform="translate(1792, 990) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="h1qysest" class="stem">
+                                 <path d="M2016 962 L2016 378" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n4" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-i1qjhz3m" transform="translate(2116, 990) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="i4780d2" class="stem">
+                                 <path d="M2340 962 L2340 378" stroke-width="18" />
+                              </g>
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="gwocmyz" class="barLine">
+                  <path d="M2454 540 L2454 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="xs7200g" class="systemMilestoneEnd x1664r43" />
+         </g>
+         <g id="y13uyxu9" class="pageMilestoneEnd k43u8vu" />
+         <g id="zl8na8k" class="pageMilestoneEnd jn015x0" />
+      </g>
+   </svg>
+</svg>

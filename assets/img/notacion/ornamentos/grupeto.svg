@@ -1,0 +1,107 @@
+<svg id="i1sztz9v" viewBox="0 0 129 80" width="246" height="153" role="img" xmlns="http://www.w3.org/2000/svg"><title>Grupeto directo sobre Sol y su realización: La, Sol, Fa, Sol</title>
+   <defs>
+      <g id="E050-i1sztz9v">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A4-i1sztz9v">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+      <g id="E567-i1sztz9v">
+         <path transform="scale(1,-1)" d="M366 232c51 0 90 -47 90 -118c0 -75 -64 -114 -121 -114c-34 0 -60 12 -85 35l-105 98c-26 23 -41 31 -70 31c-25 0 -45 -20 -45 -45v-1c0 -28 11 -43 30 -43c21 0 26 15 48 15c23 0 41 -16 41 -45c0 -30 -31 -45 -58 -45c-51 0 -91 47 -91 118c0 75 64 114 121 114 c34 0 61 -12 86 -35l104 -98c26 -23 42 -31 71 -31c25 0 44 20 44 45v1c0 28 -11 43 -30 43c-21 0 -26 -15 -48 -15c-23 0 -41 16 -41 45c0 30 32 45 59 45z" />
+      </g>
+   </defs>
+   <style type="text/css">#i1sztz9v g.ending, #i1sztz9v g.fing, #i1sztz9v g.reh, #i1sztz9v g.tempo {font-weight:bold;}#i1sztz9v g.dir, #i1sztz9v g.dynam, #i1sztz9v g.mNum {font-style:italic;}#i1sztz9v g.label {font-weight:normal;}#i1sztz9v ellipse, #i1sztz9v path, #i1sztz9v polygon, #i1sztz9v polyline, #i1sztz9v rect {stroke:currentColor}#i1sztz9v g.cursor {fill:dodgerblue; color:dodgerblue;}#i1sztz9v g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 3220 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="j4hqis5" class="mdiv pageMilestone" />
+         <g id="k25t1wo" class="score pageMilestone" />
+         <g id="f45o3kv" class="system">
+            <g id="xsyqjdq" class="section systemMilestone" />
+            <g id="y1iv7fke" class="measure">
+               <g id="he88gsl" class="staff">
+                  <path d="M0 540 L1523 540" stroke-width="13" />
+                  <path d="M0 720 L1523 720" stroke-width="13" />
+                  <path d="M0 900 L1523 900" stroke-width="13" />
+                  <path d="M0 1080 L1523 1080" stroke-width="13" />
+                  <path d="M0 1260 L1523 1260" stroke-width="13" />
+                  <g id="x10s089" class="clef">
+                     <use href="#E050-i1sztz9v" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="y1jg9x3d" class="keySig" />
+                  <g id="i1bq6uu1" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-i1sztz9v" transform="translate(820, 1080) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="p1hhuh17" class="stem">
+                           <path d="M1044 1052 L1044 450" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="k18w9xje" class="turn">
+                  <use href="#E567-i1sztz9v" transform="translate(773, 396) scale(0.72, 0.72)" />
+               </g>
+               <g id="g1kl3uzj" class="barLine">
+                  <path d="M1510 540 L1510 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="l1r627oa" class="measure">
+               <g id="u1enfod2" class="staff">
+                  <path d="M1523 540 L3026 540" stroke-width="13" />
+                  <path d="M1523 720 L3026 720" stroke-width="13" />
+                  <path d="M1523 900 L3026 900" stroke-width="13" />
+                  <path d="M1523 1080 L3026 1080" stroke-width="13" />
+                  <path d="M1523 1260 L3026 1260" stroke-width="13" />
+                  <g id="v4e089o" class="layer">
+                     <g id="wv8i7h2" class="beam">
+                        <polygon points="1918,315 2908,360 2908,450 1918,405" />
+                        <polygon points="1918,450 2251,465 2251,555 1918,540" />
+                        <polygon points="2251,465 2575,480 2575,570 2251,555" />
+                        <polygon points="2575,480 2908,495 2908,585 2575,570" />
+                        <g id="n1" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-i1sztz9v" transform="translate(1703, 990) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="qrm7735" class="stem">
+                              <path d="M1927 962 L1927 333" stroke-width="18" />
+                           </g>
+                        </g>
+                        <g id="n2" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-i1sztz9v" transform="translate(2027, 1080) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="r1nqtkms" class="stem">
+                              <path d="M2251 1052 L2251 348" stroke-width="18" />
+                           </g>
+                        </g>
+                        <g id="n3" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-i1sztz9v" transform="translate(2351, 1170) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="s9sspn" class="stem">
+                              <path d="M2575 1142 L2575 363" stroke-width="18" />
+                           </g>
+                        </g>
+                        <g id="n4" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-i1sztz9v" transform="translate(2675, 1080) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="t4q9v5" class="stem">
+                              <path d="M2899 1052 L2899 378" stroke-width="18" />
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="t1mb52a2" class="barLine">
+                  <path d="M3013 540 L3013 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="i1igpr6w" class="systemMilestoneEnd xsyqjdq" />
+         </g>
+         <g id="j1bxg5lz" class="pageMilestoneEnd k25t1wo" />
+         <g id="k1ctre7o" class="pageMilestoneEnd j4hqis5" />
+      </g>
+   </svg>
+</svg>

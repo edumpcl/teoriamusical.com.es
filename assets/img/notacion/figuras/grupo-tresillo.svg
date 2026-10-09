@@ -1,0 +1,80 @@
+<svg id="tw9ui5i" viewBox="0 0 85 80" width="195" height="183" role="img" xmlns="http://www.w3.org/2000/svg"><title>Tresillo: tres corcheas con el número 3</title>
+   <defs>
+      <g id="E050-tw9ui5i">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A4-tw9ui5i">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+      <g id="E883-tw9ui5i">
+         <path transform="scale(1,-1)" d="M179 185c42 -10 74 -27 74 -77c0 -66 -60 -116 -142 -116c-68 0 -111 32 -111 83c0 31 19 52 47 52c25 0 41 -16 41 -39c0 -18 -9 -30 -26 -36c-9 -3 -11 -4 -11 -10c0 -12 22 -24 44 -24c56 0 74 62 74 108c0 31 -11 48 -34 48c-5 0 -5 0 -16 -3c-3 -1 -9 -2 -12 -2 c-11 0 -18 6 -18 17s7 18 17 18c4 0 7 -1 13 -3c7 -3 11 -3 17 -3c40 0 63 53 63 87c0 31 -17 50 -45 50c-21 0 -42 -10 -42 -21c0 -3 0 -3 9 -10c11 -9 16 -19 16 -31c0 -21 -17 -37 -39 -37c-25 0 -42 18 -42 45c0 46 50 81 114 81c65 0 109 -34 109 -83 c0 -60 -50 -83 -100 -94z" />
+      </g>
+   </defs>
+   <style type="text/css">#tw9ui5i g.ending, #tw9ui5i g.fing, #tw9ui5i g.reh, #tw9ui5i g.tempo {font-weight:bold;}#tw9ui5i g.dir, #tw9ui5i g.dynam, #tw9ui5i g.mNum {font-style:italic;}#tw9ui5i g.label {font-weight:normal;}#tw9ui5i ellipse, #tw9ui5i path, #tw9ui5i polygon, #tw9ui5i polyline, #tw9ui5i rect {stroke:currentColor}#tw9ui5i g.cursor {fill:dodgerblue; color:dodgerblue;}#tw9ui5i g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2110 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="u1cohbob" class="mdiv pageMilestone" />
+         <g id="v1a5x27c" class="score pageMilestone" />
+         <g id="d19ls5z7" class="system">
+            <g id="i1ihf3f8" class="section systemMilestone" />
+            <g id="j1rzrhcu" class="measure">
+               <g id="sil7254" class="staff">
+                  <path d="M0 540 L1913 540" stroke-width="13" />
+                  <path d="M0 720 L1913 720" stroke-width="13" />
+                  <path d="M0 900 L1913 900" stroke-width="13" />
+                  <path d="M0 1080 L1913 1080" stroke-width="13" />
+                  <path d="M0 1260 L1913 1260" stroke-width="13" />
+                  <g id="trvygpx" class="clef">
+                     <use href="#E050-tw9ui5i" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="u18ipc88" class="keySig" />
+                  <g id="t1tz6qzd" class="layer">
+                     <g id="u1hlu2sc" class="tuplet">
+                        <g id="m1unb1jf" class="tupletNum">
+                           <use href="#E883-tw9ui5i" transform="translate(1197, 313) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="l1uxtt2u" class="tupletBracket">
+                           <polyline stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter" fill="none" points="829,313 829,180 1152,180 " />
+                           <polyline stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter" fill="none" points="1765,313 1765,180 1442,180 " />
+                        </g>
+                        <g id="vk4an7v" class="beam">
+                           <polygon points="1035,360 1773,360 1773,450 1035,450" />
+                           <g id="n0" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-tw9ui5i" transform="translate(820, 990) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="n1jzn9w7" class="stem">
+                                 <path d="M1044 962 L1044 378" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n1" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-tw9ui5i" transform="translate(1180, 990) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="o1vxcscq" class="stem">
+                                 <path d="M1404 962 L1404 378" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n2" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-tw9ui5i" transform="translate(1540, 990) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="p1puflwl" class="stem">
+                                 <path d="M1764 962 L1764 378" stroke-width="18" />
+                              </g>
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="r196uuuv" class="barLine">
+                  <path d="M1900 540 L1900 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="grm3wxv" class="systemMilestoneEnd i1ihf3f8" />
+         </g>
+         <g id="hkubcp" class="pageMilestoneEnd v1a5x27c" />
+         <g id="iglq77z" class="pageMilestoneEnd u1cohbob" />
+      </g>
+   </svg>
+</svg>

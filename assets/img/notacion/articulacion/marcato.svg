@@ -1,0 +1,88 @@
+<svg id="blx8o6f" viewBox="0 0 152 80" width="278" height="146" role="img" xmlns="http://www.w3.org/2000/svg"><title>Cuatro notas con signo de marcato en el pentagrama</title>
+   <defs>
+      <g id="E050-blx8o6f">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A4-blx8o6f">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+      <g id="E4AD-blx8o6f">
+         <path transform="scale(1,-1)" d="M271 -7l24 -14l-135 -226c-2 -4 -8 -6 -12 -6c-6 1 -9 2 -12 6l-135 226c-1 2 -1 5 -1 7c0 8 5 14 13 14h63c5 0 11 -3 13 -7l87 -159z" />
+      </g>
+   </defs>
+   <style type="text/css">#blx8o6f g.ending, #blx8o6f g.fing, #blx8o6f g.reh, #blx8o6f g.tempo {font-weight:bold;}#blx8o6f g.dir, #blx8o6f g.dynam, #blx8o6f g.mNum {font-style:italic;}#blx8o6f g.label {font-weight:normal;}#blx8o6f ellipse, #blx8o6f path, #blx8o6f polygon, #blx8o6f polyline, #blx8o6f rect {stroke:currentColor}#blx8o6f g.cursor {fill:dodgerblue; color:dodgerblue;}#blx8o6f g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 3790 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="c12ga4w7" class="mdiv pageMilestone" />
+         <g id="d1fzw3v0" class="score pageMilestone" />
+         <g id="o1hjqmr6" class="system">
+            <g id="q3blrxq" class="section systemMilestone" />
+            <g id="r1huuqns" class="measure">
+               <g id="a13ffzhf" class="staff">
+                  <path d="M0 540 L3593 540" stroke-width="13" />
+                  <path d="M0 720 L3593 720" stroke-width="13" />
+                  <path d="M0 900 L3593 900" stroke-width="13" />
+                  <path d="M0 1080 L3593 1080" stroke-width="13" />
+                  <path d="M0 1260 L3593 1260" stroke-width="13" />
+                  <g id="d1xef673" class="clef">
+                     <use href="#E050-blx8o6f" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="e1i2bo0g" class="keySig" />
+                  <g id="b185bh2v" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-blx8o6f" transform="translate(820, 1260) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="w19lsye5" class="stem">
+                           <path d="M1044 1232 L1044 630" stroke-width="18" />
+                        </g>
+                        <g id="duks567" class="artic">
+                           <use href="#E4AD-blx8o6f" transform="translate(831, 1417) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-blx8o6f" transform="translate(1510, 1080) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="x1w85msi" class="stem">
+                           <path d="M1734 1052 L1734 450" stroke-width="18" />
+                        </g>
+                        <g id="f7b4zka" class="artic">
+                           <use href="#E4AD-blx8o6f" transform="translate(1521, 1327) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-blx8o6f" transform="translate(2200, 990) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="y1tvny2n" class="stem">
+                           <path d="M2424 962 L2424 360" stroke-width="18" />
+                        </g>
+                        <g id="h1ana6gm" class="artic">
+                           <use href="#E4AD-blx8o6f" transform="translate(2211, 1327) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-blx8o6f" transform="translate(2890, 1080) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="z1g77ryi" class="stem">
+                           <path d="M3114 1052 L3114 450" stroke-width="18" />
+                        </g>
+                        <g id="jfbfp6a" class="artic">
+                           <use href="#E4AD-blx8o6f" transform="translate(2901, 1327) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="z1fd6rih" class="barLine">
+                  <path d="M3580 540 L3580 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="r1gh4a7p" class="systemMilestoneEnd q3blrxq" />
+         </g>
+         <g id="swd9wje" class="pageMilestoneEnd d1fzw3v0" />
+         <g id="t1w8dtvk" class="pageMilestoneEnd c12ga4w7" />
+      </g>
+   </svg>
+</svg>

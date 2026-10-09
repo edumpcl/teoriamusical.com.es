@@ -1,0 +1,44 @@
+<svg id="yjeglhm" viewBox="0 0 89 80" width="245" height="220" role="img" xmlns="http://www.w3.org/2000/svg"><title>Silencio de fusa en el pentagrama</title>
+   <defs>
+      <g id="E050-yjeglhm">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E4E8-yjeglhm">
+         <path transform="scale(1,-1)" d="M151 49c-45 0 -90 29 -90 76c0 40 31 71 70 71s72 -27 72 -67c0 -18 -3 -33 -15 -48c56 14 99 84 119 134l39 161c-28 -39 -68 -67 -117 -70c-5 -1 -9 -1 -13 -1c-45 3 -92 23 -92 76c0 42 33 72 72 72s70 -29 70 -67c0 -18 -3 -33 -15 -48c48 12 94 71 113 113 c3 5 7 9 13 9c1 0 3 0 4 -1c6 -2 10 -6 10 -12c0 -1 0 -3 -1 -4l-232 -950l-27 6l91 372c-30 -42 -72 -71 -125 -71s-97 25 -97 77c0 40 32 70 71 70s71 -26 71 -66c0 -18 -3 -34 -14 -48c58 16 96 83 118 135l37 151c-4 -7 -41 -70 -132 -70z" />
+      </g>
+   </defs>
+   <style type="text/css">#yjeglhm g.ending, #yjeglhm g.fing, #yjeglhm g.reh, #yjeglhm g.tempo {font-weight:bold;}#yjeglhm g.dir, #yjeglhm g.dynam, #yjeglhm g.mNum {font-style:italic;}#yjeglhm g.label {font-weight:normal;}#yjeglhm ellipse, #yjeglhm path, #yjeglhm polygon, #yjeglhm polyline, #yjeglhm rect {stroke:currentColor}#yjeglhm g.cursor {fill:dodgerblue; color:dodgerblue;}#yjeglhm g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2210 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="z1vs2hye" class="mdiv pageMilestone" />
+         <g id="a1oxw5rv" class="score pageMilestone" />
+         <g id="efnv5fi" class="system">
+            <g id="nrnkm6o" class="section systemMilestone" />
+            <g id="ojncjas" class="measure">
+               <g id="xovx456" class="staff">
+                  <path d="M0 540 L2017 540" stroke-width="13" />
+                  <path d="M0 720 L2017 720" stroke-width="13" />
+                  <path d="M0 900 L2017 900" stroke-width="13" />
+                  <path d="M0 1080 L2017 1080" stroke-width="13" />
+                  <path d="M0 1260 L2017 1260" stroke-width="13" />
+                  <g id="pzqorvh" class="clef">
+                     <use href="#E050-yjeglhm" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="qfwdoy" class="keySig" />
+                  <g id="yjnis76" class="layer">
+                     <g id="n0" class="rest">
+                        <use href="#E4E8-yjeglhm" transform="translate(1067, 900) scale(0.72, 0.72)" />
+                     </g>
+                  </g>
+               </g>
+               <g id="w1uqw8pe" class="barLine">
+                  <path d="M2004 540 L2004 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="hu9bfei" class="systemMilestoneEnd nrnkm6o" />
+         </g>
+         <g id="ity4vv8" class="pageMilestoneEnd a1oxw5rv" />
+         <g id="j6d4kk9" class="pageMilestoneEnd z1vs2hye" />
+      </g>
+   </svg>
+</svg>

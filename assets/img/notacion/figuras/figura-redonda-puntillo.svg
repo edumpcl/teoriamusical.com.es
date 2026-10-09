@@ -1,0 +1,49 @@
+<svg id="r1uvshdy" viewBox="0 0 123 80" width="338" height="220" role="img" xmlns="http://www.w3.org/2000/svg"><title>Redonda con puntillo</title>
+   <defs>
+      <g id="E050-r1uvshdy">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A2-r1uvshdy">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#r1uvshdy g.ending, #r1uvshdy g.fing, #r1uvshdy g.reh, #r1uvshdy g.tempo {font-weight:bold;}#r1uvshdy g.dir, #r1uvshdy g.dynam, #r1uvshdy g.mNum {font-style:italic;}#r1uvshdy g.label {font-weight:normal;}#r1uvshdy ellipse, #r1uvshdy path, #r1uvshdy polygon, #r1uvshdy polyline, #r1uvshdy rect {stroke:currentColor}#r1uvshdy g.cursor {fill:dodgerblue; color:dodgerblue;}#r1uvshdy g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 3070 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="s1h7i0pk" class="mdiv pageMilestone" />
+         <g id="t2isgkc" class="score pageMilestone" />
+         <g id="xt017j6" class="system">
+            <g id="g1fx141h" class="section systemMilestone" />
+            <g id="h1tjxk0v" class="measure">
+               <g id="q3yl9fd" class="staff">
+                  <path d="M0 540 L2873 540" stroke-width="13" />
+                  <path d="M0 720 L2873 720" stroke-width="13" />
+                  <path d="M0 900 L2873 900" stroke-width="13" />
+                  <path d="M0 1080 L2873 1080" stroke-width="13" />
+                  <path d="M0 1260 L2873 1260" stroke-width="13" />
+                  <g id="k1bt59j0" class="clef">
+                     <use href="#E050-r1uvshdy" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="lni7xvt" class="keySig" />
+                  <g id="r1h9ye38" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-r1uvshdy" transform="translate(820, 1080) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="g1ob5zpt" class="dots">
+                           <ellipse cx="1178" cy="990" rx="36" ry="36" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="peddmyb" class="barLine">
+                  <path d="M2860 540 L2860 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="afh1yl9" class="systemMilestoneEnd g1fx141h" />
+         </g>
+         <g id="bihbi37" class="pageMilestoneEnd t2isgkc" />
+         <g id="c2dvj7a" class="pageMilestoneEnd s1h7i0pk" />
+      </g>
+   </svg>
+</svg>

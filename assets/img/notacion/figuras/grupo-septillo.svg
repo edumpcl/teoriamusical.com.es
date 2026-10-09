@@ -1,0 +1,118 @@
+<svg id="r1laukj2" viewBox="0 0 133 80" width="305" height="183" role="img" xmlns="http://www.w3.org/2000/svg"><title>Septillo: siete semicorcheas con el número 7</title>
+   <defs>
+      <g id="E050-r1laukj2">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A4-r1laukj2">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+      <g id="E887-r1laukj2">
+         <path transform="scale(1,-1)" d="M271 365l1 -19c-95 -163 -117 -209 -131 -289c-7 -32 -13 -62 -54 -62c-27 0 -46 17 -46 42c0 34 13 52 149 228l19 25h-113c-29 0 -43 -12 -64 -50l-8 -15l-24 7l53 133c42 -5 63 -5 97 -5c36 0 64 1 121 5z" />
+      </g>
+   </defs>
+   <style type="text/css">#r1laukj2 g.ending, #r1laukj2 g.fing, #r1laukj2 g.reh, #r1laukj2 g.tempo {font-weight:bold;}#r1laukj2 g.dir, #r1laukj2 g.dynam, #r1laukj2 g.mNum {font-style:italic;}#r1laukj2 g.label {font-weight:normal;}#r1laukj2 ellipse, #r1laukj2 path, #r1laukj2 polygon, #r1laukj2 polyline, #r1laukj2 rect {stroke:currentColor}#r1laukj2 g.cursor {fill:dodgerblue; color:dodgerblue;}#r1laukj2 g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 3310 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="scjb3rn" class="mdiv pageMilestone" />
+         <g id="tpwhkz5" class="score pageMilestone" />
+         <g id="fnekuhz" class="system">
+            <g id="g1n0nl57" class="section systemMilestone" />
+            <g id="hp90aqo" class="measure">
+               <g id="q1o654ab" class="staff">
+                  <path d="M0 540 L3115 540" stroke-width="13" />
+                  <path d="M0 720 L3115 720" stroke-width="13" />
+                  <path d="M0 900 L3115 900" stroke-width="13" />
+                  <path d="M0 1080 L3115 1080" stroke-width="13" />
+                  <path d="M0 1260 L3115 1260" stroke-width="13" />
+                  <g id="z1efa2bb" class="clef">
+                     <use href="#E050-r1laukj2" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="a1mqnfpr" class="keySig" />
+                  <g id="r11bcsq4" class="layer">
+                     <g id="szcmoxr" class="tuplet">
+                        <g id="ozpge2r" class="tupletNum">
+                           <use href="#E887-r1laukj2" transform="translate(1811, 313) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="nz7lvhv" class="tupletBracket">
+                           <polyline stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter" fill="none" points="829,313 829,180 1766,180 " />
+                           <polyline stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter" fill="none" points="2989,313 2989,180 2051,180 " />
+                        </g>
+                        <g id="taqva4b" class="beam">
+                           <polygon points="1035,360 2997,360 2997,450 1035,450" />
+                           <polygon points="1035,495 1368,495 1368,585 1035,585" />
+                           <polygon points="1368,495 1692,495 1692,585 1368,585" />
+                           <polygon points="1692,495 2016,495 2016,585 1692,585" />
+                           <polygon points="2016,495 2340,495 2340,585 2016,585" />
+                           <polygon points="2340,495 2664,495 2664,585 2340,585" />
+                           <polygon points="2664,495 2997,495 2997,585 2664,585" />
+                           <g id="n0" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-r1laukj2" transform="translate(820, 990) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="p1q8e47f" class="stem">
+                                 <path d="M1044 962 L1044 378" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n1" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-r1laukj2" transform="translate(1144, 990) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="qrx1fco" class="stem">
+                                 <path d="M1368 962 L1368 378" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n2" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-r1laukj2" transform="translate(1468, 990) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="rgvox6b" class="stem">
+                                 <path d="M1692 962 L1692 378" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n3" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-r1laukj2" transform="translate(1792, 990) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="sot6jyu" class="stem">
+                                 <path d="M2016 962 L2016 378" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n4" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-r1laukj2" transform="translate(2116, 990) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="t711k4v" class="stem">
+                                 <path d="M2340 962 L2340 378" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n5" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-r1laukj2" transform="translate(2440, 990) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="unsj1rn" class="stem">
+                                 <path d="M2664 962 L2664 378" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n6" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-r1laukj2" transform="translate(2764, 990) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="vkt9t5s" class="stem">
+                                 <path d="M2988 962 L2988 378" stroke-width="18" />
+                              </g>
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="pg4vo" class="barLine">
+                  <path d="M3102 540 L3102 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="ia4s95s" class="systemMilestoneEnd g1n0nl57" />
+         </g>
+         <g id="jd20po0" class="pageMilestoneEnd tpwhkz5" />
+         <g id="k167tasj" class="pageMilestoneEnd scjb3rn" />
+      </g>
+   </svg>
+</svg>

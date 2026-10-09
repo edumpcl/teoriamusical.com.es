@@ -1083,6 +1083,26 @@ figcaption, .wp-element-caption {
 /* Scrollable table wrapper */
 .tm-table-wrap { overflow-x: auto; margin: 1.5rem 0; }
 
+/* ── Tablas en tarjetas (movil) ──
+   Las tablas con imagenes de notacion (figuras, silencios, puntillos, alteraciones, grupos de valoracion
+   especial) no caben en 390 px sin encoger la imagen a ~50 px. En movil cada fila pasa a ser una tarjeta:
+   la imagen a la izquierda, a tamano legible, y los datos a su derecha, cada uno con la etiqueta de su
+   columna (data-label). En escritorio no cambia nada. Se activa con tools/tablas-tarjetas.js. */
+@media (max-width: 640px) {
+  .tm-table.tm-table--tarjetas, .tm-table.tm-table--tarjetas tbody { display: block; width: 100%; overflow: visible; }
+  .tm-table.tm-table--tarjetas thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+  .tm-table.tm-table--tarjetas tr {
+    display: grid; grid-template-columns: minmax(0, 46%) minmax(0, 1fr); column-gap: .9rem; align-items: center;
+    padding: .7rem .75rem; margin: 0 0 .7rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface);
+  }
+  .tm-table.tm-table--tarjetas tbody tr:nth-child(even) td, .tm-table.tm-table--tarjetas tbody tr:hover td { background: transparent; }
+  .tm-table.tm-table--tarjetas td { display: block; grid-column: 2; border: 0; padding: .12rem 0; text-align: left; }
+  .tm-table.tm-table--tarjetas td:first-child { font-size: 1.05rem; padding-bottom: .25rem; }
+  .tm-table.tm-table--tarjetas td.tm-celda-img { grid-column: 1; grid-row: 1 / span 6; padding: 0; }
+  .tm-table.tm-table--tarjetas td.tm-celda-img img { display: block; width: 100%; height: auto; max-width: 220px; }
+  .tm-table.tm-table--tarjetas td:not(:first-child):not(.tm-celda-img)::before { content: attr(data-label) ": "; color: var(--text-muted); font-weight: 600; }
+}
+
 /* Hero / landing section utilities */
 .tm-hero-btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.75rem; }
 .tm-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
