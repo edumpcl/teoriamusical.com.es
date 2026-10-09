@@ -1,0 +1,87 @@
+<svg id="zbij61z" viewBox="0 0 265 94" width="405" height="144" role="img" xmlns="http://www.w3.org/2000/svg"><title>clave de do en 4ª</title>
+   <defs>
+      <g id="E05C-zbij61z">
+         <path transform="scale(1,-1)" d="M13 469h72c7 0 13 -6 13 -13v-910c0 -7 -6 -13 -13 -13h-72c-7 0 -13 6 -13 13v910c0 7 6 13 13 13zM627 -261c0 -140 -103 -219 -224 -219c-75 0 -182 31 -182 123c0 49 34 81 83 81c44 0 75 -32 75 -76c0 -43 -29 -74 -73 -74c-6 0 -10 1 -11 1c23 -16 54 -25 85 -25 c105 0 122 84 122 174c0 77 -2 189 -90 189s-106 -95 -108 -106c0 -1 0 -13 -14 -13s-15 12 -15 13c-11 56 -33 151 -92 175v-436c0 -7 -5 -13 -12 -13s-13 6 -13 13v910c0 7 6 13 13 13s12 -6 12 -13v-436c56 23 83 119 92 174c0 1 1 14 15 14s14 -13 14 -14 c2 -10 20 -105 108 -105s90 112 90 189c0 90 -17 174 -122 174c-31 0 -62 -9 -85 -25c48 0 84 -18 84 -73c0 -44 -31 -76 -75 -76c-49 0 -83 32 -83 81c0 92 107 123 182 123c121 0 224 -79 224 -219c0 -108 -60 -221 -182 -221c-43 0 -56 3 -94 26c-2 -4 -22 -44 -55 -67 c33 -23 53 -63 55 -67c39 24 56 26 79 26c131 0 197 -97 197 -221z" />
+      </g>
+      <g id="E0A2-zbij61z">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#zbij61z g.ending, #zbij61z g.fing, #zbij61z g.reh, #zbij61z g.tempo {font-weight:bold;}#zbij61z g.dir, #zbij61z g.dynam, #zbij61z g.mNum {font-style:italic;}#zbij61z g.label {font-weight:normal;}#zbij61z ellipse, #zbij61z path, #zbij61z polygon, #zbij61z polyline, #zbij61z rect {stroke:currentColor}#zbij61z g.cursor {fill:dodgerblue; color:dodgerblue;}#zbij61z g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 6610 2358">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="a16epjgf" class="mdiv pageMilestone" />
+         <g id="b1wzhc4g" class="score pageMilestone" />
+         <g id="m113fdb1" class="system">
+            <g id="o13dvus1" class="section systemMilestone" />
+            <g id="pqaefb2" class="measure">
+               <g id="y3yy8gi" class="staff">
+                  <path d="M0 548 L6411 548" stroke-width="13" />
+                  <path d="M0 728 L6411 728" stroke-width="13" />
+                  <path d="M0 908 L6411 908" stroke-width="13" />
+                  <path d="M0 1088 L6411 1088" stroke-width="13" />
+                  <path d="M0 1268 L6411 1268" stroke-width="13" />
+                  <g id="fogevf0" class="clef">
+                     <use href="#E05C-zbij61z" transform="translate(90, 728) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="g12a117u" class="keySig" />
+                  <g class="ledgerLines above">
+                     <path d="M3563 368 L3927 368" stroke-width="22" />
+                     <path d="M4263 368 L4627 368" stroke-width="22" />
+                     <path d="M4963 368 L5327 368" stroke-width="22" />
+                     <path d="M5663 368 L6027 368" stroke-width="22" />
+                     <path d="M4963 188 L5327 188" stroke-width="22" />
+                     <path d="M5663 188 L6027 188" stroke-width="22" />
+                  </g>
+                  <g id="z1lrk0uj" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-zbij61z" transform="translate(811, 728) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-zbij61z" transform="translate(1511, 638) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-zbij61z" transform="translate(2211, 548) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-zbij61z" transform="translate(2911, 458) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n4" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-zbij61z" transform="translate(3611, 368) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n5" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-zbij61z" transform="translate(4311, 278) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n6" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-zbij61z" transform="translate(5011, 188) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n7" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-zbij61z" transform="translate(5711, 98) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="xwjy3ux" class="barLine" />
+            </g>
+            <g id="p1deku7a" class="systemMilestoneEnd o13dvus1" />
+         </g>
+         <g id="q5drmw7" class="pageMilestoneEnd b1wzhc4g" />
+         <g id="rbr5agy" class="pageMilestoneEnd a16epjgf" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="963" y="2018" text-anchor="middle">Do</text><text x="1663" y="2018" text-anchor="middle">Re</text><text x="2363" y="2018" text-anchor="middle">Mi</text><text x="3063" y="2018" text-anchor="middle">Fa</text><text x="3763" y="2018" text-anchor="middle">Sol</text><text x="4463" y="2018" text-anchor="middle">La</text><text x="5163" y="2018" text-anchor="middle">Si</text><text x="5863" y="2018" text-anchor="middle">Do</text></g></g></svg>
+</svg>

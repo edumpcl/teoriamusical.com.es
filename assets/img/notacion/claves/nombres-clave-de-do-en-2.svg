@@ -1,0 +1,79 @@
+<svg id="z46t3hd" viewBox="0 0 265 94" width="405" height="144" role="img" xmlns="http://www.w3.org/2000/svg"><title>clave de do en 2ª</title>
+   <defs>
+      <g id="E05C-z46t3hd">
+         <path transform="scale(1,-1)" d="M13 469h72c7 0 13 -6 13 -13v-910c0 -7 -6 -13 -13 -13h-72c-7 0 -13 6 -13 13v910c0 7 6 13 13 13zM627 -261c0 -140 -103 -219 -224 -219c-75 0 -182 31 -182 123c0 49 34 81 83 81c44 0 75 -32 75 -76c0 -43 -29 -74 -73 -74c-6 0 -10 1 -11 1c23 -16 54 -25 85 -25 c105 0 122 84 122 174c0 77 -2 189 -90 189s-106 -95 -108 -106c0 -1 0 -13 -14 -13s-15 12 -15 13c-11 56 -33 151 -92 175v-436c0 -7 -5 -13 -12 -13s-13 6 -13 13v910c0 7 6 13 13 13s12 -6 12 -13v-436c56 23 83 119 92 174c0 1 1 14 15 14s14 -13 14 -14 c2 -10 20 -105 108 -105s90 112 90 189c0 90 -17 174 -122 174c-31 0 -62 -9 -85 -25c48 0 84 -18 84 -73c0 -44 -31 -76 -75 -76c-49 0 -83 32 -83 81c0 92 107 123 182 123c121 0 224 -79 224 -219c0 -108 -60 -221 -182 -221c-43 0 -56 3 -94 26c-2 -4 -22 -44 -55 -67 c33 -23 53 -63 55 -67c39 24 56 26 79 26c131 0 197 -97 197 -221z" />
+      </g>
+      <g id="E0A2-z46t3hd">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#z46t3hd g.ending, #z46t3hd g.fing, #z46t3hd g.reh, #z46t3hd g.tempo {font-weight:bold;}#z46t3hd g.dir, #z46t3hd g.dynam, #z46t3hd g.mNum {font-style:italic;}#z46t3hd g.label {font-weight:normal;}#z46t3hd ellipse, #z46t3hd path, #z46t3hd polygon, #z46t3hd polyline, #z46t3hd rect {stroke:currentColor}#z46t3hd g.cursor {fill:dodgerblue; color:dodgerblue;}#z46t3hd g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 6610 2350">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="a15e02u4" class="mdiv pageMilestone" />
+         <g id="b1on35aj" class="score pageMilestone" />
+         <g id="m1uawxrq" class="system">
+            <g id="o3xmr0s" class="section systemMilestone" />
+            <g id="p1dhsq83" class="measure">
+               <g id="yo0bhet" class="staff">
+                  <path d="M0 540 L6411 540" stroke-width="13" />
+                  <path d="M0 720 L6411 720" stroke-width="13" />
+                  <path d="M0 900 L6411 900" stroke-width="13" />
+                  <path d="M0 1080 L6411 1080" stroke-width="13" />
+                  <path d="M0 1260 L6411 1260" stroke-width="13" />
+                  <g id="f1hcerko" class="clef">
+                     <use href="#E05C-z46t3hd" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="g16i1dgg" class="keySig" />
+                  <g id="z1vavs5h" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-z46t3hd" transform="translate(811, 1080) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-z46t3hd" transform="translate(1511, 990) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-z46t3hd" transform="translate(2211, 900) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-z46t3hd" transform="translate(2911, 810) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n4" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-z46t3hd" transform="translate(3611, 720) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n5" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-z46t3hd" transform="translate(4311, 630) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n6" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-z46t3hd" transform="translate(5011, 540) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n7" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-z46t3hd" transform="translate(5711, 450) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="x11kuokl" class="barLine" />
+            </g>
+            <g id="p19j8337" class="systemMilestoneEnd o3xmr0s" />
+         </g>
+         <g id="q1fprmzg" class="pageMilestoneEnd b1on35aj" />
+         <g id="r9yjdz0" class="pageMilestoneEnd a15e02u4" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="963" y="2010" text-anchor="middle">Do</text><text x="1663" y="2010" text-anchor="middle">Re</text><text x="2363" y="2010" text-anchor="middle">Mi</text><text x="3063" y="2010" text-anchor="middle">Fa</text><text x="3763" y="2010" text-anchor="middle">Sol</text><text x="4463" y="2010" text-anchor="middle">La</text><text x="5163" y="2010" text-anchor="middle">Si</text><text x="5863" y="2010" text-anchor="middle">Do</text></g></g></svg>
+</svg>

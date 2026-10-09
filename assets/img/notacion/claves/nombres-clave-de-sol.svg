@@ -1,0 +1,82 @@
+<svg id="n1jemwrb" viewBox="0 0 265 101" width="405" height="154" role="img" xmlns="http://www.w3.org/2000/svg"><title>clave de Sol</title>
+   <defs>
+      <g id="E050-n1jemwrb">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A2-n1jemwrb">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#n1jemwrb g.ending, #n1jemwrb g.fing, #n1jemwrb g.reh, #n1jemwrb g.tempo {font-weight:bold;}#n1jemwrb g.dir, #n1jemwrb g.dynam, #n1jemwrb g.mNum {font-style:italic;}#n1jemwrb g.label {font-weight:normal;}#n1jemwrb ellipse, #n1jemwrb path, #n1jemwrb polygon, #n1jemwrb polyline, #n1jemwrb rect {stroke:currentColor}#n1jemwrb g.cursor {fill:dodgerblue; color:dodgerblue;}#n1jemwrb g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 6620 2530">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="ogpvxl5" class="mdiv pageMilestone" />
+         <g id="p11sjfzp" class="score pageMilestone" />
+         <g id="a1e7xrnj" class="system">
+            <g id="c1u2cm1l" class="section systemMilestone" />
+            <g id="dzb17fu" class="measure">
+               <g id="m1okzn91" class="staff">
+                  <path d="M0 540 L6420 540" stroke-width="13" />
+                  <path d="M0 720 L6420 720" stroke-width="13" />
+                  <path d="M0 900 L6420 900" stroke-width="13" />
+                  <path d="M0 1080 L6420 1080" stroke-width="13" />
+                  <path d="M0 1260 L6420 1260" stroke-width="13" />
+                  <g id="tmd9p1w" class="clef">
+                     <use href="#E050-n1jemwrb" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="u1ci5npo" class="keySig" />
+                  <g class="ledgerLines below">
+                     <path d="M772 1440 L1136 1440" stroke-width="22" />
+                  </g>
+                  <g id="n191seen" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n1jemwrb" transform="translate(820, 1440) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n1jemwrb" transform="translate(1520, 1350) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n1jemwrb" transform="translate(2220, 1260) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n1jemwrb" transform="translate(2920, 1170) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n4" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n1jemwrb" transform="translate(3620, 1080) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n5" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n1jemwrb" transform="translate(4320, 990) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n6" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n1jemwrb" transform="translate(5020, 900) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n7" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n1jemwrb" transform="translate(5720, 810) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="l1katt4z" class="barLine" />
+            </g>
+            <g id="d1u30uva" class="systemMilestoneEnd c1u2cm1l" />
+         </g>
+         <g id="e1eren2f" class="pageMilestoneEnd p11sjfzp" />
+         <g id="fdh5tk0" class="pageMilestoneEnd ogpvxl5" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="972" y="2190" text-anchor="middle">Do</text><text x="1672" y="2190" text-anchor="middle">Re</text><text x="2372" y="2190" text-anchor="middle">Mi</text><text x="3072" y="2190" text-anchor="middle">Fa</text><text x="3772" y="2190" text-anchor="middle">Sol</text><text x="4472" y="2190" text-anchor="middle">La</text><text x="5172" y="2190" text-anchor="middle">Si</text><text x="5872" y="2190" text-anchor="middle">Do</text></g></g></svg>
+</svg>

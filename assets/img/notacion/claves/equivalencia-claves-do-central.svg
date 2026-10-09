@@ -1,0 +1,308 @@
+<svg id="tm-c1476360608" viewBox="0 0 670 310" width="670" height="310" role="img" xmlns="http://www.w3.org/2000/svg"><title>El mismo Do central escrito en las siete claves: clave de Sol en 2ª, Do en 1ª, 2ª, 3ª y 4ª, y Fa en 3ª y 4ª</title><svg id="wk8qcqu" x="0" y="0" width="160" height="150" viewBox="0 0 105 98">
+   <defs>
+      <g id="E050-wk8qcqu">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A2-wk8qcqu">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#wk8qcqu g.ending, #wk8qcqu g.fing, #wk8qcqu g.reh, #wk8qcqu g.tempo {font-weight:bold;}#wk8qcqu g.dir, #wk8qcqu g.dynam, #wk8qcqu g.mNum {font-style:italic;}#wk8qcqu g.label {font-weight:normal;}#wk8qcqu ellipse, #wk8qcqu path, #wk8qcqu polygon, #wk8qcqu polyline, #wk8qcqu rect {stroke:currentColor}#wk8qcqu g.cursor {fill:dodgerblue; color:dodgerblue;}#wk8qcqu g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2610 2450">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="x7sbmrj" class="mdiv pageMilestone" />
+         <g id="yyrgyf6" class="score pageMilestone" />
+         <g id="c5t54py" class="system">
+            <g id="l1pctbsa" class="section systemMilestone" />
+            <g id="m1v081d" class="measure">
+               <g id="v1t3751c" class="staff">
+                  <path d="M0 540 L2410 540" stroke-width="13" />
+                  <path d="M0 720 L2410 720" stroke-width="13" />
+                  <path d="M0 900 L2410 900" stroke-width="13" />
+                  <path d="M0 1080 L2410 1080" stroke-width="13" />
+                  <path d="M0 1260 L2410 1260" stroke-width="13" />
+                  <g id="o8gtp6o" class="clef">
+                     <use href="#E050-wk8qcqu" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="p1y59906" class="keySig" />
+                  <g class="ledgerLines below">
+                     <path d="M772 1440 L1136 1440" stroke-width="22" />
+                  </g>
+                  <g id="w1rqsy4v" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-wk8qcqu" transform="translate(820, 1440) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="u1hjf5rs" class="barLine" />
+            </g>
+            <g id="f1ok3s5y" class="systemMilestoneEnd l1pctbsa" />
+         </g>
+         <g id="gk66nuo" class="pageMilestoneEnd yyrgyf6" />
+         <g id="hxpdfa3" class="pageMilestoneEnd x7sbmrj" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="972" y="2110" font-weight="700" text-anchor="middle">Sol en 2ª</text></g></g></svg>
+</svg><svg id="wgcphk8" x="170" y="0" width="159" height="150" viewBox="0 0 104 98">
+   <defs>
+      <g id="E05C-wgcphk8">
+         <path transform="scale(1,-1)" d="M13 469h72c7 0 13 -6 13 -13v-910c0 -7 -6 -13 -13 -13h-72c-7 0 -13 6 -13 13v910c0 7 6 13 13 13zM627 -261c0 -140 -103 -219 -224 -219c-75 0 -182 31 -182 123c0 49 34 81 83 81c44 0 75 -32 75 -76c0 -43 -29 -74 -73 -74c-6 0 -10 1 -11 1c23 -16 54 -25 85 -25 c105 0 122 84 122 174c0 77 -2 189 -90 189s-106 -95 -108 -106c0 -1 0 -13 -14 -13s-15 12 -15 13c-11 56 -33 151 -92 175v-436c0 -7 -5 -13 -12 -13s-13 6 -13 13v910c0 7 6 13 13 13s12 -6 12 -13v-436c56 23 83 119 92 174c0 1 1 14 15 14s14 -13 14 -14 c2 -10 20 -105 108 -105s90 112 90 189c0 90 -17 174 -122 174c-31 0 -62 -9 -85 -25c48 0 84 -18 84 -73c0 -44 -31 -76 -75 -76c-49 0 -83 32 -83 81c0 92 107 123 182 123c121 0 224 -79 224 -219c0 -108 -60 -221 -182 -221c-43 0 -56 3 -94 26c-2 -4 -22 -44 -55 -67 c33 -23 53 -63 55 -67c39 24 56 26 79 26c131 0 197 -97 197 -221z" />
+      </g>
+      <g id="E0A2-wgcphk8">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#wgcphk8 g.ending, #wgcphk8 g.fing, #wgcphk8 g.reh, #wgcphk8 g.tempo {font-weight:bold;}#wgcphk8 g.dir, #wgcphk8 g.dynam, #wgcphk8 g.mNum {font-style:italic;}#wgcphk8 g.label {font-weight:normal;}#wgcphk8 ellipse, #wgcphk8 path, #wgcphk8 polygon, #wgcphk8 polyline, #wgcphk8 rect {stroke:currentColor}#wgcphk8 g.cursor {fill:dodgerblue; color:dodgerblue;}#wgcphk8 g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2600 2450">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="xk8lzol" class="mdiv pageMilestone" />
+         <g id="y1f7qkzz" class="score pageMilestone" />
+         <g id="c1o26z99" class="system">
+            <g id="laogrdf" class="section systemMilestone" />
+            <g id="mkk34gu" class="measure">
+               <g id="v1yjpr9b" class="staff">
+                  <path d="M0 540 L2401 540" stroke-width="13" />
+                  <path d="M0 720 L2401 720" stroke-width="13" />
+                  <path d="M0 900 L2401 900" stroke-width="13" />
+                  <path d="M0 1080 L2401 1080" stroke-width="13" />
+                  <path d="M0 1260 L2401 1260" stroke-width="13" />
+                  <g id="o9urtmv" class="clef">
+                     <use href="#E05C-wgcphk8" transform="translate(90, 1260) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="p1n51wth" class="keySig" />
+                  <g id="whfyf1j" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-wgcphk8" transform="translate(811, 1260) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="uz3cdno" class="barLine" />
+            </g>
+            <g id="fm6lhxq" class="systemMilestoneEnd laogrdf" />
+         </g>
+         <g id="g1ssvkxk" class="pageMilestoneEnd y1f7qkzz" />
+         <g id="h1pg58zb" class="pageMilestoneEnd xk8lzol" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="963" y="2110" font-weight="700" text-anchor="middle">Do en 1ª</text></g></g></svg>
+</svg><svg id="d4p1rfj" x="340" y="0" width="159" height="150" viewBox="0 0 104 98">
+   <defs>
+      <g id="E05C-d4p1rfj">
+         <path transform="scale(1,-1)" d="M13 469h72c7 0 13 -6 13 -13v-910c0 -7 -6 -13 -13 -13h-72c-7 0 -13 6 -13 13v910c0 7 6 13 13 13zM627 -261c0 -140 -103 -219 -224 -219c-75 0 -182 31 -182 123c0 49 34 81 83 81c44 0 75 -32 75 -76c0 -43 -29 -74 -73 -74c-6 0 -10 1 -11 1c23 -16 54 -25 85 -25 c105 0 122 84 122 174c0 77 -2 189 -90 189s-106 -95 -108 -106c0 -1 0 -13 -14 -13s-15 12 -15 13c-11 56 -33 151 -92 175v-436c0 -7 -5 -13 -12 -13s-13 6 -13 13v910c0 7 6 13 13 13s12 -6 12 -13v-436c56 23 83 119 92 174c0 1 1 14 15 14s14 -13 14 -14 c2 -10 20 -105 108 -105s90 112 90 189c0 90 -17 174 -122 174c-31 0 -62 -9 -85 -25c48 0 84 -18 84 -73c0 -44 -31 -76 -75 -76c-49 0 -83 32 -83 81c0 92 107 123 182 123c121 0 224 -79 224 -219c0 -108 -60 -221 -182 -221c-43 0 -56 3 -94 26c-2 -4 -22 -44 -55 -67 c33 -23 53 -63 55 -67c39 24 56 26 79 26c131 0 197 -97 197 -221z" />
+      </g>
+      <g id="E0A2-d4p1rfj">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#d4p1rfj g.ending, #d4p1rfj g.fing, #d4p1rfj g.reh, #d4p1rfj g.tempo {font-weight:bold;}#d4p1rfj g.dir, #d4p1rfj g.dynam, #d4p1rfj g.mNum {font-style:italic;}#d4p1rfj g.label {font-weight:normal;}#d4p1rfj ellipse, #d4p1rfj path, #d4p1rfj polygon, #d4p1rfj polyline, #d4p1rfj rect {stroke:currentColor}#d4p1rfj g.cursor {fill:dodgerblue; color:dodgerblue;}#d4p1rfj g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2600 2450">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="evi1ofo" class="mdiv pageMilestone" />
+         <g id="f1h4ndrj" class="score pageMilestone" />
+         <g id="j1xd3bde" class="system">
+            <g id="sne0ay4" class="section systemMilestone" />
+            <g id="t1vkqu31" class="measure">
+               <g id="c4il0b7" class="staff">
+                  <path d="M0 540 L2401 540" stroke-width="13" />
+                  <path d="M0 720 L2401 720" stroke-width="13" />
+                  <path d="M0 900 L2401 900" stroke-width="13" />
+                  <path d="M0 1080 L2401 1080" stroke-width="13" />
+                  <path d="M0 1260 L2401 1260" stroke-width="13" />
+                  <g id="v1uekc6p" class="clef">
+                     <use href="#E05C-d4p1rfj" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="wanm8aq" class="keySig" />
+                  <g id="d13z6jp3" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-d4p1rfj" transform="translate(811, 1080) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="bvhmu8v" class="barLine" />
+            </g>
+            <g id="ms2c6aa" class="systemMilestoneEnd sne0ay4" />
+         </g>
+         <g id="n1m8ql80" class="pageMilestoneEnd f1h4ndrj" />
+         <g id="o1x6rf5m" class="pageMilestoneEnd evi1ofo" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="963" y="2110" font-weight="700" text-anchor="middle">Do en 2ª</text></g></g></svg>
+</svg><svg id="ph6333q" x="510" y="0" width="159" height="150" viewBox="0 0 104 98">
+   <defs>
+      <g id="E05C-ph6333q">
+         <path transform="scale(1,-1)" d="M13 469h72c7 0 13 -6 13 -13v-910c0 -7 -6 -13 -13 -13h-72c-7 0 -13 6 -13 13v910c0 7 6 13 13 13zM627 -261c0 -140 -103 -219 -224 -219c-75 0 -182 31 -182 123c0 49 34 81 83 81c44 0 75 -32 75 -76c0 -43 -29 -74 -73 -74c-6 0 -10 1 -11 1c23 -16 54 -25 85 -25 c105 0 122 84 122 174c0 77 -2 189 -90 189s-106 -95 -108 -106c0 -1 0 -13 -14 -13s-15 12 -15 13c-11 56 -33 151 -92 175v-436c0 -7 -5 -13 -12 -13s-13 6 -13 13v910c0 7 6 13 13 13s12 -6 12 -13v-436c56 23 83 119 92 174c0 1 1 14 15 14s14 -13 14 -14 c2 -10 20 -105 108 -105s90 112 90 189c0 90 -17 174 -122 174c-31 0 -62 -9 -85 -25c48 0 84 -18 84 -73c0 -44 -31 -76 -75 -76c-49 0 -83 32 -83 81c0 92 107 123 182 123c121 0 224 -79 224 -219c0 -108 -60 -221 -182 -221c-43 0 -56 3 -94 26c-2 -4 -22 -44 -55 -67 c33 -23 53 -63 55 -67c39 24 56 26 79 26c131 0 197 -97 197 -221z" />
+      </g>
+      <g id="E0A2-ph6333q">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#ph6333q g.ending, #ph6333q g.fing, #ph6333q g.reh, #ph6333q g.tempo {font-weight:bold;}#ph6333q g.dir, #ph6333q g.dynam, #ph6333q g.mNum {font-style:italic;}#ph6333q g.label {font-weight:normal;}#ph6333q ellipse, #ph6333q path, #ph6333q polygon, #ph6333q polyline, #ph6333q rect {stroke:currentColor}#ph6333q g.cursor {fill:dodgerblue; color:dodgerblue;}#ph6333q g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2600 2450">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="qir7zq1" class="mdiv pageMilestone" />
+         <g id="ren85u3" class="score pageMilestone" />
+         <g id="v19usdvt" class="system">
+            <g id="e480v6f" class="section systemMilestone" />
+            <g id="f8b07l3" class="measure">
+               <g id="oorpfr1" class="staff">
+                  <path d="M0 540 L2401 540" stroke-width="13" />
+                  <path d="M0 720 L2401 720" stroke-width="13" />
+                  <path d="M0 900 L2401 900" stroke-width="13" />
+                  <path d="M0 1080 L2401 1080" stroke-width="13" />
+                  <path d="M0 1260 L2401 1260" stroke-width="13" />
+                  <g id="h1cvaiua" class="clef">
+                     <use href="#E05C-ph6333q" transform="translate(90, 900) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="ieztzsu" class="keySig" />
+                  <g id="p14ok47j" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-ph6333q" transform="translate(811, 900) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="nrg9yrr" class="barLine" />
+            </g>
+            <g id="y1hbgpre" class="systemMilestoneEnd e480v6f" />
+         </g>
+         <g id="z1xifape" class="pageMilestoneEnd ren85u3" />
+         <g id="atn7j90" class="pageMilestoneEnd qir7zq1" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="963" y="2110" font-weight="700" text-anchor="middle">Do en 3ª</text></g></g></svg>
+</svg><svg id="e8esxyx" x="0" y="160" width="159" height="150" viewBox="0 0 104 98">
+   <defs>
+      <g id="E05C-e8esxyx">
+         <path transform="scale(1,-1)" d="M13 469h72c7 0 13 -6 13 -13v-910c0 -7 -6 -13 -13 -13h-72c-7 0 -13 6 -13 13v910c0 7 6 13 13 13zM627 -261c0 -140 -103 -219 -224 -219c-75 0 -182 31 -182 123c0 49 34 81 83 81c44 0 75 -32 75 -76c0 -43 -29 -74 -73 -74c-6 0 -10 1 -11 1c23 -16 54 -25 85 -25 c105 0 122 84 122 174c0 77 -2 189 -90 189s-106 -95 -108 -106c0 -1 0 -13 -14 -13s-15 12 -15 13c-11 56 -33 151 -92 175v-436c0 -7 -5 -13 -12 -13s-13 6 -13 13v910c0 7 6 13 13 13s12 -6 12 -13v-436c56 23 83 119 92 174c0 1 1 14 15 14s14 -13 14 -14 c2 -10 20 -105 108 -105s90 112 90 189c0 90 -17 174 -122 174c-31 0 -62 -9 -85 -25c48 0 84 -18 84 -73c0 -44 -31 -76 -75 -76c-49 0 -83 32 -83 81c0 92 107 123 182 123c121 0 224 -79 224 -219c0 -108 -60 -221 -182 -221c-43 0 -56 3 -94 26c-2 -4 -22 -44 -55 -67 c33 -23 53 -63 55 -67c39 24 56 26 79 26c131 0 197 -97 197 -221z" />
+      </g>
+      <g id="E0A2-e8esxyx">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#e8esxyx g.ending, #e8esxyx g.fing, #e8esxyx g.reh, #e8esxyx g.tempo {font-weight:bold;}#e8esxyx g.dir, #e8esxyx g.dynam, #e8esxyx g.mNum {font-style:italic;}#e8esxyx g.label {font-weight:normal;}#e8esxyx ellipse, #e8esxyx path, #e8esxyx polygon, #e8esxyx polyline, #e8esxyx rect {stroke:currentColor}#e8esxyx g.cursor {fill:dodgerblue; color:dodgerblue;}#e8esxyx g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2600 2450">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="f1ddkscp" class="mdiv pageMilestone" />
+         <g id="gwhzhn3" class="score pageMilestone" />
+         <g id="k181sfiv" class="system">
+            <g id="te1gleq" class="section systemMilestone" />
+            <g id="ugb1fmq" class="measure">
+               <g id="d1skww8x" class="staff">
+                  <path d="M0 540 L2401 540" stroke-width="13" />
+                  <path d="M0 720 L2401 720" stroke-width="13" />
+                  <path d="M0 900 L2401 900" stroke-width="13" />
+                  <path d="M0 1080 L2401 1080" stroke-width="13" />
+                  <path d="M0 1260 L2401 1260" stroke-width="13" />
+                  <g id="wt5gwpp" class="clef">
+                     <use href="#E05C-e8esxyx" transform="translate(90, 720) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="xj67fy9" class="keySig" />
+                  <g id="e1c7wmnk" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-e8esxyx" transform="translate(811, 720) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="c1sqm1cz" class="barLine" />
+            </g>
+            <g id="nkrv2td" class="systemMilestoneEnd te1gleq" />
+         </g>
+         <g id="okncqib" class="pageMilestoneEnd gwhzhn3" />
+         <g id="p72k5sy" class="pageMilestoneEnd f1ddkscp" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="963" y="2110" font-weight="700" text-anchor="middle">Do en 4ª</text></g></g></svg>
+</svg><svg id="f1yxtzew" x="170" y="160" width="160" height="150" viewBox="0 0 105 98">
+   <defs>
+      <g id="E062-f1yxtzew">
+         <path transform="scale(1,-1)" d="M568 124c0 28 22 51 48 51s48 -23 48 -51s-22 -50 -48 -50s-48 22 -48 50zM254 251c180 0 274 -112 274 -286c0 -184 -158 -362 -298 -463c-91 -71 -205 -118 -206 -118s-4 -1 -5 -1c-6 0 -15 2 -18 12c0 2 -1 3 -1 5c0 12 12 19 12 19c1 0 99 45 203 140 c98 88 181 275 181 405c0 168 -50 250 -152 250c-35 0 -67 -6 -92 -20c-39 -21 -69 -65 -76 -109c8 7 25 17 35 21c9 3 20 5 32 5c56 0 106 -47 106 -104c0 -66 -50 -109 -114 -109c-74 0 -116 54 -116 127s38 139 97 182c1 0 62 44 138 44zM568 -123c0 28 22 51 48 51 s48 -23 48 -51s-22 -51 -48 -51s-48 23 -48 51z" />
+      </g>
+      <g id="E0A2-f1yxtzew">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#f1yxtzew g.ending, #f1yxtzew g.fing, #f1yxtzew g.reh, #f1yxtzew g.tempo {font-weight:bold;}#f1yxtzew g.dir, #f1yxtzew g.dynam, #f1yxtzew g.mNum {font-style:italic;}#f1yxtzew g.label {font-weight:normal;}#f1yxtzew ellipse, #f1yxtzew path, #f1yxtzew polygon, #f1yxtzew polyline, #f1yxtzew rect {stroke:currentColor}#f1yxtzew g.cursor {fill:dodgerblue; color:dodgerblue;}#f1yxtzew g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2620 2450">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="g1llp106" class="mdiv pageMilestone" />
+         <g id="h9okqox" class="score pageMilestone" />
+         <g id="l47f2wv" class="system">
+            <g id="u1twh3ax" class="section systemMilestone" />
+            <g id="vfv1z96" class="measure">
+               <g id="ebzmnwz" class="staff">
+                  <path d="M0 540 L2428 540" stroke-width="13" />
+                  <path d="M0 720 L2428 720" stroke-width="13" />
+                  <path d="M0 900 L2428 900" stroke-width="13" />
+                  <path d="M0 1080 L2428 1080" stroke-width="13" />
+                  <path d="M0 1260 L2428 1260" stroke-width="13" />
+                  <g id="x10iz5wb" class="clef">
+                     <use href="#E062-f1yxtzew" transform="translate(90, 900) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="yfxqvgh" class="keySig" />
+                  <g id="f1vj5a40" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-f1yxtzew" transform="translate(838, 540) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="dmf1zzt" class="barLine" />
+            </g>
+            <g id="o1xso5qa" class="systemMilestoneEnd u1twh3ax" />
+         </g>
+         <g id="p1wpw2lt" class="pageMilestoneEnd h9okqox" />
+         <g id="q1tb3hio" class="pageMilestoneEnd g1llp106" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="990" y="2110" font-weight="700" text-anchor="middle">Fa en 3ª</text></g></g></svg>
+</svg><svg id="r183h1m3" x="340" y="160" width="160" height="150" viewBox="0 0 105 98">
+   <defs>
+      <g id="E062-r183h1m3">
+         <path transform="scale(1,-1)" d="M568 124c0 28 22 51 48 51s48 -23 48 -51s-22 -50 -48 -50s-48 22 -48 50zM254 251c180 0 274 -112 274 -286c0 -184 -158 -362 -298 -463c-91 -71 -205 -118 -206 -118s-4 -1 -5 -1c-6 0 -15 2 -18 12c0 2 -1 3 -1 5c0 12 12 19 12 19c1 0 99 45 203 140 c98 88 181 275 181 405c0 168 -50 250 -152 250c-35 0 -67 -6 -92 -20c-39 -21 -69 -65 -76 -109c8 7 25 17 35 21c9 3 20 5 32 5c56 0 106 -47 106 -104c0 -66 -50 -109 -114 -109c-74 0 -116 54 -116 127s38 139 97 182c1 0 62 44 138 44zM568 -123c0 28 22 51 48 51 s48 -23 48 -51s-22 -51 -48 -51s-48 23 -48 51z" />
+      </g>
+      <g id="E0A2-r183h1m3">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#r183h1m3 g.ending, #r183h1m3 g.fing, #r183h1m3 g.reh, #r183h1m3 g.tempo {font-weight:bold;}#r183h1m3 g.dir, #r183h1m3 g.dynam, #r183h1m3 g.mNum {font-style:italic;}#r183h1m3 g.label {font-weight:normal;}#r183h1m3 ellipse, #r183h1m3 path, #r183h1m3 polygon, #r183h1m3 polyline, #r183h1m3 rect {stroke:currentColor}#r183h1m3 g.cursor {fill:dodgerblue; color:dodgerblue;}#r183h1m3 g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2620 2450">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="s1jf5w5p" class="mdiv pageMilestone" />
+         <g id="t1kcovbe" class="score pageMilestone" />
+         <g id="x17rq70i" class="system">
+            <g id="gcb2b8k" class="section systemMilestone" />
+            <g id="hcberi4" class="measure">
+               <g id="q185gg79" class="staff">
+                  <path d="M0 540 L2428 540" stroke-width="13" />
+                  <path d="M0 720 L2428 720" stroke-width="13" />
+                  <path d="M0 900 L2428 900" stroke-width="13" />
+                  <path d="M0 1080 L2428 1080" stroke-width="13" />
+                  <path d="M0 1260 L2428 1260" stroke-width="13" />
+                  <g id="j1r7meua" class="clef">
+                     <use href="#E062-r183h1m3" transform="translate(90, 720) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="k1v4kgn6" class="keySig" />
+                  <g class="ledgerLines above">
+                     <path d="M790 360 L1154 360" stroke-width="22" />
+                  </g>
+                  <g id="r15grjp2" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-r183h1m3" transform="translate(838, 360) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="ptc5e2u" class="barLine" />
+            </g>
+            <g id="auiwqig" class="systemMilestoneEnd gcb2b8k" />
+         </g>
+         <g id="bdsvn5w" class="pageMilestoneEnd t1kcovbe" />
+         <g id="c1kqg5c4" class="pageMilestoneEnd s1jf5w5p" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="990" y="2110" font-weight="700" text-anchor="middle">Fa en 4ª</text></g></g></svg>
+</svg></svg>

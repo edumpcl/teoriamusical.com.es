@@ -28,7 +28,7 @@ const { RAIZ, ESPACIO, OPCIONES, hash, preparar, escAttr } = G;
 const SALIDA = 'assets/img/notacion';
 const carpetaDe = (spec) => spec.carpeta || 'compases';   // assets/img/notacion/<carpeta>/<slug>.svg
 const aFilas = (s) => (s.filas ? s : { ...s, tipo: 'cifra', filas: [{ num: s.num, den: s.den, simbolo: s.corte ? 'cut' : null, compases: s.compases }] });
-const DATOS = [...require('./notacion/datos/compases-cifra.js'), ...require('./notacion/datos/compases-rotulados.js'), ...require('./notacion/datos/ritmo-figuras.js'), ...require('./notacion/datos/ritmo-grupos.js'), ...require('./notacion/datos/ritmo-signos.js'), ...require('./notacion/datos/ritmo-ornamentos.js'), ...require('./notacion/datos/ritmo-repeticion.js'), ...require('./notacion/datos/ritmo-frase.js'), ...require('./notacion/datos/tesituras.js')].map(aFilas);
+const DATOS = [...require('./notacion/datos/compases-cifra.js'), ...require('./notacion/datos/compases-rotulados.js'), ...require('./notacion/datos/ritmo-figuras.js'), ...require('./notacion/datos/ritmo-grupos.js'), ...require('./notacion/datos/ritmo-signos.js'), ...require('./notacion/datos/ritmo-ornamentos.js'), ...require('./notacion/datos/ritmo-repeticion.js'), ...require('./notacion/datos/ritmo-frase.js'), ...require('./notacion/datos/tesituras.js'), ...require('./notacion/datos/claves.js'), ...require('./notacion/datos/grados.js')].map(aFilas);
 // todas las paginas del diccionario (el generador solo toca las que llevan imagenes suyas)
 const PAGINAS = (function buscar(dir) {
   const res = [];
@@ -51,11 +51,18 @@ const ANCHO_CABEZA = { E0A2: 304, E0A3: 212, E0A4: 212 };   // anchura de cada c
 const anchoCab = (g) => ANCHO_CABEZA[g] || 250;              // (un silencio mide unos 250)
 const LETRAS = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
 const PASO_Y = ESPACIO / 2;
-const CLAVES = {   // `paso` = el de la nota de la linea inferior del pentagrama (octava*7 + letra, Do = 0)
-  sol: { shape: 'G', line: 2, glifo: 'E050', paso: 4 * 7 + 2, nombre: 'clave de sol' },
-  fa: { shape: 'F', line: 4, glifo: 'E062', paso: 2 * 7 + 4, nombre: 'clave de fa en cuarta' },
-  tenor: { shape: 'C', line: 4, glifo: 'E05C', paso: 3 * 7 + 1, nombre: 'clave de do en cuarta' },   // el Do central en la 4.ª linea: la linea inferior es Re3
+/**
+ * Las claves se definen por lo que SON: una clave de Sol en la linea L pone el Sol 4 en esa linea; una de Do, el Do 4; una de Fa, el Fa 3.
+ * De ahi sale la nota de la linea inferior (`paso` = octava*7 + letra, con Do = 0), que es contra lo que se mide el dibujo.
+ */
+const REF_CLAVE = { sol: { shape: 'G', glifo: 'E050', ref: 4 * 7 + 4, texto: 'sol' }, do: { shape: 'C', glifo: 'E05C', ref: 4 * 7, texto: 'do' }, fa: { shape: 'F', glifo: 'E062', ref: 3 * 7 + 3, texto: 'fa' } };
+const mkClave = (tipo, linea, nombre) => ({ shape: REF_CLAVE[tipo].shape, line: linea, glifo: REF_CLAVE[tipo].glifo, paso: REF_CLAVE[tipo].ref - 2 * (linea - 1), nombre, tipo });
+const CLAVES = {
+  sol: mkClave('sol', 2, 'clave de sol'),
+  do1: mkClave('do', 1, 'clave de do en primera'), do2: mkClave('do', 2, 'clave de do en segunda'), do3: mkClave('do', 3, 'clave de do en tercera'), do4: mkClave('do', 4, 'clave de do en cuarta'),
+  fa3: mkClave('fa', 3, 'clave de fa en tercera'), fa: mkClave('fa', 4, 'clave de fa en cuarta'),
 };
+CLAVES.tenor = CLAVES.do4;   // nombre antiguo (fagot y contrafagot)
 const claveDe = (fila) => CLAVES[fila.clave || 'sol'];
 const ACC_MEI = { 1: 's', '-1': 'f', 0: 'n', 2: 'x', '-2': 'ff' };   // OJO: «ss» en MEI son dos sostenidos juntos; el doble sostenido es «x»
 const MEI_ACC = { s: 1, f: -1, n: 0, x: 2, ff: -2 };
@@ -77,6 +84,10 @@ function parseKey(key) {
 }
 const pasoDe = (key) => { const k = parseKey(key); return k.oct * 7 + LETRAS.indexOf(k.letra); };
 
+const ORDEN_SOSTENIDOS = 'fcgdaeb', ORDEN_BEMOLES = 'beadgcf';
+/** Alteracion que la armadura da a una letra (+1 sostenido, -1 bemol, 0 ninguna). */
+const altArmadura = (n, letra) => (n > 0 && ORDEN_SOSTENIDOS.slice(0, n).includes(letra) ? 1 : n < 0 && ORDEN_BEMOLES.slice(0, -n).includes(letra) ? -1 : 0);
+const armaduraMEI = (n) => (n > 0 ? ` key.sig="${n}s"` : n < 0 ? ` key.sig="${-n}f"` : '');
 /** Alteracion que se escribe en cada nota (regla del compas: vale hasta la barra). [compas][evento] -> 's' | 'f' | 'n' | null */
 function alteraciones(fila) {
   return fila.compases.map((c) => {
@@ -84,7 +95,7 @@ function alteraciones(fila) {
     return c.map((e) => {
       if (e.silencio) return null;
       const k = parseKey(e.key), id = k.letra + k.oct;
-      const vigente = id in estado ? estado[id] : 0;
+      const vigente = id in estado ? estado[id] : altArmadura(fila.armadura || 0, k.letra);
       const muestra = k.alt !== vigente || !!e.becuadro;
       estado[id] = k.alt;
       return muestra ? ACC_MEI[k.alt] : null;
@@ -126,7 +137,7 @@ function aMEI(fila) {
       const dur = `dur="${DUR_MEI[x.d]}"${x.puntillo ? ' dots="1"' : ''}${x.gracia ? ` grace="${x.gracia}"` : ''}`;
       if (x.silencio) return `<rest xml:id="${id}" ${dur}/>`;
       const p = parseKey(x.key), a = acc[i][j];
-      return `<note xml:id="${id}" pname="${p.letra}" oct="${p.oct}" ${dur}${a ? ` accid="${a}"` : ''}${x.plica ? ` stem.dir="${x.plica}"` : ''}${x.union ? ` tie="${x.union}"` : ''}>${articDe(x) ? `<artic artic="${articDe(x).tipo}" place="${articDe(x).lugar}"/>` : ''}</note>`;
+      return `<note xml:id="${id}" pname="${p.letra}" oct="${p.oct}" ${dur}${a ? ` accid="${a}"` : ''}${x.color ? ` color="${x.color}"` : ''}${x.plica ? ` stem.dir="${x.plica}"` : ''}${x.union ? ` tie="${x.union}"` : ''}>${articDe(x) ? `<artic artic="${articDe(x).tipo}" place="${articDe(x).lugar}"/>` : ''}</note>`;
     };
     // unidades: un evento suelto o un grupo con barra
     const unidades = [];
@@ -167,7 +178,7 @@ function aMEI(fila) {
   }).join('');
   const metro = !fila.num ? '' : fila.simbolo ? ` meter.count="${fila.num}" meter.unit="${fila.den}" meter.sym="${fila.simbolo}"` : ` meter.count="${fila.num}" meter.unit="${fila.den}"`;
   return '<?xml version="1.0" encoding="UTF-8"?><mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="5.0"><meiHead><fileDesc><titleStmt><title/></titleStmt><pubStmt/></fileDesc></meiHead><music><body><mdiv><score><scoreDef><staffGrp>'
-    + `<staffDef n="1" lines="5" clef.shape="${claveDe(fila).shape}" clef.line="${claveDe(fila).line}"${metro}/></staffGrp></scoreDef><section>${medidas}</section></score></mdiv></body></music></mei>`;
+    + `<staffDef n="1" lines="5" clef.shape="${claveDe(fila).shape}" clef.line="${claveDe(fila).line}"${armaduraMEI(fila.armadura || 0)}${metro}/></staffGrp></scoreDef><section>${medidas}</section></score></mdiv></body></music></mei>`;
 }
 
 /**
@@ -175,6 +186,8 @@ function aMEI(fila) {
  * (grupo = n.º de <beam> o -1; tupla = n.º de <tuplet> o -1). El array lleva ademas .tuplas ([{num, numbase}]) y .slurs ([{de, a}] por id).
  */
 function leerMEI(mei) {
+  const ks = /key\.sig="(\d)([sf])"/.exec(mei);
+  const armadura = ks ? (ks[2] === 's' ? 1 : -1) * Number(ks[1]) : 0;
   const compases = [];
   const tuplas = [];
   let nb = 0;
@@ -196,7 +209,7 @@ function leerMEI(mei) {
       if (t.startsWith('<rest')) { evs.push({ ...base, silencio: true }); continue; }
       const id = a('pname') + a('oct');
       if (a('accid') !== undefined) estado[id] = MEI_ACC[a('accid')];
-      evs.push({ ...base, key: a('pname') + ACC_TXT[id in estado ? estado[id] : 0] + '/' + a('oct'), artic: /<artic /.test(t) ? { tipo: (/artic artic="(\w+)"/.exec(t) || [])[1], lugar: (/place="(\w+)"/.exec(t.slice(t.indexOf('<artic'))) || [])[1] } : null, acento: /artic="acc"/.test(t), plica: a('stem.dir'), union: a('tie'), gracia: a('grace') });
+      evs.push({ ...base, key: a('pname') + ACC_TXT[id in estado ? estado[id] : altArmadura(armadura, a('pname'))] + '/' + a('oct'), artic: /<artic /.test(t) ? { tipo: (/artic artic="(\w+)"/.exec(t) || [])[1], lugar: (/place="(\w+)"/.exec(t.slice(t.indexOf('<artic'))) || [])[1] } : null, acento: /artic="acc"/.test(t), plica: a('stem.dir'), union: a('tie'), gracia: a('grace'), color: a('color') });
     }
     // ornamentos: eventos de control que apuntan a una nota (startid)
     for (const c of m.match(/<(?:mordent|turn|trill) [^>]*\/>/g) || []) {
@@ -289,6 +302,19 @@ function revisarCifra(spec, leido, alt, melodia) {
   return err;
 }
 
+const NOMBRE_NOTA = { c: 'Do', d: 'Re', e: 'Mi', f: 'Fa', g: 'Sol', a: 'La', b: 'Si' };
+/** La clave que dice el alt («Clave de Sol», «clave de do en 3ª», «Símbolo de la clave de Fa en 4ª línea») contra la del dibujo. */
+function revisarClaveDeAlt(fila, alt) {
+  const m = /[Cc]lave de (Sol|Do|Fa|do|fa|sol)(?: en (\d)ª)?/.exec(alt);
+  if (!m) return ['el alt no nombra la clave'];
+  const tipo = m[1].toLowerCase();
+  const linea = m[2] ? Number(m[2]) : tipo === 'sol' ? 2 : tipo === 'fa' ? 4 : null;
+  const c = CLAVES[fila.clave || 'sol'];
+  const err = [];
+  if (c.tipo !== tipo) err.push(`el alt habla de la clave de ${tipo} y el dibujo es ${c.nombre}`);
+  else if (linea && c.line !== linea) err.push(`el alt habla de la clave de ${tipo} en ${linea}.ª linea y el dibujo la lleva en la ${c.line}.ª`);
+  return err;
+}
 const sumaBarra = (c) => c.reduce((a, e) => a + durTotal(e), 0);
 const totalDe = (f) => f.num * (64 / f.den);
 const compuesto = (f) => f.den >= 8 && f.num % 3 === 0 && f.num > 3;
@@ -365,6 +391,103 @@ const REVISORES = {
     if (grupos !== f.textos.map((x) => x.texto).join('+')) err.push('los rotulos no son el reparto 3+3+2 del alt');
     // cada rotulo = numero de corcheas que dura su figura
     evs.forEach((e, i) => { if (durTotal(e) / 8 !== Number(f.textos[i].texto)) err.push(`el rotulo ${f.textos[i].texto} no es la duracion en corcheas de la figura ${i + 1}`); });
+    return err;
+  },
+  'nombres-notas'(spec, leido, alt) {
+    const err = [], f = spec.filas[0], evs = leido[0].flat();
+    err.push(...revisarClaveDeAlt(f, alt));
+    if (evs.map((e) => e.key[0]).join('') !== 'cdefgabc') err.push('deberia ser la escala de Do: do re mi fa sol la si do');
+    // el primer Do: el Do central en las claves de Sol y de Do; el de una octava mas grave en las de Fa
+    const octava = CLAVES[f.clave].tipo === 'fa' ? 3 : 4;
+    if (evs[0].key !== 'c/' + octava || evs[7].key !== 'c/' + (octava + 1)) err.push(`la escala deberia ir de Do${octava} a Do${octava + 1} en ${CLAVES[f.clave].nombre}`);
+    evs.forEach((e, i) => { if (!f.textos[i] || f.textos[i].texto !== NOMBRE_NOTA[e.key[0]]) err.push(`el rotulo de la nota ${i + 1} no es su nombre (${NOMBRE_NOTA[e.key[0]]})`); });
+    evs.forEach((e, i) => { if (i && pasoDe(e.key) !== pasoDe(evs[i - 1].key) + (e.key[0] === 'c' && i === 7 ? 1 : 1)) err.push('las notas tienen que subir de grado en grado'); });
+    return err;
+  },
+  'clave-glifo'(spec, leido, alt) {
+    const err = [], f = spec.filas[0];
+    err.push(...revisarClaveDeAlt(f, alt));
+    if (leido[0].flat().length) err.push('el glifo de la clave va solo, sin notas');
+    return err;
+  },
+  'notas-clave'(spec, leido, alt) {
+    const err = [], f = spec.filas[0], evs = leido[0].flat();
+    err.push(...revisarClaveDeAlt(f, alt));
+    const lista = (alt.split(':')[1] || '').split(/,| y /).map((x) => x.trim()).filter(Boolean);
+    if (lista.length !== 9 || evs.length !== 9) err.push('la clave lleva nueve notas: las cinco lineas y los cuatro espacios mas el de encima');
+    if (lista.join('|') !== evs.map((e) => NOMBRE_NOTA[e.key[0]]).join('|')) err.push(`el alt dice ${lista.join(', ')} y el dibujo ${evs.map((e) => NOMBRE_NOTA[e.key[0]]).join(', ')}`);
+    if (lista.join('|') !== f.textos.map((t) => t.texto).join('|')) err.push('los rotulos no son los nombres que dice el alt');
+    if (evs[0] && pasoDe(evs[0].key) !== CLAVES[f.clave].paso) err.push('la primera nota deberia ser la de la linea inferior del pentagrama');
+    evs.forEach((e, i) => { if (i && pasoDe(e.key) !== pasoDe(evs[i - 1].key) + 1) err.push('las notas tienen que subir de grado en grado (linea, espacio, linea...)'); });
+    const APODO = { viola: 3, soprano: 1, mezzosoprano: 2, tenor: 4 };
+    const ap = /\((viola|soprano|mezzosoprano|tenor)\)/.exec(alt);
+    if (ap && CLAVES[f.clave].line !== APODO[ap[1]]) err.push(`el alt dice «${ap[1]}» (clave de do en ${APODO[ap[1]]}.ª) y el dibujo es otra`);
+    return err;
+  },
+  'lineas-adicionales'(spec, leido, alt) {
+    const err = [], f = spec.filas[0], evs = leido[0].flat();
+    err.push(...revisarClaveDeAlt(f, alt));
+    const SUBS = '₀₁₂₃₄₅₆₇₈₉';
+    const notas = (txt) => [...txt.matchAll(/(Do|Re|Mi|Fa|Sol|La|Si)([₀-₉])/g)].map((m) => ({ nombre: m[0], letra: Object.keys(NOMBRE_NOTA).find((k) => NOMBRE_NOTA[k] === m[1]), oct: SUBS.indexOf(m[2]) }));
+    // el alt reparte las notas en: «por debajo del pentagrama», «en la primera línea», «en la quinta línea» y «por encima»
+    const trozos = (alt.split(':').slice(1).join(':')).split(';').map((x) => x.trim());
+    const grupos = { debajo: [], primera: [], quinta: [], encima: [] };
+    for (const t of trozos) {
+      const clase = /por debajo del pentagrama/.test(t) ? 'debajo' : /en la primera línea/.test(t) ? 'primera' : /en la quinta línea/.test(t) ? 'quinta' : /por encima/.test(t) ? 'encima' : null;
+      if (!clase) return ['el alt ya no reparte las notas en «por debajo / primera línea / quinta línea / por encima»'];
+      grupos[clase].push(...notas(t));
+    }
+    const base = CLAVES[f.clave].paso, tope = base + 8;
+    const clasifica = (e) => { const q = pasoDe(e.key); return q < base ? 'debajo' : q === base ? 'primera' : q > tope ? 'encima' : q === tope ? 'quinta' : 'dentro'; };
+    const aKey = (n) => n.letra + '/' + n.oct;
+    for (const clase of ['debajo', 'primera', 'quinta', 'encima']) {
+      const dibujo = evs.filter((e) => clasifica(e) === clase).map((e) => e.key);
+      if (grupos[clase].map(aKey).join() !== dibujo.join()) err.push(`el alt dice ${clase} = [${grupos[clase].map((n) => n.nombre).join(', ')}] y en el dibujo hay [${dibujo.join(', ')}]`);
+    }
+    if (evs.some((e) => clasifica(e) === 'dentro')) err.push('hay una nota dentro del pentagrama que el alt no menciona');
+    const debajo = grupos.debajo, encima = grupos.encima;
+    void debajo; void encima;
+    const todas = [...grupos.debajo, ...grupos.primera, ...grupos.quinta, ...grupos.encima].sort((x, y) => (x.oct * 7 + 'cdefgab'.indexOf(x.letra)) - (y.oct * 7 + 'cdefgab'.indexOf(y.letra)));
+    const rotulos = f.textos.map((t) => t.texto).join();
+    if (rotulos !== todas.map((n) => n.nombre).join()) err.push('los rotulos no son los nombres (con su octava) que dice el alt');
+    return err;
+  },
+  'equivalencia-claves'(spec, leido, alt) {
+    const err = [];
+    if (!/siete claves/.test(alt) || spec.filas.length !== 7) err.push('son siete claves');
+    const ORDEN = ['sol', 'do1', 'do2', 'do3', 'do4', 'fa3', 'fa'];
+    const TIPO = { sol: 'Sol', do: 'Do', fa: 'Fa' };
+    spec.filas.forEach((f, i) => {
+      if (f.clave !== ORDEN[i]) err.push(`la clave ${i + 1} deberia ser ${ORDEN[i]}`);
+      const ev = leido[i].flat();
+      if (ev.length !== 1 || ev[0].key !== 'c/4') err.push(`la clave ${i + 1} lleva un solo Do central (Do4)`);
+      const c = CLAVES[f.clave];
+      if (f.textos[0].texto !== `${TIPO[c.tipo]} en ${c.line}ª`) err.push(`el rotulo de la clave ${i + 1} deberia ser «${TIPO[c.tipo]} en ${c.line}ª»`);
+    });
+    if (!/clave de Sol en 2ª, Do en 1ª, 2ª, 3ª y 4ª, y Fa en 3ª y 4ª/.test(alt)) err.push('el alt ya no enumera las claves en ese orden');
+    return err;
+  },
+  grados(spec, leido, alt) {
+    const err = [], f = spec.filas[0], evs = leido[0].flat();
+    const gm = /Grados (tonales|modales)/.exec(alt), mm = /modo (mayor|menor)/.exec(alt);
+    if (!gm || !mm) return ['el alt tiene que decir «Grados tonales/modales … en modo mayor/menor»'];
+    if (gm[1] !== spec.grupo || mm[1] !== spec.modo) err.push(`el alt habla de ${gm[1]} en modo ${mm[1]} y la imagen es de ${spec.grupo} en modo ${spec.modo}`);
+    // la escala: tonica Do y distancias de la escala mayor o menor natural, medidas en semitonos (no con una tabla de alturas del dibujo)
+    const PC = { c: 0, d: 2, e: 4, f: 5, g: 7, a: 9, b: 11 };
+    const semis = (key) => { const k = parseKey(key); return (k.oct + 1) * 12 + PC[k.letra] + k.alt; };
+    const pasos = evs.slice(1).map((e, i) => semis(e.key) - semis(evs[i].key)).join();
+    const quiere = spec.modo === 'mayor' ? '2,2,1,2,2,2,1' : '2,1,2,2,1,2,2';
+    if (evs.length !== 8 || evs[0].key !== 'c/4' || pasos !== quiere) err.push(`la escala de Do ${spec.modo} tiene los pasos ${quiere} y el dibujo ${pasos}`);
+    // la armadura: tantas alteraciones como notas alteradas tiene la escala
+    const alteradas = new Set(evs.slice(0, 7).filter((e) => parseKey(e.key).alt !== 0).map((e) => parseKey(e.key).letra)).size;
+    if (Math.abs(f.armadura || 0) !== alteradas || (spec.modo === 'menor') !== ((f.armadura || 0) < 0)) err.push(`la armadura (${f.armadura || 0}) no corresponde a las ${alteradas} notas alteradas de la escala`);
+    // los grados en rojo: tonales I IV V, modales III VI VII
+    const rojos = evs.map((e, i) => (e.color ? i : -1)).filter((i) => i >= 0).join();
+    if (rojos !== (spec.grupo === 'tonales' ? '0,3,4' : '2,5,6')) err.push(`los grados en rojo deberian ser ${spec.grupo === 'tonales' ? 'I, IV y V' : 'III, VI y VII'}`);
+    const ROM = { I: 0, IV: 3, V: 4, III: 2, VI: 5, VII: 6 };
+    const enAlt = [...alt.matchAll(/\((I|II|III|IV|V|VI|VII)\)/g)].map((x) => ROM[x[1]]).sort().join();
+    if (enAlt && enAlt !== rojos.split(',').map(Number).sort().join()) err.push(`el alt nombra los grados ${enAlt} y el dibujo pinta ${rojos}`);
+    if (f.textos.map((t) => t.texto).join(' ') !== 'I II III IV V VI VII I') err.push('los rotulos deberian ser los numeros romanos I a VII y otra vez I');
     return err;
   },
   tesitura(spec, leido, alt, melodia, leyenda) {
@@ -646,10 +769,10 @@ const cuenta = (svg, re) => (svg.match(re) || []).length;
 function cabezas(svg) { return detalle(svg).map((d) => ({ id: d.id, g: d.cabeza || d.glifo, x: d.x, y: d.y })); }
 /** Cada nota o silencio del dibujo, en orden: cabeza, plica (sube/baja), corchete, silencio. */
 function detalle(svg) {
-  const marcas = [...svg.matchAll(/<g id="(n\d+)" class="(note|rest)"/g)];
+  const marcas = [...svg.matchAll(/<g id="(n\d+)" class="(note|rest)"([^>]*)>/g)];
   return marcas.map((m, i) => {
     const trozo = svg.slice(m.index, i + 1 < marcas.length ? marcas[i + 1].index : svg.length);
-    const d = { id: Number(m[1].slice(1)), tipo: m[2] };
+    const d = { id: Number(m[1].slice(1)), tipo: m[2], color: (/color="([^"]+)"/.exec(m[3]) || [])[1] };
     if (m[2] === 'rest') { const r = /href="#(E4E[0-9A-F])[^>]*transform="translate\(([\d.]+), ([\d.]+)\)/.exec(trozo) || []; d.glifo = r[1]; d.x = Number(r[2]); d.y = Number(r[3]); return d; }
     const cab = /<g class="notehead"[^>]*>\s*<use [^>]*href="#(E0[0-9A-F]+)[^>]*transform="translate\(([\d.]+), ([\d.]+)\)/.exec(trozo);
     if (cab) { d.cabeza = cab[1]; d.x = Number(cab[2]); d.y = Number(cab[3]); }
@@ -700,6 +823,12 @@ function verificarSVG(svg, fila, leido) {
   if (!raiz || !new RegExp('#' + raiz + ' path').test(svg)) err.push('el estilo de Verovio no esta ligado al id de la raiz');
   const claves = [...svg.matchAll(/class="clef"[\s\S]{0,260}?href="#(E0[0-9A-F]+)/g)].map((m) => m[1]);
   if (JSON.stringify(claves) !== JSON.stringify([claveDe(fila).glifo])) err.push('clave dibujada ' + JSON.stringify(claves) + ', prevista ' + claveDe(fila).nombre + ' (' + claveDe(fila).glifo + ')');
+  const yClave = (/class="clef"[\s\S]{0,300}?href="#E0[0-9A-F]+[^>]*translate\([\d.]+, ([\d.]+)\)/.exec(svg) || [])[1];
+  const lsC = lineas(svg);
+  if (lsC.length === 5 && Number(yClave) !== lsC[5 - claveDe(fila).line]) err.push(`la clave esta a y=${yClave} y deberia estar en la linea ${claveDe(fila).line} (y=${lsC[5 - claveDe(fila).line]})`);
+  const kn = fila.armadura || 0;
+  const kAcc = [...svg.matchAll(/class="keyAccid"[\s\S]{0,200}?href="#(E2[0-9A-F]+)/g)].map((x) => x[1]);
+  if (JSON.stringify(kAcc) !== JSON.stringify(Array(Math.abs(kn)).fill(kn > 0 ? 'E262' : 'E260'))) err.push(`armadura dibujada ${JSON.stringify(kAcc)}, prevista de ${Math.abs(kn)} ${kn > 0 ? 'sostenidos' : 'bemoles'}`);
   const metro = (svg.match(/<g[^>]* class="meterSig"[\s\S]*?<\/g>\s*<\/g>/) || [''])[0];
   const glifosMetro = [...metro.matchAll(/href="#(E08[0-9A-F])/g)].map((m) => m[1]);
   const dig = (n) => String(n).split('').map((d) => 'E08' + d);
@@ -721,6 +850,7 @@ function verificarSVG(svg, fila, leido) {
         return;
       }
       if (d.tipo !== 'note') { err.push(`el evento ${k + 1} deberia ser una nota`); return; }
+      if ((d.color || null) !== (e.color || null)) err.push(`la nota ${k + 1} ${e.color ? 'deberia ir en ' + e.color : 'no deberia llevar color'} y lleva ${d.color || 'ninguno'}`);
       const quiere = ls[4] - (pasoDe(e.key) - claveDe(fila).paso) * PASO_Y;
       if (d.y !== quiere) err.push(`la nota ${k + 1} (${e.key}) esta a y=${d.y} y le corresponde y=${quiere}`);
       if (d.cabeza !== GLIFO_CABEZA[e.d]) err.push(`la cabeza de la nota ${k + 1} es ${d.cabeza} y para «${e.d}» deberia ser ${GLIFO_CABEZA[e.d]}`);
@@ -836,9 +966,9 @@ function conRotulos(svg, fila, cabs) {
     else if (t.finDeCompas !== undefined) x = barraDe(svg, fila, t.finDeCompas) - (t.hueco || 100);
     else if (t.grupo) { const xs = t.grupo.map((i) => cabs[i].x + ancho(cabs[i])); x = Math.round(xs.reduce((a, b) => a + b, 0) / xs.length); }
     else x = Math.round(cabs[t.nota].x + ancho(cabs[t.nota]));
-    const y = t.antesDeSigno !== undefined ? signoDe(svg, fila, t.antesDeSigno).y + (t.dy || 0) : t.despuesDeSigno !== undefined ? signoDe(svg, fila, t.despuesDeSigno).y + (t.dy || 0) : t.ref === 'arriba' ? yTop - (t.dy || 640) : yBot + (t.dy || 850);
+    const y = t.antesDeSigno !== undefined ? signoDe(svg, fila, t.antesDeSigno).y + (t.dy || 0) : t.despuesDeSigno !== undefined ? signoDe(svg, fila, t.despuesDeSigno).y + (t.dy || 0) : t.ref === 'arriba' ? yTop - (t.dy || 640) : t.ref === 'pie' ? Math.max(yBot, ...cabs.map((c) => c.y)) + (t.dy || 750) : yBot + (t.dy || 850);
     if (t.ref === 'arriba') arriba = Math.min(arriba, y - 300); else abajo = Math.max(abajo, y);
-    return `<text x="${x}" y="${y}" text-anchor="${(t.izq || t.despuesDeSigno !== undefined) ? 'start' : (t.antesDeSigno !== undefined || t.finDeCompas !== undefined) ? 'end' : 'middle'}"${t.size ? ` font-size="${t.size}"` : ''}>${escAttr(t.texto)}</text>`;
+    return `<text x="${x}" y="${y}"${t.familia ? ` font-family="${t.familia}"` : ''}${t.peso ? ` font-weight="${t.peso}"` : ''} text-anchor="${(t.izq || t.despuesDeSigno !== undefined) ? 'start' : (t.antesDeSigno !== undefined || t.finDeCompas !== undefined) ? 'end' : 'middle'}"${t.size ? ` font-size="${t.size}"` : ''}>${escAttr(t.texto)}</text>`;
   }).join('');
   const grupo = `<g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a">${trozos}</g>`;
   let s = svg;
@@ -869,7 +999,7 @@ function rotulosCaben(fila, cabs, W, svg) {
   const ts = textosDeFila(fila).filter((t) => centroDe(t, cabs) !== null).map((t) => { const c = centroDe(t, cabs), w = anchoTexto(t); return { t, ini: t.izq ? c : c - w / 2, fin: t.izq ? c + w : c + w / 2 }; });
   for (const a of ts) if (a.ini < 0 || a.fin + 200 > W) return `el rotulo «${a.t.texto}» no cabe en el ancho del dibujo`;
   for (let i = 0; i < ts.length; i++) for (let j = i + 1; j < ts.length; j++) {
-    if (ts[i].t.ref !== ts[j].t.ref) continue;
+    if ((ts[i].t.ref === 'pie' ? 'abajo' : ts[i].t.ref) !== (ts[j].t.ref === 'pie' ? 'abajo' : ts[j].t.ref)) continue;
     if (ts[i].fin + (fila.holgura || 80) > ts[j].ini && ts[j].fin + (fila.holgura || 80) > ts[i].ini) return `los rotulos «${ts[i].t.texto}» y «${ts[j].t.texto}» se pisan`;
   }
   // rotulos pegados a un signo (To, D.S. al, Coda) o a una barra (Fine, D.C.): ni se pisan entre si ni tapan otro signo
@@ -914,6 +1044,7 @@ function verificarRotulos(svg, fila, cabs) {
         const c = t.grupo.map((i) => cabs[i].x + anchoCab(cabs[i].g) / 2);
         if (Math.abs(d.x - c.reduce((a, b) => a + b, 0) / c.length) > 1) err.push(`el rotulo «${t.texto}» no esta centrado bajo su grupo`);
       }
+      if (t.ref === 'pie' && cabs.some((c) => d.y <= c.y)) err.push(`el rotulo «${t.texto}» no esta debajo de todas las notas`);
       if (t.ref === 'abajo' && d.y <= ls[4]) err.push(`el rotulo «${t.texto}» esta dentro del pentagrama`);
       if (t.ref === 'arriba' && d.y >= ls[0]) err.push(`el rotulo «${t.texto}» no esta encima del pentagrama`);
     });
@@ -933,7 +1064,7 @@ function construirFila(tk, fila, semilla, tocar, soloDibujo, separacion) {
   if (leido.length !== fila.compases.length) e.push(`el MEI tiene ${leido.length} compases y debian ser ${fila.compases.length}`);
   fila.compases.forEach((c, i) => {
     const l = leido[i] || [];
-    if (l.length !== c.length || c.some((x, j) => !l[j] || eventoTxt(l[j]) !== eventoTxt(x) || JSON.stringify(articDe(x)) !== JSON.stringify(l[j].artic || null) || (l[j].plica || null) !== (x.plica || null) || (l[j].union || null) !== (x.union || null) || (l[j].gracia || null) !== (x.gracia || null) || (l[j].orna || null) !== (x.orna || null))) e.push(`el MEI escribe mal el compas ${i + 1}`);
+    if (l.length !== c.length || c.some((x, j) => !l[j] || eventoTxt(l[j]) !== eventoTxt(x) || JSON.stringify(articDe(x)) !== JSON.stringify(l[j].artic || null) || (l[j].plica || null) !== (x.plica || null) || (l[j].union || null) !== (x.union || null) || (l[j].gracia || null) !== (x.gracia || null) || (l[j].color || null) !== (x.color || null) || (l[j].orna || null) !== (x.orna || null))) e.push(`el MEI escribe mal el compas ${i + 1}`);
     const quiere = JSON.stringify(tuplasDe(fila, i).map((t) => [t.ini, t.fin, t.num, t.numbase]).sort()), tiene = JSON.stringify(leido.length > i ? tuplasLeidas(leido, i).sort() : []);
     if (quiere !== tiene) e.push(`el MEI escribe mal los grupos de valoracion especial del compas ${i + 1}`);
     c.forEach((x, j) => { if (l[j] && (l[j].grupo >= 0) !== (x.barra !== undefined && c.filter((y) => y.barra === x.barra).length > 1)) e.push(`el MEI agrupa mal la figura ${j + 1} del compas ${i + 1}`); });
@@ -964,13 +1095,21 @@ function construirFila(tk, fila, semilla, tocar, soloDibujo, separacion) {
 }
 
 /** Apila las filas (una imagen de Verovio por fila) en un solo SVG. */
-function componer(filasSvg, alt, slug, escala) {
+function componer(filasSvg, alt, slug, escala, columnas) {
   const hojas = filasSvg.map((s) => preparar(s, ''));
   if (hojas.length === 1) {
     const u = preparar(filasSvg[0], alt);
     if (!escala || escala === 1) return u;
     const w = Math.round(u.w * escala), h = Math.round(u.h * escala);
     return { svg: u.svg.replace(/^(<svg [^>]*?) width="\d+" height="\d+"/, `$1 width="${w}" height="${h}"`), w, h };
+  }
+  if (columnas) {
+    const cw = Math.max(...hojas.map((h) => h.w)), ch = Math.max(...hojas.map((h) => h.h)), hueco = 10;
+    const filasN = Math.ceil(hojas.length / columnas);
+    const W2 = columnas * cw + (columnas - 1) * hueco, H2 = filasN * ch + (filasN - 1) * hueco;
+    const hijos2 = hojas.map((h, i) => h.svg.replace(/<title>[\s\S]*?<\/title>/, '').replace(/^<svg ([^>]*?) viewBox="([^"]*)" width="\d+" height="\d+"[^>]*>/, (m, ant, vb) => `<svg ${ant} x="${(i % columnas) * (cw + hueco)}" y="${Math.floor(i / columnas) * (ch + hueco)}" width="${h.w}" height="${h.h}" viewBox="${vb}">`).trim());
+    const svg2 = `<svg id="tm-c${hash(slug)}" viewBox="0 0 ${W2} ${H2}" width="${W2}" height="${H2}" role="img" xmlns="http://www.w3.org/2000/svg"><title>${escAttr(alt)}</title>${hijos2.join('')}</svg>\n`;
+    return { svg: svg2, w: W2, h: H2 };
   }
   const W = Math.max(...hojas.map((h) => h.w)), H = hojas.reduce((a, h) => a + h.h, 0);
   let y = 0;
@@ -986,14 +1125,15 @@ function componer(filasSvg, alt, slug, escala) {
 function construir(tk, spec, alt, melodia, tocar, soloDibujo, leyenda) {
   const errores = [], filasSvg = [], leidos = [];
   let medidasDe0 = null;
+  const medidasTodas = [];
   // misma separacion en todas las filas: la primera con la que todos los rotulos caben (sin rotulos, la de siempre)
   const hayRotulos = spec.filas.some((f) => textosDeFila(f).length);
-  const lista = spec.filas.some((f) => f.fino) ? FINAS : SEPARACIONES;   // `fino`: imagen ancha de rotulos, que en el movil se encoge: se busca el ancho justo
+  const lista = spec.filas.some((f) => f.fino === 'compacto') ? COMPACTAS : spec.filas.some((f) => f.fino) ? FINAS : SEPARACIONES;   // `fino`: imagen ancha de rotulos, que en el movil se encoge: se busca el ancho justo
   for (const sep of hayRotulos ? lista : [0.25]) {
     const rs = spec.filas.map((f, i) => construirFila(tk, f, hash(spec.filas.length > 1 ? spec.slug + '#' + i : spec.slug), tocar, soloDibujo, f.separacion || sep));
     const cabe = rs.every((r) => !r.motivoAncho);
     if (cabe || sep === lista[lista.length - 1] || !hayRotulos) {
-      rs.forEach((r, i) => { if (!i) medidasDe0 = r.medidas; errores.push(...r.errores.map((x) => (spec.filas.length > 1 ? `fila ${i + 1}: ` : '') + x)); filasSvg.push(r.svg); leidos.push(r.leido); });
+      rs.forEach((r, i) => { if (!i) medidasDe0 = r.medidas; medidasTodas.push(r.medidas); errores.push(...r.errores.map((x) => (spec.filas.length > 1 ? `fila ${i + 1}: ` : '') + x)); filasSvg.push(r.svg); leidos.push(r.leido); });
       break;
     }
   }
@@ -1002,20 +1142,21 @@ function construir(tk, spec, alt, melodia, tocar, soloDibujo, leyenda) {
     if (!rev) errores.push('no hay revisor del alt para el tipo ' + spec.tipo);
     else errores.push(...rev(spec, leidos, alt, melodia, leyenda));
   }
-  const listo = errores.length ? null : componer(filasSvg, alt || '', spec.slug, spec.escala);
+  const listo = errores.length ? null : componer(filasSvg, alt || '', spec.slug, spec.escala, spec.columnas);
   if (listo && spec.filas.length > 1) {
     // la composicion: una imagen por fila, en orden, y todos los rotulos
-    const n = cuenta(listo.svg, /<svg [^>]*x="0" y="\d+"/g);
+    const n = cuenta(listo.svg, /<svg id="[^"]+" x="\d+" y="\d+"/g);
     if (n !== spec.filas.length) errores.push(`la composicion tiene ${n} filas y debian ser ${spec.filas.length}`);
     const quiere = spec.filas.flatMap((f) => textosDeFila(f).map((t) => t.texto));
     const dib = (listo.svg.match(/<text[^>]*>[^<]*<\/text>/g) || []).map((t) => t.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&'));
     if (JSON.stringify(dib) !== JSON.stringify(quiere)) errores.push('los rotulos de la composicion no son los previstos');
   }
-  return { listo, errores, medidas: medidasDe0 };
+  return { listo, errores, medidas: medidasDe0, medidasTodas };
 }
 
 /* ---------- sabotajes: la verificacion tiene que fallar, y por la razon prevista ---------- */
 const SEPARACIONES = [0.25, 0.3, 0.36, 0.43, 0.5, 0.6, 0.72, 0.86, 1.0, 1.2];
+const COMPACTAS = Array.from({ length: 60 }, (_, i) => Math.round((0.03 + i * 0.02) * 100) / 100);   // desde muy apretado: redondas con rotulo, que en el movil se encogen
 const FINAS = Array.from({ length: 33 }, (_, i) => Math.round((0.25 + i * 0.03) * 100) / 100);
 const SABOTAJES = [
   ['otra nota', (mei) => mei.replace('pname="g"', 'pname="a"'), /MEI escribe mal|esta a y|alt|melodia/i, 'compas-4-4-pulso'],
@@ -1066,6 +1207,11 @@ const SABOTAJES_DIBUJO = [
   ['apoyatura con rayita', (mei) => mei.replace('grace="acc"', 'grace="unacc"'), /rayita de las notas de adorno/, 'apoyatura'],
   ['otro grupeto', (mei) => mei.replace('form="upper"', 'form="lower"'), /ornamentos dibujados/, 'grupeto'],
   ['trino perdido', (mei) => mei.replace(new RegExp('<trill [^>]*/>'), ''), /ornamentos dibujados/, 'trino'],
+  ['clave en otra linea', (mei) => mei.replace('clef.line="3"', 'clef.line="2"'), /la clave esta a y|esta a y|clave dibujada/, 'nombres-clave-de-do-en-3'],
+  ['clave de fa dibujada como de sol', (mei) => mei.replace('clef.shape="F"', 'clef.shape="G"').replace('clef.line="4"', 'clef.line="2"'), /clave dibujada/, 'glifo-clave-fa'],
+  ['sin armadura', (mei) => mei.replace(' key.sig="3f"', ''), /armadura dibujada|alteraciones dibujadas/, 'grados-tonales-menor'],
+  ['sin color rojo', (mei) => mei.split(' color="#d00000"').join(''), /deberia ir en/, 'grados-modales-mayor'],
+  ['armadura de sostenidos', (mei) => mei.replace(' key.sig="3f"', ' key.sig="3s"'), /armadura dibujada/, 'grados-tonales-menor'],
   ['tesitura con otra clave', (mei) => mei.replace('clef.shape="C"', 'clef.shape="G"'), /clave dibujada/, 'fagot-tesitura-agudo'],
   ['tesitura con la nota movida', (mei) => mei.replace('pname="g"', 'pname="a"'), /esta a y/, 'oboe-tesitura-medio'],
   ['tesitura sin una nota', (mei) => mei.replace(new RegExp('<note [^>]*></note>'), ''), /cabezas|notas y silencios/, 'oboe-tesitura-medio'],
@@ -1082,6 +1228,23 @@ const SABOTAJES_LEYENDA = [
   ['leyenda de tabla con otro rango', 'Medio | Do₅–Re₆ | | Brillante', /la leyenda de la pagina dice que acaba en d\/6/, 'flauta-tesitura-medio'],
 ];
 const SABOTAJES_DATOS = [
+  ['nombres: la clave de Sol dibujada en Do 3', (s) => { s.filas[0].clave = 'do3'; }, /el alt habla de la clave de sol/, 'nombres-clave-de-sol'],
+  ['nombres: una nota de la escala cambiada', (s) => { s.filas[0].compases[0][3].key = 'g/4'; }, /deberia ser la escala de Do/, 'nombres-clave-de-do-en-3'],
+  ['nombres: rotulo de otra nota', (s) => { s.filas[0].textos[2].texto = 'Re'; }, /el rotulo de la nota 3/, 'nombres-clave-de-do-en-3'],
+  ['nombres: escala una octava mas alta', (s) => { s.filas[0].compases[0].forEach((e) => { e.key = e.key.replace('/3', '/4').replace('/4', '/5'); }); }, /deberia ir de Do/, 'nombres-clave-de-fa-en-4'],
+  ['glifo de clave con una nota', (s) => { s.filas[0].compases[0].push({ key: 'c/4', d: 'w', puntillo: 0 }); }, /va solo, sin notas/, 'glifo-clave-fa'],
+  ['glifo de la clave de fa en tercera', (s) => { s.filas[0].clave = 'fa3'; }, /en 4\.ª linea|la clave de fa/, 'glifo-clave-fa'],
+  ['notas-clave que no empieza en la linea inferior', (s) => { s.filas[0].compases[0][0].key = 'd/3'; }, /linea inferior|el alt dice/, 'notas-clave-do'],
+  ['notas-clave con la clave de do en primera', (s) => { s.filas[0].clave = 'do1'; }, /clave de do en 3\.ª|linea inferior/, 'notas-clave-do'],
+  ['notas-clave con una nota que salta', (s) => { s.filas[0].compases[0][4].key = 'e/4'; }, /subir de grado en grado|el alt dice/, 'notas-clave-sol'],
+  ['lineas adicionales con una nota dentro del pentagrama', (s) => { s.filas[0].compases[0][2].key = 'c/4'; s.filas[0].textos[2].texto = 'Do₄'; }, /dentro del pentagrama|el alt dice/, 'lineas-adicionales-clave-do'],
+  ['lineas adicionales con el rotulo sin octava', (s) => { s.filas[0].textos[0].texto = 'La'; }, /los rotulos no son los nombres/, 'lineas-adicionales-clave-sol'],
+  ['equivalencia con las claves en otro orden', (s) => { const t = s.filas[1]; s.filas[1] = s.filas[2]; s.filas[2] = t; }, /deberia ser|rotulo de la clave/, 'equivalencia-claves-do-central'],
+  ['equivalencia con un Do que no es el central', (s) => { s.filas[3].compases[0][0].key = 'c/5'; }, /un solo Do central/, 'equivalencia-claves-do-central'],
+  ['grados: el rojo en otro grado', (s) => { s.filas[0].compases[0][1].color = '#d00000'; }, /grados en rojo/, 'grados-tonales-mayor'],
+  ['grados menores sin armadura', (s) => { s.filas[0].armadura = 0; }, /armadura/, 'grados-tonales-menor'],
+  ['grados: la escala con el tercer grado mayor', (s) => { s.filas[0].compases[0][2].key = 'e/4'; }, /los pasos|la armadura/, 'grados-modales-menor'],
+  ['grados modales llamados tonales', (s) => { s.grupo = 'tonales'; }, /el alt habla de modales/, 'grados-modales-mayor'],
   ['tesitura con la nota aguda cambiada', (s) => { s.filas[0].compases[0][1].key = 'd/6'; }, /el alt dice que el registro acaba/, 'clarinete-tesitura-clarin'],
   ['tesitura con la nota grave cambiada', (s) => { s.filas[0].compases[0][0].key = 'a/4'; }, /el alt dice que el registro empieza/, 'clarinete-tesitura-clarin'],
   ['fagot agudo en clave de sol', (s) => { s.filas[0].clave = 'sol'; }, /clave de do en cuarta/, 'fagot-tesitura-agudo'],
@@ -1212,6 +1375,13 @@ async function main() {
     marcos.set(sp.instrumento, { top: Math.max(m.top, r0.medidas.top), bot: Math.max(m.bot, r0.medidas.bot) });
   }
   for (const sp of tesituras) sp.filas[0].marco = marcos.get(sp.instrumento);
+  // imagenes de varias filas que tienen que quedar alineadas entre si (marcoComun): mismo hueco encima y debajo en todas
+  for (const sp of new Set(paginas.flatMap((p) => p.imgs.map((i) => i.spec)))) {
+    if (!sp.marcoComun) continue;
+    const r0 = construir(tk, sp, null, null, null, false);
+    const m = { top: Math.max(...r0.medidasTodas.map((x) => x.top)), bot: Math.max(...r0.medidasTodas.map((x) => x.bot)) };
+    sp.filas.forEach((f) => { f.marco = m; });
+  }
   const hechos = new Map();
   let fallos = 0;
   for (const p of paginas) {
@@ -1224,6 +1394,15 @@ async function main() {
           fs.writeFileSync(path.join(RAIZ, SALIDA, carpetaDe(im.spec), slug + '.svg'), r.listo.svg);
           hechos.set(slug, { slug, carpeta: carpetaDe(im.spec), w: r.listo.w, h: r.listo.h });
           im.spec.medidasFinales = r.medidas;
+          // version para movil (spec.movil = n.º de columnas de la rejilla): otra imagen, verificada igual, que la pagina elige con <picture>
+          if (im.spec.movil) {
+            const copia = { ...im.spec, slug: slug + '-movil', columnas: im.spec.movil, movil: undefined };
+            const r2 = construir(tk, copia, im.alt, im.melodia, null, false, im.leyenda);
+            if (r2.errores.length) throw new Error('(version movil) ' + r2.errores.join('\n   - '));
+            fs.writeFileSync(path.join(RAIZ, SALIDA, carpetaDe(im.spec), slug + '-movil.svg'), r2.listo.svg);
+            hechos.set(slug + '-movil', { slug: slug + '-movil', carpeta: carpetaDe(im.spec), w: r2.listo.w, h: r2.listo.h });
+            console.log(`✓ ${(slug + '-movil').padEnd(32)} ${String(r2.listo.svg.length).padStart(5)} B · ${r2.listo.w}×${r2.listo.h}  (para movil, ${im.spec.movil} columnas)`);
+          }
           console.log(`✓ ${slug.padEnd(32)} ${String(r.listo.svg.length).padStart(5)} B · ${r.listo.w}×${r.listo.h}${im.spec.filas.length > 1 ? `  (${im.spec.filas.length} filas)` : ''}`);
         }
         im.hecho = hechos.get(slug);
@@ -1263,7 +1442,9 @@ async function main() {
         const alt = (/alt="([^"]*)"/.exec(im.trozo) || [])[0] || 'alt=""';
         const resto = (/<img\b([^>]*)>/.exec(im.trozo) || [])[1] || '';
         const loading = /loading="lazy"/.test(resto) ? ' loading="lazy"' : '';
-        const nuevo = `<img src="/${SALIDA}/${im.hecho.carpeta}/${im.hecho.slug}.svg" width="${im.hecho.w}" height="${im.hecho.h}" ${alt}${loading} decoding="async">`;
+        const mv = im.spec.movil ? hechos.get(im.hecho.slug + '-movil') : null;
+        const img = `<img src="/${SALIDA}/${im.hecho.carpeta}/${im.hecho.slug}.svg" width="${im.hecho.w}" height="${im.hecho.h}" ${alt}${loading} decoding="async">`;
+        const nuevo = mv ? `<picture><source media="(max-width: 600px)" srcset="/${SALIDA}/${mv.carpeta}/${mv.slug}.svg" width="${mv.w}" height="${mv.h}">${img}</picture>` : img;
         html = html.replace(im.trozo, () => nuevo);
       }
       fs.writeFileSync(p.ruta, html);

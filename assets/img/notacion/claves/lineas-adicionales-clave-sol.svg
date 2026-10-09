@@ -1,0 +1,86 @@
+<svg id="n1fmg6j0" viewBox="0 0 274 108" width="419" height="165" role="img" xmlns="http://www.w3.org/2000/svg"><title>Líneas adicionales en clave de Sol: La₃, Si₃ y Do₄ por debajo del pentagrama; Sol₅, La₅, Si₅ y Do₆ por encima</title>
+   <defs>
+      <g id="E050-n1fmg6j0">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A2-n1fmg6j0">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#n1fmg6j0 g.ending, #n1fmg6j0 g.fing, #n1fmg6j0 g.reh, #n1fmg6j0 g.tempo {font-weight:bold;}#n1fmg6j0 g.dir, #n1fmg6j0 g.dynam, #n1fmg6j0 g.mNum {font-style:italic;}#n1fmg6j0 g.label {font-weight:normal;}#n1fmg6j0 ellipse, #n1fmg6j0 path, #n1fmg6j0 polygon, #n1fmg6j0 polyline, #n1fmg6j0 rect {stroke:currentColor}#n1fmg6j0 g.cursor {fill:dodgerblue; color:dodgerblue;}#n1fmg6j0 g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 6830 2710">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="o3rzyig" class="mdiv pageMilestone" />
+         <g id="p1kjlx7r" class="score pageMilestone" />
+         <g id="z1g7bn4v" class="system">
+            <g id="c18v7eo1" class="section systemMilestone" />
+            <g id="d13agfta" class="measure">
+               <g id="mj4erlj" class="staff">
+                  <path d="M0 540 L6630 540" stroke-width="13" />
+                  <path d="M0 720 L6630 720" stroke-width="13" />
+                  <path d="M0 900 L6630 900" stroke-width="13" />
+                  <path d="M0 1080 L6630 1080" stroke-width="13" />
+                  <path d="M0 1260 L6630 1260" stroke-width="13" />
+                  <g id="r1ie0chx" class="clef">
+                     <use href="#E050-n1fmg6j0" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="s9hr5mk" class="keySig" />
+                  <g class="ledgerLines above">
+                     <path d="M4092 360 L4456 360" stroke-width="22" />
+                     <path d="M4922 360 L5286 360" stroke-width="22" />
+                     <path d="M5752 360 L6116 360" stroke-width="22" />
+                     <path d="M5752 180 L6116 180" stroke-width="22" />
+                  </g>
+                  <g class="ledgerLines below">
+                     <path d="M772 1440 L1136 1440" stroke-width="22" />
+                     <path d="M1602 1440 L1966 1440" stroke-width="22" />
+                     <path d="M2432 1440 L2796 1440" stroke-width="22" />
+                     <path d="M772 1620 L1136 1620" stroke-width="22" />
+                  </g>
+                  <g id="nt81k58" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n1fmg6j0" transform="translate(820, 1620) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n1fmg6j0" transform="translate(1650, 1530) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n1fmg6j0" transform="translate(2480, 1440) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n1fmg6j0" transform="translate(3310, 450) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n4" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n1fmg6j0" transform="translate(4140, 360) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n5" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n1fmg6j0" transform="translate(4970, 270) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n6" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n1fmg6j0" transform="translate(5800, 180) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="lifva9p" class="barLine" />
+            </g>
+            <g id="c1x71w7k" class="systemMilestoneEnd c18v7eo1" />
+         </g>
+         <g id="d10347sa" class="pageMilestoneEnd p1kjlx7r" />
+         <g id="e1vpwes" class="pageMilestoneEnd o3rzyig" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="972" y="2370" font-weight="700" text-anchor="middle">La₃</text><text x="1802" y="2370" font-weight="700" text-anchor="middle">Si₃</text><text x="2632" y="2370" font-weight="700" text-anchor="middle">Do₄</text><text x="3462" y="2370" font-weight="700" text-anchor="middle">Sol₅</text><text x="4292" y="2370" font-weight="700" text-anchor="middle">La₅</text><text x="5122" y="2370" font-weight="700" text-anchor="middle">Si₅</text><text x="5952" y="2370" font-weight="700" text-anchor="middle">Do₆</text></g></g></svg>
+</svg>

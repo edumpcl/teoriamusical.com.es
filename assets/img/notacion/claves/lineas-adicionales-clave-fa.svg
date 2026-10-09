@@ -1,0 +1,91 @@
+<svg id="mb4og9o" viewBox="0 0 307 108" width="469" height="165" role="img" xmlns="http://www.w3.org/2000/svg"><title>Líneas adicionales en clave de Fa: Do₂, Re₂, Mi₂ y Fa₂ por debajo del pentagrama; Si₃, Do₄, Re₄ y Mi₄ por encima</title>
+   <defs>
+      <g id="E062-mb4og9o">
+         <path transform="scale(1,-1)" d="M568 124c0 28 22 51 48 51s48 -23 48 -51s-22 -50 -48 -50s-48 22 -48 50zM254 251c180 0 274 -112 274 -286c0 -184 -158 -362 -298 -463c-91 -71 -205 -118 -206 -118s-4 -1 -5 -1c-6 0 -15 2 -18 12c0 2 -1 3 -1 5c0 12 12 19 12 19c1 0 99 45 203 140 c98 88 181 275 181 405c0 168 -50 250 -152 250c-35 0 -67 -6 -92 -20c-39 -21 -69 -65 -76 -109c8 7 25 17 35 21c9 3 20 5 32 5c56 0 106 -47 106 -104c0 -66 -50 -109 -114 -109c-74 0 -116 54 -116 127s38 139 97 182c1 0 62 44 138 44zM568 -123c0 28 22 51 48 51 s48 -23 48 -51s-22 -51 -48 -51s-48 23 -48 51z" />
+      </g>
+      <g id="E0A2-mb4og9o">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#mb4og9o g.ending, #mb4og9o g.fing, #mb4og9o g.reh, #mb4og9o g.tempo {font-weight:bold;}#mb4og9o g.dir, #mb4og9o g.dynam, #mb4og9o g.mNum {font-style:italic;}#mb4og9o g.label {font-weight:normal;}#mb4og9o ellipse, #mb4og9o path, #mb4og9o polygon, #mb4og9o polyline, #mb4og9o rect {stroke:currentColor}#mb4og9o g.cursor {fill:dodgerblue; color:dodgerblue;}#mb4og9o g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 7670 2710">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="n1rci84m" class="mdiv pageMilestone" />
+         <g id="o124erh6" class="score pageMilestone" />
+         <g id="z2k4jxx" class="system">
+            <g id="b12i0bed" class="section systemMilestone" />
+            <g id="ciitgc3" class="measure">
+               <g id="l1ydym6t" class="staff">
+                  <path d="M0 540 L7478 540" stroke-width="13" />
+                  <path d="M0 720 L7478 720" stroke-width="13" />
+                  <path d="M0 900 L7478 900" stroke-width="13" />
+                  <path d="M0 1080 L7478 1080" stroke-width="13" />
+                  <path d="M0 1260 L7478 1260" stroke-width="13" />
+                  <g id="s1d8mcc8" class="clef">
+                     <use href="#E062-mb4og9o" transform="translate(90, 720) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="tgsqc2k" class="keySig" />
+                  <g class="ledgerLines above">
+                     <path d="M4940 360 L5304 360" stroke-width="22" />
+                     <path d="M5770 360 L6134 360" stroke-width="22" />
+                     <path d="M6600 360 L6964 360" stroke-width="22" />
+                     <path d="M6600 180 L6964 180" stroke-width="22" />
+                  </g>
+                  <g class="ledgerLines below">
+                     <path d="M790 1440 L1154 1440" stroke-width="22" />
+                     <path d="M1620 1440 L1984 1440" stroke-width="22" />
+                     <path d="M2450 1440 L2814 1440" stroke-width="22" />
+                     <path d="M790 1620 L1154 1620" stroke-width="22" />
+                  </g>
+                  <g id="mjh90qg" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-mb4og9o" transform="translate(838, 1620) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-mb4og9o" transform="translate(1668, 1530) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-mb4og9o" transform="translate(2498, 1440) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-mb4og9o" transform="translate(3328, 1350) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n4" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-mb4og9o" transform="translate(4158, 450) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n5" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-mb4og9o" transform="translate(4988, 360) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n6" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-mb4og9o" transform="translate(5818, 270) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n7" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-mb4og9o" transform="translate(6648, 180) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="knqtbe2" class="barLine" />
+            </g>
+            <g id="c1iszw6n" class="systemMilestoneEnd b12i0bed" />
+         </g>
+         <g id="dq9jqez" class="pageMilestoneEnd o124erh6" />
+         <g id="e1hj6cgq" class="pageMilestoneEnd n1rci84m" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="990" y="2370" font-weight="700" text-anchor="middle">Do₂</text><text x="1820" y="2370" font-weight="700" text-anchor="middle">Re₂</text><text x="2650" y="2370" font-weight="700" text-anchor="middle">Mi₂</text><text x="3480" y="2370" font-weight="700" text-anchor="middle">Fa₂</text><text x="4310" y="2370" font-weight="700" text-anchor="middle">Si₃</text><text x="5140" y="2370" font-weight="700" text-anchor="middle">Do₄</text><text x="5970" y="2370" font-weight="700" text-anchor="middle">Re₄</text><text x="6800" y="2370" font-weight="700" text-anchor="middle">Mi₄</text></g></g></svg>
+</svg>

@@ -1,0 +1,37 @@
+<svg id="k1h6mr54" viewBox="0 0 102 80" width="156" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Clave de Fa en 4ª línea del pentagrama</title>
+   <defs>
+      <g id="E062-k1h6mr54">
+         <path transform="scale(1,-1)" d="M568 124c0 28 22 51 48 51s48 -23 48 -51s-22 -50 -48 -50s-48 22 -48 50zM254 251c180 0 274 -112 274 -286c0 -184 -158 -362 -298 -463c-91 -71 -205 -118 -206 -118s-4 -1 -5 -1c-6 0 -15 2 -18 12c0 2 -1 3 -1 5c0 12 12 19 12 19c1 0 99 45 203 140 c98 88 181 275 181 405c0 168 -50 250 -152 250c-35 0 -67 -6 -92 -20c-39 -21 -69 -65 -76 -109c8 7 25 17 35 21c9 3 20 5 32 5c56 0 106 -47 106 -104c0 -66 -50 -109 -114 -109c-74 0 -116 54 -116 127s38 139 97 182c1 0 62 44 138 44zM568 -123c0 28 22 51 48 51 s48 -23 48 -51s-22 -51 -48 -51s-48 23 -48 51z" />
+      </g>
+   </defs>
+   <style type="text/css">#k1h6mr54 g.ending, #k1h6mr54 g.fing, #k1h6mr54 g.reh, #k1h6mr54 g.tempo {font-weight:bold;}#k1h6mr54 g.dir, #k1h6mr54 g.dynam, #k1h6mr54 g.mNum {font-style:italic;}#k1h6mr54 g.label {font-weight:normal;}#k1h6mr54 ellipse, #k1h6mr54 path, #k1h6mr54 polygon, #k1h6mr54 polyline, #k1h6mr54 rect {stroke:currentColor}#k1h6mr54 g.cursor {fill:dodgerblue; color:dodgerblue;}#k1h6mr54 g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2530 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="l16mni26" class="mdiv pageMilestone" />
+         <g id="m18jd8gu" class="score pageMilestone" />
+         <g id="qqaq8e6" class="system">
+            <g id="z12k3b5j" class="section systemMilestone" />
+            <g id="a1gj4m1g" class="measure">
+               <g id="j1koc0ty" class="staff">
+                  <path d="M0 540 L2338 540" stroke-width="13" />
+                  <path d="M0 720 L2338 720" stroke-width="13" />
+                  <path d="M0 900 L2338 900" stroke-width="13" />
+                  <path d="M0 1080 L2338 1080" stroke-width="13" />
+                  <path d="M0 1260 L2338 1260" stroke-width="13" />
+                  <g id="b1pzfikj" class="clef">
+                     <use href="#E062-k1h6mr54" transform="translate(90, 720) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="cgrouum" class="keySig" />
+                  <g id="k1av1wfb" class="layer">
+                     <g id="l1jiwhbd" class="space" />
+                  </g>
+               </g>
+               <g id="i16d1mnl" class="barLine" />
+            </g>
+            <g id="tvu7ugb" class="systemMilestoneEnd z12k3b5j" />
+         </g>
+         <g id="uqrql0v" class="pageMilestoneEnd m18jd8gu" />
+         <g id="vu4bz20" class="pageMilestoneEnd l16mni26" />
+      </g>
+   </svg>
+</svg>

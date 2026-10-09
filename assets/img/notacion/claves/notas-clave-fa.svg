@@ -1,0 +1,84 @@
+<svg id="prg4596" viewBox="0 0 294 94" width="449" height="144" role="img" xmlns="http://www.w3.org/2000/svg"><title>Notas en la clave de Fa en 4ª línea en el pentagrama: Sol, La, Si, Do, Re, Mi, Fa, Sol, La</title>
+   <defs>
+      <g id="E062-prg4596">
+         <path transform="scale(1,-1)" d="M568 124c0 28 22 51 48 51s48 -23 48 -51s-22 -50 -48 -50s-48 22 -48 50zM254 251c180 0 274 -112 274 -286c0 -184 -158 -362 -298 -463c-91 -71 -205 -118 -206 -118s-4 -1 -5 -1c-6 0 -15 2 -18 12c0 2 -1 3 -1 5c0 12 12 19 12 19c1 0 99 45 203 140 c98 88 181 275 181 405c0 168 -50 250 -152 250c-35 0 -67 -6 -92 -20c-39 -21 -69 -65 -76 -109c8 7 25 17 35 21c9 3 20 5 32 5c56 0 106 -47 106 -104c0 -66 -50 -109 -114 -109c-74 0 -116 54 -116 127s38 139 97 182c1 0 62 44 138 44zM568 -123c0 28 22 51 48 51 s48 -23 48 -51s-22 -51 -48 -51s-48 23 -48 51z" />
+      </g>
+      <g id="E0A2-prg4596">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#prg4596 g.ending, #prg4596 g.fing, #prg4596 g.reh, #prg4596 g.tempo {font-weight:bold;}#prg4596 g.dir, #prg4596 g.dynam, #prg4596 g.mNum {font-style:italic;}#prg4596 g.label {font-weight:normal;}#prg4596 ellipse, #prg4596 path, #prg4596 polygon, #prg4596 polyline, #prg4596 rect {stroke:currentColor}#prg4596 g.cursor {fill:dodgerblue; color:dodgerblue;}#prg4596 g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 7330 2350">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="q1en0odh" class="mdiv pageMilestone" />
+         <g id="rzpfdzw" class="score pageMilestone" />
+         <g id="d1mio97a" class="system">
+            <g id="eb0nlpo" class="section systemMilestone" />
+            <g id="f1n7jf9" class="measure">
+               <g id="oicoi27" class="staff">
+                  <path d="M0 540 L7138 540" stroke-width="13" />
+                  <path d="M0 720 L7138 720" stroke-width="13" />
+                  <path d="M0 900 L7138 900" stroke-width="13" />
+                  <path d="M0 1080 L7138 1080" stroke-width="13" />
+                  <path d="M0 1260 L7138 1260" stroke-width="13" />
+                  <g id="xfsun3x" class="clef">
+                     <use href="#E062-prg4596" transform="translate(90, 720) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="y18r9ede" class="keySig" />
+                  <g id="p6b39t1" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-prg4596" transform="translate(838, 1260) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-prg4596" transform="translate(1538, 1170) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-prg4596" transform="translate(2238, 1080) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-prg4596" transform="translate(2938, 990) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n4" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-prg4596" transform="translate(3638, 900) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n5" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-prg4596" transform="translate(4338, 810) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n6" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-prg4596" transform="translate(5038, 720) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n7" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-prg4596" transform="translate(5738, 630) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n8" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-prg4596" transform="translate(6438, 540) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="n1jc7net" class="barLine" />
+            </g>
+            <g id="g1whsarf" class="systemMilestoneEnd eb0nlpo" />
+         </g>
+         <g id="h1wgeejz" class="pageMilestoneEnd rzpfdzw" />
+         <g id="ive0xqm" class="pageMilestoneEnd q1en0odh" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="990" y="2010" font-weight="700" text-anchor="middle">Sol</text><text x="1690" y="2010" font-weight="700" text-anchor="middle">La</text><text x="2390" y="2010" font-weight="700" text-anchor="middle">Si</text><text x="3090" y="2010" font-weight="700" text-anchor="middle">Do</text><text x="3790" y="2010" font-weight="700" text-anchor="middle">Re</text><text x="4490" y="2010" font-weight="700" text-anchor="middle">Mi</text><text x="5190" y="2010" font-weight="700" text-anchor="middle">Fa</text><text x="5890" y="2010" font-weight="700" text-anchor="middle">Sol</text><text x="6590" y="2010" font-weight="700" text-anchor="middle">La</text></g></g></svg>
+</svg>
