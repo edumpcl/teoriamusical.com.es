@@ -28,7 +28,7 @@ const { RAIZ, ESPACIO, OPCIONES, hash, preparar, escAttr } = G;
 const SALIDA = 'assets/img/notacion';
 const carpetaDe = (spec) => spec.carpeta || 'compases';   // assets/img/notacion/<carpeta>/<slug>.svg
 const aFilas = (s) => (s.filas ? s : { ...s, tipo: 'cifra', filas: [{ num: s.num, den: s.den, simbolo: s.corte ? 'cut' : null, compases: s.compases }] });
-const DATOS = [...require('./notacion/datos/compases-cifra.js'), ...require('./notacion/datos/compases-rotulados.js'), ...require('./notacion/datos/ritmo-figuras.js'), ...require('./notacion/datos/ritmo-grupos.js'), ...require('./notacion/datos/ritmo-signos.js'), ...require('./notacion/datos/ritmo-ornamentos.js')].map(aFilas);
+const DATOS = [...require('./notacion/datos/compases-cifra.js'), ...require('./notacion/datos/compases-rotulados.js'), ...require('./notacion/datos/ritmo-figuras.js'), ...require('./notacion/datos/ritmo-grupos.js'), ...require('./notacion/datos/ritmo-signos.js'), ...require('./notacion/datos/ritmo-ornamentos.js'), ...require('./notacion/datos/ritmo-repeticion.js')].map(aFilas);
 // todas las paginas del diccionario (el generador solo toca las que llevan imagenes suyas)
 const PAGINAS = (function buscar(dir) {
   const res = [];
@@ -115,6 +115,7 @@ function aMEI(fila) {
       const id = `n${k++}`;
       ids[`${i},${j}`] = id;
       if (x.orna) ornamentos.push({ en: i, txt: ornaMEI(x.orna).replace('@ID@', id) });
+      if (x.signo) ornamentos.push({ en: i, txt: `<repeatMark func="${x.signo}" startid="#${id}" place="above"/>` });
       const dur = `dur="${DUR_MEI[x.d]}"${x.puntillo ? ' dots="1"' : ''}${x.gracia ? ` grace="${x.gracia}"` : ''}`;
       if (x.silencio) return `<rest xml:id="${id}" ${dur}/>`;
       const p = parseKey(x.key), a = acc[i][j];
@@ -144,13 +145,19 @@ function aMEI(fila) {
     let texto = cuerpo.map((u) => u.txt).join('');
     if (!c.length) texto = '<space dur="1"/>';
     const ultimo = i === fila.compases.length - 1;
-    const der = ultimo ? (fila.sinBarraFinal ? ' right="invis"' : fila.barraFinal === 'end' ? ' right="end"' : '') : '';
+    const b = (fila.barras || [])[i] || {};
+    const izq = i === 0 && b.ini === 'rpt' ? ' left="rptstart"' : '';
+    const derB = b.fin === 'rpt' ? ' right="rptend"' : b.fin === 'end' ? ' right="end"' : ultimo ? (fila.sinBarraFinal ? ' right="invis"' : fila.barraFinal === 'end' ? ' right="end"' : '') : '';
+    const der = izq + derB;
     const incompleto = total && c.length && duracionBarra(fila, i) !== total ? ' metcon="false"' : '';
-    return { i, der, incompleto, texto };
+    return { i, der, incompleto, texto, casilla: b.casilla };
   });
   // ligaduras de expresion: eventos de control que apuntan a las notas
   const slurs = (fila.slurs || []).map((s) => ({ en: s.de[0], txt: `<slur startid="#${ids[s.de.join(',')]}" endid="#${ids[s.a.join(',')]}" curvedir="${s.curva || 'above'}"/>` }));
-  const medidas = ms.map((m) => `<measure n="${m.i + 1}"${m.der}${m.incompleto}><staff n="1"><layer n="1">${m.texto}</layer></staff>${slurs.filter((s) => s.en === m.i).map((s) => s.txt).join('')}${ornamentos.filter((o) => o.en === m.i).map((o) => o.txt).join('')}</measure>`).join('');
+  const medidas = ms.map((m) => {
+    const medida = `<measure n="${m.i + 1}"${m.der}${m.incompleto}><staff n="1"><layer n="1">${m.texto}</layer></staff>${slurs.filter((s) => s.en === m.i).map((s) => s.txt).join('')}${ornamentos.filter((o) => o.en === m.i).map((o) => o.txt).join('')}</measure>`;
+    return m.casilla ? `<ending xml:id="casilla${m.i}" n="${m.casilla.n}" label="${m.casilla.label}">${medida}</ending>` : medida;
+  }).join('');
   const metro = !fila.num ? '' : fila.simbolo ? ` meter.count="${fila.num}" meter.unit="${fila.den}" meter.sym="${fila.simbolo}"` : ` meter.count="${fila.num}" meter.unit="${fila.den}"`;
   return '<?xml version="1.0" encoding="UTF-8"?><mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="5.0"><meiHead><fileDesc><titleStmt><title/></titleStmt><pubStmt/></fileDesc></meiHead><music><body><mdiv><score><scoreDef><staffGrp>'
     + `<staffDef n="1" lines="5" clef.shape="G" clef.line="2"${metro}/></staffGrp></scoreDef><section>${medidas}</section></score></mdiv></body></music></mei>`;
@@ -190,7 +197,20 @@ function leerMEI(mei) {
       const ev = evs.find((e) => '#' + e.id === at('startid'));
       if (ev) ev.orna = ornaLeida(/^<(\w+)/.exec(c)[1], at('form'), at('glyph.name'));
     }
+    for (const c of m.match(/<repeatMark [^>]*\/>/g) || []) {
+      const at = (nom) => (new RegExp('\\b' + nom + '="([^"]*)"').exec(c) || [])[1];
+      const ev = evs.find((e) => '#' + e.id === at('startid'));
+      if (ev) ev.signo = at('func');
+    }
     compases.push(evs);
+  }
+  // barras de repeticion y casillas (<ending> que envuelve a un compas)
+  compases.barras = [];
+  let casilla = null;
+  for (const t of mei.match(/<ending [^>]*>|<\/ending>|<measure [^>]*>/g) || []) {
+    if (t.startsWith('<ending')) casilla = (/\bn="([^"]*)"/.exec(t) || [])[1] + '|' + (/label="([^"]*)"/.exec(t) || [])[1];
+    else if (t === '</ending>') casilla = null;
+    else compases.barras.push({ ini: /left="rptstart"/.test(t), fin: (/right="(\w+)"/.exec(t) || [])[1] || null, casilla });
   }
   compases.tuplas = tuplas;
   compases.slurs = [...mei.matchAll(/<slur [^>]*>/g)].map((s) => ({ de: (/startid="#([^"]+)"/.exec(s[0]) || [])[1], a: (/endid="#([^"]+)"/.exec(s[0]) || [])[1] }));
@@ -338,6 +358,44 @@ const REVISORES = {
     if (grupos !== f.textos.map((x) => x.texto).join('+')) err.push('los rotulos no son el reparto 3+3+2 del alt');
     // cada rotulo = numero de corcheas que dura su figura
     evs.forEach((e, i) => { if (durTotal(e) / 8 !== Number(f.textos[i].texto)) err.push(`el rotulo ${f.textos[i].texto} no es la duracion en corcheas de la figura ${i + 1}`); });
+    return err;
+  },
+  repeticion(spec, leido, alt) {
+    const err = [], f = spec.filas[0], l = leido[0], b = l.barras, evs = l.flat();
+    if (f.num !== 4 || f.den !== 4) err.push('los ejemplos de repeticion van en 4/4');
+    if (spec.slug === 'repeticion-barras') {
+      if (!/barra de repetici[oó]n de apertura y otra de cierre/.test(alt)) err.push('el alt ya no habla de una barra de apertura y otra de cierre');
+      const dos = /^Dos compases/.test(alt) ? 2 : 0;
+      if (l.length !== dos) err.push(`el alt dice ${dos} compases y hay ${l.length}`);
+      if (!b[0].ini || b[l.length - 1].fin !== 'rptend' || b.slice(0, -1).some((x) => x.fin === 'rptend')) err.push('deberia haber una barra de apertura al principio y una de cierre al final, y ninguna mas');
+    } else if (spec.slug === 'repeticion-casillas') {
+      if (!/Un compás común y dos casillas/.test(alt) || l.length !== 3) err.push('el alt habla de un compas comun y dos casillas (3 compases)');
+      if (b[0].casilla || b[0].fin) err.push('el primer compas es comun: sin casilla ni repeticion');
+      if (b[1].casilla !== '1|1.' || b[1].fin !== 'rptend' || !/la 1\.ª con barra de repetición/.test(alt)) err.push('la 1.ª casilla lleva la barra de repeticion');
+      if (b[2].casilla !== '2|2.' || b[2].fin !== 'end' || !/la 2\.ª como final/.test(alt)) err.push('la 2.ª casilla es la final');
+    } else if (spec.slug === 'repeticion-dc-fine') {
+      if (!/palabra Fine sobre un compás y D\.C\. al Fine al final/.test(alt)) err.push('el alt ya no habla de Fine sobre un compas y D.C. al Fine al final');
+      const [fine, dc] = f.textos;
+      if (fine.texto !== 'Fine' || dc.texto !== 'D.C. al Fine') err.push('los rotulos deberian ser «Fine» y «D.C. al Fine»');
+      if (fine.finDeCompas >= l.length - 1 || dc.finDeCompas !== l.length - 1) err.push('«Fine» va sobre un compas intermedio y «D.C. al Fine» al final de la partitura');
+      if (evs.some((e) => e.signo)) err.push('no lleva segno ni coda');
+    } else if (spec.slug === 'repeticion-segno-coda') {
+      if (!/signo \(segno\), la marca To Coda, D\.S\. al Coda y la sección Coda/.test(alt)) err.push('el alt ya no describe segno, To Coda, D.S. al Coda y la Coda');
+      // la partitura se lee de arriba abajo: todos los compases de todas las filas, en orden
+      const barrasTodas = leido.flatMap((x) => x.map((c) => c));
+      const posiciones = [];
+      barrasTodas.forEach((c, i) => c.forEach((e, j) => { if (e.signo) posiciones.push([i, j, e.signo]); }));
+      if (posiciones.map((x) => x[2]).join() !== 'segno,coda,coda,coda') err.push('deberia haber un segno y tres codas (To Coda, D.S. al Coda y la Coda)');
+      const textos = spec.filas.flatMap((x) => x.textos.map((t) => t.texto)).join('|');
+      if (textos !== 'To|D.S. al|Coda') err.push('los rotulos deberian ser To, D.S. al y Coda');
+      if (posiciones[0][0] !== 0 || posiciones[0][1] !== 0) err.push('el segno va al principio de la partitura');
+      if (posiciones[3][0] !== barrasTodas.length - 1 || posiciones[3][1] !== 0) err.push('la seccion Coda empieza en el ultimo compas');
+      if (!(posiciones[1][0] < posiciones[2][0] && posiciones[2][0] < posiciones[3][0])) err.push('el orden deberia ser: To Coda, luego D.S. al Coda y por ultimo la Coda');
+      // cada rotulo esta pegado al signo que le toca: To -> la 1.ª coda; D.S. al -> la 2.ª; Coda -> la 3.ª
+      const sigFila = leido.map((x) => x.flat().filter((e) => e.signo));
+      const t1 = spec.filas[0].textos[0], t2 = spec.filas[1].textos[0], t3 = spec.filas[1].textos[1];
+      if (!(sigFila[0][t1.antesDeSigno] && sigFila[0][t1.antesDeSigno].signo === 'coda' && sigFila[1][t2.antesDeSigno] && sigFila[1][t2.antesDeSigno].signo === 'coda' && sigFila[1][t3.despuesDeSigno] && sigFila[1][t3.despuesDeSigno].signo === 'coda' && t2.antesDeSigno === 0 && t3.despuesDeSigno === 1)) err.push('los rotulos To, D.S. al y Coda tienen que ir junto a su coda');
+    } else err.push('repeticion desconocida');
     return err;
   },
   ornamento(spec, leido, alt) {
@@ -522,7 +580,12 @@ function detalle(svg) {
     return d;
   });
 }
-const lineas = (svg) => [...new Set([...svg.matchAll(/<path d="M\d+ (\d+) L\d+ \1" stroke-width="13"/g)].map((m) => Number(m[1])))].sort((x, y) => x - y);
+const lineas = (svg) => {
+  // las 5 lineas del pentagrama: horizontales de trazo 13, a distancia ESPACIO una de otra (el corchete de una casilla tambien es horizontal y de trazo 13)
+  const ys = [...new Set([...svg.matchAll(/<path d="M\d+ (\d+) L\d+ \1" stroke-width="13"/g)].map((m) => Number(m[1])))].sort((x, y) => x - y);
+  const y0 = ys.find((y) => [1, 2, 3, 4].every((k) => ys.includes(y + k * ESPACIO)));
+  return y0 === undefined ? ys : [0, 1, 2, 3, 4].map((k) => y0 + k * ESPACIO);
+};
 
 function verificarDatos(fila) {
   const err = [];
@@ -613,16 +676,48 @@ function verificarSVG(svg, fila, leido) {
   // ligaduras
   if (cuenta(svg, /class="tie"/g) !== evs.filter((e) => e.union === 'i' || e.union === 'm').length) err.push('ligaduras de union dibujadas distintas de las previstas');
   if (cuenta(svg, /class="slur"/g) !== (fila.slurs || []).length) err.push('ligaduras de expresion dibujadas distintas de las previstas');
-  // barras de compas: las invisibles salen como <g class="barLine"/> vacio; la barra final «end» lleva dos trazos
-  const quiereBarras = fila.compases.length - (fila.sinBarraFinal ? 1 : 0);
-  const trazosBarra = (svg.match(/class="barLine">\s*(?:<path[^>]*\/>\s*)+/g) || []).map((g) => (g.match(/<path/g) || []).length);
-  const quiereTrazos = Array.from({ length: quiereBarras }, (_, i) => (fila.barraFinal === 'end' && i === fila.compases.length - 1 ? 2 : 1));
-  if (JSON.stringify(trazosBarra) !== JSON.stringify(quiereTrazos)) err.push(`barras de compas con trazos ${JSON.stringify(trazosBarra)}, previstas ${JSON.stringify(quiereTrazos)}`);
+  // barras de compas, de izquierda a derecha: {trazos, puntos}. Las invisibles salen como <g class="barLine"/> vacio;
+  // «final» lleva dos trazos y la de repeticion dos trazos y dos puntos.
+  const ultimo = fila.compases.length - 1;
+  const quiereBarras = [];
+  fila.compases.forEach((_, i) => {
+    const b = (fila.barras || [])[i] || {};
+    if (i === 0 && b.ini === 'rpt') quiereBarras.push({ trazos: 2, puntos: 2 });
+    if (i === ultimo && fila.sinBarraFinal && !b.fin) return;
+    quiereBarras.push(b.fin === 'rpt' ? { trazos: 2, puntos: 2 } : (b.fin === 'end' || (i === ultimo && fila.barraFinal === 'end')) ? { trazos: 2, puntos: 0 } : { trazos: 1, puntos: 0 });
+  });
+  const dibBarras = [...svg.matchAll(/class="barLine">\s*((?:<(?:path|use)[^>]*\/>\s*)+)/g)]
+    .map((m) => ({ x: Number((/M(\d+) /.exec(m[1]) || [])[1]), trazos: (m[1].match(/<path/g) || []).length, puntos: (m[1].match(/<use /g) || []).length }))
+    .sort((u, v) => u.x - v.x).map((m) => ({ trazos: m.trazos, puntos: m.puntos }));
+  if (JSON.stringify(dibBarras) !== JSON.stringify(quiereBarras)) err.push(`barras de compas ${JSON.stringify(dibBarras)}, previstas ${JSON.stringify(quiereBarras)}`);
+  // signos de repeticion (segno, coda): el glifo de cada uno, en orden, y por encima del pentagrama
+  const quiereSignos = evs.filter((e) => e.signo).map((e) => (e.signo === 'segno' ? 'E047' : 'E048'));
+  const dibSignos = signosDibujados(svg);
+  if (JSON.stringify(dibSignos.map((x) => x.glifo)) !== JSON.stringify(quiereSignos)) err.push(`signos de repeticion dibujados ${JSON.stringify(dibSignos.map((x) => x.glifo))}, previstos ${JSON.stringify(quiereSignos)}`);
+  else if (ls.length === 5 && dibSignos.some((x) => x.y >= ls[0])) err.push('un signo de repeticion no esta encima del pentagrama');
+  // casillas (voltas): una por compas con casilla, con su corchete
+  const casillas = (fila.barras || []).filter((b) => b.casilla);
+  if (cuenta(svg, /class="ending /g) !== casillas.length || cuenta(svg, /class="voltaBracket"/g) !== casillas.length) err.push(`casillas dibujadas ${cuenta(svg, /class="ending /g)}, previstas ${casillas.length}`);
+  const etiquetas = [...svg.matchAll(/class="labelAttr">([^<]*)</g)].map((m) => m[1]);
+  if (JSON.stringify(etiquetas) !== JSON.stringify(casillas.map((b) => b.casilla.label))) err.push(`numeros de casilla ${JSON.stringify(etiquetas)}, previstos ${JSON.stringify(casillas.map((b) => b.casilla.label))}`);
   return err;
 }
 
 /* ---------- rotulos encima del dibujo ---------- */
 function textosDeFila(fila) { return (fila.rotulo ? [{ texto: fila.rotulo, ref: 'arriba', izq: true }] : []).concat(fila.textos || []); }
+
+/** Signos de repeticion dibujados por Verovio (segno/coda), de izquierda a derecha: [{glifo, x, y}]. */
+function signosDibujados(svg) {
+  return [...svg.matchAll(/class="repeatMark">\s*<use [^>]*href="#(E04[78])[^>]*transform="translate\(([\d.]+), ([\d.]+)\)/g)].map((m) => ({ glifo: m[1], x: Number(m[2]), y: Number(m[3]) })).sort((u, v) => u.x - v.x);
+}
+/** El signo n-esimo (por orden de aparicion en los eventos) de la fila. */
+const signoDe = (svg, fila, n) => signosDibujados(svg)[n];
+/** x de las barras de compas visibles (la mas a la derecha de cada una), de izquierda a derecha. */
+function barrasX(svg) {
+  return [...svg.matchAll(/class="barLine">\s*((?:<path[^>]*\/>\s*)+)/g)].map((m) => Math.max(...[...m[1].matchAll(/M(\d+) /g)].map((x) => Number(x[1])))).sort((u, v) => u - v);
+}
+/** x de la barra que cierra el compas n (se salta la barra de repeticion inicial si la hay). */
+const barraDe = (svg, fila, n) => barrasX(svg)[n + (((fila.barras || [])[0] || {}).ini === 'rpt' ? 1 : 0)];
 
 /** Los rotulos van dentro del grupo que lleva el margen de pagina, y se alarga el lienzo para que quepan. */
 function conRotulos(svg, fila, cabs) {
@@ -634,11 +729,14 @@ function conRotulos(svg, fila, cabs) {
     const ancho = (c) => anchoCab(c.g) / 2;
     let x;
     if (t.izq) x = 60;
+    else if (t.antesDeSigno !== undefined) x = signoDe(svg, fila, t.antesDeSigno).x - (t.hueco || 70);
+    else if (t.despuesDeSigno !== undefined) x = signoDe(svg, fila, t.despuesDeSigno).x + ANCHO_SIGNO + (t.hueco || 60);
+    else if (t.finDeCompas !== undefined) x = barraDe(svg, fila, t.finDeCompas) - (t.hueco || 100);
     else if (t.grupo) { const xs = t.grupo.map((i) => cabs[i].x + ancho(cabs[i])); x = Math.round(xs.reduce((a, b) => a + b, 0) / xs.length); }
     else x = Math.round(cabs[t.nota].x + ancho(cabs[t.nota]));
-    const y = t.ref === 'arriba' ? yTop - (t.dy || 640) : yBot + (t.dy || 850);
+    const y = t.antesDeSigno !== undefined ? signoDe(svg, fila, t.antesDeSigno).y + (t.dy || 0) : t.despuesDeSigno !== undefined ? signoDe(svg, fila, t.despuesDeSigno).y + (t.dy || 0) : t.ref === 'arriba' ? yTop - (t.dy || 640) : yBot + (t.dy || 850);
     if (t.ref === 'arriba') arriba = Math.min(arriba, y - 300); else abajo = Math.max(abajo, y);
-    return `<text x="${x}" y="${y}" text-anchor="${t.izq ? 'start' : 'middle'}"${t.size ? ` font-size="${t.size}"` : ''}>${escAttr(t.texto)}</text>`;
+    return `<text x="${x}" y="${y}" text-anchor="${(t.izq || t.despuesDeSigno !== undefined) ? 'start' : (t.antesDeSigno !== undefined || t.finDeCompas !== undefined) ? 'end' : 'middle'}"${t.size ? ` font-size="${t.size}"` : ''}>${escAttr(t.texto)}</text>`;
   }).join('');
   const grupo = `<g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a">${trozos}</g>`;
   let s = svg;
@@ -660,25 +758,42 @@ function conRotulos(svg, fila, cabs) {
 const anchoTexto = (t) => Math.round(t.texto.length * 0.52 * (t.size || 300));
 const centroDe = (t, cabs) => {
   if (t.izq) return 60;
+  if (t.antesDeSigno !== undefined || t.despuesDeSigno !== undefined || t.finDeCompas !== undefined) return null;   // van pegados a un signo o a una barra: no compiten con las notas
   const c = (k) => cabs[k].x + anchoCab(cabs[k].g) / 2;
   return t.grupo ? t.grupo.map(c).reduce((a, b) => a + b, 0) / t.grupo.length : c(t.nota);
 };
 /** Que los rotulos no se pisen entre si ni se salgan del dibujo. Devuelve el motivo, o '' si caben. */
-function rotulosCaben(fila, cabs, W) {
-  const ts = textosDeFila(fila).map((t) => { const c = centroDe(t, cabs), w = anchoTexto(t); return { t, ini: t.izq ? c : c - w / 2, fin: t.izq ? c + w : c + w / 2 }; });
+function rotulosCaben(fila, cabs, W, svg) {
+  const ts = textosDeFila(fila).filter((t) => centroDe(t, cabs) !== null).map((t) => { const c = centroDe(t, cabs), w = anchoTexto(t); return { t, ini: t.izq ? c : c - w / 2, fin: t.izq ? c + w : c + w / 2 }; });
   for (const a of ts) if (a.ini < 0 || a.fin + 200 > W) return `el rotulo «${a.t.texto}» no cabe en el ancho del dibujo`;
   for (let i = 0; i < ts.length; i++) for (let j = i + 1; j < ts.length; j++) {
     if (ts[i].t.ref !== ts[j].t.ref) continue;
     if (ts[i].fin + (fila.holgura || 80) > ts[j].ini && ts[j].fin + (fila.holgura || 80) > ts[i].ini) return `los rotulos «${ts[i].t.texto}» y «${ts[j].t.texto}» se pisan`;
   }
+  // rotulos pegados a un signo (To, D.S. al, Coda) o a una barra (Fine, D.C.): ni se pisan entre si ni tapan otro signo
+  if (svg && textosDeFila(fila).some((t) => t.antesDeSigno !== undefined || t.despuesDeSigno !== undefined || t.finDeCompas !== undefined)) {
+    const signos = signosDibujados(svg);
+    const cajas = textosDeFila(fila).filter((t) => t.antesDeSigno !== undefined || t.despuesDeSigno !== undefined || t.finDeCompas !== undefined).map((t) => {
+      if (t.despuesDeSigno !== undefined) { const ini = signos[t.despuesDeSigno].x + ANCHO_SIGNO + (t.hueco || 60); return { t, ini, fin: ini + anchoTexto(t) }; }
+      const fin = t.antesDeSigno !== undefined ? signos[t.antesDeSigno].x - (t.hueco || 70) : barraDe(svg, fila, t.finDeCompas) - (t.hueco || 100);
+      return { t, ini: fin - anchoTexto(t), fin };
+    });
+    for (const c of cajas) {
+      if (c.ini < 0) return `el rotulo «${c.t.texto}» se sale por la izquierda`;
+      if (c.fin + 200 > W) return `el rotulo «${c.t.texto}» no cabe en el ancho del dibujo`;
+      for (const sg of signos) if (c.t.despuesDeSigno === undefined || sg !== signos[c.t.despuesDeSigno]) if (c.fin > sg.x - 30 && c.ini < sg.x + ANCHO_SIGNO) return `el rotulo «${c.t.texto}» tapa un signo de repeticion`;
+    }
+    for (let i = 0; i < cajas.length; i++) for (let j = i + 1; j < cajas.length; j++) if (cajas[i].fin + 60 > cajas[j].ini && cajas[j].fin + 60 > cajas[i].ini) return `los rotulos «${cajas[i].t.texto}» y «${cajas[j].t.texto}» se pisan`;
+  }
   return '';
 }
+const ANCHO_SIGNO = 480;   // segno y coda miden unas 480 unidades de ancho
 const anchoInterior = (svg) => Number(/class="definition-scale"[^>]*viewBox="0 -?\d+ (\d+) /.exec(svg)[1]);
 
 function verificarRotulos(svg, fila, cabs) {
   const err = [];
   const textos = textosDeFila(fila);
-  const motivo = textos.length ? rotulosCaben(fila, cabs, anchoInterior(svg)) : '';
+  const motivo = textos.length ? rotulosCaben(fila, cabs, anchoInterior(svg), svg) : '';
   if (motivo) err.push(motivo);
   const dibujados = (svg.match(/<text[^>]*>[^<]*<\/text>/g) || []).map((t) => t.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&quot;/g, '"'));
   const previstos = textos.map((t) => t.texto);
@@ -726,15 +841,20 @@ function construirFila(tk, fila, semilla, tocar, soloDibujo, separacion) {
   const slurQuiere = JSON.stringify((fila.slurs || []).map((x) => [x.de.join(','), x.a.join(',')]));
   const slurTiene = JSON.stringify(leido.slurs.map((x) => [ids[x.de], ids[x.a]]));
   if (slurQuiere !== slurTiene) e.push('el MEI escribe mal las ligaduras de expresion');
-  const right = (/<measure n="\d+"([^>]*)>(?![\s\S]*<measure )/.exec(mei) || [])[1] || '';
-  if ((/right="invis"/.test(right)) !== !!fila.sinBarraFinal || (/right="end"/.test(right)) !== (fila.barraFinal === 'end')) e.push('el MEI escribe otra barra final');
+  const quiereB = fila.compases.map((_, i) => {
+    const b = (fila.barras || [])[i] || {};
+    const ultimo = i === fila.compases.length - 1;
+    const fin = b.fin === 'rpt' ? 'rptend' : b.fin === 'end' ? 'end' : ultimo ? (fila.sinBarraFinal ? 'invis' : fila.barraFinal === 'end' ? 'end' : null) : null;
+    return [i === 0 && b.ini === 'rpt', fin, b.casilla ? b.casilla.n + '|' + b.casilla.label : null];
+  });
+  if (JSON.stringify(quiereB) !== JSON.stringify(leido.barras.map((x) => [x.ini, x.fin, x.casilla]))) e.push('el MEI escribe otra barra final, otras barras de repeticion u otras casillas');
   tk.setOptions(Object.assign({}, OPCIONES, { xmlIdSeed: semilla, spacingLinear: separacion || 0.25, spacingNonLinear: 0.6 }));
   if (!tk.loadData(meiDibujo)) throw new Error('Verovio no lee el MEI');
   if (tk.getPageCount() !== 1) e.push('sale en mas de una pagina');
   let svg = tk.renderToSVG(1);
   e.push(...verificarSVG(svg, fila, leido));
   const cabs = cabezas(svg);
-  const motivoAncho = textosDeFila(fila).length ? rotulosCaben(fila, cabs, anchoInterior(svg)) : '';
+  const motivoAncho = textosDeFila(fila).length ? rotulosCaben(fila, cabs, anchoInterior(svg), svg) : '';
   svg = conRotulos(svg, fila, cabs);
   e.push(...verificarRotulos(svg, fila, cabs));
   return { svg, errores: e, leido, motivoAncho };
@@ -811,6 +931,9 @@ const SABOTAJES = [
   ['otra articulacion', (mei) => mei.replace('artic="ten"', 'artic="stacc"'), /MEI escribe mal/i, 'tenuto'],
   ['acciaccatura sin rayita', (mei) => mei.replace('grace="unacc"', 'grace="acc"'), /MEI escribe mal/i, 'acciaccatura'],
   ['otro mordente', (mei) => mei.replace('form="upper"', 'form="lower"'), /MEI escribe mal/i, 'mordente'],
+  ['barra de apertura perdida', (mei) => mei.replace(' left="rptstart"', ''), /MEI escribe otra barra/i, 'repeticion-barras'],
+  ['casilla con otro numero', (mei) => mei.replace('label="2."', 'label="3."'), /MEI escribe otra barra/i, 'repeticion-casillas'],
+  ['segno cambiado por coda', (mei) => mei.replace('func="segno"', 'func="coda"'), /MEI escribe mal|un segno y tres codas/i, 'repeticion-segno-coda'],
 ];
 const SABOTAJES_DIBUJO = [
   ['nota movida', (mei) => mei.replace('pname="g"', 'pname="a"'), /esta a y/, 'compas-4-4-pulso'],
@@ -836,6 +959,11 @@ const SABOTAJES_DIBUJO = [
   ['apoyatura con rayita', (mei) => mei.replace('grace="acc"', 'grace="unacc"'), /rayita de las notas de adorno/, 'apoyatura'],
   ['otro grupeto', (mei) => mei.replace('form="upper"', 'form="lower"'), /ornamentos dibujados/, 'grupeto'],
   ['trino perdido', (mei) => mei.replace(new RegExp('<trill [^>]*/>'), ''), /ornamentos dibujados/, 'trino'],
+  ['sin barra de cierre de repeticion', (mei) => mei.replace(' right="rptend"', ''), /barras de compas/, 'repeticion-barras'],
+  ['sin barra de apertura', (mei) => mei.replace(' left="rptstart"', ''), /barras de compas/, 'repeticion-barras'],
+  ['casilla con otro numero', (mei) => mei.replace('label="1."', 'label="9."'), /numeros de casilla/, 'repeticion-casillas'],
+  ['sin casillas', (mei) => mei.split('<ending ').join('<sinending ').split('</ending>').join('</sinending>'), /casillas dibujadas|Verovio/, 'repeticion-casillas'],
+  ['segno donde iba una coda', (mei) => mei.replace('func="coda"', 'func="segno"'), /signos de repeticion dibujados/, 'repeticion-segno-coda'],
 ];
 // sabotajes de los DATOS: la pagina dice una cosa y el dato otra; los revisores del alt tienen que saltar
 const SABOTAJES_DATOS = [
@@ -853,6 +981,10 @@ const SABOTAJES_DATOS = [
   ['ligadura de union entre notas distintas', (s) => { s.filas[0].compases[0][1].key = 'a/4'; }, /MISMA altura|misma nota/, 'ligadura-union'],
   ['tipo de tresillo mal rotulado', (s) => { s.filas[1].rotulo = 'de negra'; }, /el rotulo del grupo 2/, 'tipos-de-tresillo'],
   ['dosillo de cuatro figuras', (s) => { const f = s.filas[2]; f.compases[0].push({ ...f.compases[0][0] }); f.tuplets[0].fin = 2; f.tuplets[0].num = 3; }, /deberia ser de 2|dosillo/, 'tipos-de-dosillo'],
+  ['Fine en el ultimo compas', (s) => { s.filas[0].textos[0].finDeCompas = 2; }, /«Fine» va sobre un compas intermedio/, 'repeticion-dc-fine'],
+  ['D.C. al Fine en otro sitio', (s) => { s.filas[0].textos[1].finDeCompas = 0; }, /«D\.C\. al Fine» al final/, 'repeticion-dc-fine'],
+  ['la 1.ª casilla sin repeticion', (s) => { delete s.filas[0].barras[1].fin; }, /1\.ª casilla lleva la barra/, 'repeticion-casillas'],
+  ['To Coda junto al segno', (s) => { s.filas[0].textos[0].antesDeSigno = 0; }, /tienen que ir junto a su coda/, 'repeticion-segno-coda'],
   ['alt dice becuadro', (s) => { s.filas[0].compases[0][0].key = 'g#/4'; s.filas[0].compases[0][0].becuadro = false; }, /el alt dice «becuadro»/i, 'alteracion-becuadro'],
   ['marcato como tenuto', (s) => { s.filas[0].compases[0].forEach((e) => { e.artic.tipo = 'ten'; }); }, /el alt dice «marcato»/, 'marcato'],
   ['trino sobre negra', (s) => { s.filas[0].compases[0][0].d = 'q'; }, /el trino va sobre una blanca/, 'trino'],

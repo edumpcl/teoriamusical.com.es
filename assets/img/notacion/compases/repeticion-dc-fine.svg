@@ -1,0 +1,179 @@
+<svg id="aim9j3k" viewBox="0 0 414 104" width="633" height="159" role="img" xmlns="http://www.w3.org/2000/svg"><title>Partitura con la palabra Fine sobre un compás y D.C. al Fine al final</title>
+   <defs>
+      <g id="E050-aim9j3k">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E084-aim9j3k">
+         <path transform="scale(1,-1)" d="M208 -127h-172c-9 0 -11 6 -11 6s-7 11 -10 18c-1 2 -1 4 -1 6c0 6 3 11 3 11c26 37 56 87 82 168s31 155 31 155c1 6 6 12 13 12h149c4 0 7 -2 10 -4l22 -22c1 -1 3 -5 3 -10c0 -4 -1 -9 -5 -14c-118 -158 -230 -278 -230 -278h116v82c0 4 1 8 4 11l91 83c3 3 7 3 11 3 c2 0 3 0 5 -1l12 -6c4 -2 7 -7 7 -13v-159h90c8 0 14 -7 14 -14v-19c0 -8 -6 -15 -14 -15h-90v-74h90c8 0 14 -6 14 -14v-19c0 -8 -6 -14 -14 -14h-303c-7 0 -14 6 -14 14v19c0 8 7 14 14 14h83v74z" />
+      </g>
+      <g id="E0A4-aim9j3k">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+   </defs>
+   <style type="text/css">#aim9j3k g.ending, #aim9j3k g.fing, #aim9j3k g.reh, #aim9j3k g.tempo {font-weight:bold;}#aim9j3k g.dir, #aim9j3k g.dynam, #aim9j3k g.mNum {font-style:italic;}#aim9j3k g.label {font-weight:normal;}#aim9j3k ellipse, #aim9j3k path, #aim9j3k polygon, #aim9j3k polyline, #aim9j3k rect {stroke:currentColor}#aim9j3k g.cursor {fill:dodgerblue; color:dodgerblue;}#aim9j3k g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 -600 10340 2600">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="b1g8sjoo" class="mdiv pageMilestone" />
+         <g id="c1i1gp75" class="score pageMilestone" />
+         <g id="o102exv2" class="system">
+            <g id="q1k9ssay" class="section systemMilestone" />
+            <g id="rfroynr" class="measure">
+               <g id="a1u6605n" class="staff">
+                  <path d="M0 540 L4081 540" stroke-width="13" />
+                  <path d="M0 720 L4081 720" stroke-width="13" />
+                  <path d="M0 900 L4081 900" stroke-width="13" />
+                  <path d="M0 1080 L4081 1080" stroke-width="13" />
+                  <path d="M0 1260 L4081 1260" stroke-width="13" />
+                  <g id="y1kuz0h6" class="clef">
+                     <use href="#E050-aim9j3k" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="z7nu7c8" class="keySig" />
+                  <g id="aaxtc1r" class="meterSig">
+                     <use href="#E084-aim9j3k" transform="translate(720, 720) scale(0.72, 0.72)" />
+                     <use href="#E084-aim9j3k" transform="translate(720, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g class="ledgerLines below">
+                     <path d="M1260 1440 L1590 1440" stroke-width="22" />
+                  </g>
+                  <g id="btcrtam" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-aim9j3k" transform="translate(1308, 1440) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="a16v2xt8" class="stem">
+                           <path d="M1532 1412 L1532 810" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-aim9j3k" transform="translate(1998, 1260) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="b1jgtx31" class="stem">
+                           <path d="M2222 1232 L2222 630" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-aim9j3k" transform="translate(2688, 1080) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="cep6d13" class="stem">
+                           <path d="M2912 1052 L2912 450" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-aim9j3k" transform="translate(3378, 1260) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="d1udvsz1" class="stem">
+                           <path d="M3602 1232 L3602 630" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="zzn0pdt" class="barLine">
+                  <path d="M4068 540 L4068 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="g18fevar" class="measure">
+               <g id="p1vqyto6" class="staff">
+                  <path d="M4081 540 L7034 540" stroke-width="13" />
+                  <path d="M4081 720 L7034 720" stroke-width="13" />
+                  <path d="M4081 900 L7034 900" stroke-width="13" />
+                  <path d="M4081 1080 L7034 1080" stroke-width="13" />
+                  <path d="M4081 1260 L7034 1260" stroke-width="13" />
+                  <g class="ledgerLines below">
+                     <path d="M6283 1440 L6613 1440" stroke-width="22" />
+                  </g>
+                  <g id="q10apasc" class="layer">
+                     <g id="n4" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-aim9j3k" transform="translate(4261, 1170) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="es1bhoz" class="stem">
+                           <path d="M4485 1142 L4485 540" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n5" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-aim9j3k" transform="translate(4951, 1260) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="f7d8ab1" class="stem">
+                           <path d="M5175 1232 L5175 630" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n6" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-aim9j3k" transform="translate(5641, 1350) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="gjsj4xe" class="stem">
+                           <path d="M5865 1322 L5865 720" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n7" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-aim9j3k" transform="translate(6331, 1440) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="h1f9ytlj" class="stem">
+                           <path d="M6555 1412 L6555 810" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="o8uveym" class="barLine">
+                  <path d="M7021 540 L7021 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="vf6pkf6" class="measure">
+               <g id="e4nqa3y" class="staff">
+                  <path d="M7034 540 L10149 540" stroke-width="13" />
+                  <path d="M7034 720 L10149 720" stroke-width="13" />
+                  <path d="M7034 900 L10149 900" stroke-width="13" />
+                  <path d="M7034 1080 L10149 1080" stroke-width="13" />
+                  <path d="M7034 1260 L10149 1260" stroke-width="13" />
+                  <g id="fu7aigt" class="layer">
+                     <g id="n8" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-aim9j3k" transform="translate(7214, 1080) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="igesbwz" class="stem">
+                           <path d="M7438 1052 L7438 450" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n9" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-aim9j3k" transform="translate(7904, 990) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="j1o4to7o" class="stem">
+                           <path d="M8128 962 L8128 360" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n10" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-aim9j3k" transform="translate(8594, 1080) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="kv6c13o" class="stem">
+                           <path d="M8818 1052 L8818 450" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n11" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-aim9j3k" transform="translate(9284, 1260) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="l1m7dy9i" class="stem">
+                           <path d="M9508 1232 L9508 630" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="dbpl1jq" class="barLine">
+                  <path d="M9974 540 L9974 1260" stroke-width="27" />
+                  <path d="M10104 540 L10104 1260" stroke-width="90" />
+               </g>
+            </g>
+            <g id="r1y5e8u4" class="systemMilestoneEnd q1k9ssay" />
+         </g>
+         <g id="s1dbmgxv" class="pageMilestoneEnd c1i1gp75" />
+         <g id="tcjfz3m" class="pageMilestoneEnd b1g8sjoo" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="6921" y="-100" text-anchor="end">Fine</text><text x="10004" y="-100" text-anchor="end">D.C. al Fine</text></g></g></svg>
+</svg>
