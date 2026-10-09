@@ -1,0 +1,200 @@
+<svg id="j101dtja" viewBox="0 0 234 80" width="394" height="134" role="img" xmlns="http://www.w3.org/2000/svg"><title>Ejercicio de metrónomo: tresillos repitiendo cada nota, tres notas por pulso, en compás de 4/4</title>
+   <defs>
+      <g id="E050-j101dtja">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E084-j101dtja">
+         <path transform="scale(1,-1)" d="M208 -127h-172c-9 0 -11 6 -11 6s-7 11 -10 18c-1 2 -1 4 -1 6c0 6 3 11 3 11c26 37 56 87 82 168s31 155 31 155c1 6 6 12 13 12h149c4 0 7 -2 10 -4l22 -22c1 -1 3 -5 3 -10c0 -4 -1 -9 -5 -14c-118 -158 -230 -278 -230 -278h116v82c0 4 1 8 4 11l91 83c3 3 7 3 11 3 c2 0 3 0 5 -1l12 -6c4 -2 7 -7 7 -13v-159h90c8 0 14 -7 14 -14v-19c0 -8 -6 -15 -14 -15h-90v-74h90c8 0 14 -6 14 -14v-19c0 -8 -6 -14 -14 -14h-303c-7 0 -14 6 -14 14v19c0 8 7 14 14 14h83v74z" />
+      </g>
+      <g id="E0A4-j101dtja">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+      <g id="E883-j101dtja">
+         <path transform="scale(1,-1)" d="M179 185c42 -10 74 -27 74 -77c0 -66 -60 -116 -142 -116c-68 0 -111 32 -111 83c0 31 19 52 47 52c25 0 41 -16 41 -39c0 -18 -9 -30 -26 -36c-9 -3 -11 -4 -11 -10c0 -12 22 -24 44 -24c56 0 74 62 74 108c0 31 -11 48 -34 48c-5 0 -5 0 -16 -3c-3 -1 -9 -2 -12 -2 c-11 0 -18 6 -18 17s7 18 17 18c4 0 7 -1 13 -3c7 -3 11 -3 17 -3c40 0 63 53 63 87c0 31 -17 50 -45 50c-21 0 -42 -10 -42 -21c0 -3 0 -3 9 -10c11 -9 16 -19 16 -31c0 -21 -17 -37 -39 -37c-25 0 -42 18 -42 45c0 46 50 81 114 81c65 0 109 -34 109 -83 c0 -60 -50 -83 -100 -94z" />
+      </g>
+   </defs>
+   <style type="text/css">#j101dtja g.ending, #j101dtja g.fing, #j101dtja g.reh, #j101dtja g.tempo {font-weight:bold;}#j101dtja g.dir, #j101dtja g.dynam, #j101dtja g.mNum {font-style:italic;}#j101dtja g.label {font-weight:normal;}#j101dtja ellipse, #j101dtja path, #j101dtja polygon, #j101dtja polyline, #j101dtja rect {stroke:currentColor}#j101dtja g.cursor {fill:dodgerblue; color:dodgerblue;}#j101dtja g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 5840 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="k18awvi0" class="mdiv pageMilestone" />
+         <g id="l1m079yo" class="score pageMilestone" />
+         <g id="j3q3bcy" class="system">
+            <g id="z93q019" class="section systemMilestone" />
+            <g id="a1sum8ws" class="measure">
+               <g id="j1fm7l52" class="staff">
+                  <path d="M0 540 L5641 540" stroke-width="13" />
+                  <path d="M0 720 L5641 720" stroke-width="13" />
+                  <path d="M0 900 L5641 900" stroke-width="13" />
+                  <path d="M0 1080 L5641 1080" stroke-width="13" />
+                  <path d="M0 1260 L5641 1260" stroke-width="13" />
+                  <g id="xgc3z1u" class="clef">
+                     <use href="#E050-j101dtja" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="yevv01t" class="keySig" />
+                  <g id="z8r9c4i" class="meterSig">
+                     <use href="#E084-j101dtja" transform="translate(720, 720) scale(0.72, 0.72)" />
+                     <use href="#E084-j101dtja" transform="translate(720, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g class="ledgerLines below">
+                     <path d="M1266 1440 L1584 1440" stroke-width="22" />
+                     <path d="M1626 1440 L1944 1440" stroke-width="22" />
+                     <path d="M1986 1440 L2304 1440" stroke-width="22" />
+                  </g>
+                  <g id="k1tbxg64" class="layer">
+                     <g id="lbzxcaj" class="tuplet">
+                        <g id="smvhuxx" class="tupletNum">
+                           <use href="#E883-j101dtja" transform="translate(1685, 493) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="r1l9flsb" class="tupletBracket">
+                           <polyline stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter" fill="none" points="1317,493 1317,360 1640,360 " />
+                           <polyline stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter" fill="none" points="2253,493 2253,360 1930,360 " />
+                        </g>
+                        <g id="m1bdzjwa" class="beam">
+                           <polygon points="1523,855 2261,855 2261,945 1523,945" />
+                           <g id="n0" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-j101dtja" transform="translate(1308, 1440) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="t1hhak84" class="stem">
+                                 <path d="M1532 1412 L1532 873" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n1" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-j101dtja" transform="translate(1668, 1440) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="udagae1" class="stem">
+                                 <path d="M1892 1412 L1892 873" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n2" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-j101dtja" transform="translate(2028, 1440) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="vtp9u0w" class="stem">
+                                 <path d="M2252 1412 L2252 873" stroke-width="18" />
+                              </g>
+                           </g>
+                        </g>
+                     </g>
+                     <g id="q177fv5j" class="tuplet">
+                        <g id="xerh972" class="tupletNum">
+                           <use href="#E883-j101dtja" transform="translate(2765, 493) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="w17eb70i" class="tupletBracket">
+                           <polyline stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter" fill="none" points="2397,493 2397,360 2720,360 " />
+                           <polyline stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter" fill="none" points="3333,493 3333,360 3010,360 " />
+                        </g>
+                        <g id="r1yxl5rz" class="beam">
+                           <polygon points="2603,720 3341,720 3341,810 2603,810" />
+                           <g id="n3" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-j101dtja" transform="translate(2388, 1350) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="y1vokrxe" class="stem">
+                                 <path d="M2612 1322 L2612 738" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n4" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-j101dtja" transform="translate(2748, 1350) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="zhmh01c" class="stem">
+                                 <path d="M2972 1322 L2972 738" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n5" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-j101dtja" transform="translate(3108, 1350) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="a1jo488o" class="stem">
+                                 <path d="M3332 1322 L3332 738" stroke-width="18" />
+                              </g>
+                           </g>
+                        </g>
+                     </g>
+                     <g id="vg7rcg9" class="tuplet">
+                        <g id="cne5ah5" class="tupletNum">
+                           <use href="#E883-j101dtja" transform="translate(3845, 493) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="b1eq5yge" class="tupletBracket">
+                           <polyline stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter" fill="none" points="3477,493 3477,360 3800,360 " />
+                           <polyline stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter" fill="none" points="4413,493 4413,360 4090,360 " />
+                        </g>
+                        <g id="w1w9b21h" class="beam">
+                           <polygon points="3683,675 4421,675 4421,765 3683,765" />
+                           <g id="n6" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-j101dtja" transform="translate(3468, 1260) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="d9227zx" class="stem">
+                                 <path d="M3692 1232 L3692 693" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n7" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-j101dtja" transform="translate(3828, 1260) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="e177ar4d" class="stem">
+                                 <path d="M4052 1232 L4052 693" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n8" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-j101dtja" transform="translate(4188, 1260) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="ffjtptb" class="stem">
+                                 <path d="M4412 1232 L4412 693" stroke-width="18" />
+                              </g>
+                           </g>
+                        </g>
+                     </g>
+                     <g id="a1rkex3q" class="tuplet">
+                        <g id="h1q2tw5h" class="tupletNum">
+                           <use href="#E883-j101dtja" transform="translate(4925, 493) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="g1c3scc4" class="tupletBracket">
+                           <polyline stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter" fill="none" points="4557,493 4557,360 4880,360 " />
+                           <polyline stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter" fill="none" points="5493,493 5493,360 5170,360 " />
+                        </g>
+                        <g id="baohl5e" class="beam">
+                           <polygon points="4763,540 5501,540 5501,630 4763,630" />
+                           <g id="n9" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-j101dtja" transform="translate(4548, 1170) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="imq71uv" class="stem">
+                                 <path d="M4772 1142 L4772 558" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n10" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-j101dtja" transform="translate(4908, 1170) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="j8ivgul" class="stem">
+                                 <path d="M5132 1142 L5132 558" stroke-width="18" />
+                              </g>
+                           </g>
+                           <g id="n11" class="note">
+                              <g class="notehead">
+                                 <use href="#E0A4-j101dtja" transform="translate(5268, 1170) scale(0.72, 0.72)" />
+                              </g>
+                              <g id="k16sr43m" class="stem">
+                                 <path d="M5492 1142 L5492 558" stroke-width="18" />
+                              </g>
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="ihi8oso" class="barLine">
+                  <path d="M5628 540 L5628 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="mw020vh" class="systemMilestoneEnd z93q019" />
+         </g>
+         <g id="nyooeix" class="pageMilestoneEnd l1m079yo" />
+         <g id="o7x8d95" class="pageMilestoneEnd k18awvi0" />
+      </g>
+   </svg>
+</svg>

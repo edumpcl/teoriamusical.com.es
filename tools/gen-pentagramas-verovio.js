@@ -518,6 +518,7 @@ const CONJUNTOS = {
   'inversion':                { pagina: 'diccionario-musical/intervalos/inversion', datos: 'intervalos' },
   'unisono-enarmonicas':      { pagina: 'diccionario-musical/intervalos/unisono-y-notas-enarmonicas', datos: 'intervalos' },
   'acorde-mayor':             { pagina: 'diccionario-musical/acordes/acorde-perfecto-mayor', datos: 'acordes' },
+  'blog-acordes':             { pagina: 'blog/como-leer-cifrado-de-acordes', datos: 'acordes' },
   'acorde-menor':             { pagina: 'diccionario-musical/acordes/acorde-perfecto-menor', datos: 'acordes' },
   'acorde-aumentado':         { pagina: 'diccionario-musical/acordes/acorde-aumentado', datos: 'acordes' },
   'acorde-disminuido':        { pagina: 'diccionario-musical/acordes/acorde-disminuido', datos: 'acordes' },

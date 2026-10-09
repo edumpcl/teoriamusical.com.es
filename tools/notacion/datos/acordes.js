@@ -31,6 +31,11 @@ for (const c of leerScript('generate-triadas-notacion.js', 'const ITEMS', 'const
   datos.push({ slug: c.file, archivos: [c.file + '.png'], clave: 'sol', ancho: 220, compases: [[{ n: c.keys.map(clave), d: 'w' }]] });
 }
 
+/* power chord de la entrada del blog «como leer cifrado de acordes»: Do y Sol, sin tercera (generate-blog-notacion.js) */
+// las triadas Do y Do menor del blog son las mismas notas que las del diccionario, pero con SU alt (el <title> del SVG es el alt): fichero propio
+for (const [slug, keys] of [['blog-triada-mayor', ['c4', 'e4', 'g4']], ['blog-triada-menor', ['c4', 'eb4', 'g4']]]) datos.push({ slug, archivos: [slug.replace('blog-', '') + '.png'], clave: 'sol', ancho: 220, compases: [[{ n: keys, d: 'w' }]] });
+datos.push({ slug: 'acorde-c5', archivos: ['acorde-c5.png'], clave: 'sol', ancho: 200, compases: [[{ n: ['c4', 'g4'], d: 'w' }]] });
+
 /* generate-cifrado.js: acorde + cifra (numeros) debajo; accs = signo que se escribe en cada nota */
 const { ITEMS: CIFRADOS } = leerScript('generate-cifrado.js', "const S = '", 'const RENDER_FN', ['ITEMS']);
 for (const c of CIFRADOS) {

@@ -1,0 +1,127 @@
+<svg id="z10ebsn" viewBox="0 0 205 80" width="344" height="134" role="img" xmlns="http://www.w3.org/2000/svg"><title>Ejercicio de metrónomo: escala de Do mayor en corcheas, dos notas por pulso, en compás de 4/4</title>
+   <defs>
+      <g id="E050-z10ebsn">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E084-z10ebsn">
+         <path transform="scale(1,-1)" d="M208 -127h-172c-9 0 -11 6 -11 6s-7 11 -10 18c-1 2 -1 4 -1 6c0 6 3 11 3 11c26 37 56 87 82 168s31 155 31 155c1 6 6 12 13 12h149c4 0 7 -2 10 -4l22 -22c1 -1 3 -5 3 -10c0 -4 -1 -9 -5 -14c-118 -158 -230 -278 -230 -278h116v82c0 4 1 8 4 11l91 83c3 3 7 3 11 3 c2 0 3 0 5 -1l12 -6c4 -2 7 -7 7 -13v-159h90c8 0 14 -7 14 -14v-19c0 -8 -6 -15 -14 -15h-90v-74h90c8 0 14 -6 14 -14v-19c0 -8 -6 -14 -14 -14h-303c-7 0 -14 6 -14 14v19c0 8 7 14 14 14h83v74z" />
+      </g>
+      <g id="E0A4-z10ebsn">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+   </defs>
+   <style type="text/css">#z10ebsn g.ending, #z10ebsn g.fing, #z10ebsn g.reh, #z10ebsn g.tempo {font-weight:bold;}#z10ebsn g.dir, #z10ebsn g.dynam, #z10ebsn g.mNum {font-style:italic;}#z10ebsn g.label {font-weight:normal;}#z10ebsn ellipse, #z10ebsn path, #z10ebsn polygon, #z10ebsn polyline, #z10ebsn rect {stroke:currentColor}#z10ebsn g.cursor {fill:dodgerblue; color:dodgerblue;}#z10ebsn g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 5120 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="arkgymn" class="mdiv pageMilestone" />
+         <g id="b1rqvyx5" class="score pageMilestone" />
+         <g id="r1p397xu" class="system">
+            <g id="p6z1lyr" class="section systemMilestone" />
+            <g id="q1lwblpg" class="measure">
+               <g id="z1by7l85" class="staff">
+                  <path d="M0 540 L4921 540" stroke-width="13" />
+                  <path d="M0 720 L4921 720" stroke-width="13" />
+                  <path d="M0 900 L4921 900" stroke-width="13" />
+                  <path d="M0 1080 L4921 1080" stroke-width="13" />
+                  <path d="M0 1260 L4921 1260" stroke-width="13" />
+                  <g id="txquczi" class="clef">
+                     <use href="#E050-z10ebsn" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="uao3fel" class="keySig" />
+                  <g id="vw0a6k" class="meterSig">
+                     <use href="#E084-z10ebsn" transform="translate(720, 720) scale(0.72, 0.72)" />
+                     <use href="#E084-z10ebsn" transform="translate(720, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g class="ledgerLines below">
+                     <path d="M1260 1440 L1590 1440" stroke-width="22" />
+                  </g>
+                  <g id="adc0xbw" class="layer">
+                     <g id="br187b2" class="beam">
+                        <polygon points="1523,720 1991,675 1991,765 1523,810" />
+                        <g id="n0" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-z10ebsn" transform="translate(1308, 1440) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="z1uko6yn" class="stem">
+                              <path d="M1532 1412 L1532 738" stroke-width="18" />
+                           </g>
+                        </g>
+                        <g id="n1" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-z10ebsn" transform="translate(1758, 1350) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="agg4zck" class="stem">
+                              <path d="M1982 1322 L1982 693" stroke-width="18" />
+                           </g>
+                        </g>
+                     </g>
+                     <g id="e1lafkcx" class="beam">
+                        <polygon points="2423,540 2891,495 2891,585 2423,630" />
+                        <g id="n2" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-z10ebsn" transform="translate(2208, 1260) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="b1m2yctq" class="stem">
+                              <path d="M2432 1232 L2432 558" stroke-width="18" />
+                           </g>
+                        </g>
+                        <g id="n3" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-z10ebsn" transform="translate(2658, 1170) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="c10f3r26" class="stem">
+                              <path d="M2882 1142 L2882 513" stroke-width="18" />
+                           </g>
+                        </g>
+                     </g>
+                     <g id="h7gewa5" class="beam">
+                        <polygon points="3323,360 3791,315 3791,405 3323,450" />
+                        <g id="n4" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-z10ebsn" transform="translate(3108, 1080) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="d1osu0bj" class="stem">
+                              <path d="M3332 1052 L3332 378" stroke-width="18" />
+                           </g>
+                        </g>
+                        <g id="n5" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-z10ebsn" transform="translate(3558, 990) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="e1u3fjqf" class="stem">
+                              <path d="M3782 962 L3782 333" stroke-width="18" />
+                           </g>
+                        </g>
+                     </g>
+                     <g id="k1rt839m" class="beam">
+                        <polygon points="4008,1485 4476,1440 4476,1350 4008,1395" />
+                        <g id="n6" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-z10ebsn" transform="translate(4008, 900) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="fz4aowz" class="stem">
+                              <path d="M4017 930 L4017 1467" stroke-width="18" />
+                           </g>
+                        </g>
+                        <g id="n7" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-z10ebsn" transform="translate(4458, 810) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="g1oz29cn" class="stem">
+                              <path d="M4467 840 L4467 1422" stroke-width="18" />
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="yedri7s" class="barLine">
+                  <path d="M4908 540 L4908 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="ug8imph" class="systemMilestoneEnd p6z1lyr" />
+         </g>
+         <g id="v1aux91" class="pageMilestoneEnd b1rqvyx5" />
+         <g id="w5ppm7e" class="pageMilestoneEnd arkgymn" />
+      </g>
+   </svg>
+</svg>

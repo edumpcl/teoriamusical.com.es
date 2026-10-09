@@ -28,7 +28,7 @@ const { RAIZ, ESPACIO, OPCIONES, hash, preparar, escAttr } = G;
 const SALIDA = 'assets/img/notacion';
 const carpetaDe = (spec) => spec.carpeta || 'compases';   // assets/img/notacion/<carpeta>/<slug>.svg
 const aFilas = (s) => (s.filas ? s : { ...s, tipo: 'cifra', filas: [{ num: s.num, den: s.den, simbolo: s.corte ? 'cut' : null, compases: s.compases }] });
-const DATOS = [...require('./notacion/datos/compases-cifra.js'), ...require('./notacion/datos/compases-rotulados.js'), ...require('./notacion/datos/ritmo-figuras.js'), ...require('./notacion/datos/ritmo-grupos.js'), ...require('./notacion/datos/ritmo-signos.js'), ...require('./notacion/datos/ritmo-ornamentos.js'), ...require('./notacion/datos/ritmo-repeticion.js'), ...require('./notacion/datos/ritmo-frase.js'), ...require('./notacion/datos/tesituras.js'), ...require('./notacion/datos/claves.js'), ...require('./notacion/datos/grados.js'), ...require('./notacion/datos/intervalos-blog.js')].map(aFilas);
+const DATOS = [...require('./notacion/datos/compases-cifra.js'), ...require('./notacion/datos/compases-rotulados.js'), ...require('./notacion/datos/ritmo-figuras.js'), ...require('./notacion/datos/ritmo-grupos.js'), ...require('./notacion/datos/ritmo-signos.js'), ...require('./notacion/datos/ritmo-ornamentos.js'), ...require('./notacion/datos/ritmo-repeticion.js'), ...require('./notacion/datos/ritmo-frase.js'), ...require('./notacion/datos/tesituras.js'), ...require('./notacion/datos/claves.js'), ...require('./notacion/datos/grados.js'), ...require('./notacion/datos/intervalos-blog.js'), ...require('./notacion/datos/blog-notacion.js')].map(aFilas);
 // todas las paginas del diccionario (el generador solo toca las que llevan imagenes suyas)
 const PAGINAS = (function buscar(dir) {
   const res = [];
@@ -399,6 +399,66 @@ const REVISORES = {
     if (grupos !== f.textos.map((x) => x.texto).join('+')) err.push('los rotulos no son el reparto 3+3+2 del alt');
     // cada rotulo = numero de corcheas que dura su figura
     evs.forEach((e, i) => { if (durTotal(e) / 8 !== Number(f.textos[i].texto)) err.push(`el rotulo ${f.textos[i].texto} no es la duracion en corcheas de la figura ${i + 1}`); });
+    return err;
+  },
+  armadura(spec, leido, alt) {
+    const err = [], f = spec.filas[0];
+    const m = /^Armadura de (Do|Re|Mi|Fa|Sol|La|Si)( bemol| sostenido)? mayor en el pentagrama: (un|dos|tres|cuatro|cinco|seis|siete) (sostenidos?|bemoles?) \((.+)\)/.exec(alt);
+    if (!m) return ['el alt ya no tiene la forma «Armadura de <tonica> mayor …: <n> sostenidos/bemoles (<nombres>)»'];
+    const LETRA = { Do: 'c', Re: 'd', Mi: 'e', Fa: 'f', Sol: 'g', La: 'a', Si: 'b' };
+    const BASE = { f: -1, c: 0, g: 1, d: 2, a: 3, e: 4, b: 5 };   // quintas de cada tonica mayor natural (circulo de quintas)
+    const alteracion = m[2] === ' bemol' ? -1 : m[2] === ' sostenido' ? 1 : 0;
+    const quintas = BASE[LETRA[m[1]]] + 7 * alteracion;
+    if (f.armadura !== quintas) err.push(`la tonalidad de ${m[1]}${m[2] || ''} mayor lleva ${quintas > 0 ? quintas + ' sostenidos' : -quintas + ' bemoles'} y el dibujo ${f.armadura}`);
+    if (Math.abs(quintas) !== NUM[m[3]] || (quintas > 0) !== /sostenid/.test(m[4])) err.push(`el alt dice ${m[3]} ${m[4]} y la tonalidad lleva ${quintas}`);
+    const orden = quintas > 0 ? 'fcgdaeb' : 'beadgcf';
+    const nombres = m[5].split(/,| y /).map((x) => x.trim()).filter(Boolean).map((x) => LETRA[x.split(' ')[0]]).join('');
+    if (nombres !== orden.slice(0, Math.abs(quintas))) err.push(`el alt nombra ${nombres} y el orden de ${quintas > 0 ? 'los sostenidos' : 'los bemoles'} da ${orden.slice(0, Math.abs(quintas))}`);
+    if (leido[0].flat().length) err.push('una armadura va sola, sin notas');
+    return err;
+  },
+  'ejercicio-ritmo'(spec, leido, alt) {
+    const err = [], f = spec.filas[0], evs = leido[0].flat();
+    if (!/en (un )?compás de 4\/4/.test(alt) || f.num !== 4 || f.den !== 4) err.push('los ejercicios son de un compas de 4/4');
+    // donde empieza cada nota (en 64avos), con el tresillo ya reducido a su valor real: cada pulso = 16
+    let pos = 0;
+    const ini = evs.map((e, j) => { const p0 = Math.round(pos * 1e6) / 1e6; pos += durTotal(e) * factorEvento(f, 0, j); return p0; });
+    const porPulso = [0, 1, 2, 3].map((b) => ini.filter((x) => x >= b * 16 && x < (b + 1) * 16).length);
+    const mp = /(una|dos|tres|cuatro) notas? por pulso/.exec(alt);
+    if (mp && porPulso.some((x) => x !== NUM[mp[1]])) err.push(`el alt dice ${mp[1]} notas por pulso y el dibujo tiene ${porPulso.join('-')}`);
+    const todas = (d) => evs.every((e) => e.d === d && !e.puntillo);
+    if (/en negras/.test(alt) && !todas('q')) err.push('el alt dice «en negras»');
+    if (/en corcheas/.test(alt) && !todas('8')) err.push('el alt dice «en corcheas»');
+    if (/en semicorcheas/.test(alt) && !todas('16')) err.push('el alt dice «en semicorcheas»');
+    if (/tresillos/.test(alt) && !/pirámide/.test(alt)) {
+      const t = leido[0].tuplas;
+      if (t.length !== 4 || t.some((x) => x.num !== 3 || x.numbase !== 2)) err.push('el alt dice «tresillos»: cuatro grupos de 3 en el tiempo de 2');
+    }
+    // las notas, segun lo que dice el alt
+    let quiere = null;
+    if (/tetracordo Do-Re-Mi-Fa/.test(alt)) quiere = 'cdef';
+    else if (/semicorcheas, octava ascendente y descendente/.test(alt)) quiere = 'cdefgabccbagfedc';
+    else if (/Do Do Re Re Mi Mi Fa Fa/.test(alt)) quiere = 'ccddeeff';
+    else if (/escala de Do mayor|galopa/.test(alt)) quiere = 'cdefgabc';
+    else if (/tresillos repitiendo cada nota/.test(alt)) quiere = 'cccdddeeefff';
+    else if (/pirámide/.test(alt)) quiere = 'gggggggggg';
+    if (!quiere) err.push('no reconozco que notas dice el alt');
+    else if (evs.map((e) => e.key[0]).join('') !== quiere) err.push(`las notas deberian ser ${quiere} y el dibujo ${evs.map((e) => e.key[0]).join('')}`);
+    if (quiere && quiere !== 'gggggggggg') evs.forEach((e, i) => { if (i && e.key[0] !== evs[i - 1].key[0]) { const sube = pasoDe(e.key) - pasoDe(evs[i - 1].key); const bajaAlFinal = /semicorcheas, octava/.test(alt) && i >= 9; if (Math.abs(sube) !== 1 && !(sube === 0)) err.push('las notas de la escala tienen que ir de grado en grado'); if (bajaAlFinal ? sube !== -1 : sube !== 1) err.push('la escala sube (y en el de semicorcheas, baja en la segunda mitad)'); } });
+    if (/galopa/.test(alt) && evs.some((e, i) => (i % 2 === 0 ? !(e.d === '8' && e.puntillo) : !(e.d === '16' && !e.puntillo)))) err.push('la galopa es corchea con puntillo + semicorchea, cuatro veces');
+    if (/pirámide/.test(alt)) {
+      const ok = porPulso.join() === '1,2,3,4' && ['q', '8', '8', '8', '8', '8', '16', '16', '16', '16'].join() === evs.map((e) => e.d).join() && leido[0].tuplas.length === 1 && leido[0].tuplas[0].num === 3;
+      if (!ok) err.push('la piramide es: negra, dos corcheas, tresillo de corcheas y cuatro semicorcheas, un pulso cada una');
+      if (!/negra, dos corcheas, tresillo y cuatro semicorcheas/.test(alt)) err.push('el alt ya no enumera las cuatro subdivisiones');
+    }
+    // cada barra agrupa exactamente un pulso (cuando hay mas de una nota por pulso)
+    const grupos = {};
+    evs.forEach((e, i) => { if (e.grupo >= 0) (grupos[e.grupo] = grupos[e.grupo] || []).push(i); });
+    for (const g of Object.values(grupos)) {
+      const pulsos = new Set(g.map((i) => Math.floor(ini[i] / 16)));
+      const delPulso = evs.filter((e, i) => Math.floor(ini[i] / 16) === [...pulsos][0]).length;
+      if (pulsos.size !== 1 || g.length !== delPulso) err.push('cada barra tiene que agrupar las notas de un pulso, ni mas ni menos');
+    }
     return err;
   },
   'intervalo-melodico'(spec, leido, alt) {
@@ -861,6 +921,13 @@ function verificarSVG(svg, fila, leido) {
   const kn = fila.armadura || 0;
   const kAcc = [...svg.matchAll(/class="keyAccid"[\s\S]{0,200}?href="#(E2[0-9A-F]+)/g)].map((x) => x[1]);
   if (JSON.stringify(kAcc) !== JSON.stringify(Array(Math.abs(kn)).fill(kn > 0 ? 'E262' : 'E260'))) err.push(`armadura dibujada ${JSON.stringify(kAcc)}, prevista de ${Math.abs(kn)} ${kn > 0 ? 'sostenidos' : 'bemoles'}`);
+  if (kn && (fila.clave || 'sol') === 'sol' && lsC.length === 5) {
+    // posicion de cada alteracion de la armadura en clave de sol (orden de los sostenidos F C G D A E B; de los bemoles B E A D G C F)
+    const PASOS = kn > 0 ? [38, 35, 39, 36, 33, 37, 34] : [34, 37, 33, 36, 32, 35, 31];
+    const quiereY = PASOS.slice(0, Math.abs(kn)).map((q) => lsC[4] - (q - 30) * PASO_Y);
+    const dibY = [...svg.matchAll(/class="keyAccid"[\s\S]{0,200}?translate\(([\d.]+), ([\d.]+)\)/g)].map((x) => ({ x: Number(x[1]), y: Number(x[2]) })).sort((u, v) => u.x - v.x).map((o) => o.y);
+    if (JSON.stringify(dibY) !== JSON.stringify(quiereY)) err.push(`alteraciones de la armadura a y=${JSON.stringify(dibY)}, previstas a ${JSON.stringify(quiereY)}`);
+  }
   const metro = (svg.match(/<g[^>]* class="meterSig"[\s\S]*?<\/g>\s*<\/g>/) || [''])[0];
   const glifosMetro = [...metro.matchAll(/href="#(E08[0-9A-F])/g)].map((m) => m[1]);
   const dig = (n) => String(n).split('').map((d) => 'E08' + d);
@@ -1239,6 +1306,9 @@ const SABOTAJES_DIBUJO = [
   ['apoyatura con rayita', (mei) => mei.replace('grace="acc"', 'grace="unacc"'), /rayita de las notas de adorno/, 'apoyatura'],
   ['otro grupeto', (mei) => mei.replace('form="upper"', 'form="lower"'), /ornamentos dibujados/, 'grupeto'],
   ['trino perdido', (mei) => mei.replace(new RegExp('<trill [^>]*/>'), ''), /ornamentos dibujados/, 'trino'],
+  ['armadura de Sol con otro sostenido', (mei) => mei.replace('key.sig="1s"', 'key.sig="1f"'), /armadura dibujada/, 'armadura-sol-mayor'],
+  ['armadura de Si bemol con un bemol menos', (mei) => mei.replace('key.sig="2f"', 'key.sig="1f"'), /armadura dibujada/, 'armadura-sib-mayor'],
+  ['tresillo sin numero', (mei) => mei.split('num.visible="true"').join('num.visible="false"'), /numeros de grupo/, 'ej-ritmo-tresillos'],
   ['intervalo con la nota aguda movida', (mei) => mei.replace('pname="a"', 'pname="b"'), /esta a y/, 'blog-iv-do-la'],
   ['intervalo sin el bemol', (mei) => mei.replace(' accid="f"', ''), /alteraciones dibujadas/, 'blog-iv-do-mib'],
   ['clave en otra linea', (mei) => mei.replace('clef.line="3"', 'clef.line="2"'), /la clave esta a y|esta a y|clave dibujada/, 'nombres-clave-de-do-en-3'],
@@ -1262,6 +1332,15 @@ const SABOTAJES_LEYENDA = [
   ['leyenda de tabla con otro rango', 'Medio | Do₅–Re₆ | | Brillante', /la leyenda de la pagina dice que acaba en d\/6/, 'flauta-tesitura-medio'],
 ];
 const SABOTAJES_DATOS = [
+  ['armadura de Sol con dos sostenidos', (s) => { s.filas[0].armadura = 2; }, /lleva 1 sostenidos/, 'armadura-sol-mayor'],
+  ['armadura de Si bemol con sostenidos', (s) => { s.filas[0].armadura = 2; }, /lleva 2 bemoles/, 'armadura-sib-mayor'],
+  ['armadura con una nota', (s) => { s.filas[0].compases[0].push({ key: 'g/4', d: 'w', puntillo: 0 }); }, /va sola/, 'armadura-sol-mayor'],
+  ['ejercicio con una nota cambiada', (s) => { s.filas[0].compases[0][2].key = 'g/4'; }, /las notas deberian ser|de grado en grado/, 'ej-ritmo-negras'],
+  ['ejercicio de corcheas con una negra', (s) => { s.filas[0].compases[0][0].d = 'q'; s.filas[0].compases[0][0].barra = undefined; s.filas[0].sumas = [72]; }, /en corcheas|suma/, 'ej-ritmo-corcheas'],
+  ['tresillos sin su grupo', (s) => { s.filas[0].tuplets.pop(); }, /suma|tresillos/, 'ej-ritmo-tresillos'],
+  ['galopa con corcheas sin puntillo', (s) => { s.filas[0].compases[0][0].puntillo = 0; }, /galopa|suma/, 'ej-ritmo-galopa'],
+  ['piramide con las subdivisiones cambiadas', (s) => { const c = s.filas[0].compases[0]; const t = c[1]; c[1] = c[6]; c[6] = t; }, /piramide|suma|barra/, 'ej-subdivisiones-piramide'],
+  ['semicorcheas que no bajan', (s) => { s.filas[0].compases[0][12].key = 'g/5'; }, /las notas deberian|de grado en grado|baja/, 'ej-ritmo-semicorcheas'],
   ['intervalo de otra calidad (6ª menor en vez de mayor)', (s) => { s.filas[0].compases[0][1].key = 'ab/4'; }, /el alt dice|lo dibujado es una 6ª menor/, 'blog-iv-do-la'],
   ['intervalo con otra nota (7ª en vez de 6ª)', (s) => { s.filas[0].compases[0][1].key = 'b/4'; }, /el alt dice/, 'blog-iv-do-la'],
   ['tritono de 5 semitonos', (s) => { s.filas[0].compases[0][1].key = 'b/4'; s.filas[0].compases[0][0].key = 'g/4'; }, /el alt dice/, 'blog-iv-fa-si'],

@@ -1,0 +1,143 @@
+<svg id="unupb9g" viewBox="0 0 206 80" width="347" height="134" role="img" xmlns="http://www.w3.org/2000/svg"><title>Ejercicio de metrónomo: escala con ritmo de galopa, corchea con puntillo más semicorchea, en compás de 4/4</title>
+   <defs>
+      <g id="E050-unupb9g">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E084-unupb9g">
+         <path transform="scale(1,-1)" d="M208 -127h-172c-9 0 -11 6 -11 6s-7 11 -10 18c-1 2 -1 4 -1 6c0 6 3 11 3 11c26 37 56 87 82 168s31 155 31 155c1 6 6 12 13 12h149c4 0 7 -2 10 -4l22 -22c1 -1 3 -5 3 -10c0 -4 -1 -9 -5 -14c-118 -158 -230 -278 -230 -278h116v82c0 4 1 8 4 11l91 83c3 3 7 3 11 3 c2 0 3 0 5 -1l12 -6c4 -2 7 -7 7 -13v-159h90c8 0 14 -7 14 -14v-19c0 -8 -6 -15 -14 -15h-90v-74h90c8 0 14 -6 14 -14v-19c0 -8 -6 -14 -14 -14h-303c-7 0 -14 6 -14 14v19c0 8 7 14 14 14h83v74z" />
+      </g>
+      <g id="E0A4-unupb9g">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+   </defs>
+   <style type="text/css">#unupb9g g.ending, #unupb9g g.fing, #unupb9g g.reh, #unupb9g g.tempo {font-weight:bold;}#unupb9g g.dir, #unupb9g g.dynam, #unupb9g g.mNum {font-style:italic;}#unupb9g g.label {font-weight:normal;}#unupb9g ellipse, #unupb9g path, #unupb9g polygon, #unupb9g polyline, #unupb9g rect {stroke:currentColor}#unupb9g g.cursor {fill:dodgerblue; color:dodgerblue;}#unupb9g g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 5150 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="vw5hejz" class="mdiv pageMilestone" />
+         <g id="w197tet2" class="score pageMilestone" />
+         <g id="m1wqkcps" class="system">
+            <g id="ka1nffl" class="section systemMilestone" />
+            <g id="lqw2bg2" class="measure">
+               <g id="u1nphm4o" class="staff">
+                  <path d="M0 540 L4951 540" stroke-width="13" />
+                  <path d="M0 720 L4951 720" stroke-width="13" />
+                  <path d="M0 900 L4951 900" stroke-width="13" />
+                  <path d="M0 1080 L4951 1080" stroke-width="13" />
+                  <path d="M0 1260 L4951 1260" stroke-width="13" />
+                  <g id="s193xmc0" class="clef">
+                     <use href="#E050-unupb9g" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="t18v86y2" class="keySig" />
+                  <g id="u189jpcc" class="meterSig">
+                     <use href="#E084-unupb9g" transform="translate(720, 720) scale(0.72, 0.72)" />
+                     <use href="#E084-unupb9g" transform="translate(720, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g class="ledgerLines below">
+                     <path d="M1260 1440 L1590 1440" stroke-width="22" />
+                  </g>
+                  <g id="vdvk0t2" class="layer">
+                     <g id="whrfuue" class="beam">
+                        <polygon points="1523,810 2121,720 2121,810 1523,900" />
+                        <polygon points="1887,889 2121,855 2121,945 1887,979" />
+                        <g id="n0" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-unupb9g" transform="translate(1308, 1440) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="v1sjvrm8" class="dots">
+                              <ellipse cx="1632" cy="1350" rx="36" ry="36" />
+                           </g>
+                           <g id="uzyxmyg" class="stem">
+                              <path d="M1532 1412 L1532 828" stroke-width="18" />
+                           </g>
+                        </g>
+                        <g id="n1" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-unupb9g" transform="translate(1888, 1350) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="w1hxzjcv" class="stem">
+                              <path d="M2112 1322 L2112 738" stroke-width="18" />
+                           </g>
+                        </g>
+                     </g>
+                     <g id="zy48ekl" class="beam">
+                        <polygon points="2427,630 3025,540 3025,630 2427,720" />
+                        <polygon points="2791,709 3025,675 3025,765 2791,799" />
+                        <g id="n2" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-unupb9g" transform="translate(2212, 1260) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="y1b5q28i" class="dots">
+                              <ellipse cx="2536" cy="1170" rx="36" ry="36" />
+                           </g>
+                           <g id="x36x3mb" class="stem">
+                              <path d="M2436 1232 L2436 648" stroke-width="18" />
+                           </g>
+                        </g>
+                        <g id="n3" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-unupb9g" transform="translate(2792, 1170) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="zqr9j4" class="stem">
+                              <path d="M3016 1142 L3016 558" stroke-width="18" />
+                           </g>
+                        </g>
+                     </g>
+                     <g id="c1nq0ttq" class="beam">
+                        <polygon points="3331,450 3929,360 3929,450 3331,540" />
+                        <polygon points="3695,529 3929,495 3929,585 3695,619" />
+                        <g id="n4" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-unupb9g" transform="translate(3116, 1080) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="b1m3a3as" class="dots">
+                              <ellipse cx="3440" cy="990" rx="36" ry="36" />
+                           </g>
+                           <g id="afwm2k9" class="stem">
+                              <path d="M3340 1052 L3340 468" stroke-width="18" />
+                           </g>
+                        </g>
+                        <g id="n5" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-unupb9g" transform="translate(3696, 990) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="cs7bjhn" class="stem">
+                              <path d="M3920 962 L3920 378" stroke-width="18" />
+                           </g>
+                        </g>
+                     </g>
+                     <g id="f1dlzrch" class="beam">
+                        <polygon points="4020,1485 4618,1395 4618,1305 4020,1395" />
+                        <polygon points="4384,1294 4618,1260 4618,1170 4384,1204" />
+                        <g id="n6" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-unupb9g" transform="translate(4020, 900) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="enbtmhk" class="dots">
+                              <ellipse cx="4344" cy="810" rx="36" ry="36" />
+                           </g>
+                           <g id="d1wphpdj" class="stem">
+                              <path d="M4029 930 L4029 1467" stroke-width="18" />
+                           </g>
+                        </g>
+                        <g id="n7" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-unupb9g" transform="translate(4600, 810) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="f15szwtw" class="stem">
+                              <path d="M4609 840 L4609 1377" stroke-width="18" />
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="t13t9szg" class="barLine">
+                  <path d="M4938 540 L4938 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="pl6syn8" class="systemMilestoneEnd ka1nffl" />
+         </g>
+         <g id="q1ia4zd7" class="pageMilestoneEnd w197tet2" />
+         <g id="r1v11huf" class="pageMilestoneEnd vw5hejz" />
+      </g>
+   </svg>
+</svg>
