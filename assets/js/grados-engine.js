@@ -42,9 +42,8 @@
   ];
   var CLASIF_TXT = { tonal: 'un grado <strong>tonal</strong>', modal: 'un grado <strong>modal</strong>', ninguno: '<strong>ni tonal ni modal</strong>' };
 
-  /* Tonalidades por número de alteraciones. vex = nombre de la armadura para
-     VexFlow, que siempre es el del RELATIVO MAYOR: la armadura de la menor y la
-     de Do Mayor son la misma. */
+  /* Tonalidades por número de alteraciones. vex = armadura (siempre la del RELATIVO MAYOR: la de la
+     menor y la de Do Mayor son la misma). */
   var TONALIDADES = [
     { alt: 0,  tipo: '#', mayor: 'C',  menor: 'A',  vex: 'C' },
     { alt: 1,  tipo: '#', mayor: 'G',  menor: 'E',  vex: 'G' },
@@ -245,42 +244,20 @@
 
     function drawStaff(id, q) {
       var el = document.getElementById(id);
-      if (!el || typeof Vex === 'undefined') return;
-      el.innerHTML = '';
-      var V = Vex.Flow;
-      var r = new V.Renderer(el, V.Renderer.Backends.SVG);
-      var W = 300, H = 150;
-      r.resize(W, H);
-      var ctx = r.getContext();
-      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(8, 20, W - 20);
-      stave.addClef('treble');
-      if (q.ton.alt > 0) stave.addKeySignature(q.ton.vex);
-      stave.setContext(ctx).draw();
-
+      if (!el) return;
       var n = q.esc.notas[q.grado];
       /* Octava: se coloca la nota en un sitio cómodo del pentagrama en clave de
          sol, sin líneas adicionales. */
       var oct = 'CDE'.indexOf(n.letra) >= 0 ? 5 : 4;
-      var clave = n.letra.toLowerCase() + (n.acc || '') + '/' + oct;
-      var nota = new V.StaveNote({ keys: [clave], duration: 'w', clef: 'treble' });
-
-      /* La alteración solo se dibuja si NO la lleva ya la armadura (el VII
-         subido de la menor armónica). Dibujarla siempre sería una redundancia
-         que en una partitura real no se escribe. */
-      var arm = armadura(q.ton.alt, q.ton.tipo);
-      if ((n.acc || '') !== (arm[n.letra] || '')) {
-        nota.addModifier(new V.Accidental(n.acc === '' ? 'n' : n.acc), 0);
-      }
-      var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([nota]);
-      new V.Formatter().joinVoices([voice]).format([voice], W - 120);
-      /* VexFlow pega la nota a la armadura y deja medio pentagrama vacío. Se
-         centra en el hueco que queda libre tras la clave y las alteraciones. */
-      var libre = stave.getNoteEndX() - stave.getNoteStartX();
-      nota.setXShift(Math.max(0, (libre - 30) / 2));
-      voice.draw(ctx, stave);
-      var svg = el.querySelector('svg');
-      if (svg) { svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H); svg.style.width = W + 'px'; svg.style.maxWidth = '100%'; svg.style.height = 'auto'; }
+      /* La armadura de la menor es la de su relativo mayor. La alteración de la nota
+         solo se dibuja si NO la lleva ya la armadura (el VII subido de la menor
+         armónica): tm-mei.js aplica esa regla, y pone becuadro si la nota la cancela. */
+      var fila = {
+        clave: 'sol',
+        armadura: q.ton.tipo === '#' ? q.ton.alt : -q.ton.alt,
+        compases: [[{ key: n.letra.toLowerCase() + (n.acc || '') + '/' + oct, d: 'w' }]]
+      };
+      tmNotacion.dibujarSync(el, fila, { escala: 1.3, separacion: 0.5, id: id, alt: 'Pentagrama en clave de sol con la armadura de la tonalidad y una nota redonda' });
     }
 
     function showQuestion() {
@@ -430,7 +407,10 @@
       wrap.querySelector('.tm-gr-btn').addEventListener('click', showModeScreen);
     }
 
-    showModeScreen();
+    wrap.innerHTML = '<div class="tm-gr-card"><div class="tm-gr-mode-sub">Cargando el ejercicio…</div></div>';
+    tmNotacion.listo().then(showModeScreen).catch(function () {
+      wrap.innerHTML = '<div class="tm-gr-card"><div class="tm-gr-mode-sub">No se ha podido cargar el ejercicio. Recarga la página.</div></div>';
+    });
   }
 
   window.tmGradosIdentificar = function (id) { motor(id, 'grado'); };
