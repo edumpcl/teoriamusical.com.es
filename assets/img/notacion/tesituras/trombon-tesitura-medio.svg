@@ -1,0 +1,49 @@
+<svg id="q1fytx9v" viewBox="0 0 92 101" width="176" height="193" role="img" xmlns="http://www.w3.org/2000/svg"><title>Registro medio del trombón: de Do 3 a Si 3, en clave de fa</title>
+   <defs>
+      <g id="E062-q1fytx9v">
+         <path transform="scale(1,-1)" d="M568 124c0 28 22 51 48 51s48 -23 48 -51s-22 -50 -48 -50s-48 22 -48 50zM254 251c180 0 274 -112 274 -286c0 -184 -158 -362 -298 -463c-91 -71 -205 -118 -206 -118s-4 -1 -5 -1c-6 0 -15 2 -18 12c0 2 -1 3 -1 5c0 12 12 19 12 19c1 0 99 45 203 140 c98 88 181 275 181 405c0 168 -50 250 -152 250c-35 0 -67 -6 -92 -20c-39 -21 -69 -65 -76 -109c8 7 25 17 35 21c9 3 20 5 32 5c56 0 106 -47 106 -104c0 -66 -50 -109 -114 -109c-74 0 -116 54 -116 127s38 139 97 182c1 0 62 44 138 44zM568 -123c0 28 22 51 48 51 s48 -23 48 -51s-22 -51 -48 -51s-48 23 -48 51z" />
+      </g>
+      <g id="E0A2-q1fytx9v">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#q1fytx9v g.ending, #q1fytx9v g.fing, #q1fytx9v g.reh, #q1fytx9v g.tempo {font-weight:bold;}#q1fytx9v g.dir, #q1fytx9v g.dynam, #q1fytx9v g.mNum {font-style:italic;}#q1fytx9v g.label {font-weight:normal;}#q1fytx9v ellipse, #q1fytx9v path, #q1fytx9v polygon, #q1fytx9v polyline, #q1fytx9v rect {stroke:currentColor}#q1fytx9v g.cursor {fill:dodgerblue; color:dodgerblue;}#q1fytx9v g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 -525 2290 2525">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="r124b6mq" class="mdiv pageMilestone" />
+         <g id="s14p2hp7" class="score pageMilestone" />
+         <g id="x1u6lfy0" class="system">
+            <g id="fu3mgd4" class="section systemMilestone" />
+            <g id="gkkitto" class="measure">
+               <g id="p1fbyd8y" class="staff">
+                  <path d="M0 540 L2098 540" stroke-width="13" />
+                  <path d="M0 720 L2098 720" stroke-width="13" />
+                  <path d="M0 900 L2098 900" stroke-width="13" />
+                  <path d="M0 1080 L2098 1080" stroke-width="13" />
+                  <path d="M0 1260 L2098 1260" stroke-width="13" />
+                  <g id="kqmwh04" class="clef">
+                     <use href="#E062-q1fytx9v" transform="translate(90, 720) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="l1hp1vh7" class="keySig" />
+                  <g id="qk8cv2n" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-q1fytx9v" transform="translate(838, 990) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-q1fytx9v" transform="translate(1468, 450) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="o1tsro4h" class="barLine" />
+            </g>
+            <g id="a6jbbvg" class="systemMilestoneEnd fu3mgd4" />
+         </g>
+         <g id="b1a02tc" class="pageMilestoneEnd s14p2hp7" />
+         <g id="c1q9w5z0" class="pageMilestoneEnd r124b6mq" />
+      </g>
+   </svg>
+</svg>

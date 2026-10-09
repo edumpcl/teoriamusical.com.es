@@ -1,0 +1,63 @@
+<svg id="g1mbxa2o" viewBox="0 0 101 104" width="193" height="199" role="img" xmlns="http://www.w3.org/2000/svg"><title>Registro sobreagudo del clarinete bajo: de Do sostenido 6 a La 6 escritos</title>
+   <defs>
+      <g id="E050-g1mbxa2o">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A2-g1mbxa2o">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+      <g id="E262-g1mbxa2o">
+         <path transform="scale(1,-1)" d="M78 74v-166l89 19v165zM233 105l-38 -7v-165l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14l-38 -7v-147h-28v141l-89 -18v-155h-28v149l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v165l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v147h28v-141 l89 18v155h28v-149l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14z" />
+      </g>
+   </defs>
+   <style type="text/css">#g1mbxa2o g.ending, #g1mbxa2o g.fing, #g1mbxa2o g.reh, #g1mbxa2o g.tempo {font-weight:bold;}#g1mbxa2o g.dir, #g1mbxa2o g.dynam, #g1mbxa2o g.mNum {font-style:italic;}#g1mbxa2o g.label {font-weight:normal;}#g1mbxa2o ellipse, #g1mbxa2o path, #g1mbxa2o polygon, #g1mbxa2o polyline, #g1mbxa2o rect {stroke:currentColor}#g1mbxa2o g.cursor {fill:dodgerblue; color:dodgerblue;}#g1mbxa2o g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2520 2585">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="ho9ub16" class="mdiv pageMilestone" />
+         <g id="ibvt8wi" class="score pageMilestone" />
+         <g id="ogdoxmj" class="system">
+            <g id="vngzh83" class="section systemMilestone" />
+            <g id="w9bx6jy" class="measure">
+               <g id="f1c12wbo" class="staff">
+                  <path d="M0 908 L2326 908" stroke-width="13" />
+                  <path d="M0 1088 L2326 1088" stroke-width="13" />
+                  <path d="M0 1268 L2326 1268" stroke-width="13" />
+                  <path d="M0 1448 L2326 1448" stroke-width="13" />
+                  <path d="M0 1628 L2326 1628" stroke-width="13" />
+                  <g id="b5zdlaa" class="clef">
+                     <use href="#E050-g1mbxa2o" transform="translate(90, 1448) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="c4boq3w" class="keySig" />
+                  <g class="ledgerLines above">
+                     <path d="M1018 728 L1382 728" stroke-width="22" />
+                     <path d="M1648 728 L2012 728" stroke-width="22" />
+                     <path d="M1018 548 L1382 548" stroke-width="22" />
+                     <path d="M1648 548 L2012 548" stroke-width="22" />
+                     <path d="M1648 368 L2012 368" stroke-width="22" />
+                     <path d="M1648 188 L2012 188" stroke-width="22" />
+                  </g>
+                  <g id="gfdlbpe" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-g1mbxa2o" transform="translate(1066, 548) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="id8xacp" class="accid">
+                           <use href="#E262-g1mbxa2o" transform="translate(820, 548) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-g1mbxa2o" transform="translate(1696, 98) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="ejo7c7i" class="barLine" />
+            </g>
+            <g id="r11cw00m" class="systemMilestoneEnd vngzh83" />
+         </g>
+         <g id="s1c1kl1e" class="pageMilestoneEnd ibvt8wi" />
+         <g id="tcyxb8u" class="pageMilestoneEnd ho9ub16" />
+      </g>
+   </svg>
+</svg>

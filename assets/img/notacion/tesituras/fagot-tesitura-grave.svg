@@ -1,0 +1,59 @@
+<svg id="v19w7r21" viewBox="0 0 101 82" width="193" height="156" role="img" xmlns="http://www.w3.org/2000/svg"><title>Registro grave del fagot en clave de fa: de Si bemol 1 a Sol 2</title>
+   <defs>
+      <g id="E062-v19w7r21">
+         <path transform="scale(1,-1)" d="M568 124c0 28 22 51 48 51s48 -23 48 -51s-22 -50 -48 -50s-48 22 -48 50zM254 251c180 0 274 -112 274 -286c0 -184 -158 -362 -298 -463c-91 -71 -205 -118 -206 -118s-4 -1 -5 -1c-6 0 -15 2 -18 12c0 2 -1 3 -1 5c0 12 12 19 12 19c1 0 99 45 203 140 c98 88 181 275 181 405c0 168 -50 250 -152 250c-35 0 -67 -6 -92 -20c-39 -21 -69 -65 -76 -109c8 7 25 17 35 21c9 3 20 5 32 5c56 0 106 -47 106 -104c0 -66 -50 -109 -114 -109c-74 0 -116 54 -116 127s38 139 97 182c1 0 62 44 138 44zM568 -123c0 28 22 51 48 51 s48 -23 48 -51s-22 -51 -48 -51s-48 23 -48 51z" />
+      </g>
+      <g id="E0A2-v19w7r21">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+      <g id="E260-v19w7r21">
+         <path transform="scale(1,-1)" d="M132 40v11c0 21 -3 55 -39 55c-40 0 -55 -29 -57 -38l-3 -195c58 46 99 88 99 167zM120 155c59 0 83 -49 83 -101c0 -103 -90 -185 -176 -228c-2 -1 -6 -2 -8 -2c-8 0 -14 6 -14 14l-5 601c0 8 6 14 14 14h12c8 0 14 -6 14 -14l-4 -321c5 6 34 37 84 37z" />
+      </g>
+   </defs>
+   <style type="text/css">#v19w7r21 g.ending, #v19w7r21 g.fing, #v19w7r21 g.reh, #v19w7r21 g.tempo {font-weight:bold;}#v19w7r21 g.dir, #v19w7r21 g.dynam, #v19w7r21 g.mNum {font-style:italic;}#v19w7r21 g.label {font-weight:normal;}#v19w7r21 ellipse, #v19w7r21 path, #v19w7r21 polygon, #v19w7r21 polyline, #v19w7r21 rect {stroke:currentColor}#v19w7r21 g.cursor {fill:dodgerblue; color:dodgerblue;}#v19w7r21 g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2510 2030">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="w1470dlv" class="mdiv pageMilestone" />
+         <g id="xoyjuoy" class="score pageMilestone" />
+         <g id="d1d30qp8" class="system">
+            <g id="kzq5ahu" class="section systemMilestone" />
+            <g id="l1i4acz7" class="measure">
+               <g id="u18zr40x" class="staff">
+                  <path d="M0 540 L2315 540" stroke-width="13" />
+                  <path d="M0 720 L2315 720" stroke-width="13" />
+                  <path d="M0 900 L2315 900" stroke-width="13" />
+                  <path d="M0 1080 L2315 1080" stroke-width="13" />
+                  <path d="M0 1260 L2315 1260" stroke-width="13" />
+                  <g id="qzwvnkq" class="clef">
+                     <use href="#E062-v19w7r21" transform="translate(90, 720) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="r16t8c6i" class="keySig" />
+                  <g class="ledgerLines below">
+                     <path d="M1007 1440 L1371 1440" stroke-width="22" />
+                     <path d="M1007 1620 L1371 1620" stroke-width="22" />
+                  </g>
+                  <g id="vbdfo0i" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-v19w7r21" transform="translate(1055, 1710) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="x1uu2xue" class="accid">
+                           <use href="#E260-v19w7r21" transform="translate(838, 1710) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-v19w7r21" transform="translate(1685, 1260) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="t1dccigz" class="barLine" />
+            </g>
+            <g id="g55m9b8" class="systemMilestoneEnd kzq5ahu" />
+         </g>
+         <g id="hn2xncw" class="pageMilestoneEnd xoyjuoy" />
+         <g id="i3a8r1x" class="pageMilestoneEnd w1470dlv" />
+      </g>
+   </svg>
+</svg>

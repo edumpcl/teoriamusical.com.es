@@ -20,6 +20,8 @@ const PAGINAS = [
   'diccionario-musical/puntillo',
   'diccionario-musical/alteraciones',
   'diccionario-musical/grupos-de-valoracion-especial',
+  'diccionario-musical/notas-de-la-flauta-travesera',
+  'diccionario-musical/notas-del-oboe',
 ];
 const quitar = process.argv.includes('--quitar');
 const limpia = (t) => t.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();

@@ -1,0 +1,58 @@
+<svg id="pqegerg" viewBox="0 0 99 82" width="189" height="156" role="img" xmlns="http://www.w3.org/2000/svg"><title>Registro agudo del fagot en clave de do en cuarta: de La bemol 3 a Sol 4</title>
+   <defs>
+      <g id="E05C-pqegerg">
+         <path transform="scale(1,-1)" d="M13 469h72c7 0 13 -6 13 -13v-910c0 -7 -6 -13 -13 -13h-72c-7 0 -13 6 -13 13v910c0 7 6 13 13 13zM627 -261c0 -140 -103 -219 -224 -219c-75 0 -182 31 -182 123c0 49 34 81 83 81c44 0 75 -32 75 -76c0 -43 -29 -74 -73 -74c-6 0 -10 1 -11 1c23 -16 54 -25 85 -25 c105 0 122 84 122 174c0 77 -2 189 -90 189s-106 -95 -108 -106c0 -1 0 -13 -14 -13s-15 12 -15 13c-11 56 -33 151 -92 175v-436c0 -7 -5 -13 -12 -13s-13 6 -13 13v910c0 7 6 13 13 13s12 -6 12 -13v-436c56 23 83 119 92 174c0 1 1 14 15 14s14 -13 14 -14 c2 -10 20 -105 108 -105s90 112 90 189c0 90 -17 174 -122 174c-31 0 -62 -9 -85 -25c48 0 84 -18 84 -73c0 -44 -31 -76 -75 -76c-49 0 -83 32 -83 81c0 92 107 123 182 123c121 0 224 -79 224 -219c0 -108 -60 -221 -182 -221c-43 0 -56 3 -94 26c-2 -4 -22 -44 -55 -67 c33 -23 53 -63 55 -67c39 24 56 26 79 26c131 0 197 -97 197 -221z" />
+      </g>
+      <g id="E0A2-pqegerg">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+      <g id="E260-pqegerg">
+         <path transform="scale(1,-1)" d="M132 40v11c0 21 -3 55 -39 55c-40 0 -55 -29 -57 -38l-3 -195c58 46 99 88 99 167zM120 155c59 0 83 -49 83 -101c0 -103 -90 -185 -176 -228c-2 -1 -6 -2 -8 -2c-8 0 -14 6 -14 14l-5 601c0 8 6 14 14 14h12c8 0 14 -6 14 -14l-4 -321c5 6 34 37 84 37z" />
+      </g>
+   </defs>
+   <style type="text/css">#pqegerg g.ending, #pqegerg g.fing, #pqegerg g.reh, #pqegerg g.tempo {font-weight:bold;}#pqegerg g.dir, #pqegerg g.dynam, #pqegerg g.mNum {font-style:italic;}#pqegerg g.label {font-weight:normal;}#pqegerg ellipse, #pqegerg path, #pqegerg polygon, #pqegerg polyline, #pqegerg rect {stroke:currentColor}#pqegerg g.cursor {fill:dodgerblue; color:dodgerblue;}#pqegerg g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2460 2050">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="qck4hfb" class="mdiv pageMilestone" />
+         <g id="r15jmt2v" class="score pageMilestone" />
+         <g id="x1u2fl4c" class="system">
+            <g id="e8wgfgn" class="section systemMilestone" />
+            <g id="f1ispa5r" class="measure">
+               <g id="o1j7sm0t" class="staff">
+                  <path d="M0 540 L2262 540" stroke-width="13" />
+                  <path d="M0 720 L2262 720" stroke-width="13" />
+                  <path d="M0 900 L2262 900" stroke-width="13" />
+                  <path d="M0 1080 L2262 1080" stroke-width="13" />
+                  <path d="M0 1260 L2262 1260" stroke-width="13" />
+                  <g id="k7xkemi" class="clef">
+                     <use href="#E05C-pqegerg" transform="translate(90, 720) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="l13ganp0" class="keySig" />
+                  <g class="ledgerLines above">
+                     <path d="M1584 360 L1948 360" stroke-width="22" />
+                  </g>
+                  <g id="p1ix7vgu" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-pqegerg" transform="translate(1002, 900) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="rntybrp" class="accid">
+                           <use href="#E260-pqegerg" transform="translate(811, 900) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-pqegerg" transform="translate(1632, 360) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="n4arutw" class="barLine" />
+            </g>
+            <g id="ayw5qwk" class="systemMilestoneEnd e8wgfgn" />
+         </g>
+         <g id="b1u6pcp9" class="pageMilestoneEnd r15jmt2v" />
+         <g id="c1bz19ta" class="pageMilestoneEnd qck4hfb" />
+      </g>
+   </svg>
+</svg>
