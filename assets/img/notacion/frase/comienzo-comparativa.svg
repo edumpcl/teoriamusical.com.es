@@ -1,0 +1,250 @@
+<svg id="tm-c1570311226" viewBox="0 0 513 477" width="513" height="477" role="img" xmlns="http://www.w3.org/2000/svg"><title>Los tres tipos de comienzo de una frase comparados: tético (en el tiempo fuerte), anacrúsico (con anacrusa antes del tiempo fuerte) y acéfalo (tras un silencio en el tiempo fuerte)</title><svg id="v1o1gwak" x="0" y="0" width="501" height="159" viewBox="0 0 328 104">
+   <defs>
+      <g id="E050-v1o1gwak">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E084-v1o1gwak">
+         <path transform="scale(1,-1)" d="M208 -127h-172c-9 0 -11 6 -11 6s-7 11 -10 18c-1 2 -1 4 -1 6c0 6 3 11 3 11c26 37 56 87 82 168s31 155 31 155c1 6 6 12 13 12h149c4 0 7 -2 10 -4l22 -22c1 -1 3 -5 3 -10c0 -4 -1 -9 -5 -14c-118 -158 -230 -278 -230 -278h116v82c0 4 1 8 4 11l91 83c3 3 7 3 11 3 c2 0 3 0 5 -1l12 -6c4 -2 7 -7 7 -13v-159h90c8 0 14 -7 14 -14v-19c0 -8 -6 -15 -14 -15h-90v-74h90c8 0 14 -6 14 -14v-19c0 -8 -6 -14 -14 -14h-303c-7 0 -14 6 -14 14v19c0 8 7 14 14 14h83v74z" />
+      </g>
+      <g id="E0A4-v1o1gwak">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+   </defs>
+   <style type="text/css">#v1o1gwak g.ending, #v1o1gwak g.fing, #v1o1gwak g.reh, #v1o1gwak g.tempo {font-weight:bold;}#v1o1gwak g.dir, #v1o1gwak g.dynam, #v1o1gwak g.mNum {font-style:italic;}#v1o1gwak g.label {font-weight:normal;}#v1o1gwak ellipse, #v1o1gwak path, #v1o1gwak polygon, #v1o1gwak polyline, #v1o1gwak rect {stroke:currentColor}#v1o1gwak g.cursor {fill:dodgerblue; color:dodgerblue;}#v1o1gwak g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 -600 8200 2600">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="wbqk9z6" class="mdiv pageMilestone" />
+         <g id="x1hpxak1" class="score pageMilestone" />
+         <g id="fv3r4xy" class="system">
+            <g id="l1s2s2ke" class="section systemMilestone" />
+            <g id="m1fok2l1" class="measure">
+               <g id="v17trv46" class="staff">
+                  <path d="M0 540 L8001 540" stroke-width="13" />
+                  <path d="M0 720 L8001 720" stroke-width="13" />
+                  <path d="M0 900 L8001 900" stroke-width="13" />
+                  <path d="M0 1080 L8001 1080" stroke-width="13" />
+                  <path d="M0 1260 L8001 1260" stroke-width="13" />
+                  <g id="dskav6w" class="clef">
+                     <use href="#E050-v1o1gwak" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="e190w5i0" class="keySig" />
+                  <g id="fzp5iw1" class="meterSig">
+                     <use href="#E084-v1o1gwak" transform="translate(720, 720) scale(0.72, 0.72)" />
+                     <use href="#E084-v1o1gwak" transform="translate(720, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="wnxme0m" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-v1o1gwak" transform="translate(1308, 810) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="ntdqb33" class="stem">
+                           <path d="M1317 840 L1317 1440" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-v1o1gwak" transform="translate(2978, 720) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="olln8d1" class="stem">
+                           <path d="M2987 750 L2987 1350" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-v1o1gwak" transform="translate(4648, 630) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="pd43bfs" class="stem">
+                           <path d="M4657 660 L4657 1260" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-v1o1gwak" transform="translate(6318, 540) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="q1wk9mh" class="stem">
+                           <path d="M6327 570 L6327 1170" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="ulxhs4b" class="barLine">
+                  <path d="M7988 540 L7988 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="ihta39k" class="systemMilestoneEnd l1s2s2ke" />
+         </g>
+         <g id="jftujkn" class="pageMilestoneEnd x1hpxak1" />
+         <g id="ko4oz8b" class="pageMilestoneEnd wbqk9z6" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="60" y="-100" text-anchor="start">Tético · empieza en el tiempo fuerte</text></g></g></svg>
+</svg><svg id="r8cs5hk" x="0" y="159" width="513" height="159" viewBox="0 0 336 104">
+   <defs>
+      <g id="E050-r8cs5hk">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E084-r8cs5hk">
+         <path transform="scale(1,-1)" d="M208 -127h-172c-9 0 -11 6 -11 6s-7 11 -10 18c-1 2 -1 4 -1 6c0 6 3 11 3 11c26 37 56 87 82 168s31 155 31 155c1 6 6 12 13 12h149c4 0 7 -2 10 -4l22 -22c1 -1 3 -5 3 -10c0 -4 -1 -9 -5 -14c-118 -158 -230 -278 -230 -278h116v82c0 4 1 8 4 11l91 83c3 3 7 3 11 3 c2 0 3 0 5 -1l12 -6c4 -2 7 -7 7 -13v-159h90c8 0 14 -7 14 -14v-19c0 -8 -6 -15 -14 -15h-90v-74h90c8 0 14 -6 14 -14v-19c0 -8 -6 -14 -14 -14h-303c-7 0 -14 6 -14 14v19c0 8 7 14 14 14h83v74z" />
+      </g>
+      <g id="E0A4-r8cs5hk">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+   </defs>
+   <style type="text/css">#r8cs5hk g.ending, #r8cs5hk g.fing, #r8cs5hk g.reh, #r8cs5hk g.tempo {font-weight:bold;}#r8cs5hk g.dir, #r8cs5hk g.dynam, #r8cs5hk g.mNum {font-style:italic;}#r8cs5hk g.label {font-weight:normal;}#r8cs5hk ellipse, #r8cs5hk path, #r8cs5hk polygon, #r8cs5hk polyline, #r8cs5hk rect {stroke:currentColor}#r8cs5hk g.cursor {fill:dodgerblue; color:dodgerblue;}#r8cs5hk g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 -600 8390 2600">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="s1tfkkr5" class="mdiv pageMilestone" />
+         <g id="tcb6z4b" class="score pageMilestone" />
+         <g id="m1wc52fc" class="system">
+            <g id="h1jq3tqw" class="section systemMilestone" />
+            <g id="i1f3eowf" class="measure">
+               <g id="rk3vqrc" class="staff">
+                  <path d="M0 540 L2991 540" stroke-width="13" />
+                  <path d="M0 720 L2991 720" stroke-width="13" />
+                  <path d="M0 900 L2991 900" stroke-width="13" />
+                  <path d="M0 1080 L2991 1080" stroke-width="13" />
+                  <path d="M0 1260 L2991 1260" stroke-width="13" />
+                  <g id="m14onufb" class="clef">
+                     <use href="#E050-r8cs5hk" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="n1f8tzz" class="keySig" />
+                  <g id="od3m8dy" class="meterSig">
+                     <use href="#E084-r8cs5hk" transform="translate(720, 720) scale(0.72, 0.72)" />
+                     <use href="#E084-r8cs5hk" transform="translate(720, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="s9dqq88" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-r8cs5hk" transform="translate(1308, 1080) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="wjk9119" class="stem">
+                           <path d="M1532 1052 L1532 450" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="q2pnxn3" class="barLine">
+                  <path d="M2978 540 L2978 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="u14voeso" class="measure">
+               <g id="d10wfso9" class="staff">
+                  <path d="M2991 540 L8194 540" stroke-width="13" />
+                  <path d="M2991 720 L8194 720" stroke-width="13" />
+                  <path d="M2991 900 L8194 900" stroke-width="13" />
+                  <path d="M2991 1080 L8194 1080" stroke-width="13" />
+                  <path d="M2991 1260 L8194 1260" stroke-width="13" />
+                  <g id="e1jos5en" class="layer">
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-r8cs5hk" transform="translate(3171, 810) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="x1ay4r34" class="stem">
+                           <path d="M3180 840 L3180 1440" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-r8cs5hk" transform="translate(4841, 720) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="yecvetx" class="stem">
+                           <path d="M4850 750 L4850 1350" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-r8cs5hk" transform="translate(6511, 630) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="z16dq1qv" class="stem">
+                           <path d="M6520 660 L6520 1260" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="c5vk6qi" class="barLine">
+                  <path d="M8181 540 L8181 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="p13i7d4u" class="systemMilestoneEnd h1jq3tqw" />
+         </g>
+         <g id="q49rm5w" class="pageMilestoneEnd tcb6z4b" />
+         <g id="r1n0zbqw" class="pageMilestoneEnd s1tfkkr5" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="60" y="-100" text-anchor="start">Anacrúsico · antes del tiempo fuerte</text></g></g></svg>
+</svg><svg id="r1s63qci" x="0" y="318" width="501" height="159" viewBox="0 0 328 104">
+   <defs>
+      <g id="E050-r1s63qci">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E084-r1s63qci">
+         <path transform="scale(1,-1)" d="M208 -127h-172c-9 0 -11 6 -11 6s-7 11 -10 18c-1 2 -1 4 -1 6c0 6 3 11 3 11c26 37 56 87 82 168s31 155 31 155c1 6 6 12 13 12h149c4 0 7 -2 10 -4l22 -22c1 -1 3 -5 3 -10c0 -4 -1 -9 -5 -14c-118 -158 -230 -278 -230 -278h116v82c0 4 1 8 4 11l91 83c3 3 7 3 11 3 c2 0 3 0 5 -1l12 -6c4 -2 7 -7 7 -13v-159h90c8 0 14 -7 14 -14v-19c0 -8 -6 -15 -14 -15h-90v-74h90c8 0 14 -6 14 -14v-19c0 -8 -6 -14 -14 -14h-303c-7 0 -14 6 -14 14v19c0 8 7 14 14 14h83v74z" />
+      </g>
+      <g id="E4E5-r1s63qci">
+         <path transform="scale(1,-1)" d="M230 -166l2 -3c2 -3 3 -5 3 -8s-1 -5 -3 -9c-3 -4 -6 -5 -10 -5s-8 2 -8 2l-39 25c-8 5 -19 9 -32 9c-32 0 -56 -26 -56 -58c0 -18 7 -32 7 -32s32 -58 35 -63c1 -2 3 -5 3 -9s-2 -8 -7 -12c-2 -2 -4 -2 -6 -2c-7 0 -12 6 -12 6s-75 95 -96 127c-8 11 -11 25 -11 39 c0 51 40 93 91 93c12 0 21 -2 25 -3l-112 139c-2 2 -3 5 -3 8v9c0 2 1 6 2 8l101 154c2 3 3 8 3 12c0 5 -1 9 -3 12l-76 104s-3 5 -3 11c0 3 1 7 5 10c3 2 5 3 8 3c6 0 10 -6 10 -6l162 -219c2 -2 3 -5 3 -8v-9c0 -2 -1 -5 -2 -7l-102 -154c-1 -2 -2 -6 -2 -9 c0 -2 1 -5 2 -6l115 -142c3 -4 5 -6 6 -7z" />
+      </g>
+      <g id="E0A4-r1s63qci">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+   </defs>
+   <style type="text/css">#r1s63qci g.ending, #r1s63qci g.fing, #r1s63qci g.reh, #r1s63qci g.tempo {font-weight:bold;}#r1s63qci g.dir, #r1s63qci g.dynam, #r1s63qci g.mNum {font-style:italic;}#r1s63qci g.label {font-weight:normal;}#r1s63qci ellipse, #r1s63qci path, #r1s63qci polygon, #r1s63qci polyline, #r1s63qci rect {stroke:currentColor}#r1s63qci g.cursor {fill:dodgerblue; color:dodgerblue;}#r1s63qci g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 -600 8200 2600">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="snigsel" class="mdiv pageMilestone" />
+         <g id="tdw8rjo" class="score pageMilestone" />
+         <g id="bj4mzki" class="system">
+            <g id="hzyc1kx" class="section systemMilestone" />
+            <g id="ivfcgbi" class="measure">
+               <g id="r1kbpf98" class="staff">
+                  <path d="M0 540 L8001 540" stroke-width="13" />
+                  <path d="M0 720 L8001 720" stroke-width="13" />
+                  <path d="M0 900 L8001 900" stroke-width="13" />
+                  <path d="M0 1080 L8001 1080" stroke-width="13" />
+                  <path d="M0 1260 L8001 1260" stroke-width="13" />
+                  <g id="y8u3fqk" class="clef">
+                     <use href="#E050-r1s63qci" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="zul40h1" class="keySig" />
+                  <g id="afb1hok" class="meterSig">
+                     <use href="#E084-r1s63qci" transform="translate(720, 720) scale(0.72, 0.72)" />
+                     <use href="#E084-r1s63qci" transform="translate(720, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="snslbad" class="layer">
+                     <g id="n0" class="rest">
+                        <use href="#E4E5-r1s63qci" transform="translate(1308, 900) scale(0.72, 0.72)" />
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-r1s63qci" transform="translate(2978, 810) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="jdnu8a1" class="stem">
+                           <path d="M2987 840 L2987 1440" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-r1s63qci" transform="translate(4648, 720) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="k13hepla" class="stem">
+                           <path d="M4657 750 L4657 1350" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-r1s63qci" transform="translate(6318, 630) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="l1xujj6a" class="stem">
+                           <path d="M6327 660 L6327 1260" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="q1se7f4t" class="barLine">
+                  <path d="M7988 540 L7988 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="emnkqyb" class="systemMilestoneEnd hzyc1kx" />
+         </g>
+         <g id="f1e7sn4n" class="pageMilestoneEnd tdw8rjo" />
+         <g id="g8i8eg2" class="pageMilestoneEnd snigsel" />
+      </g>
+   <g class="tm-margen" transform="translate(100 100)"><g class="tm-rotulos" font-family="Arial, Helvetica, sans-serif" font-size="300" fill="#1a1a1a"><text x="60" y="-100" text-anchor="start">Acéfalo · tras un silencio en el tiempo fuerte</text></g></g></svg>
+</svg></svg>

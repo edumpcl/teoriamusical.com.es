@@ -28,7 +28,7 @@ const { RAIZ, ESPACIO, OPCIONES, hash, preparar, escAttr } = G;
 const SALIDA = 'assets/img/notacion';
 const carpetaDe = (spec) => spec.carpeta || 'compases';   // assets/img/notacion/<carpeta>/<slug>.svg
 const aFilas = (s) => (s.filas ? s : { ...s, tipo: 'cifra', filas: [{ num: s.num, den: s.den, simbolo: s.corte ? 'cut' : null, compases: s.compases }] });
-const DATOS = [...require('./notacion/datos/compases-cifra.js'), ...require('./notacion/datos/compases-rotulados.js'), ...require('./notacion/datos/ritmo-figuras.js'), ...require('./notacion/datos/ritmo-grupos.js'), ...require('./notacion/datos/ritmo-signos.js'), ...require('./notacion/datos/ritmo-ornamentos.js'), ...require('./notacion/datos/ritmo-repeticion.js')].map(aFilas);
+const DATOS = [...require('./notacion/datos/compases-cifra.js'), ...require('./notacion/datos/compases-rotulados.js'), ...require('./notacion/datos/ritmo-figuras.js'), ...require('./notacion/datos/ritmo-grupos.js'), ...require('./notacion/datos/ritmo-signos.js'), ...require('./notacion/datos/ritmo-ornamentos.js'), ...require('./notacion/datos/ritmo-repeticion.js'), ...require('./notacion/datos/ritmo-frase.js')].map(aFilas);
 // todas las paginas del diccionario (el generador solo toca las que llevan imagenes suyas)
 const PAGINAS = (function buscar(dir) {
   const res = [];
@@ -359,6 +359,48 @@ const REVISORES = {
     // cada rotulo = numero de corcheas que dura su figura
     evs.forEach((e, i) => { if (durTotal(e) / 8 !== Number(f.textos[i].texto)) err.push(`el rotulo ${f.textos[i].texto} no es la duracion en corcheas de la figura ${i + 1}`); });
     return err;
+  },
+  frase(spec, leido, alt) {
+    const err = [];
+    const total = (f) => f.num * (64 / f.den);
+    const suma = (c) => c.reduce((a, e) => a + durTotal(e), 0);
+    // tipo de comienzo segun CUANDO entra la musica (no segun si el compas esta completo)
+    const comienzo = (f, l) => (suma(l[0]) < total(f) ? 'anacrusico' : l[0][0].silencio ? 'acefalo' : 'tetico');
+    // el final es fuerte si la ultima nota EMPIEZA en el primer tiempo de su compas
+    const final = (f, l) => { const c = l[l.length - 1]; return suma(c.slice(0, -1)) === 0 ? 'fuerte' : 'debil'; };
+    const sinTilde = (t) => sinTildes(t);
+    if (spec.slug === 'comienzo-comparativa') {
+      const orden = ['tetico', 'anacrusico', 'acefalo'];
+      if (spec.filas.length !== 3) err.push('la comparativa tiene tres filas');
+      spec.filas.forEach((f, i) => {
+        if (comienzo(f, leido[i]) !== orden[i]) err.push(`la fila ${i + 1} deberia ser un comienzo ${orden[i]} y es ${comienzo(f, leido[i])}`);
+        if (!sinTilde(f.rotulo).startsWith(orden[i])) err.push(`el rotulo de la fila ${i + 1} deberia empezar por «${orden[i]}»`);
+      });
+      const pos = orden.map((o) => sinTilde(alt).indexOf(o));
+      if (pos.some((x) => x < 0) || !(pos[0] < pos[1] && pos[1] < pos[2])) err.push('el alt deberia hablar de tetico, anacrusico y acefalo, por ese orden');
+      return err;
+    }
+    const f = spec.filas[0], l = leido[0];
+    if (f.num !== 4 || f.den !== 4) err.push('los ejemplos de frase van en 4/4');
+    const m = /^Comienzo (tético|anacrúsico|acéfalo)/.exec(alt);
+    if (m) {
+      const quiere = sinTilde(m[1]);
+      if (comienzo(f, l) !== quiere) err.push(`el alt dice comienzo ${quiere} y el dibujo es ${comienzo(f, l)}`);
+      if (quiere === 'anacrusico' && (l[0].length !== 1 || !/una nota de anacrusa/.test(alt))) err.push('el comienzo anacrusico del ejemplo lleva UNA nota de anacrusa');
+      if (quiere === 'acefalo' && !(l[0][0].silencio && /un silencio ocupa el tiempo fuerte/.test(alt))) err.push('el comienzo acefalo empieza con un silencio en el tiempo fuerte');
+      if (quiere === 'tetico' && (l[0][0].silencio || !/primer tiempo fuerte de un compás de 4\/4/.test(alt))) err.push('el comienzo tetico suena en el primer tiempo fuerte');
+      return err;
+    }
+    const fm = /^Final en tiempo (fuerte|débil)/.exec(alt);
+    if (fm) {
+      const quiere = sinTilde(fm[1]);
+      if (final(f, l) !== quiere) err.push(`el alt dice final en tiempo ${quiere} y la ultima nota empieza en el tiempo ${final(f, l)}`);
+      const ultima = l[l.length - 1][l[l.length - 1].length - 1];
+      if (quiere === 'fuerte' && (ultima.d !== 'w' || !/una redonda/.test(alt))) err.push('el final en tiempo fuerte termina en una redonda');
+      if (ultima.silencio) err.push('la frase termina en una nota, no en un silencio');
+      return err;
+    }
+    return ['el alt no empieza como un comienzo ni como un final conocido'];
   },
   repeticion(spec, leido, alt) {
     const err = [], f = spec.filas[0], l = leido[0], b = l.barras, evs = l.flat();
@@ -931,6 +973,7 @@ const SABOTAJES = [
   ['otra articulacion', (mei) => mei.replace('artic="ten"', 'artic="stacc"'), /MEI escribe mal/i, 'tenuto'],
   ['acciaccatura sin rayita', (mei) => mei.replace('grace="unacc"', 'grace="acc"'), /MEI escribe mal/i, 'acciaccatura'],
   ['otro mordente', (mei) => mei.replace('form="upper"', 'form="lower"'), /MEI escribe mal/i, 'mordente'],
+  ['silencio convertido en nota', (mei) => mei.replace(new RegExp('<rest [^>]*/>'), '<note xml:id="x0" pname="c" oct="5" dur="4"/>'), /MEI escribe mal/i, 'comienzo-acefalo'],
   ['barra de apertura perdida', (mei) => mei.replace(' left="rptstart"', ''), /MEI escribe otra barra/i, 'repeticion-barras'],
   ['casilla con otro numero', (mei) => mei.replace('label="2."', 'label="3."'), /MEI escribe otra barra/i, 'repeticion-casillas'],
   ['segno cambiado por coda', (mei) => mei.replace('func="segno"', 'func="coda"'), /MEI escribe mal|un segno y tres codas/i, 'repeticion-segno-coda'],
@@ -981,6 +1024,12 @@ const SABOTAJES_DATOS = [
   ['ligadura de union entre notas distintas', (s) => { s.filas[0].compases[0][1].key = 'a/4'; }, /MISMA altura|misma nota/, 'ligadura-union'],
   ['tipo de tresillo mal rotulado', (s) => { s.filas[1].rotulo = 'de negra'; }, /el rotulo del grupo 2/, 'tipos-de-tresillo'],
   ['dosillo de cuatro figuras', (s) => { const f = s.filas[2]; f.compases[0].push({ ...f.compases[0][0] }); f.tuplets[0].fin = 2; f.tuplets[0].num = 3; }, /deberia ser de 2|dosillo/, 'tipos-de-dosillo'],
+  ['tetico que empieza con silencio', (s) => { s.filas[0].compases[0][0] = { silencio: true, d: 'q', puntillo: 0 }; }, /el alt dice comienzo tetico/, 'comienzo-tetico'],
+  ['acefalo sin silencio', (s) => { s.filas[0].compases[0][0] = { key: 'c/5', d: 'q', puntillo: 0 }; }, /el alt dice comienzo acefalo/, 'comienzo-acefalo'],
+  ['anacrusa de dos notas', (s) => { s.filas[0].compases[0].push({ key: 'a/4', d: 'q', puntillo: 0 }); s.filas[0].sumas = [32, 64, 64]; }, /UNA nota de anacrusa/, 'comienzo-anacrusico'],
+  ['final fuerte en el tercer tiempo', (s) => { s.filas[0].compases[1] = [{ key: 'd/5', d: 'h', puntillo: 0 }, { key: 'c/5', d: 'h', puntillo: 0 }]; }, /el alt dice final en tiempo fuerte/, 'final-tiempo-fuerte'],
+  ['final debil en el primer tiempo', (s) => { s.filas[0].compases[1] = [{ key: 'c/5', d: 'w', puntillo: 0 }]; }, /el alt dice final en tiempo debil/, 'final-tiempo-debil'],
+  ['comparativa con las filas cambiadas', (s) => { s.filas.reverse(); }, /deberia ser un comienzo/, 'comienzo-comparativa'],
   ['Fine en el ultimo compas', (s) => { s.filas[0].textos[0].finDeCompas = 2; }, /«Fine» va sobre un compas intermedio/, 'repeticion-dc-fine'],
   ['D.C. al Fine en otro sitio', (s) => { s.filas[0].textos[1].finDeCompas = 0; }, /«D\.C\. al Fine» al final/, 'repeticion-dc-fine'],
   ['la 1.ª casilla sin repeticion', (s) => { delete s.filas[0].barras[1].fin; }, /1\.ª casilla lleva la barra/, 'repeticion-casillas'],
