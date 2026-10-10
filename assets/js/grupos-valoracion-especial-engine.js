@@ -191,7 +191,7 @@
 
   /* Dibuja el compás completo con el grupo de valoración especial insertado.
      opts = { w }. Escribe div.__tmInfo para el verificador. */
-  function dibujarConGrupo(div, it, opts) {
+  function dibujarConGrupoVF(div, it, opts) {
     var V = VF(), FIG = D().FIG;
     opts = opts || {};
     div.innerHTML = '';
@@ -261,6 +261,59 @@
     div.__tmInfo = info;
   }
 
+  /* ---- Dibujo con Verovio (tm-mei.js + tm-notacion.js) ---- */
+  /* Mientras haya motores que aún dibujan con VexFlow, dibujarConGrupo elige solo: con Verovio cargado, Verovio; si no,
+     VexFlow (dibujarConGrupoVF). Cuando estén todos migrados se quitará la versión de VexFlow. */
+  function conVerovio() { return !!(window.tmNotacion && window.tmNotacion.cargado && window.tmNotacion.cargado()); }
+
+  /* '8', 'q', 'h', '16', 'qd', '8d', 'hd', 'wd'… (duraciones de VexFlow) -> duración y puntillo de tm-mei.js */
+  function durV(vf) { return { d: vf.replace(/d$/, ''), p: /d$/.test(vf) ? 1 : 0 }; }
+
+  function dibujarConGrupoV(div, it, opts) {
+    var FIG = D().FIG, d = D().COMPASES[it.compasGrupo], g = GRUPOS_VE[it.grupo];
+    opts = opts || {};
+    div.innerHTML = '';
+    var evs = [], info = [], barra = 0, ini = -1, fin = -1;
+    var fuera = [];   // figuras cortas seguidas del mismo tiempo, fuera del grupo: llevan barra juntas
+    function cerrarFuera() { if (fuera.length > 1) { barra++; fuera.forEach(function (x) { evs[x.k].barra = barra; }); } fuera = []; }
+    it.elems.forEach(function (e) {
+      if (e.grupo) {
+        ini = evs.length;
+        var corriendo = [];
+        var cerrarGrupo = function () { if (corriendo.length > 1) { barra++; corriendo.forEach(function (k) { evs[k].barra = barra; }); } corriendo = []; };
+        it.partes.forEach(function (p, k) {
+          var esSil = k === it.silIdx, v = durV(duracionDe(it.variante.base, p));
+          var ev = { key: 'b/4', d: v.d };
+          if (esSil) ev.silencio = true; else ev.plica = 'down';
+          evs.push(ev);
+          info.push({ grupo: it.grupo, partes: p, silencio: esSil });
+          if (p === 1 && !esSil) corriendo.push(evs.length - 1); else cerrarGrupo();
+        });
+        cerrarGrupo();
+        fin = evs.length - 1;
+        cerrarFuera();
+        return;
+      }
+      var v = durV(FIG[e.f].vf), ev2 = { key: 'b/4', d: v.d };
+      if (v.p) ev2.puntillo = 1;
+      if (e.s) ev2.silencio = true; else ev2.plica = 'down';
+      evs.push(ev2);
+      info.push({ f: e.f, s: !!e.s, puntillos: v.p });
+      var corta = e.u < 16 && !e.s;
+      var tiempoIdx = Math.floor(e.t0 / d.tiempo);
+      if (!corta || (fuera.length && Math.floor(fuera[0].t0 / d.tiempo) !== tiempoIdx)) cerrarFuera();
+      if (corta) fuera.push({ k: evs.length - 1, t0: e.t0 });
+    });
+    cerrarFuera();
+    var p = it.compasGrupo.split('/');
+    var fila = { clave: 'sol', num: Number(p[0]), den: Number(p[1]), compases: [evs], tuplets: [{ c: 0, ini: ini, fin: fin, num: g.n, numbase: g.equivale }] };
+    var r = window.tmNotacion.dibujarSync(div, fila, { escala: 1.3, separacion: 0.5, id: 'gve', alt: 'Compás de ' + it.compasGrupo + ' con un grupo de valoración especial' });
+    r.elemento.style.maxWidth = Math.round((opts.w || 460) * 1.2) + 'px';
+    div.__tmInfo = info;
+  }
+
+  function dibujarConGrupo(div, it, opts) { return (conVerovio() ? dibujarConGrupoV : dibujarConGrupoVF)(div, it, opts); }
+
   /* -------------------------------------------------------------- UI */
 
   var NIVELES = [
@@ -320,6 +373,16 @@
   }
 
   window.tmGruposVE = function (id) {
+    var cont = document.getElementById(id);
+    if (cont && D() && window.tmNotacion && !conVerovio()) {
+      cont.innerHTML = '<div class="tm-gv-card"><div class="tm-gv-sub">Cargando el ejercicio…</div></div>';
+      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<div class="tm-gv-card"><div class="tm-gv-sub">No se ha podido cargar el ejercicio. Recarga la página.</div></div>'; });
+      return;
+    }
+    arrancar(id);
+  };
+
+  function arrancar(id) {
     var cont = document.getElementById(id);
     if (!cont || !D()) return;
     css();
@@ -410,7 +473,7 @@
     }
 
     inicio();
-  };
+  }
 
   window.tmGruposVETest = {
     GRUPOS_VE: GRUPOS_VE, generarLote: generarLote, explicar: explicar, dibujarConGrupo: dibujarConGrupo,
