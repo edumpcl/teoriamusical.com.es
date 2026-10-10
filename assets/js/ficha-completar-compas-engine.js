@@ -93,7 +93,7 @@
           var c = document.createElement('div'); c.className = 'tm-fc-celda';
           c.innerHTML = '<span class="tm-fc-n"></span><div class="tm-fc-svg"></div>';
           rej.appendChild(c);
-          Tt.dibujar(c.querySelector('.tm-fc-svg'), it, { w: 400, revelar: solucion });
+          Tt.dibujar(c.querySelector('.tm-fc-svg'), it, { w: 400, revelar: solucion, compacto: true });
         });
       });
       var n = 0;

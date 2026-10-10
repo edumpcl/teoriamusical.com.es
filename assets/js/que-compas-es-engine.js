@@ -158,7 +158,7 @@
      sus propios datos (e.datos: {grupo, variante, partes, silIdx}), a
      diferencia de dibujarConGrupo() del otro ejercicio, que solo admite un
      grupo por compás. */
-  function dibujarCompas(div, it, opts) {
+  function dibujarCompasVF(div, it, opts) {
     var V = VF(), FIG = D().FIG;
     opts = opts || {};
     div.innerHTML = '';
@@ -229,6 +229,59 @@
     div.__tmInfo = info;
   }
 
+  /* ---- Dibujo con Verovio (tm-mei.js + tm-notacion.js) ---- */
+  /* Mientras haya motores que aún dibujan con VexFlow, dibujarCompas elige solo: con Verovio cargado, Verovio; si no,
+     VexFlow (dibujarCompasVF). Cuando estén todos migrados se quitará la versión de VexFlow. */
+  function conVerovio() { return !!(window.tmNotacion && window.tmNotacion.cargado && window.tmNotacion.cargado()); }
+  /* '8', 'q', 'h', '16', 'qd', '8d'… (duraciones de VexFlow) -> duración y puntillo de tm-mei.js */
+  function durV(vf) { return { d: vf.replace(/d$/, ''), p: /d$/.test(vf) ? 1 : 0 }; }
+
+  /* Separación compacta (0,15): un 12/8 hecho solo de grupos mide 1015 px con la de siempre (0,5) y 473 con esta; en móvil
+     eso es la diferencia entre notas de 3,7 px y de 8 px entre líneas. */
+  function dibujarCompasV(div, it, opts) {
+    var FIG = D().FIG, d = D().COMPASES[it.compas];
+    opts = opts || {};
+    div.innerHTML = '';
+    var evs = [], info = [], tuplets = [], barra = 0, fuera = [];
+    // figuras cortas seguidas del mismo tiempo, fuera de los grupos: llevan barra juntas
+    function cerrarFuera() { if (fuera.length > 1) { barra++; fuera.forEach(function (x) { evs[x.k].barra = barra; }); } fuera = []; }
+    it.elems.forEach(function (e) {
+      if (e.grupo) {
+        var g = e.datos, ini = evs.length, corriendo = [];
+        var cerrarGrupo = function () { if (corriendo.length > 1) { barra++; corriendo.forEach(function (k) { evs[k].barra = barra; }); } corriendo = []; };
+        g.partes.forEach(function (p, k) {
+          var esSil = k === g.silIdx, v = durV(GV().duracionDe(g.variante.base, p));
+          var ev = { key: 'b/4', d: v.d };
+          if (esSil) ev.silencio = true; else ev.plica = 'down';
+          evs.push(ev);
+          info.push({ grupo: g.grupo, partes: p, silencio: esSil });
+          if (p === 1 && !esSil) corriendo.push(evs.length - 1); else cerrarGrupo();
+        });
+        cerrarGrupo();
+        tuplets.push({ c: 0, ini: ini, fin: evs.length - 1, num: GV().GRUPOS_VE[g.grupo].n, numbase: GV().GRUPOS_VE[g.grupo].equivale });
+        cerrarFuera();
+        return;
+      }
+      var v2 = durV(FIG[e.f].vf), ev2 = { key: 'b/4', d: v2.d };
+      if (v2.p) ev2.puntillo = 1;
+      if (e.s) ev2.silencio = true; else ev2.plica = 'down';
+      evs.push(ev2);
+      info.push({ f: e.f, s: !!e.s, puntillos: v2.p });
+      var corta = e.u < 16 && !e.s;
+      var tiempoIdx = Math.floor(e.t0 / d.tiempo);
+      if (!corta || (fuera.length && Math.floor(fuera[0].t0 / d.tiempo) !== tiempoIdx)) cerrarFuera();
+      if (corta) fuera.push({ k: evs.length - 1, t0: e.t0 });
+    });
+    cerrarFuera();
+    var fila = { clave: 'sol', compases: [evs], tuplets: tuplets };
+    if (!opts.sinCifra) { var p = it.compas.split('/'); fila.num = Number(p[0]); fila.den = Number(p[1]); }
+    var res = window.tmNotacion.dibujarSync(div, fila, { escala: 1.3, separacion: 0.15, id: 'qce', alt: opts.sinCifra ? 'Compás sin indicación de compás, con grupos de valoración especial' : 'Compás de ' + it.compas + ' con grupos de valoración especial' });
+    res.elemento.style.maxWidth = Math.round((opts.w || 460) * 1.2) + 'px';
+    div.__tmInfo = info;
+  }
+
+  function dibujarCompas(div, it, opts) { return (conVerovio() ? dibujarCompasV : dibujarCompasVF)(div, it, opts); }
+
   /* -------------------------------------------------------------- UI */
 
   var NIVELES = [
@@ -292,6 +345,16 @@
   }
 
   window.tmQueCompasEs = function (id) {
+    var cont = document.getElementById(id);
+    if (cont && D() && GV() && window.tmNotacion && !conVerovio()) {
+      cont.innerHTML = '<div class="tm-qc-card"><div class="tm-qc-sub">Cargando el ejercicio…</div></div>';
+      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<div class="tm-qc-card"><div class="tm-qc-sub">No se ha podido cargar el ejercicio. Recarga la página.</div></div>'; });
+      return;
+    }
+    arrancar(id);
+  };
+
+  function arrancar(id) {
     var cont = document.getElementById(id);
     if (!cont || !D() || !GV()) return;
     css();
@@ -397,7 +460,7 @@
     }
 
     inicio();
-  };
+  }
 
   window.tmQueCompasEsTest = { generarLote: generarLote, explicar: explicar, dibujarCompas: dibujarCompas, candidatosPara: candidatosPara, cifrasValidas: cifrasValidas };
 })();

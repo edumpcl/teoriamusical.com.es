@@ -97,7 +97,7 @@
           var nombreEquiv = T1.FIG[it.variante.equivaleFig].nombre;
           c.innerHTML = '<span class="tm-fg-n"></span><div class="tm-fg-casilla' + (solucion ? ' tm-sol' : '') + '">' + (solucion ? nombreEquiv : '') + '</div><div class="tm-fg-svg"></div>';
           rej.appendChild(c);
-          T2.dibujarConGrupo(c.querySelector('.tm-fg-svg'), it, { w: 400 });
+          T2.dibujarConGrupo(c.querySelector('.tm-fg-svg'), it, { w: 400, compacto: true });
         });
       });
       var n = 0;

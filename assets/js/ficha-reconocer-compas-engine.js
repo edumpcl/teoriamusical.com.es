@@ -99,7 +99,7 @@
           var cifraTxt = it.validos.join(' / ');
           c.innerHTML = '<span class="tm-fr-n"></span><div class="tm-fr-casilla' + (solucion ? ' tm-sol' : '') + '">' + (solucion ? cifraTxt : '') + '</div><div class="tm-fr-svg"></div>';
           rej.appendChild(c);
-          T1.dibujarMedida(c.querySelector('.tm-fr-svg'), it.compasBase, it.elems, { w: 400, sinCifra: true });
+          T1.dibujarMedida(c.querySelector('.tm-fr-svg'), it.compasBase, it.elems, { w: 400, sinCifra: true, compacto: true });
         });
       });
       var n = 0;
