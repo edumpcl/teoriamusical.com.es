@@ -272,7 +272,7 @@
   function pintarCompasV(div, sig, items, opts) {
     opts = opts || {};
     var r = window.tmNotacion.dibujarSync(div, filaDeCompas(sig, items, opts), {
-      escala: 1.3, separacion: opts.compacto ? 0.15 : 0.5, id: 'cc', alt: opts.alt || ('Compás de ' + sig)
+      escala: 1.3, separacion: opts.separacion || (opts.compacto ? 0.15 : 0.5), id: 'cc', alt: opts.alt || ('Compás de ' + sig)
     });
     r.elemento.style.maxWidth = Math.round((opts.w || 420) * 1.2) + 'px';
     return r.elemento;
@@ -333,7 +333,7 @@
         t += FIG[x.f].u;
       });
     });
-    var svg = pintarCompasV(div, it.compas, items, { w: opts.w || 420, compacto: opts.compacto, alt: 'Compás de ' + it.compas + ' con un hueco marcado con una línea roja' });
+    var svg = pintarCompasV(div, it.compas, items, { w: opts.w || 420, compacto: opts.compacto, separacion: opts.separacion, alt: 'Compás de ' + it.compas + ' con un hueco marcado con una línea roja' });
     // El hueco: una línea debajo y un interrogante. Mientras se está respondiendo (parcial) se mantiene siempre, aunque ya se
     // haya rellenado del todo o de más: solo desaparece al corregir (Eduardo).
     var fantasmas = [], enHuecoIdx = [];
@@ -382,7 +382,7 @@
     div.innerHTML = '';
     var items = [], t = 0;
     elems.forEach(function (e) { items.push({ f: e.f, s: !!e.s, t0: t, u: FIG[e.f].u }); t += FIG[e.f].u; });
-    pintarCompasV(div, sig, items, { w: opts.w || 420, sinCifra: opts.sinCifra, compacto: opts.compacto, alt: opts.sinCifra ? 'Compás sin indicación de compás' : 'Compás de ' + sig });
+    pintarCompasV(div, sig, items, { w: opts.w || 420, sinCifra: opts.sinCifra, compacto: opts.compacto, separacion: opts.separacion, alt: opts.sinCifra ? 'Compás sin indicación de compás' : 'Compás de ' + sig });
     var barras = barrasPorTiempos(items, COMPASES[sig]), porGrupo = {}, grupos = [];
     items.forEach(function (x, k) { if (barras[k]) (porGrupo[barras[k]] = porGrupo[barras[k]] || []).push(x.t0); });
     Object.keys(porGrupo).forEach(function (g) { grupos.push(porGrupo[g]); });

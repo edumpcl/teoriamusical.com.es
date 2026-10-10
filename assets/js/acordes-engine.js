@@ -1,4 +1,4 @@
-/* Motor de ejercicios de acordes tríada — v3 construir inversiones */
+/* Motor de ejercicios de acordes tríada — v3 construir inversiones (se dibuja con Verovio: tm-mei.js + tm-notacion.js) */
 (function () {
   'use strict';
 
@@ -94,12 +94,20 @@
     document.head.appendChild(s);
   }
 
-  function accStr(a) {
-    if (a ===  2) return '##';
-    if (a ===  1) return '#';
-    if (a === -1) return 'b';
-    if (a === -2) return 'bb';
-    return null;
+  /* La nota en el formato de tm-mei.js: letra + alteración + / + octava ('f##/4'). */
+  function claveMEI(vfn, acc, oct) {
+    return vfn + (acc === 2 ? '##' : acc === 1 ? '#' : acc === -1 ? 'b' : acc === -2 ? 'bb' : '') + '/' + oct;
+  }
+  /* Un acorde de redonda en clave de sol (sin armadura): una fila de tm-mei.js. notas = ['c/4', { key: 'e/4', color }, ...] */
+  function filaAcorde(notas) {
+    return { pentagramas: [{ clave: 'sol', compases: [[{ notas: notas, d: 'w' }]] }] };
+  }
+  /* Verovio se carga bajo demanda: el motor arranca cuando ya está. */
+  function cargarVerovio(wrap, init) {
+    wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">Cargando el ejercicio…</p></div>';
+    window.tmNotacion.listo().then(init).catch(function () {
+      wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">No se ha podido cargar el ejercicio. Recarga la página.</p></div>';
+    });
   }
 
   /* ================================================================
@@ -212,13 +220,7 @@
     /* ---- Dibuja el acorde con la inversión correcta ---- */
     function drawStaff() {
       var elNot = document.getElementById(uid + '_not');
-      elNot.innerHTML = '';
-      var V = Vex.Flow;
-      var r = new V.Renderer(elNot, V.Renderer.Backends.SVG);
-      r.resize(300, 130);
-      var ctx = r.getContext();
-      var stave = new V.Stave(10, 10, 280);
-      stave.addClef('treble').setContext(ctx).draw();
+      elNot.style.width = '100%'; elNot.style.height = '150px';
 
       /*
        * Orden de notas según inversión:
@@ -241,19 +243,9 @@
       var moct = (mn > bn) ? boct : boct + 1;
       var toct = (tn > mn) ? moct : moct + 1;
 
-      var key1 = VF_NAMES[bn] + '/' + boct;
-      var key2 = VF_NAMES[mn] + '/' + moct;
-      var key3 = VF_NAMES[tn] + '/' + toct;
-
-      var chord = new V.StaveNote({ keys: [key1, key2, key3], duration: 'w' });
-      var acc1 = accStr(ba), acc2 = accStr(ma), acc3 = accStr(ta);
-      if (acc1) chord.addModifier(new V.Accidental(acc1), 0);
-      if (acc2) chord.addModifier(new V.Accidental(acc2), 1);
-      if (acc3) chord.addModifier(new V.Accidental(acc3), 2);
-
-      var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([chord]);
-      new V.Formatter().joinVoices([voice]).format([voice], 180);
-      voice.draw(ctx, stave);
+      tmNotacion.dibujarAlineado(elNot, filaAcorde([claveMEI(VF_NAMES[bn], ba, boct), claveMEI(VF_NAMES[mn], ma, moct), claveMEI(VF_NAMES[tn], ta, toct)]), {
+        escala: 1.4, separacion: 0.5, top: 62, id: uid, alt: 'Acorde de tres notas en clave de sol'
+      });
     }
 
     /* ---- Renderiza los 4 botones de opción (orden aleatorio) ---- */
@@ -347,11 +339,7 @@
 
     function init() { showModeScreen(); }
 
-    if (typeof Vex !== 'undefined') {
-      init();
-    } else {
-      window.addEventListener('vexflow-ready', init, { once: true });
-    }
+    cargarVerovio(wrap, init);
   }
 
   /* ================================================================
@@ -366,7 +354,6 @@
     var NOTE_NAMES = ['Do','Re','Mi','Fa','Sol','La','Si'];
     var ACC_SYM = {'-2':'♭♭','-1':'♭','0':'','1':'♯','2':'♯♯'};
 
-    var SVG_W = 300, SVG_H = 170, STAVE_Y = 30, STAVE_W = 280;
 
     /* Staff positions G5 → B3, each 5px apart in SVG space */
     var ROWS = [
@@ -519,90 +506,48 @@
     /* ---- Draw main staff (bass + placed notes, sorted by pitch) ---- */
     function drawStaff() {
       var elNot = document.getElementById(uid+'_not');
-      if (!elNot || typeof Vex === 'undefined') return;
-      elNot.innerHTML = '';
-      var V = Vex.Flow;
-      var r = new V.Renderer(elNot, V.Renderer.Backends.SVG);
-      r.resize(SVG_W, SVG_H);
-      var ctx = r.getContext();
-      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(10, STAVE_Y, STAVE_W);
-      stave.addClef('treble').setContext(ctx).draw();
+      if (!elNot) return;
+      elNot.style.height = '170px';
       var allNotes = [{vfn:cQ.bass.vfn,oct:cQ.bass.oct,acc:cQ.bass.a}];
       placedNotes.forEach(function(p){ allNotes.push({vfn:p.vfn,oct:p.oct,acc:p.acc}); });
       allNotes.sort(function(a,b){
         return (a.oct*12+NS[VF_NAMES.indexOf(a.vfn)])-(b.oct*12+NS[VF_NAMES.indexOf(b.vfn)]);
       });
-      var keys = allNotes.map(function(n){ return n.vfn+'/'+n.oct; });
-      var chord = new V.StaveNote({keys:keys,duration:'w'});
-      allNotes.forEach(function(n,i){ var a=accStr(n.acc); if(a) chord.addModifier(new V.Accidental(a),i); });
-      var voice = new V.Voice({num_beats:4,beat_value:4}).setStrict(false);
-      voice.addTickables([chord]);
-      new V.Formatter().joinVoices([voice]).format([voice],180);
-      voice.draw(ctx, stave);
-      var svg = elNot.querySelector('svg');
-      if (svg) {
-        svg.setAttribute('viewBox','0 0 '+SVG_W+' '+SVG_H);
-        svg.style.width='100%'; svg.style.height='auto';
-        currentSvg = svg;
-      }
+      var r = tmNotacion.dibujarAlineado(elNot, filaAcorde(allNotes.map(function(n){ return claveMEI(n.vfn, n.acc, n.oct); })), {
+        escala: 1.5, separacion: 0.5, top: 62, id: uid, alt: 'Pentagrama en clave de sol con la nota dada y las que has colocado'
+      });
+      currentSvg = r.elemento;
     }
 
     /* ---- Draw loupe (root + placed + preview amber) ---- */
     function drawLoupe(row) {
       var elLstaff = document.getElementById(uid+'_lstaff');
-      if (!elLstaff || typeof Vex === 'undefined') return;
+      if (!elLstaff) return;
       var key = cQ.bass.vfn+','+cQ.bass.oct+','+cQ.bass.a+'|'+placedNotes.map(function(p){return p.vfn+p.oct+p.acc;}).join(',')+'|'+row.vfn+row.oct+activeTool;
       if (key === lastLoupeKey) return;
       lastLoupeKey = key;
-      elLstaff.innerHTML = '';
-      var V = Vex.Flow;
-      var rend = new V.Renderer(elLstaff, V.Renderer.Backends.SVG);
-      rend.resize(300,160);
-      var ctx = rend.getContext();
-      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(10,20,280);
-      stave.addClef('treble').setContext(ctx).draw();
-
-      /* Collect all notes, sort bottom-to-top so setKeyStyle index matches VF rendering */
       var all = [{vfn:cQ.bass.vfn,oct:cQ.bass.oct,acc:cQ.bass.a,pre:false}];
       placedNotes.forEach(function(p){ all.push({vfn:p.vfn,oct:p.oct,acc:p.acc,pre:false}); });
       all.push({vfn:row.vfn,oct:row.oct,acc:activeTool,pre:true});
       all.sort(function(a,b){
         return (a.oct*12+NS[VF_NAMES.indexOf(a.vfn)]+a.acc)-(b.oct*12+NS[VF_NAMES.indexOf(b.vfn)]+b.acc);
       });
-
-      var keys = all.map(function(n){return n.vfn+'/'+n.oct;});
-      var chord = new V.StaveNote({keys:keys,duration:'w'});
-      all.forEach(function(n,i){
-        var st = n.pre ? {fillStyle:'#8b6914',strokeStyle:'#8b6914'} : {fillStyle:'#1a1a1a',strokeStyle:'#1a1a1a'};
-        if (chord.setKeyStyle) chord.setKeyStyle(i,st);
-        var a = accStr(n.acc);
-        if (a) {
-          var obj = new V.Accidental(a);
-          if (n.pre && obj.setStyle) obj.setStyle(st);
-          chord.addModifier(obj,i);
-        }
-      });
-      var voice = new V.Voice({num_beats:4,beat_value:4}).setStrict(false);
-      voice.addTickables([chord]);
-      new V.Formatter().joinVoices([voice]).format([voice],180);
-      voice.draw(ctx,stave);
-      var svg = elLstaff.querySelector('svg');
-      var w = placedNotes.length > 0 ? '240' : '180';
-      var h = placedNotes.length > 0 ? '96' : '72';
-      if (svg) { svg.setAttribute('viewBox','0 0 300 160'); svg.setAttribute('width',w); svg.setAttribute('height',h); }
+      elLstaff.style.width = (placedNotes.length > 0 ? '240px' : '200px'); elLstaff.style.height = '120px';
+      tmNotacion.dibujarAlineado(elLstaff, filaAcorde(all.map(function(n){
+        var k = claveMEI(n.vfn, n.acc, n.oct);
+        return n.pre ? { key: k, color: '#8b6914' } : k;
+      })), { escala: 1.4, separacion: 0.5, top: 42, id: uid + 'l', alt: '' });
     }
 
     /* ---- Map screen Y to ROWS index ---- */
     function getRow(clientY) {
       if (!currentSvg) return ROWS[7];
-      var sr = currentSvg.getBoundingClientRect();
-      if (!sr.width) return ROWS[7];
-      var scale = sr.width / SVG_W;
-      var svgY = (clientY - sr.top) / scale;
-      /* Row 0 (G5) is at svgY = STAVE_Y + (-0.5)*10 = STAVE_Y - 5 */
-      var idx = Math.round((svgY - STAVE_Y + 5) / 5);
+      var sr = currentSvg.getBoundingClientRect(), g = tmNotacion.geometria(currentSvg);
+      if (!sr.width || !g.lineas) return ROWS[7];
+      var sp = (g.lineas[4] - g.lineas[0]) / 4;               /* px entre líneas */
+      var L = (clientY - sr.top - g.lineas[0]) / sp;          /* posición en líneas desde la superior */
+      /* Row 0 (G5) está media línea por encima de la línea superior */
+      var idx = Math.round((L - ROWS[0].line) * 2);
       return ROWS[Math.max(0, Math.min(ROWS.length-1, idx))];
     }
 
@@ -622,8 +567,8 @@
         /* Highlight line */
         var sr = currentSvg.getBoundingClientRect();
         var wr = elWrap.getBoundingClientRect();
-        var scale = sr.width / SVG_W;
-        var lineY = (sr.top - wr.top) + (STAVE_Y + row.line*10)*scale;
+        var g = tmNotacion.geometria(currentSvg);
+        var lineY = (sr.top - wr.top) + g.lineas[0] + row.line * (g.lineas[4] - g.lineas[0]) / 4;
         elHigh.style.display = 'block';
         elHigh.style.top = (lineY-1)+'px';
         /* Loupe */
@@ -749,8 +694,7 @@
     }
 
     function init() { showModeScreen(); }
-    if (typeof Vex !== 'undefined') { init(); }
-    else { window.addEventListener('vexflow-ready', init, {once:true}); }
+    cargarVerovio(wrap, init);
   }
 
   window.tmAcEngine = tmAcEngine;

@@ -30,9 +30,9 @@ const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(
 
 /* Los lotes de la ficha: nivel, cuántos, semilla. */
 const LOTES = [
-  [1, 4, 8101],
-  [2, 4, 8102],
-  [3, 8, 8103],
+  [1, 3, 8101],
+  [2, 3, 8102],
+  [3, 9, 8103],
 ];
 module.exports = { LOTES };
 if (require.main !== module) return;
@@ -56,9 +56,10 @@ const CSS = `
   .datos span { flex: 1; border-bottom: 1px solid #bbb; padding-bottom: 2px; }
   .datos span b { font-weight: normal; color: #888; }
   h2 { font-size: 10.5pt; margin: 8px 0 4px; color: #8b6914; }
-  .rejilla { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px 8px; }
-  .celda { position: relative; border: 1px solid #e8e0cc; border-radius: 6px; padding: 3px 5px 4px 20px; page-break-inside: avoid; }
+  .rejilla { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px 10px; }
+  .celda { position: relative; border: 1px solid #e8e0cc; border-radius: 6px; padding: 3px 6px 4px 6px; page-break-inside: avoid; }
   .celda svg { display: block; margin: 0 auto; }
+  .celda .svg { margin-left: 12px; }
   .num { position: absolute; top: 3px; left: 5px; font-size: 8.5pt; font-weight: 700; color: #9a7b28; }
   .ops { display: grid; grid-template-columns: 1fr 1fr; gap: 0 3px; font-size: 6.9pt; color: #333; padding: 1px 2px 0; }
   .op { display: flex; align-items: flex-start; gap: 3px; line-height: 1.15; padding: 1px 0; }
@@ -129,7 +130,7 @@ function montar({ LOTES, solucion }) {
     await cargarFicha(page, html(solucion), [ENGINE1, ENGINE2, ENGINE3]);
     await page.evaluate((TIT) => { window.__tmTit = TIT; }, TIT);
     const n = await page.evaluate(montar, { LOTES, solucion });
-    await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 27, 0.6)");
+    await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 14, 0.8, false)");
     const nombre = 'ficha-cadencias' + (solucion ? '-soluciones' : '');
     const pdfPath = path.join(OUT_DIR, nombre + '.pdf');
     const sobra = await page.evaluate(() => Math.round(document.querySelector('.hoja').scrollHeight - 297 / 25.4 * 96));

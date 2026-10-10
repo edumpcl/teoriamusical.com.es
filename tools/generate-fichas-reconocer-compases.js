@@ -98,7 +98,7 @@ function montar({ LOTES, solucion }) {
       const cifraTxt = it.validos.join(' / ');
       c.innerHTML = `<span class="num">${++n}</span><div class="casilla${solucion ? ' sol' : ''}">${solucion ? cifraTxt : ''}</div><div class="svg"></div>`;
       rej.appendChild(c);
-      T1.dibujarMedida(c.querySelector('.svg'), it.compasBase, it.elems, { w: 400, sinCifra: true, compacto: true });
+      T1.dibujarMedida(c.querySelector('.svg'), it.compasBase, it.elems, { w: 400, sinCifra: true, separacion: 0.3 });
     });
   });
   return n;
@@ -115,7 +115,7 @@ function montar({ LOTES, solucion }) {
     await cargarFicha(page, html(solucion), [ENGINE1, ENGINE2]);
     await page.evaluate((TIT) => { window.__tmTit = TIT; }, TIT);
     const n = await page.evaluate(montar, { LOTES, solucion });
-    await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 14, 0.5)");
+    await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 14, 0.45)");
     const nombre = 'ficha-reconocer-compases' + (solucion ? '-soluciones' : '');
     const pdfPath = path.join(OUT_DIR, nombre + '.pdf');
     const sobra = await page.evaluate(() => Math.round(document.querySelector('.hoja').scrollHeight - 297 / 25.4 * 96));

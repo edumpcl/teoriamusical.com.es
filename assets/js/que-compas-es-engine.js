@@ -197,7 +197,7 @@
     cerrarFuera();
     var fila = { clave: 'sol', compases: [evs], tuplets: tuplets };
     if (!opts.sinCifra) { var p = it.compas.split('/'); fila.num = Number(p[0]); fila.den = Number(p[1]); }
-    var res = window.tmNotacion.dibujarSync(div, fila, { escala: 1.3, separacion: 0.15, id: 'qce', alt: opts.sinCifra ? 'Compás sin indicación de compás, con grupos de valoración especial' : 'Compás de ' + it.compas + ' con grupos de valoración especial' });
+    var res = window.tmNotacion.dibujarSync(div, fila, { escala: 1.3, separacion: opts.separacion || 0.15, id: 'qce', alt: opts.sinCifra ? 'Compás sin indicación de compás, con grupos de valoración especial' : 'Compás de ' + it.compas + ' con grupos de valoración especial' });
     res.elemento.style.maxWidth = Math.round((opts.w || 460) * 1.2) + 'px';
     div.__tmInfo = info;
   }

@@ -28,14 +28,20 @@ async function cargarFicha(page, html, scripts) {
   await page.evaluate(() => window.tmNotacion.listo());
 }
 
-/** Dentro de la pagina: todos los <svg> de las rejillas dadas a la misma escala. relleno = px que no son dibujo en cada casilla. */
-function escalarUniforme(selectorRejilla, selectorCasilla, relleno, maximo) {
+/** Dentro de la pagina: todos los <svg> de las rejillas dadas a la misma escala (y los que no caben en una columna, a fila entera). relleno = px que no son dibujo en cada casilla. */
+function escalarUniforme(selectorRejilla, selectorCasilla, relleno, maximo, permitirAnchas) {
   document.querySelectorAll(selectorRejilla).forEach((rej) => {
     const svgs = [...rej.querySelectorAll('svg')].filter((s) => s.getAttribute('width'));
     if (!svgs.length) return;
     // primero se encogen todos: con su ancho natural los dibujos ensanchan las columnas de la rejilla y la casilla se mediria de mas
     svgs.forEach((s) => { s.style.width = '10px'; s.style.maxWidth = 'none'; });
-    // cada dibujo cabe en SU casilla (las anchas ocupan dos columnas); la escala es la menor de todas
+    // los que a la escala maxima no caben en una columna ocupan la fila entera (en vez de encogerse y apretar las notas)
+    svgs.forEach((s) => {
+      const cas = s.closest(selectorCasilla);
+      if (permitirAnchas === false || cas.style.gridColumn) return;
+      if (Number(s.getAttribute('width')) * maximo > cas.clientWidth - relleno && cas.parentElement.children.length > 1 && getComputedStyle(cas.parentElement).display === 'grid') cas.style.gridColumn = '1 / -1';
+    });
+    // cada dibujo cabe en SU casilla; la escala es la menor de todas
     let K = maximo;
     svgs.forEach((s) => { K = Math.min(K, (s.closest(selectorCasilla).clientWidth - relleno) / Number(s.getAttribute('width'))); });
     svgs.forEach((s) => { s.style.width = (Number(s.getAttribute('width')) * K) + 'px'; s.style.height = 'auto'; s.style.maxWidth = 'none'; });

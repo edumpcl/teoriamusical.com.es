@@ -317,7 +317,7 @@
     var fila = { clave: 'sol', armadura: arm, num: Number(p[0]), den: Number(p[1]), compases: compases };
     if (opts.final) fila.barras = [{}, { fin: 'end' }];
     var res = window.tmNotacion.dibujarSync(div, fila, {
-      escala: 1.3, separacion: opts.compacto ? 0.2 : 0.4, id: 'com',
+      escala: 1.3, separacion: opts.separacion || (opts.compacto ? 0.2 : 0.4), id: 'com',
       alt: 'Dos compases de una melodía en compás de ' + it.compas
     });
     res.elemento.style.maxWidth = '100%';

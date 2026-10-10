@@ -108,8 +108,21 @@
     return { lineas: lineas, cabezas: cabezas, ancho: caja.width, alto: caja.height };
   }
 
+  /**
+   * Como dibujarSync, pero con la linea SUPERIOR del pentagrama siempre a op.top px del borde del contenedor, sea cual sea la altura
+   * del contenido (Verovio recorta el SVG: una nota con lineas adicionales lo alarga y moveria el pentagrama). El contenedor debe tener
+   * altura fija. Para el primer pentagrama de un sistema.
+   */
+  function dibujarAlineado(contenedor, fila, op) {
+    var r = dibujarSync(contenedor, fila, op);
+    var g = r.geometria();
+    r.elemento.style.display = 'block'; r.elemento.style.margin = '0 auto';
+    if (g.lineas) r.elemento.style.marginTop = Math.round(op.top - g.lineas[0]) + 'px';
+    return r;
+  }
+
   raiz.tmNotacion = {
     listo: listo, cargado: function () { return !!toolkit; }, mei: mei,
-    svg: svg, svgSync: svgSync, dibujar: dibujar, dibujarSync: dibujarSync, geometria: geometria, VERSION: VERSION
+    svg: svg, svgSync: svgSync, dibujar: dibujar, dibujarSync: dibujarSync, dibujarAlineado: dibujarAlineado, geometria: geometria, VERSION: VERSION
   };
 })(typeof self !== 'undefined' ? self : this);

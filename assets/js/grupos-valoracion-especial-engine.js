@@ -233,7 +233,7 @@
     cerrarFuera();
     var p = it.compasGrupo.split('/');
     var fila = { clave: 'sol', num: Number(p[0]), den: Number(p[1]), compases: [evs], tuplets: [{ c: 0, ini: ini, fin: fin, num: g.n, numbase: g.equivale }] };
-    var r = window.tmNotacion.dibujarSync(div, fila, { escala: 1.3, separacion: opts.compacto ? 0.15 : 0.5, id: 'gve', alt: 'Compás de ' + it.compasGrupo + ' con un grupo de valoración especial' });
+    var r = window.tmNotacion.dibujarSync(div, fila, { escala: 1.3, separacion: opts.separacion || (opts.compacto ? 0.15 : 0.5), id: 'gve', alt: 'Compás de ' + it.compasGrupo + ' con un grupo de valoración especial' });
     r.elemento.style.maxWidth = Math.round((opts.w || 460) * 1.2) + 'px';
     div.__tmInfo = info;
   }

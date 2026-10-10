@@ -145,7 +145,7 @@ function aMEI(fila) {
  * Un SISTEMA de varios pentagramas (piano: clave de sol y de fa con llave) con ACORDES.
  *   { armadura, num?, den?, llave: true, barraFinal: 'end'?,
  *     pentagramas: [{ clave: 'sol', compases: [[ev, ev], [ev]] }, { clave: 'fa', compases: [...] }] }
- * ev = { notas: ['c/4', 'e/4'], d: 'w', puntillo?, silencio?, color?, plica? }   (una sola nota: notas con un elemento).
+ * ev = { notas: ['c/4', { key: 'e/4', color: '#8b6914' }], d: 'w', puntillo?, silencio?, color?, plica? }   (una sola nota: notas con un elemento).
  * Las notas se escriben con la alteracion que dice la armadura ('bb/4' en Si bemol mayor); la regla del compas (una alteracion
  * vale hasta la barra) se aplica por pentagrama.
  */
@@ -162,12 +162,14 @@ function aMEIsistema(s) {
     const evs = p.compases[i].map((x) => {
       const dur = `dur="${DUR_MEI[x.d]}"${x.puntillo ? ' dots="1"' : ''}`;
       if (x.silencio) return `<rest xml:id="n${k++}" ${dur}${x.color ? ` color="${x.color}"` : ''}/>`;
-      const notas = x.notas.map((key) => {
+      const notas = x.notas.map((nota) => {
+        // una nota es 'c/4' o { key: 'c/4', color } (para pintar una sola nota del acorde)
+        const key = typeof nota === 'string' ? nota : nota.key, colorNota = typeof nota === 'string' ? x.color : (nota.color || x.color);
         const q = parseKey(key), id = q.letra + q.oct;
         const vigente = id in estado ? estado[id] : altArmadura(arm, q.letra);
         const muestra = q.alt !== vigente || !!x.becuadro;
         estado[id] = q.alt;
-        const comun = `pname="${q.letra}" oct="${q.oct}"${muestra ? ` accid="${ACC_MEI[q.alt]}"` : ''}${x.color ? ` color="${x.color}"` : ''}`;
+        const comun = `pname="${q.letra}" oct="${q.oct}"${muestra ? ` accid="${ACC_MEI[q.alt]}"` : ''}${colorNota ? ` color="${colorNota}"` : ''}`;
         return x.notas.length > 1 ? `<note xml:id="n${k++}" ${comun}/>` : `<note xml:id="n${k++}" ${comun} ${dur}${x.plica ? ` stem.dir="${x.plica}"` : ''}/>`;
       }).join('');
       return x.notas.length > 1 ? `<chord xml:id="n${k++}" ${dur}${x.plica ? ` stem.dir="${x.plica}"` : ''}>${notas}</chord>` : notas;

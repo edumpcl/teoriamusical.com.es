@@ -95,7 +95,7 @@ function montar({ LOTES, solucion }) {
       const nombreEquiv = T1.FIG[it.variante.equivaleFig].nombre;
       c.innerHTML = `<span class="num">${++n}</span><div class="casilla${solucion ? ' sol' : ''}">${solucion ? nombreEquiv : ''}</div><div class="svg"></div>`;
       rej.appendChild(c);
-      T2.dibujarConGrupo(c.querySelector('.svg'), it, { w: 400, compacto: true });
+      T2.dibujarConGrupo(c.querySelector('.svg'), it, { w: 400, separacion: 0.3 });
     });
   });
   return n;
@@ -112,7 +112,7 @@ function montar({ LOTES, solucion }) {
     await cargarFicha(page, html(solucion), [ENGINE1, ENGINE2]);
     await page.evaluate((TIT) => { window.__tmTit = TIT; }, TIT);
     const n = await page.evaluate(montar, { LOTES, solucion });
-    await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 14, 0.5)");
+    await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 14, 0.45)");
     const nombre = 'ficha-grupos-valoracion-especial' + (solucion ? '-soluciones' : '');
     const pdfPath = path.join(OUT_DIR, nombre + '.pdf');
     const sobra = await page.evaluate(() => Math.round(document.querySelector('.hoja').scrollHeight - 297 / 25.4 * 96));

@@ -88,7 +88,7 @@ function montar({ LOTES, solucion }) {
       const c = document.createElement('div'); c.className = 'celda';
       c.innerHTML = `<span class="num">${++n}</span><div class="svg"></div>`;
       rej.appendChild(c);
-      T.dibujar(c.querySelector('.svg'), it, { w: 400, revelar: solucion, compacto: true });
+      T.dibujar(c.querySelector('.svg'), it, { w: 400, revelar: solucion, separacion: 0.3 });
     });
   });
   return n;
@@ -104,7 +104,7 @@ function montar({ LOTES, solucion }) {
     await page.setViewportSize({ width: 850, height: 1200 });
     await cargarFicha(page, html(solucion), [ENGINE]);
     const n = await page.evaluate(montar, { LOTES, solucion });
-    await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 14, 0.5)");
+    await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 14, 0.45)");
     const nombre = 'ficha-completar-compases' + (solucion ? '-soluciones' : '');
     const pdfPath = path.join(OUT_DIR, nombre + '.pdf');
     const sobra = await page.evaluate(() => Math.round(document.querySelector('.hoja').scrollHeight - 297 / 25.4 * 96));
