@@ -355,64 +355,50 @@
     document.head.appendChild(s);
   }
 
-  /* Dibuja el fragmento (1 o más compases) y devuelve { svg, lanes } donde
-     lanes[i] = {x, w} en coordenadas del SVG para la nota i. */
+  /* ---- Dibujo con Verovio (tm-mei.js + tm-notacion.js) ---- */
+  var DURACION = { q: { d: 'q' }, '8': { d: '8' }, '16': { d: '16' }, qd: { d: 'q', puntillo: 1 }, '8r': { d: '8', silencio: true } };
+  var ROJO = '#c0392b';
+
+  /* El fragmento como «fila» de tm-mei.js: clave de sol, compás, un array de figuras por compás. Las ligaduras son
+     `union` (i = inicia, t = termina, m = ambas) y los grupos con barra comparten el valor de `barra`. */
+  function filaDeFragmento(frag, solucion) {
+    var cifra = /^(\d+)\/(\d+)$/.exec(frag.compasTxt || '4/4');
+    var nComp = 1 + Math.max.apply(null, frag.notas.map(function (n) { return n.measure; }));
+    var barraDe = {};
+    (frag.beams || []).forEach(function (g, k) { g.forEach(function (i) { barraDe[i] = k + 1; }); });
+    var union = {};
+    (frag.ligaduras || []).forEach(function (p) {
+      union[p[0]] = union[p[0]] === 't' ? 'm' : 'i';
+      union[p[1]] = union[p[1]] === 'i' ? 'm' : 't';
+    });
+    var correcta = function (i) { return solucion && (frag.correctas || []).some(function (par) { return par.indexOf(i) !== -1; }); };
+    var compases = [];
+    for (var m = 0; m < nComp; m++) compases.push([]);
+    frag.notas.forEach(function (n, i) {
+      var d = DURACION[n.duration];
+      var e = { key: n.keys[0], d: d.d };
+      if (d.puntillo) e.puntillo = 1;
+      if (d.silencio) e.silencio = true;
+      if (barraDe[i]) e.barra = barraDe[i];
+      if (union[i]) e.union = union[i];
+      if (correcta(i)) e.color = ROJO;
+      compases[n.measure].push(e);
+    });
+    return { clave: 'sol', num: Number(cifra[1]), den: Number(cifra[2]), compases: compases };
+  }
+
+  function dibujarSVG(div, frag, solucion, escala) {
+    var r = tmNotacion.dibujarSync(div, filaDeFragmento(frag, solucion), {
+      escala: escala, separacion: 0.4, id: 'sinc', alt: 'Fragmento rítmico en compás ' + (frag.compasTxt || '4/4')
+    });
+    return r.elemento;
+  }
+
+  /* Dibuja el fragmento (1 o más compases) y devuelve { svg, rects, groups }: un carril clicable por nota o grupo de notas
+     ligadas, en coordenadas del SVG. */
   function dibujarFragmento(div, frag) {
     div.innerHTML = '';
-    var V = Vex.Flow;
-    var numCompases = 1 + Math.max.apply(null, frag.notas.map(function (n) { return n.measure; }));
-    var w = numCompases === 1 ? 300 : (20 + numCompases * 230), h = 150;
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(w, h);
-    var ctx = r.getContext();
-
-    var staveW = numCompases === 1 ? (w - 20) : 230;
-    var grupos = [];
-    var staves = [];
-    var x = 10;
-    for (var mi = 0; mi < numCompases; mi++) {
-      var anchoAqui = (mi === numCompases - 1) ? (w - 10 - x) : staveW;
-      var stave = new V.Stave(x, 30, anchoAqui);
-      if (mi === 0) stave.addClef('treble').addTimeSignature(frag.compasTxt || '4/4');
-      stave.setContext(ctx).draw();
-      staves.push(stave);
-      x += anchoAqui;
-      grupos.push(frag.notas.filter(function (n) { return n.measure === mi; }));
-    }
-
-    function crear(n) {
-      var note = new V.StaveNote({ clef: 'treble', keys: n.keys, duration: n.duration });
-      /* Plica hacia abajo por encima de la línea central (línea 3 = si4),
-         hacia arriba en la línea central o por debajo — convención estándar. */
-      var linea = note.getKeyProps()[0].line;
-      note.setStemDirection(linea >= 3 ? -1 : 1);
-      /* El puntillo (duration termina en "d") no se dibuja solo con la
-         duración: hace falta añadir el modificador Dot explícitamente. */
-      if (n.duration.slice(-1) === 'd') V.Dot.buildAndAttach([note], { all: true });
-      return note;
-    }
-    var vfPorCompas = grupos.map(function (g) { return g.map(crear); });
-    var vfTodas = [].concat.apply([], vfPorCompas);
-
-    var beams = (frag.beams || []).map(function (grupo) {
-      return new V.Beam(grupo.map(function (idx) { return vfTodas[idx]; }));
-    });
-
-    vfPorCompas.forEach(function (vfNotas, mi) { V.Formatter.FormatAndDraw(ctx, staves[mi], vfNotas); });
-    beams.forEach(function (b) { b.setContext(ctx).draw(); });
-
-    (frag.ligaduras || []).forEach(function (par) {
-      new V.StaveTie({
-        first_note: vfTodas[par[0]], last_note: vfTodas[par[1]],
-        first_indices: [0], last_indices: [0]
-      }).setContext(ctx).draw();
-    });
-
-    var svg = div.querySelector('svg');
-    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
-    svg.style.width = '100%';
-    svg.style.height = 'auto';
-    svg.style.maxWidth = w + 'px';
+    var svg = dibujarSVG(div, frag, false, 1.3);
 
     /* Agrupa las notas ligadas: una síncopa es UN solo suceso rítmico, así
        que las dos notas de la ligadura comparten un único carril de clic
@@ -429,10 +415,14 @@
 
     /* Carriles clicables: el punto medio entre cada grupo y el vecino,
        para que el hueco de clic sea generoso (no hay que acertar el
-       cabezal exacto). */
-    var boxes = Array.prototype.slice.call(svg.querySelectorAll('.vf-stavenote')).map(function (g) {
-      return g.getBBox();
-    });
+       cabezal exacto). Las cajas se miden en pantalla y se pasan a las unidades del SVG. */
+    var figuras = Array.prototype.slice.call(svg.querySelectorAll('.note, .rest'));
+    if (figuras.length !== n) throw new Error('el dibujo tiene ' + figuras.length + ' figuras y el fragmento ' + n);
+    var inv = svg.getScreenCTM().inverse();
+    var aX = function (px) { var p = svg.createSVGPoint(); p.x = px; p.y = 0; return p.matrixTransform(inv).x; };
+    var boxes = figuras.map(function (g) { var b = g.getBoundingClientRect(); return { x: aX(b.left), width: aX(b.right) - aX(b.left) }; });
+    var vb = svg.viewBox.baseVal;
+    var w = vb.width, h = vb.height;
     var lanes = groups.map(function (grp, i) {
       var first = boxes[grp[0]], last = boxes[grp[grp.length - 1]];
       var prevLast = (i === 0) ? null : boxes[groups[i - 1][groups[i - 1].length - 1]];
@@ -468,64 +458,22 @@
      síncopa" aparte). */
   function dibujarFragmentoImpresion(div, frag, solucion) {
     div.innerHTML = '';
-    var V = Vex.Flow;
-    var numCompases = 1 + Math.max.apply(null, frag.notas.map(function (n) { return n.measure; }));
-    var w = numCompases === 1 ? 300 : (20 + numCompases * 230), h = 150;
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(w, h);
-    var ctx = r.getContext();
-
-    var staveW = numCompases === 1 ? (w - 20) : 230;
-    var grupos = [];
-    var staves = [];
-    var x = 10;
-    for (var mi = 0; mi < numCompases; mi++) {
-      var anchoAqui = (mi === numCompases - 1) ? (w - 10 - x) : staveW;
-      var stave = new V.Stave(x, 30, anchoAqui);
-      if (mi === 0) stave.addClef('treble').addTimeSignature(frag.compasTxt || '4/4');
-      stave.setContext(ctx).draw();
-      staves.push(stave);
-      x += anchoAqui;
-      grupos.push(frag.notas.filter(function (n) { return n.measure === mi; }));
-    }
-
-    var ROJO = { fillStyle: '#c0392b', strokeStyle: '#c0392b' };
-    var esCorrecta = function (idx) { return solucion && (frag.correctas || []).some(function (par) { return par.indexOf(idx) !== -1; }); };
-    var idxGlobal = 0;
-    function crear(n) {
-      var note = new V.StaveNote({ clef: 'treble', keys: n.keys, duration: n.duration });
-      var linea = note.getKeyProps()[0].line;
-      note.setStemDirection(linea >= 3 ? -1 : 1);
-      if (n.duration.slice(-1) === 'd') V.Dot.buildAndAttach([note], { all: true });
-      if (esCorrecta(idxGlobal)) note.setStyle(ROJO);
-      idxGlobal++;
-      return note;
-    }
-    var vfPorCompas = grupos.map(function (g) { return g.map(crear); });
-    var vfTodas = [].concat.apply([], vfPorCompas);
-
-    var beams = (frag.beams || []).map(function (grupo) {
-      return new V.Beam(grupo.map(function (idx) { return vfTodas[idx]; }));
-    });
-
-    vfPorCompas.forEach(function (vfNotas, mi) { V.Formatter.FormatAndDraw(ctx, staves[mi], vfNotas); });
-    beams.forEach(function (b) { b.setContext(ctx).draw(); });
-
-    (frag.ligaduras || []).forEach(function (par) {
-      var tie = new V.StaveTie({
-        first_note: vfTodas[par[0]], last_note: vfTodas[par[1]],
-        first_indices: [0], last_indices: [0]
-      });
-      if (esCorrecta(par[0])) tie.setStyle(ROJO);
-      tie.setContext(ctx).draw();
-    });
-
-    var svg = div.querySelector('svg');
-    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
-    svg.style.width = '100%';
-    svg.style.height = 'auto';
-    svg.style.maxWidth = w + 'px';
+    var svg = dibujarSVG(div, frag, solucion, 1.0);
+    if (solucion) colorearLigaduras(svg, frag);
     return svg;
+  }
+
+  /* Las ligaduras de las síncopas, en rojo. Verovio dibuja las ligaduras en el orden en que empiezan. */
+  function colorearLigaduras(svg, frag) {
+    var ligs = (frag.ligaduras || []).slice().sort(function (a, b) { return a[0] - b[0]; });
+    var dibujadas = Array.prototype.slice.call(svg.querySelectorAll('.tie'));
+    ligs.forEach(function (par, k) {
+      var esCorrecta = (frag.correctas || []).some(function (c) { return c[0] === par[0] && c[1] === par[1]; });
+      if (esCorrecta && dibujadas[k]) {
+        dibujadas[k].setAttribute('color', ROJO);
+        Array.prototype.forEach.call(dibujadas[k].querySelectorAll('path'), function (p) { p.setAttribute('fill', ROJO); p.setAttribute('stroke', ROJO); });
+      }
+    });
   }
 
   function tmSincopaEngine(containerId) {
@@ -709,9 +657,10 @@
       document.getElementById(uid + '_restart').addEventListener('click', showModeScreen);
     }
 
-    function init() { showModeScreen(); }
-    if (typeof Vex !== 'undefined') { init(); }
-    else { window.addEventListener('vexflow-ready', init, { once: true }); }
+    wrap.innerHTML = '<div class="tm-card"><p class="tm-si-mode-subtitle">Cargando el ejercicio…</p></div>';
+    tmNotacion.listo().then(showModeScreen).catch(function () {
+      wrap.innerHTML = '<div class="tm-card"><p class="tm-si-mode-subtitle">No se ha podido cargar el ejercicio. Recarga la página.</p></div>';
+    });
   }
 
   window.tmSincopaEngine = tmSincopaEngine;

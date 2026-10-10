@@ -106,39 +106,40 @@
         + '<div class="tm-sf-chk' + (solucion && noSincopa ? ' sol' : '') + '">' + (solucion && noSincopa ? '☒' : '☐') + ' No hay síncopa</div>';
     }
 
+    /* Todos los dibujos de la hoja a la MISMA escala (la mayor que quepa a todos): los de dos compases son más anchos y,
+       si cada uno se encogiera por su cuenta, las notas saldrían de tamaños distintos en una misma hoja. */
+    function escalarUniforme(svgs, limite) {
+      if (!svgs.length) return;
+      var K = 1;
+      svgs.forEach(function (s) { K = Math.min(K, limite(s) / Number(s.getAttribute('width'))); });
+      svgs.forEach(function (s) { s.style.width = (Number(s.getAttribute('width')) * K) + 'px'; s.style.maxWidth = 'none'; });
+    }
+
     function pintar() {
       elCuerpo.innerHTML = '';
+      var ancho = anchoForzado || elCuerpo.clientWidth || 700;
+      var cols = 1;
+      var contenedor;
       if (dificil) {
         // Modo difícil: todos los fragmentos son de 2 compases (siempre
-        // anchos), así que van en una sola columna; el propio SVG ya trae
-        // width:100% + max-width del motor, no hace falta reescalar a mano.
-        var lista = document.createElement('div'); lista.className = 'tm-sf-lista'; elCuerpo.appendChild(lista);
-        fragmentosActuales.forEach(function (frag, i) {
-          var c = document.createElement('div'); c.className = 'tm-sf-celda';
-          c.innerHTML = celdaHTML(frag, i);
-          lista.appendChild(c);
-          window.tmSincopaDibujarImpresion(c.querySelector('.tm-sf-svg'), frag, solucion);
-        });
+        // anchos), así que van en una sola columna.
+        contenedor = document.createElement('div'); contenedor.className = 'tm-sf-lista'; elCuerpo.appendChild(contenedor);
       } else {
-        var rej = document.createElement('div'); rej.className = 'tm-sf-rejilla'; elCuerpo.appendChild(rej);
-        fragmentosActuales.forEach(function (frag, i) {
-          var dosCompases = frag.notas.some(function (n) { return n.measure === 1; });
-          var c = document.createElement('div'); c.className = 'tm-sf-celda' + (dosCompases ? ' ancha' : '');
-          c.innerHTML = celdaHTML(frag, i);
-          rej.appendChild(c);
-          window.tmSincopaDibujarImpresion(c.querySelector('.tm-sf-svg'), frag, solucion);
-        });
-        var ancho = anchoForzado || elCuerpo.clientWidth || 700;
-        var cols = ancho >= 420 ? 2 : 1;
-        rej.style.setProperty('--tm-sf-cols', cols);
-        var interior = Math.floor(ancho / cols) - 24;
-        var svgs = Array.prototype.slice.call(rej.querySelectorAll('.tm-sf-celda:not(.ancha) svg'));
-        if (svgs.length) {
-          var anchos = svgs.map(function (s) { return Number(s.getAttribute('viewBox').split(' ')[2]); });
-          var K = Math.min(1, interior / Math.max.apply(null, anchos));
-          svgs.forEach(function (s, i) { s.style.width = (anchos[i] * K) + 'px'; s.style.maxWidth = 'none'; });
-        }
+        contenedor = document.createElement('div'); contenedor.className = 'tm-sf-rejilla'; elCuerpo.appendChild(contenedor);
+        cols = ancho >= 420 ? 2 : 1;
+        contenedor.style.setProperty('--tm-sf-cols', cols);
       }
+      fragmentosActuales.forEach(function (frag, i) {
+        var dosCompases = !dificil && frag.notas.some(function (n) { return n.measure === 1; });
+        var c = document.createElement('div'); c.className = 'tm-sf-celda' + (dosCompases ? ' ancha' : '');
+        c.innerHTML = celdaHTML(frag, i);
+        contenedor.appendChild(c);
+        window.tmSincopaDibujarImpresion(c.querySelector('.tm-sf-svg'), frag, solucion);
+      });
+      escalarUniforme(Array.prototype.slice.call(contenedor.querySelectorAll('svg')), function (s) {
+        var ancha = dificil || s.closest('.tm-sf-celda').classList.contains('ancha');
+        return ancha ? ancho - 24 : Math.floor(ancho / cols) - 24;
+      });
       elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
     }
 
@@ -208,7 +209,6 @@
       var semillaURL = Number(q.get(dificil ? 'hojad' : 'hoja')) || null;
       generar(semillaURL);
     }
-    if (typeof Vex !== 'undefined') { init(); }
-    else { window.addEventListener('vexflow-ready', init, { once: true }); }
+    tmNotacion.listo().then(init);
   };
 })();
