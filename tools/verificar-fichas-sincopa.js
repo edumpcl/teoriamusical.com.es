@@ -12,7 +12,6 @@ const { chromium } = require('playwright');
 const { SEMILLA, N_FRAGMENTOS } = require('./generate-fichas-sincopa.js');
 
 const ROOT = path.join(__dirname, '..');
-const VF4_URL = 'https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js';
 const ENGINE = path.join(ROOT, 'assets/js/sincopa-engine.js');
 
 // duración -> tamaño en corcheas (con puntillo = *1.5)
@@ -39,7 +38,6 @@ function fuerzaTiempo(notas, idx, fuerzas) {
 (async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage();
-  await page.addScriptTag({ url: VF4_URL });
   await page.addScriptTag({ path: ENGINE });
 
   const { fragmentos, compases } = await page.evaluate(({ SEMILLA, N_FRAGMENTOS }) => {

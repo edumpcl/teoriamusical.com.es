@@ -15,7 +15,7 @@
    Los compases se generan tiempo a tiempo con patrones rítmicos reales (no
    sumas al azar): cada figura cabe en su tiempo, o empieza en un tiempo y ocupa
    tiempos enteros. Las barras de las corcheas se hacen a mano por tiempos.
-   Duraciones en semifusas (redonda = 64). Funciona con VexFlow 4 (web) y 5 (PDF).
+   Duraciones en semifusas (redonda = 64). Se dibuja con Verovio (tm-mei.js + tm-notacion.js).
    Se audita con tools/verificar-completar-compas.js. */
 (function () {
   'use strict';
@@ -206,7 +206,6 @@
 
   /* -------------------------------------------------------- dibujo */
 
-  function VF() { return (window.Vex && window.Vex.Flow) || window.VexFlow; }
   var ROJO = '#c0392b';
 
   /* Lo que queda del hueco, como figuras invisibles (de mayor a menor). */
@@ -217,132 +216,6 @@
     return out;
   }
 
-  /* opts = { w,
-       revelar: true          dibuja lo que falta en rojo (la solucion);
-       respuesta: [{f,s}]     dibuja en el hueco lo que ha puesto el alumno, en negro;
-       parcial: true          la respuesta aun no llena el hueco: lo que queda sigue
-                              como hueco, con su linea } */
-  function dibujarVF(div, it, opts) {
-    var V = VF();
-    opts = opts || {};
-    div.innerHTML = '';
-    var W = opts.w || 420, H = 118;
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(W, H);
-    var ctx = r.getContext();
-    var stave = new V.Stave(6, 6, W - 12, { space_above_staff_ln: 3, spaceAboveStaffLn: 3 });
-    stave.addTimeSignature(it.compas);
-    stave.setContext(ctx).draw();
-
-    var d = COMPASES[it.compas];
-    var notas = [], info = [];
-    var t = 0;
-    // Con respuesta parcial, lo que queda por poner sigue siendo hueco invisible.
-    var respuesta = opts.respuesta ? opts.respuesta.slice() : null;
-    if (respuesta && opts.parcial) {
-      var puesto = respuesta.reduce(function (a, x) { return a + FIG[x.f].u; }, 0);
-      if (puesto < it.valor) respuesta = respuesta.concat(descomponer(it.valor - puesto));
-    }
-    it.elems.forEach(function (e, k) {
-      var enHueco = k >= it.hueco.desde && k <= it.hueco.hasta;
-      var fuente = enHueco && respuesta && k === it.hueco.desde ? respuesta : (enHueco && respuesta ? [] : [e]);
-      fuente.forEach(function (x) {
-        var dur = FIG[x.f].vf + (x.s ? 'r' : '');
-        var nota;
-        if (enHueco && ((!opts.revelar && !respuesta) || x.fantasma)) {
-          nota = new V.GhostNote({ duration: dur });
-        } else {
-          nota = new V.StaveNote({ keys: ['b/4'], duration: dur, clef: 'treble' });
-          if (!x.s) nota.setStemDirection(-1);   // Si4 está en la 3ª línea: plica abajo
-          // En VexFlow 4 y 5 la «d» de la duración no dibuja el puntillo: hay que añadirlo.
-          if (/d$/.test(FIG[x.f].vf)) V.Dot.buildAndAttach([nota], { all: true });
-          // En rojo solo lo que faltaba (solución); la respuesta del alumno va en negro, como el resto.
-          if (enHueco && opts.revelar) nota.setStyle({ fillStyle: ROJO, strokeStyle: ROJO });
-        }
-        notas.push(nota);
-        info.push({ t0: t, u: FIG[x.f].u, s: !!x.s, f: x.f, hueco: enHueco, fantasma: nota instanceof V.GhostNote,
-          puntillos: nota.getModifiersByType ? nota.getModifiersByType('Dot').length : 0 });
-        t += FIG[x.f].u;
-      });
-    });
-
-    var voz = new V.Voice({ num_beats: d.tiempos * d.tiempo, beat_value: 64, numBeats: d.tiempos * d.tiempo, beatValue: 64 });
-    voz.setMode(V.Voice.Mode.SOFT);
-    voz.addTickables(notas);
-    // Barras a mano, por tiempos: corcheas y semicorcheas seguidas dentro del mismo tiempo.
-    var barras = [], grupo = [], grupos = [];
-    function cerrar() { if (grupo.length > 1) { barras.push(new V.Beam(grupo.map(function (g) { return g.n; }), false)); grupos.push(grupo.map(function (g) { return g.t0; })); } grupo = []; }
-    info.forEach(function (x, k) {
-      var corta = x.u < 16 && !x.s && !x.fantasma;
-      var tiempo = Math.floor(x.t0 / d.tiempo);
-      if (!corta || (grupo.length && Math.floor(grupo[0].t0 / d.tiempo) !== tiempo)) cerrar();
-      if (corta) grupo.push({ n: notas[k], t0: x.t0 });
-    });
-    cerrar();
-    new V.Formatter().joinVoices([voz]).format([voz], stave.getNoteEndX() - stave.getNoteStartX() - 20);
-    voz.draw(ctx, stave);
-    barras.forEach(function (b) { b.setContext(ctx).draw(); });
-
-    var svg = div.querySelector('svg');
-    // El hueco: una línea debajo y un interrogante, para que se vea dónde falta.
-    // Mientras se está respondiendo (parcial) se mantiene siempre, aunque ya se
-    // haya rellenado del todo o de más: solo desaparece al corregir (Eduardo).
-    var fantasmas = info.map(function (x, k) { return x.fantasma ? k : -1; }).filter(function (k) { return k >= 0; });
-    var marcar = opts.parcial ? info.map(function (x, k) { return x.hueco ? k : -1; }).filter(function (k) { return k >= 0; }) : fantasmas;
-    if (marcar.length) {
-      var x1 = notas[marcar[0]].getAbsoluteX() - 4;
-      var sig = marcar[marcar.length - 1] + 1;
-      var x2 = (sig < notas.length ? notas[sig].getAbsoluteX() : stave.getX() + stave.getWidth()) - 12;
-      if (x2 < x1 + 18) x2 = x1 + 18;
-      var y = stave.getYForLine(4) + 14;
-      var ns = 'http://www.w3.org/2000/svg';
-      var linea = document.createElementNS(ns, 'line');
-      linea.setAttribute('x1', x1); linea.setAttribute('x2', x2); linea.setAttribute('y1', y); linea.setAttribute('y2', y);
-      linea.setAttribute('stroke', ROJO); linea.setAttribute('stroke-width', '2.5'); linea.setAttribute('stroke-linecap', 'round');
-      linea.setAttribute('class', 'tm-cc-hueco');
-      svg.appendChild(linea);
-      var q = document.createElementNS(ns, 'text');
-      q.setAttribute('x', (x1 + x2) / 2); q.setAttribute('y', y + 15); q.setAttribute('text-anchor', 'middle');
-      q.setAttribute('font-family', 'Arial, sans-serif'); q.setAttribute('font-size', '13'); q.setAttribute('font-weight', '700'); q.setAttribute('fill', ROJO);
-      q.textContent = '?';
-      svg.appendChild(q);
-    }
-    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-    svg.style.width = '100%';
-    svg.style.height = 'auto';
-    svg.style.maxWidth = Math.round(W * 1.2) + 'px';
-
-    // Para el verificador: lo que se ha dibujado de verdad.
-    div.__tmDibujo = { notas: info, barras: grupos, hueco: fantasmas };
-  }
-
-  /* Una carta de la paleta: la figura sola, sin compás. En la 2ª línea (Sol) y con
-     la plica hacia arriba (petición de Eduardo). Se dibuja con voz y formateador,
-     igual que el compás: colocando la nota a mano VexFlow no pintaba los puntillos. */
-  function cartaVF(div, f, silencio) {
-    var V = VF();
-    div.innerHTML = '';
-    var W = 64, H = 78;
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(W, H);
-    var ctx = r.getContext();
-    var stave = new V.Stave(2, 0, W - 4, { space_above_staff_ln: 2.5, spaceAboveStaffLn: 2.5 });
-    var NINGUNA = (V.BarlineType || (V.Barline && V.Barline.type)).NONE;
-    stave.setBegBarType(NINGUNA); stave.setEndBarType(NINGUNA);
-    stave.setContext(ctx).draw();
-    var n = new V.StaveNote({ keys: ['g/4'], duration: FIG[f].vf + (silencio ? 'r' : ''), clef: 'treble' });
-    if (!silencio) n.setStemDirection(1);
-    if (/d$/.test(FIG[f].vf)) V.Dot.buildAndAttach([n], { all: true });
-    var voz = new V.Voice({ num_beats: FIG[f].u, beat_value: 64, numBeats: FIG[f].u, beatValue: 64 });
-    voz.setMode(V.Voice.Mode.SOFT);
-    voz.addTickables([n]);
-    new V.Formatter().joinVoices([voz]).format([voz], W - 30);
-    voz.draw(ctx, stave);
-    var svg = div.querySelector('svg');
-    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-    svg.style.width = '100%'; svg.style.height = 'auto';
-  }
-
   /* Un compás COMPLETO, sin hueco (para /ejercicios/compases/reconocer-compas/).
      o = { compas: '3/4', silencios: bool, semilla }. Reutiliza compas(). */
   function generarMedida(o) {
@@ -351,64 +224,9 @@
     return compas(o.compas, !!o.silencios, A, rnd);
   }
 
-  /* Dibuja un compás completo, sin huecos. opts = { w,
-       sinCifra: true  no se dibuja la indicación de compás (para «reconocer compás»,
-                 donde el alumno tiene que adivinarla) }. */
-  function dibujarMedidaVF(div, compasSig, elems, opts) {
-    var V = VF();
-    opts = opts || {};
-    div.innerHTML = '';
-    var W = opts.w || 420, H = 100;
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(W, H);
-    var ctx = r.getContext();
-    var stave = new V.Stave(6, 6, W - 12, { space_above_staff_ln: 3, spaceAboveStaffLn: 3 });
-    if (!opts.sinCifra) stave.addTimeSignature(compasSig);
-    stave.setContext(ctx).draw();
-
-    var d = COMPASES[compasSig];
-    var notas = [], info = [], t = 0;
-    elems.forEach(function (e) {
-      var dur = FIG[e.f].vf + (e.s ? 'r' : '');
-      var nota = new V.StaveNote({ keys: ['b/4'], duration: dur, clef: 'treble' });
-      if (!e.s) nota.setStemDirection(-1);
-      if (/d$/.test(FIG[e.f].vf)) V.Dot.buildAndAttach([nota], { all: true });
-      notas.push(nota);
-      info.push({ t0: t, u: FIG[e.f].u, s: !!e.s, f: e.f, puntillos: nota.getModifiersByType ? nota.getModifiersByType('Dot').length : 0 });
-      t += FIG[e.f].u;
-    });
-
-    var voz = new V.Voice({ num_beats: d.tiempos * d.tiempo, beat_value: 64, numBeats: d.tiempos * d.tiempo, beatValue: 64 });
-    voz.setMode(V.Voice.Mode.SOFT);
-    voz.addTickables(notas);
-    // Misma regla que dibujar(): solo se barran corchea/semicorchea/corchea con
-    // puntillo (u<16), nunca una negra suelta, sea cual sea el compás.
-    var barras = [], grupo = [], grupos = [];
-    function cerrar() { if (grupo.length > 1) { barras.push(new V.Beam(grupo.map(function (g) { return g.n; }), false)); grupos.push(grupo.map(function (g) { return g.t0; })); } grupo = []; }
-    info.forEach(function (x, k) {
-      var corta = x.u < 16 && !x.s;
-      var tiempo = Math.floor(x.t0 / d.tiempo);
-      if (!corta || (grupo.length && Math.floor(grupo[0].t0 / d.tiempo) !== tiempo)) cerrar();
-      if (corta) grupo.push({ n: notas[k], t0: x.t0 });
-    });
-    cerrar();
-    new V.Formatter().joinVoices([voz]).format([voz], stave.getNoteEndX() - stave.getNoteStartX() - 20);
-    voz.draw(ctx, stave);
-    barras.forEach(function (b) { b.setContext(ctx).draw(); });
-
-    var svg = div.querySelector('svg');
-    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-    svg.style.width = '100%';
-    svg.style.height = 'auto';
-    svg.style.maxWidth = Math.round(W * 1.2) + 'px';
-    div.__tmInfo = { notas: info, barras: grupos };   // para el verificador
-  }
-
   /* ------------------------------------------------ dibujo con Verovio */
 
-  /* Mientras haya motores que aún dibujan con VexFlow (cargan este módulo sin tm-notacion.js), las tres funciones de dibujo
-     de abajo eligen solas: con Verovio cargado, Verovio; si no, VexFlow. Cuando se hayan migrado todos se quitarán las
-     versiones de VexFlow. */
+  /* ¿Está Verovio ya cargado? (los motores esperan a tmNotacion.listo() antes de arrancar) */
   function conVerovio() { return !!(window.tmNotacion && window.tmNotacion.cargado && window.tmNotacion.cargado()); }
 
   var DUR_V = { r: { d: 'w' }, rP: { d: 'w', p: 1 }, b: { d: 'h' }, bP: { d: 'h', p: 1 }, n: { d: 'q' }, nP: { d: 'q', p: 1 }, c: { d: '8' }, cP: { d: '8', p: 1 }, sc: { d: '16' } };
@@ -495,7 +313,7 @@
     svg.appendChild(q);
   }
 
-  function dibujarV(div, it, opts) {
+  function dibujar(div, it, opts) {
     opts = opts || {};
     div.innerHTML = '';
     var d = COMPASES[it.compas];
@@ -531,7 +349,7 @@
 
   /* Una carta de la paleta: la figura sola, sin compás ni clave. En la 2ª línea (Sol) y con la plica hacia arriba (petición de
      Eduardo). */
-  function cartaV(div, f, silencio) {
+  function carta(div, f, silencio) {
     var v = DUR_V[f], e = { key: 'g/4', d: v.d };
     if (v.p) e.puntillo = 1;
     if (silencio) e.silencio = true; else e.plica = 'up';
@@ -559,7 +377,7 @@
   }
 
   /* Un compás COMPLETO, sin hueco. sinCifra: no se dibuja la indicación de compás. */
-  function dibujarMedidaV(div, sig, elems, opts) {
+  function dibujarMedida(div, sig, elems, opts) {
     opts = opts || {};
     div.innerHTML = '';
     var items = [], t = 0;
@@ -570,10 +388,6 @@
     Object.keys(porGrupo).forEach(function (g) { grupos.push(porGrupo[g]); });
     div.__tmInfo = { notas: items.map(function (x) { return { t0: x.t0, u: x.u, s: x.s, f: x.f, puntillos: /P$/.test(x.f) ? 1 : 0 }; }), barras: grupos };
   }
-
-  function dibujar(div, it, opts) { return (conVerovio() ? dibujarV : dibujarVF)(div, it, opts); }
-  function carta(div, f, silencio) { return (conVerovio() ? cartaV : cartaVF)(div, f, silencio); }
-  function dibujarMedida(div, sig, elems, opts) { return (conVerovio() ? dibujarMedidaV : dibujarMedidaVF)(div, sig, elems, opts); }
 
   window.tmCompletarCompasData = {
     FIG: FIG, COMPASES: COMPASES, GRUPOS: GRUPOS, CARTAS_FIG: CARTAS_FIG, CARTAS_SIL: CARTAS_SIL,
@@ -651,7 +465,7 @@
 
   function arrancar(id) {
     var cont = document.getElementById(id);
-    if (!cont || !(VF() || conVerovio())) return;
+    if (!cont || !conVerovio()) return;
     if (!document.getElementById('tm-cc-css')) {
       var st = document.createElement('style');
       st.id = 'tm-cc-css';

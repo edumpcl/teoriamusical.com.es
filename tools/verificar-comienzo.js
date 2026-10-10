@@ -19,18 +19,17 @@
  * puntillos pintados de verdad (también en silencios), figuras y silencios tal
  * cual, la duración que VexFlow entiende de cada figura (ticks) igual a la
  * que declara el motor —en los seis compases, simples y compuestos—, y las barras (solo figuras más cortas que la negra, del mismo tiempo,
- * sin silencios en medio), con VexFlow 4 (web) y 5 (PDF). En el navegador, los
+ * sin silencios en medio), con Verovio. En el navegador, los
  * tres niveles resueltos bien y mal, con el resultado contado.
  */
 const { chromium } = require('playwright');
+const { cargarFicha } = require('./lib-ficha-verovio.js');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const URL = 'http://localhost:8099/ejercicios/comienzo-tetico-anacrusico-acefalo/';
-const ENGINE1 = path.join(ROOT, 'assets/js/completar-compas-engine.js');
-const ENGINE2 = path.join(ROOT, 'assets/js/tipo-de-comienzo-engine.js');
-const VF5 = path.join(ROOT, 'node_modules/vexflow/build/cjs/vexflow.js');
-const VF4 = 'https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js';
+const ENGINE1 = 'assets/js/completar-compas-engine.js';
+const ENGINE2 = 'assets/js/tipo-de-comienzo-engine.js';
 
 const TIEMPO = { '2/4': 16, '3/4': 16, '4/4': 16, '6/8': 24, '9/8': 24, '12/8': 24 };
 const TIEMPOS = { '2/4': 2, '3/4': 3, '4/4': 4, '6/8': 2, '9/8': 3, '12/8': 4 };
@@ -162,15 +161,12 @@ function vigasEsperadas(it) {
   return n;
 }
 
-async function conVexFlow(browser, etiqueta, vexflow) {
+async function conVerovio(browser, etiqueta) {
   const p = await browser.newPage();
   const errs = [];
   p.on('pageerror', e => errs.push(e.message));
   p.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') errs.push(m.type() + ': ' + m.text()); });
-  await p.setContent('<!doctype html><html><body><div id="z"></div></body></html>');
-  await p.addScriptTag(vexflow.startsWith('http') ? { url: vexflow } : { path: vexflow });
-  await p.addScriptTag({ path: ENGINE1 });
-  await p.addScriptTag({ path: ENGINE2 });
+  await cargarFicha(p, '<!doctype html><html><body><div id="z"></div></body></html>', [ENGINE1, ENGINE2]);
   const lotes = await p.evaluate(() => {
     const T = window.tmComienzoTest, z = document.getElementById('z'), out = [];
     [1, 2, 3].forEach(nivel => {
@@ -181,7 +177,7 @@ async function conVexFlow(browser, etiqueta, vexflow) {
           const d = document.createElement('div'); z.appendChild(d);
           T.dibujar(d, it);
           const info = d.__tmInfo;
-          const ancho = d.querySelector('svg').getAttribute('viewBox');
+          const ancho = d.querySelector('svg').getAttribute('width');   // px del dibujo
           z.removeChild(d);
           return { info, ancho };
         });
@@ -206,14 +202,14 @@ async function conVexFlow(browser, etiqueta, vexflow) {
         c.elems.forEach((e, j) => {
           const x = dib[j];
           if (x.f !== e.f || x.s !== !!e.s) mal(donde, `c${k + 1} figura ${j + 1}: dibujada ${x.f}${x.s ? ' silencio' : ''} y debería ser ${e.f}${e.s ? ' silencio' : ''}`);
-          if (x.ticks !== U[e.f] * 256) mal(donde, `c${k + 1} figura ${j + 1} (${e.f}${e.s ? ' silencio' : ''}): VexFlow la cuenta como ${x.ticks} ticks y deberían ser ${U[e.f] * 256}`);
+          if (x.ticks !== U[e.f] * 256) mal(donde, `c${k + 1} figura ${j + 1} (${e.f}${e.s ? ' silencio' : ''}): el dibujo la cuenta como ${x.ticks} ticks y deberían ser ${U[e.f] * 256}`);
           const esperados = /P$/.test(e.f) ? 1 : 0;
           if (x.puntillos !== esperados) mal(donde, `c${k + 1} figura ${j + 1} (${e.f}${e.s ? ' silencio' : ''}) lleva ${x.puntillos} puntillos y debería llevar ${esperados}`);
         });
       });
       if (info.vigas !== vigasEsperadas(it)) mal(donde, `${info.vigas} barras dibujadas y deberían ser ${vigasEsperadas(it)}`);
-      const W = Number(ancho.split(' ')[2]);
-      if (!(W > 200 && W < 900)) mal(donde, `ancho del dibujo raro: ${W}`);
+      const W = Number(ancho);
+      if (!(W > 120 && W < 2000)) mal(donde, `ancho del dibujo raro: ${W}`);
     });
     ['tetico', 'anacrusico', 'acefalo'].forEach(tp => { if (Math.abs(porTipo[tp] - 4) > 0) mal(`${etiqueta} nivel ${lote.nivel} #${lote.semilla}`, `reparto de tipos ${JSON.stringify(porTipo)} (esperado 4/4/4)`); });
   }
@@ -268,10 +264,9 @@ async function enPagina(browser) {
 
 (async () => {
   const browser = await chromium.launch();
-  const a = await conVexFlow(browser, 'VexFlow 4 (web)', VF4);
-  const b = await conVexFlow(browser, 'VexFlow 5 (PDF)', VF5);
+  const a = await conVerovio(browser, 'Verovio');
   await enPagina(browser);
   await browser.close();
-  console.log(`\n  ${a + b} melodías · ${fallos} problema(s).`);
+  console.log(`\n  ${a} melodías · ${fallos} problema(s).`);
   process.exit(fallos ? 1 : 0);
 })().catch(e => { console.error(e); process.exit(1); });

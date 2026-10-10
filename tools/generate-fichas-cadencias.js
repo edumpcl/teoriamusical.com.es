@@ -21,11 +21,12 @@ const path = require('path');
 const fs = require('fs');
 
 const ROOT = path.join(__dirname, '..');
-const VF5 = path.join(ROOT, 'node_modules/vexflow/build/cjs/vexflow.js');
-const ENGINE1 = path.join(ROOT, 'assets/js/completar-compas-engine.js');
-const ENGINE2 = path.join(ROOT, 'assets/js/tipo-de-comienzo-engine.js');
-const ENGINE3 = path.join(ROOT, 'assets/js/cadencias-engine.js');
-const OUT_DIR = path.join(ROOT, 'assets/img/cadencias/fichas');
+const ENGINE1 = 'assets/js/completar-compas-engine.js';
+const ENGINE2 = 'assets/js/tipo-de-comienzo-engine.js';
+const ENGINE3 = 'assets/js/cadencias-engine.js';
+const { cargarFicha, escalarUniforme } = require('./lib-ficha-verovio.js');
+/* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/cadencias/fichas');
 
 /* Los lotes de la ficha: nivel, cuántos, semilla. */
 const LOTES = [
@@ -55,11 +56,11 @@ const CSS = `
   .datos span { flex: 1; border-bottom: 1px solid #bbb; padding-bottom: 2px; }
   .datos span b { font-weight: normal; color: #888; }
   h2 { font-size: 10.5pt; margin: 8px 0 4px; color: #8b6914; }
-  .rejilla { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 5px 8px; }
+  .rejilla { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px 8px; }
   .celda { position: relative; border: 1px solid #e8e0cc; border-radius: 6px; padding: 3px 5px 4px 20px; page-break-inside: avoid; }
-  .celda svg { display: block; margin: 0 auto; height: auto !important; }
+  .celda svg { display: block; margin: 0 auto; }
   .num { position: absolute; top: 3px; left: 5px; font-size: 8.5pt; font-weight: 700; color: #9a7b28; }
-  .ops { display: grid; grid-template-columns: 1fr 1fr; gap: 0 4px; font-size: 7.3pt; color: #333; padding: 1px 2px 0; }
+  .ops { display: grid; grid-template-columns: 1fr 1fr; gap: 0 3px; font-size: 6.9pt; color: #333; padding: 1px 2px 0; }
   .op { display: flex; align-items: flex-start; gap: 3px; line-height: 1.15; padding: 1px 0; }
   .caja { display: inline-block; width: 8px; height: 8px; min-width: 8px; border: 1.2px solid #777; border-radius: 2px; text-align: center; line-height: 6.5px; font-size: 7pt; font-weight: 700; margin-top: 1px; }
   .op.sol { color: #c0392b; font-weight: 700; }
@@ -114,14 +115,6 @@ function montar({ LOTES, solucion }) {
       T.dibujar(c.querySelector('.svg'), it);
     });
   });
-  // Misma escala dentro de cada nivel (si no, unas salen gigantes y otras diminutas).
-  const interior = document.querySelector('.celda').clientWidth - 25 - 2;
-  Array.from(document.querySelectorAll('.rejilla')).forEach(rej => {
-    const svgs = Array.from(rej.querySelectorAll('svg'));
-    const anchos = svgs.map(s => Number(s.getAttribute('viewBox').split(' ')[2]));
-    const K = Math.min(1, interior / Math.max.apply(null, anchos));
-    svgs.forEach((s, i) => { s.style.width = (anchos[i] * K) + 'px'; s.style.maxWidth = 'none'; });
-  });
   return n;
 }
 
@@ -133,20 +126,17 @@ function montar({ LOTES, solucion }) {
   for (const solucion of [false, true]) {
     const page = await browser.newPage({ deviceScaleFactor: 3 });
     await page.setViewportSize({ width: 850, height: 1200 });
-    await page.setContent(html(solucion));
-    await page.addScriptTag({ path: VF5 });
-    await page.addScriptTag({ path: ENGINE1 });
-    await page.addScriptTag({ path: ENGINE2 });
-    await page.addScriptTag({ path: ENGINE3 });
+    await cargarFicha(page, html(solucion), [ENGINE1, ENGINE2, ENGINE3]);
     await page.evaluate((TIT) => { window.__tmTit = TIT; }, TIT);
     const n = await page.evaluate(montar, { LOTES, solucion });
+    await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 27, 0.6)");
     const nombre = 'ficha-cadencias' + (solucion ? '-soluciones' : '');
     const pdfPath = path.join(OUT_DIR, nombre + '.pdf');
     const sobra = await page.evaluate(() => Math.round(document.querySelector('.hoja').scrollHeight - 297 / 25.4 * 96));
     await page.pdf({ path: pdfPath, format: 'A4', printBackground: true, margin: { top: '0', bottom: '0', left: '0', right: '0' } });
     const paginas = Number((fs.readFileSync(pdfPath).toString('latin1').match(/\/Count\s+(\d+)/) || [])[1] || 0);
     // Glifos cortados: tinta en los bordes de cada dibujo.
-    const svgs = await page.$$('.celda svg');
+    const svgs = await page.$('.celda .svg > svg');
     const cortes = [];
     for (let i = 0; i < svgs.length; i++) {
       const { data, info } = await sharp(await svgs[i].screenshot()).greyscale().raw().toBuffer({ resolveWithObject: true });

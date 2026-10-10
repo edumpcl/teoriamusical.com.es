@@ -15,21 +15,20 @@
  *   - que el compás entero (grupos + figuras normales) suma exactamente lo
  *     que cabe y ninguna figura cruza la barra del tiempo;
  *   - lo DIBUJADO: puntillos de las figuras «de fuera» pintados de verdad,
- *     con VexFlow 4 (web) y 5 (PDF), y que dibujar con y sin cifra da el
+ *     con Verovio, y que dibujar con y sin cifra da el
  *     mismo ritmo;
  *   - y en el navegador, los tres niveles resueltos bien y mal, con el
  *     resultado contado.
  */
 const { chromium } = require('playwright');
+const { cargarFicha } = require('./lib-ficha-verovio.js');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const URL = 'http://localhost:8099/ejercicios/grupos-de-valoracion-especial/que-compas-es/';
-const ENGINE1 = path.join(ROOT, 'assets/js/completar-compas-engine.js');
-const ENGINE2 = path.join(ROOT, 'assets/js/grupos-valoracion-especial-engine.js');
-const ENGINE3 = path.join(ROOT, 'assets/js/que-compas-es-engine.js');
-const VF5 = path.join(ROOT, 'node_modules/vexflow/build/cjs/vexflow.js');
-const VF4 = 'https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js';
+const ENGINE1 = 'assets/js/completar-compas-engine.js';
+const ENGINE2 = 'assets/js/grupos-valoracion-especial-engine.js';
+const ENGINE3 = 'assets/js/que-compas-es-engine.js';
 
 /* Tabla propia, la misma regla de grupos-valoracion-especial (verificada
    contra /diccionario-musical/grupos-de-valoracion-especial/). */
@@ -104,16 +103,12 @@ function revisarItem(donde, it) {
   if (pos !== t * d) mal(donde, `el compás suma ${pos} y debería sumar ${t * d}`);
 }
 
-async function conVexFlow(browser, etiqueta, vexflow) {
+async function conVerovio(browser, etiqueta) {
   const p = await browser.newPage();
   const errs = [];
   p.on('pageerror', e => errs.push(e.message));
   p.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') errs.push(m.type() + ': ' + m.text()); });
-  await p.setContent('<!doctype html><html><body><div id="z"></div></body></html>');
-  await p.addScriptTag(vexflow.startsWith('http') ? { url: vexflow } : { path: vexflow });
-  await p.addScriptTag({ path: ENGINE1 });
-  await p.addScriptTag({ path: ENGINE2 });
-  await p.addScriptTag({ path: ENGINE3 });
+  await cargarFicha(p, '<!doctype html><html><body><div id="z"></div></body></html>', [ENGINE1, ENGINE2, ENGINE3]);
   const lotes = await p.evaluate(() => {
     const T = window.tmQueCompasEsTest, z = document.getElementById('z'), out = [];
     [1, 2, 3].forEach(nivel => {
@@ -226,10 +221,9 @@ async function enPagina(browser) {
 
 (async () => {
   const browser = await chromium.launch();
-  const a = await conVexFlow(browser, 'VexFlow 4 (web)', VF4);
-  const b = await conVexFlow(browser, 'VexFlow 5 (PDF)', VF5);
+  const a = await conVerovio(browser, 'Verovio');
   await enPagina(browser);
   await browser.close();
-  console.log(`\n  ${a + b} preguntas · ${fallos} problema(s).`);
+  console.log(`\n  ${a} preguntas · ${fallos} problema(s).`);
   process.exit(fallos ? 1 : 0);
 })().catch(e => { console.error(e); process.exit(1); });

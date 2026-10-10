@@ -12,7 +12,6 @@ const path = require('path');
 const { chromium } = require('playwright');
 
 const ROOT = path.join(__dirname, '..');
-const VF4_URL = 'https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js';
 const ENGINE = path.join(ROOT, 'assets/js/contratiempo-engine.js');
 const N_NORMAL = 400;
 const N_DIFICIL = 200;
@@ -67,7 +66,6 @@ function comprobarDuraciones(f, compas) {
 (async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage();
-  await page.addScriptTag({ url: VF4_URL });
   await page.addScriptTag({ path: ENGINE });
 
   const { normales, dificiles, compases } = await page.evaluate(({ N_NORMAL, N_DIFICIL }) => {

@@ -20,17 +20,16 @@
  *   - que el nivel usa exactamente los tipos que le tocan (TIPOS_NIVEL).
  * Y lo DIBUJADO: que las 4 notas de cada acorde aparecen en el pentagrama
  * correcto (soprano/contralto en sol, tenor/bajo en fa) con la duración de
- * redonda, con VexFlow 4 (web) y 5 (PDF). En el navegador, los tres niveles
+ * redonda, con Verovio. En el navegador, los tres niveles
  * resueltos bien y mal, con el resultado contado.
  */
 const { chromium } = require('playwright');
+const { cargarFicha } = require('./lib-ficha-verovio.js');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const URL = 'http://localhost:8099/ejercicios/cadencias/';
-const ENGINES = ['assets/js/completar-compas-engine.js', 'assets/js/tipo-de-comienzo-engine.js', 'assets/js/cadencias-engine.js'].map(f => path.join(ROOT, f));
-const VF5 = path.join(ROOT, 'node_modules/vexflow/build/cjs/vexflow.js');
-const VF4 = 'https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js';
+const ENGINES = ['assets/js/completar-compas-engine.js', 'assets/js/tipo-de-comienzo-engine.js', 'assets/js/cadencias-engine.js'];
 
 const LETRAS = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
 const SEMI = { c: 0, d: 2, e: 4, f: 5, g: 7, a: 9, b: 11 };
@@ -124,14 +123,12 @@ function revisarItem(donde, it) {
   if (it.tipo === 'plagal' && LETRAS[((finB % 7) + 7) % 7] !== 'c') mal(donde, 'plagal: el bajo del acorde final debería ser la tónica');
 }
 
-async function conVexFlow(browser, etiqueta, vexflow) {
+async function conVerovio(browser, etiqueta) {
   const p = await browser.newPage();
   const errs = [];
   p.on('pageerror', e => errs.push(e.message));
   p.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') errs.push(m.type() + ': ' + m.text()); });
-  await p.setContent('<!doctype html><html><body><div id="z"></div></body></html>');
-  await p.addScriptTag(vexflow.startsWith('http') ? { url: vexflow } : { path: vexflow });
-  for (const e of ENGINES) await p.addScriptTag({ path: e });
+  await cargarFicha(p, '<!doctype html><html><body><div id="z"></div></body></html>', [...ENGINES]);
   const lotes = await p.evaluate(() => {
     const T = window.tmCadenciasTest, z = document.getElementById('z'), out = [];
     [1, 2, 3].forEach(nivel => {
@@ -215,10 +212,9 @@ async function enPagina(browser) {
 
 (async () => {
   const browser = await chromium.launch();
-  const a = await conVexFlow(browser, 'VexFlow 4 (web)', VF4);
-  const b = await conVexFlow(browser, 'VexFlow 5 (PDF)', VF5);
+  const a = await conVerovio(browser, 'Verovio');
   await enPagina(browser);
   await browser.close();
-  console.log(`\n  ${a + b} cadencias · ${fallos} problema(s).`);
+  console.log(`\n  ${a} cadencias · ${fallos} problema(s).`);
   process.exit(fallos ? 1 : 0);
 })().catch(e => { console.error(e); process.exit(1); });

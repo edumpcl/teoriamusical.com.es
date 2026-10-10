@@ -5,6 +5,7 @@
  *   node tools/servidor-estatico.js                      (en otra terminal)
  *   node tools/test-motor-grados.js --version=vexflow    # el motor tal y como esta en git (HEAD)
  *   node tools/test-motor-grados.js --version=verovio    # el motor del arbol de trabajo
+ *   (--version=vexflow solo sirve mientras HEAD conserve el motor con VexFlow: es la linea base con la que se comprobo la migracion)
  *   opciones: --semillas=5 --base=http://127.0.0.1:8910
  *
  * Azar sembrado. Las escalas se calculan AQUI, aparte del motor (por semitonos, no por armadura), y se lee el DIBUJO en el DOM:

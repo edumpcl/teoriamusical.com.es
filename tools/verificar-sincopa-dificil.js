@@ -4,7 +4,6 @@
    comprueba, sin fiarse del motor, que cada ligadura está clasificada
    correctamente según la fuerza métrica real del compás del fragmento. */
 const { chromium } = require('playwright');
-const VF4_URL = 'https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js';
 const path = require('path');
 const ENGINE = path.join(__dirname, '..', 'assets/js/sincopa-engine.js');
 
@@ -25,7 +24,6 @@ function fuerzaTiempo(notas, idx, fuerzas) {
 (async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage();
-  await page.addScriptTag({ url: VF4_URL });
   await page.addScriptTag({ path: ENGINE });
 
   const N = 300;

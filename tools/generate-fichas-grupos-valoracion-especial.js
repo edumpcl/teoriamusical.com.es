@@ -17,10 +17,11 @@ const path = require('path');
 const fs = require('fs');
 
 const ROOT = path.join(__dirname, '..');
-const VF5 = path.join(ROOT, 'node_modules/vexflow/build/cjs/vexflow.js');
-const ENGINE1 = path.join(ROOT, 'assets/js/completar-compas-engine.js');
-const ENGINE2 = path.join(ROOT, 'assets/js/grupos-valoracion-especial-engine.js');
-const OUT_DIR = path.join(ROOT, 'assets/img/compases/fichas');
+const ENGINE1 = 'assets/js/completar-compas-engine.js';
+const ENGINE2 = 'assets/js/grupos-valoracion-especial-engine.js';
+const { cargarFicha, escalarUniforme } = require('./lib-ficha-verovio.js');
+/* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/compases/fichas');
 
 /* Los lotes de la ficha: nivel, cuántos, semilla. El verificador los reutiliza. */
 const LOTES = [
@@ -52,7 +53,7 @@ const CSS = `
   h2 { font-size: 10.5pt; margin: 8px 0 4px; color: #8b6914; }
   .rejilla { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 10px; }
   .celda { position: relative; border: 1px solid #e8e0cc; border-radius: 6px; padding: 3px 6px 2px 62px; page-break-inside: avoid; min-height: 80px; }
-  .celda svg { display: block; margin: 0 auto; height: 74px !important; width: auto !important; max-width: 100% !important; }
+  .celda svg { display: block; margin: 0 auto; }
   .num { position: absolute; top: 3px; left: 6px; font-size: 8.5pt; font-weight: 700; color: #9a7b28; }
   .casilla { position: absolute; left: 6px; top: 26px; width: 52px; height: 30px; border: 1.5px solid #bbb; border-radius: 4px; }
   .casilla.sol { border-color: #c0392b; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #c0392b; font-size: 7.5pt; line-height: 1.1; text-align: center; padding: 0 2px; }
@@ -94,7 +95,7 @@ function montar({ LOTES, solucion }) {
       const nombreEquiv = T1.FIG[it.variante.equivaleFig].nombre;
       c.innerHTML = `<span class="num">${++n}</span><div class="casilla${solucion ? ' sol' : ''}">${solucion ? nombreEquiv : ''}</div><div class="svg"></div>`;
       rej.appendChild(c);
-      T2.dibujarConGrupo(c.querySelector('.svg'), it, { w: 400 });
+      T2.dibujarConGrupo(c.querySelector('.svg'), it, { w: 400, compacto: true });
     });
   });
   return n;
@@ -108,19 +109,17 @@ function montar({ LOTES, solucion }) {
   for (const solucion of [false, true]) {
     const page = await browser.newPage({ deviceScaleFactor: 3 });
     await page.setViewportSize({ width: 850, height: 1200 });
-    await page.setContent(html(solucion));
-    await page.addScriptTag({ path: VF5 });
-    await page.addScriptTag({ path: ENGINE1 });
-    await page.addScriptTag({ path: ENGINE2 });
+    await cargarFicha(page, html(solucion), [ENGINE1, ENGINE2]);
     await page.evaluate((TIT) => { window.__tmTit = TIT; }, TIT);
     const n = await page.evaluate(montar, { LOTES, solucion });
+    await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 14, 0.5)");
     const nombre = 'ficha-grupos-valoracion-especial' + (solucion ? '-soluciones' : '');
     const pdfPath = path.join(OUT_DIR, nombre + '.pdf');
     const sobra = await page.evaluate(() => Math.round(document.querySelector('.hoja').scrollHeight - 297 / 25.4 * 96));
     await page.pdf({ path: pdfPath, format: 'A4', printBackground: true, margin: { top: '0', bottom: '0', left: '0', right: '0' } });
     const paginas = Number((fs.readFileSync(pdfPath).toString('latin1').match(/\/Count\s+(\d+)/) || [])[1] || 0);
     // Glifos cortados: tinta en los bordes de cada dibujo.
-    const svgs = await page.$$('.celda svg');
+    const svgs = await page.$('.celda .svg > svg');
     const cortes = [];
     for (let i = 0; i < svgs.length; i++) {
       const { data, info } = await sharp(await svgs[i].screenshot()).greyscale().raw().toBuffer({ resolveWithObject: true });

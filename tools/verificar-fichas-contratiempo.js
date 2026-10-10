@@ -8,7 +8,6 @@ const { chromium } = require('playwright');
 const { SEMILLA, N_FRAGMENTOS } = require('./generate-fichas-contratiempo.js');
 
 const ROOT = path.join(__dirname, '..');
-const VF4_URL = 'https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js';
 const ENGINE = path.join(ROOT, 'assets/js/contratiempo-engine.js');
 
 function corcheas(d) {
@@ -29,7 +28,6 @@ function fuerzaTiempo(notas, idx, fuerzas) {
 (async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage();
-  await page.addScriptTag({ url: VF4_URL });
   await page.addScriptTag({ path: ENGINE });
 
   const { fragmentos, compases } = await page.evaluate(({ SEMILLA, N_FRAGMENTOS }) => {

@@ -24,9 +24,10 @@ const ROOT = path.join(__dirname, '..');
    por CDN. El paquete node_modules/vexflow es la v5 (API distinta, en
    camelCase) y rompe StaveTie con esas opciones, así que aquí se carga el
    mismo build por red en vez del paquete de Node. */
-const VF4_URL = 'https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js';
-const ENGINE = path.join(ROOT, 'assets/js/sincopa-engine.js');
-const OUT_DIR = path.join(ROOT, 'assets/img/compases/fichas');
+const ENGINE = 'assets/js/sincopa-engine.js';
+const { cargarFicha, escalarUniforme } = require('./lib-ficha-verovio.js');
+/* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/compases/fichas');
 
 /* Semilla fija + cuántos fragmentos trae la ficha. El verificador reutiliza esto. */
 const SEMILLA = 7000;
@@ -55,8 +56,7 @@ const CSS = `
   .rejilla { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; }
   .celda { position: relative; border: 1px solid #e8e0cc; border-radius: 6px; padding: 3px 6px 4px 22px; page-break-inside: avoid; }
   .celda.ancha { grid-column: 1 / -1; padding-left: 22px; }
-  .celda svg { display: block; margin: 0 auto; height: 58px !important; width: auto !important; max-width: 100% !important; }
-  .celda.ancha svg { height: 58px !important; }
+  .celda svg { display: block; margin: 0 auto; }
   .num { position: absolute; top: 3px; left: 5px; font-size: 8pt; font-weight: 700; color: #9a7b28; }
   .chk { font-size: 7.6pt; color: #555; text-align: center; margin-top: -2px; }
   .chk.sol { color: #c0392b; font-weight: 700; }
@@ -109,17 +109,16 @@ function montar({ SEMILLA, N_FRAGMENTOS, solucion }) {
   for (const solucion of [false, true]) {
     const page = await browser.newPage({ deviceScaleFactor: 3 });
     await page.setViewportSize({ width: 850, height: 1200 });
-    await page.setContent(html(solucion));
-    await page.addScriptTag({ url: VF4_URL });
-    await page.addScriptTag({ path: ENGINE });
+    await cargarFicha(page, html(solucion), [ENGINE]);
     const n = await page.evaluate(montar, { SEMILLA, N_FRAGMENTOS, solucion });
+    await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 14, 0.5)");
     const nombre = 'ficha-sincopa' + (solucion ? '-soluciones' : '');
     const pdfPath = path.join(OUT_DIR, nombre + '.pdf');
     const sobra = await page.evaluate(() => Math.round(document.querySelector('.hoja').scrollHeight - 297 / 25.4 * 96));
     await page.pdf({ path: pdfPath, format: 'A4', printBackground: true, margin: { top: '0', bottom: '0', left: '0', right: '0' } });
     const paginas = Number((fs.readFileSync(pdfPath).toString('latin1').match(/\/Count\s+(\d+)/) || [])[1] || 0);
     // Glifos cortados: tinta en los bordes de cada dibujo.
-    const svgs = await page.$$('.celda svg');
+    const svgs = await page.$('.celda .svg > svg');
     const cortes = [];
     for (let i = 0; i < svgs.length; i++) {
       const { data, info } = await sharp(await svgs[i].screenshot()).greyscale().raw().toBuffer({ resolveWithObject: true });

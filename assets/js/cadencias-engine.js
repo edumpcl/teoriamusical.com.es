@@ -39,7 +39,6 @@
 
   var REDONDA = 'w';
   function CT() { return window.tmComienzoTest; }
-  function VF() { return (window.Vex && window.Vex.Flow) || window.VexFlow; }
 
   function mulberry32(a) {
     return function () {
@@ -178,69 +177,15 @@
 
   function anchoAcorde() { return 130; }
 
-  /* Dibuja los dos acordes en un gran pentagrama (piano). Escribe
-     div.__tmInfo = { acordes: [{S,A,T,B}, {S,A,T,B}] } para el verificador. */
-  function dibujarVF(div, it) {
-    var V = VF();
-    div.innerHTML = '';
-    var w1 = anchoAcorde(), w2 = anchoAcorde(), margen = 40;
-    var W = margen + w1 + w2, H = 270;
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(W, H);
-    var ctx = r.getContext();
-    // Hueco generoso entre los dos pentagramas: las voces internas (alto y
-    // tenor) usan a menudo líneas adicionales por encima o por debajo de su
-    // clave, y con poco margen esas líneas se solapan con el otro pentagrama.
-    var opTop = { space_above_staff_ln: 3, spaceAboveStaffLn: 3, space_below_staff_ln: 6, spaceBelowStaffLn: 6 };
-    var opBot = { space_above_staff_ln: 6, spaceAboveStaffLn: 6 };
-    var xs = [margen, margen + w1];
-    var arriba = [], abajo = [];
-    xs.forEach(function (x, i) {
-      var top = new V.Stave(x, 8, w1, opTop);
-      var bot = new V.Stave(x, 132, w1, opBot);
-      if (i === 0) { top.addClef('treble').addKeySignature(it.tonalidad); bot.addClef('bass').addKeySignature(it.tonalidad); }
-      if (i === xs.length - 1) {
-        var FINAL = (V.BarlineType || (V.Barline && V.Barline.type)).END;
-        top.setEndBarType(FINAL); bot.setEndBarType(FINAL);
-      }
-      top.setContext(ctx).draw();
-      bot.setContext(ctx).draw();
-      arriba.push(top); abajo.push(bot);
-    });
-    var llave = new V.StaveConnector(arriba[0], abajo[0]).setType(V.StaveConnector.type.BRACE);
-    llave.setContext(ctx).draw();
-    new V.StaveConnector(arriba[0], abajo[0]).setType(V.StaveConnector.type.SINGLE_LEFT).setContext(ctx).draw();
-
-    var dur = REDONDA;
-    var notasArriba = [], notasAbajo = [];
-    it.acordes.forEach(function (ac) {
-      notasArriba.push(new V.StaveNote({ keys: [ac.A, ac.S], duration: dur, clef: 'treble' }));
-      notasAbajo.push(new V.StaveNote({ keys: [ac.B, ac.T], duration: dur, clef: 'bass' }));
-    });
-    var vozArriba = new V.Voice({ num_beats: 8, beat_value: 4 }); vozArriba.setStrict(false); vozArriba.addTickables(notasArriba);
-    var vozAbajo = new V.Voice({ num_beats: 8, beat_value: 4 }); vozAbajo.setStrict(false); vozAbajo.addTickables(notasAbajo);
-    new V.Formatter().joinVoices([vozArriba]).joinVoices([vozAbajo]).format([vozArriba, vozAbajo], w1 + w2 - 30);
-    vozArriba.draw(ctx, arriba[0]);
-    vozAbajo.draw(ctx, abajo[0]);
-
-    var svg = div.querySelector('svg');
-    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-    svg.style.width = '100%';
-    svg.style.height = 'auto';
-    svg.style.maxWidth = Math.round(W * 1.3) + 'px';
-    div.__tmInfo = { acordes: it.acordes.slice() };
-  }
-
   /* ---- Dibujo con Verovio (tm-mei.js + tm-notacion.js) ---- */
-  /* Mientras haya motores que aún dibujan con VexFlow, dibujar elige solo: con Verovio cargado, Verovio; si no, VexFlow
-     (dibujarVF). Cuando estén todos migrados se quitará la versión de VexFlow. */
+  /* ¿Está Verovio ya cargado? (los motores esperan a tmNotacion.listo() antes de arrancar) */
   function conVerovio() { return !!(window.tmNotacion && window.tmNotacion.cargado && window.tmNotacion.cargado()); }
   /* Alteraciones de la armadura de cada tonalidad (mayor): + sostenidos, − bemoles. */
   var ARMADURA = { C: 0, G: 1, D: 2, F: -1, Bb: -2, A: 3, Eb: -3 };
 
   /* Los dos acordes en un gran pentagrama (piano): soprano y contralto en un acorde de clave de sol, tenor y bajo en uno de
      clave de fa, redondas. Las notas se escriben con la alteración que les da la armadura. */
-  function dibujarV(div, it) {
+  function dibujar(div, it) {
     var arm = ARMADURA[it.tonalidad];
     div.innerHTML = '';
     function conArm(key) {
@@ -259,8 +204,6 @@
     res.elemento.style.maxWidth = '100%';
     div.__tmInfo = { acordes: it.acordes.slice() };
   }
-
-  function dibujar(div, it) { return (conVerovio() ? dibujarV : dibujarVF)(div, it); }
 
   /* ------------------------------------------------------------------ UI */
 

@@ -12,18 +12,17 @@
  *   - que el hueco cumple el nivel (1: una figura; 2: figura o silencio; 3: dos o
  *     tres figuras) y que en los niveles 1 y 2 la respuesta es ÚNICA en la paleta;
  *   - lo DIBUJADO: tantos huecos invisibles como elementos faltan, ninguna barra
- *     de corcheas une notas de tiempos distintos, y con VexFlow 4 (web) y 5 (PDF);
+ *     de corcheas une notas de tiempos distintos, y con Verovio;
  *   - y en el navegador, cada nivel se resuelve bien y mal: la corrección acierta
  *     en ambos casos.
  */
 const { chromium } = require('playwright');
+const { cargarFicha } = require('./lib-ficha-verovio.js');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const URL = 'http://localhost:8099/ejercicios/compases/completar-compas/';
-const ENGINE = path.join(ROOT, 'assets/js/completar-compas-engine.js');
-const VF5 = path.join(ROOT, 'node_modules/vexflow/build/cjs/vexflow.js');
-const VF4 = 'https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js';
+const ENGINE = 'assets/js/completar-compas-engine.js';
 
 /* Tablas propias, en semifusas. */
 const U = { r: 64, rP: 96, b: 32, bP: 48, n: 16, nP: 24, c: 8, cP: 12, sc: 4 };
@@ -79,13 +78,11 @@ function revisarCompas(donde, it) {
   if (JSON.stringify(it.faltan) !== JSON.stringify(faltan.map(e => ({ f: e.f, s: e.s })))) mal(donde, '«faltan» no coincide con el hueco');
 }
 
-async function conVexFlow(browser, etiqueta, vexflow) {
+async function conVerovio(browser, etiqueta) {
   const p = await browser.newPage();
   const errs = [];
   p.on('pageerror', e => errs.push(e.message));
-  await p.setContent('<!doctype html><html><body><div id="z"></div></body></html>');
-  await p.addScriptTag(vexflow.startsWith('http') ? { url: vexflow } : { path: vexflow });
-  await p.addScriptTag({ path: ENGINE });
+  await cargarFicha(p, '<!doctype html><html><body><div id="z"></div></body></html>', [ENGINE]);
   const lotes = await p.evaluate(() => {
     const T = window.tmCompletarCompasData, z = document.getElementById('z'), out = [];
     const cartasFig = T.CARTAS_FIG.map(f => T.FIG[f].u), cartasSil = T.CARTAS_SIL.map(f => T.FIG[f].u);
@@ -223,10 +220,9 @@ async function enPagina(browser) {
 
 (async () => {
   const browser = await chromium.launch();
-  const a = await conVexFlow(browser, 'VexFlow 4 (web)', VF4);
-  const b = await conVexFlow(browser, 'VexFlow 5 (PDF)', VF5);
+  const a = await conVerovio(browser, 'Verovio');
   await enPagina(browser);
   await browser.close();
-  console.log(`\n  ${a + b} compases · ${fallos} problema(s).`);
+  console.log(`\n  ${a} compases · ${fallos} problema(s).`);
   process.exit(fallos ? 1 : 0);
 })().catch(e => { console.error(e); process.exit(1); });

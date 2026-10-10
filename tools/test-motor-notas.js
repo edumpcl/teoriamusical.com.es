@@ -5,6 +5,7 @@
  *   (antes: node tools/servidor-estatico.js)
  *   node tools/test-motor-notas.js --version=vexflow     # el motor tal y como esta en git (HEAD), con VexFlow
  *   node tools/test-motor-notas.js --version=verovio     # el motor del arbol de trabajo (Verovio)
+ *   (--version=vexflow solo sirve mientras HEAD conserve el motor con VexFlow: es la linea base con la que se comprobo la migracion)
  *   opciones: --semillas=5 --base=http://127.0.0.1:8910
  *
  * Con el azar SEMBRADO (Math.random determinista) el motor plantea las mismas preguntas en las dos versiones. Para cada una se

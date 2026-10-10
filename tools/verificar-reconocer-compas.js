@@ -18,19 +18,18 @@
  *     aparece con una frecuencia razonable (no es teórico: se ve en la práctica);
  *   - lo DIBUJADO con `dibujarMedida`: puntillos realmente pintados, ninguna barra
  *     de corcheas cruza un tiempo, y sin cifra vs. con cifra no cambia el ritmo;
- *     con VexFlow 4 (web) y 5 (PDF);
+ *     con Verovio;
  *   - y en el navegador, una ronda respondiendo bien y mal, incluyendo un caso
  *     ambiguo (aceptar cualquiera de las cifras válidas) y el resultado contado.
  */
 const { chromium } = require('playwright');
+const { cargarFicha } = require('./lib-ficha-verovio.js');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const URL = 'http://localhost:8099/ejercicios/compases/reconocer-compas/';
-const ENGINE1 = path.join(ROOT, 'assets/js/completar-compas-engine.js');
-const ENGINE2 = path.join(ROOT, 'assets/js/reconocer-compas-engine.js');
-const VF5 = path.join(ROOT, 'node_modules/vexflow/build/cjs/vexflow.js');
-const VF4 = 'https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js';
+const ENGINE1 = 'assets/js/completar-compas-engine.js';
+const ENGINE2 = 'assets/js/reconocer-compas-engine.js';
 
 /* Tablas propias, en semifusas. */
 const U = { r: 64, rP: 96, b: 32, bP: 48, n: 16, nP: 24, c: 8, cP: 12, sc: 4 };
@@ -128,14 +127,11 @@ function equivalentesPropio(compasBase, conT) {
   return validos;
 }
 
-async function conVexFlow(browser, etiqueta, vexflow) {
+async function conVerovio(browser, etiqueta) {
   const p = await browser.newPage();
   const errs = [];
   p.on('pageerror', e => errs.push(e.message));
-  await p.setContent('<!doctype html><html><body><div id="z"></div></body></html>');
-  await p.addScriptTag(vexflow.startsWith('http') ? { url: vexflow } : { path: vexflow });
-  await p.addScriptTag({ path: ENGINE1 });
-  await p.addScriptTag({ path: ENGINE2 });
+  await cargarFicha(p, '<!doctype html><html><body><div id="z"></div></body></html>', [ENGINE1, ENGINE2]);
   const lotes = await p.evaluate(() => {
     const T = window.tmReconocerCompasTest, z = document.getElementById('z'), out = [];
     ['simples', 'compuestos', 'mezcla'].forEach(grupo => {
@@ -263,10 +259,9 @@ async function enPagina(browser) {
 
 (async () => {
   const browser = await chromium.launch();
-  const a = await conVexFlow(browser, 'VexFlow 4 (web)', VF4);
-  const b = await conVexFlow(browser, 'VexFlow 5 (PDF)', VF5);
+  const a = await conVerovio(browser, 'Verovio');
   await enPagina(browser);
   await browser.close();
-  console.log(`\n  ${a + b} medidas · ${fallos} problema(s).`);
+  console.log(`\n  ${a} medidas · ${fallos} problema(s).`);
   process.exit(fallos ? 1 : 0);
 })().catch(e => { console.error(e); process.exit(1); });

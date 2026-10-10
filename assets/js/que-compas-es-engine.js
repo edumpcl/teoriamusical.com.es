@@ -33,7 +33,6 @@
 
   function D() { return window.tmCompletarCompasData; }
   function GV() { return window.tmGruposVETest; }
-  function VF() { return (window.Vex && window.Vex.Flow) || window.VexFlow; }
 
   function mulberry32(a) {
     return function () {
@@ -153,92 +152,15 @@
 
   /* --------------------------------------------------------- Dibujo */
 
-  /* Dibuja el compás completo, con o sin cifra. opts = { w, sinCifra }.
-     Escribe div.__tmInfo para el verificador. Cada elemento del grupo lleva
-     sus propios datos (e.datos: {grupo, variante, partes, silIdx}), a
-     diferencia de dibujarConGrupo() del otro ejercicio, que solo admite un
-     grupo por compás. */
-  function dibujarCompasVF(div, it, opts) {
-    var V = VF(), FIG = D().FIG;
-    opts = opts || {};
-    div.innerHTML = '';
-    var W = opts.w || 460, H = 100;
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(W, H);
-    var ctx = r.getContext();
-    var stave = new V.Stave(6, 6, W - 12, { space_above_staff_ln: 3, spaceAboveStaffLn: 3 });
-    if (!opts.sinCifra) stave.addTimeSignature(it.compas);
-    stave.setContext(ctx).draw();
-
-    var d = D().COMPASES[it.compas];
-    var notas = [], info = [], tuplets = [];
-    var barrasFuera = [], grupoFuera = [];
-    function cerrarFuera() { if (grupoFuera.length > 1) barrasFuera.push(new V.Beam(grupoFuera.map(function (x) { return x.n; }), false)); grupoFuera = []; }
-
-    it.elems.forEach(function (e) {
-      if (e.grupo) {
-        var g = e.datos;
-        var notasGrupo = [], barrasGrupo = [], corriendo = [];
-        function cerrarGrupo() { if (corriendo.length > 1) barrasGrupo.push(new V.Beam(corriendo, false)); corriendo = []; }
-        g.partes.forEach(function (p, k) {
-          var esSil = k === g.silIdx;
-          var dur = GV().duracionDe(g.variante.base, p) + (esSil ? 'r' : '');
-          var nota = new V.StaveNote({ keys: ['b/4'], duration: dur, clef: 'treble' });
-          if (!esSil) nota.setStemDirection(-1);
-          notasGrupo.push(nota);
-          notas.push(nota);
-          info.push({ grupo: g.grupo, partes: p, silencio: esSil });
-          if (p === 1 && !esSil) corriendo.push(nota); else cerrarGrupo();
-        });
-        cerrarGrupo();
-        var nGrupo = GV().GRUPOS_VE[g.grupo].n, equivale = GV().GRUPOS_VE[g.grupo].equivale;
-        tuplets.push(new V.Tuplet(notasGrupo, {
-          num_notes: nGrupo, notes_occupied: equivale, numNotes: nGrupo, notesOccupied: equivale,
-          bracketed: true, ratioed: false
-        }));
-        barrasFuera = barrasFuera.concat(barrasGrupo);
-        cerrarFuera();
-        return;
-      }
-      var durFuera = FIG[e.f].vf + (e.s ? 'r' : '');
-      var notaFuera = new V.StaveNote({ keys: ['b/4'], duration: durFuera, clef: 'treble' });
-      if (!e.s) notaFuera.setStemDirection(-1);
-      if (/d$/.test(FIG[e.f].vf)) V.Dot.buildAndAttach([notaFuera], { all: true });
-      notas.push(notaFuera);
-      info.push({ f: e.f, s: !!e.s, puntillos: notaFuera.getModifiersByType ? notaFuera.getModifiersByType('Dot').length : 0 });
-      var corta = e.u < 16 && !e.s;
-      var tiempoIdx = Math.floor(e.t0 / d.tiempo);
-      if (!corta || (grupoFuera.length && Math.floor(grupoFuera[0].t0 / d.tiempo) !== tiempoIdx)) cerrarFuera();
-      if (corta) grupoFuera.push({ n: notaFuera, t0: e.t0 });
-    });
-    cerrarFuera();
-
-    var voz = new V.Voice({ num_beats: d.tiempos * d.tiempo, beat_value: 64, numBeats: d.tiempos * d.tiempo, beatValue: 64 });
-    voz.setMode(V.Voice.Mode.SOFT);
-    voz.addTickables(notas);
-    new V.Formatter().joinVoices([voz]).format([voz], stave.getNoteEndX() - stave.getNoteStartX() - 30);
-    voz.draw(ctx, stave);
-    barrasFuera.forEach(function (b) { b.setContext(ctx).draw(); });
-    tuplets.forEach(function (tp) { tp.setContext(ctx).draw(); });
-
-    var svg = div.querySelector('svg');
-    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-    svg.style.width = '100%';
-    svg.style.height = 'auto';
-    svg.style.maxWidth = Math.round(W * 1.2) + 'px';
-    div.__tmInfo = info;
-  }
-
   /* ---- Dibujo con Verovio (tm-mei.js + tm-notacion.js) ---- */
-  /* Mientras haya motores que aún dibujan con VexFlow, dibujarCompas elige solo: con Verovio cargado, Verovio; si no,
-     VexFlow (dibujarCompasVF). Cuando estén todos migrados se quitará la versión de VexFlow. */
+  /* ¿Está Verovio ya cargado? (los motores esperan a tmNotacion.listo() antes de arrancar) */
   function conVerovio() { return !!(window.tmNotacion && window.tmNotacion.cargado && window.tmNotacion.cargado()); }
-  /* '8', 'q', 'h', '16', 'qd', '8d'… (duraciones de VexFlow) -> duración y puntillo de tm-mei.js */
+  /* '8', 'q', 'h', '16', 'qd', '8d'… (duraciones de la tabla FIG) -> duración y puntillo de tm-mei.js */
   function durV(vf) { return { d: vf.replace(/d$/, ''), p: /d$/.test(vf) ? 1 : 0 }; }
 
   /* Separación compacta (0,15): un 12/8 hecho solo de grupos mide 1015 px con la de siempre (0,5) y 473 con esta; en móvil
      eso es la diferencia entre notas de 3,7 px y de 8 px entre líneas. */
-  function dibujarCompasV(div, it, opts) {
+  function dibujarCompas(div, it, opts) {
     var FIG = D().FIG, d = D().COMPASES[it.compas];
     opts = opts || {};
     div.innerHTML = '';
@@ -279,8 +201,6 @@
     res.elemento.style.maxWidth = Math.round((opts.w || 460) * 1.2) + 'px';
     div.__tmInfo = info;
   }
-
-  function dibujarCompas(div, it, opts) { return (conVerovio() ? dibujarCompasV : dibujarCompasVF)(div, it, opts); }
 
   /* -------------------------------------------------------------- UI */
 

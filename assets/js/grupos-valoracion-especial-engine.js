@@ -30,8 +30,8 @@
    semifusas ENTERAS; el interior de un grupo de valoración especial no cae en
    esa rejilla (un tresillo son tercios de tiempo). Por eso el reparto interno
    del grupo NO se lleva en semifusas: se lleva en «partes» (1 a N, sumando
-   exactamente N) y se dibuja con el soporte de tresillos/grupos (V.Tuplet) que
-   trae VexFlow de serie, que hace el reparto proporcional él solo. Hacia
+   exactamente N) y se dibuja con el soporte de tresillos/grupos de Verovio (tuplets de tm-mei.js), que
+   hace el reparto proporcional él solo. Hacia
    fuera, el grupo entero sigue ocupando una posición entera (un tiempo) dentro
    del compás, así que el resto del compás se genera igual que siempre.
 
@@ -42,7 +42,6 @@
   'use strict';
 
   function D() { return window.tmCompletarCompasData; }
-  function VF() { return (window.Vex && window.Vex.Flow) || window.VexFlow; }
 
   function mulberry32(a) {
     return function () {
@@ -90,7 +89,7 @@
   var ORDEN = ['tresillo', 'dosillo', 'cuatrillo', 'seisillo'];
   var NOMBRE_ART = { tresillo: 'un tresillo', dosillo: 'un dosillo', cuatrillo: 'un cuatrillo', seisillo: 'un seisillo' };
 
-  /* Escala de duraciones VexFlow (sin puntillo) según la unidad base del grupo
+  /* Escala de duraciones (sin puntillo) según la unidad base del grupo
      y cuántas «partes» (1, 2 o 4) ocupa una figura dentro de él. */
   var ESCALA = { c: ['8', 'q', 'h'], sc: ['16', '8', 'q'] };
   function duracionDe(base, partes) { return ESCALA[base][Math.round(Math.log2(partes))]; }
@@ -189,87 +188,14 @@
 
   /* --------------------------------------------------------- Dibujo */
 
-  /* Dibuja el compás completo con el grupo de valoración especial insertado.
-     opts = { w }. Escribe div.__tmInfo para el verificador. */
-  function dibujarConGrupoVF(div, it, opts) {
-    var V = VF(), FIG = D().FIG;
-    opts = opts || {};
-    div.innerHTML = '';
-    var W = opts.w || 460, H = 100;
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(W, H);
-    var ctx = r.getContext();
-    var stave = new V.Stave(6, 6, W - 12, { space_above_staff_ln: 3, spaceAboveStaffLn: 3 });
-    stave.addTimeSignature(it.compasGrupo);
-    stave.setContext(ctx).draw();
-
-    var d = D().COMPASES[it.compasGrupo];
-    var notas = [], info = [], tuplet = null;
-    var barrasFuera = [], grupoFuera = [];
-    function cerrarFuera() { if (grupoFuera.length > 1) barrasFuera.push(new V.Beam(grupoFuera.map(function (x) { return x.n; }), false)); grupoFuera = []; }
-
-    it.elems.forEach(function (e) {
-      if (e.grupo) {
-        var g = GRUPOS_VE[it.grupo];
-        var notasGrupo = [], barrasGrupo = [], corriendo = [];
-        function cerrarGrupo() { if (corriendo.length > 1) barrasGrupo.push(new V.Beam(corriendo, false)); corriendo = []; }
-        it.partes.forEach(function (p, k) {
-          var esSil = k === it.silIdx;
-          var dur = duracionDe(it.variante.base, p) + (esSil ? 'r' : '');
-          var nota = new V.StaveNote({ keys: ['b/4'], duration: dur, clef: 'treble' });
-          if (!esSil) nota.setStemDirection(-1);
-          notasGrupo.push(nota);
-          notas.push(nota);
-          info.push({ grupo: it.grupo, partes: p, silencio: esSil });
-          if (p === 1 && !esSil) corriendo.push(nota); else cerrarGrupo();
-        });
-        cerrarGrupo();
-        tuplet = new V.Tuplet(notasGrupo, {
-          num_notes: g.n, notes_occupied: g.equivale, numNotes: g.n, notesOccupied: g.equivale,
-          bracketed: true, ratioed: false
-        });
-        barrasFuera = barrasFuera.concat(barrasGrupo);
-        cerrarFuera();
-        return;
-      }
-      var durFuera = FIG[e.f].vf + (e.s ? 'r' : '');
-      var notaFuera = new V.StaveNote({ keys: ['b/4'], duration: durFuera, clef: 'treble' });
-      if (!e.s) notaFuera.setStemDirection(-1);
-      if (/d$/.test(FIG[e.f].vf)) V.Dot.buildAndAttach([notaFuera], { all: true });
-      notas.push(notaFuera);
-      info.push({ f: e.f, s: !!e.s, puntillos: notaFuera.getModifiersByType ? notaFuera.getModifiersByType('Dot').length : 0 });
-      var corta = e.u < 16 && !e.s;
-      var tiempoIdx = Math.floor(e.t0 / d.tiempo);
-      if (!corta || (grupoFuera.length && Math.floor(grupoFuera[0].t0 / d.tiempo) !== tiempoIdx)) cerrarFuera();
-      if (corta) grupoFuera.push({ n: notaFuera, t0: e.t0 });
-    });
-    cerrarFuera();
-
-    var voz = new V.Voice({ num_beats: d.tiempos * d.tiempo, beat_value: 64, numBeats: d.tiempos * d.tiempo, beatValue: 64 });
-    voz.setMode(V.Voice.Mode.SOFT);
-    voz.addTickables(notas);
-    new V.Formatter().joinVoices([voz]).format([voz], stave.getNoteEndX() - stave.getNoteStartX() - 30);
-    voz.draw(ctx, stave);
-    barrasFuera.forEach(function (b) { b.setContext(ctx).draw(); });
-    if (tuplet) tuplet.setContext(ctx).draw();
-
-    var svg = div.querySelector('svg');
-    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-    svg.style.width = '100%';
-    svg.style.height = 'auto';
-    svg.style.maxWidth = Math.round(W * 1.2) + 'px';
-    div.__tmInfo = info;
-  }
-
   /* ---- Dibujo con Verovio (tm-mei.js + tm-notacion.js) ---- */
-  /* Mientras haya motores que aún dibujan con VexFlow, dibujarConGrupo elige solo: con Verovio cargado, Verovio; si no,
-     VexFlow (dibujarConGrupoVF). Cuando estén todos migrados se quitará la versión de VexFlow. */
+  /* ¿Está Verovio ya cargado? (los motores esperan a tmNotacion.listo() antes de arrancar) */
   function conVerovio() { return !!(window.tmNotacion && window.tmNotacion.cargado && window.tmNotacion.cargado()); }
 
-  /* '8', 'q', 'h', '16', 'qd', '8d', 'hd', 'wd'… (duraciones de VexFlow) -> duración y puntillo de tm-mei.js */
+  /* '8', 'q', 'h', '16', 'qd', '8d', 'hd', 'wd'… (duraciones de la tabla FIG) -> duración y puntillo de tm-mei.js */
   function durV(vf) { return { d: vf.replace(/d$/, ''), p: /d$/.test(vf) ? 1 : 0 }; }
 
-  function dibujarConGrupoV(div, it, opts) {
+  function dibujarConGrupo(div, it, opts) {
     var FIG = D().FIG, d = D().COMPASES[it.compasGrupo], g = GRUPOS_VE[it.grupo];
     opts = opts || {};
     div.innerHTML = '';
@@ -311,8 +237,6 @@
     r.elemento.style.maxWidth = Math.round((opts.w || 460) * 1.2) + 'px';
     div.__tmInfo = info;
   }
-
-  function dibujarConGrupo(div, it, opts) { return (conVerovio() ? dibujarConGrupoV : dibujarConGrupoVF)(div, it, opts); }
 
   /* -------------------------------------------------------------- UI */
 

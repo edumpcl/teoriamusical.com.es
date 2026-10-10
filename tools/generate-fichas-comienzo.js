@@ -16,10 +16,11 @@ const path = require('path');
 const fs = require('fs');
 
 const ROOT = path.join(__dirname, '..');
-const VF5 = path.join(ROOT, 'node_modules/vexflow/build/cjs/vexflow.js');
-const ENGINE1 = path.join(ROOT, 'assets/js/completar-compas-engine.js');
-const ENGINE2 = path.join(ROOT, 'assets/js/tipo-de-comienzo-engine.js');
-const OUT_DIR = path.join(ROOT, 'assets/img/comienzo/fichas');
+const ENGINE1 = 'assets/js/completar-compas-engine.js';
+const ENGINE2 = 'assets/js/tipo-de-comienzo-engine.js';
+const { cargarFicha, escalarUniforme } = require('./lib-ficha-verovio.js');
+/* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/comienzo/fichas');
 
 /* Los lotes de la ficha: nivel, cuántos, semilla. */
 const LOTES = [
@@ -51,7 +52,7 @@ const CSS = `
   h2 { font-size: 10.5pt; margin: 8px 0 4px; color: #8b6914; }
   .rejilla { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 10px; }
   .celda { position: relative; border: 1px solid #e8e0cc; border-radius: 6px; padding: 3px 6px 3px 22px; page-break-inside: avoid; }
-  .celda svg { display: block; margin: 0 auto; height: auto !important; }
+  .celda svg { display: block; margin: 0 auto; }
   .num { position: absolute; top: 3px; left: 6px; font-size: 8.5pt; font-weight: 700; color: #9a7b28; }
   .ops { display: flex; justify-content: space-between; gap: 6px; font-size: 8.5pt; color: #333; padding: 0 2px 1px; }
   .op { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
@@ -100,17 +101,8 @@ function montar({ LOTES, solucion }) {
       }).join('');
       c.innerHTML = `<span class="num">${++n}</span><div class="svg"></div><div class="ops">${ops}</div>`;
       rej.appendChild(c);
-      T.dibujar(c.querySelector('.svg'), it, { compacto: 0.85 });
+      T.dibujar(c.querySelector('.svg'), it, { compacto: true });
     });
-  });
-  // Misma escala dentro de cada nivel (si no, las cortas salen gigantes y las
-  // largas diminutas); cada nivel aprovecha su propio hueco, hasta tamaño natural.
-  const interior = document.querySelector('.celda').clientWidth - 28 - 2;
-  Array.from(document.querySelectorAll('.rejilla')).forEach(rej => {
-    const svgs = Array.from(rej.querySelectorAll('svg'));
-    const anchos = svgs.map(s => Number(s.getAttribute('viewBox').split(' ')[2]));
-    const K = Math.min(1, interior / Math.max.apply(null, anchos));
-    svgs.forEach((s, i) => { s.style.width = (anchos[i] * K) + 'px'; s.style.maxWidth = 'none'; });
   });
   return n;
 }
@@ -123,19 +115,17 @@ function montar({ LOTES, solucion }) {
   for (const solucion of [false, true]) {
     const page = await browser.newPage({ deviceScaleFactor: 3 });
     await page.setViewportSize({ width: 850, height: 1200 });
-    await page.setContent(html(solucion));
-    await page.addScriptTag({ path: VF5 });
-    await page.addScriptTag({ path: ENGINE1 });
-    await page.addScriptTag({ path: ENGINE2 });
+    await cargarFicha(page, html(solucion), [ENGINE1, ENGINE2]);
     await page.evaluate((TIT) => { window.__tmTit = TIT; }, TIT);
     const n = await page.evaluate(montar, { LOTES, solucion });
+    await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 27, 0.44)");
     const nombre = 'ficha-comienzo' + (solucion ? '-soluciones' : '');
     const pdfPath = path.join(OUT_DIR, nombre + '.pdf');
     const sobra = await page.evaluate(() => Math.round(document.querySelector('.hoja').scrollHeight - 297 / 25.4 * 96));
     await page.pdf({ path: pdfPath, format: 'A4', printBackground: true, margin: { top: '0', bottom: '0', left: '0', right: '0' } });
     const paginas = Number((fs.readFileSync(pdfPath).toString('latin1').match(/\/Count\s+(\d+)/) || [])[1] || 0);
     // Glifos cortados: tinta en los bordes de cada dibujo.
-    const svgs = await page.$$('.celda svg');
+    const svgs = await page.$('.celda .svg > svg');
     const cortes = [];
     for (let i = 0; i < svgs.length; i++) {
       const { data, info } = await sharp(await svgs[i].screenshot()).greyscale().raw().toBuffer({ resolveWithObject: true });

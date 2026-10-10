@@ -5,6 +5,7 @@
  *   node tools/servidor-estatico.js                          (en otra terminal)
  *   node tools/test-motor-articulacion.js --version=vexflow  # el motor tal y como esta en git (HEAD)
  *   node tools/test-motor-articulacion.js --version=verovio  # el motor del arbol de trabajo
+ *   (--version=vexflow solo sirve mientras HEAD conserve el motor con VexFlow: es la linea base con la que se comprobo la migracion)
  *   opciones: --semillas=4 --base=http://127.0.0.1:8910
  *
  * Con el azar sembrado se pasan los tres modos. Con Verovio se LEE EL DIBUJO de cada signo (no los datos del motor):

@@ -33,7 +33,6 @@
   'use strict';
 
   function D() { return window.tmCompletarCompasData; }
-  function VF() { return (window.Vex && window.Vex.Flow) || window.VexFlow; }
 
   function mulberry32(a) {
     return function () {
@@ -277,78 +276,13 @@
     return w + (e.u === 12 || e.u === 24 || e.u === 48 ? 8 : 0);
   }
 
-  /* Dibuja los dos compases. Escribe div.__tmInfo para el verificador. */
-  function dibujarVF(div, it, opts) {
-    var V = VF(), FIG = D().FIG;
-    opts = opts || {};
-    div.innerHTML = '';
-    var H = 104;
-    var molde = new V.Stave(0, 0, 400);
-    molde.addClef('treble').addKeySignature(it.tonalidad).addTimeSignature(it.compas);
-    var modW = molde.getNoteStartX();
-    var compacto = opts.compacto || 1;
-    var anchos = it.compases.map(function (c) {
-      var s = 0; c.elems.forEach(function (e) { s += anchoElem(e) * compacto; }); return s + 30;
-    });
-    var w1 = modW + anchos[0], w2 = anchos[1], W = 12 + w1 + w2;
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(W, H);
-    var ctx = r.getContext();
-    var op = { space_above_staff_ln: 3, spaceAboveStaffLn: 3 };
-    var st1 = new V.Stave(6, 6, w1, op);
-    st1.addClef('treble').addKeySignature(it.tonalidad).addTimeSignature(it.compas);
-    var st2 = new V.Stave(6 + w1, 6, w2, op);
-    st1.setContext(ctx).draw();
-    if (opts.final) { var BT = V.BarlineType || (V.Barline && V.Barline.type); st2.setEndBarType(BT.END); }
-    st2.setContext(ctx).draw();
-
-    var info = { barras: [], vigas: 0, final: !!opts.final };
-    [[it.compases[0], st1], [it.compases[1], st2]].forEach(function (par) {
-      var bar = par[0], stave = par[1], notas = [], datos = [], grupo = [], vigas = [];
-      var d = D().COMPASES[it.compas];
-      function cerrar() { if (grupo.length > 1) vigas.push(new V.Beam(grupo.map(function (x) { return x.n; }), true)); grupo = []; }
-      bar.elems.forEach(function (e) {
-        var clave = e.s ? 'b/4' : LETRAS[((e.p % 7) + 7) % 7] + '/' + Math.floor(e.p / 7);
-        var n = new V.StaveNote({
-          keys: [clave], duration: FIG[e.f].vf + (e.s ? 'r' : ''), clef: 'treble',
-          auto_stem: true, autoStem: true
-        });
-        if (/d$/.test(FIG[e.f].vf)) V.Dot.buildAndAttach([n], { all: true });
-        notas.push(n);
-        datos.push({ f: e.f, s: !!e.s, key: e.s ? null : clave, ticks: n.getTicks().value(), puntillos: n.getModifiersByType ? n.getModifiersByType('Dot').length : 0 });
-        var corta = e.u < 16 && !e.s;
-        var tiempoIdx = Math.floor(e.t0 / d.tiempo);
-        if (!corta || (grupo.length && Math.floor(grupo[0].t0 / d.tiempo) !== tiempoIdx)) cerrar();
-        if (corta) grupo.push({ n: n, t0: e.t0 });
-      });
-      cerrar();
-      var total = bar.elems.reduce(function (a, e) { return a + e.u; }, 0);
-      var voz = new V.Voice({ num_beats: total, beat_value: 64, numBeats: total, beatValue: 64 });
-      voz.setMode(V.Voice.Mode.SOFT);
-      voz.addTickables(notas);
-      new V.Formatter().joinVoices([voz]).format([voz], stave.getNoteEndX() - stave.getNoteStartX() - 22);
-      voz.draw(ctx, stave);
-      vigas.forEach(function (b) { b.setContext(ctx).draw(); });
-      info.barras.push(datos);
-      info.vigas += vigas.length;
-    });
-
-    var svg = div.querySelector('svg');
-    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-    svg.style.width = '100%';
-    svg.style.height = 'auto';
-    svg.style.maxWidth = Math.round(W * 1.25) + 'px';
-    div.__tmInfo = info;
-  }
-
   /* ---- Dibujo con Verovio (tm-mei.js + tm-notacion.js) ---- */
-  /* Mientras haya motores que aún dibujan con VexFlow (tipo-de-final reutiliza este dibujo), dibujar elige solo: con Verovio
-     cargado, Verovio; si no, VexFlow (dibujarVF). Cuando estén todos migrados se quitará la versión de VexFlow. */
+  /* ¿Está Verovio ya cargado? (los motores esperan a tmNotacion.listo() antes de arrancar) */
   function conVerovio() { return !!(window.tmNotacion && window.tmNotacion.cargado && window.tmNotacion.cargado()); }
   /* Alteraciones de la armadura de cada tonalidad (mayor): + sostenidos, − bemoles. */
   var ARMADURA = { C: 0, G: 1, D: 2, F: -1, Bb: -2, A: 3, Eb: -3 };
 
-  function dibujarV(div, it, opts) {
+  function dibujar(div, it, opts) {
     var FIG = D().FIG, d = D().COMPASES[it.compas], arm = ARMADURA[it.tonalidad];
     opts = opts || {};
     div.innerHTML = '';
@@ -389,8 +323,6 @@
     res.elemento.style.maxWidth = '100%';
     div.__tmInfo = info;
   }
-
-  function dibujar(div, it, opts) { return (conVerovio() ? dibujarV : dibujarVF)(div, it, opts); }
 
   /* ------------------------------------------------------------------ UI */
 

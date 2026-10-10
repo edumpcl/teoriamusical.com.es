@@ -16,17 +16,16 @@
  * su tabla; que la melodía cabe en el pentagrama y acaba en la tónica; y que
  * cada lote reparte mitad y mitad. Y lo DIBUJADO: puntillos (también en
  * silencios), figuras y silencios tal cual, ticks de VexFlow, barras, y la doble
- * barra final, con VexFlow 4 (web) y 5 (PDF). En el navegador, los tres niveles
+ * barra final, con Verovio. En el navegador, los tres niveles
  * resueltos bien y mal, con el resultado contado.
  */
 const { chromium } = require('playwright');
+const { cargarFicha } = require('./lib-ficha-verovio.js');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const URL = 'http://localhost:8099/ejercicios/final-tiempo-fuerte-y-debil/';
-const ENGINES = ['assets/js/completar-compas-engine.js', 'assets/js/tipo-de-comienzo-engine.js', 'assets/js/tipo-de-final-engine.js'].map(f => path.join(ROOT, f));
-const VF5 = path.join(ROOT, 'node_modules/vexflow/build/cjs/vexflow.js');
-const VF4 = 'https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js';
+const ENGINES = ['assets/js/completar-compas-engine.js', 'assets/js/tipo-de-comienzo-engine.js', 'assets/js/tipo-de-final-engine.js'];
 
 const TIEMPO = { '2/4': 16, '3/4': 16, '4/4': 16, '6/8': 24, '9/8': 24, '12/8': 24 };
 const TIEMPOS = { '2/4': 2, '3/4': 3, '4/4': 4, '6/8': 2, '9/8': 3, '12/8': 4 };
@@ -121,14 +120,12 @@ function vigasEsperadas(it) {
   return n;
 }
 
-async function conVexFlow(browser, etiqueta, vexflow) {
+async function conVerovio(browser, etiqueta) {
   const p = await browser.newPage();
   const errs = [];
   p.on('pageerror', e => errs.push(e.message));
   p.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') errs.push(m.type() + ': ' + m.text()); });
-  await p.setContent('<!doctype html><html><body><div id="z"></div></body></html>');
-  await p.addScriptTag(vexflow.startsWith('http') ? { url: vexflow } : { path: vexflow });
-  for (const e of ENGINES) await p.addScriptTag({ path: e });
+  await cargarFicha(p, '<!doctype html><html><body><div id="z"></div></body></html>', [...ENGINES]);
   const lotes = await p.evaluate(() => {
     const T = window.tmFinalTest, z = document.getElementById('z'), out = [];
     [1, 2, 3].forEach(nivel => {
@@ -229,10 +226,9 @@ async function enPagina(browser) {
 
 (async () => {
   const browser = await chromium.launch();
-  const a = await conVexFlow(browser, 'VexFlow 4 (web)', VF4);
-  const b = await conVexFlow(browser, 'VexFlow 5 (PDF)', VF5);
+  const a = await conVerovio(browser, 'Verovio');
   await enPagina(browser);
   await browser.close();
-  console.log(`\n  ${a + b} melodías · ${fallos} problema(s).`);
+  console.log(`\n  ${a} melodías · ${fallos} problema(s).`);
   process.exit(fallos ? 1 : 0);
 })().catch(e => { console.error(e); process.exit(1); });
