@@ -440,6 +440,7 @@
       rect.setAttribute('width', l.w);
       rect.setAttribute('height', h);
       rect.setAttribute('class', 'tm-si-lane');
+      rect.style.stroke = 'none';   // el SVG de Verovio trae «#id rect { stroke: currentcolor }», que le gana a la clase del carril
       rect.setAttribute('tabindex', '0');
       rect.setAttribute('role', 'button');
       rect.setAttribute('aria-label', 'Nota o grupo de notas ' + (i + 1) + ' de ' + lanes.length);

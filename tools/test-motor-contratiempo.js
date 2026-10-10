@@ -1,21 +1,21 @@
 'use strict';
 /**
- * Banco de pruebas del ejercicio de síncopas (sincopa-engine.js): el test interactivo (normal y difícil) y la variante de
+ * Banco de pruebas del ejercicio de contratiempos (contratiempo-engine.js): el test interactivo (normal y difícil) y la variante de
  * impresión que usa la ficha.
  *
  *   node tools/servidor-estatico.js                      (en otra terminal)
- *   node tools/test-motor-sincopa.js --version=vexflow   # el motor tal y como esta en git (HEAD)
- *   node tools/test-motor-sincopa.js --version=verovio   # el motor del arbol de trabajo
+ *   node tools/test-motor-contratiempo.js --version=vexflow   # el motor tal y como esta en git (HEAD)
+ *   node tools/test-motor-contratiempo.js --version=verovio   # el motor del arbol de trabajo
  *   opciones: --semillas=4 --base=http://127.0.0.1:8910
  *
- * Con el azar sembrado el motor plantea fragmentos que se vuelven a generar aqui con el mismo generador (window.tmSincopaGenerar),
+ * Con el azar sembrado el motor plantea fragmentos que se vuelven a generar aqui con el mismo generador (window.tmContratiempoGenerar),
  * y se comprueba que el DIBUJO dice lo mismo que los datos:
  *   - cada figura esta en su altura (clave de Sol), es nota o silencio, y con Verovio ademas: cabeza, corchetes, puntillos, barras y compas;
  *   - las ligaduras unen las notas que tienen que unir (y solo esas);
  *   - la cifra del compas dibujada es la del fragmento;
  *   - cada nota (y silencio) esta DENTRO de su carril de clic (elementFromPoint), y cada carril es de su grupo;
  *   - contestar lo correcto da «Correcto» y contestar mal da «Incorrecto»;
- *   - en la variante de impresion con soluciones, en rojo estan las notas y ligaduras de las sincopas y nada mas.
+ *   - en la variante de impresion con soluciones, en rojo estan las notas y ligaduras de las contratiempos y nada mas.
  */
 const { chromium } = require('playwright');
 const { execFileSync } = require('child_process');
@@ -26,8 +26,8 @@ const VERSION = arg('version', 'verovio');
 const SEMILLAS = Number(arg('semillas', 4));
 const BASE = arg('base', 'http://127.0.0.1:8910');
 const RAIZ = path.join(__dirname, '..');
-const URL = '/ejercicios/compases/sincopa/';
-const MOTOR = 'assets/js/sincopa-engine.js';
+const URL = '/ejercicios/compases/contratiempo/';
+const MOTOR = 'assets/js/contratiempo-engine.js';
 const gitShow = (r) => execFileSync('git', ['show', 'HEAD:' + r], { cwd: RAIZ, maxBuffer: 1 << 26 }).toString('utf8');
 
 const LETRAS = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
@@ -71,7 +71,7 @@ function leerEnPagina(svg) {
   return {
     verovio, lineas, figuras, ligaduras,
     cifra: [...svg.querySelectorAll('.meterSig use')].map(id),
-    carriles: [...svg.querySelectorAll('.tm-si-lane')].map((r) => { const b = r.getBoundingClientRect(); return { idx: Number(r.dataset.idx), izq: b.left, der: b.right, trazo: getComputedStyle(r).stroke }; }),
+    carriles: [...svg.querySelectorAll('.tm-ct-lane')].map((r) => { const b = r.getBoundingClientRect(); return { idx: Number(r.dataset.idx), izq: b.left, der: b.right, trazo: getComputedStyle(r).stroke }; }),
   };
 }
 
@@ -87,7 +87,7 @@ async function abrir(browser, semilla) {
   await page.route('**/*', (r) => (/consent\.js|googletagmanager|googlesyndication|google-analytics|doubleclick/.test(r.request().url()) ? r.abort() : r.fallback()));
   if (VERSION === 'vexflow') {
     await page.route(BASE + URL, (r) => r.fulfill({ contentType: 'text/html; charset=utf-8', body: gitShow(URL.replace(/^\//, '') + 'index.html') }));
-    for (const f of ['assets/js/sincopa-engine.js', 'assets/js/ficha-sincopa-engine.js']) {
+    for (const f of ['assets/js/contratiempo-engine.js', 'assets/js/ficha-contratiempo-engine.js']) {
       await page.route('**/' + f + '*', (r) => r.fulfill({ contentType: 'text/javascript; charset=utf-8', body: gitShow(f) }));
     }
   }
@@ -103,7 +103,7 @@ function compararDibujo(frag, d) {
   if (d.figuras.length !== frag.notas.length) return [`el dibujo tiene ${d.figuras.length} figuras y el fragmento ${frag.notas.length}`];
   const enBarra = new Set((frag.beams || []).flat());
   frag.notas.forEach((n, i) => {
-    const f = d.figuras[i], rest = n.duration === '8r';
+    const f = d.figuras[i], rest = n.duration.endsWith('r');
     if (f.silencio !== null && f.silencio !== rest) { mal.push(`figura ${i + 1}: ${rest ? 'debia ser silencio' : 'debia ser nota'}`); return; }
     if (!rest) {
       const paso = 30 + Math.round((d.lineas[4] - f.y) / (esp / 2));
@@ -111,7 +111,7 @@ function compararDibujo(frag, d) {
     }
     if (d.verovio) {
       if (f.medida !== n.measure) mal.push(`figura ${i + 1}: esta en el compas ${f.medida + 1} y deberia estar en el ${n.measure + 1}`);
-      if (rest) { if (f.glifoSilencio !== 'E4E6') mal.push(`figura ${i + 1}: silencio de corchea esperado (E4E6) y es ${f.glifoSilencio}`); return; }
+      if (rest) { const gs = n.duration === 'qr' ? 'E4E5' : 'E4E6'; if (f.glifoSilencio !== gs) mal.push(`figura ${i + 1}: silencio esperado (${gs}) y es ${f.glifoSilencio}`); return; }
       if (f.cabeza !== 'E0A4') mal.push(`figura ${i + 1}: cabeza de negra esperada (E0A4) y es ${f.cabeza}`);
       const base = n.duration.replace('d', '');
       const nBarras = base === '8' ? 1 : base === '16' ? 2 : 0;
@@ -147,34 +147,27 @@ function compararCifra(frag, d) {
   return JSON.stringify(d.cifra.slice(0, 2)) === JSON.stringify(esperado) ? [] : [`cifra dibujada ${d.cifra} y esperada ${esperado}`];
 }
 
-const gruposDe = (frag) => {
-  const g = []; let saltar = -1;
-  for (let i = 0; i < frag.notas.length; i++) {
-    if (i === saltar) continue;
-    const par = (frag.ligaduras || []).find((p) => p[0] === i);
-    if (par) { g.push([i, par[1]]); saltar = par[1]; } else g.push([i]);
-  }
-  return g;
-};
+// sin ligaduras que agrupen: cada nota o silencio es su propio carril
+const gruposDe = (frag) => frag.notas.map((_, i) => [i]);
 
 async function probarTest(browser, modo, semilla) {
   const { ctx, page } = await abrir(browser, semilla);
   const fallos = []; let preguntas = 0;
   const falla = (q, m) => fallos.push(`semilla ${semilla} ${modo ? 'dificil' : 'normal'} p${q}: ${m}`);
   try {
-    await page.waitForSelector('#tmsi .tm-si-mode-btn');
+    await page.waitForSelector('#tmct .tm-ct-mode-btn');
     // se reinicia el azar justo antes de elegir el modo: asi los fragmentos se pueden volver a generar igual
     await page.evaluate(sembrar, semilla);
     const frags = await page.evaluate(([s, dif]) => {
-      const f = []; for (let i = 0; i < 10; i++) f.push(dif ? tmSincopaGenerarDificil(Math.random) : tmSincopaGenerar(Math.random)); return f;
+      const f = []; for (let i = 0; i < 10; i++) f.push(dif ? tmContratiempoGenerarDificil(Math.random) : tmContratiempoGenerar(Math.random)); return f;
     }, [semilla, modo]);
     await page.evaluate(sembrar, semilla);
-    await page.locator('#tmsi .tm-si-mode-btn').nth(modo).click();
+    await page.locator('#tmct .tm-ct-mode-btn').nth(modo).click();
     for (let q = 1; q <= 10; q++) {
       preguntas++;
       const frag = frags[q - 1];
-      await page.waitForSelector('#tmsi .tm-si-staff svg');
-      const d = await page.evaluate(() => { const s = document.querySelector('#tmsi .tm-si-staff svg'); return window.__leer(s); });
+      await page.waitForSelector('#tmct .tm-ct-staff svg');
+      const d = await page.evaluate(() => { const s = document.querySelector('#tmct .tm-ct-staff svg'); return window.__leer(s); });
       for (const m of compararDibujo(frag, d)) falla(q, m);
       for (const m of compararCifra(frag, d)) falla(q, m);
       if (d.carriles.some((c) => c.trazo !== 'none')) falla(q, 'los carriles de clic tienen borde visible (stroke ' + d.carriles.find((c) => c.trazo !== 'none').trazo + ')');
@@ -182,12 +175,12 @@ async function probarTest(browser, modo, semilla) {
       if (d.carriles.length !== grupos.length) falla(q, `${grupos.length} carriles esperados y hay ${d.carriles.length}`);
       else {
         // cada figura cae dentro del carril de su grupo
-        const dentro = await page.evaluate(() => [...document.querySelectorAll('#tmsi .tm-si-staff svg')].map((svg) => {
+        const dentro = await page.evaluate(() => [...document.querySelectorAll('#tmct .tm-ct-staff svg')].map((svg) => {
           const verovio = !svg.querySelector('.vf-stavenote');
           return [...svg.querySelectorAll(verovio ? '.note, .rest' : '.vf-stavenote')].map((g) => {
             const b = g.getBoundingClientRect();
             const e = document.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2);
-            return e && e.classList.contains('tm-si-lane') ? Number(e.dataset.idx) : null;
+            return e && e.classList.contains('tm-ct-lane') ? Number(e.dataset.idx) : null;
           });
         })[0]);
         grupos.forEach((g, gi) => g.forEach((i) => { if (dentro[i] !== gi) falla(q, `la figura ${i + 1} cae en el carril ${dentro[i]} y es del grupo ${gi}`); }));
@@ -201,19 +194,19 @@ async function probarTest(browser, modo, semilla) {
       };
       let elegidos;
       if (hacerBien) {
-        if (!correctos.length) await page.locator('#tmsi .tm-si-none').click();
+        if (!correctos.length) await page.locator('#tmct .tm-ct-none').click();
         else for (const gi of correctos) await clicLane(gi);
       } else {
         const otros = grupos.map((_, gi) => gi).filter((gi) => !correctos.includes(gi));
         if (!correctos.length) await clicLane(0);                       // hay que decir «no hay» y se toca una nota
         else if (otros.length) await clicLane(otros[0]);                // se toca una que no es
-        else await page.locator('#tmsi .tm-si-none').click();           // todas lo son: se dice «no hay»
+        else await page.locator('#tmct .tm-ct-none').click();           // todas lo son: se dice «no hay»
       }
-      await page.locator('#tmsi .tm-submit').click();
-      const clases = await page.locator('#tmsi .tm-fb').evaluate((e) => e.className);
+      await page.locator('#tmct .tm-submit').click();
+      const clases = await page.locator('#tmct .tm-fb').evaluate((e) => e.className);
       if (hacerBien && !/tm-ok/.test(clases)) falla(q, 'se contesta lo correcto y el motor no dice «Correcto»');
       if (!hacerBien && !/tm-ko/.test(clases)) falla(q, 'se contesta mal y el motor no dice «Incorrecto»');
-      await page.locator('#tmsi .tm-nxt').click();
+      await page.locator('#tmct .tm-nxt').click();
     }
   } catch (e) { falla('?', String(e).slice(0, 250)); }
   await ctx.close();
@@ -224,16 +217,16 @@ async function probarImpresion(browser, semilla) {
   const { ctx, page } = await abrir(browser, semilla);
   const fallos = []; let n = 0;
   try {
-    await page.waitForSelector('#tmsi .tm-si-mode-btn');
+    await page.waitForSelector('#tmct .tm-ct-mode-btn');
     for (const dif of [false, true]) {
-      const frags = await page.evaluate(([s, dif]) => { const rng = tmSincopaMulberry32(s); const f = []; for (let i = 0; i < 12; i++) f.push(dif ? tmSincopaGenerarDificil(rng) : tmSincopaGenerar(rng)); return f; }, [semilla, dif]);
+      const frags = await page.evaluate(([s, dif]) => { const rng = tmContratiempoMulberry32(s); const f = []; for (let i = 0; i < 12; i++) f.push(dif ? tmContratiempoGenerarDificil(rng) : tmContratiempoGenerar(rng)); return f; }, [semilla, dif]);
       for (const solucion of [false, true]) {
         for (let i = 0; i < frags.length; i++) {
           n++;
           const frag = frags[i];
           const d = await page.evaluate(([f, sol]) => {
             const div = document.createElement('div'); div.style.width = '700px'; document.body.appendChild(div);
-            const svg = tmSincopaDibujarImpresion(div, f, sol);
+            const svg = tmContratiempoDibujarImpresion(div, f, sol);
             const r = window.__leer(svg); div.remove(); return r;
           }, [frag, solucion]);
           const etiqueta = `semilla ${semilla} impresion ${dif ? 'dificil' : 'normal'}${solucion ? '+sol' : ''} #${i + 1}`;

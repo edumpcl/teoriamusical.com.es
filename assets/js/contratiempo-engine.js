@@ -220,7 +220,7 @@
        compases), así que el modo difícil se queda en el ancho que cabe
        encogido sin perder legibilidad. */
     var numCompases = 2;
-    var notas = [], correctas = [], resumen = [];
+    var notas = [], ligaduras = [], correctas = [], resumen = [];
     var offset = 0;
 
     for (var m = 0; m < numCompases; m++) {
@@ -228,6 +228,8 @@
       var frag = gen(rng, compas);
 
       frag.notas.forEach(function (n) { notas.push({ keys: n.keys, duration: n.duration, measure: m }); });
+      /* La síncopa ligada (distractor) lleva su ligadura: sin ella el dibujo no se corresponde con la explicación. */
+      (frag.ligaduras || []).forEach(function (p) { ligaduras.push([p[0] + offset, p[1] + offset]); });
       (frag.correctas || []).forEach(function (p) {
         correctas.push([p[0] + offset]);
         resumen.push('compás ' + (m + 1));
@@ -240,7 +242,7 @@
       ? 'Este fragmento no tiene ningún contratiempo.'
       : (correctas.length === 1 ? 'Hay un contratiempo: ' : 'Hay ' + correctas.length + ' contratiempos: ') + resumen.join(', ') + '.';
 
-    return { tipo: 'dificil', notas: notas, ligaduras: [], correctas: correctas, explicacion: explicacion, compasTxt: compas.txt };
+    return { tipo: 'dificil', notas: notas, ligaduras: ligaduras, correctas: correctas, explicacion: explicacion, compasTxt: compas.txt };
   }
 
   var CSS = [
@@ -295,58 +297,55 @@
     document.head.appendChild(s);
   }
 
-  /* Dibuja el fragmento (1 o más compases) y devuelve { svg, lanes } donde
-     lanes[i] = {x, w} en coordenadas del SVG para la nota i. Sin
-     ligaduras, cada nota (o silencio) es su propio grupo/carril, así que
-     el clic siempre apunta a un único suceso rítmico. */
+  /* ---- Dibujo con Verovio (tm-mei.js + tm-notacion.js) ---- */
+  var DURACION = { q: { d: 'q' }, '8': { d: '8' }, qd: { d: 'q', puntillo: 1 }, qr: { d: 'q', silencio: true }, '8r': { d: '8', silencio: true } };
+  var ROJO = '#c0392b';
+
+  /* El fragmento como «fila» de tm-mei.js: clave de sol, compás, un array de figuras por compás. Las ligaduras (el distractor de la
+     síncopa ligada) son `union`: i = inicia, t = termina. */
+  function filaDeFragmento(frag, solucion) {
+    var cifra = /^(\d+)\/(\d+)$/.exec(frag.compasTxt || '4/4');
+    var nComp = 1 + Math.max.apply(null, frag.notas.map(function (n) { return n.measure; }));
+    var union = {};
+    (frag.ligaduras || []).forEach(function (p) { union[p[0]] = 'i'; union[p[1]] = 't'; });
+    var correcta = function (i) { return solucion && (frag.correctas || []).some(function (par) { return par.indexOf(i) !== -1; }); };
+    var compases = [];
+    for (var m = 0; m < nComp; m++) compases.push([]);
+    frag.notas.forEach(function (n, i) {
+      var d = DURACION[n.duration];
+      var e = { key: n.keys[0], d: d.d };
+      if (d.puntillo) e.puntillo = 1;
+      if (d.silencio) e.silencio = true;
+      if (union[i]) e.union = union[i];
+      if (correcta(i)) e.color = ROJO;
+      compases[n.measure].push(e);
+    });
+    return { clave: 'sol', num: Number(cifra[1]), den: Number(cifra[2]), compases: compases };
+  }
+
+  function dibujarSVG(div, frag, solucion, escala) {
+    var r = tmNotacion.dibujarSync(div, filaDeFragmento(frag, solucion), {
+      escala: escala, separacion: 0.4, id: 'contra', alt: 'Fragmento rítmico en compás ' + (frag.compasTxt || '4/4')
+    });
+    return r.elemento;
+  }
+
+  /* Dibuja el fragmento (1 o más compases) y devuelve { svg, rects, groups }. Sin ligaduras, cada nota (o silencio) es su
+     propio grupo/carril, así que el clic siempre apunta a un único suceso rítmico. Los carriles, en coordenadas del SVG. */
   function dibujarFragmento(div, frag) {
     div.innerHTML = '';
-    var V = Vex.Flow;
-    var numCompases = 1 + Math.max.apply(null, frag.notas.map(function (n) { return n.measure; }));
-    var w = numCompases === 1 ? 300 : (20 + numCompases * 230), h = 150;
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(w, h);
-    var ctx = r.getContext();
-
-    var staveW = numCompases === 1 ? (w - 20) : 230;
-    var grupos = [];
-    var staves = [];
-    var x = 10;
-    for (var mi = 0; mi < numCompases; mi++) {
-      var anchoAqui = (mi === numCompases - 1) ? (w - 10 - x) : staveW;
-      var stave = new V.Stave(x, 30, anchoAqui);
-      if (mi === 0) stave.addClef('treble').addTimeSignature(frag.compasTxt || '4/4');
-      stave.setContext(ctx).draw();
-      staves.push(stave);
-      x += anchoAqui;
-      grupos.push(frag.notas.filter(function (n) { return n.measure === mi; }));
-    }
-
-    function crear(n) {
-      var note = new V.StaveNote({ clef: 'treble', keys: n.keys, duration: n.duration });
-      if (n.duration.slice(-1) !== 'r') {
-        var linea = note.getKeyProps()[0].line;
-        note.setStemDirection(linea >= 3 ? -1 : 1);
-      }
-      if (n.duration.slice(-1) === 'd') V.Dot.buildAndAttach([note], { all: true });
-      return note;
-    }
-    var vfPorCompas = grupos.map(function (g) { return g.map(crear); });
-    var vfTodas = [].concat.apply([], vfPorCompas);
-
-    vfPorCompas.forEach(function (vfNotas, mi) { V.Formatter.FormatAndDraw(ctx, staves[mi], vfNotas); });
-
-    var svg = div.querySelector('svg');
-    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
-    svg.style.width = '100%';
-    svg.style.height = 'auto';
-    svg.style.maxWidth = w + 'px';
+    var svg = dibujarSVG(div, frag, false, 1.3);
 
     var groups = frag.notas.map(function (n, i) { return [i]; });
 
-    var boxes = Array.prototype.slice.call(svg.querySelectorAll('.vf-stavenote')).map(function (g) {
-      return g.getBBox();
-    });
+    /* Las cajas de cada figura se miden en pantalla y se pasan a las unidades del SVG. */
+    var figuras = Array.prototype.slice.call(svg.querySelectorAll('.note, .rest'));
+    if (figuras.length !== frag.notas.length) throw new Error('el dibujo tiene ' + figuras.length + ' figuras y el fragmento ' + frag.notas.length);
+    var inv = svg.getScreenCTM().inverse();
+    var aX = function (px) { var p = svg.createSVGPoint(); p.x = px; p.y = 0; return p.matrixTransform(inv).x; };
+    var boxes = figuras.map(function (g) { var b = g.getBoundingClientRect(); return { x: aX(b.left), width: aX(b.right) - aX(b.left) }; });
+    var vb = svg.viewBox.baseVal;
+    var w = vb.width, h = vb.height;
     var lanes = groups.map(function (grp, i) {
       var first = boxes[grp[0]], last = boxes[grp[grp.length - 1]];
       var prevLast = (i === 0) ? null : boxes[groups[i - 1][groups[i - 1].length - 1]];
@@ -364,6 +363,7 @@
       rect.setAttribute('width', l.w);
       rect.setAttribute('height', h);
       rect.setAttribute('class', 'tm-ct-lane');
+      rect.style.stroke = 'none';   // el SVG de Verovio trae «#id rect { stroke: currentcolor }», que le gana a la clase del carril
       rect.setAttribute('tabindex', '0');
       rect.setAttribute('role', 'button');
       rect.setAttribute('aria-label', 'Nota o silencio ' + (i + 1) + ' de ' + lanes.length);
@@ -380,51 +380,7 @@
      contratiempo; si el fragmento no tiene ninguno, no colorea nada. */
   function dibujarFragmentoImpresion(div, frag, solucion) {
     div.innerHTML = '';
-    var V = Vex.Flow;
-    var numCompases = 1 + Math.max.apply(null, frag.notas.map(function (n) { return n.measure; }));
-    var w = numCompases === 1 ? 300 : (20 + numCompases * 230), h = 150;
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(w, h);
-    var ctx = r.getContext();
-
-    var staveW = numCompases === 1 ? (w - 20) : 230;
-    var grupos = [];
-    var staves = [];
-    var x = 10;
-    for (var mi = 0; mi < numCompases; mi++) {
-      var anchoAqui = (mi === numCompases - 1) ? (w - 10 - x) : staveW;
-      var stave = new V.Stave(x, 30, anchoAqui);
-      if (mi === 0) stave.addClef('treble').addTimeSignature(frag.compasTxt || '4/4');
-      stave.setContext(ctx).draw();
-      staves.push(stave);
-      x += anchoAqui;
-      grupos.push(frag.notas.filter(function (n) { return n.measure === mi; }));
-    }
-
-    var ROJO = { fillStyle: '#c0392b', strokeStyle: '#c0392b' };
-    var esCorrecta = function (idx) { return solucion && (frag.correctas || []).some(function (par) { return par.indexOf(idx) !== -1; }); };
-    var idxGlobal = 0;
-    function crear(n) {
-      var note = new V.StaveNote({ clef: 'treble', keys: n.keys, duration: n.duration });
-      if (n.duration.slice(-1) !== 'r') {
-        var linea = note.getKeyProps()[0].line;
-        note.setStemDirection(linea >= 3 ? -1 : 1);
-      }
-      if (n.duration.slice(-1) === 'd') V.Dot.buildAndAttach([note], { all: true });
-      if (esCorrecta(idxGlobal)) note.setStyle(ROJO);
-      idxGlobal++;
-      return note;
-    }
-    var vfPorCompas = grupos.map(function (g) { return g.map(crear); });
-
-    vfPorCompas.forEach(function (vfNotas, mi) { V.Formatter.FormatAndDraw(ctx, staves[mi], vfNotas); });
-
-    var svg = div.querySelector('svg');
-    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
-    svg.style.width = '100%';
-    svg.style.height = 'auto';
-    svg.style.maxWidth = w + 'px';
-    return svg;
+    return dibujarSVG(div, frag, solucion, 1.0);
   }
 
   function tmContratiempoEngine(containerId) {
@@ -599,9 +555,10 @@
       document.getElementById(uid + '_restart').addEventListener('click', showModeScreen);
     }
 
-    function init() { showModeScreen(); }
-    if (typeof Vex !== 'undefined') { init(); }
-    else { window.addEventListener('vexflow-ready', init, { once: true }); }
+    wrap.innerHTML = '<div class="tm-card"><p class="tm-ct-mode-subtitle">Cargando el ejercicio…</p></div>';
+    tmNotacion.listo().then(showModeScreen).catch(function () {
+      wrap.innerHTML = '<div class="tm-card"><p class="tm-ct-mode-subtitle">No se ha podido cargar el ejercicio. Recarga la página.</p></div>';
+    });
   }
 
   window.tmContratiempoEngine = tmContratiempoEngine;

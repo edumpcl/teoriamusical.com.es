@@ -104,36 +104,38 @@
         + '<div class="tm-fc-chk' + (solucion && noContratiempo ? ' sol' : '') + '">' + (solucion && noContratiempo ? '☒' : '☐') + ' No hay contratiempo</div>';
     }
 
+    /* Todos los dibujos de la hoja a la MISMA escala (la mayor que quepa a todos): los de dos compases son más anchos y,
+       si cada uno se encogiera por su cuenta, las notas saldrían de tamaños distintos en una misma hoja. */
+    function escalarUniforme(svgs, limite) {
+      if (!svgs.length) return;
+      var K = 1;
+      svgs.forEach(function (s) { K = Math.min(K, limite(s) / Number(s.getAttribute('width'))); });
+      svgs.forEach(function (s) { s.style.width = (Number(s.getAttribute('width')) * K) + 'px'; s.style.maxWidth = 'none'; });
+    }
+
     function pintar() {
       elCuerpo.innerHTML = '';
+      var ancho = anchoForzado || elCuerpo.clientWidth || 700;
+      var cols = 1;
+      var contenedor;
       if (dificil) {
-        var lista = document.createElement('div'); lista.className = 'tm-fc-lista'; elCuerpo.appendChild(lista);
-        fragmentosActuales.forEach(function (frag, i) {
-          var c = document.createElement('div'); c.className = 'tm-fc-celda';
-          c.innerHTML = celdaHTML(frag, i);
-          lista.appendChild(c);
-          window.tmContratiempoDibujarImpresion(c.querySelector('.tm-fc-svg'), frag, solucion);
-        });
+        contenedor = document.createElement('div'); contenedor.className = 'tm-fc-lista'; elCuerpo.appendChild(contenedor);
       } else {
-        var rej = document.createElement('div'); rej.className = 'tm-fc-rejilla'; elCuerpo.appendChild(rej);
-        fragmentosActuales.forEach(function (frag, i) {
-          var dosCompases = frag.notas.some(function (n) { return n.measure === 1; });
-          var c = document.createElement('div'); c.className = 'tm-fc-celda' + (dosCompases ? ' ancha' : '');
-          c.innerHTML = celdaHTML(frag, i);
-          rej.appendChild(c);
-          window.tmContratiempoDibujarImpresion(c.querySelector('.tm-fc-svg'), frag, solucion);
-        });
-        var ancho = anchoForzado || elCuerpo.clientWidth || 700;
-        var cols = ancho >= 420 ? 2 : 1;
-        rej.style.setProperty('--tm-fc-cols', cols);
-        var interior = Math.floor(ancho / cols) - 24;
-        var svgs = Array.prototype.slice.call(rej.querySelectorAll('.tm-fc-celda:not(.ancha) svg'));
-        if (svgs.length) {
-          var anchos = svgs.map(function (s) { return Number(s.getAttribute('viewBox').split(' ')[2]); });
-          var K = Math.min(1, interior / Math.max.apply(null, anchos));
-          svgs.forEach(function (s, i) { s.style.width = (anchos[i] * K) + 'px'; s.style.maxWidth = 'none'; });
-        }
+        contenedor = document.createElement('div'); contenedor.className = 'tm-fc-rejilla'; elCuerpo.appendChild(contenedor);
+        cols = ancho >= 420 ? 2 : 1;
+        contenedor.style.setProperty('--tm-fc-cols', cols);
       }
+      fragmentosActuales.forEach(function (frag, i) {
+        var dosCompases = !dificil && frag.notas.some(function (n) { return n.measure === 1; });
+        var c = document.createElement('div'); c.className = 'tm-fc-celda' + (dosCompases ? ' ancha' : '');
+        c.innerHTML = celdaHTML(frag, i);
+        contenedor.appendChild(c);
+        window.tmContratiempoDibujarImpresion(c.querySelector('.tm-fc-svg'), frag, solucion);
+      });
+      escalarUniforme(Array.prototype.slice.call(contenedor.querySelectorAll('svg')), function (s) {
+        var ancha = dificil || s.closest('.tm-fc-celda').classList.contains('ancha');
+        return ancha ? ancho - 24 : Math.floor(ancho / cols) - 24;
+      });
       elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
     }
 
@@ -203,7 +205,6 @@
       var semillaURL = Number(q.get(dificil ? 'hojad' : 'hoja')) || null;
       generar(semillaURL);
     }
-    if (typeof Vex !== 'undefined') { init(); }
-    else { window.addEventListener('vexflow-ready', init, { once: true }); }
+    tmNotacion.listo().then(init);
   };
 })();
