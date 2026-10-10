@@ -254,6 +254,16 @@
 
   window.tmReconocerCompas = function (id) {
     var cont = document.getElementById(id);
+    if (cont && D() && window.tmNotacion && !window.tmNotacion.cargado()) {
+      cont.innerHTML = '<p class="tm-rc-sub">Cargando el ejercicio…</p>';
+      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<p class="tm-rc-sub">No se ha podido cargar el ejercicio. Recarga la página.</p>'; });
+      return;
+    }
+    arrancar(id);
+  };
+
+  function arrancar(id) {
+    var cont = document.getElementById(id);
     if (!cont || !D()) return;
     css();
     cont.className = 'tm-rc';
@@ -362,7 +372,7 @@
     }
 
     inicio();
-  };
+  }
 
   window.tmReconocerCompasTest = { equivalentes: equivalentes, generarLote: generarLote, explicar: explicar };
 })();
