@@ -278,7 +278,7 @@
   }
 
   /* Dibuja los dos compases. Escribe div.__tmInfo para el verificador. */
-  function dibujar(div, it, opts) {
+  function dibujarVF(div, it, opts) {
     var V = VF(), FIG = D().FIG;
     opts = opts || {};
     div.innerHTML = '';
@@ -341,6 +341,57 @@
     div.__tmInfo = info;
   }
 
+  /* ---- Dibujo con Verovio (tm-mei.js + tm-notacion.js) ---- */
+  /* Mientras haya motores que aún dibujan con VexFlow (tipo-de-final reutiliza este dibujo), dibujar elige solo: con Verovio
+     cargado, Verovio; si no, VexFlow (dibujarVF). Cuando estén todos migrados se quitará la versión de VexFlow. */
+  function conVerovio() { return !!(window.tmNotacion && window.tmNotacion.cargado && window.tmNotacion.cargado()); }
+  /* Alteraciones de la armadura de cada tonalidad (mayor): + sostenidos, − bemoles. */
+  var ARMADURA = { C: 0, G: 1, D: 2, F: -1, Bb: -2, A: 3, Eb: -3 };
+
+  function dibujarV(div, it, opts) {
+    var FIG = D().FIG, d = D().COMPASES[it.compas], arm = ARMADURA[it.tonalidad];
+    opts = opts || {};
+    div.innerHTML = '';
+    var info = { barras: [], vigas: 0, final: !!opts.final };
+    var compases = it.compases.map(function (bar) {
+      var evs = [], datos = [], grupo = [], barra = 0;
+      function cerrar() { if (grupo.length > 1) { barra++; info.vigas++; grupo.forEach(function (x) { evs[x.k].barra = barra; }); } grupo = []; }
+      bar.elems.forEach(function (e) {
+        var letra = LETRAS[((e.p % 7) + 7) % 7], oct = Math.floor(e.p / 7);
+        var clave = e.s ? 'b/4' : letra + '/' + oct;
+        var vf = FIG[e.f].vf, ev = { key: clave, d: vf.replace(/d$/, '') };
+        if (/d$/.test(vf)) ev.puntillo = 1;
+        if (e.s) ev.silencio = true;
+        else {
+          // la nota se escribe SIN alteración propia: la que le toca por la armadura (si es Si en una tonalidad con Si bemol,
+          // es Si bemol); si no, tm-mei.js le pondría un becuadro
+          var a = window.tmMEI.altArmadura(arm, letra);
+          ev.key = letra + (a > 0 ? '#' : a < 0 ? 'b' : '') + '/' + oct;
+        }
+        evs.push(ev);
+        datos.push({ f: e.f, s: !!e.s, key: e.s ? null : clave, ticks: e.u * 256, puntillos: /d$/.test(vf) ? 1 : 0 });
+        var corta = e.u < 16 && !e.s;
+        var tiempoIdx = Math.floor(e.t0 / d.tiempo);
+        if (!corta || (grupo.length && Math.floor(grupo[0].t0 / d.tiempo) !== tiempoIdx)) cerrar();
+        if (corta) grupo.push({ k: evs.length - 1, t0: e.t0 });
+      });
+      cerrar();
+      info.barras.push(datos);
+      return evs;
+    });
+    var p = it.compas.split('/');
+    var fila = { clave: 'sol', armadura: arm, num: Number(p[0]), den: Number(p[1]), compases: compases };
+    if (opts.final) fila.barras = [{}, { fin: 'end' }];
+    var res = window.tmNotacion.dibujarSync(div, fila, {
+      escala: 1.3, separacion: opts.compacto ? 0.2 : 0.4, id: 'com',
+      alt: 'Dos compases de una melodía en compás de ' + it.compas
+    });
+    res.elemento.style.maxWidth = '100%';
+    div.__tmInfo = info;
+  }
+
+  function dibujar(div, it, opts) { return (conVerovio() ? dibujarV : dibujarVF)(div, it, opts); }
+
   /* ------------------------------------------------------------------ UI */
 
   var NIVELES = [
@@ -398,6 +449,16 @@
   }
 
   window.tmComienzo = function (id) {
+    var cont = document.getElementById(id);
+    if (cont && D() && window.tmNotacion && !conVerovio()) {
+      cont.innerHTML = '<div class="tm-cm-card"><div class="tm-cm-sub">Cargando el ejercicio…</div></div>';
+      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<div class="tm-cm-card"><div class="tm-cm-sub">No se ha podido cargar el ejercicio. Recarga la página.</div></div>'; });
+      return;
+    }
+    arrancar(id);
+  };
+
+  function arrancar(id) {
     var cont = document.getElementById(id);
     if (!cont || !D()) return;
     css();
@@ -477,7 +538,7 @@
     }
 
     inicio();
-  };
+  }
 
   /* Lo que reutiliza tipo-de-final-engine.js (final de frase): el mismo dibujo (con
      opts.final = doble barra) y las mismas piezas de ritmo y melodía. */
