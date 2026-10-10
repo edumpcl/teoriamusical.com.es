@@ -157,45 +157,18 @@
 
   /* ----------------------------------------------------------------- dibujo */
 
+  /* Un acorde de redonda en su clave (o solo su nota grave, en «escribir»), con tm-mei.js / Verovio. */
   function dibujarCelda(div, e, opts) {
-    var V = Vex.Flow;
-    div.innerHTML = '';
-    var W = opts.w, H = 88;
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(W, H);
-    var ctx = r.getContext();
-    var clef = e.clave === 'sol' ? 'treble' : 'bass';
-    var stave = new V.Stave(2, 3, W - 8, { space_above_staff_ln: 2 });
-    stave.addClef(clef).setContext(ctx).draw();
-
     var soloGrave = opts.modo === 'escribir' && !opts.solucion;
     var notas = soloGrave ? e.notas.slice(0, 1) : e.notas;
-    var sn = new V.StaveNote({ keys: notas.map(function (n) { return n.key; }), duration: 'w', clef: clef });
-    var accs = [];
-    notas.forEach(function (n, i) {
-      if (!n.acc) return;
-      accs[i] = new V.Accidental(n.acc);
-      sn.addModifier(accs[i], i);
-    });
     // En la solución de escribir, las dos notas añadidas van en rojo y la dada en negro.
-    if (opts.modo === 'escribir' && opts.solucion) {
-      [1, 2].forEach(function (i) {
-        var st = { fillStyle: '#c0392b', strokeStyle: '#c0392b' };
-        if (sn.setKeyStyle) sn.setKeyStyle(i, st);
-        if (accs[i] && accs[i].setStyle) accs[i].setStyle(st);
-      });
-    }
-    sn.setStave(stave);
-    sn.addToModifierContext(new V.ModifierContext());
-    var tc = new V.TickContext();
-    tc.addTickable(sn);
-    tc.preFormat();
-    var x0 = stave.getNoteStartX(), fin = stave.getX() + stave.getWidth();
-    tc.setX(x0 + (fin - x0) * 0.52 - x0);
-    sn.setContext(ctx).draw();
-
-    var svg = div.querySelector('svg');
-    if (svg) { svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H); svg.style.width = '100%'; svg.style.height = 'auto'; }
+    var rojo = opts.modo === 'escribir' && opts.solucion ? [1, 2] : [];
+    var claves = notas.map(function (n, i) {
+      var k = n.key.replace('/', (n.acc || '') + '/');
+      return rojo.indexOf(i) >= 0 ? { key: k, color: '#c0392b' } : k;
+    });
+    window.tmNotacion.dibujarSync(div, { pentagramas: [{ clave: e.clave === 'sol' ? 'sol' : 'fa', compases: [[{ notas: claves, d: 'w' }]] }] },
+      { escala: 1.1, separacion: 1.0, id: 'fa', alt: '' });
   }
 
   /* --------------------------------------------------------------------- UI */
@@ -225,6 +198,7 @@
     '.tm-fa-datos{display:none;}',
     '.tm-fa-rejilla{display:grid;grid-template-columns:repeat(var(--tm-fa-cols,3),1fr);gap:6px 10px;}',
     '.tm-fa-celda{position:relative;border:1px solid #e8e0cc;border-radius:6px;padding:3px 5px 5px;break-inside:avoid;page-break-inside:avoid;}',
+    '.tm-fa-svg{padding-top:12px;}',
     '.tm-fa-n{position:absolute;top:2px;left:6px;font-size:.72rem;font-weight:700;color:#9a7b28;}',
     '.tm-fa-pide{font-size:.85rem;text-align:center;margin:0;color:#1a1a1a;min-height:1.1em;}',
     '.tm-fa-linea{display:flex;align-items:baseline;gap:5px;font-size:.85rem;margin:2px 4px 0;}',
@@ -247,7 +221,7 @@
     '  body.tm-fa-print .tm-fa-instr{font-size:.78rem;margin:0 0 6px;}',
     '  body.tm-fa-print .tm-fa-rejilla{gap:4px 8px;}',
     '  body.tm-fa-print .tm-fa-celda{padding:2px 4px 3px;}',
-    '  body.tm-fa-print .tm-fa-svg svg{width:90%!important;display:block;margin:0 auto;}',
+    '  body.tm-fa-print .tm-fa-svg svg{display:block;margin:0 auto;}',
     '  body.tm-fa-print .tm-fa-linea{font-size:.78rem;margin:0 4px;line-height:1.2;}',
     '  body.tm-fa-print .tm-fa-linea > span{min-height:.9em;}',
     '  @page{size:A4;margin:10mm;}',
@@ -258,7 +232,11 @@
 
   window.tmFichasAcordes = function (id, opciones) {
     var cont = document.getElementById(id);
-    if (!cont || typeof Vex === 'undefined') return;
+    if (!cont || !window.tmNotacion) return;
+    if (!window.tmNotacion.cargado()) {   // Verovio se carga bajo demanda
+      window.tmNotacion.listo().then(function () { window.tmFichasAcordes(id, opciones); });
+      return;
+    }
     if (!document.getElementById('tm-fa-css')) {
       var st = document.createElement('style');
       st.id = 'tm-fa-css';
@@ -390,9 +368,15 @@
         }
         return html + '</div>';
       }).join('');
-      Array.prototype.forEach.call(elRej.querySelectorAll('.tm-fa-svg'), function (div, i) {
-        dibujarCelda(div, ejercicios[i], { w: Math.max(170, anchoCelda), modo: estado.modo, solucion: estado.solucion });
+      var divs = elRej.querySelectorAll('.tm-fa-svg');
+      Array.prototype.forEach.call(divs, function (div, i) {
+        dibujarCelda(div, ejercicios[i], { modo: estado.modo, solucion: estado.solucion });
       });
+      /* Verovio recorta cada dibujo a su tinta: todos a la misma escala, la mayor que quepa en la casilla */
+      var svgs = Array.prototype.map.call(divs, function (d) { return d.querySelector('svg'); }).filter(Boolean);
+      var anchoMax = Math.max.apply(null, svgs.map(function (s) { return Number(s.getAttribute('width')); }));
+      var K = Math.min(1.5, Math.max(170, anchoCelda) / anchoMax);
+      svgs.forEach(function (s) { s.style.width = (Number(s.getAttribute('width')) * K) + 'px'; s.style.height = 'auto'; s.style.maxWidth = 'none'; });
     }
 
     function avisar(texto) { elAviso.hidden = !texto; elAviso.textContent = texto || ''; }

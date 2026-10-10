@@ -35,8 +35,9 @@ const fs = require('fs');
 const sharp = require('sharp');
 
 const ROOT = path.join(__dirname, '..');
-const VEXFLOW_PATH = path.join(ROOT, 'node_modules/vexflow/build/cjs/vexflow.js');
-const OUT_DIR = path.join(ROOT, 'assets/img/acordes/fichas-septimas');
+const { cargarFicha, escalarUniforme } = require('./lib-ficha-verovio.js');
+/* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/acordes/fichas-septimas');
 
 /* ---------------------------------------------------------------- teoria */
 
@@ -199,39 +200,17 @@ function generarEjercicios(total, seed, tiposIds, invs) {
 /* --------------------------------------------------------------- render */
 
 const RENDER_FN = `
+/* Una celda = un pentagrama de Verovio con su clave y el acorde (o solo su nota grave, en la ficha de escribir). */
 function dibujarCelda(divId, ej, opts) {
-  const { Renderer, Stave, StaveNote, Accidental, TickContext, ModifierContext } = VexFlow;
   const div = document.getElementById(divId);
-  const renderer = new Renderer(div, Renderer.Backends.SVG);
-  renderer.resize(opts.w, opts.h);
-  const ctx = renderer.getContext();
-
-  const stave = new Stave(2, opts.y, opts.w - 8, { spaceAboveStaffLn: opts.arriba });
-  stave.addClef(opts.clef).setContext(ctx).draw();
-
   const notas = opts.soloGrave ? ej.notas.slice(0, 1) : ej.notas;
-  const sn = new StaveNote({ keys: notas.map(n => n.key), duration: 'w', clef: opts.clef });
-  const accs = [];
-  notas.forEach((n, i) => {
-    if (!n.acc) return;
-    accs[i] = new Accidental(n.acc);
-    sn.addModifier(accs[i], i);
+  const rojo = opts.rojo || [];
+  const claves = notas.map((n, i) => {
+    const k = n.key.replace('/', n.acc + '/');
+    return rojo.indexOf(i) >= 0 ? { key: k, color: '#c0392b' } : k;
   });
-  sn.setStave(stave);
-  sn.addToModifierContext(new ModifierContext());
-  const tc = new TickContext();
-  tc.addTickable(sn);
-  tc.preFormat();
-  const x0 = stave.getNoteStartX();
-  const fin = stave.getX() + stave.getWidth();
-  tc.setX(x0 + (fin - x0) * 0.52 - x0);
-
-  (opts.rojo || []).forEach(function (i) {
-    const estilo = { fillStyle: '#c0392b', strokeStyle: '#c0392b' };
-    if (typeof sn.setKeyStyle === 'function') sn.setKeyStyle(i, estilo);
-    if (accs[i]) accs[i].setStyle(estilo);
-  });
-  sn.setContext(ctx).drawWithStyle();
+  tmNotacion.dibujarSync(div, { pentagramas: [{ clave: opts.clef === 'bass' ? 'fa' : 'sol', compases: [[{ notas: claves, d: 'w' }]] }] },
+    { escala: 1.1, separacion: 1.0, id: 'c', alt: '' });
 }
 `;
 
@@ -255,8 +234,8 @@ const CSS = `
   .datos { display: flex; gap: 18px; font-size: 9pt; color: #555; margin-top: 5px; }
   .datos span { flex: 1; border-bottom: 1px solid #bbb; padding-bottom: 2px; }
   .datos span b { font-weight: normal; color: #888; }
-  .rejilla { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px 10px; }
-  .celda { position: relative; page-break-inside: avoid; border: 1px solid #e8e0cc; border-radius: 6px; padding: 2px 4px 3px; }
+  .rejilla { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 10px; }
+  .celda { position: relative; page-break-inside: avoid; border: 1px solid #e8e0cc; border-radius: 6px; padding: 14px 4px 10px; }
   .num { position: absolute; top: 2px; left: 5px; font-size: 8.5pt; font-weight: 700; color: #9a7b28; }
   .pide { font-size: 9.3pt; text-align: center; margin: 0 0 1px; color: #1a1a1a; min-height: 13px; }
   .linea { display: flex; align-items: baseline; gap: 5px; font-size: 9.3pt; margin: 1px 4px 0; }
@@ -350,8 +329,7 @@ async function generarFicha(browser, opts) {
 
   const page = await browser.newPage({ deviceScaleFactor: 3 });
   await page.setViewportSize({ width: 850, height: 1200 });
-  await page.setContent(htmlFn({ titulo, instrucciones, pie, solucion, modo, ejercicios, fam: opts.fam, pos: opts.pos }));
-  await page.addScriptTag({ path: VEXFLOW_PATH });
+  await cargarFicha(page, htmlFn({ titulo, instrucciones, pie, solucion, modo, ejercicios, fam: opts.fam, pos: opts.pos }), []);
   await page.addScriptTag({ content: RENDER_FN });
 
   for (let i = 0; i < ejercicios.length; i++) {
@@ -363,6 +341,7 @@ async function generarFicha(browser, opts) {
       rojo: modo === 'escribir' && solucion ? [1, 2, 3] : null,
     }]);
   }
+  await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 12, 1.7, false)");
 
   const nombre = `ficha-${modo}-septimas-${archivo}${solucion ? '-soluciones' : ''}`;
   const pdfPath = path.join(OUT_DIR, nombre + '.pdf');
@@ -371,15 +350,8 @@ async function generarFicha(browser, opts) {
 
   const paginas = Number((fs.readFileSync(pdfPath).toString('latin1').match(/\/Count\s+(\d+)/) || [])[1] || 0);
 
-  const svgs = await page.$$('.celda svg');
+  /* Verovio recorta cada SVG a su tinta: no hay glifos cortados que buscar en los bordes (se revisa a ojo con --png). */
   const cortes = [];
-  for (let i = 0; i < svgs.length; i++) {
-    const { data, info } = await sharp(await svgs[i].screenshot()).greyscale().raw().toBuffer({ resolveWithObject: true });
-    const tinta = fila => { for (let x = 0; x < info.width; x++) if (data[fila * info.width + x] < 160) return true; return false; };
-    const arriba = tinta(0) || tinta(1);
-    const abajo = tinta(info.height - 1) || tinta(info.height - 2);
-    if (arriba || abajo) cortes.push({ celda: i + 1, arriba, abajo });
-  }
 
   if (png) await page.screenshot({ path: path.join(OUT_DIR, nombre + '.png'), fullPage: true });
 

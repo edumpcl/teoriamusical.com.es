@@ -22,7 +22,7 @@
   var ES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
   var ACC_TXT = { '-2': '♭♭', '-1': '♭', '0': '', '1': '♯', '2': '♯♯' };
   var ACC_VF = { '-2': 'bb', '-1': 'b', '0': '', '1': '#', '2': '##' };
-  var CLAVES = { sol: 'treble', fa: 'bass' };
+  var CLAVES = { sol: 'sol', fa: 'fa' };   // las claves de tm-mei.js
   /* Igual que generate-fichas-septimas.js: "nivel" es un TOPE acumulado
      (como mucho N alteraciones), no un nivel exacto — casi ningún acorde de
      séptima es del todo natural (ver ese script). */
@@ -105,7 +105,7 @@
     '.tm-fs-celda{position:relative;min-width:0;border:1px solid #e8e0cc;border-radius:6px;padding:3px 5px 4px 20px;break-inside:avoid;page-break-inside:avoid;}',
     '.tm-fs-n{position:absolute;top:3px;left:5px;font-size:.72rem;font-weight:700;color:#9a7b28;}',
     '.tm-fs-svg{display:block;margin:0 auto;}',
-    '.tm-fs-svg svg{display:block;margin:0 auto;width:100%;height:auto;}',
+    '.tm-fs-svg svg{display:block;margin:0 auto;}',
     '.tm-fs-pide{font-size:.78rem;text-align:center;margin:0 0 1px;color:#1a1a1a;min-height:13px;}',
     '.tm-fs-linea{display:flex;align-items:baseline;gap:4px;font-size:.72rem;margin:1px 2px 0;}',
     '.tm-fs-linea b{font-weight:600;}',
@@ -145,6 +145,10 @@
   window.tmFichaSeptimas = function (id, config) {
     var cont = document.getElementById(id);
     if (!cont || !T7()) return;
+    if (window.tmNotacion && !window.tmNotacion.cargado()) {   // Verovio se carga bajo demanda
+      window.tmNotacion.listo().then(function () { window.tmFichaSeptimas(id, config); });
+      return;
+    }
     config = config || {};
     var tiposIds = config.tiposIds || ['dominante', 'sensible', 'disminuida'];
     var invs = config.invs || [0, 1, 2, 3];
@@ -233,32 +237,19 @@
       return out.slice(0, TOTAL);
     }
 
+    /* Un acorde de redonda en su clave, con tm-mei.js/Verovio. opts.soloGrave: solo la nota del bajo; opts.rojo: índices de las notas que
+       van en rojo (en la solución de «escribir» las 3 añadidas, y la dada en negro). */
     function dibujarCelda(div, it, opts) {
-      var V = Vex.Flow;
-      var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-      r.resize(opts.w, opts.h);
-      var ctx = r.getContext();
-      var stave = new V.Stave(2, opts.y, opts.w - 8);
-      stave.addClef(opts.clef).setContext(ctx).draw();
       var notas = opts.soloGrave ? it.notas.slice(0, 1) : it.notas;
-      var keys = notas.map(function (n) { return n.key; });
-      var sn = new V.StaveNote({ keys: keys, duration: 'w', clef: opts.clef });
-      var accs = [];
-      notas.forEach(function (n, i) { if (n.acc) { accs[i] = new V.Accidental(n.acc); sn.addModifier(accs[i], i); } });
-      /* En la solución de "escribir" las 3 notas añadidas van en rojo y la
-         dada se queda en negro: se ve de un vistazo qué había que escribir
-         (igual criterio que tools/generate-fichas-septimas.js). */
-      (opts.rojo || []).forEach(function (i) {
-        var estilo = { fillStyle: '#c0392b', strokeStyle: '#c0392b' };
-        if (typeof sn.setKeyStyle === 'function') sn.setKeyStyle(i, estilo);
-        if (accs[i]) accs[i].setStyle(estilo);
+      var rojo = opts.rojo || [];
+      var claves = notas.map(function (n, i) {
+        var k = LETRAS[n.l] + ACC_VF[String(n.a)] + '/' + n.oct;
+        return rojo.indexOf(i) >= 0 ? { key: k, color: '#c0392b' } : k;
       });
-      var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
-      voice.addTickables([sn]);
-      new V.Formatter().joinVoices([voice]).format([voice], opts.w - 50);
-      voice.draw(ctx, stave);
-      var svg = div.querySelector('svg');
-      if (svg) { svg.setAttribute('viewBox', '0 0 ' + opts.w + ' ' + opts.h); svg.style.width = '100%'; svg.style.height = 'auto'; }
+      div.style.height = opts.h + 'px';
+      tmNotacion.dibujarAlineado(div, { pentagramas: [{ clave: opts.clef, compases: [[{ notas: claves, d: 'w' }]] }] }, {
+        escala: 1.1, separacion: 1.0, top: opts.y, id: 'fs', alt: 'Acorde de ' + notas.length + (notas.length === 1 ? ' nota' : ' notas') + ' en clave de ' + (opts.clef === 'sol' ? 'sol' : 'fa')
+      });
     }
 
     function pintar() {
@@ -279,7 +270,7 @@
         }
         elCuerpo.appendChild(c);
         var svgDiv = c.querySelector('.tm-fs-svg');
-        dibujarCelda(svgDiv, it, { w: 210, h: 86, y: 4, clef: CLAVES[it.clave], soloGrave: modo === 'escribir' && !solucion, rojo: modo === 'escribir' && solucion ? [1, 2, 3] : null });
+        dibujarCelda(svgDiv, it, { h: 116, y: 40, clef: CLAVES[it.clave], soloGrave: modo === 'escribir' && !solucion, rojo: modo === 'escribir' && solucion ? [1, 2, 3] : null });
       });
       var n = 0;
       Array.prototype.forEach.call(cont.querySelectorAll('.tm-fs-celda'), function (c) { c.querySelector('.tm-fs-n').textContent = ++n; });
@@ -288,7 +279,10 @@
       elCuerpo.style.setProperty('--tm-fs-cols', cols);
       var svgs = Array.prototype.slice.call(elCuerpo.querySelectorAll('svg'));
       var interior = Math.floor(ancho / cols) - 20;
-      svgs.forEach(function (s) { s.style.width = interior + 'px'; s.style.maxWidth = '100%'; });
+      /* misma escala para todos los acordes de la hoja: el ancho natural de cada dibujo cambia con sus alteraciones */
+      var anchoMax = Math.max.apply(null, svgs.map(function (s) { return Number(s.getAttribute('width')); }));
+      var K = Math.min(1.25, interior / anchoMax);
+      svgs.forEach(function (s) { s.style.width = (Number(s.getAttribute('width')) * K) + 'px'; s.style.maxWidth = 'none'; s.style.height = 'auto'; });
       elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
     }
 
