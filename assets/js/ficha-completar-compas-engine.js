@@ -104,7 +104,7 @@
         rej.style.setProperty('--tm-fc-cols', cols);
         var interior = Math.floor(ancho / cols) - 24;
         var svgs = Array.prototype.slice.call(rej.querySelectorAll('svg'));
-        var anchos = svgs.map(function (s) { return Number(s.getAttribute('viewBox').split(' ')[2]); });
+        var anchos = svgs.map(function (s) { return Number(s.getAttribute('width')); });
         var K = Math.min(1, interior / Math.max.apply(null, anchos));
         svgs.forEach(function (s, i) { s.style.width = (anchos[i] * K) + 'px'; s.style.maxWidth = 'none'; });
       });
@@ -173,6 +173,7 @@
 
     var q = new URLSearchParams(window.location.search);
     var semillaURL = Number(q.get('hoja')) || null;
-    generar(semillaURL);
+    if (window.tmNotacion && !window.tmNotacion.cargado()) window.tmNotacion.listo().then(function () { generar(semillaURL); });
+    else generar(semillaURL);
   };
 })();

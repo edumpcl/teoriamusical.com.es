@@ -222,7 +222,7 @@
        respuesta: [{f,s}]     dibuja en el hueco lo que ha puesto el alumno, en negro;
        parcial: true          la respuesta aun no llena el hueco: lo que queda sigue
                               como hueco, con su linea } */
-  function dibujar(div, it, opts) {
+  function dibujarVF(div, it, opts) {
     var V = VF();
     opts = opts || {};
     div.innerHTML = '';
@@ -319,7 +319,7 @@
   /* Una carta de la paleta: la figura sola, sin compás. En la 2ª línea (Sol) y con
      la plica hacia arriba (petición de Eduardo). Se dibuja con voz y formateador,
      igual que el compás: colocando la nota a mano VexFlow no pintaba los puntillos. */
-  function carta(div, f, silencio) {
+  function cartaVF(div, f, silencio) {
     var V = VF();
     div.innerHTML = '';
     var W = 64, H = 78;
@@ -354,7 +354,7 @@
   /* Dibuja un compás completo, sin huecos. opts = { w,
        sinCifra: true  no se dibuja la indicación de compás (para «reconocer compás»,
                  donde el alumno tiene que adivinarla) }. */
-  function dibujarMedida(div, compasSig, elems, opts) {
+  function dibujarMedidaVF(div, compasSig, elems, opts) {
     var V = VF();
     opts = opts || {};
     div.innerHTML = '';
@@ -403,6 +403,175 @@
     svg.style.maxWidth = Math.round(W * 1.2) + 'px';
     div.__tmInfo = { notas: info, barras: grupos };   // para el verificador
   }
+
+  /* ------------------------------------------------ dibujo con Verovio */
+
+  /* Mientras haya motores que aún dibujan con VexFlow (cargan este módulo sin tm-notacion.js), las tres funciones de dibujo
+     de abajo eligen solas: con Verovio cargado, Verovio; si no, VexFlow. Cuando se hayan migrado todos se quitarán las
+     versiones de VexFlow. */
+  function conVerovio() { return !!(window.tmNotacion && window.tmNotacion.cargado && window.tmNotacion.cargado()); }
+
+  var DUR_V = { r: { d: 'w' }, rP: { d: 'w', p: 1 }, b: { d: 'h' }, bP: { d: 'h', p: 1 }, n: { d: 'q' }, nP: { d: 'q', p: 1 }, c: { d: '8' }, cP: { d: '8', p: 1 }, sc: { d: '16' } };
+
+  /* Barras a mano, por tiempos: corcheas y semicorcheas seguidas dentro del mismo tiempo (nunca una figura suelta, ni silencios,
+     ni huecos). Devuelve, por elemento, el número de su grupo con barra (o undefined). */
+  function barrasPorTiempos(items, d) {
+    var ids = [], grupo = [], n = 0;
+    function cerrar() { if (grupo.length > 1) { n++; grupo.forEach(function (k) { ids[k] = n; }); } grupo = []; }
+    items.forEach(function (x, k) {
+      var corta = x.u < 16 && !x.s && !x.fantasma;
+      var tiempo = Math.floor(x.t0 / d.tiempo);
+      if (!corta || (grupo.length && Math.floor(items[grupo[0]].t0 / d.tiempo) !== tiempo)) cerrar();
+      if (corta) grupo.push(k);
+    });
+    cerrar();
+    return ids;
+  }
+
+  /* El compás como «fila» de tm-mei.js. items = [{ f, s, t0, u, fantasma, rojo }]. Las plicas van abajo (Si4 está en la 3.ª
+     línea); un fantasma es un hueco invisible que ocupa su tiempo. */
+  function filaDeCompas(sig, items, opts) {
+    var d = COMPASES[sig], barras = barrasPorTiempos(items, d), p = sig.split('/');
+    var evs = items.map(function (x, k) {
+      var v = DUR_V[x.f], e = { key: 'b/4', d: v.d };
+      if (v.p) e.puntillo = 1;
+      if (x.fantasma) e.espacio = true;
+      else {
+        if (x.s) e.silencio = true; else e.plica = 'down';
+        if (x.rojo) e.color = ROJO;
+      }
+      if (barras[k]) e.barra = barras[k];
+      return e;
+    });
+    var fila = { clave: 'sol', compases: [evs] };
+    if (!(opts && opts.sinCifra)) { fila.num = Number(p[0]); fila.den = Number(p[1]); }
+    return fila;
+  }
+
+  /* Dibuja y devuelve el <svg>; las figuras (notas y silencios, sin huecos) en orden son svg.querySelectorAll('.note, .rest'). */
+  function pintarCompasV(div, sig, items, opts) {
+    opts = opts || {};
+    var r = window.tmNotacion.dibujarSync(div, filaDeCompas(sig, items, opts), {
+      escala: 1.3, separacion: 0.5, id: 'cc', alt: opts.alt || ('Compás de ' + sig)
+    });
+    r.elemento.style.maxWidth = Math.round((opts.w || 420) * 1.2) + 'px';
+    return r.elemento;
+  }
+
+  /* La línea roja con «?» bajo el hueco. Las posiciones se miden en pantalla y se pasan a las unidades del SVG. */
+  function marcarHuecoV(svg, items, marcar) {
+    var figuras = Array.prototype.slice.call(svg.querySelectorAll('.note, .rest'));
+    var figDe = {}, c = 0;
+    items.forEach(function (x, k) { if (!x.fantasma) figDe[k] = figuras[c++]; });
+    var cab = svg.querySelector('.meterSig') || svg.querySelector('.clef');
+    var barras = svg.querySelectorAll('.barLine path');
+    var finIzq = barras.length ? barras[barras.length - 1].getBoundingClientRect().left : svg.getBoundingClientRect().right;
+    var primero = marcar[0], ultimo = marcar[marcar.length - 1];
+    var anterior = null, siguiente = null;
+    for (var i = primero - 1; i >= 0; i--) if (figDe[i] && marcar.indexOf(i) < 0) { anterior = figDe[i]; break; }
+    for (var j = ultimo + 1; j < items.length; j++) if (figDe[j]) { siguiente = figDe[j]; break; }
+    var derAnt = anterior ? anterior.getBoundingClientRect().right : (cab ? cab.getBoundingClientRect().right : svg.getBoundingClientRect().left);
+    var x1 = figDe[primero] ? figDe[primero].getBoundingClientRect().left - 4 : derAnt + 6;
+    var x2 = (siguiente ? siguiente.getBoundingClientRect().left : finIzq) - 12;
+    if (x2 < x1 + 18) x2 = x1 + 18;
+    var lineas = svg.querySelectorAll('.staff > path');
+    var yLinea = lineas.length ? lineas[lineas.length - 1].getBoundingClientRect().top + lineas[lineas.length - 1].getBoundingClientRect().height / 2 : svg.getBoundingClientRect().bottom - 20;
+    var y = yLinea + 14;
+    var inv = svg.getScreenCTM().inverse(), u = inv.a;   // unidades del SVG por píxel
+    var pt = function (px, py) { var p = svg.createSVGPoint(); p.x = px; p.y = py; return p.matrixTransform(inv); };
+    var a = pt(x1, y), b = pt(x2, y);
+    var ns = 'http://www.w3.org/2000/svg';
+    var linea = document.createElementNS(ns, 'line');
+    linea.setAttribute('x1', a.x); linea.setAttribute('x2', b.x); linea.setAttribute('y1', a.y); linea.setAttribute('y2', a.y);
+    linea.setAttribute('stroke', ROJO); linea.setAttribute('stroke-width', 2.5 * u); linea.setAttribute('stroke-linecap', 'round');
+    linea.setAttribute('class', 'tm-cc-hueco');
+    svg.appendChild(linea);
+    var q = document.createElementNS(ns, 'text');
+    q.setAttribute('x', (a.x + b.x) / 2); q.setAttribute('y', a.y + 15 * u); q.setAttribute('text-anchor', 'middle');
+    q.setAttribute('font-family', 'Arial, sans-serif'); q.setAttribute('font-size', 13 * u); q.setAttribute('font-weight', '700'); q.setAttribute('fill', ROJO);
+    q.textContent = '?';
+    svg.appendChild(q);
+  }
+
+  function dibujarV(div, it, opts) {
+    opts = opts || {};
+    div.innerHTML = '';
+    var d = COMPASES[it.compas];
+    var items = [], t = 0;
+    // Con respuesta parcial, lo que queda por poner sigue siendo hueco invisible.
+    var respuesta = opts.respuesta ? opts.respuesta.slice() : null;
+    if (respuesta && opts.parcial) {
+      var puesto = respuesta.reduce(function (a, x) { return a + FIG[x.f].u; }, 0);
+      if (puesto < it.valor) respuesta = respuesta.concat(descomponer(it.valor - puesto));
+    }
+    it.elems.forEach(function (e, k) {
+      var enHueco = k >= it.hueco.desde && k <= it.hueco.hasta;
+      var fuente = enHueco && respuesta && k === it.hueco.desde ? respuesta : (enHueco && respuesta ? [] : [e]);
+      fuente.forEach(function (x) {
+        var fantasma = enHueco && ((!opts.revelar && !respuesta) || !!x.fantasma);
+        items.push({ f: x.f, s: !!x.s, t0: t, u: FIG[x.f].u, hueco: enHueco, fantasma: fantasma, rojo: enHueco && !fantasma && !!opts.revelar });
+        t += FIG[x.f].u;
+      });
+    });
+    var svg = pintarCompasV(div, it.compas, items, { w: opts.w || 420, alt: 'Compás de ' + it.compas + ' con un hueco marcado con una línea roja' });
+    // El hueco: una línea debajo y un interrogante. Mientras se está respondiendo (parcial) se mantiene siempre, aunque ya se
+    // haya rellenado del todo o de más: solo desaparece al corregir (Eduardo).
+    var fantasmas = [], enHuecoIdx = [];
+    items.forEach(function (x, k) { if (x.fantasma) fantasmas.push(k); if (x.hueco) enHuecoIdx.push(k); });
+    var marcar = opts.parcial ? enHuecoIdx : fantasmas;
+    if (marcar.length) marcarHuecoV(svg, items, marcar);
+    var grupos = [], barras = barrasPorTiempos(items, d), porGrupo = {};
+    items.forEach(function (x, k) { if (barras[k]) (porGrupo[barras[k]] = porGrupo[barras[k]] || []).push(x.t0); });
+    Object.keys(porGrupo).forEach(function (g) { grupos.push(porGrupo[g]); });
+    // Para el verificador: lo que se ha dibujado de verdad.
+    div.__tmDibujo = { notas: items.map(function (x) { return { t0: x.t0, u: x.u, s: x.s, f: x.f, hueco: x.hueco, fantasma: x.fantasma, puntillos: /P$/.test(x.f) ? 1 : 0 }; }), barras: grupos, hueco: fantasmas };
+  }
+
+  /* Una carta de la paleta: la figura sola, sin compás ni clave. En la 2ª línea (Sol) y con la plica hacia arriba (petición de
+     Eduardo). */
+  function cartaV(div, f, silencio) {
+    var v = DUR_V[f], e = { key: 'g/4', d: v.d };
+    if (v.p) e.puntillo = 1;
+    if (silencio) e.silencio = true; else e.plica = 'up';
+    var r = window.tmNotacion.dibujarSync(div, { clave: 'sol', sinClave: true, sinBarraFinal: true, compases: [[e]] }, {
+      escala: 1.0, separacion: 0.3, id: 'ccc', alt: (silencio ? 'Silencio de ' : '') + FIG[f].nombre
+    });
+    /* Todas las cartas con la MISMA ventana (ancho y alto), centrada en la figura: Verovio recorta el SVG al contenido, y
+       una redonda ocupa más que una semicorchea. Las líneas del pentagrama llegan de borde a borde. Verovio mete un <svg>
+       interno (el del contenido) que se ajusta al externo: la ventana se fija en el interno y el externo toma su proporción. */
+    var svg = r.elemento, dentro = svg.querySelector('svg');
+    svg.style.maxWidth = 'none'; svg.style.width = svg.getAttribute('width') + 'px';   // a su tamaño natural para medir
+    var inv = dentro.getScreenCTM().inverse();
+    var pt = function (x, y) { var p = svg.createSVGPoint(); p.x = x; p.y = y; return p.matrixTransform(inv); };
+    var fig = svg.querySelector('.notehead use, .rest use') || svg.querySelector('.rest');
+    var fb = fig.getBoundingClientRect(), cx = pt(fb.left + fb.width / 2, fb.top).x;
+    var lineas = svg.querySelectorAll('.staff > path');
+    var yDe = function (l) { var b2 = l.getBoundingClientRect(); return pt(0, b2.top + b2.height / 2).y; };
+    var y0 = yDe(lineas[0]), sp = (yDe(lineas[4]) - y0) / 4;
+    var upp = pt(1, 0).x - pt(0, 0).x;   // unidades del contenido por píxel
+    var W = 64, vbW = W * upp, vbH = 9 * sp;
+    dentro.setAttribute('viewBox', (cx - vbW / 2) + ' ' + (y0 - 3 * sp) + ' ' + vbW + ' ' + vbH);
+    svg.setAttribute('viewBox', '0 0 ' + vbW + ' ' + vbH);
+    svg.setAttribute('width', W); svg.setAttribute('height', Math.round(vbH / upp));
+    svg.style.width = '100%'; svg.style.height = 'auto';
+  }
+
+  /* Un compás COMPLETO, sin hueco. sinCifra: no se dibuja la indicación de compás. */
+  function dibujarMedidaV(div, sig, elems, opts) {
+    opts = opts || {};
+    div.innerHTML = '';
+    var items = [], t = 0;
+    elems.forEach(function (e) { items.push({ f: e.f, s: !!e.s, t0: t, u: FIG[e.f].u }); t += FIG[e.f].u; });
+    pintarCompasV(div, sig, items, { w: opts.w || 420, sinCifra: opts.sinCifra, alt: opts.sinCifra ? 'Compás sin indicación de compás' : 'Compás de ' + sig });
+    var barras = barrasPorTiempos(items, COMPASES[sig]), porGrupo = {}, grupos = [];
+    items.forEach(function (x, k) { if (barras[k]) (porGrupo[barras[k]] = porGrupo[barras[k]] || []).push(x.t0); });
+    Object.keys(porGrupo).forEach(function (g) { grupos.push(porGrupo[g]); });
+    div.__tmInfo = { notas: items.map(function (x) { return { t0: x.t0, u: x.u, s: x.s, f: x.f, puntillos: /P$/.test(x.f) ? 1 : 0 }; }), barras: grupos };
+  }
+
+  function dibujar(div, it, opts) { return (conVerovio() ? dibujarV : dibujarVF)(div, it, opts); }
+  function carta(div, f, silencio) { return (conVerovio() ? cartaV : cartaVF)(div, f, silencio); }
+  function dibujarMedida(div, sig, elems, opts) { return (conVerovio() ? dibujarMedidaV : dibujarMedidaVF)(div, sig, elems, opts); }
 
   window.tmCompletarCompasData = {
     FIG: FIG, COMPASES: COMPASES, GRUPOS: GRUPOS, CARTAS_FIG: CARTAS_FIG, CARTAS_SIL: CARTAS_SIL,
@@ -470,7 +639,17 @@
 
   window.tmCompletarCompas = function (id) {
     var cont = document.getElementById(id);
-    if (!cont || !VF()) return;
+    if (cont && window.tmNotacion && !conVerovio()) {
+      cont.innerHTML = '<div class="tm-cc-card"><div class="tm-cc-sub">Cargando el ejercicio…</div></div>';
+      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<div class="tm-cc-card"><div class="tm-cc-sub">No se ha podido cargar el ejercicio. Recarga la página.</div></div>'; });
+      return;
+    }
+    arrancar(id);
+  };
+
+  function arrancar(id) {
+    var cont = document.getElementById(id);
+    if (!cont || !(VF() || conVerovio())) return;
     if (!document.getElementById('tm-cc-css')) {
       var st = document.createElement('style');
       st.id = 'tm-cc-css';
@@ -622,5 +801,5 @@
     }
 
     inicio();
-  };
+  }
 })();

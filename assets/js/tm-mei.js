@@ -94,7 +94,8 @@ function aMEI(fila) {
       if (x.orna) ornamentos.push({ en: i, txt: ornaMEI(x.orna).replace('@ID@', id) });
       if (x.signo) ornamentos.push({ en: i, txt: `<repeatMark func="${x.signo}" startid="#${id}" place="above"/>` });
       const dur = `dur="${DUR_MEI[x.d]}"${x.puntillo ? ' dots="1"' : ''}${x.gracia ? ` grace="${x.gracia}"` : ''}`;
-      if (x.silencio) return `<rest xml:id="${id}" ${dur}/>`;
+      if (x.espacio) return `<space xml:id="${id}" ${dur}/>`;   // hueco invisible que ocupa tiempo (el ejercicio lo rellena el alumno)
+      if (x.silencio) return `<rest xml:id="${id}" ${dur}${x.color ? ` color="${x.color}"` : ''}/>`;
       const p = parseKey(x.key), a = acc[i][j];
       return `<note xml:id="${id}" pname="${p.letra}" oct="${p.oct}" ${dur}${a ? ` accid="${a}"` : ''}${x.color ? ` color="${x.color}"` : ''}${x.plica ? ` stem.dir="${x.plica}"` : ''}${x.union ? ` tie="${x.union}"` : ''}>${articDe(x) ? `<artic artic="${articDe(x).tipo}" place="${articDe(x).lugar}"/>` : ''}</note>`;
     };
@@ -137,7 +138,7 @@ function aMEI(fila) {
   }).join('');
   const metro = !fila.num ? '' : fila.simbolo ? ` meter.count="${fila.num}" meter.unit="${fila.den}" meter.sym="${fila.simbolo}"` : ` meter.count="${fila.num}" meter.unit="${fila.den}"`;
   return '<?xml version="1.0" encoding="UTF-8"?><mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="5.0"><meiHead><fileDesc><titleStmt><title/></titleStmt><pubStmt/></fileDesc></meiHead><music><body><mdiv><score><scoreDef><staffGrp>'
-    + `<staffDef n="1" lines="5" clef.shape="${claveDe(fila).shape}" clef.line="${claveDe(fila).line}"${armaduraMEI(fila.armadura || 0)}${metro}/></staffGrp></scoreDef><section>${medidas}</section></score></mdiv></body></music></mei>`;
+    + `<staffDef n="1" lines="5" clef.shape="${claveDe(fila).shape}" clef.line="${claveDe(fila).line}"${fila.sinClave ? ' clef.visible="false"' : ''}${armaduraMEI(fila.armadura || 0)}${metro}/></staffGrp></scoreDef><section>${medidas}</section></score></mdiv></body></music></mei>`;
 }
 
 
