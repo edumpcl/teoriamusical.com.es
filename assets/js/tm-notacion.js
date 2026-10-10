@@ -44,7 +44,7 @@
   var escAttr = function (s) { return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); };
 
   /** MEI de una fila. */
-  function mei(fila) { return raiz.tmMEI.aMEI(fila); }
+  function mei(fila) { return fila.pentagramas ? raiz.tmMEI.aMEIsistema(fila) : raiz.tmMEI.aMEI(fila); }
 
   /** SVG de una fila (sin tocar el DOM): { svg, ancho, alto } con ancho/alto en px. */
   async function svg(fila, op) { await listo(); return svgSync(fila, op); }
@@ -55,7 +55,7 @@
     var tk = toolkit;
     if (!tk) throw new Error('Verovio todavia no esta cargado: espera a tmNotacion.listo()');
     var semilla = op.semilla || hash((op.id || 'tm') + '#' + (++contador));   // ids unicos: varios dibujos conviven en la misma pagina
-    tk.setOptions(Object.assign({}, OPCIONES, { xmlIdSeed: semilla, spacingLinear: op.separacion || 0.25 }));
+    tk.setOptions(Object.assign({}, OPCIONES, { xmlIdSeed: semilla, spacingLinear: op.separacion || 0.25, pageMarginLeft: op.margenIzq || OPCIONES.pageMarginLeft }));
     if (!tk.loadData(mei(fila))) throw new Error('Verovio no lee el MEI');
     var s = tk.renderToSVG(1);
     var vb = /viewBox="0 0 ([\d.]+) ([\d.]+)"/.exec(s);

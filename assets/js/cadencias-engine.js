@@ -180,7 +180,7 @@
 
   /* Dibuja los dos acordes en un gran pentagrama (piano). Escribe
      div.__tmInfo = { acordes: [{S,A,T,B}, {S,A,T,B}] } para el verificador. */
-  function dibujar(div, it) {
+  function dibujarVF(div, it) {
     var V = VF();
     div.innerHTML = '';
     var w1 = anchoAcorde(), w2 = anchoAcorde(), margen = 40;
@@ -230,6 +230,37 @@
     svg.style.maxWidth = Math.round(W * 1.3) + 'px';
     div.__tmInfo = { acordes: it.acordes.slice() };
   }
+
+  /* ---- Dibujo con Verovio (tm-mei.js + tm-notacion.js) ---- */
+  /* Mientras haya motores que aún dibujan con VexFlow, dibujar elige solo: con Verovio cargado, Verovio; si no, VexFlow
+     (dibujarVF). Cuando estén todos migrados se quitará la versión de VexFlow. */
+  function conVerovio() { return !!(window.tmNotacion && window.tmNotacion.cargado && window.tmNotacion.cargado()); }
+  /* Alteraciones de la armadura de cada tonalidad (mayor): + sostenidos, − bemoles. */
+  var ARMADURA = { C: 0, G: 1, D: 2, F: -1, Bb: -2, A: 3, Eb: -3 };
+
+  /* Los dos acordes en un gran pentagrama (piano): soprano y contralto en un acorde de clave de sol, tenor y bajo en uno de
+     clave de fa, redondas. Las notas se escriben con la alteración que les da la armadura. */
+  function dibujarV(div, it) {
+    var arm = ARMADURA[it.tonalidad];
+    div.innerHTML = '';
+    function conArm(key) {
+      var p = key.split('/'), a = window.tmMEI.altArmadura(arm, p[0]);
+      return p[0] + (a > 0 ? '#' : a < 0 ? 'b' : '') + '/' + p[1];
+    }
+    var acorde = function (a, b) { return [{ notas: [conArm(a), conArm(b)], d: 'w' }]; };
+    var sistema = {
+      armadura: arm, llave: true, barraFinal: 'end',
+      pentagramas: [
+        { clave: 'sol', compases: it.acordes.map(function (ac) { return acorde(ac.A, ac.S); }) },
+        { clave: 'fa', compases: it.acordes.map(function (ac) { return acorde(ac.B, ac.T); }) }
+      ]
+    };
+    var res = window.tmNotacion.dibujarSync(div, sistema, { escala: 1.3, separacion: 0.5, margenIzq: 45, id: 'cad', alt: 'Dos acordes a cuatro voces en un pentagrama de piano' });
+    res.elemento.style.maxWidth = '100%';
+    div.__tmInfo = { acordes: it.acordes.slice() };
+  }
+
+  function dibujar(div, it) { return (conVerovio() ? dibujarV : dibujarVF)(div, it); }
 
   /* ------------------------------------------------------------------ UI */
 
@@ -286,6 +317,16 @@
   }
 
   window.tmCadencias = function (id) {
+    var cont0 = document.getElementById(id);
+    if (cont0 && CT() && window.tmNotacion && !conVerovio()) {
+      cont0.innerHTML = '<div class="tm-cd-card"><div class="tm-cd-sub">Cargando el ejercicio…</div></div>';
+      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont0.innerHTML = '<div class="tm-cd-card"><div class="tm-cd-sub">No se ha podido cargar el ejercicio. Recarga la página.</div></div>'; });
+      return;
+    }
+    arrancar(id);
+  };
+
+  function arrancar(id) {
     var cont = document.getElementById(id);
     if (!cont || !CT()) return;
     css();
@@ -362,7 +403,7 @@
     }
 
     inicio();
-  };
+  }
 
   window.tmCadenciasTest = { generarLote: generarLote, explicar: explicar, dibujar: dibujar, CADENCIAS: CADENCIAS, TIPOS_NIVEL: TIPOS_NIVEL, VOCES: VOCES, nota: nota };
 })();

@@ -141,6 +141,49 @@ function aMEI(fila) {
     + `<staffDef n="1" lines="5" clef.shape="${claveDe(fila).shape}" clef.line="${claveDe(fila).line}"${fila.sinClave ? ' clef.visible="false"' : ''}${armaduraMEI(fila.armadura || 0)}${metro}/></staffGrp></scoreDef><section>${medidas}</section></score></mdiv></body></music></mei>`;
 }
 
+/**
+ * Un SISTEMA de varios pentagramas (piano: clave de sol y de fa con llave) con ACORDES.
+ *   { armadura, num?, den?, llave: true, barraFinal: 'end'?,
+ *     pentagramas: [{ clave: 'sol', compases: [[ev, ev], [ev]] }, { clave: 'fa', compases: [...] }] }
+ * ev = { notas: ['c/4', 'e/4'], d: 'w', puntillo?, silencio?, color?, plica? }   (una sola nota: notas con un elemento).
+ * Las notas se escriben con la alteracion que dice la armadura ('bb/4' en Si bemol mayor); la regla del compas (una alteracion
+ * vale hasta la barra) se aplica por pentagrama.
+ */
+function aMEIsistema(s) {
+  let k = 0;
+  const arm = s.armadura || 0;
+  const claves = s.pentagramas.map((p) => CLAVES[p.clave || 'sol']);
+  const nMed = s.pentagramas[0].compases.length;
+  const metro = !s.num ? '' : ` meter.count="${s.num}" meter.unit="${s.den}"`;
+  const defs = claves.map((c, i) => `<staffDef n="${i + 1}" lines="5" clef.shape="${c.shape}" clef.line="${c.line}"${armaduraMEI(arm)}${metro}/>`).join('');
+  const grupo = `<staffGrp${s.llave ? ' symbol="brace" bar.thru="true"' : ''}>${defs}</staffGrp>`;
+  const pentagrama = (p, n, i) => {
+    const estado = {};
+    const evs = p.compases[i].map((x) => {
+      const dur = `dur="${DUR_MEI[x.d]}"${x.puntillo ? ' dots="1"' : ''}`;
+      if (x.silencio) return `<rest xml:id="n${k++}" ${dur}${x.color ? ` color="${x.color}"` : ''}/>`;
+      const notas = x.notas.map((key) => {
+        const q = parseKey(key), id = q.letra + q.oct;
+        const vigente = id in estado ? estado[id] : altArmadura(arm, q.letra);
+        const muestra = q.alt !== vigente || !!x.becuadro;
+        estado[id] = q.alt;
+        const comun = `pname="${q.letra}" oct="${q.oct}"${muestra ? ` accid="${ACC_MEI[q.alt]}"` : ''}${x.color ? ` color="${x.color}"` : ''}`;
+        return x.notas.length > 1 ? `<note xml:id="n${k++}" ${comun}/>` : `<note xml:id="n${k++}" ${comun} ${dur}${x.plica ? ` stem.dir="${x.plica}"` : ''}/>`;
+      }).join('');
+      return x.notas.length > 1 ? `<chord xml:id="n${k++}" ${dur}${x.plica ? ` stem.dir="${x.plica}"` : ''}>${notas}</chord>` : notas;
+    }).join('');
+    return `<staff n="${n}"><layer n="1">${evs}</layer></staff>`;
+  };
+  const medidas = Array.from({ length: nMed }, (_, i) => {
+    const b = (s.barras || [])[i] || {};
+    const ultimo = i === nMed - 1;
+    const der = b.fin === 'end' ? ' right="end"' : ultimo && s.barraFinal === 'end' ? ' right="end"' : '';
+    return `<measure n="${i + 1}"${der}>${s.pentagramas.map((p, j) => pentagrama(p, j + 1, i)).join('')}</measure>`;
+  }).join('');
+  return '<?xml version="1.0" encoding="UTF-8"?><mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="5.0"><meiHead><fileDesc><titleStmt><title/></titleStmt><pubStmt/></fileDesc></meiHead><music><body><mdiv><score><scoreDef>'
+    + grupo + `</scoreDef><section>${medidas}</section></score></mdiv></body></music></mei>`;
+}
 
-  return { DUR, DUR_MEI, LETRAS, PASO_Y, ESPACIO, REF_CLAVE, mkClave, CLAVES, claveDe, ACC_MEI, MEI_ACC, ACC_TXT, ACC_GLIFO, durTotal, parseKey, pasoDe, ORDEN_SOSTENIDOS, ORDEN_BEMOLES, altArmadura, armaduraMEI, alteraciones, GLIFO_ARTIC, ORNA, ornaMEI, ornaLeida, articDe, tuplasDe, factorEvento, duracionBarra, aMEI };
+
+  return { DUR, DUR_MEI, LETRAS, PASO_Y, ESPACIO, REF_CLAVE, mkClave, CLAVES, claveDe, ACC_MEI, MEI_ACC, ACC_TXT, ACC_GLIFO, durTotal, parseKey, pasoDe, ORDEN_SOSTENIDOS, ORDEN_BEMOLES, altArmadura, armaduraMEI, alteraciones, GLIFO_ARTIC, ORNA, ornaMEI, ornaLeida, articDe, tuplasDe, factorEvento, duracionBarra, aMEI, aMEIsistema };
 });
