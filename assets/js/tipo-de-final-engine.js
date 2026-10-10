@@ -277,6 +277,16 @@
 
   window.tmFinal = function (id) {
     var cont = document.getElementById(id);
+    if (cont && D() && C() && window.tmNotacion && !window.tmNotacion.cargado()) {
+      cont.innerHTML = '<div class="tm-fi-card"><div class="tm-fi-sub">Cargando el ejercicio…</div></div>';
+      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<div class="tm-fi-card"><div class="tm-fi-sub">No se ha podido cargar el ejercicio. Recarga la página.</div></div>'; });
+      return;
+    }
+    arrancar(id);
+  };
+
+  function arrancar(id) {
+    var cont = document.getElementById(id);
     if (!cont || !D() || !C()) return;
     css();
     cont.className = 'tm-fi';
@@ -355,7 +365,7 @@
     }
 
     inicio();
-  };
+  }
 
   window.tmFinalTest = { generarLote: generarLote, explicar: explicar, dibujar: function (div, it, opts) { opts = opts || {}; opts.final = true; C().dibujar(div, it, opts); }, TIPOS: TIPOS, ETIQUETA: ETIQUETA };
 })();
