@@ -1,9 +1,8 @@
 /* Motor — Test de articulación musical (legato, staccato, acento, tenuto,
    marcato). Dos sentidos, como pidió Eduardo: se da el NOMBRE y hay que
    elegir el SIGNO (dibujado en el pentagrama), o al revés. Reutiliza los
-   mismos códigos de articulación VexFlow que generate-articulacion.js (que
-   generó las imágenes de la página de diccionario), así el signo dibujado
-   aquí es idéntico al de esa página. */
+   mismos signos (tm-mei.js) que las imágenes de la página de diccionario,
+   así el signo dibujado aquí es idéntico al de esa página. */
 (function () {
   'use strict';
 
@@ -101,34 +100,21 @@
 
   function porId(id) { return ARTICULACIONES.filter(function (a) { return a.id === id; })[0]; }
 
+  /* Signo de cada articulación en tm-mei.js: el mismo que ya se dibuja en la página de diccionario (datos de ritmo-signos.js). */
+  var ARTIC_MEI = { 'a.': 'stacc', 'a>': 'acc', 'a-': 'ten', 'a^': 'marc' };
+
+  /* Dos negras (mi4 y sol4, plicas arriba) con el signo debajo de cada cabeza (lado opuesto a la plica); el legato es una
+     ligadura de expresión por debajo, de una a otra. */
   function dibujarMini(div, artId) {
-    if (typeof Vex === 'undefined') return;
-    div.innerHTML = '';
-    var V = Vex.Flow;
-    var w = 150, h = 130;
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(w, h);
-    var ctx = r.getContext();
-    var stave = new V.Stave(4, 6, w - 12);
-    stave.addClef('treble').setContext(ctx).draw();
     var art = porId(artId);
-    /* Notas bajo la 3.ª línea => plicas arriba => el signo va bajo la
-       cabeza (lado opuesto a la plica), igual criterio que la página de
-       diccionario. */
-    var keys = ['e/4', 'g/4'];
-    var notes = keys.map(function (k) { return new V.StaveNote({ keys: [k], duration: 'q', clef: 'treble' }); });
-    if (art.art !== 'slur') {
-      notes.forEach(function (n) { n.addModifier(new V.Articulation(art.art).setPosition(V.Modifier.Position.BELOW)); });
-    }
-    var voice = new V.Voice({ num_beats: 2, beat_value: 4 });
-    voice.setMode(V.Voice.Mode.SOFT); voice.addTickables(notes);
-    new V.Formatter().joinVoices([voice]).format([voice], w - 60);
-    voice.draw(ctx, stave);
-    if (art.art === 'slur') {
-      new V.Curve(notes[0], notes[1], { cps: [{ x: 0, y: 18 }, { x: 0, y: 18 }] }).setContext(ctx).draw();
-    }
-    var svg = div.querySelector('svg');
-    if (svg) { svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h); svg.style.width = '100%'; svg.style.height = 'auto'; }
+    var ev = function (key) {
+      var e = { key: key, d: 'q', plica: 'up' };
+      if (art.art !== 'slur') e.artic = { tipo: ARTIC_MEI[art.art], lugar: 'below' };
+      return e;
+    };
+    var fila = { clave: 'sol', compases: [[ev('e/4'), ev('g/4')]] };
+    if (art.art === 'slur') fila.slurs = [{ de: [0, 0], a: [0, 1], curva: 'below' }];
+    tmNotacion.dibujarSync(div, fila, { escala: 1.0, separacion: 0.2, id: 'art', alt: 'Pentagrama con dos negras y un signo de articulación' });
   }
 
   function tmArticulacionEngine(containerId, config) {
@@ -228,7 +214,7 @@
       } else {
         elQ.textContent = '¿Cómo se llama esta articulación?';
         elStaff.style.display = 'flex';
-        elStaff.innerHTML = '<div id="' + uid + '_qmini" style="width:150px;"></div>';
+        elStaff.innerHTML = '<div id="' + uid + '_qmini" style="width:240px;max-width:100%;"></div>';
         dibujarMini(document.getElementById(uid + '_qmini'), cQ.art.id);
         var opcionesN = shuffled(ARTICULACIONES);
         elOpts.className = 'tm-grid';
@@ -308,9 +294,10 @@
       });
     }
 
-    function init() { showModeScreen(); }
-    if (typeof Vex !== 'undefined') { init(); }
-    else { window.addEventListener('vexflow-ready', init, { once: true }); }
+    wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">Cargando el ejercicio…</p></div>';
+    tmNotacion.listo().then(showModeScreen).catch(function () {
+      wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">No se ha podido cargar el ejercicio. Recarga la página.</p></div>';
+    });
   }
 
   /* ---- Segundo test: definición <-> nombre (sin pentagrama) ---- */
