@@ -6,7 +6,7 @@
  * momento: cada pulsación da una hoja distinta.
  *
  * Uso:  <div id="tmfg"></div>  +  tmFichasGenerador('tmfg')
- * Requiere VexFlow 4 (Vex.Flow) cargado antes.
+ * Se dibuja con Verovio: requiere tm-mei.js y tm-notacion.js cargados antes.
  */
 (function () {
   'use strict';
@@ -186,119 +186,76 @@
 
   /* ------------------------------------------------------------- dibujo */
 
-  /* Un sistema (pentagrama con varios ejercicios). Las notas se colocan a mano
-     con TickContext: así las casillas quedan iguales y la solución encaja
-     exactamente encima de la hoja en blanco. */
+  /* La nota en el formato de tm-mei.js: 'f#/4' (la clave del ejercicio ya lleva la alteración dentro). */
+  function claveMEI(n) { return n.key; }
+  var ROJO = '#c0392b';
+
+  /* Un sistema (pentagrama con varios ejercicios), dibujado con Verovio: un compás por ejercicio, las dos redondas dentro. La barra
+     entre compases separa los ejercicios; los números, las respuestas y las rayas de respuesta son texto sobre el dibujo, colocado
+     con las medidas reales de los compases. En la hoja en blanco de «escribir» la segunda nota va OCULTA (ocupa su sitio): así la
+     ficha y su solución salen con la misma maqueta exacta.
+     opts: w (ancho), gap (hueco bajo el pentagrama), modo, solucion, desde (número del primero). */
   function dibujarSistema(div, ejercicios, opts) {
-    var V = Vex.Flow;
+    var T = window.tmNotacion;
+    var oculta = opts.modo === 'escribir' && !opts.solucion;
+    var fila = { clave: 'sol', sinBarraFinal: true, compases: ejercicios.map(function (e) {
+      var n2 = { key: claveMEI(e.n2), d: 'w' };
+      if (oculta) n2.oculta = true; else if (opts.modo === 'escribir') n2.color = ROJO;
+      return [{ key: claveMEI(e.n1), d: 'w' }, n2];
+    }) };
     div.innerHTML = '';
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    var alto = 20 + 40 + opts.gap + 20;
-    r.resize(opts.w, alto);
-    var ctx = r.getContext();
+    div.style.position = 'relative';
+    var res = T.dibujarAAncho(div, fila, opts.w, { escala: 0.9, id: 'fgs', alt: 'Pentagrama con ' + ejercicios.length + ' ejercicios de intervalos' });
+    var svg = res.elemento;
+    svg.style.display = 'block';
+    /* la línea superior siempre a la misma altura: Verovio recorta el SVG a lo que se ve, y la hoja en blanco (segunda nota oculta) y la solución deben ser idénticas */
+    var TOPE = 28, g0 = T.geometria(svg);
+    svg.style.margin = Math.round(TOPE - g0.lineas[0]) + 'px auto 0 0';
+    var dr = div.getBoundingClientRect(), sr = svg.getBoundingClientRect();
+    var g = T.geometria(svg), cajas = T.compases(svg);
+    var cl = svg.querySelector('.clef');
+    if (cl) cajas[0].izq = cl.getBoundingClientRect().right - sr.left + 6;   // la primera casilla empieza tras la clave
+    var dx = sr.left - dr.left, dy = sr.top - dr.top;
+    var ySup = dy + g.lineas[0], yInf = dy + g.lineas[4];
 
-    var stave = new V.Stave(0, 0, opts.w - 2, { space_above_staff_ln: 2 });
-    stave.addClef('treble').setContext(ctx).draw();
-
-    var ySup = stave.getYForLine(0), yInf = stave.getYForLine(4);
-    var x0 = stave.getNoteStartX();
-    var casilla = ((stave.getX() + stave.getWidth()) - x0) / ejercicios.length;
-    var svg = div.querySelector('svg');
-    var NSVG = 'http://www.w3.org/2000/svg';
-
-    function texto(x, y, s, size, fill, weight, anchor) {
-      var t = document.createElementNS(NSVG, 'text');
-      t.setAttribute('x', x); t.setAttribute('y', y);
-      t.setAttribute('font-family', 'Arial, Helvetica, sans-serif');
-      t.setAttribute('font-size', size);
-      t.setAttribute('fill', fill);
-      t.setAttribute('text-anchor', anchor || 'middle');
-      if (weight) t.setAttribute('font-weight', weight);
-      t.textContent = s;
-      svg.appendChild(t);
+    function poner(x, y, s, estilo) {
+      var e = document.createElement('div');
+      e.textContent = s;
+      e.style.cssText = 'position:absolute;font-family:Arial,Helvetica,sans-serif;white-space:nowrap;line-height:1;' + estilo;
+      e.style.left = x + 'px'; e.style.top = y + 'px';
+      div.appendChild(e);
+      return e;
     }
-    function linea(x1, y1, x2, y2, color) {
-      var l = document.createElementNS(NSVG, 'line');
-      l.setAttribute('x1', x1); l.setAttribute('y1', y1);
-      l.setAttribute('x2', x2); l.setAttribute('y2', y2);
-      l.setAttribute('stroke', color); l.setAttribute('stroke-width', 1);
-      svg.appendChild(l);
-    }
-    function nota(n, x, color) {
-      var sn = new V.StaveNote({ keys: [n.key], duration: 'w' });
-      if (n.acc) {
-        var a = new V.Accidental(n.acc);
-        if (color && a.setStyle) a.setStyle({ fillStyle: color, strokeStyle: color });
-        sn.addModifier(a, 0);
-      }
-      sn.setStave(stave);
-      sn.addToModifierContext(new V.ModifierContext());
-      var tc = new V.TickContext();
-      tc.addTickable(sn);
-      tc.preFormat();
-      tc.setX(x - x0);
-      if (color) sn.setStyle({ fillStyle: color, strokeStyle: color });
-      sn.setContext(ctx).draw();
-    }
-
-    var yNum = ySup - 20 + 9;
-    var yPie = yInf + opts.gap;
-
     ejercicios.forEach(function (e, i) {
-      var izq = x0 + casilla * i;
-      var cx = izq + casilla / 2;
-      if (i > 0) linea(izq, ySup, izq, yInf, '#888');
-
-      nota(e.n1, izq + casilla * 0.30, null);
-      if (opts.modo === 'analizar') nota(e.n2, izq + casilla * 0.66, null);
-      else if (opts.solucion) nota(e.n2, izq + casilla * 0.66, '#c0392b');
-
-      texto(izq + 5, yNum, String(opts.desde + i), 10.5, '#9a7b28', null, 'start');
-
-      var flecha = e.dir > 0 ? '↑' : '↓';
+      var izq = dx + cajas[i].izq, der = dx + cajas[i].der, cx = (izq + der) / 2, w = der - izq;
+      poner(izq + 5, 0, String(opts.desde + i), 'font-size:10.5px;color:#9a7b28;');
+      var flecha = e.dir > 0 ? '\u2191' : '\u2193';
+      var yTxt = yInf + opts.gap - 10;
       if (opts.modo === 'analizar') {
-        if (opts.solucion) texto(cx, yPie + 4, e.etiqueta + ' ' + flecha, 15, '#c0392b', '600');
-        else linea(cx - casilla * 0.34, yPie, cx + casilla * 0.34, yPie, '#9a9a9a');
+        if (opts.solucion) {
+          var t = poner(cx, yTxt, e.etiqueta + ' ' + flecha, 'font-size:15px;font-weight:600;color:' + ROJO + ';');
+          t.style.transform = 'translateX(-50%)';
+        } else {
+          var l = document.createElement('div');
+          l.style.cssText = 'position:absolute;height:0;border-top:1px solid #9a9a9a;';
+          l.style.left = (cx - w * 0.34) + 'px'; l.style.width = (w * 0.68) + 'px'; l.style.top = (yInf + opts.gap) + 'px';
+          div.appendChild(l);
+        }
       } else {
-        texto(cx, yPie + 4, e.etiqueta + ' ' + flecha, 14.5, '#1a1a1a', null);
+        var t2 = poner(cx, yTxt, e.etiqueta + ' ' + flecha, 'font-size:14.5px;color:#1a1a1a;');
+        t2.style.transform = 'translateX(-50%)';
       }
     });
+    div.style.height = Math.ceil(yInf + opts.gap + 8) + 'px';
   }
 
   /* Un solo intervalo, en grande, para la práctica en pantalla. En modo
      "escribir" la segunda nota no se dibuja hasta que el alumno responde. */
   function dibujarSuelto(div, e, opts) {
-    var V = Vex.Flow;
-    div.innerHTML = '';
-    var ancho = Math.min(opts.w || 360, 420);
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(ancho, 190);
-    var ctx = r.getContext();
-    var stave = new V.Stave(4, 10, ancho - 12, { space_above_staff_ln: 4 });
-    stave.addClef('treble').setContext(ctx).draw();
-
-    var x0 = stave.getNoteStartX();
-    var util = (stave.getX() + stave.getWidth()) - x0;
-
-    function nota(n, x, color) {
-      var sn = new V.StaveNote({ keys: [n.key], duration: 'w' });
-      if (n.acc) {
-        var a = new V.Accidental(n.acc);
-        if (color && a.setStyle) a.setStyle({ fillStyle: color, strokeStyle: color });
-        sn.addModifier(a, 0);
-      }
-      sn.setStave(stave);
-      sn.addToModifierContext(new V.ModifierContext());
-      var tc = new V.TickContext();
-      tc.addTickable(sn);
-      tc.preFormat();
-      tc.setX(x - x0);
-      if (color) sn.setStyle({ fillStyle: color, strokeStyle: color });
-      sn.setContext(ctx).draw();
-    }
-
-    nota(e.n1, x0 + util * 0.28, null);
-    if (opts.mostrarSegunda) nota(e.n2, x0 + util * 0.62, opts.colorSegunda || null);
+    div.style.height = '150px';
+    var compases = [[{ key: claveMEI(e.n1), d: 'w' }]];
+    if (opts.mostrarSegunda) compases.push([opts.colorSegunda ? { key: claveMEI(e.n2), d: 'w', color: opts.colorSegunda } : { key: claveMEI(e.n2), d: 'w' }]);
+    window.tmNotacion.dibujarAlineado(div, { clave: 'sol', compases: compases }, { escala: 1.4, separacion: 0.4, top: 62, id: 'fgu', alt: 'Intervalo de dos notas en clave de sol' });
   }
 
   /* ----------------------------------------------------------------- UI */
@@ -401,14 +358,18 @@
 
   /* Expuesto para tools/verificar-fichas-intervalos.js --web: permite auditar
      miles de hojas sin pasar por la interfaz. */
-  window.tmFichasGeneradorTest = { generarHoja: generarHoja };
+  window.tmFichasGeneradorTest = { generarHoja: generarHoja, dibujarSistema: dibujarSistema };
 
   /* tmFichasGenerador('tmfg')                      -> arranque genérico
      tmFichasGenerador('tmfg', { nums: [3] })       -> ya puesto en terceras
      Opciones: nums, modo (analizar|escribir), dificultad, total, salida. */
   window.tmFichasGenerador = function (id, opciones) {
     var cont = document.getElementById(id);
-    if (!cont || typeof Vex === 'undefined') return;
+    if (!cont || !window.tmNotacion) return;
+    if (!window.tmNotacion.cargado()) {   // Verovio se carga bajo demanda
+      window.tmNotacion.listo().then(function () { window.tmFichasGenerador(id, opciones); });
+      return;
+    }
 
     if (!document.getElementById('tm-fg-css')) {
       var st = document.createElement('style');
@@ -545,44 +506,26 @@
     /* Pentagrama de la práctica de escribir: mismas medidas que el test de
        construir intervalos (300x220, pentagrama en 10,20,280), porque de ahí
        sale la fórmula que convierte la Y del clic en posición de nota. */
-    function pintarConstruir(div, e, nota, color) {
-      var V = Vex.Flow;
-      div.innerHTML = '';
-      var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-      r.resize(300, 220);
-      var ctx = r.getContext();
-      var stave = new V.Stave(10, 20, 280);
-      stave.addClef('treble').setContext(ctx).draw();
-
-      var notas = [];
-      var sn1 = new V.StaveNote({ keys: [e.n1.key], duration: 'w' });
-      if (e.n1.acc) sn1.addModifier(new V.Accidental(e.n1.acc), 0);
-      notas.push(sn1);
-
+    function pintarConstruir(div, e, nota, color, opts) {
+      opts = opts || {};
+      div.style.height = (opts.alto || 170) + 'px';
+      var compases = [[{ key: claveMEI(e.n1), d: 'w' }]];
       if (nota) {
         var key = LETTERS[nota.l] + (nota.alt > 0 ? '#' : nota.alt < 0 ? 'b' : '') + '/' + nota.oct;
-        var sn2 = new V.StaveNote({ keys: [key], duration: 'w' });
-        if (sn2.setStyle) sn2.setStyle({ fillStyle: color, strokeStyle: color });
-        if (nota.alt !== 0) {
-          var ac = new V.Accidental(nota.alt > 0 ? '#' : 'b');
-          if (ac.setStyle) ac.setStyle({ fillStyle: color, strokeStyle: color });
-          sn2.addModifier(ac, 0);
-        }
-        notas.push(sn2);
+        compases.push([{ key: key, d: 'w', color: color }]);
       }
-
-      var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables(notas);
-      new V.Formatter().joinVoices([voice]).format([voice], 180);
-      voice.draw(ctx, stave);
-      var svg = div.querySelector('svg');
-      if (svg) svg.style.cursor = 'crosshair';
+      var res = window.tmNotacion.dibujarAlineado(div, { clave: 'sol', compases: compases }, { escala: opts.escala || 1.0, separacion: 0.25, top: opts.top || 62, id: 'fgc', alt: '' });
+      res.elemento.style.cursor = opts.sinCursor ? 'default' : 'crosshair';
     }
 
-    /* Y del clic -> posición en el pentagrama. La primera línea (Fa5) está en
-       y=60 del SVG y cada posición ocupa 5 px. */
+    /* Y del clic -> posición en el pentagrama, medida sobre el dibujo: la línea superior (Fa5) es la posición 3 y cada media línea
+       es una posición más. */
     function posicionDeY(div, clientY) {
-      var rect = div.getBoundingClientRect();
-      var paso = Math.round((clientY - rect.top - 60) / 5);
+      var svg = div.querySelector('svg');
+      if (!svg) return 3;
+      var sr = svg.getBoundingClientRect(), g = window.tmNotacion.geometria(svg);
+      var sp = (g.lineas[4] - g.lineas[0]) / 4;
+      var paso = Math.round((clientY - sr.top - g.lineas[0]) / (sp / 2));
       return Math.max(-3, Math.min(12, paso)) + 3;
     }
 
@@ -607,9 +550,7 @@
       var clave = f.l + '_' + f.oct + '_' + pr.alt;
       if (clave !== ultimaLupa) {
         ultimaLupa = clave;
-        pintarConstruir(el.querySelector('.tm-fg-loupe-staff'), e, { l: f.l, oct: f.oct, alt: pr.alt }, '#8b6914');
-        var svg = el.querySelector('svg');
-        if (svg) { svg.setAttribute('width', '180'); svg.setAttribute('height', '132'); svg.style.cursor = 'default'; }
+        pintarConstruir(el.querySelector('.tm-fg-loupe-staff'), e, { l: f.l, oct: f.oct, alt: pr.alt }, '#8b6914', { alto: 104, top: 40, escala: 0.95, sinCursor: true });
       }
       el.style.transform = '';
       el.style.left = clientX + 'px';

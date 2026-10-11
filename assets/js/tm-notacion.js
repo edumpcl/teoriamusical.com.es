@@ -121,8 +121,41 @@
     return r;
   }
 
+  /**
+   * Dibuja una fila lo mas ancha posible SIN pasar de «ancho» px: busca la separacion (0,15-1,0) cuyo dibujo natural llena el ancho; si ni con la
+   * mayor llega, se queda con ella (el llamador centra); si ni con la menor cabe, se encoge el SVG. Para sistemas de varios ejercicios (fichas).
+   * Devuelve lo mismo que dibujarSync.
+   */
+  function dibujarAAncho(contenedor, fila, ancho, op) {
+    op = Object.assign({}, op || {});
+    var lo = 0.15, hi = 1.0, elegida = hi;
+    if (svgSync(fila, Object.assign({}, op, { separacion: hi })).ancho > ancho) {
+      if (svgSync(fila, Object.assign({}, op, { separacion: lo })).ancho > ancho) elegida = lo;
+      else {
+        elegida = lo;
+        for (var i = 0; i < 8; i++) {
+          var mid = (lo + hi) / 2;
+          if (svgSync(fila, Object.assign({}, op, { separacion: mid })).ancho <= ancho) { lo = mid; elegida = mid; } else hi = mid;
+        }
+      }
+    }
+    op.separacion = elegida;
+    var r = dibujarSync(contenedor, fila, op);
+    if (r.ancho > ancho) r.elemento.style.width = ancho + 'px';
+    return r;
+  }
+
+  /** Los compases de un dibujo: [{ izq, der }] en px relativos a la esquina izquierda del <svg> (de las lineas del pentagrama de cada uno). */
+  function compases(el) {
+    var caja = el.getBoundingClientRect();
+    return Array.prototype.map.call(el.querySelectorAll('.measure'), function (m) {
+      var p = m.querySelector('.staff > path'), b = p.getBoundingClientRect();
+      return { izq: b.left - caja.left, der: b.right - caja.left };
+    });
+  }
+
   raiz.tmNotacion = {
     listo: listo, cargado: function () { return !!toolkit; }, mei: mei,
-    svg: svg, svgSync: svgSync, dibujar: dibujar, dibujarSync: dibujarSync, dibujarAlineado: dibujarAlineado, geometria: geometria, VERSION: VERSION
+    svg: svg, svgSync: svgSync, dibujar: dibujar, dibujarSync: dibujarSync, dibujarAlineado: dibujarAlineado, dibujarAAncho: dibujarAAncho, compases: compases, geometria: geometria, VERSION: VERSION
   };
 })(typeof self !== 'undefined' ? self : this);

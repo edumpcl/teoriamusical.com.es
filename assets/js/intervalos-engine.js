@@ -16,7 +16,7 @@
     "5AA":[4,9,"5","DblAum"],"6AA":[5,11,"6","DblAum"],
     /* dobles disminuidas */
     "3dd":[2,1,"3","DblDis"],"4dd":[3,3,"4","DblDis"],"5dd":[4,5,"5","DblDis"],
-    "6dd":[5,7,"6","DblDis"],"7dd":[6,8,"7","DblDis"],
+    "6d":[5,7,"6","Dis"],"7dd":[6,8,"7","DblDis"],
     /* intervalos compuestos (def[0] >= 8) — para el test completo */
     "9m":[8,13,"9","menor"], "9M":[8,14,"9","Mayor"],
     "10m":[9,15,"10","menor"],"10M":[9,16,"10","Mayor"],
@@ -48,7 +48,7 @@
     "2AA":"Disonancia Condicional",
     "4AA":"Disonancia Condicional","5AA":"Disonancia Condicional",
     "4dd":"Disonancia Condicional","5dd":"Disonancia Condicional",
-    "6dd":"Disonancia Condicional","7dd":"Disonancia Condicional"
+    "6d":"Disonancia Condicional","7dd":"Disonancia Condicional"
   };
 
   /*
@@ -214,8 +214,8 @@
         /* simple: solo hasta 8ª; compuesto: hasta la 15ª */
         if (currentDiffObj.simple) k = k.filter(function(x){ return DEFS[x][0] < 8; });
       }
-      /* consonancia: solo intervalos simples (hasta 8ª) */
-      if (config.test === 'consonancia') {
+      /* consonancia y número: solo intervalos simples (hasta 8ª); el test de número solo ofrece de la 1ª a la 8ª */
+      if (config.test === 'consonancia' || config.test === 'numero') {
         k = k.filter(function(x){ return DEFS[x][0] <= 7; });
       }
       /* construir: simples (hasta 8ª) salvo en niveles compuestos; sin unísonos; filtro por número */
@@ -279,9 +279,9 @@
       if (config.test === 'construir_semitono') {
         var cs_tipos = ['unisono','diaton_asc','diaton_desc','cromatico_asc','cromatico_desc','enarmonicas'];
         var cs_tipo, cs_n1, cs_a1, cs_n2, cs_a2, cs_oct2;
-        var cs_ok = false, cs_att = 0;
+        var cs_ok = false, cs_att = 0, cs_validas = null;
         while (!cs_ok && cs_att < 200) {
-          cs_att++;
+          cs_att++; cs_validas = null;
           cs_tipo = cs_tipos[Math.floor(Math.random() * cs_tipos.length)];
           cs_n1 = Math.floor(Math.random() * 7);
           var a1opts_cs = maxAlt === 0 ? [0] : (maxAlt === 1 ? [-1,0,0,0,1] : [-1,-1,0,0,0,1,1]);
@@ -317,6 +317,10 @@
             if (n2_dn > cs_n1) { a2_dn += 12; oct2_dn = 3; }
             var up_ok = Math.abs(a2_up) <= maxAlt;
             var dn_ok = Math.abs(a2_dn) <= maxAlt;
+            /* la enarmónica vale con la letra de arriba Y con la de abajo (las que caben en los botones del nivel) */
+            cs_validas = [];
+            if (up_ok) cs_validas.push({ n2: n2_up, a2: a2_up, oct2: oct2_up });
+            if (dn_ok) cs_validas.push({ n2: n2_dn, a2: a2_dn, oct2: oct2_dn });
             if (up_ok && dn_ok) {
               if (Math.random() < 0.5) { cs_n2 = n2_up; cs_a2 = a2_up; cs_oct2 = oct2_up; }
               else                     { cs_n2 = n2_dn; cs_a2 = a2_dn; cs_oct2 = oct2_dn; }
@@ -325,7 +329,7 @@
             else if (dn_ok)   { cs_n2 = n2_dn; cs_a2 = a2_dn; cs_oct2 = oct2_dn; cs_ok = true; }
           }
         }
-        cQ = { n1: cs_n1, a1: cs_a1, n2: cs_n2, a2: cs_a2, oct2: cs_oct2, cs_tipo: cs_tipo };
+        cQ = { n1: cs_n1, a1: cs_a1, n2: cs_n2, a2: cs_a2, oct2: cs_oct2, cs_tipo: cs_tipo, validas: cs_validas };
         return;
       }
       /* Construir por número: dada una nota y un número (2ª-8ª) escribir la nota correcta */
@@ -385,7 +389,7 @@
         } else {
           n2  = (n1 + def[0]) % 7;
           nd  = NS[n2] - NS[n1]; if (nd < 0) nd += 12;
-          a2  = def[0] >= 8 ? (def[1] - 12) - nd : def[1] - nd;
+          a2  = def[0] >= 7 ? (def[1] - 12) - nd : def[1] - nd;   /* la 8ª (def[0]=7) también vuelve a la misma letra: sin esto salía dibujada como unísono */
           outOfRange = false;
         }
         attempts++;
@@ -427,29 +431,36 @@
       return TIPO_LABEL[abrev] || abrev;
     }
 
+    /* La nota en el formato de tm-mei.js: letra + alteración + / + octava ('f#/4'). */
+    function claveMEI(vfn, acc, oct) { return vfn + (accidental(acc) || '') + '/' + oct; }
+    /* Cada redonda en su compás (una redonda llena el 4/4): así cada nota lleva su propia alteración, sin que la regla del compás se la quite a la segunda.
+       Dibuja en clave de sol, sin armadura, con la línea superior del pentagrama siempre a `top` px (Verovio recorta el SVG). */
+    function dibujarIv(el, secuencia, top, extra) {
+      var op = { escala: 1.0, separacion: 0.25, top: top, id: uid, alt: '' };
+      for (var k in (extra || {})) op[k] = extra[k];
+      return tmNotacion.dibujarAlineado(el, { pentagramas: [{ clave: 'sol', compases: secuencia.map(function (n) { return [{ notas: n, d: 'w' }]; }) }] }, op);
+    }
+    /* Las notas de un acorde van de grave a aguda (diatónica y luego alteración) */
+    function ordenar(notas) {
+      return notas.slice().sort(function (p, q) { return (p.oct * 7 + p.n - q.oct * 7 - q.n) || (p.acc - q.acc); });
+    }
+    function nombreN(n) { return claveMEI(VF_NAMES[n.n], n.acc, n.oct); }
+
+    /* La fila bajo el puntero, medida sobre el pentagrama dibujado: 0 = línea superior, de media en media línea. */
+    function pasoEn(elNotDiv, clientY) {
+      var svg = elNotDiv.querySelector('svg');
+      if (!svg) return 0;
+      var sr = svg.getBoundingClientRect(), g = tmNotacion.geometria(svg);
+      if (!g.lineas) return 0;
+      var sp = (g.lineas[4] - g.lineas[0]) / 4;
+      return Math.max(-3, Math.min(12, Math.round((clientY - sr.top - g.lineas[0]) / (sp / 2))));
+    }
+
     function drawConstruirPreview(vfn, oct, acc) {
       var elNot = document.getElementById(uid + '_not');
-      elNot.innerHTML = '';
-      var V = Vex.Flow;
-      var r = new V.Renderer(elNot, V.Renderer.Backends.SVG);
-      r.resize(300, 220);
-      var ctx = r.getContext();
-      var stave = new V.Stave(10, 20, 280);
-      stave.addClef('treble').setContext(ctx).draw();
-      var key1 = VF_NAMES[cQ.n1] + '/4';
-      var key2 = vfn + '/' + oct;
-      var acc2str = accidental(acc);
-      var sn1 = new V.StaveNote({ keys: [key1], duration: 'w' });
-      var acc1str = (cQ.a1 !== undefined && cQ.a1 !== 0) ? accidental(cQ.a1) : null;
-      if (acc1str) sn1.addModifier(new V.Accidental(acc1str), 0);
-      var sn2 = new V.StaveNote({ keys: [key2], duration: 'w' });
-      if (acc2str) sn2.addModifier(new V.Accidental(acc2str), 0);
-      var notes = [sn1, sn2];
-      var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables(notes);
-      new V.Formatter().joinVoices([voice]).format([voice], 180);
-      voice.draw(ctx, stave);
-      var svg = elNot.querySelector('svg');
-      if (svg) svg.style.cursor = 'crosshair';
+      elNot.style.height = '190px'; elNot.style.width = '100%';
+      var r = dibujarIv(elNot, [[claveMEI(VF_NAMES[cQ.n1], cQ.a1 || 0, 4)], [claveMEI(vfn, acc, oct)]], 62);
+      r.elemento.style.cursor = 'crosshair';
     }
 
     /* -------- pantalla de selección de dificultad -------- */
@@ -518,42 +529,14 @@
         var lastLoupeKey = null;
         elNotDiv.style.cursor = 'crosshair';
 
-        function calcStep(clientY) {
-          var rect = elNotDiv.getBoundingClientRect();
-          var ns = Math.round((clientY - rect.top - 60) / 5);
-          return Math.max(-3, Math.min(12, ns));
-        }
+        function calcStep(clientY) { return pasoEn(elNotDiv, clientY); }
 
         function renderLoupeNote(vfn, oct, acc) {
           var key = cQ.n1 + '_' + (cQ.a1 || 0) + '|' + vfn + oct + acc;
           if (key === lastLoupeKey) return;
           lastLoupeKey = key;
-          elLstaff.innerHTML = '';
-          if (typeof Vex === 'undefined') return;
-          var V = Vex.Flow;
-          var rend = new V.Renderer(elLstaff, V.Renderer.Backends.SVG);
-          rend.resize(300, 220);
-          var ctx = rend.getContext();
-          ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-          var stave = new V.Stave(10, 38, 280);
-          stave.addClef('treble').setContext(ctx).draw();
-          var sn1 = new V.StaveNote({ keys: [VF_NAMES[cQ.n1] + '/4'], duration: 'w' });
-          var acc1str = (cQ.a1 !== undefined && cQ.a1 !== 0) ? accidental(cQ.a1) : null;
-          if (acc1str) sn1.addModifier(new V.Accidental(acc1str), 0);
-          var sn2 = new V.StaveNote({ keys: [vfn + '/' + oct], duration: 'w' });
-          if (sn2.setStyle) sn2.setStyle({ fillStyle: '#8b6914', strokeStyle: '#8b6914' });
-          var accStr = accidental(acc);
-          if (accStr) {
-            var a2 = new V.Accidental(accStr);
-            if (a2.setStyle) a2.setStyle({ fillStyle: '#8b6914', strokeStyle: '#8b6914' });
-            sn2.addModifier(a2, 0);
-          }
-          var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
-          voice.addTickables([sn1, sn2]);
-          new V.Formatter().joinVoices([voice]).format([voice], 180);
-          voice.draw(ctx, stave);
-          var svg = elLstaff.querySelector('svg');
-          if (svg) { svg.setAttribute('viewBox','0 0 300 220'); svg.setAttribute('width','180'); svg.setAttribute('height','132'); }
+          elLstaff.style.height = '104px';
+          dibujarIv(elLstaff, [[claveMEI(VF_NAMES[cQ.n1], cQ.a1 || 0, 4)], [{ key: claveMEI(vfn, acc, oct), color: '#8b6914' }]], 40, { id: uid + 'l', escala: 0.95 });
         }
 
         function showLoupe(clientX, clientY) {
@@ -810,75 +793,35 @@
 
     function drawStaff() {
       var elNot = document.getElementById(uid + '_not');
-      elNot.innerHTML = '';
-      var V = Vex.Flow;
-      var r = new V.Renderer(elNot, V.Renderer.Backends.SVG);
-      var staveH = (config.test === 'construir' || config.test === 'construir_semitono' || config.test === 'construir_numero') ? 220 : 130;
-      var staveY = (config.test === 'construir' || config.test === 'construir_semitono' || config.test === 'construir_numero') ? 20 : 10;
-      r.resize(300, staveH);
-      var ctx = r.getContext();
-      var stave = new V.Stave(10, staveY, 280);
-      stave.addClef('treble').setContext(ctx).draw();
-      var key1 = VF_NAMES[cQ.n1] + '/4';
+      var esConstruir = config.test === 'construir' || config.test === 'construir_semitono' || config.test === 'construir_numero';
+      elNot.style.height = esConstruir ? '190px' : '150px';
+      if (esConstruir) elNot.style.width = '100%';   // se toca en cualquier punto de la fila, no solo sobre el dibujo
+      var n1 = { n: cQ.n1, oct: 4, acc: 0 };
       /* compuesto: oct 6 si n2<=n1 (wrap, ej. 15ª), oct 5 si n2>n1; simple: 5 si n2<n1, 4 si no */
-      var oct2 = cQ.def ? ((cQ.def[0] >= 8) ? (cQ.n2 <= cQ.n1 ? 6 : 5) : (cQ.n2 < cQ.n1 ? 5 : 4)) : (cQ.oct2 || 4);
-      var key2 = VF_NAMES[cQ.n2 !== undefined ? cQ.n2 : 0] + '/' + oct2;
-      var acc = accidental(cQ.a2);
-      var voice;
-      if (config.test === 'arm_mel' && cQ.harmonic) {
-        /* Armónico: acorde — ambas notas en el mismo StaveNote */
-        var chord = new V.StaveNote({ keys: [key1, key2], duration: 'w' });
-        if (acc) chord.addModifier(new V.Accidental(acc), 1);
-        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([chord]);
+      var oct2 = cQ.def ? ((cQ.def[0] >= 8) ? (cQ.n2 <= cQ.n1 ? 6 : 5) : ((cQ.n2 < cQ.n1 || cQ.def[0] === 7) ? 5 : 4)) : (cQ.oct2 || 4);
+      var n2 = { n: cQ.n2 !== undefined ? cQ.n2 : 0, oct: oct2, acc: cQ.a2 || 0 };
+      var secuencia;
+      if ((config.test === 'arm_mel' && cQ.harmonic) || (config.test === 'completo' && cQ.harmonic) || config.test === 'consonancia') {
+        /* Armónico: acorde, las dos notas en el mismo acorde */
+        secuencia = [ordenar([n1, n2]).map(nombreN)];
       } else if (config.test === 'arm_mel' && !cQ.harmonic) {
         /* Melódico: dos redondas consecutivas */
-        var sn1 = new V.StaveNote({ keys: [key1], duration: 'w' });
-        var sn2 = new V.StaveNote({ keys: [key2], duration: 'w' });
-        if (acc) sn2.addModifier(new V.Accidental(acc), 0);
-        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1, sn2]);
+        secuencia = [[nombreN(n1)], [nombreN(n2)]];
       } else if (config.test === 'asc_des' || (config.test === 'completo' && !cQ.harmonic)) {
-        /* Melódico: Ascendente key1→key2 | Descendente key2→key1 */
-        var first, second;
-        if (cQ.ascending) {
-          first  = new V.StaveNote({ keys: [key1], duration: 'w' });
-          second = new V.StaveNote({ keys: [key2], duration: 'w' });
-          if (acc) second.addModifier(new V.Accidental(acc), 0);
-        } else {
-          first  = new V.StaveNote({ keys: [key2], duration: 'w' });
-          second = new V.StaveNote({ keys: [key1], duration: 'w' });
-          if (acc) first.addModifier(new V.Accidental(acc), 0);
-        }
-        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([first, second]);
-      } else if (config.test === 'completo' && cQ.harmonic) {
-        /* Armónico en completo: acorde */
-        var chord = new V.StaveNote({ keys: [key1, key2], duration: 'w' });
-        if (acc) chord.addModifier(new V.Accidental(acc), 1);
-        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([chord]);
-      } else if (config.test === 'consonancia') {
-        /* Consonancia: siempre armónico — acorde */
-        var chord = new V.StaveNote({ keys: [key1, key2], duration: 'w' });
-        if (acc) chord.addModifier(new V.Accidental(acc), 1);
-        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([chord]);
+        /* Melódico: Ascendente n1→n2 | Descendente n2→n1 */
+        secuencia = cQ.ascending ? [[nombreN(n1)], [nombreN(n2)]] : [[nombreN(n2)], [nombreN(n1)]];
       } else if (config.test === 'construir' || config.test === 'construir_numero') {
         /* Construir: solo nota raíz */
-        var sn1c = new V.StaveNote({ keys: [key1], duration: 'w' });
-        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1c]);
+        secuencia = [[nombreN(n1)]];
       } else if (config.test === 'construir_semitono') {
         /* Construir semitono: nota raíz con alteración */
-        var sn1cs = new V.StaveNote({ keys: [key1], duration: 'w' });
-        if (cQ.a1) { var acc1cs = accidental(cQ.a1); if (acc1cs) sn1cs.addModifier(new V.Accidental(acc1cs), 0); }
-        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1cs]);
+        secuencia = [[nombreN({ n: cQ.n1, oct: 4, acc: cQ.a1 || 0 })]];
       } else {
         /* Resto de tests: dos redondas lado a lado */
-        var sn1 = new V.StaveNote({ keys: [key1], duration: 'w' });
-        var sn2 = new V.StaveNote({ keys: [key2], duration: 'w' });
-        var acc1 = cQ.a1 ? accidental(cQ.a1) : null;
-        if (acc1) sn1.addModifier(new V.Accidental(acc1), 0);
-        if (acc)  sn2.addModifier(new V.Accidental(acc), 0);
-        voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([sn1, sn2]);
+        n1.acc = cQ.a1 || 0;
+        secuencia = [[nombreN(n1)], [nombreN(n2)]];
       }
-      new V.Formatter().joinVoices([voice]).format([voice], 180);
-      voice.draw(ctx, stave);
+      dibujarIv(elNot, secuencia, esConstruir ? 62 : 66);
     }
 
     function correctTipo() {
@@ -902,7 +845,10 @@
       if (config.test === 'semitono')    return sel.ans === (SEMITIPO_LABEL[cQ.semitipo] || '');
       if (config.test === 'con_dis')     return sel.ans === (cQ.conjunto  ? 'Conjunto'      : 'Disjunto');
       if (config.test === 'construir')          return sel.ans === (cQ.n2 + '_' + cQ.oct2 + '_' + cQ.a2);
-      if (config.test === 'construir_semitono') return sel.ans === (cQ.n2 + '_' + cQ.oct2 + '_' + cQ.a2);
+      if (config.test === 'construir_semitono') {
+        if (cQ.validas) return cQ.validas.some(function (v) { return sel.ans === (v.n2 + '_' + v.oct2 + '_' + v.a2); });
+        return sel.ans === (cQ.n2 + '_' + cQ.oct2 + '_' + cQ.a2);
+      }
       if (config.test === 'construir_numero')   return !!(sel.construirNote && sel.construirNote.n === cQ.n2 && sel.construirNote.oct === cQ.oct2);
       return sel.ans === correctTipo();
     }
@@ -923,7 +869,10 @@
       if (config.test === 'semitono')    return SEMITIPO_LABEL[cQ.semitipo] || '\u2014';
       if (config.test === 'con_dis')     return cQ.conjunto  ? 'Conjunto'     : 'Disjunto';
       if (config.test === 'construir')          return noteLabel(cQ.n2, cQ.a2);
-      if (config.test === 'construir_semitono') return noteLabel(cQ.n2, cQ.a2);
+      if (config.test === 'construir_semitono') {
+        if (cQ.validas && cQ.validas.length > 1) return cQ.validas.map(function (v) { return noteLabel(v.n2, v.a2); }).join(' o ');
+        return noteLabel(cQ.n2, cQ.a2);
+      }
       if (config.test === 'construir_numero')   return noteLabel(cQ.n2, 0);
       return cQ.def[2] + '\xaa ' + correctTipo();
     }
@@ -1042,11 +991,11 @@
       }
     }
 
-    if (typeof Vex !== 'undefined') {
-      init();
-    } else {
-      window.addEventListener('vexflow-ready', init, { once: true });
-    }
+    /* Verovio se carga bajo demanda: el motor arranca cuando ya está. */
+    wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">Cargando el ejercicio…</p></div>';
+    window.tmNotacion.listo().then(init).catch(function () {
+      wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">No se ha podido cargar el ejercicio. Recarga la página.</p></div>';
+    });
   }
 
   window.tmIvEngine = tmIvEngine;

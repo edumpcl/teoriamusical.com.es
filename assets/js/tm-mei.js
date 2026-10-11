@@ -97,7 +97,7 @@ function aMEI(fila) {
       if (x.espacio) return `<space xml:id="${id}" ${dur}/>`;   // hueco invisible que ocupa tiempo (el ejercicio lo rellena el alumno)
       if (x.silencio) return `<rest xml:id="${id}" ${dur}${x.color ? ` color="${x.color}"` : ''}/>`;
       const p = parseKey(x.key), a = acc[i][j];
-      return `<note xml:id="${id}" pname="${p.letra}" oct="${p.oct}" ${dur}${a ? ` accid="${a}"` : ''}${x.color ? ` color="${x.color}"` : ''}${x.plica ? ` stem.dir="${x.plica}"` : ''}${x.union ? ` tie="${x.union}"` : ''}>${articDe(x) ? `<artic artic="${articDe(x).tipo}" place="${articDe(x).lugar}"/>` : ''}</note>`;
+      return `<note xml:id="${id}" pname="${p.letra}" oct="${p.oct}" ${dur}${a ? ` accid="${a}"` : ''}${x.color ? ` color="${x.color}"` : ''}${x.oculta ? ' visible="false"' : ''}${x.plica ? ` stem.dir="${x.plica}"` : ''}${x.union ? ` tie="${x.union}"` : ''}>${articDe(x) ? `<artic artic="${articDe(x).tipo}" place="${articDe(x).lugar}"/>` : ''}</note>`;
     };
     // unidades: un evento suelto o un grupo con barra
     const unidades = [];

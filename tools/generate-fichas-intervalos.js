@@ -26,8 +26,9 @@ const fs = require('fs');
 const sharp = require('sharp');
 
 const ROOT = path.join(__dirname, '..');
-const VEXFLOW_PATH = path.join(ROOT, 'node_modules/vexflow/build/cjs/vexflow.js');
-const OUT_DIR = path.join(ROOT, 'assets/img/intervalos/fichas');
+const { cargarFicha } = require('./lib-ficha-verovio.js');
+/* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/intervalos/fichas');
 
 /* ---------------------------------------------------------------- teoria */
 
@@ -211,91 +212,7 @@ function generarEjerciciosMixtos(nums, total, seed) {
 
 /* --------------------------------------------------------------- render */
 
-const RENDER_FN = `
-/* Cada sistema se dibuja a mano (sin Formatter): la hoja necesita casillas de
-   ancho identico y las dos notas del intervalo juntas dentro de su casilla,
-   no un reparto proporcional a lo largo del pentagrama. Ademas asi la ficha y
-   su solucion salen con la misma maqueta exacta: lo unico que cambia es si la
-   nota respuesta se dibuja o no. */
-function dibujarSistema(divId, ejercicios, opts) {
-  const { Renderer, Stave, StaveNote, Accidental, TickContext, ModifierContext } = VexFlow;
-  const div = document.getElementById(divId);
-  const renderer = new Renderer(div, Renderer.Backends.SVG);
-  renderer.resize(opts.w, opts.h);
-  const ctx = renderer.getContext();
-
-  const stave = new Stave(0, 0, opts.w - 2, { spaceAboveStaffLn: opts.arriba });
-  stave.addClef('treble');
-  stave.setContext(ctx).draw();
-
-  const yLineaSup = stave.getYForLine(0);
-  const yLineaInf = stave.getYForLine(4);
-  const x0 = stave.getNoteStartX();
-  const ancho = (stave.getX() + stave.getWidth()) - x0;
-  const casilla = ancho / ejercicios.length;
-
-  const svg = div.querySelector('svg');
-  const NSVG = 'http://www.w3.org/2000/svg';
-  const texto = function (x, y, s, size, fill, weight, anchor) {
-    const t = document.createElementNS(NSVG, 'text');
-    t.setAttribute('x', x); t.setAttribute('y', y);
-    t.setAttribute('font-family', 'Arial, Helvetica, sans-serif');
-    t.setAttribute('font-size', size);
-    t.setAttribute('fill', fill);
-    t.setAttribute('text-anchor', anchor || 'middle');
-    if (weight) t.setAttribute('font-weight', weight);
-    t.textContent = s;
-    svg.appendChild(t);
-  };
-  const linea = function (x1, y1, x2, y2, color, ancho) {
-    const l = document.createElementNS(NSVG, 'line');
-    l.setAttribute('x1', x1); l.setAttribute('y1', y1);
-    l.setAttribute('x2', x2); l.setAttribute('y2', y2);
-    l.setAttribute('stroke', color); l.setAttribute('stroke-width', ancho);
-    svg.appendChild(l);
-  };
-  const dibujarNota = function (n, x, color) {
-    const sn = new StaveNote({ keys: [n.key], duration: 'w', clef: 'treble' });
-    if (n.acc) sn.addModifier(new Accidental(n.acc), 0);
-    sn.setStave(stave);
-    sn.addToModifierContext(new ModifierContext());
-    const tc = new TickContext();
-    tc.addTickable(sn);
-    tc.preFormat();
-    tc.setX(x - x0);
-    if (color) sn.setStyle({ fillStyle: color, strokeStyle: color });
-    sn.setContext(ctx).drawWithStyle();
-  };
-
-  const yNum = yLineaSup - opts.arriba * 10 + 9;       // numero, sobre el pentagrama
-  const yPie = yLineaInf + opts.gap;                   // respuesta o enunciado
-
-  ejercicios.forEach(function (e, i) {
-    const izq = x0 + casilla * i;
-    const cx = izq + casilla / 2;
-    if (i > 0) linea(izq, yLineaSup, izq, yLineaInf, '#888', 1);   // separacion entre ejercicios
-
-    dibujarNota(e.n1, izq + casilla * 0.30, null);
-    if (opts.modo === 'analizar') {
-      dibujarNota(e.n2, izq + casilla * 0.66, null);
-    } else if (opts.solucion) {
-      dibujarNota(e.n2, izq + casilla * 0.66, '#c0392b');
-    }
-
-    texto(izq + 5, yNum, String(opts.desde + i), 10.5, '#9a7b28', null, 'start');
-
-    if (opts.modo === 'analizar') {
-      // La respuesta completa incluye la direccion: un intervalo melodico no
-      // esta leido hasta decir si sube o baja.
-      const flecha = e.dir > 0 ? '\\u2191' : '\\u2193';
-      if (opts.solucion) texto(cx, yPie + 4, e.etiqueta + ' ' + flecha, 15, '#c0392b', '600');
-      else linea(cx - casilla * 0.34, yPie, cx + casilla * 0.34, yPie, '#9a9a9a', 1);
-    } else {
-      texto(cx, yPie + 4, e.etiqueta + ' ' + (e.dir > 0 ? '\\u2191' : '\\u2193'), 14.5, '#1a1a1a', null);
-    }
-  });
-}
-`;
+/* El dibujo de cada sistema (Verovio) es el del generador de la web: assets/js/fichas-intervalos-engine.js -> tmFichasGeneradorTest.dibujarSistema. */
 
 /* ----------------------------------------------------------------- html */
 
@@ -320,7 +237,7 @@ const CSS = `
   .datos { display: flex; gap: 18px; font-size: 9pt; color: #555; margin-top: 7px; }
   .datos span { flex: 1; border-bottom: 1px solid #bbb; padding-bottom: 2px; }
   .datos span b { font-weight: normal; color: #888; }
-  .sistema { page-break-inside: avoid; }
+  .sistema { page-break-inside: avoid; margin-bottom: 14px; }
   .pie { margin-top: 6px; border-top: 1px solid #ddd; padding-top: 4px;
          font-size: 8pt; color: #888; display: flex; justify-content: space-between; }
   .sol-tag { display: inline-block; background: #c0392b; color: #fff; font-size: 8.5pt;
@@ -387,20 +304,15 @@ async function generarFicha(browser, opts) {
   // grueso de lo que es, y no se puede juzgar la tipografia de la ficha.
   const page = await browser.newPage({ deviceScaleFactor: png ? 3 : 1 });
   await page.setViewportSize({ width: 850, height: 1200 });
-  await page.setContent(construirHtml({ titulo, instrucciones, leyenda, pie, solucion, sistemas }));
-  await page.addScriptTag({ path: VEXFLOW_PATH });
-  await page.addScriptTag({ content: RENDER_FN });
+  await cargarFicha(page, construirHtml({ titulo, instrucciones, leyenda, pie, solucion, sistemas }), ['assets/js/fichas-intervalos-engine.js']);
 
-  // 'arriba' son lineas de espacio sobre el pentagrama (VexFlow: 10 px cada una);
-  // el hueco de abajo tiene que dejar sitio a las lineas adicionales graves.
-  const arriba = 2;
-  const gap = esAnalizar ? 42 : 44;
-  const alto = arriba * 10 + 40 + gap + 18;
+  // 'gap' es el hueco bajo el pentagrama: tiene que dejar sitio a las lineas adicionales graves y a la respuesta.
+  const gap = esAnalizar ? 40 : 40;
   let desde = 1;
   for (let i = 0; i < sistemas.length; i++) {
-    await page.evaluate(a => dibujarSistema(a[0], a[1], a[2]), [
+    await page.evaluate(a => window.tmFichasGeneradorTest.dibujarSistema(document.getElementById(a[0]), a[1], a[2]), [
       's' + i, sistemas[i],
-      { w: ANCHO, h: alto, arriba, gap, modo, solucion: !!solucion, desde },
+      { w: ANCHO, gap, modo, solucion: !!solucion, desde },
     ]);
     desde += sistemas[i].length;
   }
