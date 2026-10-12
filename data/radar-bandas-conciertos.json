@@ -1,0 +1,2085 @@
+{
+ "comprobado": "2026-10-12",
+ "fuente": "Rastreos de la segunda ronda (bandas de Andalucía, Murcia, Cataluña, Baleares, Navarra, País Vasco, Galicia, Madrid, CyL y Comunidad Valenciana ampliada)",
+ "bandas": [
+  {
+   "grupo": "h2",
+   "nombre": "A.C. Amigos de la Música de Herrera",
+   "municipio": null,
+   "url": "https://www.amigosdelamusicadeherrera.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "A.C.M. Banda de Música Cruz del Humilladero",
+   "municipio": null,
+   "url": "https://bandacruzhumilladero.es/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "ACM. San Jose Artesano San Fernando Cádiz",
+   "municipio": null,
+   "url": "https://www.acmsanjoseartesano.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "AGRUPACIÓN MUSICAL AMIGOS DE LA MÚSICA DE MANCHA REAL",
+   "municipio": null,
+   "url": "http://amigosdelamusicamanchareal.es/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Agrupación Musical de Cazorla",
+   "municipio": null,
+   "url": "http://agrupacionmusicalcazorla.blogspot.com/p/contacto.html?m=1",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Agrupación Musical Ejidense",
+   "municipio": null,
+   "url": "https://agrupacionmusicalejidense.blogspot.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Agrupación Musical San Indalecio",
+   "municipio": null,
+   "url": "https://sanindalecio.com/",
+   "responde": true,
+   "url_agenda": "https://almeriaciudad.es/cultura/evento/gala-concierto-xxxv-aniversario-agrupacion-musical-san-indalecio",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Agrupación Musical «Amihuesa»",
+   "municipio": null,
+   "url": "https://agrupacionamihuesa.wixsite.com/bandademusica/sobre-nosotros",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Agrupación Musical Caballero León",
+   "municipio": null,
+   "url": "http://agrupacionmusicalcaballeroleon.blogspot.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Banda de Música de Loja",
+   "municipio": null,
+   "url": "https://banda-de-musica-de-loja.webador.es/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Banda de Música «Maestro Dueñas»",
+   "municipio": null,
+   "url": "https://www.bandamaestroduenas.es/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "ASOCIACIÓN CULTURAL AMIGOS DE LA MÚSICA DE PEGALAJAR",
+   "municipio": null,
+   "url": "http://www.bandadepegalajar.com",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Cultural Banda de Música Santa Cecilia",
+   "municipio": null,
+   "url": "http://bandasantacecilialebrija.com/portal/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Cultural Banda de Música Villa de Osuna",
+   "municipio": null,
+   "url": "https://www.bandamusicaosuna.es/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Cultural Banda de Música Virgen del Castillo",
+   "municipio": null,
+   "url": "https://bandavirgendelcastillo.com/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Cultural Musical de Macael",
+   "municipio": null,
+   "url": "https://www.bandademacael.es/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Cultural Musical Eladio Guzmán de Canjáyar",
+   "municipio": null,
+   "url": "http://www.bandadecanjayar.es",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Cultural Vive la Música de Torrox",
+   "municipio": null,
+   "url": "https://www.acvivelamusica.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Filarmónica y Cultural de Albaida del Aljarafe",
+   "municipio": null,
+   "url": "http://www.bandadealbaida.es/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Musical Cullarense «El Alabí»",
+   "municipio": null,
+   "url": "http://elalabi.es",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Musical «El Castillo» de Serón",
+   "municipio": null,
+   "url": "https://www.bandaseron.com/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Musical Las Flores",
+   "municipio": null,
+   "url": "https://www.bandalasflores.es/historia/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Musical Ortíz de Villajos de Adra",
+   "municipio": null,
+   "url": "https://bandadeadra.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Musical «Salvador Contreras»",
+   "municipio": null,
+   "url": "http://labandadealbanchez.blogspot.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Musical Santa Maria de la Blanca",
+   "municipio": null,
+   "url": "https://www.bandalacampana.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Músico Cultural Banda de Música «Villa de Íllora»",
+   "municipio": null,
+   "url": "http://www.bandaillora.com/p/inicio.html",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Músico Cultural Daliense",
+   "municipio": null,
+   "url": "http://www.asociacionmusicaldaliense.com/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Músico-Cultural Illoras",
+   "municipio": null,
+   "url": "http://bandademusicaillar.blogspot.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Musico Cultural San Sebastián de Padul",
+   "municipio": null,
+   "url": "https://bandapadul.es/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Asociación Sinfónica de Huércal de Almería",
+   "municipio": null,
+   "url": "http://asociacionsinfonicahuercal.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Ateneo Musical &#8211; Banda Joven «Las Torres»",
+   "municipio": null,
+   "url": "http://bandajovenlastorres.blogspot.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Música A.M. Benzalema",
+   "municipio": null,
+   "url": "https://ambenzalemabenamaurel.blogspot.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Música Albricias",
+   "municipio": null,
+   "url": "https://www.bmalbricias.com",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Música «Amueci»",
+   "municipio": null,
+   "url": "https://www.amueci.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Música de Abla",
+   "municipio": null,
+   "url": "https://www.bandadeabla.es/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Música de Carrión de los Céspedes",
+   "municipio": null,
+   "url": "https://bandadecarrion.es/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Musica de Dos Hermanas Sevilla",
+   "municipio": null,
+   "url": "https://www.bandamusicasantaana.com/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Musica de El Cuervo Sevilla",
+   "municipio": null,
+   "url": "https://www.bandamunicipaldelcuervo.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Música de la Asociación Cultural Níjar",
+   "municipio": null,
+   "url": "http://www.bandadenijar.com/index.html",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Música de la Cruz Roja de Sevilla",
+   "municipio": null,
+   "url": "https://www.bandacruzroja.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Música de Torredonjimeno",
+   "municipio": null,
+   "url": "http://www.bandamusicatorredonjimeno.es/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Música Don Luis",
+   "municipio": null,
+   "url": "https://www.musicazufre.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Música El Saucejo",
+   "municipio": null,
+   "url": "https://bandademusicaelsaucejo.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Música Huécija-Alicún",
+   "municipio": null,
+   "url": "https://bmhuecijaalicun.wixsite.com/bmha",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Música «La Mezquita» de Alboloduy",
+   "municipio": null,
+   "url": "https://bandalamezquitadealboloduy.blogspot.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Música Liceo de Sevilla",
+   "municipio": null,
+   "url": "https://www.liceodesevilla.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Música Maestro Soler",
+   "municipio": null,
+   "url": "https://www.bandamaestrosoler.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de música Nuestra Señora de Guaditoca",
+   "municipio": null,
+   "url": "http://bandademusicaguadalcanal.es/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Filarmónica Ciudad de Bollullos",
+   "municipio": null,
+   "url": "https://lafilarmonicadebollullos.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Municipal de Morón de la Frontera",
+   "municipio": null,
+   "url": "http://bandamunicipalmoron.blogspot.com/p/historia.html",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Municipal de Música de Albox",
+   "municipio": null,
+   "url": "http://bandademusicadealbox.blogspot.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Municipal de Música de Aracena",
+   "municipio": null,
+   "url": "https://www.bandamunicipalaracena.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Municipal de Música de Aznalcóllar",
+   "municipio": null,
+   "url": "https://www.bmaznalcollar.es/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Municipal de Música de Berja",
+   "municipio": null,
+   "url": "https://bmmberja.com/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Municipal de Música de Fiñana",
+   "municipio": null,
+   "url": "http://www.bandafinana.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Municipal de Música de La Puebla del Río",
+   "municipio": null,
+   "url": "http://bandadelapuebladelrio.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Municipal de Música de Mairena del Alcor",
+   "municipio": null,
+   "url": "https://municipaldemairena.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda municipal de música de Minas de Riotinto",
+   "municipio": null,
+   "url": "https://bandamusicariotinto.blogspot.com/?m=1",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Municipal de Música de Olula del Río",
+   "municipio": null,
+   "url": "http://www.bandadeolula.es/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Municipal de Música San Antonio de Padua",
+   "municipio": null,
+   "url": "https://bandasanantoniodepaduavva.webnode.es/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Municipal de Música San Ginés de Purchena",
+   "municipio": null,
+   "url": "https://banda-de-musica-de-purchena.webnode.es/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda de Música de Estepa",
+   "municipio": null,
+   "url": "http://bandamusicaestepa.blogspot.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Sinfónica Ciudad de Baeza",
+   "municipio": null,
+   "url": "https://www.amcbaeza.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Sinfónica de San Fernando",
+   "municipio": null,
+   "url": "https://sfmsf.es/bandasinfonicadesanfernando/",
+   "responde": true,
+   "url_agenda": "https://sfmsf.es/bandasinfonicadesanfernando/",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Sinfónica El Ejido",
+   "municipio": null,
+   "url": "https://bsejido.wixsite.com/bsejido",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Sinfónica Julián Cerdán",
+   "municipio": null,
+   "url": "http://fundacionjuliancerdan.org",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Sinfónica Municipal de Lepe",
+   "municipio": null,
+   "url": "http://www.escuelampalmusicalepe.es/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Sinfónica Municipal de Música Ciudad Atarfe",
+   "municipio": null,
+   "url": "http://acatarfe.es/index.php",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Sinfónica Municipal de Tomares",
+   "municipio": null,
+   "url": "http://www.bandasinfonicatomares.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Sociedad Filarmónica «Ciudad de Bailén»",
+   "municipio": null,
+   "url": "https://www.labandadelnazareno.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Sociedad Filarmónica Nuestra Señora de la Oliva de Salteras",
+   "municipio": null,
+   "url": "https://laolivadesalteras.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Unión Musical de Serón",
+   "municipio": null,
+   "url": "http://www.unionmusicalseron.com/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Unión Musical la Moraleja",
+   "municipio": null,
+   "url": "http://www.amclamoraleja.hol.es/index.php",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Federación Andaluza de Bandas de Música",
+   "municipio": "Almería",
+   "url": "https://federband.org/",
+   "responde": true,
+   "url_agenda": "https://federband.org/conoce-nuestros-eventos",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Federación de Bandas de Música de la Región de Murcia",
+   "municipio": "Guadalupe (Murcia)",
+   "url": "https://febandasrmurcia.com/",
+   "responde": true,
+   "url_agenda": "https://febandasrmurcia.com/calendario/",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Federación Extremeña de Bandas de Música",
+   "municipio": "Casar de Cáceres",
+   "url": "https://www.fexbandasmusica.com/",
+   "responde": true,
+   "url_agenda": "https://www.fexbandasmusica.com/carteles-conciertos/2026.html",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Federación Tinerfeña de Bandas de Música",
+   "municipio": "Tacoronte",
+   "url": "https://ftbmusica.es/",
+   "responde": true,
+   "url_agenda": "https://ftbmusica.es/proximos-eventos-2/",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Federación Gran Canaria de Bandas de Música",
+   "municipio": "Las Palmas",
+   "url": "https://bandasgrancanaria.org/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Agrupación Musical Santa Cecilia de Archena",
+   "municipio": "Archena",
+   "url": "https://santaceciliadearchena.com/",
+   "responde": true,
+   "url_agenda": "https://santaceciliadearchena.com/",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h2",
+   "nombre": "Banda Municipal de Música de Málaga",
+   "municipio": "Málaga",
+   "url": "https://cultura.malaga.eu/es/banda-municipal-de-musica/",
+   "responde": true,
+   "url_agenda": "https://cultura.malaga.eu/es/banda-municipal-de-musica/programacion-general/programa-general/",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "AMCV",
+   "municipio": "Cerdanyola del Vallès",
+   "url": "https://www.amcv.cat",
+   "responde": true,
+   "url_agenda": "https://www.amcv.cat/ca/esdeveniments/",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "Unió Musical del Bages",
+   "municipio": "Manresa",
+   "url": "https://www.umbages.cat",
+   "responde": true,
+   "url_agenda": "https://www.umbages.cat/concerts",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "Banda de Música de Sabadell",
+   "municipio": "Sabadell",
+   "url": "https://bandadesabadell.com",
+   "responde": true,
+   "url_agenda": "https://bandadesabadell.com/agenda-de-concerts/",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "Associació Musical Andreuenca",
+   "municipio": "Barcelona",
+   "url": "https://www.amandreuenca.cat",
+   "responde": true,
+   "url_agenda": "https://www.amandreuenca.cat/concerts/",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "BUMT",
+   "municipio": "Tarragona",
+   "url": "https://www.bumt.cat",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "Agrupació Musical Senienca",
+   "municipio": "la Sénia",
+   "url": "https://senienca.org",
+   "responde": true,
+   "url_agenda": "https://senienca.org/category/concert/",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "Fem Banda (Lleida)",
+   "municipio": "Lleida",
+   "url": "https://fembanda.com",
+   "responde": true,
+   "url_agenda": "https://fembanda.com/actualitat-fem-banda/",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "Unió Filharmònica d'Amposta",
+   "municipio": "Amposta",
+   "url": "https://filharmonica.org",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "La Lira Ampostina",
+   "municipio": "Amposta",
+   "url": "https://www.laliraampostina.com",
+   "responde": true,
+   "url_agenda": "https://www.laliraampostina.com/noticies/",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "Banda d'Ulldecona",
+   "municipio": "Ulldecona",
+   "url": "https://bandaulldecona.wordpress.com",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "Banda Municipal d'Alcanar",
+   "municipio": "Alcanar",
+   "url": "https://bmmalcanar.wordpress.com",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "Beat Band",
+   "municipio": null,
+   "url": "https://www.beatband.org",
+   "responde": true,
+   "url_agenda": "https://www.beatband.org/concerts",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "Banda Municipal de Palma",
+   "municipio": "Palma",
+   "url": "https://palmacultura.es/banda-municipal-palma",
+   "responde": true,
+   "url_agenda": "https://palmacultura.es/banda-municipal-palma",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "Teatre Principal de Palma",
+   "municipio": "Palma",
+   "url": "https://www.teatreprincipal.com/ca",
+   "responde": true,
+   "url_agenda": "https://www.teatreprincipal.com/ca/programaci%C3%B3/espectacles/",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "Teatro Gayarre / La Pamplonesa",
+   "municipio": "Pamplona",
+   "url": "https://teatrogayarre.com",
+   "responde": true,
+   "url_agenda": "https://teatrogayarre.com/wp-content/uploads/2026/09/Folleto-Teatro-Gayarre_Programacion_Octubre2026_Febrero-2027.pdf",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "Banda Municipal de Vitoria-Gasteiz",
+   "municipio": "Vitoria-Gasteiz",
+   "url": "https://www.vitoria-gasteiz.org/banda",
+   "responde": true,
+   "url_agenda": "https://www.vitoria-gasteiz.org/we001/was/we001Action.do?idioma=es&accionWe001=ficha&accion=calMunicipales&calendariosID=890",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "Bilbao Musika (Banda Municipal)",
+   "municipio": "Bilbao",
+   "url": "https://www.bilbaomusika.eus",
+   "responde": true,
+   "url_agenda": "https://www.bilbao.eus/BilbaoMusikaMultimedia/pdf/cbdtemporada20260922.pdf",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "FCSM",
+   "municipio": "Cataluña",
+   "url": "https://www.fcsm.cat",
+   "responde": true,
+   "url_agenda": "https://www.fcsm.cat/agenda/",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h3",
+   "nombre": "Auditorio de Zaragoza",
+   "municipio": "Zaragoza",
+   "url": "https://auditoriozaragoza.com",
+   "responde": true,
+   "url_agenda": "https://auditoriozaragoza.com/agenda/conciertos/",
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Unión Musical de Valladares Unión Musical de ",
+   "municipio": null,
+   "url": "http://www.bandavalladares.com/",
+   "responde": true,
+   "url_agenda": "http://www.bandavalladares.com/calendario-de-actuacions.html",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda escola de música de Vilaboa Banda escol",
+   "municipio": null,
+   "url": "https://escolademusicavilaboa.blogspot.com/",
+   "responde": true,
+   "url_agenda": "https://escolademusicavilaboa.blogspot.com/2016/11/xa-temos-os-musicalendarios.html",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música de Ordes Banda de música de O",
+   "municipio": null,
+   "url": "https://bandadeordes.com/",
+   "responde": true,
+   "url_agenda": "https://bandadeordes.com/esp/actuacions.htm",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música xuvenil de Barro Banda de mús",
+   "municipio": null,
+   "url": "http://www.bandaxuvenilbarro.es/",
+   "responde": true,
+   "url_agenda": "http://www.bandaxuvenilbarro.es/index.php/component/content/article/5-novas-web/52-concerto-das-letras-galegas-2014",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda da escola de música de Rianxo Banda da ",
+   "municipio": null,
+   "url": "https://escolademusicaderianxo.entidadesderianxo.gal/",
+   "responde": false,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música cultural de Teo Banda de músi",
+   "municipio": null,
+   "url": "https://www.bandaculturaldeteo.com/",
+   "responde": true,
+   "url_agenda": "https://www.bandaculturaldeteo.com/calendario/",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Ateneo Musical de Bembrive Ateneo Musical de ",
+   "municipio": null,
+   "url": "http://ateneomusicaldebembrive.org/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música de Catoira Banda de música de",
+   "municipio": null,
+   "url": "https://bandademusicadecatoira.blogspot.com/",
+   "responde": true,
+   "url_agenda": "https://bandademusicadecatoira.blogspot.com/search/label/Concerto",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música da UVCD de Candeán Banda de m",
+   "municipio": null,
+   "url": "http://bandadecandean.com/",
+   "responde": false,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música de Xinzo Banda de música de X",
+   "municipio": null,
+   "url": "https://bmxx.es",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música de Vilatuxe Banda de música d",
+   "municipio": null,
+   "url": "http://www.bandamusicadevilatuxe.es/indexesp.html",
+   "responde": true,
+   "url_agenda": "http://www.bandamusicadevilatuxe.es/Calendario.htm",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música municipal de Silleda Banda de",
+   "municipio": null,
+   "url": "http://bandasilleda.com/",
+   "responde": false,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música de Santa Cruz de Ribadulla Ba",
+   "municipio": null,
+   "url": "http://bmscr.org/es/",
+   "responde": true,
+   "url_agenda": "https://bmscr.org/es/publicacion/18",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música da Vertula Banda de música da",
+   "municipio": null,
+   "url": "https://avertula.wixsite.com/avertula",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Agrupación Musical da Limia Agrupación Musica",
+   "municipio": null,
+   "url": "http://amdlimia.com/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música Ateneo Musical da Pobra do Ca",
+   "municipio": null,
+   "url": "https://bandaateneomusical.wixsite.com/pobradocaraminal",
+   "responde": true,
+   "url_agenda": "https://bandaateneomusical.wixsite.com/pobradocaraminal/concertos-entradas",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música Popular Airiños do Morrazo de",
+   "municipio": null,
+   "url": "https://www.airinosdomorrazo.com/",
+   "responde": true,
+   "url_agenda": "https://www.google.com/calendar/embed?color=%234986e7&src=c_88d2e1e2bee6f5abe02c4e780de9728568303e51034d3edd38a2968835162173@group.calendar.google.com",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Agrupación musical de Goián Agrupación musica",
+   "municipio": null,
+   "url": "http://bandadegoian.gal/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música cultural de Salceda de Casela",
+   "municipio": null,
+   "url": "http://www.bandaculturaldesalceda.gal/",
+   "responde": false,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Unión Musical Ponteledesma Unión Musical Pont",
+   "municipio": null,
+   "url": "http://www.unionmusicalponteledesma.es/gl/inicio/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda Filarmónica de Lugo Banda Filarmónica d",
+   "municipio": null,
+   "url": "https://banda.filarmonicadelugo.com/",
+   "responde": true,
+   "url_agenda": "https://entradaslugo.es/evento/concerto-presentacion-banda-infantil-sala-grande",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música cultural de Mondariz Banda de",
+   "municipio": null,
+   "url": "https://bmcmondariz.wixsite.com/bmcm",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de Lalín Banda de Lalín Rúa do Parque n",
+   "municipio": null,
+   "url": "https://bandadelalin.com/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "A Lira de Ribadavia A Lira de Ribadavia Rúa d",
+   "municipio": null,
+   "url": "https://lira.gal/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música de Sanxenxo Banda de música d",
+   "municipio": null,
+   "url": "http://bandamusicasanxenxo.blogspot.com/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música municipal de Ribadumia Banda ",
+   "municipio": null,
+   "url": "https://bandaribadumia.es.tl/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": true
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Agrupación musical do Rosal Agrupación musica",
+   "municipio": null,
+   "url": "http://www.agrupacionmusicaldorosal.com/",
+   "responde": true,
+   "url_agenda": "https://www.agrupacionmusicaldorosal.com/calendario-escolar/",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda Unión Musical de Meaño Banda Unión Musi",
+   "municipio": null,
+   "url": "https://bumm.gal/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música de Salcedo Banda de música de",
+   "municipio": null,
+   "url": "https://www.bandademusicadesalcedo.com/",
+   "responde": true,
+   "url_agenda": "https://www.bandademusicadesalcedo.com/categoria/novas/banda-xuvenil-novas/actuacionsbandaxuvenil/",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de Música de Noia Banda de Música de No",
+   "municipio": null,
+   "url": "https://bandadenoia.gal",
+   "responde": true,
+   "url_agenda": "https://bandadenoia.gal/events",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de Música Municipal de Celanova Banda d",
+   "municipio": null,
+   "url": "https://www.bandadecelanova.org",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda Artística de Merza Banda Artística de M",
+   "municipio": null,
+   "url": "http://www.artisticademerza.com/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música de Chapela Banda de música de",
+   "municipio": null,
+   "url": "https://culturaldechapela.org/",
+   "responde": true,
+   "url_agenda": "https://culturaldechapela.org/asociacion/calendario",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Xove Banda de Narón Xove Banda de Narón Edif.",
+   "municipio": null,
+   "url": "https://www.acmsementeiranaron.com/",
+   "responde": true,
+   "url_agenda": "https://www.acmsementeiranaron.gal/calendario-escolar.html",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música Santiago de Arteixo Banda de ",
+   "municipio": null,
+   "url": "http://www.bmarteixo.gal/",
+   "responde": false,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música Sementeira de Cambre Banda de",
+   "municipio": null,
+   "url": "https://sementeiracambre.org/web/",
+   "responde": true,
+   "url_agenda": "https://sementeiracambre.org/web/a-escola/curso-actual/",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música de Arca Banda de música de Ar",
+   "municipio": null,
+   "url": "http://bandadearca.com/",
+   "responde": true,
+   "url_agenda": "http://bandadearca.com/a-banda/actuacions/",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda-Escola de música de Beade Banda-Escola ",
+   "municipio": null,
+   "url": "http://bandabeade.com/",
+   "responde": true,
+   "url_agenda": "https://bandabeade.com/calendario/",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Unión Musical de Cabral Unión Musical de Cabr",
+   "municipio": null,
+   "url": "https://unionmusicaldecabral.blogspot.com/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música de Ortigueira Banda de música",
+   "municipio": null,
+   "url": "http://www.bandadeortigueira.com/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música Oza-Cesuras Banda de música O",
+   "municipio": null,
+   "url": "https://www.escuelademusicaoc.com/",
+   "responde": false,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Agrupación musical de Vincios Agrupación musi",
+   "municipio": null,
+   "url": "https://amdvincios.wordpress.com/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música de Arbo Banda de música de Ar",
+   "municipio": null,
+   "url": "https://www.bandadearbo.com/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de música de Arzúa Banda de música de A",
+   "municipio": null,
+   "url": "https://bma.gal/",
+   "responde": true,
+   "url_agenda": "https://bma.gal/concertos/",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda municipal de música de Ribadeo Banda mu",
+   "municipio": null,
+   "url": "http://www.bandamusicaribadeo.org/",
+   "responde": true,
+   "url_agenda": "http://www.bandamusicaribadeo.org/actuaci%C3%B3ns",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de Música de Poio Banda de Música de Po",
+   "municipio": null,
+   "url": "https://esmupoio.com/banda-de-musica-de-poio/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda Sinfónica Complutense",
+   "municipio": "Alcalá de Henares",
+   "url": "https://www.bandasinfonicacomplutense.com",
+   "responde": true,
+   "url_agenda": "https://www.bandasinfonicacomplutense.com/calendario",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "A. M. Banda La Estrella",
+   "municipio": "Móstoles",
+   "url": "https://bandalaestrella.es/",
+   "responde": true,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda Sinfónica de Gijón",
+   "municipio": "Gijón",
+   "url": "https://www.bandamusicagijon.es/",
+   "responde": true,
+   "url_agenda": "https://www.bandamusicagijon.es/",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Federación de Bandas de la Comunidad de Madrid",
+   "municipio": null,
+   "url": "https://bandasdemadrid.com/",
+   "responde": false,
+   "url_agenda": "",
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Banda de Música de El Espinar (agenda municipal)",
+   "municipio": "El Espinar",
+   "url": "https://elespinar.es/events/lista/",
+   "responde": true,
+   "url_agenda": "https://elespinar.es/events/mes/2026-11/",
+   "conciertos_periodo": true
+  },
+  {
+   "grupo": "h4",
+   "nombre": "Cultural Alcalá (agenda municipal)",
+   "municipio": "Alcalá de Henares",
+   "url": "https://www.culturalcala.es",
+   "responde": true,
+   "url_agenda": "https://www.culturalcala.es",
+   "conciertos_periodo": true
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Musical l'Entusiasta",
+   "municipio": "Benifairó De La Valldigna",
+   "url": "http://www.smlentusiasta.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Musical \"La Primitiva Setabense\"",
+   "municipio": "Xàtiva",
+   "url": "https://laprimitivasetabense.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Musical La Nova",
+   "municipio": "Xàtiva",
+   "url": "https://www.musicanova.es/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unió Musical de Llíria",
+   "municipio": "Llíria",
+   "url": "https://uniomusicaldelliria.com/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Ateneo Musical y de Enseñanza Banda Primitiva de Llíria",
+   "municipio": "Llíria",
+   "url": "http://www.bandaprimitiva.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Centro Instructivo Musical",
+   "municipio": "Mislata",
+   "url": "https://cimmislata.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Centro Artístico Musical de Moncada",
+   "municipio": "Moncada",
+   "url": "http://www.musicalmoncada.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Musical Lira Castellonera",
+   "municipio": "Castelló",
+   "url": "http://www.liracastellonera.org",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Musical Nova d’Alcoi",
+   "municipio": "Alcoi",
+   "url": "http://musicanovaalcoi.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Centro Instructivo Musical \"La Armónica\" de Buñol",
+   "municipio": "Buñol",
+   "url": "http://www.cimlaarmonica.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Sociedad Musical \"La Artística\" de Buñol",
+   "municipio": "Buñol",
+   "url": "http://www.laartistica.org",
+   "responde": true,
+   "url_agenda": "https://www.laartistica.org/temporada-2026-2027.html",
+   "conciertos_periodo": true
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Ateneo Musical de Cullera",
+   "municipio": "Cullera",
+   "url": "https://www.ateneumusical.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Sociedad Musical Instructiva Santa Cecilia",
+   "municipio": "Cullera",
+   "url": "http://www.santaceciliacullera.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unió Artístico Musical Sant Francesc de Borja de Gandia",
+   "municipio": "Gandia",
+   "url": "http://www.centredemusicagandia.com/banda-2/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Centre Artístic Musical de Xàbia",
+   "municipio": "Xàbia",
+   "url": "http://www.bandamusicaxabia.es",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unió Musical de Muro",
+   "municipio": "Muro De Alcoy",
+   "url": "http://www.uniomusicalmuro.org",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Musical Lira Saguntina",
+   "municipio": "Sagunto",
+   "url": "https://lirasaguntina.org/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Ateneu Musical Schola Cantorum",
+   "municipio": "La Vall d'Uixó",
+   "url": "https://lascholacantorum.org/schola/inici/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Musical L'Artesana de Catarroja",
+   "municipio": "Catarroja",
+   "url": "http://www.lartesana.org",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Corporació Musical La Pobla de Vallbona",
+   "municipio": "La Pobla De Vallbona",
+   "url": "http://corporaciomusicalpoblavallbona.com",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unió Musical Torrent",
+   "municipio": "Torrent",
+   "url": "http://www.uniomusicaltorrent.com",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Ateneu Musical La Vila Joiosa",
+   "municipio": "La Vila Joiosa",
+   "url": "http://www.ateneulavila.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Unió Musical d'Alcoi",
+   "municipio": "Alcoi",
+   "url": "http://www.uniomusicaldalcoi.com",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unió Musical d'Aldaia",
+   "municipio": "Aldaia",
+   "url": "https://umaldaia.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Centro Instructivo Musical de Alfafar",
+   "municipio": "Alfafar",
+   "url": "http://www.cimalfafar.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unió Musical Santa Cecília de Benicàssim",
+   "municipio": "Benicàssim",
+   "url": "http://www.santaceciliabenicassim.com",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Unió Musical de Carlet",
+   "municipio": "Carlet",
+   "url": "http://www.umcarlet.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unión Musical de Ibi",
+   "municipio": "Ibi",
+   "url": "http://www.unionmusicalibi.com",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unión Musical Santa Cecilia de Onda",
+   "municipio": "Onda",
+   "url": "https://www.unionmusicalonda.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Corporación Musical Primitiva de Alcoy",
+   "municipio": "Alcoi",
+   "url": "http://www.cimapolo.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Instructiva Musical de Tavernes de la Valldigna",
+   "municipio": "Tavernes De La Valldigna",
+   "url": "http://www.siumtv.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Sociedad Unión Musical de Petrer",
+   "municipio": "Petrer",
+   "url": "https://www.facebook.com/unionmusicaldepetrer/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Centro Musical Paternense",
+   "municipio": "Paterna",
+   "url": "http://www.centromusicalpaternense.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Agrupación Musical Los Silos",
+   "municipio": "Burjassot",
+   "url": "http://www.amlossilos.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Associació Musical Ciutat de Benicarló",
+   "municipio": "Benicarló",
+   "url": "http://www.bandadebenicarlo.com",
+   "responde": true,
+   "url_agenda": "https://www.bandadebenicarlo.com/noticias/ferrer-ferran-dedica-una-obra-a-la-banda-de-benicarlo",
+   "conciertos_periodo": true
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Agrupació Musical La Lírica de Silla",
+   "municipio": "Silla",
+   "url": "https://liricadesilla.blogspot.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Sociedad Musical Santa Cecilia de Requena",
+   "municipio": "Requena",
+   "url": "http://www.santaceciliaderequena.org",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Banda de Música del Círculo Católico de Torrent",
+   "municipio": "Torrent",
+   "url": "http://usuarios.lycos.es/circulocatolico/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Musical d'Algemesí",
+   "municipio": "Algemesí",
+   "url": "http://www.smalgemesi.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unión Musical Utielana",
+   "municipio": "Utiel",
+   "url": "http://www.unionmusicalutielana.com",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unió Artística Musical De Vilamarxant",
+   "municipio": "Vilamarxant",
+   "url": "http://www.uamvilamarxant.com",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unió Protectora Musical de Vallada",
+   "municipio": "Vallada",
+   "url": "http://www.upmvallada.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Agrupació Musical L'Artística de Carlet",
+   "municipio": "Carlet",
+   "url": "http://www.amartistica.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Sociedad Musical de Segorbe",
+   "municipio": "Segorbe",
+   "url": "http://www.smsegorbe.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Unió Artística Musical Ontinyent",
+   "municipio": "Ontinyent",
+   "url": "http://www.suamontinyent.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Asociación Músico Cultural Eldense Santa Cecilia",
+   "municipio": "Elda",
+   "url": "http://www.santaceciliaelda.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unió Musical de Moncada",
+   "municipio": "Moncada",
+   "url": "http://www.uniomusicalmoncada.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unió Musical \"La Nova\" de Quatretonda",
+   "municipio": "Quatretonda",
+   "url": "https://www.lanovadequatretonda.es/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unió Musical Benicadell",
+   "municipio": "Castelló de Rugat",
+   "url": "http://bumbenicadell.blogspot.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Ateneu Musical de Sueca",
+   "municipio": "Sueca",
+   "url": "http://ateneusueca.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Agrupación Musical de la Sociedad Cultural y Deportiva de Carolinas de Alicante",
+   "municipio": "Alicante",
+   "url": "https://scdcarolinas.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unió Musical Santa Cecília de Castellar - l'Oliveral",
+   "municipio": "Castellar-L'Oliveral",
+   "url": "http://www.umcastellaroliveral.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Unió Musical de Catarroja",
+   "municipio": "Catarroja",
+   "url": "https://www.uniomusicalcatarroja.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Musical Santa Cecília de Vilanova d'Alcolea",
+   "municipio": "Vilanova d'Alcolea",
+   "url": "http://www.bandavilanovadalcolea.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Agrupación Musical Las Cuevas",
+   "municipio": "Cuevas De Utiel",
+   "url": "https://www.facebook.com/agrupacion.lascuevas",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Sociedad Musical La Paz De San Juan De Alicante",
+   "municipio": "San Juan De Alicante",
+   "url": "http://www.smlapazsanjuan.com",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Associació Cultural La Roca - Banda de Música “La Lira\"",
+   "municipio": "Vilafamés",
+   "url": "https://larocavilafames.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unió Musical Vallduxense",
+   "municipio": "La Vall d'Uixó",
+   "url": "http://unmuvall.blogspot.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Musical la Lira de Quatretonda",
+   "municipio": "Quatretonda",
+   "url": "http://www.laliraquatretonda.com",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Sociedad Unión Musical de Crevillent",
+   "municipio": "Crevillent",
+   "url": "http://sumcrevillent.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unió Musical de Vilafranca",
+   "municipio": "Vilafranca",
+   "url": "https://www.facebook.com/uniomusicaldevilafranca",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Associació Musical Grau de Gandia",
+   "municipio": "Grau de Gandia",
+   "url": "https://amgraugandia.weebly.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unión Músical Ciudad de Asís",
+   "municipio": "Alicante",
+   "url": "http://www.umca.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Banda Sinfónica Aldaia",
+   "municipio": "Aldaia",
+   "url": "https://bandasinfonicaldaia.es/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Centre Instructiu Musical Castellar-Oliveral",
+   "municipio": "Castellar-L'Oliveral",
+   "url": "http://www.cimcastellaroliveral.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Agrupació Musical Mediterraneo La Vila Joiosa",
+   "municipio": "La Vila Joiosa",
+   "url": "https://www.ammlavila.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Associació Centre Musical de Beniopa",
+   "municipio": "Gandia",
+   "url": "https://www.bandabeniopa.es/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Agrupació Musical Ontinyent",
+   "municipio": "Ontinyent",
+   "url": "http://www.agrupaciomusicalontinyent.es",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Agrupació Filharmònica Borrianenca",
+   "municipio": "Burriana",
+   "url": "https://www.filharmonicadeborriana.es/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Sociedad Musical Santa María Magdalena de Novelda",
+   "municipio": "Novelda",
+   "url": "http://www.bandamariamagdalena.com",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Associació Cultural Tot per la Música d'Ontinyent",
+   "municipio": "Ontinyent",
+   "url": "https://www.instagram.com/bso_ontinyent/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Asociación Musical La Sinfónica De Crevillent",
+   "municipio": "Crevillent",
+   "url": "https://www.sumcrevillent.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unión Musical Porteña",
+   "municipio": "Puerto De Sagunto",
+   "url": "http://www.launionmusical.org",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Unió Musical de Mislata",
+   "municipio": "Mislata",
+   "url": "http://www.liceudemusicamislata.com",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Musical L'Harmonia d'Alacant",
+   "municipio": "Alicante",
+   "url": "http://www.lharmoniadalacant.com",
+   "responde": true,
+   "url_agenda": "https://lharmoniadalacant.es/eventos/",
+   "conciertos_periodo": true
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Associació Musical Castàlia",
+   "municipio": "Castellón",
+   "url": "http://www.associaciomusicalcastalia.es",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Agrupació Musical Serpis d'Alcoi",
+   "municipio": "Alcoi",
+   "url": "https://amserpis.wixsite.com/a-m-serpis",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Societat Musical L'Altet",
+   "municipio": "Elche",
+   "url": "http://www.musicaltet.com",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Asociación Cultural Amigos de la Musica y la Danza de Orihuela",
+   "municipio": "Orihuela",
+   "url": "https://acamdo.es/",
+   "responde": false,
+   "url_agenda": null,
+   "conciertos_periodo": null
+  },
+  {
+   "grupo": "h7",
+   "nombre": "Agrupació Musical Clau de Fa de Calp ",
+   "municipio": "Calpe",
+   "url": "https://musicalp-claudefa.blogspot.com/",
+   "responde": true,
+   "url_agenda": null,
+   "conciertos_periodo": false
+  }
+ ]
+}

@@ -1,0 +1,2372 @@
+{
+ "comprobado": "2026-10-12",
+ "fuentes": [
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Real Orquesta Sinfónica de Sevilla (ROSS)",
+   "tipo": "orquesta",
+   "url_calendario": "https://rossevilla.es/ross-paginas/proximos-conciertos/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendario completo de la temporada con página por concierto (rossevilla.es/eventos/...). Sin precios en la web; compra en rossevilla.koobin.es (sinfónicos) e icas.vivaticket.es (cámara). Incluye óperas del Maestranza sin página propia."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Orquesta Ciudad de Granada (OCG)",
+   "tipo": "orquesta",
+   "url_calendario": "https://www.orquestaciudadgranada.es/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Portada con la temporada; el libro de temporada 2026/27 en PDF (orquestaciudadgranada.es/wp-content/uploads/2026/05/Libro-Temporada-2026_27.pdf) trae sala, hora, programa y precios. Revisar cambios de fecha (p. ej. V3 y S4 trasladados a jueves)."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Orquesta Filarmónica de Málaga (OFM)",
+   "tipo": "orquesta",
+   "url_calendario": "https://orquestafilarmonicademalaga.com/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "La agenda carga eventos dinámicamente: puede verse vacía al abrirla sin JavaScript. Páginas por concierto en /concierto/... Solo aparecían octubre 2026 al consultarla (12-oct); revisar cada semana por si añaden más. Sin precios; entradas en Teatro Cervantes."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Orquesta de Córdoba",
+   "tipo": "orquesta",
+   "url_calendario": "https://orquestadecordoba.org/programacion/calendario/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendario con pocos datos (título, fecha, hora; sin lugar ni programa). Venta en orquestadecordoba.janto.es. Hay un PDF 'Programa Temporada 26-27' enlazado en la web que no se ha localizado/abierto; abrirlo en la revisión semanal. Abonos en el Gran Teatro habitualmente (temporada anterior)."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Banda Sinfónica Municipal de Sevilla",
+   "tipo": "banda",
+   "url_calendario": "http://bandasinfonicamunicipaldesevilla.blogspot.com/p/proximas-actuaciones.html",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "La web del Ayuntamiento (sevilla.org, unidad orgánica de la banda) enlaza a este blog. La página de próximas actuaciones se abrió pero no mostró conciertos de otoño 2026 legibles (solo imágenes de cartel y archivo antiguo). Hay un PDF 'proximas-actuaciones-bsms.pdf' en sevilla.org, pero es de enero-marzo 2016: no usar. Revisar redes."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Banda Municipal de Música de Málaga",
+   "tipo": "banda",
+   "url_calendario": "https://cultura.malaga.eu/",
+   "calendario_en_web": false,
+   "formato": "pdf",
+   "notas": "Publica boletines mensuales en PDF en cultura.malaga.eu (opencms/export/sites/cultura/.content/galerias/documentos/BOLETIN-...pdf) y comunicados en malaga.eu. Temporada 2025/26 cerrada en julio; la 2026/27 debía reanudarse en septiembre, pero no se ha localizado el boletín de otoño. URL de portada sin verificar abierta (la ruta /banda-municipal/ dio 404)."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Federación Andaluza de Bandas de Música no Profesionales (FEDERBAND)",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Nombre según un documento de la Junta de Andalucía (2026). No se ha localizado web oficial ni agenda pública. Pendiente de encontrar el dominio."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Conservatorio Superior de Música «Manuel Castillo» de Sevilla",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.csmsevilla.es/proximos-eventos",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda 'próximos eventos' con pocas entradas (2 en la ventana). Las noticias de concierto tienen programa completo."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Conservatorio Superior de Música «Rafael Orozco» de Córdoba",
+   "tipo": "conservatorio",
+   "url_calendario": "https://csmcordoba.com/conciertos/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Sección Programación (Conciertos); en octubre aún mostraba solo hasta marzo 2026. Ciclos: Ciclo de Otoño, Miércoles Flamencos, Lunes Flamencos (confirmar si repiten en 2026-27). Revisar semanalmente."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Real Conservatorio Superior de Música «Victoria Eugenia» de Granada",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se ha localizado la web oficial (los dominios probados csmgranada.com/.es no resolvieron). Pendiente."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Conservatorio Superior de Música de Málaga",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No localizado (csmmalaga.com no resolvió). Pendiente."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Teatro Cervantes de Málaga (venta OFM)",
+   "tipo": "portal",
+   "url_calendario": "https://www.teatrocervantes.com/",
+   "calendario_en_web": false,
+   "formato": "auditorio",
+   "notas": "Taquilla de la temporada de abono de la OFM; no abierto, solo referenciado desde la página de la OFM."
+  },
+  {
+   "comunidad": "Extremadura",
+   "nombre": "Orquesta de Extremadura",
+   "tipo": "orquesta",
+   "url_calendario": "https://www.orquestadeextremadura.com/calendario/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendario con página por concierto, giras por Badajoz, Mérida, Cáceres, Plasencia y Villanueva de la Serena; 20 eventos oct 2026-ene 2027. Sin precios en las páginas; taquilla.orquestadeextremadura.com."
+  },
+  {
+   "comunidad": "Extremadura",
+   "nombre": "Banda Municipal de Música de Badajoz",
+   "tipo": "banda",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "redes",
+   "notas": "Sin calendario web localizado; solo un listado aislado en un agregador (Toca la Banda, Paseo de San Francisco) sin fecha clara. Revisar el Ayuntamiento de Badajoz y redes."
+  },
+  {
+   "comunidad": "Extremadura",
+   "nombre": "Bandas municipales de Cáceres y Mérida",
+   "tipo": "banda",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Nada localizado en la búsqueda; revisar las agendas de los ayuntamientos."
+  },
+  {
+   "comunidad": "Extremadura",
+   "nombre": "Federación Extremeña de Bandas de Música",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No localizada; la búsqueda no devolvió ninguna federación regional."
+  },
+  {
+   "comunidad": "Extremadura",
+   "nombre": "Conservatorios superiores y profesionales de Badajoz y Cáceres",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No localizadas webs oficiales (el dominio probado para Badajoz no resolvió). Pendiente."
+  },
+  {
+   "comunidad": "Canarias",
+   "nombre": "Orquesta Sinfónica de Tenerife",
+   "tipo": "orquesta",
+   "url_calendario": "https://sinfonicadetenerife.es/programacion-y-entradas/conciertos/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Listado en 3 páginas, con página por concierto (sinfonicadetenerife.es/concierto/...) con sala, programa y director. Sin precios. Las óperas (Lohengrin, Tránsito, Figaro) están en auditoriodetenerife.com."
+  },
+  {
+   "comunidad": "Canarias",
+   "nombre": "Auditorio de Tenerife",
+   "tipo": "portal",
+   "url_calendario": "https://www.auditoriodetenerife.com/es/",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "Agenda general del auditorio (Sinfónica, Ópera, Barroca, Cámara); también Orquesta Barroca de Tenerife (13-dic, no incluida: sin hora/programa verificados)."
+  },
+  {
+   "comunidad": "Canarias",
+   "nombre": "Orquesta Filarmónica de Gran Canaria (OFGC)",
+   "tipo": "orquesta",
+   "url_calendario": "https://www.ofgrancanaria.com/conciertos-entradas/eventos",
+   "calendario_en_web": true,
+   "formato": "pdf",
+   "notas": "El calendario web carga dinámicamente y salió vacío; la temporada 2026/27 está en el folleto PDF oficial (api.ofgrancanaria.com/storage/9756/q69SGWLvgLnO7MQt8pn3.pdf) con fechas y programas. Pases TOP 5 en jueves de algunos programas (horas sin verificar). Hay también /conciertos-entradas/temporada2627."
+  },
+  {
+   "comunidad": "Canarias",
+   "nombre": "Banda Sinfónica Municipal de Las Palmas de Gran Canaria",
+   "tipo": "banda",
+   "url_calendario": "https://www.lpacultura.com/programs/banda-sinfonica-municipal-2026",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Página del programa en lpacultura.com; mostraba 0 eventos para 2026. Dirige Juan Antonio Roda Sapiña. Revisar lpacultura.com/events."
+  },
+  {
+   "comunidad": "Canarias",
+   "nombre": "Banda Municipal de Música de Santa Cruz de Tenerife",
+   "tipo": "banda",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "redes",
+   "notas": "Solo conciertos de verano 2026 (ya pasados); sin calendario de la temporada 26/27 localizado. Revisar la agenda del Ayuntamiento."
+  },
+  {
+   "comunidad": "Canarias",
+   "nombre": "Federación Tinerfeña de Bandas de Música",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Existe (concurso de composición, banda insular); web no localizada. En Canarias hay federaciones por isla, no una autonómica."
+  },
+  {
+   "comunidad": "Canarias",
+   "nombre": "Federación Grancanaria de Bandas de Música",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "17 bandas de la isla; presidente citado en prensa; web no localizada."
+  },
+  {
+   "comunidad": "Canarias",
+   "nombre": "Conservatorio Superior de Música de Canarias",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Ciclo 'El Conservatorio a Escena' en el Paraninfo de la ULL (mayo-junio, vía agenda ULL: ull.es/portal/agenda). Web oficial no localizada."
+  },
+  {
+   "comunidad": "Canarias",
+   "nombre": "Sociedad Filarmónica de Las Palmas de Gran Canaria",
+   "tipo": "portal",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Temporada de conciertos propia (abre con OFGC y Garanča); web no localizada. Posible fuente de conciertos extraordinarios."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Orquestra Simfònica de Barcelona i Nacional de Catalunya (OBC)",
+   "tipo": "orquesta",
+   "url_calendario": "https://auditori.cat/artist/obc/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "obc.cat redirige a la ficha de artista en auditori.cat. Cada concierto tiene ficha con programa y precio. El listado solo mostraba hasta 14-nov-2026; revisar de nuevo para dic-ene."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Banda Municipal de Barcelona (BMB)",
+   "tipo": "banda",
+   "url_calendario": "https://www.auditori.cat/ca/artist/banda-municipal-de-barcelona/",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "Ficha en L'Auditori. La vista previa solo cargó 3 conciertos (18-oct, 1-nov, 8-nov); según prensa (Ara, mayo 2026) hay más: Rachmáninov con Raül da Costa, concierto García Márquez y Fin de Año dirigido por Marcel Ortega. Sin fechas verificadas aún; el calendario carga dinámicamente, revisar."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Orquestra Simfònica del Vallès (OSV)",
+   "tipo": "orquesta",
+   "url_calendario": "https://www.palaumusica.cat/orquestra-simfonica-del-valles_964288",
+   "calendario_en_web": false,
+   "formato": "auditorio",
+   "notas": "La web propia no se pudo abrir (dominio adivinado no existe). Los conciertos en el Palau de la Música Catalana (ciclo Simfònics al Palau) se verifican en palaumusica.cat. Según prensa, quedan por verificar: 7-nov (John Williams y grandes coros del cine), 16-ene-2027 (estreno de Cupeiro y El pájaro de fuego) y Concierto de Año Nuevo 4-ene-2027 en el Teatre Fortuny. La página genérica de la orquesta en el Palau es un programa antiguo."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Palau de la Música Catalana (agenda)",
+   "tipo": "portal",
+   "url_calendario": "https://www.palaumusica.cat/ca/agenda_1186157",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Cada concierto tiene ficha con programa, hora y precio. Útil para OSV y otras orquestas y bandas invitadas."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "L'Auditori de Barcelona (programación)",
+   "tipo": "portal",
+   "url_calendario": "https://www.auditori.cat/ca/programacio/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Sede de OBC y BMB; la página de programación carga dinámicamente y no devolvió el listado al leerla; funcionan las fichas de artista y de evento."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Federació Catalana de Societats Musicals (FCSM)",
+   "tipo": "federacion",
+   "url_calendario": "https://www.fcsm.cat/web/agenda",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda con muy pocos elementos (la portada mostraba conciertos de 2025: Masdenverge, XXV Festival de Bandes). Directorio de sociedades en https://www.fcsm.cat/societats-musicals/. Sin conciertos 2026-27 localizados."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "ESMUC (Escola Superior de Música de Catalunya)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.esmuc.cat/activitats/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda sin fechas completas en la lectura (Orquestra Simfònica ESMUC abre el Festival Mixtur, sin fecha; coro Bach de Friburgo 26-29 oct). Revisar con navegador real."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Conservatori del Liceu",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No localizada la web oficial en esta pasada (dominios adivinados no existen). Pendiente."
+  },
+  {
+   "comunidad": "Islas Baleares",
+   "nombre": "Orquestra Simfònica Illes Balears (OSIB)",
+   "tipo": "orquesta",
+   "url_calendario": "https://simfonicadebalears.com/sona/auditorium-palma/",
+   "calendario_en_web": true,
+   "formato": "pdf",
+   "notas": "Temporada de abono 2026-27 completa en PDF oficial (https://simfonicadebalears.com/wp-content/uploads/2026/07/TEMPORADA-2026-27.pdf) con fecha, solistas y obras; hora 20:00. Hay concierto extra el 18-dic-2026 en la Capella de la Seu (sin detalle) y ópera Faust en el Teatre Principal (28, 30 oct y 1 nov, fuera de alcance). Listados de eventos en la web cargan dinámicamente."
+  },
+  {
+   "comunidad": "Islas Baleares",
+   "nombre": "Auditorium de Palma",
+   "tipo": "portal",
+   "url_calendario": "https://auditoriumpalma.com/es/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "La portada no listó conciertos en la lectura; entradas por koobin."
+  },
+  {
+   "comunidad": "Islas Baleares",
+   "nombre": "Banda Municipal de Palma",
+   "tipo": "banda",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No localizada web oficial ni calendario. Un directorio turístico dice que actúa cada dos semanas en invierno en el auditorio del Conservatori Superior, sin verificar."
+  },
+  {
+   "comunidad": "Islas Baleares",
+   "nombre": "Conservatori Superior de Música de les Illes Balears (CSMIB)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.caib.es/sites/xarxes/ca/conservatori_superior_de_masica_de_les_illes_balears/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Solo la ficha institucional en caib.es; agenda de conciertos no localizada."
+  },
+  {
+   "comunidad": "Islas Baleares",
+   "nombre": "Federació de Bandes de Música de les Illes Balears",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se ha localizado web ni agenda pública."
+  },
+  {
+   "comunidad": "Aragón",
+   "nombre": "Auditorio de Zaragoza (Temporada de Grandes Conciertos)",
+   "tipo": "portal",
+   "url_calendario": "https://auditoriozaragoza.com/programacion/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Fichas con ?occurrence=fecha. El listado solo muestra hasta principios de noviembre (carga más con 'Cargar más'). Lista completa de la temporada en https://www.zaragoza.es/sede/servicio/noticia/356807 (17 conciertos). Mayoría orquestas invitadas; Orquesta Reino de Aragón cierra el 22-jun-2027."
+  },
+  {
+   "comunidad": "Aragón",
+   "nombre": "Orquesta Sinfónica Reino de Aragón",
+   "tipo": "orquesta",
+   "url_calendario": "https://auditoriozaragoza.com/programacion/",
+   "calendario_en_web": false,
+   "formato": "auditorio",
+   "notas": "Web propia no localizada. Orquesta residente del Auditorio; solo consta el concierto del 22-jun-2027 (fuera de ventana)."
+  },
+  {
+   "comunidad": "Aragón",
+   "nombre": "Conservatorio Superior de Música de Aragón (CSMA)",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Web oficial no localizada. Ciclos: Atmósferas, En Familia y Grandes Conciertos CSMA en el Auditorio; orquesta de viento Sinfonietta y Banda Sinfónica. Sin fechas 2026-27 verificadas."
+  },
+  {
+   "comunidad": "Aragón",
+   "nombre": "Banda Municipal de Zaragoza",
+   "tipo": "banda",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se halló calendario oficial en esta pasada."
+  },
+  {
+   "comunidad": "Aragón",
+   "nombre": "Federación de bandas de música de Aragón",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se ha localizado web ni agenda pública."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Orquesta Sinfónica de Galicia (OSG)",
+   "tipo": "orquesta",
+   "url_calendario": "https://www.sinfonicadegalicia.com/conciertos/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Listado paginado (4 páginas) con una ficha por concierto (/concierto/ID/...) con fecha, director, solistas y programa completos; sin precio en la ficha (venta en entradas.ataquilla.com). Temporada 2026-27 ya publicada. Revisar páginas 2-4 del listado."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Real Filharmonía de Galicia (RFG)",
+   "tipo": "orquesta",
+   "url_calendario": "https://www.rfgalicia.org/gl/programacion/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Programación completa de la temporada 2026-27 (oct 2026 a jun 2027) en una sola página; cada concierto tiene ficha ?p=ID con programa y precio. Incluye giras (Vigo, Pontevedra, Ferrol, Lugo, Ourense). Ignorada su oposición. Entradas en compostelacultura.gal."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Banda Municipal de Música de A Coruña",
+   "tipo": "banda",
+   "url_calendario": "https://www.coruna.gal/cultura/gl/axenda/calendario",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Temporada habitual en el Teatro Colón (domingos 12:15, octubre a mayo) según la prensa de 2025, pero NO he podido abrir una ficha oficial 2026-27: la agenda municipal de coruna.gal no mostraba conciertos de la banda en el periodo (el filtro de categoría Concertos no cargó). Reintentar con el filtro categoriaID=1416881828804."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Concello da Coruña - agenda cultural",
+   "tipo": "portal",
+   "url_calendario": "https://www.coruna.gal/cultura/gl/axenda/calendario",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendario con filtro por categoría; ciclos Tándem y Concertos de Cámara (oct-dic 2026) sin detalle de intérpretes en el listado."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Auditorio de Galicia (Santiago)",
+   "tipo": "portal",
+   "url_calendario": "https://www.auditoriodegalicia.org/",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "La web no respondió (conexión rechazada) durante la revisión; los conciertos de la RFG se verificaron en su propia web. Reintentar."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Federación Galega de Bandas de Música (FGBM)",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No he localizado su web oficial (el dominio probado fgbm.gal no existe) ni un calendario público; solo referencias de prensa/Xunta a ciclos y certames. Pendiente buscar la URL real (webs de bandas locales y redes)."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Conservatorios gallegos (Superior de Música de Galicia, profesionales)",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "No revisados en esta pasada por falta de tiempo/acceso; pendiente localizar agendas de audiciones y orquestas de conservatorio."
+  },
+  {
+   "comunidad": "Asturias",
+   "nombre": "Orquesta Sinfónica del Principado de Asturias (OSPA)",
+   "tipo": "orquesta",
+   "url_calendario": "https://ospa.es/wp-content/uploads/2026/09/PRORAMADEMANO_26_27.pdf",
+   "calendario_en_web": true,
+   "formato": "pdf",
+   "notas": "Programa de mano PDF de la temporada 26/27 (publicado en sept 2026) con todas las fechas, horas, sedes (Oviedo, Gijón, Avilés), directores y obras. La web ospa.es no se revisó página a página; revisar cambios de programa por si hay modificaciones. Hay conciertos educativos y ópera (Teatro Campoamor) no incluidos."
+  },
+  {
+   "comunidad": "Asturias",
+   "nombre": "Oviedo Filarmonía",
+   "tipo": "orquesta",
+   "url_calendario": "https://oviedofilarmonia.es/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda con secciones: Conciertos del Auditorio (agenda-tipo-1), Jornadas de Piano Luis G. Iberni (tipo-2), Ópera (tipo-3). Ópera (Maria Stuarda, Macbeth) no incluida. Entradas en entradas.oviedo.es. Las fichas dan precio; la hora a veces solo en el listado."
+  },
+  {
+   "comunidad": "Asturias",
+   "nombre": "Banda de Música Ciudad de Oviedo",
+   "tipo": "banda",
+   "url_calendario": "http://www.bandademusicaciudaddeoviedo.com/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda con fecha, hora y sede por concierto; no publica programa ni director en las fichas. Ciclo Conciertos en el Auditorio (domingos 19:00) y conciertos en centros sociales (sábados 19:00). Dependiente de la Fundación Musical Ciudad de Oviedo."
+  },
+  {
+   "comunidad": "Asturias",
+   "nombre": "Banda de Música de Gijón",
+   "tipo": "banda",
+   "url_calendario": "https://www.gijon.es/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "No localizada una agenda oficial; solo un listado de terceros (Planomato) de un concierto de la Banda Sinfónica de Gijón en mayo 2026. La web gijon.es no cargó contenido. Pendiente."
+  },
+  {
+   "comunidad": "Asturias",
+   "nombre": "Federación de Bandas de Música de Asturias",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No localizada web oficial con calendario en la búsqueda; solo el Circuito de Música de Asturias (turismoasturias.es, circuito de bandas ene-jun 2026). Pendiente."
+  },
+  {
+   "comunidad": "Asturias",
+   "nombre": "Conservatorio Superior de Música del Principado de Asturias",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "No revisado en esta pasada."
+  },
+  {
+   "comunidad": "Cantabria",
+   "nombre": "Banda Municipal de Música de Santander",
+   "tipo": "banda",
+   "url_calendario": "https://www.santander.es/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "La web santander.es dio error de conexión. Por prensa/Planomato: ciclos Tentemplé (se reanuda en octubre 2026, sin fechas confirmadas) y La Municipal en los Barrios (enero-febrero, entrada libre en ediciones anteriores). Ningún concierto verificado."
+  },
+  {
+   "comunidad": "Cantabria",
+   "nombre": "Conservatorio Profesional de Música Jesús de Monasterio (Santander)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://conservatoriojesusdemonasterio.es/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "El dominio .com redirige a .es; la .es devolvió una redirección 307 que no se pudo seguir. Agenda sin revisar."
+  },
+  {
+   "comunidad": "Cantabria",
+   "nombre": "Palacio de Festivales de Cantabria / Festival Internacional de Santander",
+   "tipo": "portal",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "auditorio",
+   "notas": "El festival es en agosto (fuera del periodo). La web del Palacio no se pudo abrir (dominio probado no resolvió). Sin conciertos verificados de orquesta/banda."
+  },
+  {
+   "comunidad": "Cantabria",
+   "nombre": "Federación de Bandas de Música de Cantabria",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No localizada en búsquedas; pendiente."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "Orquesta Sinfónica de Castilla y León (OSCyL)",
+   "tipo": "orquesta",
+   "url_calendario": "https://www.oscyl.com/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendario mensual en portada (/eventos/AAAA/MM/) y PDF de temporada 26-27 en /assets/temporada-oscyl-26-27-oficial.pdf con programas completos; las fichas de evento no dan hora ni precio, el PDF sí. Abono en Valladolid (Centro Cultural Miguel Delibes)."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "Centro Cultural Miguel Delibes (Valladolid)",
+   "tipo": "portal",
+   "url_calendario": "https://www.centroculturalmigueldelibes.com/",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "Agenda mensual del auditorio (OSCyL, recitales y extraordinarios). Fichas con programa parcial."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "Orquesta Sinfónica de Burgos",
+   "tipo": "orquesta",
+   "url_calendario": "https://www.orquestasinfonicadeburgos.com/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "A 12-10-2026 la web solo muestra la temporada 2025/26 (terminada en mayo 2026); sin datos 26-27. Revisar cuando publiquen."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "Conservatorio Superior de Música de Castilla y León (Salamanca; COSCYL)",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se localizó web oficial con agenda (el dominio probado no existe)."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "Banda Municipal de Música de Valladolid",
+   "tipo": "banda",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "La página probada del Ayuntamiento devolvió 404; no se localizó agenda 26-27."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "Federación de Bandas de Música de Castilla y León",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Existe según fuentes secundarias, pero no se localizó web oficial; sin directorio ni agenda verificables."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "Certámenes de bandas Ciudad de Benavente y Villa de Aranda",
+   "tipo": "portal",
+   "url_calendario": "https://www.arandadeduero.es/",
+   "calendario_en_web": false,
+   "formato": "pdf",
+   "notas": "Certámenes de verano (julio-agosto) con bases en PDF; fuera de ventana."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "Federación Regional Castellano-Manchega de Sociedades de Música",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Representa a más de 150 bandas según prensa de julio 2026; web oficial no localizada."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "Banda Sinfónica Municipal de Albacete",
+   "tipo": "banda",
+   "url_calendario": "https://www.albacete.es/",
+   "calendario_en_web": false,
+   "formato": "redes",
+   "notas": "Conciertos de verano en Parque Abelardo Sánchez y Teatro Circo; no se encontró agenda oficial 26-27 (la ruta probada da 404). Revisar agenda del Ayuntamiento."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "Orquesta Filarmónica de La Mancha (Ciudad Real)",
+   "tipo": "orquesta",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Existe; web oficial no localizada."
+  },
+  {
+   "comunidad": "La Rioja",
+   "nombre": "Banda de Música de Logroño",
+   "tipo": "banda",
+   "url_calendario": "https://logrono.es/agenda-de-eventos",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Ciclos: verano en el Espolón y primavera en el Auditorio Municipal. La agenda del Ayuntamiento no mostraba eventos en la captura; sin conciertos de otoño 2026 localizados."
+  },
+  {
+   "comunidad": "La Rioja",
+   "nombre": "Federación de Bandas de Música de La Rioja",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se localizó información ni web."
+  },
+  {
+   "comunidad": "La Rioja",
+   "nombre": "Orquesta Sinfónica de La Rioja / conservatorio",
+   "tipo": "orquesta",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No localizados."
+  },
+  {
+   "comunidad": "Navarra",
+   "nombre": "Orquesta Sinfónica de Navarra (OSN)",
+   "tipo": "orquesta",
+   "url_calendario": "https://www.orquestadenavarra.es/es/agenda",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda con fichas por concierto (programa, director y precios en la mayoría). Incluye ciclo de cámara en CIVICAN. No verificados: 16 y 22 oct (Orfeón/Coral con OSN), zarzuela Katiuska 20-21 nov, Lucia di Lammermoor 29 y 31 ene."
+  },
+  {
+   "comunidad": "Navarra",
+   "nombre": "Fundación Baluarte (Auditorio Baluarte, Pamplona)",
+   "tipo": "portal",
+   "url_calendario": "https://www.baluarte.com/",
+   "calendario_en_web": false,
+   "formato": "auditorio",
+   "notas": "Organiza gala y temporada lírica; no abierta directamente, la OSN enlaza a su taquilla."
+  },
+  {
+   "comunidad": "Navarra",
+   "nombre": "Conservatorio Superior de Música de Navarra (CSMN)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://csmn.es/conciertos-y-actividades-25-25/",
+   "calendario_en_web": false,
+   "formato": "redes",
+   "notas": "La página de agenda sigue en 25-26 y remite a Instagram (csmn_navarra), Facebook, X y YouTube; sin conciertos en web para la ventana."
+  },
+  {
+   "comunidad": "Navarra",
+   "nombre": "La Pamplonesa (Banda de Música de Pamplona)",
+   "tipo": "banda",
+   "url_calendario": "https://www.pamplona.es/",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Según el Ayuntamiento: ciclo Alba en el Teatro Gayarre (febrero-mayo), Semana Santa y San Fermín; no se localizó concierto en la ventana. Web propia no accesible."
+  },
+  {
+   "comunidad": "Navarra",
+   "nombre": "Federación de Bandas de Música de Navarra (FBMN)",
+   "tipo": "federacion",
+   "url_calendario": "https://www.pamplona.es/actualidad/noticias/el-alcalde-de-pamplona-recibe-la-federacion-de-bandas-de-musica-de-navarra",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "55 bandas según el Ayuntamiento; sin web oficial localizada."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "Orquesta y Coro Nacionales de España (OCNE)",
+   "tipo": "orquesta",
+   "url_calendario": "https://ocne.inaem.gob.es/libro-temporada-26-27/view",
+   "calendario_en_web": true,
+   "formato": "pdf",
+   "notas": "Libro de temporada 26-27 en PDF (5,9 MB, pdftotext -enc UTF-8 -layout). Sinfónicos en Sala Sinfónica del Auditorio Nacional (viernes y sábado 19:30, domingo 11:30). Los ciclos Satélites (Sala de Cámara, 12 €) y el Festival Schubert (feb 2027) están en el PDF pero no se han volcado. Revisar la web por cambios de programa."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "Orquesta Sinfónica de RTVE (Orquesta y Coro RTVE)",
+   "tipo": "orquesta",
+   "url_calendario": "https://www.rtve.es/orquesta-coro/programa-conciertos/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendario oficial en HTML (descargable con curl y User-Agent; WebFetch no puede acceder a rtve.es). El calendario solo muestra 2026 hasta diciembre; los conciertos de 2027 (p. ej. enero) aún no aparecen allí. Teatro Monumental."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "Real Conservatorio Superior de Música de Madrid",
+   "tipo": "conservatorio",
+   "url_calendario": "https://rcsmm.eu/eventos",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda de eventos con pocos conciertos (recitales, clases magistrales); sala y programa suelen ir en PDF enlazado. Sin orquesta ni banda publicadas para oct-ene."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "Conservatorio Superior de Música Katarina Gurska",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se pudo localizar ni abrir una agenda; sin datos verificados. Pendiente de revisar a mano."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "Orquesta Sinfónica de Madrid (OSM)",
+   "tipo": "orquesta",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se localizó web propia con calendario 2026-27 (la OSM actúa como orquesta titular del Teatro Real). Revisar la programación del Teatro Real (teatroreal.es)."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "Unidad de Música de la Guardia Real",
+   "tipo": "banda",
+   "url_calendario": "https://www.patrimonionacional.es/",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Actúa en el ciclo Primavera Musical en Palacio (mayo) vía Patrimonio Nacional, con programas de mano en PDF; no hay conciertos publicados para oct-ene."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "Federación de Bandas de Música de la Comunidad de Madrid",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Unas 30 bandas federadas según una moción municipal (2024). No se localizó web ni agenda pública con fechas 2026-27."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "Euskadiko Orkestra (Orquesta de Euskadi)",
+   "tipo": "orquesta",
+   "url_calendario": "https://www.euskadikoorkestra.eus/zikloak/denboraldi-sinfonikoa-1",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Ciclo sinfónico con 10 programas; la lista da rangos de fechas y cada ficha (kontzertua/...) da las funciones por ciudad con hora, sala y obras. Los conciertos de Pamplona (Navarra) se han excluido. Hay además Musika Gela y Miramongo Matinéeak."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "Bilbao Orkestra Sinfonikoa (BOS)",
+   "tipo": "orquesta",
+   "url_calendario": "https://www.bilbaorkestra.eus/es/conciertos",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Lista de conciertos con ficha por concierto (fecha, hora, programa); sin precios en texto (tabla en imagen). Las óperas ABAO se han excluido. Camerísticos sin intérpretes: no volcados."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "Banda Municipal de Bilbao (Bilboko Udal Musika Banda)",
+   "tipo": "banda",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Temporada Profilak (Euskalduna y conservatorio Arriaga); solo se encontraron fechas de la temporada 25-26 en agregadores. Sin calendario oficial 26-27 localizado."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "Banda Municipal de Música de Vitoria-Gasteiz",
+   "tipo": "banda",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Ciclo Música al aire libre (mayo-septiembre); sin conciertos de otoño localizados."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "Banda Municipal de Donostia / San Sebastián",
+   "tipo": "banda",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se encontró agenda 2026-27."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "Federación de Bandas de Música del País Vasco",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se localizó web con agenda pública."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "Musikene (Centro Superior de Música del País Vasco)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://musikene.eus/agenda-de-actividades/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda muy completa (banda sinfónica, orquesta, sinfonietta, big band, ensembles, ciclo Musikagileak); cada evento tiene ficha con hora y programa. Actualizar semanalmente. Quedan sin volcar conciertos de cámara/big band/Musikagileak (17, 26, 29 oct, 6 y 25 nov)."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "Conservatorio Superior de Música Juan Crisóstomo de Arriaga (Bilbao)",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se localizó agenda 2026-27."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "Conservatorio Jesús Guridi (Vitoria-Gasteiz)",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se localizó agenda 2026-27; sede de los conciertos de Euskadiko Orkestra en Vitoria."
+  },
+  {
+   "comunidad": "Región de Murcia",
+   "nombre": "Teatro Villa de Molina (Molina de Segura)",
+   "tipo": "portal",
+   "url_calendario": "https://teatromolina.es/programacion/",
+   "calendario_en_web": true,
+   "formato": "pdf",
+   "notas": "PDF trimestral oct-ene con orquestas de conservatorio, banda municipal, orquesta de cuerda y orquesta de jóvenes; precio y hora incluidos."
+  },
+  {
+   "comunidad": "Región de Murcia",
+   "nombre": "Conservatorio Superior de Música de Murcia «Manuel Massotti Littel»",
+   "tipo": "conservatorio",
+   "url_calendario": "https://csmmurcia.com/novedades-y-agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda en forma de noticias, sin año ni fecha de publicación visible; calendario académico en /calendario/. Semana de Santa Cecilia sin fechas publicadas aún."
+  },
+  {
+   "comunidad": "Región de Murcia",
+   "nombre": "Banda Municipal de Música de Molina de Segura",
+   "tipo": "banda",
+   "url_calendario": "https://teatromolina.es/programacion/",
+   "calendario_en_web": true,
+   "formato": "pdf",
+   "notas": "Concierto de Santa Cecilia el 21-nov-2026 en el Teatro Villa de Molina."
+  },
+  {
+   "comunidad": "Región de Murcia",
+   "nombre": "Federación de Bandas de Música de la Región de Murcia",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se localizó web propia con agenda; agrupa a las bandas de la Región (Banda Sinfónica de la Federación, jóvenes 16-25)."
+  },
+  {
+   "comunidad": "Región de Murcia",
+   "nombre": "Auditorio y Centro de Congresos Víctor Villegas (Murcia)",
+   "tipo": "portal",
+   "url_calendario": "https://www.auditoriomurcia.org/",
+   "calendario_en_web": false,
+   "formato": "auditorio",
+   "notas": "Sede de conciertos (sala Narciso Yepes); no se revisó su cartelera completa."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Palau de la Música de València (temporada 2026-27)",
+   "tipo": "portal",
+   "url_calendario": "https://palauvalencia.com/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Portada con todas las fechas de la temporada (Orquestra de València, orquestas invitadas, Banda Sinfónica Municipal, Sociedad Filarmónica, Mostra, ciclo «El Palau amb les Bandes»). Cada concierto tiene ficha /event?id=NNNN con programa. Revisar semanalmente: aparecen fichas nuevas y los gratuitos (BSMV, OFUV) abren retirada de entradas 2 días antes. Folleto BSMV 2026-27 en PDF: https://palauvalencia.com/wp-content/uploads/2026/09/Temporada-26-27-BSMV-CAST_A5-1.pdf (no leído). En la portada hay fichas ocultas con paginación; se ven todas en el HTML."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Orquestra de València",
+   "tipo": "orquesta",
+   "url_calendario": "https://palauvalencia.com/orquestra/",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "Orquesta residente del Palau; sus conciertos salen en el calendario del Palau (abonos 1 a 18 y fuera de abono, p. ej. el de la Catedral el 21 de octubre)."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Banda Sinfónica Municipal de València",
+   "tipo": "banda",
+   "url_calendario": "https://palauvalencia.com/programacio-i-vendes/?filter=el-palau-con-las-bandas",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "Sus conciertos figuran en el calendario del Palau (domingos 11:30, entrada gratuita con retirada previa). Fechas del periodo: 10 nov (ya tenida), 29 nov, 20 dic, 17 ene. Tiene además un PDF de temporada en la web del Palau."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Palau de les Arts Reina Sofía / Orquestra de la Comunitat Valenciana",
+   "tipo": "orquesta",
+   "url_calendario": "https://www.lesarts.com/es/programacion/c/simfonic-72.html",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Temporada sinfónica 2026-27 con fechas y hora; folleto PDF https://www.lesarts.com/pujades/files/temporada_26_27_mov.pdf. La OCV repite algunos programas en el Auditori de Castelló. Ciclo «Bandes a Les Arts» (11 abril y 23 y 30 mayo de 2027, fuera de ventana)."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Auditori i Palau de Congressos de Castelló (IVC)",
+   "tipo": "portal",
+   "url_calendario": "https://ivc.gva.es/es/escena/programacion-escena/auditorio-y-palacio-de-congresos-castello",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Programación de otoño con fichas con hora, precio y programa; PDF de programación septiembre-diciembre en la misma página. Sociedad Filarmónica de Castellón numera los conciertos del abono."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Orquestra Simfònica de Castelló",
+   "tipo": "orquesta",
+   "url_calendario": "https://ivc.gva.es/es/escena/programacion-escena/auditorio-y-palacio-de-congresos-castello",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "No localizada web propia con calendario; sus conciertos salen en la ficha del Auditori de Castelló (24 oct y 27 dic)."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Banda Sinfónica Municipal de Alicante",
+   "tipo": "banda",
+   "url_calendario": "https://www.agendacultural.org/es/buscador?combine=%23sigueatubanda",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Sin conciertos futuros publicados a 12-10-2026: la agenda cultural solo lista conciertos concluidos y su Eventbrite (https://bandasinfonica.eventbrite.es/) dice «nada planeado». Ficha institucional: https://www.alicante.es/es/contenidos/banda-sinfonica-municipal. Publican de forma tardía (invitaciones por Eventbrite pocas semanas antes). Ciclo de invierno en enero en temporadas anteriores."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "ADDA (Auditorio de la Diputación de Alicante)",
+   "tipo": "portal",
+   "url_calendario": "https://www.addaalicante.es/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "No consultado en detalle por tenerlo ya cubierto otro agente (ADDA Simfònica). La FSMCV anuncia el XIV Ciclo de bandas de la provincia de Alicante en el ADDA para 2027 (24 conciertos, bases en PDF, sin fechas aún)."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Federació de Societats Musicals de la Comunitat Valenciana (FSMCV)",
+   "tipo": "federacion",
+   "url_calendario": "https://fsmcv.org/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda con paginación mensual poco útil: a 12-10-2026 solo muestra 12 eventos del 17, 18 y 24 de octubre (actividades comarcales, Asamblea en Onil). Noticias: https://fsmcv.org/noticias/ (publica sin fecha visible en el listado). El Ciclo de Música de Cámara (Alquería Julià, sábados 12:00) trae fechas hasta el 26 de dic.  Mapa de sociedades de la web con listado JSON de ~548 sociedades (257 con web). Revisar a diario noticias, no la agenda."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "FSMCV – Ciclo de Música de Cámara (Alquería Julià-Casa de la Música)",
+   "tipo": "federacion",
+   "url_calendario": "https://fsmcv.org/noticias-campanas/el-ciclo-de-musica-de-camara-de-la-fsmcv-celebra-su-iv-edicion-en-la-alqueria-julia/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendario completo en una nota de prensa del 10-06-2026 (sábados 12:00)."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "FSMCV – Certamen Nacional de Bandes «Ciutat de Cullera» 2027",
+   "tipo": "federacion",
+   "url_calendario": "https://fsmcv.org/convocatorias-publicas/convocatoria-del-lxxix-certamen-nacional-de-bandes-de-musica-ciutat-de-cullera-2027/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Ya tenido por el encargo (4 de abril de 2027)."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "FSMCV – III Certamen Autonómico de Bandas Juveniles «Lorenzo Sanchís»",
+   "tipo": "federacion",
+   "url_calendario": "https://fsmcv.org/convocatorias-publicas/iii-certamen-autonomico-de-bandas-juveniles-lorenzo-sanchis-de-tavernes-de-la-valldigna/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "5 dic 2026, 17:00, Tavernes de la Valldigna; participantes por publicar."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "FSMCV – XIV Ciclo de bandas de la provincia de Alicante (ADDA) 2027",
+   "tipo": "federacion",
+   "url_calendario": "https://fsmcv.org/convocatorias-publicas/xiv-ciclo-de-bandas-de-la-provincia-de-alicante-en-el-adda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Convocatoria para 2027 (24 conciertos); fechas en un PDF de bases no leído. Buen candidato a revisar en cuanto se publiquen las bandas."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Agenda Cultural Agrupada de Alicante",
+   "tipo": "portal",
+   "url_calendario": "https://www.agendacultural.org/es/buscador?combine=%23sigueatubanda",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Portal del Ayuntamiento de Alicante; buscador por etiqueta #sigueatubanda para la Banda Sinfónica Municipal."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Conservatori Superior de Música «Joaquín Rodrigo» de València",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.csmvalencia.es/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda cargada por JavaScript (hace falta navegador real; WebFetch devuelve «Carregant dades»). Muestra conciertos, masterclass y audiciones con hora y espacio. Revisar mensualmente."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Conservatori Superior de Música «Salvador Seguí» de Castelló",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.conservatorisuperiorcastello.com/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Sección «Agenda cultural» y noticias, pero a 12-10-2026 la última noticia visible es de abril de 2026: no hay conciertos del periodo publicados. Sus alumnos actúan antes de los conciertos del Auditori de Castelló."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Conservatori Superior de Música «Óscar Esplá» de Alicante",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.csmalicante.es",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "La web respondió con error 526 (certificado inválido) el 12-10-2026: no se pudo comprobar. El Ayuntamiento anunció audiciones de obras de Esplá (50 aniversario) en Las Cigarreras sin fechas."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Conservatori Municipal de Música «José Iturbi» (València)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.valencia.es/",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Centro municipal; sus actuaciones se anuncian en la agenda del Ayuntamiento de València y en el ciclo del Palau (concierto-intercambio en enero 2026). No se localizó agenda propia con fechas del periodo."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Conservatori Professional de La Vall d'Uixó",
+   "tipo": "conservatorio",
+   "url_calendario": "https://portal.edu.gva.es/conservatorilavallduixo/",
+   "calendario_en_web": true,
+   "formato": "pdf",
+   "notas": "Publica PDFs trimestrales de actividades (p. ej. 1r trimestre 2025-26). No se localizó el del 1r trimestre 2026-27."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Societat Filharmònica Alteanense (Altea)",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.sfaltea.com/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda con fichas por evento, muy completa (banda, orquesta de pulso y púa, coral, certamen). Botón «Load more»; revisar mensualmente."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Agrupació Artística Musical de Dénia",
+   "tipo": "sociedad",
+   "url_calendario": "https://fembanda.org/agenda",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda con 3 eventos de noviembre."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Societat Musical L'Artística Manisense (Manises)",
+   "tipo": "sociedad",
+   "url_calendario": "https://artisticamanisense.org/programacio/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Programació con fichas por evento; la agenda de portada muestra los 4 próximos."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Sociedad Musical Santa Cecilia de Chera",
+   "tipo": "sociedad",
+   "url_calendario": "https://santaceciliadechera.wordpress.com/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Blog; anuncia los conciertos pocas semanas antes."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Unión Musical de Benidorm",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.unionmusicaldebenidorm.com/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Portada con hitos del centenario (31 oct, 19 dic); sin sección de agenda."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Societat Musical l'Om de Picassent",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.smlompicassent.com/items",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendari de concerts en página Wix (Santa Cecília 21-11, Reis 3-1)."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Societat Musical L'Illa de Benidorm",
+   "tipo": "sociedad",
+   "url_calendario": "https://illabenidorm.com/calendario-de-eventos/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendario mensual con exportación .ics; solo octubre publicado a 12-10-2026."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Societat Musical L'Artesana de Catarroja",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.lartesana.org/calendari/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendari con actuaciones de banda y orquesta; noticias en la misma web."
+  },
+  {
+   "comunidad": "Cantabria",
+   "nombre": "Orquesta Sinfónica del Cantábrico (OSCAN)",
+   "tipo": "orquesta",
+   "url_calendario": "http://oscan.es/eventos",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda propia con ficha por concierto y precios. En octubre de 2026 mostraba 3 conciertos hasta enero. Primera orquesta profesional de Cantabria (dir. Paula Sumillera). Revisar cada semana."
+  },
+  {
+   "comunidad": "Cantabria",
+   "nombre": "Palacio de Festivales de Cantabria (Santander)",
+   "tipo": "portal",
+   "url_calendario": "https://palaciofestivales.com/ciclo/musica-clasica/",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "La ficha de cada evento (/evento/...) lleva fecha y hora solo en los datos estructurados (JSON-LD startDate), no en el texto; el calendario /calendario/ se carga con JavaScript y sale vacío. Ciclos Música clásica, Lírica y En familia. Ojo: el enlace de venta (janto.es) a veces tiene la fecha mal escrita."
+  },
+  {
+   "comunidad": "Cantabria",
+   "nombre": "Agenda Cultura de Cantabria (Gobierno de Cantabria)",
+   "tipo": "portal",
+   "url_calendario": "https://culturadecantabria.com/agenda",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Calendario cargado con JavaScript; vacío el 12-10-2026."
+  },
+  {
+   "comunidad": "Cantabria",
+   "nombre": "Ayuntamiento de Torrelavega / Paseatorrelavega",
+   "tipo": "portal",
+   "url_calendario": "https://paseatorrelavega.es/eventos/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Agenda de eventos sin entradas de banda u orquesta el 12-10-2026."
+  },
+  {
+   "comunidad": "Cantabria",
+   "nombre": "Ayuntamiento de Castro Urdiales",
+   "tipo": "portal",
+   "url_calendario": "https://www.castro-urdiales.net/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Portada con agenda; solo un concierto benéfico «Canto a Castro» (coral) hasta el 18-10; sin bandas."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "Ayuntamiento de Albacete: agenda de eventos",
+   "tipo": "portal",
+   "url_calendario": "https://www.albacete.es/es/agenda-del-dia",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda municipal; el 12-10-2026 sin conciertos de banda u orquesta."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "Conservatorio Superior de Música de Castilla-La Mancha (Albacete)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://csmclm.com/calendario/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendario WordPress (Simple Calendar) que hay que navegar mes a mes; el botón «Próximo mes» muestra conciertos y audiciones. Tiene Orquesta Sinfónica, Banda Sinfónica y Big Band; da giras (Toledo, Casas Ibáñez, Quintanar del Rey). Las audiciones de clase aparecen sin aclarar si son públicas."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "Auditorio José Luis Perales (Cuenca)",
+   "tipo": "portal",
+   "url_calendario": "https://auditoriodecuenca.es/calendario/",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "Calendario mensual claro con fichas. Acoge orquestas y bandas locales (Joven Orquesta de Cuenca, escuela Ismael Martínez Marín). Venta en globalentradas.com. Revisar cada semana."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "Teatro Auditorio Buero Vallejo (Guadalajara)",
+   "tipo": "portal",
+   "url_calendario": "https://teatrobuerovallejo.guadalajara.es/programacion/",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "Programación completa hasta abril 2027, con fichas. Ojo: las fichas conservan avisos de 2021 (COVID); comprobar el año con la fecha de publicación del HTML."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "Teatro de Rojas (Toledo)",
+   "tipo": "portal",
+   "url_calendario": "https://www.teatroderojas.es/",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "Programación hasta 2028 en la portada. Hasta enero 2027: Orfeón Tres Culturas (coro, 16-10), Spark (banda de cámara alemana), ópera y zarzuela; sin banda ni orquesta sinfónica."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "Teatro Municipal Quijano / Cultura de Ciudad Real",
+   "tipo": "portal",
+   "url_calendario": "https://www.ciudadreal.es/servicios-municipales/cultura/teatro-municipal-quijano.html",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Programación en PDF (tríptico por temporada: Lunes Musicales, abonos). Los PDF enlazados eran de 2024-2025 y primavera 2026; sin folleto de otoño 2026 localizado."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "Ayuntamiento de Cuenca: agenda cultural",
+   "tipo": "portal",
+   "url_calendario": "https://educacionycultura.cuenca.es/agenda-cultural",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Calendario ASP.NET con postback (no accesible sin interacción); no se extrajo."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "Teatro Circo de Albacete / Cultural Albacete",
+   "tipo": "portal",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Dominios probados (teatrocircoalbacete.es, .com, culturalbacete.es) no resuelven; sin web oficial localizada."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "Conservatorio Profesional de Música Albacete, Toledo, Cuenca, Guadalajara, Ciudad Real, Talavera",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se localizó web con agenda para estos conservatorios profesionales (tomar como pendiente)."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "Ayuntamiento de Talavera de la Reina",
+   "tipo": "portal",
+   "url_calendario": "https://talavera.es/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Portada sin agenda de conciertos de banda; no se exploró el portal cultural."
+  },
+  {
+   "comunidad": "La Rioja",
+   "nombre": "Riojaforum (Logroño)",
+   "tipo": "portal",
+   "url_calendario": "https://riojaforum.com/agenda?skos:ConceptID=gnoss:81378DE0-9D65-460A-BC46-BAB33BAEEA80",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "Agenda oficial del Gobierno de La Rioja, con ficha, precio y hora; la agenda carga con JavaScript y tiene 2 páginas («Página siguiente»). Temporada 45 (junio 2026 a enero 2027). Solo orquestas visitantes."
+  },
+  {
+   "comunidad": "La Rioja",
+   "nombre": "Ayuntamiento de Logroño: agenda de eventos",
+   "tipo": "portal",
+   "url_calendario": "https://logrono.es/agenda-de-eventos",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "La agenda se rellena por JavaScript (6 páginas de 18). El 12-10-2026 no listaba bandas ni orquestas hasta diciembre (Teatro Bretón: danza y ópera)."
+  },
+  {
+   "comunidad": "La Rioja",
+   "nombre": "Escuela Municipal de Música de Logroño",
+   "tipo": "escuela",
+   "url_calendario": "https://logrono.es/agenda-de-eventos",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Tiene banda escuela y audiciones; nada en la agenda de otoño 2026."
+  },
+  {
+   "comunidad": "La Rioja",
+   "nombre": "Ayuntamiento de Haro / Teatro Bretón",
+   "tipo": "portal",
+   "url_calendario": "https://www.haro.org/agenda",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda oficial. Hasta fin de octubre solo tributos y teatro."
+  },
+  {
+   "comunidad": "La Rioja",
+   "nombre": "Ayuntamiento de Calahorra (Teatro Ideal)",
+   "tipo": "portal",
+   "url_calendario": "https://calahorra.es/eventos",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Agenda cargada con JavaScript; sin resultados útiles el 12-10-2026. Programa PDF por trimestres en calahorra.es."
+  },
+  {
+   "comunidad": "La Rioja",
+   "nombre": "Ayuntamiento de Nájera: Agrupación Musical Najerense y Escuela Municipal de Música",
+   "tipo": "sociedad",
+   "url_calendario": "https://najera.es/cultura/agrupacion-musical-najerense/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Existen páginas de la agrupación y de la escuela; la agenda /agenda/mes/ no mostraba conciertos."
+  },
+  {
+   "comunidad": "La Rioja",
+   "nombre": "Ayuntamiento de Arnedo (Teatro Cervantes)",
+   "tipo": "portal",
+   "url_calendario": "https://www.arnedo.com/agenda/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Agenda sin bandas el 12-10-2026."
+  },
+  {
+   "comunidad": "La Rioja",
+   "nombre": "Gobierno de La Rioja: Red de Teatros / Cultura",
+   "tipo": "portal",
+   "url_calendario": "https://www.larioja.org/cultura",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "larioja.org/cultura carga sin contenido de agenda (403 en curl). La Red de Teatros (Alfaro, Arnedo, Calahorra, Haro, Nájera, Santo Domingo, Logroño...) publica por municipio."
+  },
+  {
+   "comunidad": "La Rioja",
+   "nombre": "Orquesta Sinfónica de La Rioja / Escuela de música superior",
+   "tipo": "orquesta",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Sin web ni calendario localizados; no aparece en la temporada de Riojaforum."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Federación Andaluza de Bandas de Música (FEDERBAND)",
+   "tipo": "federacion",
+   "url_calendario": "https://federband.org/conoce-nuestros-eventos",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Directorio de 178 bandas por delegación provincial en https://federband.org/bandas (cada ficha, con enlace a web/Facebook de la banda). La sección Eventos está desactualizada (última entrada 2024); Actualidad sí está al día (octubre 2026) pero son noticias, no agenda. Las delegaciones (Huelva, Granada...) publican alguna cita puntual (p. ej. V Encuentro Provincial Huelva, 3-4 oct 2026, ya pasado)."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Agrupación Musical San Indalecio (Almería)",
+   "tipo": "sociedad",
+   "url_calendario": "https://almeriaciudad.es/cultura/evento/gala-concierto-xxxv-aniversario-agrupacion-musical-san-indalecio",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Su gala del 24-oct aparece en la Programación de otoño 2026 del Ayuntamiento de Almería (almeriaciudad.es/cultura). Su web propia (sanindalecio.com) responde pero sin agenda de conciertos."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Banda Municipal de Música de Almería",
+   "tipo": "banda",
+   "url_calendario": "https://almeriaciudad.es/cultura/banda-municipal-de-musica-de-almeria",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "La ficha municipal solo trae historia. Hace ciclos de verano en la Plaza Vieja (jueves de julio) y cuatro ciclos anuales; no he localizado calendario de otoño 2026. Cuidado: resultados de buscador mencionan conciertos con José Solá Palmer, que ya no es el director (hoy Alfonso Maribona): son de años anteriores."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Banda Sinfónica Municipal de Huelva",
+   "tipo": "banda",
+   "url_calendario": "https://entradas.huelva.es/es/busqueda?&pagina=1",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "Sus conciertos salen en el portal de entradas de los teatros del Ayuntamiento de Huelva (Gran Teatro y Auditorio Casa Colón), 4 páginas con fecha y lugar; las fichas a veces no traen hora. La prensa anuncia además un concierto de Navidad el 22-dic que todavía no estaba en el portal el 12-oct: revisar a mediados de noviembre."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Sociedad Filarmónica de San Fernando (Banda Sinfónica)",
+   "tipo": "sociedad",
+   "url_calendario": "https://sfmsf.es/bandasinfonicadesanfernando/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Banda sinfónica con «Próximos eventos» al pie de su página (hoy: conciertos navideños 18 y 19-dic en clubes militares). Tienen también un Certamen de Bandas «Ciudad de San Fernando»."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Banda Municipal de Música de Jerez",
+   "tipo": "banda",
+   "url_calendario": "https://www.jerez.es/",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Programa de temporada anual presentado en septiembre con nota de prensa en jerez.es (Prensa); el de 2025-26 se presentó el 22-09-2025 y no hallé el de 2026-27. Ciclo de Santa Cecilia del Ayuntamiento a mediados de noviembre (nota de prensa en esas fechas): revisar hacia el 13-nov."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Agenda Cultural de Andalucía (Junta)",
+   "tipo": "portal",
+   "url_calendario": "https://www.juntadeandalucia.es/cultura/agendaculturaldeandalucia/actividades/conciertos",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Portal oficial con «Cargar más»; sesgo comercial (pop, flamenco). Útil sobre todo la página temática «Conciertos en honor a Santa Cecilia», que cada noviembre lista bandas por provincia (la versión visible es de 2024; se renueva hacia el 15-nov)."
+  },
+  {
+   "comunidad": "Andalucía",
+   "nombre": "Bandas con web propia de FEDERBAND (74)",
+   "tipo": "portal",
+   "url_calendario": "https://federband.org/bandas",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "De las 74 fichas con web propia, solo unas pocas mencionan 2026 y casi ninguna publica conciertos de otoño con antelación (se anuncian a los pocos días en Facebook). Dos dominios están secuestrados por spam (bandadepegalajar.com, bandavirgendelcastillo.com): no enlazarlos. Ver radar-h2.json."
+  },
+  {
+   "comunidad": "Región de Murcia",
+   "nombre": "Federación de Bandas de Música de la Región de Murcia (FBMRM)",
+   "tipo": "federacion",
+   "url_calendario": "https://febandasrmurcia.com/calendario/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendario en la web (se carga con JavaScript) con ciclos «Puerto y Bandas» (Cartagena, ya terminado el 11-oct), XII Día de la Federación (18-oct) y ciclo «Bandas en el Auditorio» (25-oct). Las fichas de evento dan 404 y el calendario no trae hora ni lugar, por eso no los incluyo como conciertos. Directorio de 42 bandas en /nuestras-bandas/ (casi todas solo con Facebook). Banda Sinfónica de la Federación: conciertos solidarios del 27-sep."
+  },
+  {
+   "comunidad": "Región de Murcia",
+   "nombre": "Ayuntamiento de Cartagena: Agenda Ciudad (Música y conciertos)",
+   "tipo": "portal",
+   "url_calendario": "https://cartagena.es/agenda_ciudad.asp?c=37&desde=13%2F10%2F2026&hasta=",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda oficial con filtro de música (c=37) y fecha de inicio por URL; es donde sale la Orquesta Sinfónica de Cartagena y el ciclo «De mar, puerto y bandas». Mucho jazz (festival en octubre)."
+  },
+  {
+   "comunidad": "Región de Murcia",
+   "nombre": "Agenda de eventos del Ayuntamiento de Murcia",
+   "tipo": "portal",
+   "url_calendario": "https://eventos.murcia.es/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Portal oficial; no hay todavía conciertos de bandas de otoño 2026 visibles. Las bandas de pedanías (Beniaján, Cabezo de Torres, El Palmar...) hacen su concierto de Santa Cecilia hacia el 21-22 nov y se publica con pocas semanas de antelación."
+  },
+  {
+   "comunidad": "Región de Murcia",
+   "nombre": "Agrupación Musical Santa Cecilia de Archena",
+   "tipo": "sociedad",
+   "url_calendario": "https://santaceciliadearchena.com/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Web propia al día (blog con conciertos 2026), pero su concierto de Santa Cecilia de 2026 aún no estaba publicado el 12-oct (el de 2025 se anunció el 19-nov)."
+  },
+  {
+   "comunidad": "Región de Murcia",
+   "nombre": "Ayuntamiento de Yecla: Agenda",
+   "tipo": "portal",
+   "url_calendario": "https://yecla.es/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda municipal sin conciertos de banda en octubre-noviembre 2026 (12-oct). El concierto extraordinario de Santa Cecilia de la Asociación de Amigos de la Música de Yecla se celebró el 1-dic en 2024: revisar a mediados de noviembre."
+  },
+  {
+   "comunidad": "Extremadura",
+   "nombre": "Federación Extremeña de Bandas de Música (FEBM)",
+   "tipo": "federacion",
+   "url_calendario": "https://www.fexbandasmusica.com/carteles-conciertos/2026.html",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Directorio de unas 40 bandas en /bandas (solo nombres, sin enlaces). Los «Carteles de conciertos 2026» (Junta de Extremadura y Diputación de Badajoz) son imágenes, sin texto. La actualidad es sobre convocatorias de la Banda Federal. No hay agenda de bandas con fechas."
+  },
+  {
+   "comunidad": "Extremadura",
+   "nombre": "Banda Municipal de Música de Cáceres",
+   "tipo": "banda",
+   "url_calendario": "https://www.ayto-caceres.es/noticias/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Hace «Ciclo por los Barrios» en verano y un concierto de Santa Cecilia en la Sala Clavellinas (en 2023 fue el 18-nov); noticias del Ayuntamiento unos días antes. Nada de otoño 2026 publicado el 12-oct."
+  },
+  {
+   "comunidad": "Extremadura",
+   "nombre": "Teatro López de Ayala (Badajoz)",
+   "tipo": "auditorio",
+   "url_calendario": "https://www.teatrolopezdeayala.es/categoria/musica-clasica",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "Calendario completo hasta fin de año; en música clásica solo conciertos de orquestas y solistas visitantes, ninguna banda aún."
+  },
+  {
+   "comunidad": "Canarias",
+   "nombre": "Federación Gran Canaria de Bandas de Música (FEGRANCABAN)",
+   "tipo": "federacion",
+   "url_calendario": "https://bandasgrancanaria.org/noticias/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Web con 17 bandas asociadas pero sin actualizar desde 2024; el calendario del VI Encuentro Insular 2026 solo está en la nota de prensa publicada por la CESM (coessm.org)."
+  },
+  {
+   "comunidad": "Canarias",
+   "nombre": "Confederación Española de Sociedades Musicales (CESM)",
+   "tipo": "portal",
+   "url_calendario": "https://coessm.org/cesm/federaciones-existentes/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Directorio nacional de federaciones con sus webs, y publica las notas de prensa de las federaciones (fuente para la de Gran Canaria). Secundaria, no oficial de cada banda."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Agrupació Musical de Cerdanyola del Vallès (AMCV)",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.amcv.cat/ca/esdeveniments/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda al día en portada y /ca/esdeveniments/. 3 conciertos nov 2026 recogidos."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Unió Musical del Bages (Manresa)",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.umbages.cat/concerts",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Lista «Propers concerts» al día con ficha por concierto y calendario de Google. Santa Cecília 29-11 y Cap d'Any 1-1-2027."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Associació Banda de Música de Sabadell",
+   "tipo": "sociedad",
+   "url_calendario": "https://bandadesabadell.com/agenda-de-concerts/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Agenda en web DESACTUALIZADA (último evento 2023, portada dice «Temporada 2023»). Seguirla por redes."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Associació Musical Andreuenca / Banda Simfònica de Barcelona",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.amandreuenca.cat/concerts/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Web describe programas (Game Over, Amb nom de dona...) sin fechas. Sin calendario."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Banda Unió Musical de Tarragona (BUMT)",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.bumt.cat",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Web con fichas de concierto pero la portada muestra eventos de 2025; sin agenda 2026 localizada."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Agrupació Musical Senienca (la Sénia)",
+   "tipo": "sociedad",
+   "url_calendario": "https://senienca.org/category/concert/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Última entrada de concierto 2024; sin calendario 2026."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Banda de Música Municipal de Lleida (Fem Banda)",
+   "tipo": "sociedad",
+   "url_calendario": "https://fembanda.com/actualitat-fem-banda/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "fembanda.com es el festival Fem Banda 2026 (bandes participants), no agenda de la banda; la banda solo en redes."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Unió Filharmònica d'Amposta",
+   "tipo": "sociedad",
+   "url_calendario": "https://filharmonica.org",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Web con noticias; sin sección de agenda visible (oct 2026)."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Societat Musical La Lira Ampostina",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.laliraampostina.com/noticies/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Solo noticias; sin agenda."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Banda de Música d'Ulldecona",
+   "tipo": "sociedad",
+   "url_calendario": "https://bandaulldecona.wordpress.com/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Blog con entradas antiguas (2017-2018)."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Banda Municipal de Música d'Alcanar",
+   "tipo": "sociedad",
+   "url_calendario": "https://bmmalcanar.wordpress.com",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Blog con noticias hasta 2024; sin agenda 2026."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Beat Band",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.beatband.org/concerts",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Banda amateur; no revisado el detalle de fechas."
+  },
+  {
+   "comunidad": "Islas Baleares",
+   "nombre": "Banda Municipal de Música de Palma (PalmaCultura)",
+   "tipo": "banda",
+   "url_calendario": "https://palmacultura.es/banda-municipal-palma",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Ficha en palmacultura.es (carga con JavaScript; usar Playwright). 14-11-2026 y 20-02-2027."
+  },
+  {
+   "comunidad": "Islas Baleares",
+   "nombre": "Teatre Principal de Palma",
+   "tipo": "portal",
+   "url_calendario": "https://www.teatreprincipal.com/ca/programaci%C3%B3/espectacles/",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "Programación 2026-27; la venta de entradas en teatreprincipal.koobin.com. Santa Cecília de la Banda de Santanyí 22-11-2026 18:00."
+  },
+  {
+   "comunidad": "Islas Baleares",
+   "nombre": "Banda de Música de Petra (Teatre de Petra)",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.mallorca.com/ca/agenda/concert-de-santa-cecilia-banda-de-musica-de-petra-ticketib-2026-11-21-2000-400a77",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Solo visto en agregador mallorca.com (21-11-2026 20:00, Sala Gran del Teatre de Petra): NO incluido por falta de fuente oficial; web propia del teatro no localizada."
+  },
+  {
+   "comunidad": "Islas Baleares",
+   "nombre": "Banda Simfònica Ciutat d'Eivissa / Patronat de Música",
+   "tipo": "banda",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Santa Cecília a mediados/finales de noviembre en Can Ventosa (ediciones anteriores); 2026 aún no publicado."
+  },
+  {
+   "comunidad": "Aragón",
+   "nombre": "Auditorio de Zaragoza (agenda de conciertos)",
+   "tipo": "portal",
+   "url_calendario": "https://auditoriozaragoza.com/agenda/conciertos/",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "Agenda completa hasta 2027, sin conciertos de bandas aficionadas oct-ene. Hay buscador de «banda» (Banda Sinfónica del CSMA, ediciones pasadas). Una nota de prensa indica Banda y Coros de la Academia General Militar el 11-12-2026 (no abierta en fuente oficial)."
+  },
+  {
+   "comunidad": "Aragón",
+   "nombre": "Banda Municipal de Andorra (Teruel)",
+   "tipo": "banda",
+   "url_calendario": "https://www.festivalesdeespana.com/festival/concierto-de-santa-cecilia-banda-municipal-de-andorra",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Solo agregador (28-11-2026, entrada libre, Casa de Cultura); no incluido por falta de fuente oficial. Pedir al Ayuntamiento."
+  },
+  {
+   "comunidad": "Navarra",
+   "nombre": "La Pamplonesa (Banda de Música)",
+   "tipo": "banda",
+   "url_calendario": "https://teatrogayarre.com/programacion/",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "Ciclo en el Teatro Gayarre; folleto PDF oct 2026-feb 2027 con 5 conciertos. Web propia no localizada (dominios probados no resuelven)."
+  },
+  {
+   "comunidad": "Navarra",
+   "nombre": "Teatro Gayarre (programación)",
+   "tipo": "portal",
+   "url_calendario": "https://teatrogayarre.com/programacion/",
+   "calendario_en_web": true,
+   "formato": "auditorio",
+   "notas": "Cargada por JS; el folleto PDF del mes de septiembre es la fuente fiable."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "Bilbao Musika - Bilboko Udal Musika Banda",
+   "tipo": "banda",
+   "url_calendario": "https://www.bilbaomusika.eus",
+   "calendario_en_web": true,
+   "formato": "pdf",
+   "notas": "Cartel PDF de la temporada de otoño en la portada (imagen, sin texto extraíble: hay que leerlo visualmente). Enlaza otros PDF de temporada."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "Banda Municipal de Música de Donostia",
+   "tipo": "banda",
+   "url_calendario": "https://www.donostiakultura.eus/eu/",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No localizada agenda propia; Donostia Kultura carga con JS."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "Federación / asociación de bandas del País Vasco",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se ha localizado federación con web propia ni directorio público."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Federación Galega de Bandas de Música Populares (FGBMP)",
+   "tipo": "federacion",
+   "url_calendario": "https://bandas.gal/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Directorio de unas 97 bandas con ficha y web propia (https://bandas.gal/bandas/). Eventos propios: Certame Galego (XIX, 10-11 oct 2026, Pontevedra, ya celebrado), Festival de Bandas Infantís e Xuvenís (4 jul 2026) y Concurso de Composición. No tiene agenda de conciertos de las bandas."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Certame Galego de Bandas de Música (FGBMP)",
+   "tipo": "portal",
+   "url_calendario": "https://bandas.gal/certame/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "XIX edición 10-11 oct 2026 en el Pazo da Cultura de Pontevedra; ya pasado a fecha 12-10-2026. Revisar la edición XX (otoño 2027)."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Banda de Música Municipal de Ribadumia",
+   "tipo": "sociedad",
+   "url_calendario": "https://bandaribadumia.es.tl/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Portada con «Próximos Concertos» (fechas con año). Revisar cada semana."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Banda Filarmónica de Lugo",
+   "tipo": "sociedad",
+   "url_calendario": "https://banda.filarmonicadelugo.com/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Web con noticias; última noticia de nov 2025 (presentación de agrupaciones infantiles). Sin agenda 2026-27 publicada."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Banda Municipal de Música de Santiago de Compostela",
+   "tipo": "banda",
+   "url_calendario": "https://www.compostelacultura.gal/bandamunicipaldemusica",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Temporada 2026-27 sin publicar a 12-10-2026 (la anterior publicó un PDF de ciclo de otoño-invierno en compostelacultura.gal/sites/default/files). Revisar en noviembre."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Banda de Música de Lalín",
+   "tipo": "sociedad",
+   "url_calendario": "https://bandadelalin.com/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Su web no publica agenda. Un agregador (festivalesdeespana.com) anuncia el XL Concerto de Fin de Ano de Lalín el 27-12-2026, sin confirmar en fuente oficial: pendiente de contrastar con el Concello de Lalín."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Banda de Música de Santa Cruz de Ribadulla",
+   "tipo": "sociedad",
+   "url_calendario": "http://bmscr.org/es/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Publica noticias de conciertos (Concerto de Nadal 2025); sin fecha 2026 aún."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Ateneo Musical de Bembrive",
+   "tipo": "sociedad",
+   "url_calendario": "http://ateneomusicaldebembrive.org/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Blog con conciertos de Navidad de años anteriores; sin 2026."
+  },
+  {
+   "comunidad": "Asturias",
+   "nombre": "Federación de bandas de música de Asturias",
+   "tipo": "federacion",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se localiza federación autonómica de bandas de música con web ni directorio público (la lista de federaciones de la CESM, coessm.org/cesm/federaciones-existentes, no la recoge de forma verificable)."
+  },
+  {
+   "comunidad": "Asturias",
+   "nombre": "Banda Sinfónica de Gijón (Asociación Musical Villa de Gijón)",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.bandamusicagijon.es/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Web con sección «Conciertos» (hoy sin eventos futuros: «No hay próximos eventos»). Actividad municipal enlazada desde gijon.es/es/eventos. Revisar en noviembre."
+  },
+  {
+   "comunidad": "Asturias",
+   "nombre": "Banda de Música de Avilés",
+   "tipo": "banda",
+   "url_calendario": "https://aviles.es/",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se localiza web propia; sus conciertos salen en la agenda del Ayuntamiento (aviles.es) y en turismoaviles.com (p. ej. concierto de Navidad en la carpa el 26-dic en 2025). Santa Cecilia: concierto tradicional en la Casa de Cultura; 2026 sin publicar a 12-10-2026."
+  },
+  {
+   "comunidad": "Asturias",
+   "nombre": "Banda Sinfónica Ateneo Musical de Mieres",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.mieres.es/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Publica sus conciertos en la agenda municipal (en 2024 hubo concierto de Santa Cecilia el 24 nov). A 12-10-2026 la agenda de Mieres solo llega hasta mediados de octubre."
+  },
+  {
+   "comunidad": "Asturias",
+   "nombre": "Ayuntamiento de Siero: agenda (Banda de Música de la ASAM, Banda de Siero, Tomás Bretón)",
+   "tipo": "portal",
+   "url_calendario": "https://www.ayto-siero.es/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda municipal con conciertos de bandas de la zona (carnaval, primavera, Santa Cecilia en La Pola, Navidad en Lugones); a 12-10-2026 solo hay eventos hasta el 18-nov sin bandas."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "Banda de Música de El Espinar",
+   "tipo": "sociedad",
+   "url_calendario": "https://elespinar.es/events/lista/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Conciertos de Santa Cecilia y Navidad en la agenda municipal (calendario mensual /events/mes/AAAA-MM/). Muy fiable."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "Banda de Música de Zamora",
+   "tipo": "banda",
+   "url_calendario": "https://www.diputaciondezamora.es/",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Concierto de primavera (mayo) y colaboraciones con la Diputación; sin concierto de otoño publicado."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "Banda Municipal de Música de Soria",
+   "tipo": "banda",
+   "url_calendario": "https://www.soria.es/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Temporadas por estaciones en soria.es y agendacultural.soria.es; la de otoño-invierno 2026-27 no estaba publicada a 12-10-2026."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "Banda Municipal de Música de Salamanca",
+   "tipo": "banda",
+   "url_calendario": "https://www.aytosalamanca.es/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Concierto de Navidad tradicional en diciembre en el Teatro Liceo; el programa de 2026 no está publicado."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "Federación de Bandas de la Comunidad de Madrid (Federación Regional de Sociedades Musicales)",
+   "tipo": "federacion",
+   "url_calendario": "https://bandasdemadrid.com/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "La web daba «Error establishing a database connection» el 12-10-2026 (portada, «Bandas federadas» y blog). Directorio de unas 30 bandas federadas cuando funcione."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "Cultural Alcalá (agenda del Ayuntamiento de Alcalá de Henares)",
+   "tipo": "portal",
+   "url_calendario": "https://www.culturalcala.es",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda completa de la temporada del Teatro Salón Cervantes y el Auditorio Paco de Lucía hasta ene-2027. Publica fichas con precios y programa. Muy fiable."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "Banda Sinfónica Complutense (Alcalá de Henares)",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.bandasinfonicacomplutense.com/calendario",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Su calendario propio dice «Próximamente nueva temporada»; los conciertos reales aparecen antes en culturalcala.es. Santa Cecilia (nov) aún sin publicar."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "A. M. Banda La Estrella (Móstoles)",
+   "tipo": "sociedad",
+   "url_calendario": "https://bandalaestrella.es/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Portada con apartado «Próximas actuaciones» sin contenido legible por curl ni Playwright (probablemente incrustado). Sin fechas verificables."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "Asociación Musical Harmonía (Parla)",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.ayuntamientoparla.es/eventos/concierto-de-santa-cecilia",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Concierto de Santa Cecilia en el Teatro Jaime Salom cada noviembre (en 2022: 19 nov); la agenda municipal de Parla no devuelve listado por curl. 2026 sin verificar."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "Banda Municipal Joaquín Turina (Arganda del Rey)",
+   "tipo": "banda",
+   "url_calendario": "https://www.argandadelrey.es/eventos/lista/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Santa Cecilia en el Auditorio Montserrat Caballé (en 2024: 23 nov). La agenda municipal aún no tiene el de 2026."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "Banda Municipal de Música de Alcobendas",
+   "tipo": "banda",
+   "url_calendario": "https://www.alcobendas.org/es/actividad/concierto-de-santa-cecilia-0",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "El portal alcobendas.org bloquea el acceso automatizado (Access Denied); sin verificar."
+  },
+  {
+   "comunidad": "Extremadura",
+   "nombre": "Conservatorio Superior de Música «Bonifacio Gil» de Badajoz",
+   "tipo": "conservatorio",
+   "url_calendario": "https://csmbadajoz.es/?page_id=4691",
+   "calendario_en_web": true,
+   "formato": "otro",
+   "notas": "Calendario de Google (red Educarex), ICS público consultable; a 12-10-2026 solo hay actos: presentación de temporada 15-10 (El Hospital Centro Vivo), Santa Cecilia 22-11 y «Encuentro Banda Sinfónica» 24-11 (Palacio de Congresos de Badajoz, sin hora ni confirmación de concierto público) y «Encuentro de la Orquesta Sinfónica» 18-01-2027. Categoría «Audiciones y conciertos» https://csmbadajoz.es/?cat=6. La Semana de Santa Cecilia se publica unas semanas antes: volver a mirar a finales de octubre."
+  },
+  {
+   "comunidad": "Canarias",
+   "nombre": "Conservatorio Profesional de Música de Santa Cruz de Tenerife",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www3.gobiernodecanarias.org/medusa/edublog/cpmsantacruzdetenerife/actividades/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Blog de actividades; a 12-10-2026 solo recoge actividades pasadas (hasta junio 2026) y Erasmus Days 14-16 octubre. Suele publicar conciertos con pocos días de antelación (Santa Cecilia, Navidad, fin de curso)."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Conservatori del Liceu (Fundació Conservatori Liceu)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.conservatoriliceu.es/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda paginada (4 páginas) con fichas por evento: fecha, hora, sala y precio. Predomina Liceu Jazz (jam sessions, masterclasses, big band). Liceu Cambra (orquesta simfònica y banda simfònica del Conservatori, 2 conciertos cada una) y Liceu Jove sin fechas publicadas aún; volver a mirar. BLAM Collective (AOR/rock) descartado por alcance."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Conservatori Municipal de Música de Barcelona (CMMB)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://agenda500.barcelona.cat/en/detall/conservatori-municipal-de-musica-de-barcelona_92086009589.html",
+   "calendario_en_web": true,
+   "formato": "portal",
+   "notas": "Web propia www.cmmb.cat caída (error 522) el 12-10-2026. Agenda 500 del Ajuntament de Barcelona lista sus conciertos con día, hora, sala y precio, pero sin programa. En diciembre suele hacer conciertos de Navidad de orquesta de cuerda, banda y orquesta sinfónica (según agenda de 2025)."
+  },
+  {
+   "comunidad": "Islas Baleares",
+   "nombre": "Conservatori Professional de Música i Dansa de Palma",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No se ha localizado web oficial con agenda en cuatro intentos."
+  },
+  {
+   "comunidad": "Aragón",
+   "nombre": "Conservatorio Profesional Municipal de Zaragoza",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "El Ayuntamiento prevé enseñanzas profesionales para 2027-28; sin agenda de conciertos."
+  },
+  {
+   "comunidad": "Cataluña",
+   "nombre": "Agenda 500 (Ajuntament de Barcelona)",
+   "tipo": "portal",
+   "url_calendario": "https://agenda500.barcelona.cat/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Portal municipal con fichas por organizador; útil para conservatorios y escuelas municipales de Barcelona."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "Centro Superior Katarina Gurska",
+   "tipo": "conservatorio",
+   "url_calendario": "https://katarinagurska.com/noticias-y-eventos/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda con The Events Calendar; el 12-10 solo masterclasses y actividades (Bartók Creative Lab 16-22 nov), ningún concierto. Página aparte «Ciclos y conciertos» (/noticias-y-eventos/programacion-cultural/ciclos-y-conciertos/) sin eventos del periodo."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "CPM Amaniel (Madrid)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://site.educa.madrid.org/cpm.amaniel.madrid/index.php/agenda/",
+   "calendario_en_web": true,
+   "formato": "otro",
+   "notas": "La agenda enlaza un Google Doc con el calendario mensual de todo el curso (se lee con /export?format=txt). Incluye Conciertos de la Encina (jueves 19:30), audiciones y salidas. Muy completo hasta junio 2027."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "CPM Joaquín Turina (Madrid)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://site.educa.madrid.org/cpm.joaquinturina.madrid/index.php/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendario del auditorio «Agustín Ramos» (110 plazas) con fichas /events/...; la fecha exacta sale en la lista de la portada y en el enlace a Google Calendar de cada ficha. Conciertos de entrada libre hasta completar aforo; audiciones no públicas."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "CPM Teresa Berganza (Madrid)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://site.educa.madrid.org/cpm.teresaberganza.madrid/index.php/calendario-centro/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "La portada publica noticias de actividades (conciertos de profesorado y ponencias); el calendario del centro no mostraba eventos el 12-10. Sin conciertos del periodo."
+  },
+  {
+   "comunidad": "Comunidad de Madrid",
+   "nombre": "Portal de webs de centros EducaMadrid",
+   "tipo": "portal",
+   "url_calendario": "https://site.educa.madrid.org/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Muchos CPM de Madrid tienen web WordPress bajo site.educa.madrid.org/cpm.<nombre>.madrid/. Probados con 404 los patrones de Arturo Soria, Rodolfo Halffter y Moreno Torroba (identificador distinto)."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "Conservatorio Superior de Música de Castilla y León (COSCYL, Salamanca)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://coscyl.com/actividad/calendario-de-eventos/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendario mensual con parámetro ?coscyl_eventos_mes=AAAA-MM. El 12-10 solo una masterclass de arpa (21 oct); nov-ene vacíos. Suele publicar PDF anual de grandes proyectos, jornadas y conciertos: revisar cuando salga el de 2026-27."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "CPM de Salamanca",
+   "tipo": "conservatorio",
+   "url_calendario": "https://conservatoriosalamanca.es/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda WordPress con calendario; el 12-10 sin eventos del periodo. Actividades en /actividades/."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "CPM de Valladolid",
+   "tipo": "conservatorio",
+   "url_calendario": "https://conservatoriovalladolid.centros.educa.jcyl.es/sitio/index.cgi?wid_seccion=17",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Sección Actividades curso 2026-27 con epígrafes «Santa Cecilia» (vestíbulo y Sala de Cámara, noviembre), semanas de diciembre y audiciones de cámara en enero, pero SIN fechas ni horas publicadas el 12-10 (plantilla vacía). Volver a mirar a finales de octubre."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "CPM de Burgos",
+   "tipo": "conservatorio",
+   "url_calendario": "https://conservatorioburgos.centros.educa.jcyl.es/sitio/index.cgi?wid_seccion=20&wid_item=104",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Secciones Audiciones y Conciertos vacías para 2026-27 (audiciones solo del curso 25-26). Sin conciertos del periodo el 12-10."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "CPM de León",
+   "tipo": "conservatorio",
+   "url_calendario": "https://conservatorioleon.centros.educa.jcyl.es/sitio/index.cgi",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Portada solo con calendario académico; no se ha localizado sección de conciertos."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "CPM de Palencia",
+   "tipo": "conservatorio",
+   "url_calendario": "https://conservatoriopalencia.centros.educa.jcyl.es/sitio/index.cgi?wid_seccion=6",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "«Próximos conciertos y actividades»; el 12-10 solo figuraban dos recitales de septiembre. Archivo de cursos anteriores enlazado."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "CPM de Segovia",
+   "tipo": "conservatorio",
+   "url_calendario": "https://conservatoriosegovia.centros.educa.jcyl.es/sitio/index.cgi?wid_seccion=11&wid_item=172",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Página «Conciertos y Actividades» sin ningún evento publicado el 12-10 (texto introductorio; los carteles se irán subiendo)."
+  },
+  {
+   "comunidad": "Castilla y León",
+   "nombre": "CPM Miguel Manzano (Zamora)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://conservatoriomiguelmanzano.centros.educa.jcyl.es/sitio/index.cgi?wid_seccion=21&wid_item=53",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Apartado del Departamento de Actividades Complementarias; no revisado a fondo."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Conservatorio Superior de Música de Vigo (CSMVigo)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.csmvigoactividades.com/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Web de actividades con «Axenda 2026» (vacía el 12-10) y blog de concertos; el Concerto de Santa Icía de 2025 fue el 20 de noviembre en el Auditorio Martín Códax: vigilar. Sitio oficial: www.csmvigo.com."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Conservatorio Superior de Música de A Coruña",
+   "tipo": "conservatorio",
+   "url_calendario": "https://centros.edu.xunta.gal/cmuscoruna/Concertos",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Sección Concertos con posts y PDF de cartel; el 12-10 solo conciertos de mayo-junio 2026 (Banda Sinfónica 13 mayo, Confluencia 4 junio con la BMM de A Coruña). También «Ciclos de concerto». Sin conciertos del periodo."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Conservatorio Profesional de Santiago de Compostela",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.conservatoriosantiago.gal/categoria_evento/concertos",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Categorías de eventos (concertos, audicións); el 12-10 solo eventos pasados (último: 7 octubre). El dominio conservatoriosantiago.com redirige a esta web."
+  },
+  {
+   "comunidad": "Galicia",
+   "nombre": "Conservatorios de Pontevedra, Ourense, Lugo y Vigo profesional",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.edu.xunta.gal/",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "No localizadas las webs oficiales (centros.edu.xunta.gal con los identificadores probados da 403 o 404)."
+  },
+  {
+   "comunidad": "Asturias",
+   "nombre": "CONSMUPA (Conservatorio Superior de Asturias)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://consmupa.com/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda en blog (posts con fecha) y calendario /eventos/ (vacío). El 12-10 solo avisos de pruebas extracurriculares con la Banda Ciudad de Oviedo (23 oct) y Oviedo Filarmonía (16 oct), que no son conciertos. Acto inaugural fue el 28-sep."
+  },
+  {
+   "comunidad": "Asturias",
+   "nombre": "Conservatorio Profesional de Gijón",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.conservatoriogijon.com/category/noticias/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "ATENCIÓN: el dominio conservatoriogijon.com mostraba inyección de spam (enlaces de apuestas/escort) el 12-10; no usarlo como fuente sin verificar. Ciclo de conciertos del profesorado en el Antiguo Instituto (primavera)."
+  },
+  {
+   "comunidad": "Cantabria",
+   "nombre": "CPM Jesús de Monasterio (Santander)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://conservatoriojesusdemonasterio.es/calendario/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendario con secciones Conciertos y Audiciones (/actividades/conciertos/ y /audiciones/): «¡No hay eventos!» el 12-10. Actividad conocida: Semana Inusual de la Música (marzo)."
+  },
+  {
+   "comunidad": "Navarra",
+   "nombre": "CPM Pablo Sarasate (Pamplona)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://conservatoriopablosarasate.educacion.navarra.es/",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "La «Agenda» enlaza una hoja de Google que muestra solo el curso 2024-25. Sin conciertos del periodo."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "CM Jesús Guridi (Vitoria-Gasteiz)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://conservatoriovitoria.com/index.php/es/actividades/agenda",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda (JEvents) con meses navegables. Recoge los conciertos de Euskadiko Orkestra en el Aula Magna (ya registrados por otra ronda) y el Ciclo de Cámara «Arquitecturas Insólitas» (domingos 12:00; próximo: 25 oct, Alicia Amo y Andoni Mercero; entradas por Entradium). Ciclo de profesionales, no de alumnado: no incluido."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "Musikene",
+   "tipo": "conservatorio",
+   "url_calendario": "https://musikene.eus/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Ya cubierto por la ronda previa (4 conciertos)."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "Conservatorio Superior Arriaga (Bilbao)",
+   "tipo": "conservatorio",
+   "url_calendario": "",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "Web oficial NO localizada (probados varios dominios sin éxito). Acoge encuentros de dirección y ciclos de jazz según prensa."
+  },
+  {
+   "comunidad": "País Vasco",
+   "nombre": "Conservatorio Francisco Escudero (Donostia)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://conservatorioescudero.eus/es/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Localizada la web; no se ha revisado su agenda."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "Conservatorio Superior de Castilla-La Mancha (Albacete)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://csmclm.com/actividades/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Lista de actividades con fecha y calendario mensual (/calendario/), este con reservas de aulas y ensayos. El 12-10 solo conciertos de marzo-junio 2026 (Orquesta, Banda Sinfónica, Big Band, Taller Instrumental). A vigilar: Santa Cecilia y Navidad."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "CPM Tomás de Torrejón y Velasco (Albacete)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.torrejonyvelasco.com/category/eventos/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Blog de eventos; el 12-10 solo avisos administrativos y una charla (8 oct). Calendario en /actividades-calendario/ vacío."
+  },
+  {
+   "comunidad": "Castilla-La Mancha",
+   "nombre": "CPM Marcos Redondo (Ciudad Real)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://eventos-cpmmr.netlify.app/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda propia «Eventos CPMMR»; el 12-10 solo una reunión Erasmus (16 oct). Web: conservatoriociudadreal.es (categoría actividades)."
+  },
+  {
+   "comunidad": "La Rioja",
+   "nombre": "CPM Eliseo Pinedo (Logroño)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.conservatoriorioja.com/actividades/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "MEJOR FUENTE DE LA RONDA: plan de actividades del curso 2026-27 con fecha, hora y lugar de cada concierto (Orquesta, Banda, Plectro, Santa Cecilia; ciclos en Riojaforum, Círculo Logroñés e Ibercaja). Se actualiza durante el curso; calendario en /calendario-de-actividades/ (Google Calendar) y noticias en /categorias/actividad-del-centro/."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "ADDA - Auditorio de la Diputación de Alicante: categoría «Nuestras bandas y orquestas»",
+   "tipo": "portal",
+   "url_calendario": "https://addaalicante.es/programacion/category/nuestras-bandas-y-orquestas/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "VETA PRINCIPAL: XIII Ciclo «Las bandas de la provincia en el ADDA» (domingos 10:00 y 13:00; 25-10, 15-11, 29-11 en 2026). Vista mensual por URL .../2026-11/. Dic 2026 y ene 2027 sin eventos hoy. El XIV Ciclo (24 conciertos) es de 2027: convocatoria FSMCV de julio 2026; revisar cuando publiquen el calendario."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Sociedad Musical La Artística de Buñol (temporada 2026-27)",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.laartistica.org/temporada-2026-2027.html",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "16 conciertos en el Teatro Montecarlo del 22-09-2026 al 25-04-2027, PDF completo en laartistica.org/temporada/Programacion-Temporada-26-27.pdf. Incluye conciertos del Conservatorio Superior de Castellón. Segunda mitad (feb-abr 2027) fuera de ventana."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "FSMCV: agenda",
+   "tipo": "federacion",
+   "url_calendario": "https://fsmcv.org/agenda/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Solo lista actividades comarcales del 17-18 y 24 octubre 2026 (ya recogidas en la primera ronda); no hay entradas de nov-ene. Ciclo de Cámara de la Alquería Julià (sábados 12:00 hasta 26-12) ya recogido. Convocatorias públicas: Certamen Cullera 4-04-2027, Certamen Bandas Juveniles Tavernes 5-12-2026 (ya recogidos). Som Patrimoni termina el 9-10. Bandes a les Arts 2026-27: sin fechas publicadas (las del texto son de abril-mayo 2026)."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "FSMCV: noticias y campañas",
+   "tipo": "federacion",
+   "url_calendario": "https://fsmcv.org/category/noticias/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Revisadas las noticias recientes y convocatorias públicas; sin conciertos nuevos en la ventana más allá de lo ya recogido."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Banda Municipal / Asociación Musical Ciutat de Benicarló",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.bandadebenicarlo.com/agenda",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Agenda paginada (59 págs), a 12-10 solo muestra eventos hasta septiembre; el concierto de Santa Cecilia del 7-11 aparece solo en la noticia del 14-09 (estreno de Ferrer Ferrán). Revisar semanalmente la agenda y noticias."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "L'Harmonia Societat Musical d'Alacant",
+   "tipo": "sociedad",
+   "url_calendario": "https://lharmoniadalacant.es/eventos/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Calendario de eventos: 14-11 Concierto Santa Cecilia (17:00-21:00); 22-11 «Festival Bandas de Música ADDA» (18:00) NO confirmado: no figura en la agenda del ADDA para noviembre. Navidad 2025 publicada tarde (13-12): esperar a diciembre."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Unión Musical Santa Cecilia de Onda",
+   "tipo": "sociedad",
+   "url_calendario": "https://www.unionmusicalonda.com/",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "Sin conciertos del periodo visibles el 12-10."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Radiobanda",
+   "tipo": "portal",
+   "url_calendario": "https://www.radiobanda.com/",
+   "calendario_en_web": false,
+   "formato": "web",
+   "notas": "Portal de noticias, no agenda. Sirve para pistas (secciones Festivales y Conciertos, Certámenes). Pistas sin confirmar en web oficial: «La Orquesta Filarmónica de Requena celebra su 20º aniversario con cinco conciertos en el Festival FiMuVin 2026» (fechas sin comprobar); certamen de música festera de Elda. No incluidas en conciertos."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Agenda municipal de Alicante",
+   "tipo": "portal",
+   "url_calendario": "https://www.alicante.es/es/agenda",
+   "calendario_en_web": true,
+   "formato": "web",
+   "notas": "12-10: solo exposiciones y actos; ningún concierto de bandas en la ventana."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Conservatorio Superior de Música Óscar Esplá (Alicante)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.csmalicante.es/",
+   "calendario_en_web": false,
+   "formato": "otro",
+   "notas": "La web devuelve error 526 (certificado SSL del proveedor/Cloudflare) en curl; sin calendario accesible. Ciclos de alumnos en Las Cigarreras según alicante.es (años anteriores). Pendiente de reprobar."
+  },
+  {
+   "comunidad": "Comunidad Valenciana",
+   "nombre": "Conservatorio Superior de Música Salvador Seguí (Castellón)",
+   "tipo": "conservatorio",
+   "url_calendario": "https://www.laartistica.org/temporada-2026-2027.html",
+   "calendario_en_web": true,
+   "formato": "otro",
+   "notas": "Web propia no localizada; sus orquesta y banda actúan en Buñol el 4-12-2026 y el 15-01-2027 (agenda de La Artística). Actúan también como teloneros en el Auditori de Castelló."
+  }
+ ]
+}

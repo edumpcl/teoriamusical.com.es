@@ -1,0 +1,427 @@
+{
+  "comprobado": "2026-10-12",
+  "convocatorias": [
+    {
+      "id": "real-filharmonia-2026",
+      "entidad": "Real Filharmonía de Galicia (Consorcio de Santiago)",
+      "titulo": "Viola principal, violonchelo principal y contrabajo tutti",
+      "tipo": "orquesta",
+      "instrumentos": [
+        "viola",
+        "violonchelo",
+        "contrabajo"
+      ],
+      "comunidad": "Galicia",
+      "plazas": "3 plazas de personal laboral fijo",
+      "acceso": "Acceso libre",
+      "inicio": "2026-09-29",
+      "fin": "2026-10-27",
+      "requisitos": "Título superior de música en la especialidad. Si el castellano no es tu lengua oficial, nivel B2.",
+      "tasa": "Sin derechos de examen",
+      "fuentes": [
+        {
+          "texto": "BOE del 28/09/2026 (BOE-A-2026-20027)",
+          "url": "https://www.boe.es/boe/dias/2026/09/28/pdfs/BOE-A-2026-20027.pdf"
+        },
+        {
+          "texto": "Sede del Consorcio de Santiago",
+          "url": "https://www.consorciodesantiago.gob.es"
+        }
+      ],
+      "nota_plazo": "20 días hábiles desde el día siguiente a la publicación en el BOE (28/09/2026). Contrastado con el boletín."
+    },
+    {
+      "id": "sabadell-5-plazas-2026",
+      "entidad": "Ayuntamiento de Sabadell",
+      "titulo": "5 plazas de profesor de música: canto, lenguaje musical, guitarra y clarinete",
+      "tipo": "docencia",
+      "instrumentos": [
+        "canto",
+        "lenguaje musical",
+        "guitarra",
+        "clarinete"
+      ],
+      "comunidad": "Cataluña",
+      "plazas": "5 plazas de personal laboral fijo (canto 1, lenguaje musical 2, guitarra 1, clarinete 1)",
+      "acceso": "Concurso-oposición, turno libre",
+      "inicio": "2026-09-29",
+      "fin": "2026-10-19",
+      "nota_plazo": "20 días naturales desde el día siguiente a la publicación en el BOE (28/09/2026): vencen el domingo 18 y, al ser inhábil, se prorrogan al lunes 19. Contrastado con el boletín.",
+      "requisitos": "Título superior de música (en lenguaje musical, de composición o pedagogía). Catalán C1 o superar la prueba.",
+      "pruebas": "Oposición de hasta 80 puntos (prueba práctica docente con defensa de programación y tres obras a elegir, y prueba de competencias profesionales) y concurso de hasta 40 puntos por méritos.",
+      "fuentes": [
+        {
+          "texto": "BOE 28/09/2026 (convocatoria)",
+          "url": "https://www.boe.es/boe/dias/2026/09/28/pdfs/BOE-A-2026-20048.pdf"
+        },
+        {
+          "texto": "DOGC 08/09/2026 (rectificación de bases)",
+          "url": "https://portaldogc.gencat.cat/utilsEADOP/AppJava/PdfProviderServlet?versionId=2169442&type=01&language=es_ES"
+        },
+        {
+          "texto": "BOP de Barcelona 03/09/2026 (bases)",
+          "url": "https://bop.diba.cat/anunci/descarrega-pdf/3986966"
+        },
+        {
+          "texto": "Sede electrónica de Sabadell (solicitud)",
+          "url": "https://seu.sabadell.cat/opensiac/action/tramitesinfo?method=enter&id=854"
+        }
+      ]
+    },
+    {
+      "id": "badajoz-saxofon-2026",
+      "entidad": "Ayuntamiento de Badajoz",
+      "titulo": "Profesor de música, especialidad saxofón",
+      "tipo": "docencia",
+      "instrumentos": [
+        "saxofón"
+      ],
+      "comunidad": "Extremadura",
+      "plazas": "1 plaza de funcionario de carrera (A2)",
+      "acceso": "Oposición libre",
+      "inicio": "2026-09-23",
+      "fin": "2026-10-21",
+      "requisitos": "Grado en Enseñanzas Artísticas Superiores de Música en saxofón, o equivalente.",
+      "pruebas": "Test de 80 preguntas (95 minutos) e interpretación sin piano del Concierto para saxofón alto de Henri Tomasi.",
+      "tasa": "24,04 € (con exenciones y bonificaciones)",
+      "fuentes": [
+        {
+          "texto": "BOE 22/09/2026 (convocatoria)",
+          "url": "https://www.boe.es/boe/dias/2026/09/22/pdfs/BOE-A-2026-19661.pdf"
+        },
+        {
+          "texto": "BOP de Badajoz 22/04/2026 (bases)",
+          "url": "https://www.dip-badajoz.es/ficheros/bop/bopedictos/2026-04-22000000_1368.pdf"
+        }
+      ],
+      "nota_plazo": "20 días hábiles desde el día siguiente a la publicación en el BOE (22/09/2026), con el 12 de octubre festivo. Contrastado con el boletín."
+    },
+    {
+      "id": "palacios-villafranca-saxofon",
+      "entidad": "Ayuntamiento de Los Palacios y Villafranca (Sevilla)",
+      "titulo": "Profesor de saxofón, escuela municipal de música y danza",
+      "tipo": "docencia",
+      "instrumentos": [
+        "saxofón"
+      ],
+      "comunidad": "Andalucía",
+      "fin": "2026-10-12",
+      "fuentes": [
+        {
+          "texto": "Servicio Andaluz de Empleo (oferta 01-2026-45709)",
+          "url": "https://saempleo.es/ags/candidaturas/lista-ofertas-publicas/detalle-oferta?ofertaId=01-2026-45709&origin=candidatura"
+        }
+      ],
+      "nota_plazo": "Fecha sin contrastar con el boletín."
+    },
+    {
+      "id": "la-rioja-bolsa-musica",
+      "entidad": "Consejería de Educación y Empleo (La Rioja)",
+      "titulo": "Bolsa extraordinaria de Música",
+      "tipo": "docencia",
+      "instrumentos": [
+        "varios"
+      ],
+      "comunidad": "La Rioja",
+      "fin": "2026-10-13",
+      "fuentes": [
+        {
+          "texto": "Portal de solicitud del Gobierno de La Rioja",
+          "url": "https://ias1.larioja.org/emp/portal/indexexterno.jsp?_estructura=08016&_idClave=2027%7CEDD%7CEXTRACOM%7CS016"
+        }
+      ],
+      "nota_plazo": "Fecha sin contrastar con el boletín."
+    },
+    {
+      "id": "toro-trompeta",
+      "entidad": "Ayuntamiento de Toro (Zamora)",
+      "titulo": "Trompeta, concurso-oposición, escuela municipal de música",
+      "tipo": "docencia",
+      "instrumentos": [
+        "trompeta"
+      ],
+      "comunidad": "Castilla y León",
+      "fin": "2026-10-13",
+      "fuentes": [
+        {
+          "texto": "BOP de Zamora (extracto)",
+          "url": "https://www.diputaciondezamora.es/opencms/export/sites/dipu-zamora/servicios/BOP/.Archivos/documentos/BOP/anuncios/2026/113/202602266.pdf"
+        },
+        {
+          "texto": "Sede electrónica de Toro (solicitud)",
+          "url": "https://toro.sedelectronica.es/"
+        }
+      ],
+      "nota_plazo": "10 días hábiles desde el día siguiente a la publicación en el BOP de Zamora (28/09/2026). Contrastado con el boletín."
+    },
+    {
+      "id": "badajoz-diputacion-fagot",
+      "entidad": "Diputación Provincial de Badajoz",
+      "titulo": "Bolsa de profesor superior de fagot, Conservatorio Bonifacio Gil",
+      "tipo": "docencia",
+      "instrumentos": [
+        "fagot"
+      ],
+      "comunidad": "Extremadura",
+      "fin": "2026-10-13",
+      "fuentes": [
+        {
+          "texto": "BOP de Badajoz 28/09/2026 (bases)",
+          "url": "https://www.dip-badajoz.es/ficheros/bop/bopedictos/2026-09-28000000_3744.pdf"
+        },
+        {
+          "texto": "Sede electrónica de la Diputación (solicitud)",
+          "url": "https://sede.dip-badajoz.es/portal/literal.do?opc_id=10071&ent_id=10&idioma=1"
+        }
+      ],
+      "nota_plazo": "10 días hábiles desde el día siguiente a la publicación en el BOP de Badajoz (28/09/2026). Contrastado con el boletín."
+    },
+    {
+      "id": "teulada-piano",
+      "entidad": "Ayuntamiento de Teulada (Alicante)",
+      "titulo": "Bolsa de profesor de piano",
+      "tipo": "docencia",
+      "instrumentos": [
+        "piano"
+      ],
+      "comunidad": "Comunitat Valenciana",
+      "fin": "2026-10-13",
+      "fuentes": [
+        {
+          "texto": "BOP de Alicante 21/09/2026 (extracto)",
+          "url": "https://www.dip-alicante.es/bop2/pdftotal/2026/09/21_179/2026_006978.pdf"
+        },
+        {
+          "texto": "Sede electrónica de Teulada (solicitud)",
+          "url": "https://teuladamoraira.sedelectronica.es/"
+        }
+      ],
+      "nota_plazo": "20 días naturales desde el día siguiente a la publicación en el BOP de Alicante (21/09/2026): vencen el domingo 11 y, con el 12 festivo, pasan al martes 13. Contrastado con el boletín."
+    },
+    {
+      "id": "lezo-director",
+      "entidad": "Ayuntamiento de Lezo (Gipuzkoa)",
+      "titulo": "Director o directora, concurso-oposición, «Tomás Garbizu»",
+      "tipo": "banda",
+      "instrumentos": [
+        "dirección"
+      ],
+      "comunidad": "País Vasco",
+      "fin": "2026-10-13",
+      "fuentes": [
+        {
+          "texto": "BOE 14/09/2026 (convocatoria)",
+          "url": "https://www.boe.es/boe/dias/2026/09/14/pdfs/BOE-A-2026-19149.pdf"
+        },
+        {
+          "texto": "BOG de Gipuzkoa 01/09/2026 (bases)",
+          "url": "https://egoitza.gipuzkoa.eus/gao-bog/castell/bog/2026/09/01/c2605728.pdf"
+        }
+      ],
+      "nota_plazo": "20 días hábiles desde el día siguiente a la publicación en el BOE (14/09/2026), con el 12 de octubre festivo. Contrastado con el boletín."
+    },
+    {
+      "id": "ubrique-bolsa",
+      "entidad": "Ayuntamiento de Ubrique (Cádiz)",
+      "titulo": "Bolsa de profesorado de música, escuela «Maestro Juan Chacón»",
+      "tipo": "docencia",
+      "instrumentos": [
+        "varios"
+      ],
+      "comunidad": "Andalucía",
+      "fin": "2026-10-14",
+      "fuentes": [
+        {
+          "texto": "BOP de Cádiz nº 188, 29/09/2026",
+          "url": "https://www.bopcadiz.es/.boletines_pdf/2026/09_septiembre/BOP188_29-09-26.pdf"
+        }
+      ],
+      "nota_plazo": "Las bases fijan 20 días hábiles desde la publicación en el BOE, que no hemos localizado. Fecha sin contrastar."
+    },
+    {
+      "id": "balsareny-violin",
+      "entidad": "Ayuntamiento de Balsareny (Barcelona)",
+      "titulo": "Violín, concurso-oposición, escuela municipal de música",
+      "tipo": "docencia",
+      "instrumentos": [
+        "violín"
+      ],
+      "comunidad": "Cataluña",
+      "fin": "2026-10-14",
+      "fuentes": [
+        {
+          "texto": "BOP de Barcelona (convocatoria)",
+          "url": "https://bop.diba.cat/anunci/3989258"
+        },
+        {
+          "texto": "DOGC (edicto)",
+          "url": "https://portaldogc.gencat.cat/utilsEADOP/AppJava/PdfProviderServlet?versionId=2170259&type=01&language=es_ES"
+        },
+        {
+          "texto": "Sede electrónica de Balsareny (solicitud)",
+          "url": "https://seu-e.cat/ca/web/balsareny/tramits-i-gestions/-/tramits/tramit/13208068?p_auth=joJdkIC8"
+        }
+      ],
+      "nota_plazo": "20 días hábiles desde el día siguiente a la publicación en el DOGC (15/09/2026). Contrastado con el boletín."
+    },
+    {
+      "id": "sabadell-flauta-pico",
+      "entidad": "Ayuntamiento de Sabadell",
+      "titulo": "Flauta de pico, concurso-oposición",
+      "tipo": "docencia",
+      "instrumentos": [
+        "flauta de pico"
+      ],
+      "comunidad": "Cataluña",
+      "fin": "2026-10-15",
+      "fuentes": [
+        {
+          "texto": "DOGC 25/09/2026 (bases y convocatoria)",
+          "url": "https://portaldogc.gencat.cat/utilsEADOP/AppJava/PdfProviderServlet?versionId=2171905&type=01&language=es_ES"
+        },
+        {
+          "texto": "Sede electrónica de Sabadell (solicitud)",
+          "url": "https://seu.sabadell.cat/opensiac/action/tramitesinfo?method=enter&id=854"
+        }
+      ],
+      "nota_plazo": "20 días naturales desde el día siguiente a la última publicación (BOE, DOGC o BOP). El DOGC salió el 25/09/2026 y no hemos localizado el BOE: si es posterior, el plazo vence más tarde."
+    },
+    {
+      "id": "fuerteventura-guitarra",
+      "entidad": "Cabildo Insular de Fuerteventura",
+      "titulo": "Profesor de guitarra, escuela insular de música",
+      "tipo": "docencia",
+      "instrumentos": [
+        "guitarra"
+      ],
+      "comunidad": "Canarias",
+      "fin": "2026-10-19",
+      "fuentes": [
+        {
+          "texto": "BOE 28/09/2026 (extracto)",
+          "url": "https://www.boe.es/boe/dias/2026/09/28/pdfs/BOE-A-2026-20055.pdf"
+        },
+        {
+          "texto": "BOP de Las Palmas 26/08/2026 (bases)",
+          "url": "https://www.boplaspalmas.net/boletines/2026/26-08-26/26-08-26.pdf"
+        }
+      ],
+      "nota_plazo": "20 días naturales desde el día siguiente a la publicación en el BOE (28/09/2026): vencen el domingo 18 y, al ser inhábil, se prorrogan al lunes 19. Contrastado con el boletín (el listado que consultamos decía el 18)."
+    },
+    {
+      "id": "sant-cugat-violin",
+      "entidad": "Organisme Municipal d'Educació de Sant Cugat (Barcelona)",
+      "titulo": "2 plazas de violín, concurso-oposición, conservatorio",
+      "tipo": "docencia",
+      "instrumentos": [
+        "violín"
+      ],
+      "comunidad": "Cataluña",
+      "fin": "2026-10-16",
+      "fuentes": [
+        {
+          "texto": "DOGC 17/09/2026 (bases y convocatoria)",
+          "url": "https://portaldogc.gencat.cat/utilsEADOP/AppJava/PdfProviderServlet?versionId=2170931&type=01&language=es_ES"
+        },
+        {
+          "texto": "Ayuntamiento de Sant Cugat (convocatoria)",
+          "url": "https://santcugat.cat/concurs/convocatoria-per-concurs-oposicio-de-dues-places-de-personal-laboral-de-professora-de-secundaria-especialitat-violi"
+        }
+      ],
+      "nota_plazo": "20 días hábiles desde el día siguiente a la publicación en el DOGC (17/09/2026), con el 12 de octubre festivo. Contrastado con el boletín (el listado que consultamos decía el 19)."
+    },
+    {
+      "id": "cerdanyola-bolsa",
+      "entidad": "Ayuntamiento de Cerdanyola del Vallès (Barcelona)",
+      "titulo": "Bolsa de personal docente de música, escuelas La Sínia y Aulos",
+      "tipo": "docencia",
+      "instrumentos": [
+        "varios"
+      ],
+      "comunidad": "Cataluña",
+      "fin": "2026-10-21",
+      "fuentes": [
+        {
+          "texto": "DOGC 22/09/2026 (bases y convocatoria)",
+          "url": "https://portaldogc.gencat.cat/utilsEADOP/AppJava/PdfProviderServlet?versionId=2171517&type=01&language=es_ES"
+        }
+      ],
+      "nota_plazo": "20 días hábiles desde el día siguiente a la publicación en el DOGC (22/09/2026), con el 12 de octubre festivo. Contrastado con el boletín."
+    },
+    {
+      "id": "sant-joan-vilatorrada",
+      "entidad": "Ayuntamiento de Sant Joan de Vilatorrada (Barcelona)",
+      "titulo": "Profesor de pedagogía y lenguaje musical, concurso-oposición",
+      "tipo": "docencia",
+      "instrumentos": [
+        "lenguaje musical"
+      ],
+      "comunidad": "Cataluña",
+      "fin": "2026-10-26",
+      "fuentes": [
+        {
+          "texto": "BOE 25/09/2026 (convocatoria)",
+          "url": "https://www.boe.es/boe/dias/2026/09/25/pdfs/BOE-A-2026-19884.pdf"
+        },
+        {
+          "texto": "BOP de Barcelona (bases)",
+          "url": "https://bop.diba.cat/anunci/descarrega-pdf/3990407"
+        }
+      ],
+      "nota_plazo": "20 días hábiles desde el día siguiente a la publicación en el BOE (25/09/2026), con el 12 de octubre festivo. Contrastado con el boletín."
+    },
+    {
+      "id": "las-rozas-bolsas",
+      "entidad": "Ayuntamiento de Las Rozas de Madrid",
+      "titulo": "Bolsas de profesorado de música, escuela «Joaquín Rodrigo»",
+      "tipo": "docencia",
+      "instrumentos": [
+        "varios"
+      ],
+      "comunidad": "Comunidad de Madrid",
+      "fin": "2027-05-31",
+      "fuentes": [
+        {
+          "texto": "Sede electrónica de la Fundación Cultural Las Rozas (solicitud)",
+          "url": "https://fundacionculturalasrozas.sedelectronica.es/"
+        }
+      ],
+      "nota_plazo": "Fecha sin contrastar con el boletín."
+    }
+  ],
+  "anunciadas": [
+    {
+      "id": "palau-valencia-2026",
+      "entidad": "Palau de la Música de València",
+      "titulo": "Oferta extraordinaria de 24 plazas de instrumentista en la Orquesta de València y oposiciones del Conservatorio José Iturbi",
+      "tipo": "orquesta",
+      "instrumentos": [
+        "violín",
+        "viola",
+        "violonchelo",
+        "contrabajo",
+        "clarinete",
+        "oboe",
+        "fagot",
+        "trompa",
+        "trompeta",
+        "trombón",
+        "percusión",
+        "piano",
+        "guitarra"
+      ],
+      "comunidad": "Comunitat Valenciana",
+      "estado": "Ya convocadas, con el plazo cerrado: trompeta, trompa y violín (4 plazas). El resto de plazas de la Orquesta (viola, violonchelo, contrabajo, maderas, trombones, timbal y percusión) todavía no se han convocado. Los procesos de fagot y de trompeta-fliscorno de la Banda Sinfónica Municipal están en fase de ejercicios, y las oposiciones del Conservatorio Municipal José Iturbi (piano, música de cámara, clarinete, oboe, violín, violonchelo y guitarra) están anunciadas sin fecha de solicitud.",
+      "fuentes": [
+        {
+          "texto": "Noticia del Ayuntamiento de València",
+          "url": "https://www.valencia.es/cas/actualidad/-/content/oposiciones-orquesta-de-val%C3%A8ncia-banda-municipal-y-conservatorio-municipal-jos%C3%A9-iturbi"
+        },
+        {
+          "texto": "Sede electrónica de València (convocatorias)",
+          "url": "https://sede.valencia.es/sede/?lang=1"
+        }
+      ]
+    }
+  ]
+}

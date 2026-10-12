@@ -1,0 +1,2246 @@
+{
+ "fuente": "Listado público del mapa de la FSMCV (fsmcv.org/wp-json/wpgmza/v1/markers); solo nombre, municipio y web",
+ "comprobado": "2026-10-12",
+ "sociedades": [
+  {
+   "nombre": "Unió Musical d'Alaquàs",
+   "municipio": "Alaquàs",
+   "url": "https://musicalalaquas.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://musicalalaquas.com/xxiii-campanya-de-concerts-dintercanvis-musical-fsmcv-unio-musical-dalaquas-i-unio-musical-de-catarroja/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Unió Musical d'Alberic",
+   "municipio": "Alberic",
+   "url": "https://www.societatuniomusicalalberic.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.societatuniomusicalalberic.com/programacio-general-anual.php",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical d'Alboraia",
+   "municipio": "Alboraia",
+   "url": "http://www.smalboraya.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical l'Entusiasta",
+   "municipio": "Benifairó De La Valldigna",
+   "url": "http://www.smlentusiasta.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Unió Musical de Benimodo",
+   "municipio": "Benimodo",
+   "url": "https://uniomusicaldebenimodo.blogspot.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://uniomusicaldebenimodo.blogspot.com/2013/07/2013-07-06-concert-amb-les-corals.html",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical L'Amistat",
+   "municipio": "Quart De Poblet",
+   "url": "https://www.lamistatquart.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Asociación Musical La Lira",
+   "municipio": "Cheste",
+   "url": "http://www.laliracheste.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "http://www.laliracheste.com/actualidad/",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical \"La Lira Fontiguerense\"",
+   "municipio": "La Font De La Figuera",
+   "url": "http://lalirafontiguerense.es/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://lalirafontiguerense.es/concert-excelent-2023/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical \"La Primitiva Setabense\"",
+   "municipio": "Xàtiva",
+   "url": "https://laprimitivasetabense.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://laprimitivasetabense.com/index.php/2026/10/02/programacio-doctubre-de-la-societat-musical-la-primitiva-setabense/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical La Nova",
+   "municipio": "Xàtiva",
+   "url": "https://www.musicanova.es/",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical de Llíria",
+   "municipio": "Llíria",
+   "url": "https://uniomusicaldelliria.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://uniomusicaldelliria.com/noticies/",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Ateneo Musical y de Enseñanza Banda Primitiva de Llíria",
+   "municipio": "Llíria",
+   "url": "http://www.bandaprimitiva.es",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://bandaprimitiva.org/eventos",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical de la Llosa de Ranes",
+   "municipio": "La Llosa De Ranes",
+   "url": "https://smlallosaderanes.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://smlallosaderanes.com/blog/",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Centro Instructivo Musical",
+   "municipio": "Mislata",
+   "url": "https://cimmislata.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://cimmislata.com/agenda/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Centro Artístico Musical de Moncada",
+   "municipio": "Moncada",
+   "url": "http://www.musicalmoncada.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Escola Musical Santa Cecília",
+   "municipio": "L'Olleria",
+   "url": "https://escolademusicaidansalolleria.wordpress.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://escolademusicaidansalolleria.wordpress.com/calendari-escolar/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Unión Musical de Riba-roja de Túria",
+   "municipio": "Riba-roja de Túria",
+   "url": "http://www.unionmusicalribarroja.weebly.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical y Artística de Sax",
+   "municipio": "Sax",
+   "url": "https://www.unionmusicalsax.es/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://unionmusicalsax.es/calendario/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical Lira Castellonera",
+   "municipio": "Castelló",
+   "url": "http://www.liracastellonera.org",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical Nova d’Alcoi",
+   "municipio": "Alcoi",
+   "url": "http://musicanovaalcoi.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://musicanovaalcoi.com/agenda/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical Nueva Artística de Anna",
+   "municipio": "Anna",
+   "url": "http://bandadeanna.com/",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical de Benaguasil",
+   "municipio": "Benaguasil",
+   "url": "http://www.umbenaguasil.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical de Benidorm",
+   "municipio": "Benidorm",
+   "url": "http://www.unionmusicaldebenidorm.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://www.unionmusicaldebenidorm.com/",
+   "tipo_seccion": "portada",
+   "conciertos_periodo": true
+  },
+  {
+   "nombre": "Centre Instructiu Musical de Benimaclet",
+   "municipio": "Benimaclet",
+   "url": "http://www.cimbenimaclet.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical San Francisco de Paula",
+   "municipio": "Bolbaite",
+   "url": "http://www.sdadmusicalsfcopaula.es.vg",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Centro Instructivo Musical \"La Armónica\" de Buñol",
+   "municipio": "Buñol",
+   "url": "http://www.cimlaarmonica.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical \"La Artística\" de Buñol",
+   "municipio": "Buñol",
+   "url": "http://www.laartistica.org",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://www.laartistica.org/noticias.html",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Arte Musical La Filarmónica de Callosa de Segura",
+   "municipio": "Callosa De Segura",
+   "url": "http://www.lafilarmonica.callosadesegura.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Ateneo Musical de Cullera",
+   "municipio": "Cullera",
+   "url": "https://www.ateneumusical.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.ateneumusical.com/calendari-escolar",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical Instructiva Santa Cecilia",
+   "municipio": "Cullera",
+   "url": "http://www.santaceciliacullera.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical \"La Artística\" de Chiva",
+   "municipio": "Chiva",
+   "url": "http://www.laartisticadechiva.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Artístico Musical Sant Francesc de Borja de Gandia",
+   "municipio": "Gandia",
+   "url": "http://www.centredemusicagandia.com/banda-2/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.centredemusicagandia.com/calendari-escolar/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Centre Artístic Musical Santa Cecilia de Foios",
+   "municipio": "Foios",
+   "url": "http://www.musicalfoios.org",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.musicalfoios.org/calendari/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Centre Artístic Musical de Xàbia",
+   "municipio": "Xàbia",
+   "url": "http://www.bandamusicaxabia.es",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Instructiva Unió Musical de Montserrat",
+   "municipio": "Montserrat",
+   "url": "https://siummontserrat.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://siummontserrat.com/index.php?s=sec_din/plantillas/responsive_menu_izq/galeria.php&g=gal&gal=1&codsec=7&subsec=178&tit=Campanya Excel&middot;lent 2025 - Concert",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical de Muro",
+   "municipio": "Muro De Alcoy",
+   "url": "http://www.uniomusicalmuro.org",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Unió Musical Museros",
+   "municipio": "Museros",
+   "url": "http://www.summ.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical Lira Saguntina",
+   "municipio": "Sagunto",
+   "url": "https://lirasaguntina.org/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://lirasaguntina.org/agenda/concert-excellent-2026-banda-simfonica-lira-saguntina/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical \"La Armónica\" de San Antonio",
+   "municipio": "San Antonio",
+   "url": "https://www.smlaarmonicadesanantonio.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical Torrevejense",
+   "municipio": "Torrevieja",
+   "url": "http://www.unionmusicaltorrevejense.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Ateneu Musical Schola Cantorum",
+   "municipio": "La Vall d'Uixó",
+   "url": "https://lascholacantorum.org/schola/inici/",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://lascholacantorum.org/schola/ultimes_noticies",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Renaixement Musical de Vinalesa",
+   "municipio": "Vinalesa",
+   "url": "http://www.srmvinalesa.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical Yátova",
+   "municipio": "Yátova",
+   "url": "https://www.unionmusicalyatova.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://unionmusicalyatova.com/noticias",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Centre Estudi Musical d'Almàssera",
+   "municipio": "Almàssera",
+   "url": "https://www.faceboock.com/cemalmassera/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Filharmònica Alteanense Sociedad",
+   "municipio": "Altea",
+   "url": "http://www.sfaltea.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.sfaltea.com/agenda/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": true
+  },
+  {
+   "nombre": "Societat Artística Musical de Benifaió",
+   "municipio": "Benifaió",
+   "url": "https://www.benifaio.es/es/noticia/banda-sociedad-artistica-musical-benifaio",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.benifaio.es/es/pagina/agenda-actividades",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Instructiva Musical de Beniganim",
+   "municipio": "Beniganim",
+   "url": "https://www.facebook.com/p/SIM-de-Benig%C3%A0nim-100064486580716/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Lira i Casino Carcaixentí Sociedad Musical i Recreativa",
+   "municipio": "Carcaixent",
+   "url": "https://liracarcaixentina.org/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://liracarcaixentina.org/eventos",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical L'Artesana de Catarroja",
+   "municipio": "Catarroja",
+   "url": "http://www.lartesana.org",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.lartesana.org/calendari/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": true
+  },
+  {
+   "nombre": "Unió Musical Contestana",
+   "municipio": "Cocentaina",
+   "url": "http://www.uniomusicalcontestana.es",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://www.uniomusicalcontestana.es/concert-xxvii-campanya-musica-als-pobles-2022/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Corporació Musical La Pobla de Vallbona",
+   "municipio": "La Pobla De Vallbona",
+   "url": "http://corporaciomusicalpoblavallbona.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Torrent",
+   "municipio": "Torrent",
+   "url": "http://www.uniomusicaltorrent.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Ateneu Musical La Vila Joiosa",
+   "municipio": "La Vila Joiosa",
+   "url": "http://www.ateneulavila.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://www.ateneulavila.com/index.php/ca/escola-de-musica/calendari-academic",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Filarmónica Unión Musical Agost",
+   "municipio": "Agost",
+   "url": "https://www.facebook.com/p/Sociedad-Filarm%C3%B3nica-Uni%C3%B3n-Musical-Agost-100058955245198/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Unió Musical d'Alcoi",
+   "municipio": "Alcoi",
+   "url": "http://www.uniomusicaldalcoi.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Associació Musical Canalense",
+   "municipio": "Canals",
+   "url": "http://www.amcanalense.es",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Centre Musical Puig Campana de Finestrat",
+   "municipio": "Finestrat",
+   "url": "https://www.facebook.com/Centre-Musical-Puig-Campana-Finestrat-1924914750861832/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical d'Aldaia",
+   "municipio": "Aldaia",
+   "url": "https://umaldaia.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://umaldaia.com/index.php/calendario-del-curso-20-21/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Centro Instructivo Musical de Alfafar",
+   "municipio": "Alfafar",
+   "url": "http://www.cimalfafar.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Santa Cecília de Benicàssim",
+   "municipio": "Benicàssim",
+   "url": "http://www.santaceciliabenicassim.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Unió Musical de Carlet",
+   "municipio": "Carlet",
+   "url": "http://www.umcarlet.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Santa María del Puig",
+   "municipio": "El Puig",
+   "url": "http://www.sumpuig.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.sumpuig.com/copia-de-calendari-escolar",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical de Ibi",
+   "municipio": "Ibi",
+   "url": "http://www.unionmusicalibi.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical Santa Cecilia de Onda",
+   "municipio": "Onda",
+   "url": "https://www.unionmusicalonda.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.unionmusicalonda.com/programaciones/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Corporación Musical Primitiva de Alcoy",
+   "municipio": "Alcoi",
+   "url": "http://www.cimapolo.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical Lira Almussafense",
+   "municipio": "Almussafes",
+   "url": "https://www.liraalmussafense.com/",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Ateneu Musical i Cultural d'Albalat de la Ribera",
+   "municipio": "Albalat De La Ribera",
+   "url": "http://www.ateneualbalat.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://www.ateneualbalat.com/noticies",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Instructiva Musical de Tavernes de la Valldigna",
+   "municipio": "Tavernes De La Valldigna",
+   "url": "http://www.siumtv.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical d'Albaida l'Aranya",
+   "municipio": "Albaida",
+   "url": "https://www.umaranya.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical “La Primitiva” de Rafelbunyol",
+   "municipio": "Rafelbunyol",
+   "url": "http://www.primitivarafelbunyol.org",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical Banyeres de Mariola",
+   "municipio": "Banyeres De Mariola",
+   "url": "http://www.smbm.es",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://smbm.es/concert-destiu-2026-guerra-i-pau-divendres-17-de-juliol/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical L'Artística Manisense",
+   "municipio": "Manises",
+   "url": "http://www.artisticamanisense.org",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://artisticamanisense.org/programacio/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": true
+  },
+  {
+   "nombre": "Sociedad Unión Musical de Petrer",
+   "municipio": "Petrer",
+   "url": "https://www.facebook.com/unionmusicaldepetrer/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Artístic Musical de Tavernes Blanques",
+   "municipio": "Tavernes Blanques",
+   "url": "https://aamtblanques.es/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://aamtblanques.es/programacio/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Banda Primitiva de Paiporta",
+   "municipio": "Paiporta",
+   "url": "https://www.bandaprimitivadepaiporta.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://www.bandaprimitivadepaiporta.com/blog/",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Lírica i Musical de Benissa",
+   "municipio": "Benissa",
+   "url": "http://www.bandadebenissa.org",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.bandadebenissa.org/agenda",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical La Paz de Siete Aguas",
+   "municipio": "Siete Aguas",
+   "url": "https://www.smlapaz.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://www.smlapaz.com/noticias",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Centro Musical Paternense",
+   "municipio": "Paterna",
+   "url": "http://www.centromusicalpaternense.es",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://centromusicalpaternense.es/events/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Unió Artístico-Musical de Sollana",
+   "municipio": "Sollana",
+   "url": "https://sollanasuam.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://sollanasuam.com/concerts/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupación Musical Los Silos",
+   "municipio": "Burjassot",
+   "url": "http://www.amlossilos.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.amlossilos.com/escuela/calendario-lectivo/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical Santa Cecília d'Alcàsser",
+   "municipio": "Alcàsser",
+   "url": "http://www.somualcasser.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical \"El Xúquer\" - Sumacàrcer",
+   "municipio": "Sumacàrcer",
+   "url": "http://www.umelxuquer.org",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Ateneu Musical de Rafelguaraf",
+   "municipio": "Rafelguaraf",
+   "url": "https://www.ateneumusicalderafelguaraf.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://www.ateneumusicalderafelguaraf.com/noticies",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Associació Musical Ciutat de Benicarló",
+   "municipio": "Benicarló",
+   "url": "http://www.bandadebenicarlo.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.bandadebenicarlo.com/noticias/el-concert-som-patrimoni-a-la-placa-de-l-ajuntament",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical Santa Cecilia de Chelva",
+   "municipio": "Chelva",
+   "url": "http://www.bandachelva.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Joventut Musical d'Albal",
+   "municipio": "Albal",
+   "url": "https://www.sjmalbal.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://www.sjmalbal.com/noticies",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical de Betxí",
+   "municipio": "Betxí",
+   "url": "http://www.umbetxi.org/wp/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://www.umbetxi.org/wp/calendario-escolar/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical \"La Armónica\"",
+   "municipio": "Cox",
+   "url": "https://www.armonicadecox.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical La Lírica de Silla",
+   "municipio": "Silla",
+   "url": "https://liricadesilla.blogspot.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://liricadesilla.blogspot.com/",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical Santa Cecilia de Chera",
+   "municipio": "Chera",
+   "url": "http://www.santaceciliadechera.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://santaceciliadechera.wordpress.com/",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": true
+  },
+  {
+   "nombre": "Associació Musical Polinyenense ",
+   "municipio": "Polinyà de Xúquer",
+   "url": "https://uniomusicalpolinyanense.es/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Unió Musical Quartell",
+   "municipio": "Quartell",
+   "url": "http://www.uniomusicalquartell.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical \"La Aurora\" de Albatera",
+   "municipio": "Albatera",
+   "url": "http://www.umaurora.es",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://umaurora.es/calendario-y-horarios/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupación Artística Musical Dénia",
+   "municipio": "Dénia",
+   "url": "https://fembanda.org/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://fembanda.org/agenda",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": true
+  },
+  {
+   "nombre": "Associació Musical Filharmònica Rossellana",
+   "municipio": "Rossell",
+   "url": "http://www.bandarossell.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical La Lira de Villareal",
+   "municipio": "Villarreal",
+   "url": "https://umlaliraescola.wixsite.com/umlaliraescola",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://umlaliraescola.wixsite.com/umlaliraescola/activitats",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical Santa Cecilia de Requena",
+   "municipio": "Requena",
+   "url": "http://www.santaceciliaderequena.org",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical Santa Cecilia de Macastre",
+   "municipio": "Macastre",
+   "url": "https://www.smscmacastre.es/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.smscmacastre.es/actividades-coral",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Banda de Música del Círculo Católico de Torrent",
+   "municipio": "Torrent",
+   "url": "http://usuarios.lycos.es/circulocatolico/",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical d'Algemesí",
+   "municipio": "Algemesí",
+   "url": "http://www.smalgemesi.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://www.smalgemesi.com/noticies/concert-excelent-2026",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical Unión de Pescadores",
+   "municipio": "Valencia",
+   "url": "http://www.smup-elcasinet.org",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://www.smup-elcasinet.org/programa.html",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical Utielana",
+   "municipio": "Utiel",
+   "url": "http://www.unionmusicalutielana.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Artística Musical De Vilamarxant",
+   "municipio": "Vilamarxant",
+   "url": "http://www.uamvilamarxant.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Protectora Musical de Vallada",
+   "municipio": "Vallada",
+   "url": "http://www.upmvallada.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.upmvallada.com/ca/escola/calendari-escolar/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical L'Artística de Carlet",
+   "municipio": "Carlet",
+   "url": "http://www.amartistica.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://amartistica.com/escola/calendari-escolar/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical de Segorbe",
+   "municipio": "Segorbe",
+   "url": "http://www.smsegorbe.es",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://smsegorbe.es/2026/06/15/programa-de-intercambios-fsmcv/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Associació Cultural \"Amics de la Música\" ",
+   "municipio": "Sant Joan De Moro",
+   "url": "http://www.amicsdelamusica.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical Lira Relleuense",
+   "municipio": "Relleu",
+   "url": "http://www.competic.es/bandarelleu",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://www.competic.es/noticias/",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Associació Amics de la Música de Callosa d'en Sarrià",
+   "municipio": "Callosa d'en Sarrià",
+   "url": "http://www.amicsdelamusica.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Filharmònica Alcudiana",
+   "municipio": "L'Alcúdia",
+   "url": "http://www.filharmonicaalcudiana.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": " Sociedad Musical La Lira de Chulilla",
+   "municipio": "Chulilla",
+   "url": "http://laliradechulilla.weebly.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://laliradechulilla.weebly.com/programas.html",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Associació Musical Santa Cecília d'Almenara",
+   "municipio": "Almenara",
+   "url": "http://www.amscalmenara.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Unión Musical de L'Alcúdia de Crespins",
+   "municipio": "L'Alcúdia de Crespins",
+   "url": "https://www.facebook.com/UnionMusical.Hondon.de.los.Frailes/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Unió Musical Santa Cecília Barx",
+   "municipio": "Barx",
+   "url": "http://bandabarx.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://bandabarx.com/category/concerts-ca/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical \"La Lira\" de l'Alfàs del Pi",
+   "municipio": "L'Alfàs del Pi",
+   "url": "http://www.liralfas.org",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Unió Artística Musical Ontinyent",
+   "municipio": "Ontinyent",
+   "url": "http://www.suamontinyent.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.suamontinyent.com/programacion/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Instructiva del Obrero Agrícola y Musical de Benimámet",
+   "municipio": "Benimámet",
+   "url": "https://sioambenimamet.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://sioambenimamet.com/events/lista",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Asociación Músico Cultural Eldense Santa Cecilia",
+   "municipio": "Elda",
+   "url": "http://www.santaceciliaelda.es",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://santaceciliaelda.es/calendario/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Associació Musical Santa Cecília d'Albocàsser",
+   "municipio": "Albocàsser",
+   "url": "http://www.amscal.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Centre Artístic Cultural \"Verge de la Pau\"",
+   "municipio": "Agost",
+   "url": "https://www.cacvergedelapau.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://www.cacvergedelapau.com/ca/concert-monografic-ximo-cano/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Artístico-Musical Santa Cecília Bellreguard",
+   "municipio": "Bellreguard",
+   "url": "https://bandadebellreguard.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://bandadebellreguard.com/calendari-escolar-musica-bellreguard/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical de Moncada",
+   "municipio": "Moncada",
+   "url": "http://www.uniomusicalmoncada.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Atzeneta ",
+   "municipio": "Atzeneta d'Albaida",
+   "url": "https://www.facebook.com/uniomusicalatzenetadealbaida/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Unión Musical de Dolores",
+   "municipio": "Dolores",
+   "url": "http://convega.com/sumdolores/",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Associació Artístico-Musical d'Oliva",
+   "municipio": "Oliva",
+   "url": "http://www.aamoliva.org",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://aamoliva.org/2026/07/26/concert-destiu-efecto-2000-el-concert-que-no-et-pots-perdre/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Picanya",
+   "municipio": "Picanya",
+   "url": "https://www.uniomusicalpicanya.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.uniomusicalpicanya.com/calendari-escolar",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical de Gata de Gorgos",
+   "municipio": "Gata De Gorgos",
+   "url": "http://www.bandagata.blogspot.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "http://bandagata.blogspot.com/",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical \"La Nova\" de Quatretonda",
+   "municipio": "Quatretonda",
+   "url": "https://www.lanovadequatretonda.es/",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical Santa Cecília d'Ador",
+   "municipio": "Ador",
+   "url": "http://www.amsca.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Santa Cecília de Xilxes",
+   "municipio": "Xilxes",
+   "url": "http://www.unionmusicalxilxes.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://unionmusicalxilxes.com/es/eventos/banda",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical La Nucía",
+   "municipio": "La Nucía",
+   "url": "https://www.umlanucia.org/",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://www.umlanucia.org/blog",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical de Almoradí",
+   "municipio": "Almoradí",
+   "url": "https://bandalmoradi.es/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://bandalmoradi.es/calendario-escuela-musica-almoradi",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Unión Musical La Constancia",
+   "municipio": "Catral",
+   "url": "http://www.sumlaconstancia.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.sumlaconstancia.com/tag/programa/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupación Musical de Guardamar",
+   "municipio": "Guardamar Del Segura",
+   "url": "http://www.amguardamar.es",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://amguardamar.es/memoria-actividades/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Associació Musical El Verger",
+   "municipio": "El Verger",
+   "url": "http://www.musicalelverger.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Centre Instructiu i Musical de Massanassa",
+   "municipio": "Massanassa",
+   "url": "http://www.cimmassanassa.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://musicalmassanassa.com/concert-a-dos-bandes/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Asociación Centro Artístico Cultural de Tuéjar",
+   "municipio": "Tuéjar",
+   "url": "http://www.bandatuejar.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://www.bandatuejar.es/noticias",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical l'Horta de Sant Marcel·lí",
+   "municipio": "Valencia",
+   "url": "http://www.umlhorta.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Artistica y Cultural Unión Musical de Benetússer",
+   "municipio": "Benetússer",
+   "url": "http://www.unionmusicalbenetusser.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://unionmusicalbenetusser.com/programacion-general/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Benicadell",
+   "municipio": "Castelló de Rugat",
+   "url": "http://bumbenicadell.blogspot.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://bumbenicadell.blogspot.com/2010/05/peces-proxim-concert.html",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Ateneu Musical de Sueca",
+   "municipio": "Sueca",
+   "url": "http://ateneusueca.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://ateneusueca.com/index.php/2-uncategorised/73-activitats-curs-21-22",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Associació Musical Santa Cecília d'Alcalà de Xivert",
+   "municipio": "Alcalà de Xivert",
+   "url": "https://www.bandaalcaladexivert.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Joventut Musical Verge de l'Estrella de Gilet",
+   "municipio": "Gilet",
+   "url": "http://www.jmve.giletans.com/",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupación Musical de la Sociedad Cultural y Deportiva de Carolinas de Alicante",
+   "municipio": "Alicante",
+   "url": "https://scdcarolinas.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical d'Algímia",
+   "municipio": "Algímia d'Alfara",
+   "url": "http://www.umalgimia.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://www.umalgimia.com/concert_dos_bandes_2025.html",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical de Massarrojos",
+   "municipio": "Massarrojos",
+   "url": "http://agrupacio.massarrojos.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Santa Cecília de Castellar - l'Oliveral",
+   "municipio": "Castellar-L'Oliveral",
+   "url": "http://www.umcastellaroliveral.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Unió Musical de Catarroja",
+   "municipio": "Catarroja",
+   "url": "https://www.uniomusicalcatarroja.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.uniomusicalcatarroja.com/menú/programació/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Associació Unió Musical Bocairent",
+   "municipio": "Bocairent",
+   "url": "http://www.aumbocairent.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupación Musical \"Santa Bárbara\" de Piles",
+   "municipio": "Piles",
+   "url": "http://bandadepiles.wix.com/banda",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical Banda Santa Cecília d'Atzeneta",
+   "municipio": "Atzeneta Del Maestrat",
+   "url": "http://www.banda.atzeneta.org",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Nueva Unión Musical de Granja de Rocamora",
+   "municipio": "Granja De Rocamora",
+   "url": "http://www.snum.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://snum.es/noticias/",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical San Miguel de Salinas",
+   "municipio": "San Miguel De Salinas",
+   "url": "http://unionmusicalsanmigueldesalinas.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical Santa Cecilia Cortes de Pallás",
+   "municipio": "Cortes de Pallás",
+   "url": "https://www.facebook.com/umsccortesdepallas/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical Cultural de Teulada",
+   "municipio": "Teulada",
+   "url": "https://www.bandateulada.es/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.bandateulada.es/50e-programacio/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupación Musical Los Montesinos",
+   "municipio": "Los Montesinos",
+   "url": "https://ammontesinos.es/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://ammontesinos.es/agenda/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical Santa Cecília de Vilanova d'Alcolea",
+   "municipio": "Vilanova d'Alcolea",
+   "url": "http://www.bandavilanovadalcolea.es",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical La Pau Beneixama",
+   "municipio": "Beneixama",
+   "url": "http://www.smlapaubeneixama.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://www.smlapaubeneixama.com/categoria/noticies/concerts/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical Santa Cecília de Castalla",
+   "municipio": "Castalla",
+   "url": "http://www.bandacastalla.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupación Musical Las Cuevas",
+   "municipio": "Cuevas De Utiel",
+   "url": "https://www.facebook.com/agrupacion.lascuevas",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical La Paz De San Juan De Alicante",
+   "municipio": "San Juan De Alicante",
+   "url": "http://www.smlapazsanjuan.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Ateneu Musical de Cocentaina",
+   "municipio": "Cocentaina",
+   "url": "https://www.ateneucocentaina.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Associació Cultural La Roca - Banda de Música “La Lira\"",
+   "municipio": "Vilafamés",
+   "url": "https://larocavilafames.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Xeraco",
+   "municipio": "Xeraco",
+   "url": "http://www.umxeraco.com/",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical Poblados Marítimos",
+   "municipio": "Valencia",
+   "url": "http://www.pobladosmaritimos.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Unió Musical de La Canyada",
+   "municipio": "La Canyada",
+   "url": "http://www.sumcanyada.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Vallduxense",
+   "municipio": "La Vall d'Uixó",
+   "url": "http://unmuvall.blogspot.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://unmuvall.blogspot.com/2021/07/concert-destiu.html",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Artístico Musical El Trabajo de Xixona",
+   "municipio": "Xixona",
+   "url": "http://www.bandaxixona.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical d'Agullent",
+   "municipio": "Agullent",
+   "url": "http://www.amagullent.org",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupación Musical Carrera Fuente de San Luis",
+   "municipio": "Valencia",
+   "url": "http://sites.google.com/view/musicalsanluis/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://sites.google.com/view/musicalsanluis/inicio/actividad-reciente",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical L'Aliança de Mutxamel",
+   "municipio": "Mutxamel",
+   "url": "http://www.smlaalianza.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://smlaalianza.com/programacio-general-anual/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical de Planes",
+   "municipio": "Planes",
+   "url": "http://www.uniomusicaldeplanes.org",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Banda Instructiva Musical d'Alfarrasí",
+   "municipio": "Alfarrasí",
+   "url": "https://www.facebook.com/BandaInstructivaMusicalDAlfarrasi/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical L'Eliana",
+   "municipio": "L'Eliana",
+   "url": "http://www.uniomusical-leliana.es",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.uniomusical-leliana.es/escuela-musical/secretaria/calendario-escolar/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Alqueriense",
+   "municipio": "Alquerías del Niño Perdido",
+   "url": "http://www.umalqueriense.es",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.umalqueriense.es/entrades-concerts-i-activitats",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical la Lira de Quatretonda",
+   "municipio": "Quatretonda",
+   "url": "http://www.laliraquatretonda.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Centro Instructivo Musical Banda de Torrefiel",
+   "municipio": "Valencia",
+   "url": "http://www.bandatorrefiel.es",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Unión Musical de Crevillent",
+   "municipio": "Crevillent",
+   "url": "http://sumcrevillent.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical de Paiporta",
+   "municipio": "Paiporta",
+   "url": "http://www.umpaiporta.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Banda Artístico-Cultural de Montaverner",
+   "municipio": "Montaverner",
+   "url": "https://www.facebook.com/BACM-104147603006244/?fref=ts",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical Santa Cecilia de Canals",
+   "municipio": "Canals",
+   "url": "http://www.umsccanals.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical Santa Cecília del Grau",
+   "municipio": "Valencia",
+   "url": "http://www.santaceciliadelgrao.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Milamarina",
+   "municipio": "Miramar",
+   "url": "http://www.uniomusicalmilamarina.org",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://uniomusicalmilamarina.org/escola/activitats/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Centre Música i Dansa Natzaret",
+   "municipio": "Valencia",
+   "url": "http://www.centremusicanatzaret.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical La Amistad de Villafranqueza ",
+   "municipio": "Villafranqueza",
+   "url": "https://www.smlaamistad.es/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical Redován",
+   "municipio": "Redován",
+   "url": "http://www.convega.com/umredovan",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical San Fulgencio",
+   "municipio": "San Fulgencio",
+   "url": "http://www.umsf.es",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://umsf.es/calendar/calendario-eventos/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Covarxina",
+   "municipio": "Les Coves de Vinromà",
+   "url": "http://uniomusicalcovarxina.blogspot.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "http://uniomusicalcovarxina.blogspot.com/",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical de Vilafranca",
+   "municipio": "Vilafranca",
+   "url": "https://www.facebook.com/uniomusicaldevilafranca",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Associació Musical Grau de Gandia",
+   "municipio": "Grau de Gandia",
+   "url": "https://amgraugandia.weebly.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://amgraugandia.weebly.com/papers-seguumlent-concert.html",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Artístico Musical La Unió de Quart de Poblet",
+   "municipio": "Quart De Poblet",
+   "url": "https://launiodequart.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical y Cultural de Algorfa",
+   "municipio": "Algorfa",
+   "url": "https://www.smcalgorfa.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupación Musical San José de Pignatelli",
+   "municipio": "Valencia",
+   "url": "http://www.bandapignatelli.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Músical Ciudad de Asís",
+   "municipio": "Alicante",
+   "url": "http://www.umca.es",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://www.umca.es/agenda/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Orpesa",
+   "municipio": "Oropesa Del Mar",
+   "url": "http://www.facebook.com/uniomusicalorpesa",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Banda de Música \"La Lira\" de Rojales",
+   "municipio": "Rojales",
+   "url": "https://www.facebook.com/laliraderojales/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Banda Sinfónica Aldaia",
+   "municipio": "Aldaia",
+   "url": "https://bandasinfonicaldaia.es/",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://bandasinfonicaldaia.es/blog/",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Centre Instructiu Musical Castellar-Oliveral",
+   "municipio": "Castellar-L'Oliveral",
+   "url": "http://www.cimcastellaroliveral.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupación Musical Benicalap",
+   "municipio": "Valencia",
+   "url": "https://www.bandabenicalap.es/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.bandabenicalap.es/agenda-cultural/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Banda de Música Font d'En Segures de Benassal",
+   "municipio": "Benassal",
+   "url": "http://www.bandamusicalbenassal.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical Sant Isidre",
+   "municipio": "Valencia",
+   "url": "https://bandasantisidre.wordpress.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupación Musical Gayano LLuch",
+   "municipio": "Valencia",
+   "url": "http://www.bandagayano.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://www.bandagayano.com/pag-programacion-general-anual/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical Canet d'en Berenguer",
+   "municipio": "Canet d'en Berenguer",
+   "url": "https://societatmusicalcanet.jimdo.com/",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Asociación Musical Jalonense",
+   "municipio": "Xaló",
+   "url": "http://bandaxalo.blogspot.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "http://bandaxalo.blogspot.com/2025/01/blog-post.html",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical Mediterraneo La Vila Joiosa",
+   "municipio": "La Vila Joiosa",
+   "url": "https://www.ammlavila.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Els Poblets",
+   "municipio": "Els Poblets",
+   "url": "https://www.facebook.com/Uni%C3%B3-Musical-Els-Poblets-881430058607822/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical Barri de Malilla",
+   "municipio": "Valencia",
+   "url": "https://www.sociedadmusicalmalilla.es/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.sociedadmusicalmalilla.es/agenda/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Asociación Cultural Falla Jerònima Gales - Litògraf Pascual i Abad",
+   "municipio": "Valencia",
+   "url": "https://www.facebook.com/FallaGeneralBarroso/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical Vila de Càlig",
+   "municipio": "Càlig",
+   "url": "https://www.amusicalcalig.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://www.amusicalcalig.com/noticies",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Banda de Música Campanar ",
+   "municipio": "Valencia",
+   "url": "http://www.bandacampanar.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.bandacampanar.com/copia-de-actividades",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupación Musical \"La Banda\"",
+   "municipio": "Alfarrasí",
+   "url": "http://www.amlabanda.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical L'Illa de Benidorm",
+   "municipio": "Benidorm",
+   "url": "http://www.illabenidorm.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://illabenidorm.com/calendario-de-eventos/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": true
+  },
+  {
+   "nombre": "Associació Centre Musical de Beniopa",
+   "municipio": "Gandia",
+   "url": "https://www.bandabeniopa.es/",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical Ontinyent",
+   "municipio": "Ontinyent",
+   "url": "http://www.agrupaciomusicalontinyent.es",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical La Nova",
+   "municipio": "Banyeres De Mariola",
+   "url": "http://www.lanovabanyeres.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://lanovabanyeres.com/blog",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical de Beneixida",
+   "municipio": "Beneixida",
+   "url": "https://www.facebook.com/Agrupaciomusicaldebeneixida/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Filharmònica Borrianenca",
+   "municipio": "Burriana",
+   "url": "https://www.filharmonicadeborriana.es/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.filharmonicadeborriana.es/eventos",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical de la Salzadella",
+   "municipio": "La Salzadella",
+   "url": "http://www.umlasalzadella.com/p/inicio.html",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical Santa Ana de Zarra",
+   "municipio": "Zarra",
+   "url": "https://www.facebook.com/profile.php?id=100063121125360",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical Santa María Magdalena de Novelda",
+   "municipio": "Novelda",
+   "url": "http://www.bandamariamagdalena.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Asociación Cultural Aula de Música Divisi",
+   "municipio": "Valencia",
+   "url": "https://divisi.es/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://divisi.es/concert-3/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Associació Cultural Tot per la Música d'Ontinyent",
+   "municipio": "Ontinyent",
+   "url": "https://www.instagram.com/bso_ontinyent/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical de Massalfassar",
+   "municipio": "Massalfassar",
+   "url": "https://societatmusicalmassalfassar.wordpress.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Asociación Musical Santiago Apóstol Albatera",
+   "municipio": "Albatera",
+   "url": "http://santiagoapostolalbatera.es",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Asociación Musical La Sinfónica De Crevillent",
+   "municipio": "Crevillent",
+   "url": "https://www.sumcrevillent.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Instructiva Musical Sones de Sax",
+   "municipio": "Sax",
+   "url": "http://www.sonesdesax.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Artístico Musical Santa Cecilia de Domeño",
+   "municipio": "Domeño",
+   "url": "https://www.facebook.com/people/Sam-Sta-Cecilia-de-Dome%C3%B1o/100086226483736/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Escola Musical \"La Nova\" de l'Olleria",
+   "municipio": "L'Olleria",
+   "url": "https://www.facebook.com/aemlanova.lolleria",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical Ciudad de Torrevieja \"Los Salerosos\"",
+   "municipio": "Torrevieja",
+   "url": "https://www.salerosos.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical de Ademuz",
+   "municipio": "Ademuz",
+   "url": "https://www.facebook.com/SOCIEDAD-MUSICAL-DE-ADEMUZ-133256566270",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical Porteña",
+   "municipio": "Puerto De Sagunto",
+   "url": "http://www.launionmusical.org",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.launionmusical.org/escuela-musica/calendario.php",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical la Unió de Tres Forques",
+   "municipio": "Valencia",
+   "url": "http://www.smtresforques.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "http://www.smtresforques.com/agenda/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical de Mislata",
+   "municipio": "Mislata",
+   "url": "http://www.liceudemusicamislata.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://liceudemusicamislata.com/blog/",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical L'Harmonia d'Alacant",
+   "municipio": "Alicante",
+   "url": "http://www.lharmoniadalacant.com",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Sociedad Musical de San Antonio de Benagéber",
+   "municipio": "San Antonio de Benagéber",
+   "url": "https://socmusab.es/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://socmusab.es/calendario/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical l'Om de Picassent",
+   "municipio": "Picassent",
+   "url": "https://www.smlompicassent.com/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.smlompicassent.com/items",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": true
+  },
+  {
+   "nombre": "Unió Musical Santa Cecília de Les Useres",
+   "municipio": "Les Useres",
+   "url": "http://uniomusicalsantaceciliadelesuseres.wordpress.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://uniomusicalsantaceciliadelesuseres.wordpress.com/noticies/",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Asociación “Música Jove”",
+   "municipio": "Valencia",
+   "url": "http://www.musicajove.net",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.musicajove.net/index.php/la-amj/objetivos-y-actividades",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Asociación Musical La Torre",
+   "municipio": "Valencia",
+   "url": "http://www.asociacion-musical-la-torre.webnode.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Associació Musical Castàlia",
+   "municipio": "Castellón",
+   "url": "http://www.associaciomusicalcastalia.es",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.associaciomusicalcastalia.es/eventos",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical Festival Band de Xaló",
+   "municipio": "Xaló",
+   "url": "https://www.facebook.com/groups/132089910202",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical de Torrellano",
+   "municipio": "Torrellano",
+   "url": "http://unionmusicaltorrellano.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical de Benimuslem",
+   "municipio": "Benimuslem",
+   "url": "https://www.instagram.com/smbenimuslem/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Associació Musical de Guardamar de La Safor",
+   "municipio": "Guardamar de La Safor",
+   "url": "http://associaciomusicaldeguardamar.jimdo.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical Amics de la Música de Benifaraig",
+   "municipio": "Benifaraig",
+   "url": "https://www.societatmusicalbenifaraig.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://www.societatmusicalbenifaraig.com/blog",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical Serpis d'Alcoi",
+   "municipio": "Alcoi",
+   "url": "https://amserpis.wixsite.com/a-m-serpis",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unión Musical Sueños de Artista de Almedíjar",
+   "municipio": "Almedíjar",
+   "url": "https://www.facebook.com/UMSAAlmedijar/",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Ateneu Cultural Ciutat de Manises",
+   "municipio": "Manises",
+   "url": "http://www.ateneumanises.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical La Melodia d'Olocau",
+   "municipio": "Olocau",
+   "url": "https://www.amlamelodia.com",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://www.amlamelodia.com/2026/07/23/concert-destiu-2026/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Musical L'Altet",
+   "municipio": "Elche",
+   "url": "http://www.musicaltet.com",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupación Musical Acacias Picayo",
+   "municipio": "Valencia",
+   "url": "http://www.amusicalap.es",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Asociación Cultural Amigos de la Musica y la Danza de Orihuela",
+   "municipio": "Orihuela",
+   "url": "https://acamdo.es/",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Unió Musical Centre Històric de València",
+   "municipio": "Valencia",
+   "url": "http://www.uniomusicalcentrehistoric.es",
+   "responde": false,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Asociación Musical la Esperanza de Aspe",
+   "municipio": "Aspe",
+   "url": "http://amlaesperanza.com/es/",
+   "responde": true,
+   "tiene_agenda": false,
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Agrupació Musical Clau de Fa de Calp ",
+   "municipio": "Calpe",
+   "url": "https://musicalp-claudefa.blogspot.com/",
+   "responde": true,
+   "tiene_agenda": false,
+   "url_seccion": "https://musicalp-claudefa.blogspot.com/",
+   "tipo_seccion": "noticias",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Societat Coral el Micalet de València ",
+   "municipio": "Valencia",
+   "url": "https://elmicalet.cat/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://elmicalet.cat/concert-de-lorfeo-el-micalet-a-alcasser/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": false
+  },
+  {
+   "nombre": "Federació de Societats Musicals de la Comunitat Valenciana (FSMCV)",
+   "municipio": "Valencia",
+   "url": "https://fsmcv.org/",
+   "responde": true,
+   "tiene_agenda": true,
+   "url_seccion": "https://fsmcv.org/agenda/",
+   "tipo_seccion": "agenda/conciertos",
+   "conciertos_periodo": true
+  }
+ ]
+}
