@@ -5,9 +5,10 @@
  *   node tools/verificar-figuras.js
  *
  * No se fía de la teoría del motor: genera muchas preguntas de cada tipo y nivel,
- * las DIBUJA con VexFlow 4 (el de la web) y con VexFlow 5 (el de las fichas en
- * PDF) y lee lo dibujado —duración, puntillos, silencio, altura, plica, ligadura
- * y cifra de compás— para recalcular la respuesta con tablas escritas aparte.
+ * las DIBUJA con Verovio (el mismo dibujo en la web y en las fichas en PDF) y lee
+ * lo dibujado —duración, puntillos, silencio, altura, plica, ligadura y cifra de
+ * compás, con tools/lib-leer-figuras.js— para recalcular la respuesta con tablas
+ * escritas aparte.
  *
  * Comprueba:
  *   - que el nombre, el valor, la equivalencia o la suma que da el motor coinciden
@@ -20,15 +21,15 @@
  *   - que la ligadura de unión une notas iguales y la de expresión, distintas;
  *   - que las fracciones se escriben bien («⅔ de tiempo», «1 ½ tiempos»).
  *
- * Necesita red para cargar VexFlow 4.2.2 desde jsDelivr (como la web).
+ * No necesita servidor: las rutas http://tm.local/... se sirven desde el repositorio.
  */
 const { chromium } = require('playwright');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const ENGINE = path.join(ROOT, 'assets/js/figuras-engine.js');
-const VF5 = path.join(ROOT, 'node_modules/vexflow/build/cjs/vexflow.js');
-const VF4 = 'https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js';
+const ENGINE = 'assets/js/figuras-engine.js';
+const { cargarFicha } = require('./lib-ficha-verovio.js');
+const { fuente } = require('./lib-leer-figuras.js');
 
 /* Tablas propias, en dieciseisavos de negra (la semicorchea con doble puntillo = 7). */
 const DUR = { w: 64, h: 32, q: 16, '8': 8, '16': 4 };
@@ -90,13 +91,12 @@ function revisarPlicas(donde, notas) {
   });
 }
 
-async function auditar(browser, etiqueta, vexflow) {
+async function auditar(browser, etiqueta) {
   const p = await browser.newPage();
   const errs = [];
   p.on('pageerror', e => errs.push(e.message));
-  await p.setContent('<!doctype html><html><body><div id="z"></div></body></html>');
-  await p.addScriptTag(vexflow.startsWith('http') ? { url: vexflow } : { path: vexflow });
-  await p.addScriptTag({ path: ENGINE });
+  await cargarFicha(p, '<!doctype html><html><body><div id="z"></div></body></html>', [ENGINE]);
+  await p.evaluate(`window.__leerFiguras = ${fuente};`);
 
   const lotes = await p.evaluate(({ CASOS, SEMILLAS, FICHAS }) => {
     const T = window.tmFiguras, z = document.getElementById('z'), out = [];
@@ -107,7 +107,11 @@ async function auditar(browser, etiqueta, vexflow) {
         const d = document.createElement('div');
         z.appendChild(d);
         T.dibujar(d, T.specDe(it));
-        const r = { notas: d.__tmNotas, curvas: d.__tmCurvas, cifra: d.__tmCifra, barra: d.__tmBarra };
+        const l = window.__leerFiguras(d.querySelector('svg'));
+        const r = {
+          notas: l.notas.map(x => ({ duracion: x.duracion, silencio: x.silencio, claves: [x.clave], puntillos: x.puntillos, plica: x.plica })),
+          curvas: l.curvas, cifra: l.cifra, barra: l.compases > 1 ? l.primeroLleva : null,
+        };
         z.removeChild(d);
         return r;
       });
@@ -268,9 +272,8 @@ async function auditar(browser, etiqueta, vexflow) {
 
 (async () => {
   const browser = await chromium.launch();
-  const r4 = await auditar(browser, 'VexFlow 4 (web)', VF4);
-  const r5 = await auditar(browser, 'VexFlow 5 (PDF)', VF5);
+  const r1 = await auditar(browser, 'Verovio (web y fichas)');
   await browser.close();
-  console.log(`\n  ${r4.preguntas + r5.preguntas} preguntas · ${fallos} problema(s).`);
-  process.exit(fallos || r4.errs || r5.errs ? 1 : 0);
+  console.log(`\n  ${r1.preguntas} preguntas · ${fallos} problema(s).`);
+  process.exit(fallos || r1.errs ? 1 : 0);
 })().catch(e => { console.error(e); process.exit(1); });

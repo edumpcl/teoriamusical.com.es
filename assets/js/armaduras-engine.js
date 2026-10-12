@@ -1,4 +1,4 @@
-/* Motor de ejercicios de armaduras — identificar y dibujar */
+/* Motor de ejercicios de armaduras — identificar y dibujar (se dibuja con Verovio: tm-mei.js + tm-notacion.js) */
 (function () {
   'use strict';
 
@@ -33,14 +33,13 @@
     { pitch: "e/4", line: 4 }
   ];
 
-  function waitVex(cb) {
-    if (typeof Vex !== 'undefined') { cb(); return; }
-    var i = 0, iv = setInterval(function () {
-      i++;
-      if (typeof Vex !== 'undefined') { clearInterval(iv); cb(); }
-      else if (i > 30) clearInterval(iv);
-    }, 200);
+  /* Verovio se carga bajo demanda: el motor arranca cuando ya está. */
+  function esperarNotacion(cb) {
+    window.tmNotacion.listo().then(cb);
   }
+
+  /* Número de alteraciones con signo (+ sostenidos, - bemoles) de una tonalidad de KEYS */
+  function nAlteraciones(k) { return k.seq.length ? (k.seq[0].slice(-1) === '#' ? k.seq.length : -k.seq.length) : 0; }
 
   /* ── CSS compartido ─────────────────────────────────────────────────────── */
   var CSS_IDENTIFICAR = [
@@ -223,19 +222,13 @@
     }
 
     function renderStaff(q) {
-      elStaff.innerHTML = '';
-      var VF = Vex.Flow;
-      var rend = new VF.Renderer(elStaff, VF.Renderer.Backends.SVG);
-      rend.resize(200, 130);
-      var ctx = rend.getContext();
-      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var clef = 'treble';
+      var clef = 'sol';
       if (st.diff === 'hard') {
-        clef = ['treble','bass','alto'][Math.floor(Math.random() * 3)];
+        clef = ['sol', 'fa', 'do3'][Math.floor(Math.random() * 3)];
       }
-      var stave = new VF.Stave(10, 25, 180);
-      stave.addClef(clef).addKeySignature(q.keyDef.vex);
-      stave.setContext(ctx).draw();
+      elStaff.style.height = '130px';
+      window.tmNotacion.dibujarAlineado(elStaff, { clave: clef, armadura: nAlteraciones(q.keyDef), compases: [[]] },
+        { escala: 1.25, separacion: 0.25, top: 46, id: 'ari', alt: 'Pentagrama con una armadura' });
     }
 
     function nextQ() {
@@ -280,7 +273,7 @@
       });
     }
 
-    waitVex(nextQ);
+    esperarNotacion(nextQ);
   }
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -384,93 +377,53 @@
       renderM();
     }
 
+    /* La alteración de una jugada ('f/5/#') -> { acc: 's'|'f', loc } (loc 0 = línea inferior, de media en media línea) */
+    function aLibre(s, color) {
+      var p = s.split('/');
+      var line = 2;
+      for (var li = 0; li < LANES.length; li++) if (LANES[li].pitch === p[0] + '/' + p[1]) { line = LANES[li].line; break; }
+      var o = { acc: p[2] === '#' ? 's' : 'f', loc: Math.round((4 - line) * 2) };
+      if (color) o.color = color;
+      return o;
+    }
+    /* Posición de una línea (0 = la superior, 4 = la inferior, de media en media) dentro de elWrap: se mide sobre el dibujo */
+    function geom() {
+      var svg = elNotac.querySelector('svg');
+      var sr = svg.getBoundingClientRect(), wr = elWrap.getBoundingClientRect();
+      var g = window.tmNotacion.geometria(svg);
+      return { top: sr.top - wr.top + g.lineas[0], sp: (g.lineas[4] - g.lineas[0]) / 4 };
+    }
+    function yDeLinea(line) { var g = geom(); return g.top + line * g.sp; }
+
     function renderM() {
-      elNotac.innerHTML = '';
-      if (typeof Vex === 'undefined') return;
-      var VF = Vex.Flow;
+      elNotac.style.height = '120px';
       var containerW = elNotac.offsetWidth || elWrap.offsetWidth;
       if (!containerW) containerW = Math.min(window.innerWidth - 60, 500);
       var totalW = Math.min(Math.max(containerW, 200), 500);
-      var staveW = totalW - 20;
-      var rend = new VF.Renderer(elNotac, VF.Renderer.Backends.SVG);
-      rend.resize(totalW, 140);
-      var ctx = rend.getContext();
-      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new VF.Stave(10, 30, staveW);
-      stave.addClef('treble');
-      stave.setContext(ctx).draw();
-      currentStave = stave;
-      if (userDrawing.length > 0) {
-        var startX = stave.getX() + 55;
-        var spacing = 14;
-        for (var i = 0; i < userDrawing.length; i++) {
-          var parts = userDrawing[i].split('/');
-          var p = parts[0] + '/' + parts[1];
-          var alt = parts[2];
-          var laneY = 2;
-          for (var li = 0; li < LANES.length; li++) {
-            if (LANES[li].pitch === p) { laneY = LANES[li].line; break; }
-          }
-          VF.Glyph.renderGlyph(ctx, startX + i * spacing,
-            stave.getYForLine(laneY), 38,
-            alt === '#' ? 'accidentalSharp' : 'accidentalFlat');
-        }
-      }
+      /* el pentagrama llena el ancho: las alteraciones se dibujan una tras otra, en el orden en que se colocaron */
+      window.tmNotacion.dibujarAAncho(elNotac, { clave: 'sol', armaduraLibre: userDrawing.map(function (s) { return aLibre(s); }), compases: [[]] },
+        totalW - 20, { escala: 1.25, id: 'ard', alt: 'Pentagrama donde se dibuja la armadura' });
       var svg = elNotac.querySelector('svg');
-      if (svg) {
-        svg.setAttribute('viewBox', '0 0 ' + totalW + ' 140');
-        svg.style.width = '100%';
-        svg.style.height = 'auto';
-      }
+      svg.style.marginTop = Math.round(46 - window.tmNotacion.geometria(svg).lineas[0]) + 'px';
+      currentStave = true;
     }
 
     function renderLoupeStaff(pitch, accType) {
       var key = userDrawing.join(',') + '|' + pitch + accType;
       if (key === lastLoupeKey) return;
       lastLoupeKey = key;
-      elLstaff.innerHTML = '';
-      if (typeof Vex === 'undefined') return;
-      var VF = Vex.Flow;
-      var rend = new VF.Renderer(elLstaff, VF.Renderer.Backends.SVG);
-      rend.resize(300, 120);
-      var ctx = rend.getContext();
-      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new VF.Stave(10, 20, 280);
-      stave.addClef('treble');
-      stave.setContext(ctx).draw();
-
-      function lineForPitch(p) {
-        for (var li = 0; li < LANES.length; li++) {
-          if (LANES[li].pitch === p) return LANES[li].line;
-        }
-        return 2;
+      elLstaff.style.height = '90px';
+      var libres = userDrawing.map(function (s) { return aLibre(s); });
+      libres.push(aLibre(pitch + '/' + accType));
+      window.tmNotacion.dibujarAlineado(elLstaff, { clave: 'sol', armaduraLibre: libres, compases: [[]] },
+        { escala: 1.0, separacion: 0.25, top: 32, id: 'arl', alt: '' });
+      /* la alteración en preview, en dorado (Verovio no colorea las de una armadura: se tiñe en el SVG) */
+      var acc = elLstaff.querySelectorAll('.keySig .keyAccid');
+      if (acc.length) {
+        var u = acc[acc.length - 1];
+        u.setAttribute('fill', '#8b6914');
+        Array.prototype.forEach.call(u.querySelectorAll('*'), function (x) { x.setAttribute('fill', '#8b6914'); });
       }
-
-      var GSIZE = 38;
-      var startX = 82;
-      var spacing = 16;
-
-      /* Alteraciones ya colocadas — negro */
-      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      for (var i = 0; i < userDrawing.length; i++) {
-        var parts = userDrawing[i].split('/');
-        var p = parts[0] + '/' + parts[1];
-        var alt = parts[2];
-        VF.Glyph.renderGlyph(ctx, startX + i * spacing,
-          stave.getYForLine(lineForPitch(p)),
-          GSIZE, alt === '#' ? 'accidentalSharp' : 'accidentalFlat');
-      }
-
-      /* Alteración en preview — dorado */
-      ctx.setFillStyle('#8b6914'); ctx.setStrokeStyle('#8b6914');
-      VF.Glyph.renderGlyph(ctx, startX + userDrawing.length * spacing,
-        stave.getYForLine(lineForPitch(pitch)),
-        GSIZE, accType === '#' ? 'accidentalSharp' : 'accidentalFlat');
-
-      var svg = elLstaff.querySelector('svg');
-      var dispW = userDrawing.length > 0 ? '240' : '180';
-      var dispH = userDrawing.length > 0 ? '96' : '72';
-      if (svg) { svg.setAttribute('viewBox','0 0 300 120'); svg.setAttribute('width', dispW); svg.setAttribute('height', dispH); }
     }
 
     function attachStaffListener() {
@@ -484,23 +437,15 @@
         var clientY = e.touches ? e.changedTouches[0].clientY : e.clientY;
         var relY = clientY - wrapRect.top - (e.touches ? 40 : 0);
         var relX = clientX - wrapRect.left;
-        var svgElem = elNotac.querySelector('svg');
-        var svgOffsetY = svgElem ? (svgElem.getBoundingClientRect().top - wrapRect.top) : 15;
-        var svgScale = 1;
-        if (svgElem) {
-          var natW = parseFloat(svgElem.getAttribute('width') || '500');
-          var dispW = svgElem.getBoundingClientRect().width;
-          if (natW > 0 && dispW > 0) svgScale = dispW / natW;
-        }
         var best = null, bestDist = 9999;
         LANES.forEach(function (lane) {
-          var laneY = svgOffsetY + currentStave.getYForLine(lane.line) * svgScale;
+          var laneY = yDeLinea(lane.line);
           var dist = Math.abs(relY - laneY);
           if (dist < bestDist) { bestDist = dist; best = lane; }
         });
         if (best && bestDist < 30) {
           currentBest = best;
-          var finalY = svgOffsetY + currentStave.getYForLine(best.line) * svgScale;
+          var finalY = yDeLinea(best.line);
           elGhost.style.display = 'block';
           elGhost.style.top = finalY + 'px';
           elGhost.style.left = relX + 'px';
@@ -606,7 +551,7 @@
     }
 
     attachStaffListener();
-    waitVex(nextQ);
+    esperarNotacion(nextQ);
   }
 
   window.tmArIdentificar = tmArIdentificar;

@@ -33,8 +33,9 @@ const fs = require('fs');
 const sharp = require('sharp');
 
 const ROOT = path.join(__dirname, '..');
-const VEXFLOW_PATH = path.join(ROOT, 'node_modules/vexflow/build/cjs/vexflow.js');
-const OUT_DIR = path.join(ROOT, 'assets/img/escalas/fichas');
+const { cargarFicha } = require('./lib-ficha-verovio.js');
+/* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/escalas/fichas');
 
 /* ---------------------------------------------------------------- teoria */
 
@@ -230,57 +231,7 @@ function generarEjercicios(total, seed, familia, modo) {
 
 /* --------------------------------------------------------------- render */
 
-const RENDER_FN = `
-/* Un pentagrama por escala, a ancho completo. Las notas se colocan a mano, a
-   paso fijo, con TickContext: así una escala de 8 notas y la melódica de 15
-   quedan igual de ordenadas, y ficha y solución comparten maqueta. */
-function dibujarEscala(divId, ej, opts) {
-  const { Renderer, Stave, StaveNote, Accidental, TickContext, ModifierContext } = VexFlow;
-  const ROJO = '#c0392b';
-  const div = document.getElementById(divId);
-  const renderer = new Renderer(div, Renderer.Backends.SVG);
-  renderer.resize(opts.w, opts.h);
-  const ctx = renderer.getContext();
-  const clef = ej.clave === 'sol' ? 'treble' : 'bass';
-
-  const stave = new Stave(4, opts.y, opts.w - 10, { spaceAboveStaffLn: opts.arriba });
-  stave.addClef(clef);
-  if (opts.firma && ej.arm.n > 0) stave.addKeySignature(ej.arm.vex);
-  stave.setContext(ctx).draw();
-  const svg = div.querySelector('svg');
-  if (opts.firma && opts.rojo) {
-    Array.prototype.forEach.call(svg.querySelectorAll('.vf-keysignature *'), function (el) {
-      el.setAttribute('fill', ROJO); el.setAttribute('stroke', ROJO);
-    });
-  }
-
-  if (opts.notas) {
-    const x0 = stave.getNoteStartX();
-    // Aire al final: con 15 notas la última quedaba pegada a la barra final.
-    const fin = stave.getX() + stave.getWidth() - 22;
-    const paso = (fin - x0) / ej.notas.length;
-    ej.notas.forEach(function (n, i) {
-      const sn = new StaveNote({ keys: [n.key], duration: 'w', clef: clef });
-      let acc = null;
-      if (n.glyph) { acc = new Accidental(n.glyph); sn.addModifier(acc, 0); }
-      sn.setStave(stave);
-      sn.addToModifierContext(new ModifierContext());
-      const tc = new TickContext();
-      tc.addTickable(sn);
-      tc.preFormat();
-      tc.setX(x0 + paso * (i + 0.5) - x0);
-      if (opts.rojo) {
-        sn.setStyle({ fillStyle: ROJO, strokeStyle: ROJO });
-        if (acc) acc.setStyle({ fillStyle: ROJO, strokeStyle: ROJO });
-      }
-      sn.setContext(ctx).drawWithStyle();
-    });
-  }
-  svg.setAttribute('viewBox', '0 0 ' + opts.w + ' ' + opts.h);
-  svg.style.width = '100%';
-  svg.style.height = 'auto';
-}
-`;
+/* El dibujo de cada escala (Verovio) es el del generador de la web: assets/js/fichas-escalas-engine.js -> tmFichasEscalasTest.dibujarEscala. */
 
 /* ----------------------------------------------------------------- html */
 
@@ -392,14 +343,12 @@ async function generarFicha(browser, opts) {
 
   const page = await browser.newPage({ deviceScaleFactor: 3 });
   await page.setViewportSize({ width: 850, height: 1200 });
-  await page.setContent(construirHtml({ titulo, instrucciones, pie, solucion, modo, ejercicios }));
-  await page.addScriptTag({ path: VEXFLOW_PATH });
-  await page.addScriptTag({ content: RENDER_FN });
+  await cargarFicha(page, construirHtml({ titulo, instrucciones, pie, solucion, modo, ejercicios }), ['assets/js/fichas-escalas-engine.js']);
 
   for (let i = 0; i < ejercicios.length; i++) {
     const e = ejercicios[i];
     const escribir = modo !== 'identificar';
-    await page.evaluate(a => dibujarEscala(a[0], a[1], a[2]), ['c' + i, e, {
+    await page.evaluate(a => window.tmFichasEscalasTest.dibujarEscala(document.getElementById(a[0]), a[1], a[2]), ['c' + i, e, {
       ...PENTA,
       notas: !escribir || solucion,
       firma: escribir ? (solucion && e.conArmadura) : e.conArmadura,
@@ -413,15 +362,8 @@ async function generarFicha(browser, opts) {
   await page.pdf({ path: pdfPath, format: 'A4', printBackground: true, margin: { top: '0', bottom: '0', left: '0', right: '0' } });
   const paginas = Number((fs.readFileSync(pdfPath).toString('latin1').match(/\/Count\s+(\d+)/) || [])[1] || 0);
 
-  const svgs = await page.$$('.fila svg');
+  // Verovio recorta cada SVG a lo que se ve: no hay glifos cortados que buscar en los bordes (se revisa a ojo con --png).
   const cortes = [];
-  for (let i = 0; i < svgs.length; i++) {
-    const { data, info } = await sharp(await svgs[i].screenshot()).greyscale().raw().toBuffer({ resolveWithObject: true });
-    const tinta = fila => { for (let x = 0; x < info.width; x++) if (data[fila * info.width + x] < 160) return true; return false; };
-    const arriba = tinta(0) || tinta(1);
-    const abajo = tinta(info.height - 1) || tinta(info.height - 2);
-    if (arriba || abajo) cortes.push({ celda: i + 1, arriba, abajo });
-  }
 
   if (png) await page.screenshot({ path: path.join(OUT_DIR, nombre + '.png'), fullPage: true });
   if (!solucion) {

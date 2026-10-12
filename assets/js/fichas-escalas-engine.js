@@ -202,50 +202,33 @@
 
   /* ----------------------------------------------------------------- dibujo */
 
-  /* Notas colocadas a mano, a paso fijo: una escala de 8 notas y la melódica de
-     15 quedan igual de ordenadas, y ficha y solución comparten maqueta. */
+  /* Un pentagrama por escala, a ancho completo, dibujado con Verovio: una escala de 8 notas y la melódica de 15 quedan igual de ordenadas
+     (huecos invisibles al final hasta llenar el ancho), y ficha y solución comparten maqueta (los signos los fija el ejercicio: `mostrar`). */
   function dibujarEscala(div, ej, opts) {
-    var V = Vex.Flow;
+    var T = window.tmNotacion;
     div.innerHTML = '';
-    var W = opts.w, H = 104;
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(W, H);
-    var ctx = r.getContext();
-    var clef = ej.clave === 'sol' ? 'treble' : 'bass';
-    var stave = new V.Stave(4, 2, W - 10, { space_above_staff_ln: 3 });
-    stave.addClef(clef);
-    if (opts.firma && ej.arm.n > 0) stave.addKeySignature(ej.arm.vex);
-    stave.setContext(ctx).draw();
-
-    if (opts.notas) {
-      var x0 = stave.getNoteStartX();
-      // Aire al final: con 15 notas la última quedaba pegada a la barra final.
-      var fin = stave.getX() + stave.getWidth() - 22;
-      var paso = (fin - x0) / ej.notas.length;
-      ej.notas.forEach(function (n, i) {
-        var sn = new V.StaveNote({ keys: [n.key], duration: 'w', clef: clef });
-        if (n.glyph) sn.addModifier(new V.Accidental(n.glyph), 0);
-        sn.setStave(stave);
-        sn.addToModifierContext(new V.ModifierContext());
-        var tc = new V.TickContext();
-        tc.addTickable(sn);
-        tc.preFormat();
-        tc.setX(x0 + paso * (i + 0.5) - x0);
-        sn.setContext(ctx).draw();
-      });
-    }
-    var svg = div.querySelector('svg');
-    if (!svg) return;
+    var H = 104, TOPE = 34;
+    div.style.height = H + 'px';
+    var notas = opts.notas ? ej.notas.map(function (n) {
+      var q = n.key.split('/');
+      return { key: q[0] + (n.a > 0 ? '##'.slice(0, n.a) : n.a < 0 ? 'bb'.slice(0, -n.a) : '') + '/' + q[1], d: 'w', mostrar: !!n.glyph };
+    }) : [];
+    var fila = { clave: ej.clave === 'sol' ? 'sol' : 'fa', armadura: opts.firma && ej.arm.n > 0 ? (ej.arm.acc === '#' ? ej.arm.n : -ej.arm.n) : 0, compases: [notas] };
+    var res = T.dibujarAAncho(div, fila, opts.w - 10, { escala: 1.0, llenar: true, id: 'fes', alt: 'Pentagrama con una escala' });
+    var svg = res.elemento;
+    svg.style.display = 'block'; svg.style.height = 'auto';
+    svg.style.width = '100%';
+    // el dibujo se escala al ancho de la hoja: el hueco de arriba y el alto de la caja se escalan con él (la línea superior siempre en el mismo sitio)
+    var esc = svg.getBoundingClientRect().width / Number(svg.getAttribute('width'));
+    svg.style.margin = Math.round(TOPE * esc - T.geometria(svg).lineas[0]) + 'px 0 0';
+    div.style.height = Math.round(H * esc) + 'px';
     // En las soluciones de escribir, lo que escribe el alumno (armadura y notas) va en rojo.
     if (opts.rojo) {
-      Array.prototype.forEach.call(svg.querySelectorAll('.vf-stavenote *, .vf-keysignature *'), function (el) {
-        el.setAttribute('fill', ROJO);
-        el.setAttribute('stroke', ROJO);
+      Array.prototype.forEach.call(svg.querySelectorAll('.note, .keySig'), function (g) {
+        g.setAttribute('fill', ROJO);
+        Array.prototype.forEach.call(g.querySelectorAll('*'), function (el) { el.setAttribute('fill', ROJO); });
       });
     }
-    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-    svg.style.width = '100%';
-    svg.style.height = 'auto';
   }
 
   /* --------------------------------------------------------------------- UI */
@@ -304,11 +287,15 @@
     '}'
   ].join('\n');
 
-  window.tmFichasEscalasTest = { generarHoja: generarHoja, TIPOS: TIPOS, DIFICULTADES: DIFICULTADES, MODOS: MODOS };
+  window.tmFichasEscalasTest = { generarHoja: generarHoja, dibujarEscala: dibujarEscala, TIPOS: TIPOS, DIFICULTADES: DIFICULTADES, MODOS: MODOS };
 
   window.tmFichasEscalas = function (id, opciones) {
     var cont = document.getElementById(id);
-    if (!cont || typeof Vex === 'undefined') return;
+    if (!cont || !window.tmNotacion) return;
+    if (!window.tmNotacion.cargado()) {   // Verovio se carga bajo demanda
+      window.tmNotacion.listo().then(function () { window.tmFichasEscalas(id, opciones); });
+      return;
+    }
     if (!document.getElementById('tm-fe-css')) {
       var st = document.createElement('style');
       st.id = 'tm-fe-css';

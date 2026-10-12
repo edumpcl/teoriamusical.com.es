@@ -123,12 +123,9 @@
     document.head.appendChild(s);
   }
 
-  function waitVex(cb) {
-    if (typeof Vex !== 'undefined') { cb(); return; }
-    var i = 0, iv = setInterval(function () {
-      if (typeof Vex !== 'undefined') { clearInterval(iv); cb(); }
-      else if (++i > 40) clearInterval(iv);
-    }, 200);
+  /* Verovio se carga bajo demanda: el motor arranca cuando ya está. */
+  function esperarNotacion(cb) {
+    window.tmNotacion.listo().then(cb);
   }
 
   function tmEscMixtasMayores(containerId, tipo) {
@@ -223,41 +220,9 @@
     function renderStaff(q) {
       elStaff.innerHTML = '';
       elModeTag.textContent = q.useArm ? 'Con armadura' : 'Con alteraciones';
-      if (typeof Vex === 'undefined') return;
-      var VF = Vex.Flow;
-      var W = 520, H = 155;
-      var rend = new VF.Renderer(elStaff, VF.Renderer.Backends.SVG);
-      rend.resize(W, H);
-      var ctx = rend.getContext();
-      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-
-      var stave = new VF.Stave(10, 38, W - 20);
-      stave.addClef('treble');
-      if (q.useArm) stave.addKeySignature(q.scale.vex);
-      stave.setContext(ctx).draw();
-
-      var accMap = q.useArm ? q.scale.accOnKey : q.scale.acc;
-      var formatWidth = q.useArm ? W - 150 : W - 80;
-
-      var notes = q.scale.notes.map(function (pitch) {
-        var note = new VF.StaveNote({ keys: [pitch], duration: 'w' });
-        if (accMap && accMap[pitch]) {
-          note.addModifier(new VF.Accidental(accMap[pitch]), 0);
-        }
-        return note;
-      });
-
-      var voice = new VF.Voice({ num_beats: 8, beat_value: 4 }).setStrict(false);
-      voice.addTickables(notes);
-      new VF.Formatter().joinVoices([voice]).format([voice], formatWidth);
-      voice.draw(ctx, stave);
-
-      var svg = elStaff.querySelector('svg');
-      if (svg) {
-        svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-        svg.setAttribute('width', String(W));
-        svg.setAttribute('height', String(H));
-      }
+      var larga = q.scale.notes.length > 8;
+      window.tmNotacion.dibujarEscala(elStaff, { notas: q.scale.notes, acc: q.useArm ? q.scale.accOnKey : q.scale.acc, vex: q.scale.vex, conArmadura: q.useArm },
+        { ancho: larga ? 900 : 520, id: 'escalas-mayores-mixta' });
     }
 
     function renderOpts() {
@@ -410,7 +375,7 @@
       renderOpts();
     }
 
-    waitVex(nextQ);
+    esperarNotacion(nextQ);
   }
 
   window.tmEscMixtasMayores = tmEscMixtasMayores;

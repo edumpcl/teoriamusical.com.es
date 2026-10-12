@@ -15,7 +15,7 @@
   function accNum(s)   { return s === '##' ? 2 : s === '#' ? 1 : s === 'b' ? -1 : s === 'bb' ? -2 : 0; }
   function pitchVal(p) { return p.oct * 12 + NS[VF_NAMES.indexOf(p.vfn)]; }
 
-  var SVG_W = 520, SVG_H = 200, STAVE_Y = 55, STAVE_W = 480;
+  var SVG_W = 520, SVG_H = 160, TOPE = 40;   /* TOPE: altura (px) de la línea superior del pentagrama dentro del dibujo */
 
   var ROWS = [
     { vfn:'b', oct:5, line:-1.5 }, { vfn:'a', oct:5, line:-1   }, { vfn:'g', oct:5, line:-0.5 },
@@ -26,7 +26,6 @@
     { vfn:'a', oct:3, line: 6   }, { vfn:'g', oct:3, line: 6.5 }, { vfn:'f', oct:3, line: 7   },
     { vfn:'e', oct:3, line: 7.5 }, { vfn:'d', oct:3, line: 8   }, { vfn:'c', oct:3, line: 8.5 }
   ];
-  var FIRST_ROW_SVGY = STAVE_Y + ROWS[0].line * 10;
 
   /* posiciones canónicas de la armadura en clave de Sol */
   var SHARP_ORDER = [{vfn:'f',oct:5},{vfn:'c',oct:5},{vfn:'g',oct:5},{vfn:'d',oct:5},{vfn:'a',oct:4},{vfn:'e',oct:5},{vfn:'b',oct:4}];
@@ -321,49 +320,45 @@
 
     function sortedByPitch(a) { return a.slice().sort(function (x, y) { return pitchVal(x) - pitchVal(y); }); }
 
-    /* ── DIBUJO ── */
+    /* ── DIBUJO (Verovio) ── */
+    /* la armadura puesta por el alumno (cada alteración donde la colocó) -> armadura libre de tm-mei.js */
+    function libre(p, color) {
+      var o = { acc: p.acc === '#' ? 's' : 'f', loc: Math.round((4 - lineFor(p.vfn, p.oct)) * 2) };
+      if (color) o.color = color;
+      return o;
+    }
+    /* la escala puesta: cada nota con su alteración REAL (la que escribió el alumno, o la que ya valía: armadura / misma altura antes en el compás);
+       el signo escrito por el alumno se dibuja siempre, aunque sea redundante (becuadro:true) */
+    function eventos(lista) {
+      var estado = {};
+      return lista.map(function (p) {
+        var id = p.vfn + p.oct;
+        var alt = p.glyph ? accNum(p.glyph) : (id in estado ? estado[id] : (arm.altByLetter[p.vfn] || 0));
+        estado[id] = alt;
+        var ev = { key: p.vfn + (alt > 0 ? '##'.slice(0, alt) : alt < 0 ? 'bb'.slice(0, -alt) : '') + '/' + p.oct, d: 'w' };
+        if (p.glyph) ev.becuadro = true;
+        return ev;
+      });
+    }
+    function filaDe(acc, notas, extra) {
+      var f = { clave: 'sol', compases: [notas] };
+      if (phase === 'esc') f.armadura = arm.acc === '#' ? arm.n : -arm.n; else f.armaduraLibre = acc;
+      return f;
+    }
     function draw() {
       var elNot = document.getElementById(uid + '_not');
-      if (!elNot || typeof Vex === 'undefined') return;
-      elNot.innerHTML = '';
-      var V = Vex.Flow;
-      var staveW = vW - 40;
-      var r = new V.Renderer(elNot, V.Renderer.Backends.SVG);
-      r.resize(vW, SVG_H);
-      var ctx = r.getContext();
-      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(10, STAVE_Y, staveW);
-      stave.addClef('treble');
-      if (phase === 'esc' && arm.vex !== 'C') stave.addKeySignature(arm.vex);
-      stave.setContext(ctx).draw();
-
-      if (phase === 'arm') {
-        var startX = stave.getNoteStartX() + 6, sp = 16;
-        placedAcc.forEach(function (p, i) {
-          var line = lineFor(p.vfn, p.oct);
-          V.Glyph.renderGlyph(ctx, startX + i * sp, stave.getYForLine(line), 38,
-            p.acc === '#' ? 'accidentalSharp' : 'accidentalFlat');
-        });
-      } else if (placedNotes.length > 0) {
+      if (!elNot) return;
+      elNot.style.height = SVG_H + 'px';
+      var acc = phase === 'arm' ? placedAcc.map(function (p) { return libre(p); }) : [];
+      var notas = [];
+      if (phase === 'esc' && placedNotes.length > 0) {
         /* en secuencia (melódica) se respeta el orden de colocación; si no, por altura */
-        var ordered = seqMode() ? placedNotes.slice() : sortedByPitch(placedNotes);
-        var vfNotes = ordered.map(function (p) {
-          var n = new V.StaveNote({ keys: [p.vfn + '/' + p.oct], duration: 'w' });
-          if (p.glyph) n.addModifier(new V.Accidental(p.glyph), 0);
-          return n;
-        });
-        var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
-        voice.addTickables(vfNotes);
-        new V.Formatter().joinVoices([voice]).format([voice], staveW - 70 - arm.n * 12);
-        voice.draw(ctx, stave);
+        notas = eventos(seqMode() ? placedNotes.slice() : sortedByPitch(placedNotes));
       }
-
-      var svg = elNot.querySelector('svg');
-      if (svg) {
-        svg.setAttribute('viewBox', '0 0 ' + vW + ' ' + SVG_H);
-        svg.style.width = '100%'; svg.style.height = 'auto';
-        currentSvg = svg;
-      }
+      var res = window.tmNotacion.dibujarAAncho(elNot, filaDe(acc, notas), vW - 40, { escala: 1.0, id: uid, alt: 'Pentagrama donde se escribe la armadura y la escala' });
+      var svg = res.elemento;
+      svg.style.display = 'block'; svg.style.margin = Math.round(TOPE - window.tmNotacion.geometria(svg).lineas[0]) + 'px auto 0';
+      currentSvg = svg;
     }
 
     function lineFor(vfn, oct) {
@@ -374,66 +369,43 @@
     /* ── LUPA ── */
     function drawLoupe(row) {
       var elL = document.getElementById(uid + '_lstaff');
-      if (!elL || typeof Vex === 'undefined') return;
+      if (!elL) return;
       var k = phase + '|' + placedAcc.length + '|' + placedNotes.length + '|' + row.vfn + row.oct + activeTool;
       if (k === lastLoupeKey) return;
       lastLoupeKey = k;
-      elL.innerHTML = '';
-      var V = Vex.Flow;
-      var cw = 300;
-      var r = new V.Renderer(elL, V.Renderer.Backends.SVG);
-      r.resize(cw, 120);
-      var ctx = r.getContext();
-      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(10, 20, cw - 20);
-      stave.addClef('treble');
-      if (phase === 'esc' && arm.vex !== 'C') stave.addKeySignature(arm.vex);
-      stave.setContext(ctx).draw();
-
+      elL.style.height = '92px';
       if (phase === 'arm') {
-        var sx = stave.getNoteStartX() + 6, sp = 16;
-        placedAcc.forEach(function (p, i) {
-          V.Glyph.renderGlyph(ctx, sx + i * sp, stave.getYForLine(lineFor(p.vfn, p.oct)), 38,
-            p.acc === '#' ? 'accidentalSharp' : 'accidentalFlat');
-        });
-        ctx.setFillStyle('#8b6914'); ctx.setStrokeStyle('#8b6914');
-        V.Glyph.renderGlyph(ctx, sx + placedAcc.length * sp, stave.getYForLine(row.line), 38,
-          activeTool === '#' ? 'accidentalSharp' : 'accidentalFlat');
+        var libres = placedAcc.map(function (p) { return libre(p); });
+        libres.push(libre({ vfn: row.vfn, oct: row.oct, acc: activeTool }));
+        window.tmNotacion.dibujarAlineado(elL, { clave: 'sol', armaduraLibre: libres, compases: [[]] }, { escala: 1.0, separacion: 0.25, top: 34, id: uid + 'l', alt: '' });
+        /* la alteración en preview, en dorado (Verovio no colorea las de una armadura: se tiñe en el SVG) */
+        var kacc = elL.querySelectorAll('.keySig .keyAccid');
+        if (kacc.length) {
+          var u = kacc[kacc.length - 1];
+          u.setAttribute('fill', '#8b6914');
+          Array.prototype.forEach.call(u.querySelectorAll('*'), function (x) { x.setAttribute('fill', '#8b6914'); });
+        }
       } else {
         var preview = { vfn: row.vfn, oct: row.oct, glyph: activeTool === 'inherit' ? null : glyphFor(activeTool), _h: true };
         var all = seqMode() ? placedNotes.concat([preview]) : sortedByPitch(placedNotes.concat([preview]));
         if (seqMode() && all.length > 8) all = all.slice(all.length - 8);
-        var notes = all.map(function (p) {
-          var n = new V.StaveNote({ keys: [p.vfn + '/' + p.oct], duration: 'w' });
-          if (p._h && n.setKeyStyle) n.setKeyStyle(0, { fillStyle:'#8b6914', strokeStyle:'#8b6914' });
-          if (p.glyph) {
-            var a = new V.Accidental(p.glyph);
-            if (p._h && a.setStyle) a.setStyle({ fillStyle:'#8b6914', strokeStyle:'#8b6914' });
-            n.addModifier(a, 0);
-          }
-          return n;
-        });
-        var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
-        voice.addTickables(notes);
-        new V.Formatter().joinVoices([voice]).format([voice], cw - 90);
-        voice.draw(ctx, stave);
-      }
-      var svg = elL.querySelector('svg');
-      if (svg) {
-        var has = phase === 'arm' ? placedAcc.length > 0 : placedNotes.length > 0;
-        svg.setAttribute('viewBox', '0 0 ' + cw + ' 120');
-        svg.setAttribute('width', has ? 240 : 170);
-        svg.setAttribute('height', has ? 96 : 68);
+        var ev = eventos(all);
+        all.forEach(function (p, i) { if (p._h) ev[i].color = '#8b6914'; });
+        window.tmNotacion.dibujarAlineado(elL, { clave: 'sol', armadura: arm.acc === '#' ? arm.n : -arm.n, compases: [ev] }, { escala: 1.0, separacion: 0.25, top: 34, id: uid + 'l', alt: '' });
       }
     }
 
+    /* La fila bajo el puntero, medida sobre el pentagrama dibujado */
+    function medida() {
+      var sr = currentSvg.getBoundingClientRect(), g = window.tmNotacion.geometria(currentSvg);
+      return { sr: sr, top: g.lineas[0], sp: (g.lineas[4] - g.lineas[0]) / 4 };
+    }
     function getRow(clientY) {
       if (!currentSvg) return ROWS[10];
-      var sr = currentSvg.getBoundingClientRect();
-      if (!sr.width) return ROWS[10];
-      var sc = sr.width / vW;
-      var svgY = (clientY - sr.top) / sc;
-      var idx = Math.round((svgY - FIRST_ROW_SVGY) / 5);
+      var m = medida();
+      if (!m.sr.width) return ROWS[10];
+      var L = (clientY - m.sr.top - m.top) / m.sp;
+      var idx = Math.round((L - ROWS[0].line) * 2);
       return ROWS[Math.max(0, Math.min(ROWS.length - 1, idx))];
     }
 
@@ -448,9 +420,8 @@
         var cy = e.touches ? e.changedTouches[0].clientY : e.clientY;
         var cx = e.touches ? e.changedTouches[0].clientX : e.clientX;
         var row = getRow(cy); best = row;
-        var sr = currentSvg.getBoundingClientRect(), wr = elWrap.getBoundingClientRect();
-        var sc = sr.width / vW;
-        var lineY = (sr.top - wr.top) + (STAVE_Y + row.line * 10) * sc;
+        var m = medida(), wr = elWrap.getBoundingClientRect();
+        var lineY = (m.sr.top - wr.top) + m.top + row.line * m.sp;
         elHigh.style.display = 'block'; elHigh.style.top = (lineY - 1) + 'px';
         elLoupe.style.transform = ''; elLoupe.style.left = cx + 'px'; elLoupe.style.top = cy + 'px';
         elLoupe.style.display = 'block';
@@ -603,7 +574,8 @@
       document.getElementById(uid + '_restart').addEventListener('click', showModeScreen);
     }
 
-    showModeScreen();
+    /* Verovio se carga bajo demanda: el motor arranca cuando ya está. */
+    window.tmNotacion.listo().then(showModeScreen);
   }
 
   window.tmEsArmaduraEngine = tmEsArmaduraEngine;

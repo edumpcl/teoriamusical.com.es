@@ -15,8 +15,8 @@
    de la semicorchea (4 + 2 + 1 = 7) sigue siendo un número entero.
 
    La misma teoría y el mismo dibujo sirven para las fichas en PDF
-   (tools/generate-fichas-figuras.js) mediante window.tmFiguras. Funciona con
-   VexFlow 4 (web) y VexFlow 5 (PDF). Se audita con tools/verificar-figuras.js,
+   (tools/generate-fichas-figuras.js) mediante window.tmFiguras. Se dibuja con
+   Verovio (tm-mei.js + tm-notacion.js). Se audita con tools/verificar-figuras.js,
    que lee lo que se dibuja y lo recalcula con tablas propias. */
 (function () {
   'use strict';
@@ -502,104 +502,73 @@
 
   /* --------------------------------------------------------------- dibujo */
 
-  function VF() { return (window.Vex && window.Vex.Flow) || window.VexFlow; }
+  var DUR_MEI = { r: 'w', b: 'h', n: 'q', c: '8', sc: '16' };
+  var ROJO = '#c0392b';
 
-  /* spec = { compas?, elems: [{f, p, s, k?}], tie?: [i, j], slur?: [i, j], w?, rojo? }
-     Deja en div.__tmNotas lo que realmente se ha dibujado (para el verificador). */
+  /* spec = { compas?, elems: [{f, p, s, k?}], tie?: [i, j], ties?: [[i, j], ...], slur?: [i, j], barra?, w?, escala?, rojo? }
+     w = ancho FINAL del dibujo en px (el pentagrama se alarga hasta llenarlo); escala = tamaño (1 = 11 px entre líneas). */
   function dibujar(div, spec) {
-    var V = VF();
+    var T = window.tmNotacion;
     div.innerHTML = '';
-    var cifra = spec.compas ? 44 : 0;
-    var W = spec.w || Math.max(96, 34 + cifra + spec.elems.length * (spec.elems.length > 1 ? 58 : 60) + (spec.barra != null ? 24 : 0));
-    var H = 104;
-    var r = new V.Renderer(div, V.Renderer.Backends.SVG);
-    r.resize(W, H);
-    var ctx = r.getContext();
-    var stave = new V.Stave(4, 4, W - 8, { space_above_staff_ln: 3, spaceAboveStaffLn: 3 });
-    var NINGUNA = (V.BarlineType || (V.Barline && V.Barline.type)).NONE;
-    stave.setBegBarType(NINGUNA);
-    stave.setEndBarType(NINGUNA);
-    if (spec.compas) stave.addTimeSignature(spec.compas);
-    stave.setContext(ctx).draw();
-
-    var notas = spec.elems.map(function (e) {
-      var dur = FIG[e.f].vf + (e.p === 2 ? 'dd' : e.p === 1 ? 'd' : '') + (e.s ? 'r' : '');
-      var sn = new V.StaveNote({ keys: [e.s ? 'b/4' : (e.k || 'a/4')], duration: dur, clef: 'treble' });
-      if (!e.s && e.f !== 'r') {
-        var linea = sn.getKeyProps()[0].line;
-        sn.setStemDirection(linea >= 3 ? -1 : 1);
+    /* las miniaturas se dibujan sin estar aún en la página: para medir el pentagrama se cuelgan un momento fuera de pantalla */
+    var aparte = null;
+    if (!div.isConnected) { aparte = document.createElement('div'); aparte.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden'; document.body.appendChild(aparte); aparte.appendChild(div); }
+    var esc = spec.escala || 1;
+    var cifra = spec.compas ? spec.compas.split('/') : null;
+    var compuesto = !!(spec.compas && COMPASES[spec.compas].compuesto);
+    var n = spec.elems.length, corte = spec.barra == null ? n : spec.barra;
+    var grupo = compuesto ? 24 : 16;   // lo que abarca una barra: 3/8 en compuestos, 1/4 en simples (en semifusas)
+    // ligaduras de unión: una pareja, o varias seguidas (el trío del doble puntillo)
+    var pares = (spec.tie ? [spec.tie] : []).concat(spec.ties || []);
+    var empieza = {}, acaba = {};
+    pares.forEach(function (p) { empieza[p[0]] = true; acaba[p[1]] = true; });
+    var idBarra = 0;
+    // un compás de figuras: las corcheas y semicorcheas se unen por barras dentro de cada grupo, sin pasar por un silencio ni por la barra de compás
+    function parte(desde, hasta) {
+      var pos = 0, evs = [], antes = false, gAntes = -1;
+      for (var i = desde; i < hasta; i++) {
+        var e = spec.elems[i];
+        var ev = { key: e.s ? 'b/4' : (e.k || 'a/4'), d: DUR_MEI[e.f] };
+        if (e.p) ev.puntillo = e.p;
+        if (e.s) ev.silencio = true;
+        var g = Math.floor(pos / grupo);
+        var unible = !e.s && (e.f === 'c' || e.f === 'sc');
+        if (unible) { if (!(antes && gAntes === g)) idBarra++; ev.barra = idBarra; gAntes = g; }
+        antes = unible;
+        if (empieza[i] && acaba[i]) ev.union = 'm'; else if (empieza[i]) ev.union = 'i'; else if (acaba[i]) ev.union = 't';
+        evs.push(ev);
+        pos += valor(e);
       }
-      for (var i = 0; i < e.p; i++) V.Dot.buildAndAttach([sn], { all: true });
-      return sn;
-    });
-
-    var voz = new V.Voice(spec.compas || '4/4');
-    voz.setMode(V.Voice.Mode.SOFT);
-    // Con barra de compás, la barra va dentro de la voz y las barras de las corcheas
-    // se calculan compás a compás: nunca unen notas de dos compases distintos.
-    var corte = spec.barra == null ? notas.length : spec.barra;
-    voz.addTickables(corte < notas.length ? notas.slice(0, corte).concat([new V.BarNote()], notas.slice(corte)) : notas);
-    var compuesto = spec.compas && COMPASES[spec.compas].compuesto;
-    var opcionesBarras = {
-      groups: [compuesto ? new V.Fraction(3, 8) : new V.Fraction(1, 4)],
-      beam_rests: false, beamRests: false,
-      maintain_stem_directions: true, maintainStemDirections: true
-    };
-    var barras = [];
-    [notas.slice(0, corte), notas.slice(corte)].forEach(function (grupo) {
-      if (grupo.length > 1) barras = barras.concat(V.Beam.generateBeams(grupo, opcionesBarras));
-    });
-    var ancho = stave.getNoteEndX() - stave.getNoteStartX() - 14;
-    new V.Formatter().joinVoices([voz]).format([voz], Math.max(20, ancho));
-    voz.draw(ctx, stave);
-    barras.forEach(function (b) { b.setContext(ctx).draw(); });
-
-    var curvas = [];
-    if (spec.tie) {
-      var i0 = spec.tie[0], i1 = spec.tie[1];
-      new V.StaveTie({
-        first_note: notas[i0], last_note: notas[i1], first_indices: [0], last_indices: [0],
-        firstNote: notas[i0], lastNote: notas[i1], firstIndexes: [0], lastIndexes: [0]
-      }).setContext(ctx).draw();
-      curvas.push({ clase: 'union', desde: i0, hasta: i1 });
+      return evs;
     }
-    // spec.ties: varias ligaduras de unión seguidas (p.ej. el trío del doble
-    // puntillo: nota1-nota2-nota3), a diferencia de spec.tie, que es una sola.
-    (spec.ties || []).forEach(function (par) {
-      new V.StaveTie({
-        first_note: notas[par[0]], last_note: notas[par[1]], first_indices: [0], last_indices: [0],
-        firstNote: notas[par[0]], lastNote: notas[par[1]], firstIndexes: [0], lastIndexes: [0]
-      }).setContext(ctx).draw();
-      curvas.push({ clase: 'union', desde: par[0], hasta: par[1] });
-    });
+    var compases = [parte(0, corte)];
+    if (corte < n) compases.push(parte(corte, n));
+    var slurs = [];
     if (spec.slur) {
-      var j0 = spec.slur[0], j1 = spec.slur[1];
-      new V.Curve(notas[j0], notas[j1], { cps: [{ x: 0, y: 12 }, { x: 0, y: 12 }] }).setContext(ctx).draw();
-      curvas.push({ clase: 'expresion', desde: j0, hasta: j1 });
+      var pos0 = function (k) { return k < corte ? [0, k] : [1, k - corte]; };
+      var e0 = spec.elems[spec.slur[0]];
+      slurs.push({ de: pos0(spec.slur[0]), a: pos0(spec.slur[1]), curva: !e0.s && ('cdefgab'.indexOf((e0.k || 'a/4')[0]) + 7 * Number((e0.k || 'a/4')[2])) >= 34 ? 'above' : 'below' });   // plica abajo (de si4 hacia arriba) -> ligadura arriba
     }
-
-    var svg = div.querySelector('svg');
-    if (svg) {
-      if (spec.rojo) {
-        Array.prototype.forEach.call(svg.querySelectorAll('.vf-stavenote *, .vf-stavetie *, path'), function (el) {
-          if (el.closest && el.closest('.vf-stave')) return;
-          el.setAttribute('fill', el.getAttribute('fill') === 'none' ? 'none' : '#c0392b');
-          el.setAttribute('stroke', '#c0392b');
+    var fila = { clave: 'sol', sinClave: true, sinBarraFinal: true, compases: compases, slurs: slurs };
+    if (cifra) { fila.num = Number(cifra[0]); fila.den = Number(cifra[1]); }
+    var op = { escala: esc, id: 'fig', alt: 'Figuras en un pentagrama' };
+    var res = spec.w ? T.dibujarAAncho(div, fila, spec.w, Object.assign(op, { llenar: true })) : T.dibujarSync(div, fila, Object.assign(op, { separacion: 0.5 }));
+    var svg = res.elemento;
+    // el pentagrama siempre a la misma altura (Verovio recorta el SVG a lo que se ve) y con el mismo hueco arriba y abajo
+    svg.style.display = 'block';
+    svg.style.margin = Math.round(34 * esc - T.geometria(svg).lineas[0]) + 'px 0 0';
+    div.style.height = Math.round(104 * esc) + 'px';   // todas las figuras del mismo tamaño miden lo mismo: los pentagramas quedan a la misma altura
+    if (spec.rojo) {
+      Array.prototype.forEach.call(svg.querySelectorAll('.note, .rest, .tie, .slur, .beam'), function (g) {
+        g.style.color = ROJO;
+        g.setAttribute('color', ROJO);
+        Array.prototype.forEach.call(g.querySelectorAll('*'), function (el) {
+          if (el.getAttribute('fill') && el.getAttribute('fill') !== 'none') el.setAttribute('fill', ROJO);
+          if (el.getAttribute('stroke') && el.getAttribute('stroke') !== 'none') el.setAttribute('stroke', ROJO);
         });
-      }
-      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-      svg.style.width = '100%';
-      svg.style.height = 'auto';
-      svg.style.maxWidth = Math.round(W * 1.15) + 'px';
+      });
     }
-    div.__tmNotas = notas.map(function (sn) {
-      return {
-        duracion: sn.getDuration(), silencio: sn.isRest(), claves: sn.getKeys(),
-        puntillos: sn.getModifiersByType ? sn.getModifiersByType('Dot').length : 0,
-        plica: sn.getStemDirection ? (sn.hasStem() ? sn.getStemDirection() : 0) : 0
-      };
-    });
-    div.__tmCurvas = curvas;
+    if (aparte) { aparte.removeChild(div); document.body.removeChild(aparte); }
     div.__tmCifra = spec.compas || null;
     div.__tmBarra = spec.barra == null ? null : spec.barra;
   }
@@ -678,10 +647,10 @@
     '.tm-fg-op-fig.tm-ko,.tm-fg-op-grupo.tm-ko{background:#ffebee!important;border-color:#c0392b!important;color:#1a1208!important;}',
     '.tm-fg-op[disabled]{cursor:default;}',
     '.tm-fg-op-fig{display:flex;flex-direction:column;align-items:center;padding:6px 10px;min-width:96px;flex:1 1 calc(50% - 10px);}',
-    '.tm-fg-op-fig .tm-fg-mini{width:72px;}',
+    '.tm-fg-op-fig .tm-fg-mini{width:auto;flex:none;}',
     '.tm-fg-op-fig small{font-size:.72rem;font-weight:600;line-height:1.2;}',
     '.tm-fg-op-grupo{min-width:150px;flex:1 1 calc(50% - 10px);}',
-    '.tm-fg-op-grupo .tm-fg-mini{width:150px;}',
+    '.tm-fg-op-grupo .tm-fg-mini{width:auto;flex:none;}',
     '.tm-fg-fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1;font-size:.8em;}',
     '.tm-fg-fr sup,.tm-fg-fr sub{position:static;font-size:1em;line-height:1.05;}',
     '.tm-fg-fr sup{border-bottom:1.5px solid currentColor;padding:0 1px;}',
@@ -760,19 +729,23 @@
   function mini(sim) {
     var d = document.createElement('div');
     d.className = 'tm-fg-mini';
-    dibujar(d, { elems: [sim], w: 96 });
+    dibujar(d, { elems: [sim], w: 72, escala: 0.75 });
     return d;
   }
   function miniGrupo(elems, ties) {
     var d = document.createElement('div');
     d.className = 'tm-fg-mini tm-fg-mini-grupo';
-    dibujar(d, { elems: elems, ties: ties });
+    dibujar(d, { elems: elems, ties: ties, escala: 0.75 });
     return d;
   }
 
   window.tmFigurasEjercicio = function (id, tipo) {
     var cont = document.getElementById(id);
-    if (!cont || !VF() || !MODOS[tipo]) return;
+    if (!cont || !window.tmNotacion || !MODOS[tipo]) return;
+    if (!window.tmNotacion.cargado()) {   // Verovio se carga bajo demanda
+      window.tmNotacion.listo().then(function () { window.tmFigurasEjercicio(id, tipo); });
+      return;
+    }
     if (!document.getElementById('tm-fg-css')) {
       var st = document.createElement('style');
       st.id = 'tm-fg-css';

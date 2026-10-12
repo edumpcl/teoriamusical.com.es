@@ -128,6 +128,18 @@
    */
   function dibujarAAncho(contenedor, fila, ancho, op) {
     op = Object.assign({}, op || {});
+    /* op.llenar: si ni con la mayor separación llega al ancho, se añaden al compás huecos invisibles (<space>) hasta que llegue: la escala
+       de 8 notas ocupa el mismo ancho que la de 15, con las notas al mismo paso */
+    if (op.llenar && fila.compases && !fila.pentagramas) {
+      var rel = function (k) {
+        var cs = fila.compases.map(function (c) { return c.slice(); });
+        for (var j = 0; j < k; j++) cs[cs.length - 1].push({ espacio: true, d: 'w' });
+        return Object.assign({}, fila, { compases: cs });
+      };
+      var k = 0;
+      while (k < 8 && svgSync(rel(k), Object.assign({}, op, { separacion: 1.0 })).ancho < ancho) k++;
+      fila = rel(k);
+    }
     var lo = 0.15, hi = 1.0, elegida = hi;
     if (svgSync(fila, Object.assign({}, op, { separacion: hi })).ancho > ancho) {
       if (svgSync(fila, Object.assign({}, op, { separacion: lo })).ancho > ancho) elegida = lo;
@@ -145,6 +157,37 @@
     return r;
   }
 
+  /**
+   * La escala de un ejercicio de escalas (escalas-*-engine.js): `e` = { notas: ['a/3', ...], acc: mapa {'f/4': '#'} o lista por posicion, vex: 'Bb',
+   * conArmadura: true|false }. Los signos de `acc` son ABSOLUTOS ('#', 'b', 'n' natural, '##', 'bb'); las notas sin signo mantienen lo que
+   * llevaba la misma altura antes en el compas (o lo de la armadura): de ahi se saca la alteracion real de cada nota y es tm-mei.js quien
+   * decide que signos se escriben (regla del compas). `op`: ancho (px maximo), alto, top, escala, id, alt.
+   */
+  var ARMADURA_N = { C: 0, G: 1, D: 2, A: 3, E: 4, B: 5, 'F#': 6, 'C#': 7, F: -1, Bb: -2, Eb: -3, Ab: -4, Db: -5, Gb: -6, Cb: -7 };
+  function dibujarEscala(contenedor, e, op) {
+    op = op || {};
+    var n = e.conArmadura ? ARMADURA_N[e.vex] : 0;
+    var sost = 'fcgdaeb', bem = 'beadgcf';
+    var estado = {}, lista = Array.isArray(e.acc);
+    var VAL = { '#': 1, b: -1, n: 0, '##': 2, bb: -2 };
+    var teclas = e.notas.map(function (p, i) {
+      var q = p.split('/'), letra = q[0], oct = q[1], id = letra + oct;
+      var simbolo = lista ? e.acc[i] : (e.acc && e.acc[p]);
+      var alt;
+      if (simbolo) alt = VAL[simbolo];
+      else if (id in estado) alt = estado[id];
+      else alt = n > 0 && sost.slice(0, n).indexOf(letra) >= 0 ? 1 : n < 0 && bem.slice(0, -n).indexOf(letra) >= 0 ? -1 : 0;
+      estado[id] = alt;
+      return { key: letra + (alt > 0 ? '##'.slice(0, alt) : alt < 0 ? 'bb'.slice(0, -alt) : '') + '/' + oct, d: 'w' };
+    });
+    contenedor.style.height = (op.alto || 135) + 'px';
+    var fila = { clave: 'sol', armadura: n, compases: [teclas] };
+    var r = dibujarAAncho(contenedor, fila, op.ancho || 520, { escala: op.escala || 0.95, id: op.id || 'esc', alt: op.alt || 'Escala en clave de sol' });
+    var g = geometria(r.elemento);
+    r.elemento.style.display = 'block'; r.elemento.style.margin = Math.round((op.top || 42) - g.lineas[0]) + 'px auto 0';
+    return r;
+  }
+
   /** Los compases de un dibujo: [{ izq, der }] en px relativos a la esquina izquierda del <svg> (de las lineas del pentagrama de cada uno). */
   function compases(el) {
     var caja = el.getBoundingClientRect();
@@ -156,6 +199,6 @@
 
   raiz.tmNotacion = {
     listo: listo, cargado: function () { return !!toolkit; }, mei: mei,
-    svg: svg, svgSync: svgSync, dibujar: dibujar, dibujarSync: dibujarSync, dibujarAlineado: dibujarAlineado, dibujarAAncho: dibujarAAncho, compases: compases, geometria: geometria, VERSION: VERSION
+    svg: svg, svgSync: svgSync, dibujar: dibujar, dibujarSync: dibujarSync, dibujarAlineado: dibujarAlineado, dibujarAAncho: dibujarAAncho, dibujarEscala: dibujarEscala, compases: compases, geometria: geometria, VERSION: VERSION
   };
 })(typeof self !== 'undefined' ? self : this);

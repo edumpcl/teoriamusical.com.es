@@ -36,7 +36,9 @@ const ACC_MEI = { 1: 's', '-1': 'f', 0: 'n', 2: 'x', '-2': 'ff' };   // OJO: «s
 const MEI_ACC = { s: 1, f: -1, n: 0, x: 2, ff: -2 };
 const ACC_TXT = { 1: '#', '-1': 'b', 0: '', 2: '##', '-2': 'bb' };
 const ACC_GLIFO = { 1: 'E262', '-1': 'E260', 0: 'E261', 2: 'E263', '-2': 'E264' };
-const durTotal = (e) => (e.gracia ? 0 : DUR[e.d] * (e.puntillo ? 1.5 : 1));   // una nota de adorno no ocupa tiempo
+/** puntillos de una figura: true/1 -> 1, 2 -> doble puntillo */
+const PUNTILLOS = (p) => (p === 2 ? 2 : p ? 1 : 0);
+const durTotal = (e) => (e.gracia ? 0 : DUR[e.d] * [1, 1.5, 1.75][PUNTILLOS(e.puntillo)]);   // una nota de adorno no ocupa tiempo
 /** 'd#/5' -> { letra: 'd', alt: 1, oct: 5 } */
 function parseKey(key) {
   const m = /^([a-g])(##|bb|#|b)?\/(\d)$/.exec(key);
@@ -53,10 +55,10 @@ function alteraciones(fila) {
   return fila.compases.map((c) => {
     const estado = {};
     return c.map((e) => {
-      if (e.silencio) return null;
+      if (e.silencio || e.espacio) return null;
       const k = parseKey(e.key), id = k.letra + k.oct;
       const vigente = id in estado ? estado[id] : altArmadura(fila.armadura || 0, k.letra);
-      const muestra = k.alt !== vigente || !!e.becuadro;
+      const muestra = typeof e.mostrar === 'boolean' ? e.mostrar : (k.alt !== vigente || !!e.becuadro);   // mostrar: el ejercicio decide si lleva signo (si no, la regla del compas)
       estado[id] = k.alt;
       return muestra ? ACC_MEI[k.alt] : null;
     });
@@ -93,7 +95,7 @@ function aMEI(fila) {
       ids[`${i},${j}`] = id;
       if (x.orna) ornamentos.push({ en: i, txt: ornaMEI(x.orna).replace('@ID@', id) });
       if (x.signo) ornamentos.push({ en: i, txt: `<repeatMark func="${x.signo}" startid="#${id}" place="above"/>` });
-      const dur = `dur="${DUR_MEI[x.d]}"${x.puntillo ? ' dots="1"' : ''}${x.gracia ? ` grace="${x.gracia}"` : ''}`;
+      const dur = `dur="${DUR_MEI[x.d]}"${x.puntillo ? ` dots="${PUNTILLOS(x.puntillo)}"` : ''}${x.gracia ? ` grace="${x.gracia}"` : ''}`;
       if (x.espacio) return `<space xml:id="${id}" ${dur}/>`;   // hueco invisible que ocupa tiempo (el ejercicio lo rellena el alumno)
       if (x.silencio) return `<rest xml:id="${id}" ${dur}${x.color ? ` color="${x.color}"` : ''}/>`;
       const p = parseKey(x.key), a = acc[i][j];
@@ -138,9 +140,11 @@ function aMEI(fila) {
   }).join('');
   const metro = !fila.num ? '' : fila.simbolo ? ` meter.count="${fila.num}" meter.unit="${fila.den}" meter.sym="${fila.simbolo}"` : ` meter.count="${fila.num}" meter.unit="${fila.den}"`;
   return '<?xml version="1.0" encoding="UTF-8"?><mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="5.0"><meiHead><fileDesc><titleStmt><title/></titleStmt><pubStmt/></fileDesc></meiHead><music><body><mdiv><score><scoreDef><staffGrp>'
-    + `<staffDef n="1" lines="5" clef.shape="${claveDe(fila).shape}" clef.line="${claveDe(fila).line}"${fila.sinClave ? ' clef.visible="false"' : ''}${armaduraMEI(fila.armadura || 0)}${metro}/></staffGrp></scoreDef><section>${medidas}</section></score></mdiv></body></music></mei>`;
+    + `<staffDef n="1" lines="5" clef.shape="${claveDe(fila).shape}" clef.line="${claveDe(fila).line}"${fila.sinClave ? ' clef.visible="false"' : ''}${fila.armaduraLibre ? '' : armaduraMEI(fila.armadura || 0)}${metro}>${fila.armaduraLibre ? armaduraLibreMEI(fila.armaduraLibre) : ''}</staffDef></staffGrp></scoreDef><section>${medidas}</section></score></mdiv></body></music></mei>`;
 }
 
+/** Armadura LIBRE (ejercicios de dibujar armaduras): cada alteracion donde diga el alumno y en el orden en que la puso. [{ acc: 's'|'f', loc: 0 = linea inferior, de media en media linea, color? }] */
+const armaduraLibreMEI = (l) => (l.length ? `<keySig>${l.map((x) => `<keyAccid accid="${x.acc}" loc="${x.loc}"${x.color ? ` color="${x.color}"` : ''}/>`).join('')}</keySig>` : '');
 /**
  * Un SISTEMA de varios pentagramas (piano: clave de sol y de fa con llave) con ACORDES.
  *   { armadura, num?, den?, llave: true, barraFinal: 'end'?,
@@ -160,7 +164,7 @@ function aMEIsistema(s) {
   const pentagrama = (p, n, i) => {
     const estado = {};
     const evs = p.compases[i].map((x) => {
-      const dur = `dur="${DUR_MEI[x.d]}"${x.puntillo ? ' dots="1"' : ''}`;
+      const dur = `dur="${DUR_MEI[x.d]}"${x.puntillo ? ` dots="${PUNTILLOS(x.puntillo)}"` : ''}`;
       if (x.silencio) return `<rest xml:id="n${k++}" ${dur}${x.color ? ` color="${x.color}"` : ''}/>`;
       const notas = x.notas.map((nota) => {
         // una nota es 'c/4' o { key: 'c/4', color } (para pintar una sola nota del acorde)

@@ -111,7 +111,7 @@
     });
   }
 
-  var SVG_W = 520, SVG_H = 200, STAVE_Y = 55, STAVE_W = 480;
+  var SVG_W = 520, SVG_H = 160, STAVE_W = 480, TOPE = 40;   /* TOPE: altura (px) de la línea superior del pentagrama dentro del dibujo */
 
   var ROWS = [
     { vfn:'b', n:6, oct:5, line:-1.5 },
@@ -136,7 +136,6 @@
     { vfn:'d', n:1, oct:3, line: 8   },
     { vfn:'c', n:0, oct:3, line: 8.5 }
   ];
-  var FIRST_ROW_SVGY = STAVE_Y + ROWS[0].line * 10; /* 55 + (-1.5)*10 = 40 */
 
   var CSS = [
     '.tm-ec-wrap *{box-sizing:border-box;margin:0;padding:0;}',
@@ -314,120 +313,61 @@
       return arr.slice().sort(function (a, b) { return pitchVal(a) - pitchVal(b); });
     }
 
+    /* Las notas puestas, cada una con su alteración. En secuencia (asc+desc en un solo compás) llevan signo las que dice measureAccidentals
+       (♯/♭ y los becuadros que cancelan una alteración anterior del compás); si no, cada nota con alteración lleva SIEMPRE su signo. */
+    function eventos(lista, seq) {
+      var glifos = seq ? measureAccidentals(lista) : null;
+      return lista.map(function (p, i) {
+        return { key: p.vfn + (accStr(p.acc) || '') + '/' + p.oct, d: 'w', mostrar: seq ? glifos[i] !== null : !!p.acc };
+      });
+    }
+
     function drawStaff() {
       var elNot = document.getElementById(uid + '_not');
-      if (!elNot || typeof Vex === 'undefined') return;
-      elNot.innerHTML = '';
-
+      if (!elNot) return;
+      elNot.style.height = SVG_H + 'px';
       /* en modo secuencia se respeta el orden de colocación (asc + desc) */
       var sorted = isSeq() ? placedNotes.slice() : sortedByPitch(placedNotes);
-
-      var V = Vex.Flow;
-      var r = new V.Renderer(elNot, V.Renderer.Backends.SVG);
-      r.resize(vW, SVG_H);
-      var ctx = r.getContext();
-      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(10, STAVE_Y, vSW);
-      stave.addClef('treble').setContext(ctx).draw();
-
-      if (sorted.length > 0) {
-        var seq = isSeq();
-        /* en secuencia (asc+desc en un solo compás) se dibujan ♯/♭ y los
-           becuadros que cancelan una alteración anterior del mismo compás */
-        var glyphs = seq ? measureAccidentals(sorted) : null;
-        var vfNotes = sorted.map(function (p, i) {
-          var n = new V.StaveNote({ keys: [p.vfn + '/' + p.oct], duration: 'w' });
-          var glyph = seq ? glyphs[i] : accStr(p.acc);
-          if (glyph) n.addModifier(new V.Accidental(glyph), 0);
-          return n;
-        });
-        var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
-        voice.addTickables(vfNotes);
-        new V.Formatter().joinVoices([voice]).format([voice], vSW - 60);
-        voice.draw(ctx, stave);
-      }
-
-      var svg = elNot.querySelector('svg');
-      if (svg) {
-        svg.setAttribute('viewBox', '0 0 ' + vW + ' ' + SVG_H);
-        svg.style.width = '100%'; svg.style.height = 'auto';
-        currentSvg = svg;
-      }
+      var res = window.tmNotacion.dibujarAAncho(elNot, { clave: 'sol', compases: [eventos(sorted, isSeq())] }, vSW - 20, { escala: 1.0, id: uid, alt: 'Pentagrama donde se escribe la escala' });
+      var svg = res.elemento;
+      svg.style.display = 'block'; svg.style.margin = Math.round(TOPE - window.tmNotacion.geometria(svg).lineas[0]) + 'px auto 0';
+      currentSvg = svg;
     }
 
     function drawLoupe(row) {
       var elLstaff = document.getElementById(uid + '_lstaff');
-      if (!elLstaff || typeof Vex === 'undefined') return;
+      if (!elLstaff) return;
       /* la clave incluye lo ya escrito para refrescar al añadir/quitar notas */
       var key = placedNotes.map(function (p) { return p.vfn + p.oct + p.acc; }).join(',') +
                 '|' + row.vfn + row.oct + activeTool;
       if (key === lastLoupeKey) return;
       lastLoupeKey = key;
-      elLstaff.innerHTML = '';
-
-      var V = Vex.Flow;
 
       /* notas ya escritas (negro) + la nota bajo el cursor (dorado).
          En secuencia (asc+desc) se conserva el orden de colocación; si no, por altura. */
       var seqL = isSeq();
       var preview = { vfn: row.vfn, oct: row.oct, acc: activeTool, _hover: true };
       var all = seqL ? placedNotes.concat([preview]) : sortedByPitch(placedNotes.concat([preview]));
-
-      /* En secuencia la lupa muestra solo una ventana de las últimas notas para
-         mantenerse compacta. Las alteraciones se calculan sobre la secuencia
-         COMPLETA, así el becuadro que cancela una alteración previa se dibuja
-         aunque esa alteración haya quedado fuera de la ventana. */
-      var glyphs = seqL ? measureAccidentals(all) : null;
-      var start = seqL ? Math.max(0, all.length - 8) : 0;
-      var shown = all.slice(start);
-
-      var canvasW = Math.max(300, 24 + shown.length * 30);
-
-      var rend = new V.Renderer(elLstaff, V.Renderer.Backends.SVG);
-      rend.resize(canvasW, 120);
-      var ctx = rend.getContext();
-      ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(10, 20, canvasW - 20);
-      stave.addClef('treble').setContext(ctx).draw();
-
-      var vfNotes = shown.map(function (p, i) {
-        var n = new V.StaveNote({ keys: [p.vfn + '/' + p.oct], duration: 'w' });
-        var glyph = seqL ? glyphs[start + i] : accStr(p.acc);
-        if (glyph) {
-          var accObj = new V.Accidental(glyph);
-          if (p._hover && accObj.setStyle) accObj.setStyle({ fillStyle: '#8b6914', strokeStyle: '#8b6914' });
-          n.addModifier(accObj, 0);
-        }
-        if (p._hover && n.setKeyStyle) n.setKeyStyle(0, { fillStyle: '#8b6914', strokeStyle: '#8b6914' });
-        return n;
-      });
-
-      var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
-      voice.addTickables(vfNotes);
-      new V.Formatter().joinVoices([voice]).format([voice], canvasW - 80);
-      voice.draw(ctx, stave);
-
-      var svg = elLstaff.querySelector('svg');
-      if (svg) {
-        var dispW, dispH;
-        if (placedNotes.length === 0) { dispW = 160; dispH = 64; }
-        else {
-          dispW = Math.max(240, Math.min(340, Math.round(canvasW * 0.8)));
-          dispH = Math.round(dispW * 120 / canvasW);
-        }
-        svg.setAttribute('viewBox', '0 0 ' + canvasW + ' 120');
-        svg.setAttribute('width', dispW);
-        svg.setAttribute('height', dispH);
-      }
+      /* En secuencia la lupa muestra solo una ventana de las últimas notas: las alteraciones se deciden sobre la secuencia COMPLETA
+         (así el becuadro que cancela una alteración previa se dibuja aunque esa alteración haya quedado fuera de la ventana). */
+      var ev = eventos(all, seqL);
+      all.forEach(function (p, i) { if (p._hover) ev[i].color = '#8b6914'; });
+      var shown = ev.slice(seqL ? Math.max(0, all.length - 8) : 0);
+      elLstaff.style.height = '92px';
+      window.tmNotacion.dibujarAlineado(elLstaff, { clave: 'sol', compases: [shown] }, { escala: 1.0, separacion: 0.25, top: 34, id: uid + 'l', alt: '' });
     }
 
+    /* La fila bajo el puntero, medida sobre el pentagrama dibujado */
+    function medida() {
+      var sr = currentSvg.getBoundingClientRect(), g = window.tmNotacion.geometria(currentSvg);
+      return { sr: sr, top: g.lineas[0], sp: (g.lineas[4] - g.lineas[0]) / 4 };
+    }
     function getRow(clientY) {
       if (!currentSvg) return ROWS[9];
-      var sr = currentSvg.getBoundingClientRect();
-      if (!sr.width) return ROWS[9];
-      var scale = sr.width / vW;
-      var svgY = (clientY - sr.top) / scale;
-      var idx = Math.round((svgY - FIRST_ROW_SVGY) / 5);
+      var m = medida();
+      if (!m.sr.width) return ROWS[9];
+      var L = (clientY - m.sr.top - m.top) / m.sp;
+      var idx = Math.round((L - ROWS[0].line) * 2);
       return ROWS[Math.max(0, Math.min(ROWS.length - 1, idx))];
     }
 
@@ -443,10 +383,9 @@
         var clientY = e.touches ? e.changedTouches[0].clientY : e.clientY;
         var row = getRow(clientY);
         currentBest = row;
-        var sr = currentSvg.getBoundingClientRect();
+        var m = medida();
         var wr = elWrap.getBoundingClientRect();
-        var sc = sr.width / vW;
-        var lineY = (sr.top - wr.top) + (STAVE_Y + row.line * 10) * sc;
+        var lineY = (m.sr.top - wr.top) + m.top + row.line * m.sp;
         elHigh.style.display = 'block';
         elHigh.style.top = (lineY - 1) + 'px';
         elLoupe.style.transform = '';
@@ -597,8 +536,8 @@
     }
 
     function init() { showModeScreen(); }
-    if (typeof Vex !== 'undefined') { init(); }
-    else { window.addEventListener('vexflow-ready', init, { once: true }); }
+    /* Verovio se carga bajo demanda: el motor arranca cuando ya está. */
+    window.tmNotacion.listo().then(init);
   }
 
   window.tmEsConstrEngine = tmEsConstrEngine;

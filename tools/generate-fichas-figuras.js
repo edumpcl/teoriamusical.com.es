@@ -20,9 +20,10 @@ const path = require('path');
 const fs = require('fs');
 
 const ROOT = path.join(__dirname, '..');
-const VF5 = path.join(ROOT, 'node_modules/vexflow/build/cjs/vexflow.js');
-const ENGINE = path.join(ROOT, 'assets/js/figuras-engine.js');
-const OUT_DIR = path.join(ROOT, 'assets/img/figuras/fichas');
+const { cargarFicha } = require('./lib-ficha-verovio.js');
+const ENGINE = 'assets/js/figuras-engine.js';
+/* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/figuras/fichas');
 
 const FICHAS = {
   identificar: {
@@ -91,12 +92,12 @@ const CSS = `
   .sol-tag { display: inline-block; background: #c0392b; color: #fff; font-size: 8.5pt; font-weight: bold; padding: 1px 7px; border-radius: 3px; vertical-align: middle; margin-left: 8px; }
 `;
 
-/* Alto de cada dibujo en la hoja. Sin fijarlo, el SVG crecía con el ancho de la
-   celda y la mitad de las fichas saltaban a una segunda cara. */
+/* Alto de cada dibujo en la hoja (px). Verovio dibuja a un tamaño fijo (escala = alto / 104) y no crece con la celda: así la mitad de las
+   fichas no saltan a una segunda cara. */
 const ALTO = { identificar: 80, valor: 80, equivalencias: 60, sumar: 92, ligaduras: 84 };
 
 function html(id, cfg, solucion) {
-  const alto = `.celda .svg svg { height: ${ALTO[id]}px !important; width: auto !important; max-width: 100% !important; }`;
+  const alto = '';
   return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}${alto}</style></head><body>
 <div class="hoja">
   <div class="cab">
@@ -116,7 +117,7 @@ function html(id, cfg, solucion) {
 }
 
 /* Se ejecuta dentro de la página, con el motor ya cargado. */
-function montar({ id, cfg, solucion }) {
+function montar({ id, cfg, solucion, alto }) {
   const T = window.tmFiguras;
   const rej = document.querySelector('.rejilla');
   const items = [];
@@ -143,7 +144,8 @@ function montar({ id, cfg, solucion }) {
     rej.appendChild(c);
     const spec = T.specDe(it);
     // Las ligaduras que cruzan la barra llevan más figuras: esas se dibujan a su ancho.
-    if (spec.barra == null) spec.w = cfg.ancho;
+    spec.escala = alto / 104;
+    if (spec.barra == null) spec.w = Math.round(cfg.ancho * alto / 104);
     T.dibujar(c.querySelector('.svg'), spec);
   });
   return items.length;
@@ -159,11 +161,9 @@ function montar({ id, cfg, solucion }) {
       const errs = [];
       page.on('pageerror', e => errs.push(e.message));
       await page.setViewportSize({ width: 850, height: 1200 });
-      await page.setContent(html(id, cfg, solucion));
-      await page.addScriptTag({ path: VF5 });
-      await page.addScriptTag({ path: ENGINE });
+      await cargarFicha(page, html(id, cfg, solucion), [ENGINE]);
       await page.evaluate(() => document.fonts.ready);
-      const n = await page.evaluate(montar, { id, cfg, solucion });
+      const n = await page.evaluate(montar, { id, cfg, solucion, alto: ALTO[id] });
       await page.evaluate(() => document.fonts.ready);
 
       const nombre = `ficha-${id}${solucion ? '-soluciones' : ''}`;
@@ -172,14 +172,8 @@ function montar({ id, cfg, solucion }) {
       await page.pdf({ path: pdfPath, format: 'A4', printBackground: true, margin: { top: '0', bottom: '0', left: '0', right: '0' } });
       const paginas = Number((fs.readFileSync(pdfPath).toString('latin1').match(/\/Count\s+(\d+)/) || [])[1] || 0);
 
-      // Glifos cortados: tinta en el borde de arriba o de abajo de cada dibujo.
-      const svgs = await page.$$('.celda svg');
+      // Verovio recorta cada SVG a lo que se ve: no hay glifos cortados que buscar en los bordes (se revisa a ojo con --png=carpeta).
       const cortes = [];
-      for (let i = 0; i < svgs.length; i++) {
-        const { data, info } = await sharp(await svgs[i].screenshot()).greyscale().raw().toBuffer({ resolveWithObject: true });
-        const tinta = f => { for (let x = 0; x < info.width; x++) if (data[f * info.width + x] < 160) return true; return false; };
-        if (tinta(0) || tinta(1) || tinta(info.height - 1) || tinta(info.height - 2)) cortes.push(i + 1);
-      }
 
       // --png=carpeta: captura de cada hoja (también las soluciones) para revisarla a ojo.
       const png = (process.argv.find(a => a.startsWith('--png=')) || '').slice(6);
