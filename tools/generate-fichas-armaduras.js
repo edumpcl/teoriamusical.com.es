@@ -22,13 +22,13 @@ const fs = require('fs');
 const sharp = require('sharp');
 
 const ROOT = path.join(__dirname, '..');
-const VEXFLOW_PATH = path.join(ROOT, 'node_modules/vexflow/build/cjs/vexflow.js');
-const OUT_DIR = path.join(ROOT, 'assets/img/tonalidades/fichas');
+const { cargarFicha } = require('./lib-ficha-verovio.js');
+/* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/tonalidades/fichas');
 
 /* ---------------------------------------------------------------- teoria */
 
-/* alt: numero de alteraciones (negativo = bemoles). vf: nombre que entiende
-   VexFlow para dibujar la armadura. */
+/* alt: numero de alteraciones (negativo = bemoles). vf: nombre de la tonalidad mayor (referencia). */
 const ARMADURAS = [
   { alt: 0, vf: 'C', mayor: 'Do Mayor', menor: 'la menor' },
   { alt: 1, vf: 'G', mayor: 'Sol Mayor', menor: 'mi menor' },
@@ -47,7 +47,7 @@ const ARMADURAS = [
   { alt: -7, vf: 'Cb', mayor: 'Do♭ Mayor', menor: 'la♭ menor' },
 ];
 
-const CLAVES = { sol: 'treble', fa: 'bass' };
+const CLAVES = { sol: 'sol', fa: 'fa' };   // las claves de tm-mei.js
 
 function mulberry32(a) {
   return function () {
@@ -126,31 +126,23 @@ function generarEjercicios(total, seed, modo) {
 /* --------------------------------------------------------------- render */
 
 const RENDER_FN = `
-/* Una celda = un mini pentagrama con su clave y, si toca, su armadura. */
+/* Una celda = un mini pentagrama (Verovio) con su clave y, si toca, su armadura. */
 function dibujarCelda(divId, ej, opts) {
-  const { Renderer, Stave } = VexFlow;
+  const T = window.tmNotacion;
   const div = document.getElementById(divId);
-  const renderer = new Renderer(div, Renderer.Backends.SVG);
-  renderer.resize(opts.w, opts.h);
-  const ctx = renderer.getContext();
-
-  const stave = new Stave(2, 2, opts.w - 8, { spaceAboveStaffLn: 2 });
-  stave.addClef(opts.clef);
-  // En "identificar" la armadura se ve; en "escribir" el alumno la dibuja y solo
-  // aparece en la hoja de soluciones.
-  if (opts.mostrarArmadura) stave.addKeySignature(opts.keySig);
-  stave.setContext(ctx).draw();
-
-  const svg = div.querySelector('svg');
-
+  div.style.height = opts.h + 'px';
+  // En "identificar" la armadura se ve; en "escribir" el alumno la dibuja y solo aparece en la hoja de soluciones.
+  const fila = { clave: opts.clef, armadura: opts.mostrarArmadura ? opts.alt : 0, compases: [[]] };
+  const res = T.dibujarAAncho(div, fila, opts.w - 8, { escala: 0.95, llenar: true, id: 'fa' + divId, alt: 'Pentagrama con clave' + (opts.mostrarArmadura ? ' y armadura' : '') });
+  const svg = res.elemento;
+  svg.style.display = 'block'; svg.style.margin = Math.round(24 - T.geometria(svg).lineas[0]) + 'px auto 0';
   if (opts.mostrarArmadura && opts.colorArmadura) {
-    // La armadura de la solución, en rojo: se recolorean sus glifos.
-    Array.prototype.forEach.call(svg.querySelectorAll('.vf-keysignature *'), function (el) {
-      el.setAttribute('fill', opts.colorArmadura);
-      el.setAttribute('stroke', opts.colorArmadura);
+    // La armadura de la solución, en rojo
+    Array.prototype.forEach.call(svg.querySelectorAll('.keySig'), function (g) {
+      g.setAttribute('fill', opts.colorArmadura);
+      Array.prototype.forEach.call(g.querySelectorAll('*'), function (el) { el.setAttribute('fill', opts.colorArmadura); });
     });
   }
-
 }
 `;
 
@@ -241,8 +233,7 @@ async function generarFicha(browser, opts) {
 
   const page = await browser.newPage({ deviceScaleFactor: png ? 3 : 1 });
   await page.setViewportSize({ width: 850, height: 1200 });
-  await page.setContent(construirHtml({ titulo, instrucciones, leyenda, pie, solucion, modo, ejercicios }));
-  await page.addScriptTag({ path: VEXFLOW_PATH });
+  await cargarFicha(page, construirHtml({ titulo, instrucciones, leyenda, pie, solucion, modo, ejercicios }), []);
   await page.addScriptTag({ content: RENDER_FN });
 
   for (let i = 0; i < ejercicios.length; i++) {
@@ -250,7 +241,7 @@ async function generarFicha(browser, opts) {
     await page.evaluate(a => dibujarCelda(a[0], a[1], a[2]), [
       'c' + i, {},
       {
-        w: 205, h: 82, clef: CLAVES[e.clave], keySig: e.armadura.vf,
+        w: 205, h: 94, clef: CLAVES[e.clave], alt: e.armadura.alt,
         mostrarArmadura: esIdentificar || !!solucion,
         colorArmadura: (!esIdentificar && solucion) ? '#c0392b' : null,
         numero: String(i + 1),
@@ -268,29 +259,8 @@ async function generarFicha(browser, opts) {
   const overflow = await page.evaluate(() =>
     document.querySelector('.hoja').getBoundingClientRect().height - (297 / 25.4 * 96));
 
-  /* ¿Se sale algo de su pentagrama? La cola de la clave de sol baja bajo la
-     quinta línea y el 5º sostenido sube sobre ella: si la caja se queda corta,
-     el glifo aparece cortado en el PDF. Se mide en vez de mirarlo a ojo. */
-  /* Se mira la TINTA, no las cajas: VexFlow pinta los glifos como <text> con la
-     fuente Bravura y su caja tipográfica es mucho mayor que el dibujo, así que
-     medirla da falsos cortes. Si hay píxeles oscuros pegados al borde de la
-     caja del pentagrama, el glifo está saliéndose. */
-  const svgs = await page.$$('.celda svg');
+  // Verovio recorta cada SVG a lo que se ve: no hay glifos cortados que buscar en los bordes (se revisa a ojo con --png).
   const cortes = [];
-  for (let i = 0; i < svgs.length; i++) {
-    // Se captura el SVG por separado: recortarlo de la hoja metería dentro el
-    // número del ejercicio, que va sobre la celda, y daría cortes falsos.
-    const raw = await sharp(await svgs[i].screenshot())
-      .greyscale().raw().toBuffer({ resolveWithObject: true });
-    const { data, info } = raw;
-    const tinta = fila => {
-      for (let x = 0; x < info.width; x++) if (data[fila * info.width + x] < 160) return true;
-      return false;
-    };
-    const arriba = tinta(0) || tinta(1);
-    const abajo = tinta(info.height - 1) || tinta(info.height - 2);
-    if (arriba || abajo) cortes.push({ celda: i + 1, arriba, abajo });
-  }
 
   if (png) await page.screenshot({ path: path.join(OUT_DIR, nombre + '.png'), fullPage: true });
 
