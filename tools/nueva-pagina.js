@@ -147,8 +147,11 @@ function main() {
   /* La plantilla marca «Diccionario Musical» como sección activa. Las páginas de
      /ejercicios/ o /blog/ nacían con el menú equivocado (8 de ejercicios y 3 del
      blog hasta el 15-09-2026). Se marca la sección según la primera carpeta. */
-  const SECCIONES = ['diccionario-musical', 'ejercicios', 'herramientas', 'blog', 'test-tecnico-de-laboratorio'];
-  const seccion = dir.split('/')[0];
+  const SECCIONES = ['diccionario-musical', 'ejercicios', 'herramientas', 'blog', 'test-tecnico-de-laboratorio', 'agenda-conciertos-bandas-orquestas', 'oposiciones-de-musica'];
+  // Las oposiciones cuelgan del menú «Agenda», igual que la agenda de conciertos
+  const MENU = { 'oposiciones-de-musica': 'agenda-conciertos-bandas-orquestas' };
+  const dirSeccion = dir.split('/')[0];
+  const seccion = MENU[dirSeccion] || dirSeccion;
   if (SECCIONES.includes(seccion) && seccion !== 'diccionario-musical') {
     const activo = 'href="/diccionario-musical/" class="is-active"';
     const destino = `href="/${seccion}/" class=""`;
