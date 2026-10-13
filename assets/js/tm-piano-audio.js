@@ -130,7 +130,8 @@
     else if (acc === '##') L += 2; else if (acc === 'bb') L -= 2;
     return (parseInt(m[3], 10) + 1) * 12 + L;
   }
-  var DURBEATS = { w: 4, h: 2, q: 1, '8': 0.5, '16': 0.25, '32': 0.125 };
+  /* Las que acaban en «t» son de TRESILLO (3 en el tiempo de 2): negra 2/3, corchea 1/3, semicorchea 1/6. */
+  var DURBEATS = { w: 4, h: 2, q: 1, '8': 0.5, '16': 0.25, '32': 0.125, qt: 2 / 3, '8t': 1 / 3, '16t': 1 / 6 };
   /* Reproduce una melodía con ritmo real. tokens: lista de "clave:duración" (p. ej. "g/4:8",
      "c/4:q.", barra "|" se ignora, "r:q" = silencio). bpm = pulsos de negra por minuto. */
   function playMelody(tokens, bpm) {
