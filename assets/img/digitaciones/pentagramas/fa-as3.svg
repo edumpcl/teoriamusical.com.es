@@ -1,0 +1,50 @@
+<svg id="rt9pghd" viewBox="0 0 114 109.64" width="174" height="168" role="img" xmlns="http://www.w3.org/2000/svg"><title>La♯₃ en clave de fa</title>
+   <defs>
+      <g id="E062-rt9pghd">
+         <path transform="scale(1,-1)" d="M568 124c0 28 22 51 48 51s48 -23 48 -51s-22 -50 -48 -50s-48 22 -48 50zM254 251c180 0 274 -112 274 -286c0 -184 -158 -362 -298 -463c-91 -71 -205 -118 -206 -118s-4 -1 -5 -1c-6 0 -15 2 -18 12c0 2 -1 3 -1 5c0 12 12 19 12 19c1 0 99 45 203 140 c98 88 181 275 181 405c0 168 -50 250 -152 250c-35 0 -67 -6 -92 -20c-39 -21 -69 -65 -76 -109c8 7 25 17 35 21c9 3 20 5 32 5c56 0 106 -47 106 -104c0 -66 -50 -109 -114 -109c-74 0 -116 54 -116 127s38 139 97 182c1 0 62 44 138 44zM568 -123c0 28 22 51 48 51 s48 -23 48 -51s-22 -51 -48 -51s-48 23 -48 51z" />
+      </g>
+      <g id="E0A2-rt9pghd">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+      <g id="E262-rt9pghd">
+         <path transform="scale(1,-1)" d="M78 74v-166l89 19v165zM233 105l-38 -7v-165l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14l-38 -7v-147h-28v141l-89 -18v-155h-28v149l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v165l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v147h28v-141 l89 18v155h28v-149l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14z" />
+      </g>
+   </defs>
+   <style type="text/css">#rt9pghd g.ending, #rt9pghd g.fing, #rt9pghd g.reh, #rt9pghd g.tempo {font-weight:bold;}#rt9pghd g.dir, #rt9pghd g.dynam, #rt9pghd g.mNum {font-style:italic;}#rt9pghd g.label {font-weight:normal;}#rt9pghd ellipse, #rt9pghd path, #rt9pghd polygon, #rt9pghd polyline, #rt9pghd rect {stroke:currentColor}#rt9pghd g.cursor {fill:dodgerblue; color:dodgerblue;}#rt9pghd g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 -331 2840 2741">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="s19qgzye" class="mdiv pageMilestone" />
+         <g id="t93wxdq" class="score pageMilestone" />
+         <g id="y1q6vmub" class="system">
+            <g id="g2k09x2" class="section systemMilestone" />
+            <g id="h1veab8l" class="measure">
+               <g id="q1qmssmu" class="staff">
+                  <path d="M0 540 L2648 540" stroke-width="13" />
+                  <path d="M0 720 L2648 720" stroke-width="13" />
+                  <path d="M0 900 L2648 900" stroke-width="13" />
+                  <path d="M0 1080 L2648 1080" stroke-width="13" />
+                  <path d="M0 1260 L2648 1260" stroke-width="13" />
+                  <g id="k1vzc531" class="clef">
+                     <use href="#E062-rt9pghd" transform="translate(90, 720) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="l1lgra1k" class="keySig" />
+                  <g id="r1owcrg8" class="layer">
+                     <g id="s1ucjnkw" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-rt9pghd" transform="translate(1058, 540) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="tlxawjm" class="accid">
+                           <use href="#E262-rt9pghd" transform="translate(838, 540) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="phmvz3m" class="barLine" />
+            </g>
+            <g id="b1qf1dzg" class="systemMilestoneEnd g2k09x2" />
+         </g>
+         <g id="cldgonl" class="pageMilestoneEnd t93wxdq" />
+         <g id="d8yut0e" class="pageMilestoneEnd s19qgzye" />
+      </g>
+   </svg>
+</svg>

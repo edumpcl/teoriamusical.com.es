@@ -1,0 +1,44 @@
+<svg id="n8loakx" viewBox="0 0 105 109.64" width="160" height="168" role="img" xmlns="http://www.w3.org/2000/svg"><title>La₃ en clave de fa</title>
+   <defs>
+      <g id="E062-n8loakx">
+         <path transform="scale(1,-1)" d="M568 124c0 28 22 51 48 51s48 -23 48 -51s-22 -50 -48 -50s-48 22 -48 50zM254 251c180 0 274 -112 274 -286c0 -184 -158 -362 -298 -463c-91 -71 -205 -118 -206 -118s-4 -1 -5 -1c-6 0 -15 2 -18 12c0 2 -1 3 -1 5c0 12 12 19 12 19c1 0 99 45 203 140 c98 88 181 275 181 405c0 168 -50 250 -152 250c-35 0 -67 -6 -92 -20c-39 -21 -69 -65 -76 -109c8 7 25 17 35 21c9 3 20 5 32 5c56 0 106 -47 106 -104c0 -66 -50 -109 -114 -109c-74 0 -116 54 -116 127s38 139 97 182c1 0 62 44 138 44zM568 -123c0 28 22 51 48 51 s48 -23 48 -51s-22 -51 -48 -51s-48 23 -48 51z" />
+      </g>
+      <g id="E0A2-n8loakx">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#n8loakx g.ending, #n8loakx g.fing, #n8loakx g.reh, #n8loakx g.tempo {font-weight:bold;}#n8loakx g.dir, #n8loakx g.dynam, #n8loakx g.mNum {font-style:italic;}#n8loakx g.label {font-weight:normal;}#n8loakx ellipse, #n8loakx path, #n8loakx polygon, #n8loakx polyline, #n8loakx rect {stroke:currentColor}#n8loakx g.cursor {fill:dodgerblue; color:dodgerblue;}#n8loakx g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 -331 2620 2741">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="oahurz6" class="mdiv pageMilestone" />
+         <g id="piycz0e" class="score pageMilestone" />
+         <g id="td7s0d1" class="system">
+            <g id="cd9u80g" class="section systemMilestone" />
+            <g id="dbabktf" class="measure">
+               <g id="mz7ydwk" class="staff">
+                  <path d="M0 540 L2428 540" stroke-width="13" />
+                  <path d="M0 720 L2428 720" stroke-width="13" />
+                  <path d="M0 900 L2428 900" stroke-width="13" />
+                  <path d="M0 1080 L2428 1080" stroke-width="13" />
+                  <path d="M0 1260 L2428 1260" stroke-width="13" />
+                  <g id="f9onhzf" class="clef">
+                     <use href="#E062-n8loakx" transform="translate(90, 720) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="gdp8hwi" class="keySig" />
+                  <g id="nkfectf" class="layer">
+                     <g id="o9y6jrk" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-n8loakx" transform="translate(838, 540) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="lwz2dmk" class="barLine" />
+            </g>
+            <g id="w100go14" class="systemMilestoneEnd cd9u80g" />
+         </g>
+         <g id="x1c08kpa" class="pageMilestoneEnd piycz0e" />
+         <g id="y1pqskez" class="pageMilestoneEnd oahurz6" />
+      </g>
+   </svg>
+</svg>

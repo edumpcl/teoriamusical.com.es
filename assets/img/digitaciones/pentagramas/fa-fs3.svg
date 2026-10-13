@@ -1,0 +1,50 @@
+<svg id="w1jawi5" viewBox="0 0 114 109.64" width="174" height="168" role="img" xmlns="http://www.w3.org/2000/svg"><title>Fa♯₃ en clave de fa</title>
+   <defs>
+      <g id="E062-w1jawi5">
+         <path transform="scale(1,-1)" d="M568 124c0 28 22 51 48 51s48 -23 48 -51s-22 -50 -48 -50s-48 22 -48 50zM254 251c180 0 274 -112 274 -286c0 -184 -158 -362 -298 -463c-91 -71 -205 -118 -206 -118s-4 -1 -5 -1c-6 0 -15 2 -18 12c0 2 -1 3 -1 5c0 12 12 19 12 19c1 0 99 45 203 140 c98 88 181 275 181 405c0 168 -50 250 -152 250c-35 0 -67 -6 -92 -20c-39 -21 -69 -65 -76 -109c8 7 25 17 35 21c9 3 20 5 32 5c56 0 106 -47 106 -104c0 -66 -50 -109 -114 -109c-74 0 -116 54 -116 127s38 139 97 182c1 0 62 44 138 44zM568 -123c0 28 22 51 48 51 s48 -23 48 -51s-22 -51 -48 -51s-48 23 -48 51z" />
+      </g>
+      <g id="E0A2-w1jawi5">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+      <g id="E262-w1jawi5">
+         <path transform="scale(1,-1)" d="M78 74v-166l89 19v165zM233 105l-38 -7v-165l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14l-38 -7v-147h-28v141l-89 -18v-155h-28v149l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v165l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v147h28v-141 l89 18v155h28v-149l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14z" />
+      </g>
+   </defs>
+   <style type="text/css">#w1jawi5 g.ending, #w1jawi5 g.fing, #w1jawi5 g.reh, #w1jawi5 g.tempo {font-weight:bold;}#w1jawi5 g.dir, #w1jawi5 g.dynam, #w1jawi5 g.mNum {font-style:italic;}#w1jawi5 g.label {font-weight:normal;}#w1jawi5 ellipse, #w1jawi5 path, #w1jawi5 polygon, #w1jawi5 polyline, #w1jawi5 rect {stroke:currentColor}#w1jawi5 g.cursor {fill:dodgerblue; color:dodgerblue;}#w1jawi5 g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 -331 2840 2741">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="x8elten" class="mdiv pageMilestone" />
+         <g id="yyn28oj" class="score pageMilestone" />
+         <g id="d11shbwr" class="system">
+            <g id="lgepxh2" class="section systemMilestone" />
+            <g id="m1bcd8ab" class="measure">
+               <g id="vja8psv" class="staff">
+                  <path d="M0 540 L2648 540" stroke-width="13" />
+                  <path d="M0 720 L2648 720" stroke-width="13" />
+                  <path d="M0 900 L2648 900" stroke-width="13" />
+                  <path d="M0 1080 L2648 1080" stroke-width="13" />
+                  <path d="M0 1260 L2648 1260" stroke-width="13" />
+                  <g id="pdr4nr5" class="clef">
+                     <use href="#E062-w1jawi5" transform="translate(90, 720) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="qj3a59d" class="keySig" />
+                  <g id="w14ppass" class="layer">
+                     <g id="x1633158" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-w1jawi5" transform="translate(1058, 720) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="y1wfscj" class="accid">
+                           <use href="#E262-w1jawi5" transform="translate(838, 720) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="us1at9u" class="barLine" />
+            </g>
+            <g id="g1igdj7m" class="systemMilestoneEnd lgepxh2" />
+         </g>
+         <g id="h1u99cym" class="pageMilestoneEnd yyn28oj" />
+         <g id="i1gmoxf7" class="pageMilestoneEnd x8elten" />
+      </g>
+   </svg>
+</svg>

@@ -1,0 +1,446 @@
+{
+ "sol|Fa#3": {
+  "f": "sol-fs3.svg",
+  "w": 174,
+  "h": 136,
+  "alt": "Fa♯₃ en clave de sol"
+ },
+ "sol|Sol3": {
+  "f": "sol-g3.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "Sol₃ en clave de sol"
+ },
+ "sol|Sol#3": {
+  "f": "sol-gs3.svg",
+  "w": 174,
+  "h": 136,
+  "alt": "Sol♯₃ en clave de sol"
+ },
+ "sol|La3": {
+  "f": "sol-a3.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "La₃ en clave de sol"
+ },
+ "sol|La#3": {
+  "f": "sol-as3.svg",
+  "w": 174,
+  "h": 136,
+  "alt": "La♯₃ en clave de sol"
+ },
+ "sol|Si3": {
+  "f": "sol-b3.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "Si₃ en clave de sol"
+ },
+ "sol|Do4": {
+  "f": "sol-c4.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "Do₄ en clave de sol"
+ },
+ "sol|Do#4": {
+  "f": "sol-cs4.svg",
+  "w": 174,
+  "h": 136,
+  "alt": "Do♯₄ en clave de sol"
+ },
+ "sol|Re4": {
+  "f": "sol-d4.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "Re₄ en clave de sol"
+ },
+ "sol|Re#4": {
+  "f": "sol-ds4.svg",
+  "w": 174,
+  "h": 136,
+  "alt": "Re♯₄ en clave de sol"
+ },
+ "sol|Mi4": {
+  "f": "sol-e4.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "Mi₄ en clave de sol"
+ },
+ "sol|Fa4": {
+  "f": "sol-f4.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "Fa₄ en clave de sol"
+ },
+ "sol|Fa#4": {
+  "f": "sol-fs4.svg",
+  "w": 174,
+  "h": 136,
+  "alt": "Fa♯₄ en clave de sol"
+ },
+ "sol|Sol4": {
+  "f": "sol-g4.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "Sol₄ en clave de sol"
+ },
+ "sol|Sol#4": {
+  "f": "sol-gs4.svg",
+  "w": 174,
+  "h": 136,
+  "alt": "Sol♯₄ en clave de sol"
+ },
+ "sol|La4": {
+  "f": "sol-a4.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "La₄ en clave de sol"
+ },
+ "sol|La#4": {
+  "f": "sol-as4.svg",
+  "w": 174,
+  "h": 136,
+  "alt": "La♯₄ en clave de sol"
+ },
+ "sol|Si4": {
+  "f": "sol-b4.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "Si₄ en clave de sol"
+ },
+ "sol|Do5": {
+  "f": "sol-c5.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "Do₅ en clave de sol"
+ },
+ "sol|Do#5": {
+  "f": "sol-cs5.svg",
+  "w": 174,
+  "h": 136,
+  "alt": "Do♯₅ en clave de sol"
+ },
+ "sol|Re5": {
+  "f": "sol-d5.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "Re₅ en clave de sol"
+ },
+ "sol|Re#5": {
+  "f": "sol-ds5.svg",
+  "w": 174,
+  "h": 136,
+  "alt": "Re♯₅ en clave de sol"
+ },
+ "sol|Mi5": {
+  "f": "sol-e5.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "Mi₅ en clave de sol"
+ },
+ "sol|Fa5": {
+  "f": "sol-f5.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "Fa₅ en clave de sol"
+ },
+ "sol|Fa#5": {
+  "f": "sol-fs5.svg",
+  "w": 174,
+  "h": 136,
+  "alt": "Fa♯₅ en clave de sol"
+ },
+ "sol|Sol5": {
+  "f": "sol-g5.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "Sol₅ en clave de sol"
+ },
+ "sol|Sol#5": {
+  "f": "sol-gs5.svg",
+  "w": 174,
+  "h": 136,
+  "alt": "Sol♯₅ en clave de sol"
+ },
+ "sol|La5": {
+  "f": "sol-a5.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "La₅ en clave de sol"
+ },
+ "sol|La#5": {
+  "f": "sol-as5.svg",
+  "w": 174,
+  "h": 136,
+  "alt": "La♯₅ en clave de sol"
+ },
+ "sol|Si5": {
+  "f": "sol-b5.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "Si₅ en clave de sol"
+ },
+ "sol|Do6": {
+  "f": "sol-c6.svg",
+  "w": 160,
+  "h": 136,
+  "alt": "Do₆ en clave de sol"
+ },
+ "fa|Mi1": {
+  "f": "fa-e1.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Mi₁ en clave de fa"
+ },
+ "fa|Fa1": {
+  "f": "fa-f1.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Fa₁ en clave de fa"
+ },
+ "fa|Fa#1": {
+  "f": "fa-fs1.svg",
+  "w": 176,
+  "h": 168,
+  "alt": "Fa♯₁ en clave de fa"
+ },
+ "fa|Sol1": {
+  "f": "fa-g1.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Sol₁ en clave de fa"
+ },
+ "fa|Sol#1": {
+  "f": "fa-gs1.svg",
+  "w": 176,
+  "h": 168,
+  "alt": "Sol♯₁ en clave de fa"
+ },
+ "fa|La1": {
+  "f": "fa-a1.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "La₁ en clave de fa"
+ },
+ "fa|La#1": {
+  "f": "fa-as1.svg",
+  "w": 176,
+  "h": 168,
+  "alt": "La♯₁ en clave de fa"
+ },
+ "fa|Si1": {
+  "f": "fa-b1.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Si₁ en clave de fa"
+ },
+ "fa|Do2": {
+  "f": "fa-c2.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Do₂ en clave de fa"
+ },
+ "fa|Do#2": {
+  "f": "fa-cs2.svg",
+  "w": 176,
+  "h": 168,
+  "alt": "Do♯₂ en clave de fa"
+ },
+ "fa|Re2": {
+  "f": "fa-d2.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Re₂ en clave de fa"
+ },
+ "fa|Re#2": {
+  "f": "fa-ds2.svg",
+  "w": 176,
+  "h": 168,
+  "alt": "Re♯₂ en clave de fa"
+ },
+ "fa|Mi2": {
+  "f": "fa-e2.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Mi₂ en clave de fa"
+ },
+ "fa|Fa2": {
+  "f": "fa-f2.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Fa₂ en clave de fa"
+ },
+ "fa|Fa#2": {
+  "f": "fa-fs2.svg",
+  "w": 174,
+  "h": 168,
+  "alt": "Fa♯₂ en clave de fa"
+ },
+ "fa|Sol2": {
+  "f": "fa-g2.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Sol₂ en clave de fa"
+ },
+ "fa|Sol#2": {
+  "f": "fa-gs2.svg",
+  "w": 174,
+  "h": 168,
+  "alt": "Sol♯₂ en clave de fa"
+ },
+ "fa|La2": {
+  "f": "fa-a2.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "La₂ en clave de fa"
+ },
+ "fa|La#2": {
+  "f": "fa-as2.svg",
+  "w": 174,
+  "h": 168,
+  "alt": "La♯₂ en clave de fa"
+ },
+ "fa|Si2": {
+  "f": "fa-b2.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Si₂ en clave de fa"
+ },
+ "fa|Do3": {
+  "f": "fa-c3.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Do₃ en clave de fa"
+ },
+ "fa|Do#3": {
+  "f": "fa-cs3.svg",
+  "w": 174,
+  "h": 168,
+  "alt": "Do♯₃ en clave de fa"
+ },
+ "fa|Re3": {
+  "f": "fa-d3.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Re₃ en clave de fa"
+ },
+ "fa|Re#3": {
+  "f": "fa-ds3.svg",
+  "w": 174,
+  "h": 168,
+  "alt": "Re♯₃ en clave de fa"
+ },
+ "fa|Mi3": {
+  "f": "fa-e3.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Mi₃ en clave de fa"
+ },
+ "fa|Fa3": {
+  "f": "fa-f3.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Fa₃ en clave de fa"
+ },
+ "fa|Fa#3": {
+  "f": "fa-fs3.svg",
+  "w": 174,
+  "h": 168,
+  "alt": "Fa♯₃ en clave de fa"
+ },
+ "fa|Sol3": {
+  "f": "fa-g3.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Sol₃ en clave de fa"
+ },
+ "fa|Sol#3": {
+  "f": "fa-gs3.svg",
+  "w": 174,
+  "h": 168,
+  "alt": "Sol♯₃ en clave de fa"
+ },
+ "fa|La3": {
+  "f": "fa-a3.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "La₃ en clave de fa"
+ },
+ "fa|La#3": {
+  "f": "fa-as3.svg",
+  "w": 174,
+  "h": 168,
+  "alt": "La♯₃ en clave de fa"
+ },
+ "fa|Si3": {
+  "f": "fa-b3.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Si₃ en clave de fa"
+ },
+ "fa|Do4": {
+  "f": "fa-c4.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Do₄ en clave de fa"
+ },
+ "fa|Do#4": {
+  "f": "fa-cs4.svg",
+  "w": 176,
+  "h": 168,
+  "alt": "Do♯₄ en clave de fa"
+ },
+ "fa|Re4": {
+  "f": "fa-d4.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Re₄ en clave de fa"
+ },
+ "fa|Re#4": {
+  "f": "fa-ds4.svg",
+  "w": 176,
+  "h": 168,
+  "alt": "Re♯₄ en clave de fa"
+ },
+ "fa|Mi4": {
+  "f": "fa-e4.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Mi₄ en clave de fa"
+ },
+ "fa|Fa4": {
+  "f": "fa-f4.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Fa₄ en clave de fa"
+ },
+ "fa|Fa#4": {
+  "f": "fa-fs4.svg",
+  "w": 176,
+  "h": 168,
+  "alt": "Fa♯₄ en clave de fa"
+ },
+ "fa|Sol4": {
+  "f": "fa-g4.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "Sol₄ en clave de fa"
+ },
+ "fa|Sol#4": {
+  "f": "fa-gs4.svg",
+  "w": 176,
+  "h": 168,
+  "alt": "Sol♯₄ en clave de fa"
+ },
+ "fa|La4": {
+  "f": "fa-a4.svg",
+  "w": 160,
+  "h": 168,
+  "alt": "La₄ en clave de fa"
+ },
+ "fa|La#4": {
+  "f": "fa-as4.svg",
+  "w": 176,
+  "h": 168,
+  "alt": "La♯₄ en clave de fa"
+ }
+}
