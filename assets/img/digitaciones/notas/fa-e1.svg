@@ -1,0 +1,50 @@
+<svg id="l1x4tkrh" viewBox="0 0 105 95" width="160" height="145" role="img" xmlns="http://www.w3.org/2000/svg"><title>Mi₁ en clave de fa</title>
+   <defs>
+      <g id="E062-l1x4tkrh">
+         <path transform="scale(1,-1)" d="M568 124c0 28 22 51 48 51s48 -23 48 -51s-22 -50 -48 -50s-48 22 -48 50zM254 251c180 0 274 -112 274 -286c0 -184 -158 -362 -298 -463c-91 -71 -205 -118 -206 -118s-4 -1 -5 -1c-6 0 -15 2 -18 12c0 2 -1 3 -1 5c0 12 12 19 12 19c1 0 99 45 203 140 c98 88 181 275 181 405c0 168 -50 250 -152 250c-35 0 -67 -6 -92 -20c-39 -21 -69 -65 -76 -109c8 7 25 17 35 21c9 3 20 5 32 5c56 0 106 -47 106 -104c0 -66 -50 -109 -114 -109c-74 0 -116 54 -116 127s38 139 97 182c1 0 62 44 138 44zM568 -123c0 28 22 51 48 51 s48 -23 48 -51s-22 -51 -48 -51s-48 23 -48 51z" />
+      </g>
+      <g id="E0A2-l1x4tkrh">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#l1x4tkrh g.ending, #l1x4tkrh g.fing, #l1x4tkrh g.reh, #l1x4tkrh g.tempo {font-weight:bold;}#l1x4tkrh g.dir, #l1x4tkrh g.dynam, #l1x4tkrh g.mNum {font-style:italic;}#l1x4tkrh g.label {font-weight:normal;}#l1x4tkrh ellipse, #l1x4tkrh path, #l1x4tkrh polygon, #l1x4tkrh polyline, #l1x4tkrh rect {stroke:currentColor}#l1x4tkrh g.cursor {fill:dodgerblue; color:dodgerblue;}#l1x4tkrh g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2620 2360">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="m11h7sfw" class="mdiv pageMilestone" />
+         <g id="nktbbw5" class="score pageMilestone" />
+         <g id="r1polau7" class="system">
+            <g id="a1i6koil" class="section systemMilestone" />
+            <g id="b1hafs9p" class="measure">
+               <g id="k1ok89s7" class="staff">
+                  <path d="M0 540 L2428 540" stroke-width="13" />
+                  <path d="M0 720 L2428 720" stroke-width="13" />
+                  <path d="M0 900 L2428 900" stroke-width="13" />
+                  <path d="M0 1080 L2428 1080" stroke-width="13" />
+                  <path d="M0 1260 L2428 1260" stroke-width="13" />
+                  <g id="d6p2qi2" class="clef">
+                     <use href="#E062-l1x4tkrh" transform="translate(90, 720) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="elxv8x0" class="keySig" />
+                  <g class="ledgerLines below">
+                     <path d="M790 1440 L1154 1440" stroke-width="22" />
+                     <path d="M790 1620 L1154 1620" stroke-width="22" />
+                     <path d="M790 1800 L1154 1800" stroke-width="22" />
+                     <path d="M790 1980 L1154 1980" stroke-width="22" />
+                  </g>
+                  <g id="l13otuh7" class="layer">
+                     <g id="mfof36f" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-l1x4tkrh" transform="translate(838, 2070) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="j19vi2cp" class="barLine" />
+            </g>
+            <g id="u1iz7jdd" class="systemMilestoneEnd a1i6koil" />
+         </g>
+         <g id="vq79nu1" class="pageMilestoneEnd nktbbw5" />
+         <g id="wm2iggy" class="pageMilestoneEnd m11h7sfw" />
+      </g>
+   </svg>
+</svg>

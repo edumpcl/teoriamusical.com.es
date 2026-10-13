@@ -1,0 +1,55 @@
+<svg id="ie79l3z" viewBox="0 0 115 93" width="176" height="142" role="img" xmlns="http://www.w3.org/2000/svg"><title>Sol♯₁ en clave de fa</title>
+   <defs>
+      <g id="E062-ie79l3z">
+         <path transform="scale(1,-1)" d="M568 124c0 28 22 51 48 51s48 -23 48 -51s-22 -50 -48 -50s-48 22 -48 50zM254 251c180 0 274 -112 274 -286c0 -184 -158 -362 -298 -463c-91 -71 -205 -118 -206 -118s-4 -1 -5 -1c-6 0 -15 2 -18 12c0 2 -1 3 -1 5c0 12 12 19 12 19c1 0 99 45 203 140 c98 88 181 275 181 405c0 168 -50 250 -152 250c-35 0 -67 -6 -92 -20c-39 -21 -69 -65 -76 -109c8 7 25 17 35 21c9 3 20 5 32 5c56 0 106 -47 106 -104c0 -66 -50 -109 -114 -109c-74 0 -116 54 -116 127s38 139 97 182c1 0 62 44 138 44zM568 -123c0 28 22 51 48 51 s48 -23 48 -51s-22 -51 -48 -51s-48 23 -48 51z" />
+      </g>
+      <g id="E0A2-ie79l3z">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+      <g id="E262-ie79l3z">
+         <path transform="scale(1,-1)" d="M78 74v-166l89 19v165zM233 105l-38 -7v-165l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14l-38 -7v-147h-28v141l-89 -18v-155h-28v149l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v165l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v147h28v-141 l89 18v155h28v-149l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14z" />
+      </g>
+   </defs>
+   <style type="text/css">#ie79l3z g.ending, #ie79l3z g.fing, #ie79l3z g.reh, #ie79l3z g.tempo {font-weight:bold;}#ie79l3z g.dir, #ie79l3z g.dynam, #ie79l3z g.mNum {font-style:italic;}#ie79l3z g.label {font-weight:normal;}#ie79l3z ellipse, #ie79l3z path, #ie79l3z polygon, #ie79l3z polyline, #ie79l3z rect {stroke:currentColor}#ie79l3z g.cursor {fill:dodgerblue; color:dodgerblue;}#ie79l3z g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2870 2320">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="j70zdzv" class="mdiv pageMilestone" />
+         <g id="kk4ohmb" class="score pageMilestone" />
+         <g id="pyilhpm" class="system">
+            <g id="x16q24z3" class="section systemMilestone" />
+            <g id="ydoux6t" class="measure">
+               <g id="hc4ugni" class="staff">
+                  <path d="M0 540 L2674 540" stroke-width="13" />
+                  <path d="M0 720 L2674 720" stroke-width="13" />
+                  <path d="M0 900 L2674 900" stroke-width="13" />
+                  <path d="M0 1080 L2674 1080" stroke-width="13" />
+                  <path d="M0 1260 L2674 1260" stroke-width="13" />
+                  <g id="b1ob0oek" class="clef">
+                     <use href="#E062-ie79l3z" transform="translate(90, 720) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="c1vl8xj3" class="keySig" />
+                  <g class="ledgerLines below">
+                     <path d="M1036 1440 L1400 1440" stroke-width="22" />
+                     <path d="M1036 1620 L1400 1620" stroke-width="22" />
+                     <path d="M1036 1800 L1400 1800" stroke-width="22" />
+                  </g>
+                  <g id="i1idf8mz" class="layer">
+                     <g id="j16vkmah" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-ie79l3z" transform="translate(1084, 1890) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="k154ogi5" class="accid">
+                           <use href="#E262-ie79l3z" transform="translate(838, 1890) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="gn8aoe2" class="barLine" />
+            </g>
+            <g id="s1vs7doh" class="systemMilestoneEnd x16q24z3" />
+         </g>
+         <g id="tz4871e" class="pageMilestoneEnd kk4ohmb" />
+         <g id="u1mdupa1" class="pageMilestoneEnd j70zdzv" />
+      </g>
+   </svg>
+</svg>

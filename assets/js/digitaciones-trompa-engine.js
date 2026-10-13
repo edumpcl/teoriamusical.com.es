@@ -200,22 +200,10 @@
 
     function renderStaff(n) {
       var el = document.getElementById(uid + '_staff');
-      if (!el || typeof Vex === 'undefined') return;
+      if (!el) return;
       el.innerHTML = '';
       var vn = vfNote(n); if (!vn) return;
-      var V = Vex.Flow;
-      var r = new V.Renderer(el, V.Renderer.Backends.SVG);
-      r.resize(160, 150);
-      var ctx = r.getContext(); ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(2, 24, 140);
-      stave.addClef(vn.clef).setContext(ctx).draw();
-      var note = new V.StaveNote({ keys: [vn.key], duration: 'w', clef: vn.clef });
-      if (vn.acc) note.addModifier(new V.Accidental(vn.acc), 0);
-      var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([note]);
-      new V.Formatter().joinVoices([voice]).format([voice], 90);
-      voice.draw(ctx, stave);
-      var s = el.querySelector('svg');
-      if (s) { s.setAttribute('viewBox', '0 0 160 150'); s.style.width = '150px'; s.style.maxWidth = '100%'; s.style.height = 'auto'; }
+      if (window.tmPentNota) tmPentNota(el, vn.clef, vn.key);
     }
 
     function pick(n, btn) {

@@ -1,0 +1,44 @@
+<svg id="u1ghfta2" viewBox="0 0 104 80" width="159" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>La₄ en clave de do en tercera</title>
+   <defs>
+      <g id="E05C-u1ghfta2">
+         <path transform="scale(1,-1)" d="M13 469h72c7 0 13 -6 13 -13v-910c0 -7 -6 -13 -13 -13h-72c-7 0 -13 6 -13 13v910c0 7 6 13 13 13zM627 -261c0 -140 -103 -219 -224 -219c-75 0 -182 31 -182 123c0 49 34 81 83 81c44 0 75 -32 75 -76c0 -43 -29 -74 -73 -74c-6 0 -10 1 -11 1c23 -16 54 -25 85 -25 c105 0 122 84 122 174c0 77 -2 189 -90 189s-106 -95 -108 -106c0 -1 0 -13 -14 -13s-15 12 -15 13c-11 56 -33 151 -92 175v-436c0 -7 -5 -13 -12 -13s-13 6 -13 13v910c0 7 6 13 13 13s12 -6 12 -13v-436c56 23 83 119 92 174c0 1 1 14 15 14s14 -13 14 -14 c2 -10 20 -105 108 -105s90 112 90 189c0 90 -17 174 -122 174c-31 0 -62 -9 -85 -25c48 0 84 -18 84 -73c0 -44 -31 -76 -75 -76c-49 0 -83 32 -83 81c0 92 107 123 182 123c121 0 224 -79 224 -219c0 -108 -60 -221 -182 -221c-43 0 -56 3 -94 26c-2 -4 -22 -44 -55 -67 c33 -23 53 -63 55 -67c39 24 56 26 79 26c131 0 197 -97 197 -221z" />
+      </g>
+      <g id="E0A2-u1ghfta2">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#u1ghfta2 g.ending, #u1ghfta2 g.fing, #u1ghfta2 g.reh, #u1ghfta2 g.tempo {font-weight:bold;}#u1ghfta2 g.dir, #u1ghfta2 g.dynam, #u1ghfta2 g.mNum {font-style:italic;}#u1ghfta2 g.label {font-weight:normal;}#u1ghfta2 ellipse, #u1ghfta2 path, #u1ghfta2 polygon, #u1ghfta2 polyline, #u1ghfta2 rect {stroke:currentColor}#u1ghfta2 g.cursor {fill:dodgerblue; color:dodgerblue;}#u1ghfta2 g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2600 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="vww4von" class="mdiv pageMilestone" />
+         <g id="w1gpl6me" class="score pageMilestone" />
+         <g id="a3p03ye" class="system">
+            <g id="j4emweb" class="section systemMilestone" />
+            <g id="k1erhotd" class="measure">
+               <g id="tpp82wd" class="staff">
+                  <path d="M0 540 L2401 540" stroke-width="13" />
+                  <path d="M0 720 L2401 720" stroke-width="13" />
+                  <path d="M0 900 L2401 900" stroke-width="13" />
+                  <path d="M0 1080 L2401 1080" stroke-width="13" />
+                  <path d="M0 1260 L2401 1260" stroke-width="13" />
+                  <g id="m5zfuly" class="clef">
+                     <use href="#E05C-u1ghfta2" transform="translate(90, 900) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="n1iw9ike" class="keySig" />
+                  <g id="u1htiq7m" class="layer">
+                     <g id="vl7uq8a" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-u1ghfta2" transform="translate(811, 450) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="s10id8po" class="barLine" />
+            </g>
+            <g id="d14likao" class="systemMilestoneEnd j4emweb" />
+         </g>
+         <g id="e74j8rc" class="pageMilestoneEnd w1gpl6me" />
+         <g id="f1xl4mxx" class="pageMilestoneEnd vww4von" />
+      </g>
+   </svg>
+</svg>

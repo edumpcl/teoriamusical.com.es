@@ -1,0 +1,175 @@
+/* tm-pent-nota.js — GENERADO por tools/gen-pentagramas-motores.js: no editar a mano.
+   Pone en un contenedor el pentagrama de UNA nota (SVG de Verovio hecho al construir) para los diagramas
+   interactivos «notas de la [instrumento]». Antes lo dibujaba VexFlow en el navegador a cada clic.
+     tmPentNota(contenedor, clave, nota)   clave: 'treble' | 'bass' | 'alto' | 'tenor' (nombres de VexFlow)
+                                           nota:  'f#/3', 'bb/4', 'c/5' (clave de VexFlow: letra, alteracion, octava)
+   Devuelve true si la dibujo. La tabla da [ancho, alto, alt] de cada imagen para reservar el sitio sin saltos. */
+(function () {
+  'use strict';
+  var BASE = '/assets/img/digitaciones/notas/';
+  var ESCALA = 0.85;
+  var CLAVES = { treble: 'sol', bass: 'fa', alto: 'do3', tenor: 'do4' };
+  var T = {
+  "do3-a3": [159,122,"La₃ en clave de do en tercera"],
+  "do3-a4": [159,122,"La₄ en clave de do en tercera"],
+  "do3-a5": [159,139,"La₅ en clave de do en tercera"],
+  "do3-as3": [173,122,"La♯₃ en clave de do en tercera"],
+  "do3-as4": [173,122,"La♯₄ en clave de do en tercera"],
+  "do3-b3": [159,122,"Si₃ en clave de do en tercera"],
+  "do3-b4": [159,122,"Si₄ en clave de do en tercera"],
+  "do3-c3": [159,122,"Do₃ en clave de do en tercera"],
+  "do3-c4": [159,122,"Do₄ en clave de do en tercera"],
+  "do3-c5": [159,122,"Do₅ en clave de do en tercera"],
+  "do3-cs3": [174,122,"Do♯₃ en clave de do en tercera"],
+  "do3-cs4": [173,122,"Do♯₄ en clave de do en tercera"],
+  "do3-cs5": [174,122,"Do♯₅ en clave de do en tercera"],
+  "do3-d3": [159,122,"Re₃ en clave de do en tercera"],
+  "do3-d4": [159,122,"Re₄ en clave de do en tercera"],
+  "do3-d5": [159,122,"Re₅ en clave de do en tercera"],
+  "do3-ds3": [174,122,"Re♯₃ en clave de do en tercera"],
+  "do3-ds4": [173,122,"Re♯₄ en clave de do en tercera"],
+  "do3-ds5": [174,127,"Re♯₅ en clave de do en tercera"],
+  "do3-e3": [159,122,"Mi₃ en clave de do en tercera"],
+  "do3-e4": [159,122,"Mi₄ en clave de do en tercera"],
+  "do3-e5": [159,122,"Mi₅ en clave de do en tercera"],
+  "do3-f3": [159,122,"Fa₃ en clave de do en tercera"],
+  "do3-f4": [159,122,"Fa₄ en clave de do en tercera"],
+  "do3-f5": [159,128,"Fa₅ en clave de do en tercera"],
+  "do3-fs3": [173,122,"Fa♯₃ en clave de do en tercera"],
+  "do3-fs4": [173,122,"Fa♯₄ en clave de do en tercera"],
+  "do3-fs5": [174,138,"Fa♯₅ en clave de do en tercera"],
+  "do3-g3": [159,122,"Sol₃ en clave de do en tercera"],
+  "do3-g4": [159,122,"Sol₄ en clave de do en tercera"],
+  "do3-g5": [159,134,"Sol₅ en clave de do en tercera"],
+  "do3-gs3": [173,122,"Sol♯₃ en clave de do en tercera"],
+  "do3-gs4": [173,122,"Sol♯₄ en clave de do en tercera"],
+  "do3-gs5": [174,144,"Sol♯₅ en clave de do en tercera"],
+  "do4-a3": [159,122,"La₃ en clave de do en cuarta"],
+  "do4-as3": [173,122,"La♯₃ en clave de do en cuarta"],
+  "do4-b3": [159,122,"Si₃ en clave de do en cuarta"],
+  "do4-c4": [159,122,"Do₄ en clave de do en cuarta"],
+  "do4-cs4": [173,122,"Do♯₄ en clave de do en cuarta"],
+  "do4-d4": [159,122,"Re₄ en clave de do en cuarta"],
+  "do4-ds4": [173,122,"Re♯₄ en clave de do en cuarta"],
+  "do4-e4": [159,122,"Mi₄ en clave de do en cuarta"],
+  "do4-f4": [159,122,"Fa₄ en clave de do en cuarta"],
+  "do4-fs4": [173,122,"Fa♯₄ en clave de do en cuarta"],
+  "do4-g4": [159,122,"Sol₄ en clave de do en cuarta"],
+  "do4-gs3": [173,122,"Sol♯₃ en clave de do en cuarta"],
+  "fa-a1": [160,128,"La₁ en clave de fa"],
+  "fa-a2": [160,122,"La₂ en clave de fa"],
+  "fa-a3": [160,122,"La₃ en clave de fa"],
+  "fa-a4": [160,134,"La₄ en clave de fa"],
+  "fa-as1": [176,138,"La♯₁ en clave de fa"],
+  "fa-as2": [174,122,"La♯₂ en clave de fa"],
+  "fa-as3": [174,122,"La♯₃ en clave de fa"],
+  "fa-as4": [176,144,"La♯₄ en clave de fa"],
+  "fa-b1": [160,122,"Si₁ en clave de fa"],
+  "fa-b2": [160,122,"Si₂ en clave de fa"],
+  "fa-b3": [160,122,"Si₃ en clave de fa"],
+  "fa-c2": [160,122,"Do₂ en clave de fa"],
+  "fa-c3": [160,122,"Do₃ en clave de fa"],
+  "fa-c4": [160,122,"Do₄ en clave de fa"],
+  "fa-cs2": [176,125,"Do♯₂ en clave de fa"],
+  "fa-cs3": [174,122,"Do♯₃ en clave de fa"],
+  "fa-cs4": [176,122,"Do♯₄ en clave de fa"],
+  "fa-d2": [160,122,"Re₂ en clave de fa"],
+  "fa-d3": [160,122,"Re₃ en clave de fa"],
+  "fa-d4": [160,122,"Re₄ en clave de fa"],
+  "fa-ds2": [176,122,"Re♯₂ en clave de fa"],
+  "fa-ds3": [174,122,"Re♯₃ en clave de fa"],
+  "fa-ds4": [176,122,"Re♯₄ en clave de fa"],
+  "fa-e1": [160,145,"Mi₁ en clave de fa"],
+  "fa-e2": [160,122,"Mi₂ en clave de fa"],
+  "fa-e3": [160,122,"Mi₃ en clave de fa"],
+  "fa-e4": [160,122,"Mi₄ en clave de fa"],
+  "fa-f1": [160,139,"Fa₁ en clave de fa"],
+  "fa-f2": [160,122,"Fa₂ en clave de fa"],
+  "fa-f3": [160,122,"Fa₃ en clave de fa"],
+  "fa-f4": [160,122,"Fa₄ en clave de fa"],
+  "fa-fs1": [176,148,"Fa♯₁ en clave de fa"],
+  "fa-fs2": [174,122,"Fa♯₂ en clave de fa"],
+  "fa-fs3": [174,122,"Fa♯₃ en clave de fa"],
+  "fa-fs4": [176,131,"Fa♯₄ en clave de fa"],
+  "fa-g1": [160,134,"Sol₁ en clave de fa"],
+  "fa-g2": [160,122,"Sol₂ en clave de fa"],
+  "fa-g3": [160,122,"Sol₃ en clave de fa"],
+  "fa-g4": [160,128,"Sol₄ en clave de fa"],
+  "fa-gs1": [176,142,"Sol♯₁ en clave de fa"],
+  "fa-gs2": [174,122,"Sol♯₂ en clave de fa"],
+  "fa-gs3": [174,122,"Sol♯₃ en clave de fa"],
+  "fa-gs4": [176,138,"Sol♯₄ en clave de fa"],
+  "sol-a3": [160,122,"La₃ en clave de sol"],
+  "sol-a4": [160,122,"La₄ en clave de sol"],
+  "sol-a5": [160,122,"La₅ en clave de sol"],
+  "sol-a6": [160,145,"La₆ en clave de sol"],
+  "sol-af4": [171,122,"La♭₄ en clave de sol"],
+  "sol-af5": [173,122,"La♭₅ en clave de sol"],
+  "sol-as3": [174,125,"La♯₃ en clave de sol"],
+  "sol-as4": [174,122,"La♯₄ en clave de sol"],
+  "sol-as5": [174,122,"La♯₅ en clave de sol"],
+  "sol-as6": [174,154,"La♯₆ en clave de sol"],
+  "sol-b3": [160,122,"Si₃ en clave de sol"],
+  "sol-b4": [160,122,"Si₄ en clave de sol"],
+  "sol-b5": [160,122,"Si₅ en clave de sol"],
+  "sol-b6": [160,150,"Si₆ en clave de sol"],
+  "sol-bf5": [173,125,"Si♭₅ en clave de sol"],
+  "sol-c4": [160,122,"Do₄ en clave de sol"],
+  "sol-c5": [160,122,"Do₅ en clave de sol"],
+  "sol-c6": [160,122,"Do₆ en clave de sol"],
+  "sol-c7": [160,156,"Do₇ en clave de sol"],
+  "sol-cf6": [173,131,"Do♭₆ en clave de sol"],
+  "sol-cs4": [174,122,"Do♯₄ en clave de sol"],
+  "sol-cs5": [174,122,"Do♯₅ en clave de sol"],
+  "sol-cs6": [174,127,"Do♯₆ en clave de sol"],
+  "sol-d4": [160,122,"Re₄ en clave de sol"],
+  "sol-d5": [160,122,"Re₅ en clave de sol"],
+  "sol-d6": [160,122,"Re₆ en clave de sol"],
+  "sol-df5": [171,122,"Re♭₅ en clave de sol"],
+  "sol-df6": [173,138,"Re♭₆ en clave de sol"],
+  "sol-ds3": [174,148,"Re♯₃ en clave de sol"],
+  "sol-ds4": [174,122,"Re♯₄ en clave de sol"],
+  "sol-ds5": [174,122,"Re♯₅ en clave de sol"],
+  "sol-ds6": [174,131,"Re♯₆ en clave de sol"],
+  "sol-e3": [160,134,"Mi₃ en clave de sol"],
+  "sol-e4": [160,122,"Mi₄ en clave de sol"],
+  "sol-e5": [160,122,"Mi₅ en clave de sol"],
+  "sol-e6": [160,128,"Mi₆ en clave de sol"],
+  "sol-ef6": [173,142,"Mi♭₆ en clave de sol"],
+  "sol-f3": [160,128,"Fa₃ en clave de sol"],
+  "sol-f4": [160,122,"Fa₄ en clave de sol"],
+  "sol-f5": [160,122,"Fa₅ en clave de sol"],
+  "sol-f6": [160,134,"Fa₆ en clave de sol"],
+  "sol-fs3": [174,138,"Fa♯₃ en clave de sol"],
+  "sol-fs4": [174,122,"Fa♯₄ en clave de sol"],
+  "sol-fs5": [174,122,"Fa♯₅ en clave de sol"],
+  "sol-fs6": [174,144,"Fa♯₆ en clave de sol"],
+  "sol-g3": [160,122,"Sol₃ en clave de sol"],
+  "sol-g4": [160,122,"Sol₄ en clave de sol"],
+  "sol-g5": [160,122,"Sol₅ en clave de sol"],
+  "sol-g6": [160,139,"Sol₆ en clave de sol"],
+  "sol-gs3": [174,131,"Sol♯₃ en clave de sol"],
+  "sol-gs4": [174,122,"Sol♯₄ en clave de sol"],
+  "sol-gs5": [174,122,"Sol♯₅ en clave de sol"],
+  "sol-gs6": [174,148,"Sol♯₆ en clave de sol"]
+  };
+  function fichero(clave, nota) {
+    var c = CLAVES[clave], m = /^([a-g])(#|b)?\/(\d)$/.exec(nota || '');
+    if (!c || !m) return null;
+    return c + '-' + m[1] + (m[2] === '#' ? 's' : m[2] === 'b' ? 'f' : '') + m[3];
+  }
+  window.tmPentNota = function (el, clave, nota) {
+    el.innerHTML = '';
+    var f = fichero(clave, nota), t = f && T[f];
+    if (!t) { if (window.console) console.warn('tmPentNota: no hay pentagrama para', clave, nota); return false; }
+    var img = new Image();
+    img.src = BASE + f + '.svg';
+    img.width = Math.round(t[0] * ESCALA);
+    img.height = Math.round(t[1] * ESCALA);
+    img.alt = t[2];
+    img.decoding = 'async';
+    img.style.cssText = 'display:block;margin:0 auto;max-width:100%;height:auto';
+    el.appendChild(img);
+    return true;
+  };
+})();

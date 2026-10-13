@@ -1,0 +1,47 @@
+<svg id="we1whu0" viewBox="0 0 104 80" width="159" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Do₃ en clave de do en tercera</title>
+   <defs>
+      <g id="E05C-we1whu0">
+         <path transform="scale(1,-1)" d="M13 469h72c7 0 13 -6 13 -13v-910c0 -7 -6 -13 -13 -13h-72c-7 0 -13 6 -13 13v910c0 7 6 13 13 13zM627 -261c0 -140 -103 -219 -224 -219c-75 0 -182 31 -182 123c0 49 34 81 83 81c44 0 75 -32 75 -76c0 -43 -29 -74 -73 -74c-6 0 -10 1 -11 1c23 -16 54 -25 85 -25 c105 0 122 84 122 174c0 77 -2 189 -90 189s-106 -95 -108 -106c0 -1 0 -13 -14 -13s-15 12 -15 13c-11 56 -33 151 -92 175v-436c0 -7 -5 -13 -12 -13s-13 6 -13 13v910c0 7 6 13 13 13s12 -6 12 -13v-436c56 23 83 119 92 174c0 1 1 14 15 14s14 -13 14 -14 c2 -10 20 -105 108 -105s90 112 90 189c0 90 -17 174 -122 174c-31 0 -62 -9 -85 -25c48 0 84 -18 84 -73c0 -44 -31 -76 -75 -76c-49 0 -83 32 -83 81c0 92 107 123 182 123c121 0 224 -79 224 -219c0 -108 -60 -221 -182 -221c-43 0 -56 3 -94 26c-2 -4 -22 -44 -55 -67 c33 -23 53 -63 55 -67c39 24 56 26 79 26c131 0 197 -97 197 -221z" />
+      </g>
+      <g id="E0A2-we1whu0">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#we1whu0 g.ending, #we1whu0 g.fing, #we1whu0 g.reh, #we1whu0 g.tempo {font-weight:bold;}#we1whu0 g.dir, #we1whu0 g.dynam, #we1whu0 g.mNum {font-style:italic;}#we1whu0 g.label {font-weight:normal;}#we1whu0 ellipse, #we1whu0 path, #we1whu0 polygon, #we1whu0 polyline, #we1whu0 rect {stroke:currentColor}#we1whu0 g.cursor {fill:dodgerblue; color:dodgerblue;}#we1whu0 g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2600 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="x1ke4bvv" class="mdiv pageMilestone" />
+         <g id="y9xsqzk" class="score pageMilestone" />
+         <g id="cu48o5e" class="system">
+            <g id="l2np6oj" class="section systemMilestone" />
+            <g id="msy6hs6" class="measure">
+               <g id="vmfbtf6" class="staff">
+                  <path d="M0 540 L2401 540" stroke-width="13" />
+                  <path d="M0 720 L2401 720" stroke-width="13" />
+                  <path d="M0 900 L2401 900" stroke-width="13" />
+                  <path d="M0 1080 L2401 1080" stroke-width="13" />
+                  <path d="M0 1260 L2401 1260" stroke-width="13" />
+                  <g id="o3qywpq" class="clef">
+                     <use href="#E05C-we1whu0" transform="translate(90, 900) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="p1ucyiwc" class="keySig" />
+                  <g class="ledgerLines below">
+                     <path d="M763 1440 L1127 1440" stroke-width="22" />
+                  </g>
+                  <g id="w1mvl8p0" class="layer">
+                     <g id="xopn3we" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-we1whu0" transform="translate(811, 1530) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="u1ezej59" class="barLine" />
+            </g>
+            <g id="f9k9g80" class="systemMilestoneEnd l2np6oj" />
+         </g>
+         <g id="gr3v5j6" class="pageMilestoneEnd y9xsqzk" />
+         <g id="h1tlansw" class="pageMilestoneEnd x1ke4bvv" />
+      </g>
+   </svg>
+</svg>

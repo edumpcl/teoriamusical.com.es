@@ -1,0 +1,51 @@
+<svg id="a1hmnx06" viewBox="0 0 105 102" width="160" height="156" role="img" xmlns="http://www.w3.org/2000/svg"><title>Do₇ en clave de sol</title>
+   <defs>
+      <g id="E050-a1hmnx06">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A2-a1hmnx06">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#a1hmnx06 g.ending, #a1hmnx06 g.fing, #a1hmnx06 g.reh, #a1hmnx06 g.tempo {font-weight:bold;}#a1hmnx06 g.dir, #a1hmnx06 g.dynam, #a1hmnx06 g.mNum {font-style:italic;}#a1hmnx06 g.label {font-weight:normal;}#a1hmnx06 ellipse, #a1hmnx06 path, #a1hmnx06 polygon, #a1hmnx06 polyline, #a1hmnx06 rect {stroke:currentColor}#a1hmnx06 g.cursor {fill:dodgerblue; color:dodgerblue;}#a1hmnx06 g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2610 2540">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="b1gli9k6" class="mdiv pageMilestone" />
+         <g id="c16k1ylt" class="score pageMilestone" />
+         <g id="g1gs5a54" class="system">
+            <g id="pujvtyf" class="section systemMilestone" />
+            <g id="qmkbd46" class="measure">
+               <g id="z1tr28m6" class="staff">
+                  <path d="M0 1088 L2410 1088" stroke-width="13" />
+                  <path d="M0 1268 L2410 1268" stroke-width="13" />
+                  <path d="M0 1448 L2410 1448" stroke-width="13" />
+                  <path d="M0 1628 L2410 1628" stroke-width="13" />
+                  <path d="M0 1808 L2410 1808" stroke-width="13" />
+                  <g id="s1iv21yo" class="clef">
+                     <use href="#E050-a1hmnx06" transform="translate(90, 1628) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="tthghly" class="keySig" />
+                  <g class="ledgerLines above">
+                     <path d="M772 908 L1136 908" stroke-width="22" />
+                     <path d="M772 728 L1136 728" stroke-width="22" />
+                     <path d="M772 548 L1136 548" stroke-width="22" />
+                     <path d="M772 368 L1136 368" stroke-width="22" />
+                     <path d="M772 188 L1136 188" stroke-width="22" />
+                  </g>
+                  <g id="avgef9a" class="layer">
+                     <g id="b1esog4b" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-a1hmnx06" transform="translate(820, 98) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="y1rpd33l" class="barLine" />
+            </g>
+            <g id="jt26j9v" class="systemMilestoneEnd pujvtyf" />
+         </g>
+         <g id="k15sukmk" class="pageMilestoneEnd c16k1ylt" />
+         <g id="l1rv5cms" class="pageMilestoneEnd b1gli9k6" />
+      </g>
+   </svg>
+</svg>

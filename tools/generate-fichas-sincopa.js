@@ -19,11 +19,8 @@ const path = require('path');
 const fs = require('fs');
 
 const ROOT = path.join(__dirname, '..');
-/* sincopa-engine.js usa la API de VexFlow 4 (Vex.Flow, opciones en
-   snake_case: first_note/last_note...), la misma que carga la página real
-   por CDN. El paquete node_modules/vexflow es la v5 (API distinta, en
-   camelCase) y rompe StaveTie con esas opciones, así que aquí se carga el
-   mismo build por red en vez del paquete de Node. */
+/* sincopa-engine.js dibuja con Verovio (tm-mei.js + tm-notacion.js). cargarFicha() abre la hoja SIN servidor: las rutas
+   http://tm.local/... se sirven desde el repositorio, asi que no hace falta red ni VexFlow. */
 const ENGINE = 'assets/js/sincopa-engine.js';
 const { cargarFicha, escalarUniforme } = require('./lib-ficha-verovio.js');
 /* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */

@@ -1,0 +1,44 @@
+<svg id="e1x3yctz" viewBox="0 0 105 80" width="160" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Do₃ en clave de fa</title>
+   <defs>
+      <g id="E062-e1x3yctz">
+         <path transform="scale(1,-1)" d="M568 124c0 28 22 51 48 51s48 -23 48 -51s-22 -50 -48 -50s-48 22 -48 50zM254 251c180 0 274 -112 274 -286c0 -184 -158 -362 -298 -463c-91 -71 -205 -118 -206 -118s-4 -1 -5 -1c-6 0 -15 2 -18 12c0 2 -1 3 -1 5c0 12 12 19 12 19c1 0 99 45 203 140 c98 88 181 275 181 405c0 168 -50 250 -152 250c-35 0 -67 -6 -92 -20c-39 -21 -69 -65 -76 -109c8 7 25 17 35 21c9 3 20 5 32 5c56 0 106 -47 106 -104c0 -66 -50 -109 -114 -109c-74 0 -116 54 -116 127s38 139 97 182c1 0 62 44 138 44zM568 -123c0 28 22 51 48 51 s48 -23 48 -51s-22 -51 -48 -51s-48 23 -48 51z" />
+      </g>
+      <g id="E0A2-e1x3yctz">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#e1x3yctz g.ending, #e1x3yctz g.fing, #e1x3yctz g.reh, #e1x3yctz g.tempo {font-weight:bold;}#e1x3yctz g.dir, #e1x3yctz g.dynam, #e1x3yctz g.mNum {font-style:italic;}#e1x3yctz g.label {font-weight:normal;}#e1x3yctz ellipse, #e1x3yctz path, #e1x3yctz polygon, #e1x3yctz polyline, #e1x3yctz rect {stroke:currentColor}#e1x3yctz g.cursor {fill:dodgerblue; color:dodgerblue;}#e1x3yctz g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2620 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="fg2ak96" class="mdiv pageMilestone" />
+         <g id="g1mlu9s3" class="score pageMilestone" />
+         <g id="k12o7vap" class="system">
+            <g id="t1ar2d06" class="section systemMilestone" />
+            <g id="u18odif" class="measure">
+               <g id="d9pgfl2" class="staff">
+                  <path d="M0 540 L2428 540" stroke-width="13" />
+                  <path d="M0 720 L2428 720" stroke-width="13" />
+                  <path d="M0 900 L2428 900" stroke-width="13" />
+                  <path d="M0 1080 L2428 1080" stroke-width="13" />
+                  <path d="M0 1260 L2428 1260" stroke-width="13" />
+                  <g id="w156gk2p" class="clef">
+                     <use href="#E062-e1x3yctz" transform="translate(90, 720) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="xz0mxz3" class="keySig" />
+                  <g id="e1vqwp9m" class="layer">
+                     <g id="f9q0lvz" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-e1x3yctz" transform="translate(838, 990) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="civh9mr" class="barLine" />
+            </g>
+            <g id="n14i9gu3" class="systemMilestoneEnd t1ar2d06" />
+         </g>
+         <g id="o3stp77" class="pageMilestoneEnd g1mlu9s3" />
+         <g id="pyqjo7n" class="pageMilestoneEnd fg2ak96" />
+      </g>
+   </svg>
+</svg>

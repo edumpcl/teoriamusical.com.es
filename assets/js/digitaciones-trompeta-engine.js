@@ -208,26 +208,8 @@
       var el = document.getElementById(uid + '_staff');
       if (!el) return;
       el.innerHTML = '';
-      if (typeof Vex === 'undefined') return;
       var vn = vfNote(n); if (!vn) return;
-      var V = Vex.Flow;
-      var r = new V.Renderer(el, V.Renderer.Backends.SVG);
-      r.resize(150, 150);
-      var ctx = r.getContext(); ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(2, 34, 132);
-      stave.addClef('treble').setContext(ctx).draw();
-      var note = new V.StaveNote({ keys: [vn.key], duration: 'w', clef: 'treble' });
-      if (vn.acc) note.addModifier(new V.Accidental(vn.acc), 0);
-      var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([note]);
-      new V.Formatter().joinVoices([voice]).format([voice], 80);
-      voice.draw(ctx, stave);
-      var s = el.querySelector('svg');
-      if (s) {
-        var vb = '0 0 150 150';
-        try { var bb = s.getBBox(); if (bb && bb.height) { var p = 6; vb = (bb.x - p) + ' ' + (bb.y - p) + ' ' + (bb.width + 2 * p) + ' ' + (bb.height + 2 * p); } } catch (e) {}
-        s.setAttribute('viewBox', vb);
-        s.style.width = '140px'; s.style.maxWidth = '100%'; s.style.height = 'auto';
-      }
+      if (window.tmPentNota) tmPentNota(el, 'treble', vn.key);
     }
 
     function pick(n, btn) {

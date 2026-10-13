@@ -1,0 +1,48 @@
+<svg id="w9xvdro" viewBox="0 0 105 80" width="160" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Fa₄ en clave de fa</title>
+   <defs>
+      <g id="E062-w9xvdro">
+         <path transform="scale(1,-1)" d="M568 124c0 28 22 51 48 51s48 -23 48 -51s-22 -50 -48 -50s-48 22 -48 50zM254 251c180 0 274 -112 274 -286c0 -184 -158 -362 -298 -463c-91 -71 -205 -118 -206 -118s-4 -1 -5 -1c-6 0 -15 2 -18 12c0 2 -1 3 -1 5c0 12 12 19 12 19c1 0 99 45 203 140 c98 88 181 275 181 405c0 168 -50 250 -152 250c-35 0 -67 -6 -92 -20c-39 -21 -69 -65 -76 -109c8 7 25 17 35 21c9 3 20 5 32 5c56 0 106 -47 106 -104c0 -66 -50 -109 -114 -109c-74 0 -116 54 -116 127s38 139 97 182c1 0 62 44 138 44zM568 -123c0 28 22 51 48 51 s48 -23 48 -51s-22 -51 -48 -51s-48 23 -48 51z" />
+      </g>
+      <g id="E0A2-w9xvdro">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#w9xvdro g.ending, #w9xvdro g.fing, #w9xvdro g.reh, #w9xvdro g.tempo {font-weight:bold;}#w9xvdro g.dir, #w9xvdro g.dynam, #w9xvdro g.mNum {font-style:italic;}#w9xvdro g.label {font-weight:normal;}#w9xvdro ellipse, #w9xvdro path, #w9xvdro polygon, #w9xvdro polyline, #w9xvdro rect {stroke:currentColor}#w9xvdro g.cursor {fill:dodgerblue; color:dodgerblue;}#w9xvdro g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2620 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="x1fkzf41" class="mdiv pageMilestone" />
+         <g id="y1b1r4mf" class="score pageMilestone" />
+         <g id="c3j22nn" class="system">
+            <g id="lcrujpz" class="section systemMilestone" />
+            <g id="m197rr7g" class="measure">
+               <g id="v9p126d" class="staff">
+                  <path d="M0 548 L2428 548" stroke-width="13" />
+                  <path d="M0 728 L2428 728" stroke-width="13" />
+                  <path d="M0 908 L2428 908" stroke-width="13" />
+                  <path d="M0 1088 L2428 1088" stroke-width="13" />
+                  <path d="M0 1268 L2428 1268" stroke-width="13" />
+                  <g id="ofh95my" class="clef">
+                     <use href="#E062-w9xvdro" transform="translate(90, 728) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="p12fux8y" class="keySig" />
+                  <g class="ledgerLines above">
+                     <path d="M790 368 L1154 368" stroke-width="22" />
+                     <path d="M790 188 L1154 188" stroke-width="22" />
+                  </g>
+                  <g id="w1fpa3ql" class="layer">
+                     <g id="xqlwkz" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-w9xvdro" transform="translate(838, 98) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="us4hh6g" class="barLine" />
+            </g>
+            <g id="f1azbj3x" class="systemMilestoneEnd lcrujpz" />
+         </g>
+         <g id="g1sr70g2" class="pageMilestoneEnd y1b1r4mf" />
+         <g id="hwekbzb" class="pageMilestoneEnd x1fkzf41" />
+      </g>
+   </svg>
+</svg>

@@ -1,0 +1,1803 @@
+[
+ {
+  "clave": "sol",
+  "nota": "g/4",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corneta",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "ab/4",
+  "motores": [
+   "corneta"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "c/5",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "contrafagot",
+   "corneta",
+   "corno-ingles",
+   "fagot",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "db/5",
+  "motores": [
+   "corneta"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "e/5",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corneta",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "f/5",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corneta",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "g/5",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corneta",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "ab/5",
+  "motores": [
+   "corneta"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "bb/5",
+  "motores": [
+   "corneta"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "cb/6",
+  "motores": [
+   "corneta"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "c/6",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corneta",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "db/6",
+  "motores": [
+   "corneta"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "d/6",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corneta",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "eb/6",
+  "motores": [
+   "corneta"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "e/6",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corneta",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "f/6",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corneta",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "oboe",
+   "requinto",
+   "saxofon"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "c/4",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "c#/4",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "d/4",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "d#/4",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "e/4",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "f/4",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "f#/4",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "g#/4",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "contrafagot",
+   "corno-ingles",
+   "fagot",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "a/4",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "contrafagot",
+   "corno-ingles",
+   "fagot",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "a#/4",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "contrafagot",
+   "corno-ingles",
+   "fagot",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "b/4",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "contrafagot",
+   "corno-ingles",
+   "fagot",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "c#/5",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "contrafagot",
+   "corno-ingles",
+   "fagot",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "d/5",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "contrafagot",
+   "corno-ingles",
+   "fagot",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "d#/5",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "fagot",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "f#/5",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "g#/5",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "a/5",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "ukelele",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "a#/5",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "b/5",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompa",
+   "trompeta",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "c#/6",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "d#/6",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "f#/6",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "oboe",
+   "requinto",
+   "saxofon"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "g/6",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "flauta",
+   "flautin",
+   "oboe",
+   "requinto"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "g#/6",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "flauta",
+   "flautin",
+   "requinto"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "a/6",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "flauta",
+   "flautin",
+   "requinto"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "a#/6",
+  "motores": [
+   "flauta",
+   "flautin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "b/6",
+  "motores": [
+   "flauta",
+   "flautin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "c/7",
+  "motores": [
+   "flauta",
+   "flautin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "e/3",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "guitarra",
+   "requinto"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "f/3",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "guitarra",
+   "requinto"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "f#/3",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "fliscorno",
+   "guitarra",
+   "requinto",
+   "trompeta"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "g/3",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "fliscorno",
+   "guitarra",
+   "requinto",
+   "trompeta",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "g#/3",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "fliscorno",
+   "guitarra",
+   "requinto",
+   "trompeta",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "a/3",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "fliscorno",
+   "guitarra",
+   "requinto",
+   "trompeta",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "a#/3",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompeta",
+   "violin"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "b/3",
+  "motores": [
+   "clarinete",
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo",
+   "corno-ingles",
+   "fliscorno",
+   "guitarra",
+   "oboe",
+   "requinto",
+   "saxofon",
+   "trompeta",
+   "violin"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "c/2",
+  "motores": [
+   "bombardino",
+   "contrafagot",
+   "fagot",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "c#/2",
+  "motores": [
+   "bombardino",
+   "contrafagot",
+   "fagot",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "d/2",
+  "motores": [
+   "bombardino",
+   "contrafagot",
+   "fagot",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "d#/2",
+  "motores": [
+   "bombardino",
+   "contrafagot",
+   "fagot",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "e/2",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "f/2",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "f#/2",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "g/2",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "g#/2",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "a/2",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "a#/2",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "b/2",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "c/3",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "c#/3",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "d/3",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "d#/3",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "e/3",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "f/3",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "f#/3",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "g/3",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "contrafagot",
+   "fagot",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "g#/3",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "a/3",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "a#/3",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "b/3",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "trombon",
+   "trombon-bajo",
+   "trompa",
+   "tuba",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "e/1",
+  "motores": [
+   "tuba"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "f/1",
+  "motores": [
+   "tuba"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "f#/1",
+  "motores": [
+   "tuba"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "g/1",
+  "motores": [
+   "tuba"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "g#/1",
+  "motores": [
+   "tuba"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "a/1",
+  "motores": [
+   "tuba"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "a#/1",
+  "motores": [
+   "bombardino",
+   "contrafagot",
+   "fagot",
+   "trombon-bajo",
+   "tuba"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "b/1",
+  "motores": [
+   "bombardino",
+   "contrafagot",
+   "fagot",
+   "trombon-bajo",
+   "tuba"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "c/3",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "c#/3",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "d/3",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "d#/3",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "e/3",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "f/3",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "f#/3",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "g/3",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "g#/3",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "a/3",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "a#/3",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "b/3",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "c/4",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "c#/4",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "d/4",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "d#/4",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "e/4",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "f/4",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "f#/4",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "g/4",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "g#/4",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "a/4",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "a#/4",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "b/4",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "c/5",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "c#/5",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "d/5",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "d#/5",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "e/5",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "f/5",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "f#/5",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "g/5",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "g#/5",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "do3",
+  "nota": "a/5",
+  "motores": [
+   "viola"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "c/4",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "trombon",
+   "trombon-bajo",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "c#/4",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "trombon",
+   "trombon-bajo",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "d/4",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "trombon",
+   "trombon-bajo",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "d#/4",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "trombon",
+   "trombon-bajo",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "e/4",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "trombon",
+   "trombon-bajo",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "f/4",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "trombon",
+   "trombon-bajo",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "f#/4",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "trombon",
+   "trombon-bajo",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "g/4",
+  "motores": [
+   "bajo",
+   "bombardino",
+   "contrabajo",
+   "trombon",
+   "trombon-bajo",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "g#/4",
+  "motores": [
+   "bombardino",
+   "trombon",
+   "trombon-bajo",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "a/4",
+  "motores": [
+   "bombardino",
+   "trombon",
+   "trombon-bajo",
+   "violonchelo"
+  ]
+ },
+ {
+  "clave": "fa",
+  "nota": "a#/4",
+  "motores": [
+   "bombardino",
+   "trombon",
+   "trombon-bajo"
+  ]
+ },
+ {
+  "clave": "sol",
+  "nota": "d#/3",
+  "motores": [
+   "clarinete-alto",
+   "clarinete-bajo",
+   "clarinete-contrabajo"
+  ]
+ },
+ {
+  "clave": "do4",
+  "nota": "g#/3",
+  "motores": [
+   "contrafagot",
+   "fagot"
+  ]
+ },
+ {
+  "clave": "do4",
+  "nota": "a/3",
+  "motores": [
+   "contrafagot",
+   "fagot"
+  ]
+ },
+ {
+  "clave": "do4",
+  "nota": "a#/3",
+  "motores": [
+   "contrafagot",
+   "fagot"
+  ]
+ },
+ {
+  "clave": "do4",
+  "nota": "b/3",
+  "motores": [
+   "contrafagot",
+   "fagot"
+  ]
+ },
+ {
+  "clave": "do4",
+  "nota": "c/4",
+  "motores": [
+   "contrafagot",
+   "fagot"
+  ]
+ },
+ {
+  "clave": "do4",
+  "nota": "c#/4",
+  "motores": [
+   "contrafagot",
+   "fagot"
+  ]
+ },
+ {
+  "clave": "do4",
+  "nota": "d/4",
+  "motores": [
+   "contrafagot",
+   "fagot"
+  ]
+ },
+ {
+  "clave": "do4",
+  "nota": "d#/4",
+  "motores": [
+   "contrafagot",
+   "fagot"
+  ]
+ },
+ {
+  "clave": "do4",
+  "nota": "e/4",
+  "motores": [
+   "contrafagot",
+   "fagot"
+  ]
+ },
+ {
+  "clave": "do4",
+  "nota": "f/4",
+  "motores": [
+   "contrafagot",
+   "fagot"
+  ]
+ },
+ {
+  "clave": "do4",
+  "nota": "f#/4",
+  "motores": [
+   "contrafagot",
+   "fagot"
+  ]
+ },
+ {
+  "clave": "do4",
+  "nota": "g/4",
+  "motores": [
+   "contrafagot",
+   "fagot"
+  ]
+ }
+]

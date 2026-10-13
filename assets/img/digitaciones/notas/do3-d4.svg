@@ -1,0 +1,44 @@
+<svg id="ktu3cfx" viewBox="0 0 104 80" width="159" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Re₄ en clave de do en tercera</title>
+   <defs>
+      <g id="E05C-ktu3cfx">
+         <path transform="scale(1,-1)" d="M13 469h72c7 0 13 -6 13 -13v-910c0 -7 -6 -13 -13 -13h-72c-7 0 -13 6 -13 13v910c0 7 6 13 13 13zM627 -261c0 -140 -103 -219 -224 -219c-75 0 -182 31 -182 123c0 49 34 81 83 81c44 0 75 -32 75 -76c0 -43 -29 -74 -73 -74c-6 0 -10 1 -11 1c23 -16 54 -25 85 -25 c105 0 122 84 122 174c0 77 -2 189 -90 189s-106 -95 -108 -106c0 -1 0 -13 -14 -13s-15 12 -15 13c-11 56 -33 151 -92 175v-436c0 -7 -5 -13 -12 -13s-13 6 -13 13v910c0 7 6 13 13 13s12 -6 12 -13v-436c56 23 83 119 92 174c0 1 1 14 15 14s14 -13 14 -14 c2 -10 20 -105 108 -105s90 112 90 189c0 90 -17 174 -122 174c-31 0 -62 -9 -85 -25c48 0 84 -18 84 -73c0 -44 -31 -76 -75 -76c-49 0 -83 32 -83 81c0 92 107 123 182 123c121 0 224 -79 224 -219c0 -108 -60 -221 -182 -221c-43 0 -56 3 -94 26c-2 -4 -22 -44 -55 -67 c33 -23 53 -63 55 -67c39 24 56 26 79 26c131 0 197 -97 197 -221z" />
+      </g>
+      <g id="E0A2-ktu3cfx">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#ktu3cfx g.ending, #ktu3cfx g.fing, #ktu3cfx g.reh, #ktu3cfx g.tempo {font-weight:bold;}#ktu3cfx g.dir, #ktu3cfx g.dynam, #ktu3cfx g.mNum {font-style:italic;}#ktu3cfx g.label {font-weight:normal;}#ktu3cfx ellipse, #ktu3cfx path, #ktu3cfx polygon, #ktu3cfx polyline, #ktu3cfx rect {stroke:currentColor}#ktu3cfx g.cursor {fill:dodgerblue; color:dodgerblue;}#ktu3cfx g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2600 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="l5dtw9j" class="mdiv pageMilestone" />
+         <g id="mpqia6m" class="score pageMilestone" />
+         <g id="qyft2gw" class="system">
+            <g id="zds0lhv" class="section systemMilestone" />
+            <g id="axcpbaw" class="measure">
+               <g id="j10sc4oc" class="staff">
+                  <path d="M0 540 L2401 540" stroke-width="13" />
+                  <path d="M0 720 L2401 720" stroke-width="13" />
+                  <path d="M0 900 L2401 900" stroke-width="13" />
+                  <path d="M0 1080 L2401 1080" stroke-width="13" />
+                  <path d="M0 1260 L2401 1260" stroke-width="13" />
+                  <g id="c54pnre" class="clef">
+                     <use href="#E05C-ktu3cfx" transform="translate(90, 900) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="d1mafdl7" class="keySig" />
+                  <g id="k5l3kev" class="layer">
+                     <g id="l1plubd3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-ktu3cfx" transform="translate(811, 810) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="i189qux0" class="barLine" />
+            </g>
+            <g id="teglfks" class="systemMilestoneEnd zds0lhv" />
+         </g>
+         <g id="u9i3qbv" class="pageMilestoneEnd mpqia6m" />
+         <g id="v12nrqjs" class="pageMilestoneEnd l5dtw9j" />
+      </g>
+   </svg>
+</svg>

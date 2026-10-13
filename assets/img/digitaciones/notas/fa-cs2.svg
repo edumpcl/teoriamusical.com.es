@@ -1,0 +1,54 @@
+<svg id="lpsj2xq" viewBox="0 0 115 82" width="176" height="125" role="img" xmlns="http://www.w3.org/2000/svg"><title>Do♯₂ en clave de fa</title>
+   <defs>
+      <g id="E062-lpsj2xq">
+         <path transform="scale(1,-1)" d="M568 124c0 28 22 51 48 51s48 -23 48 -51s-22 -50 -48 -50s-48 22 -48 50zM254 251c180 0 274 -112 274 -286c0 -184 -158 -362 -298 -463c-91 -71 -205 -118 -206 -118s-4 -1 -5 -1c-6 0 -15 2 -18 12c0 2 -1 3 -1 5c0 12 12 19 12 19c1 0 99 45 203 140 c98 88 181 275 181 405c0 168 -50 250 -152 250c-35 0 -67 -6 -92 -20c-39 -21 -69 -65 -76 -109c8 7 25 17 35 21c9 3 20 5 32 5c56 0 106 -47 106 -104c0 -66 -50 -109 -114 -109c-74 0 -116 54 -116 127s38 139 97 182c1 0 62 44 138 44zM568 -123c0 28 22 51 48 51 s48 -23 48 -51s-22 -51 -48 -51s-48 23 -48 51z" />
+      </g>
+      <g id="E0A2-lpsj2xq">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+      <g id="E262-lpsj2xq">
+         <path transform="scale(1,-1)" d="M78 74v-166l89 19v165zM233 105l-38 -7v-165l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14l-38 -7v-147h-28v141l-89 -18v-155h-28v149l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v165l-33 -7h-3c-8 0 -14 6 -14 14v58c0 6 5 13 11 14l39 8v147h28v-141 l89 18v155h28v-149l33 7h2c8 0 14 -6 14 -14v-59c0 -6 -5 -13 -11 -14z" />
+      </g>
+   </defs>
+   <style type="text/css">#lpsj2xq g.ending, #lpsj2xq g.fing, #lpsj2xq g.reh, #lpsj2xq g.tempo {font-weight:bold;}#lpsj2xq g.dir, #lpsj2xq g.dynam, #lpsj2xq g.mNum {font-style:italic;}#lpsj2xq g.label {font-weight:normal;}#lpsj2xq ellipse, #lpsj2xq path, #lpsj2xq polygon, #lpsj2xq polyline, #lpsj2xq rect {stroke:currentColor}#lpsj2xq g.cursor {fill:dodgerblue; color:dodgerblue;}#lpsj2xq g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2870 2050">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="mjhbdl5" class="mdiv pageMilestone" />
+         <g id="narp7we" class="score pageMilestone" />
+         <g id="sxvch82" class="system">
+            <g id="a100squh" class="section systemMilestone" />
+            <g id="b10k6qrp" class="measure">
+               <g id="khg3lam" class="staff">
+                  <path d="M0 540 L2674 540" stroke-width="13" />
+                  <path d="M0 720 L2674 720" stroke-width="13" />
+                  <path d="M0 900 L2674 900" stroke-width="13" />
+                  <path d="M0 1080 L2674 1080" stroke-width="13" />
+                  <path d="M0 1260 L2674 1260" stroke-width="13" />
+                  <g id="er70icw" class="clef">
+                     <use href="#E062-lpsj2xq" transform="translate(90, 720) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="f1bvpzvn" class="keySig" />
+                  <g class="ledgerLines below">
+                     <path d="M1036 1440 L1400 1440" stroke-width="22" />
+                     <path d="M1036 1620 L1400 1620" stroke-width="22" />
+                  </g>
+                  <g id="lmo38ad" class="layer">
+                     <g id="mybntl0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-lpsj2xq" transform="translate(1084, 1620) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="n1k5gp53" class="accid">
+                           <use href="#E262-lpsj2xq" transform="translate(838, 1620) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="j1wun6fw" class="barLine" />
+            </g>
+            <g id="v1a6s49v" class="systemMilestoneEnd a100squh" />
+         </g>
+         <g id="wlh2w6j" class="pageMilestoneEnd narp7we" />
+         <g id="x1gkr6q6" class="pageMilestoneEnd mjhbdl5" />
+      </g>
+   </svg>
+</svg>

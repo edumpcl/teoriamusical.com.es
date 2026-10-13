@@ -1,0 +1,49 @@
+<svg id="jpqq0br" viewBox="0 0 104 88" width="159" height="134" role="img" xmlns="http://www.w3.org/2000/svg"><title>Sol₅ en clave de do en tercera</title>
+   <defs>
+      <g id="E05C-jpqq0br">
+         <path transform="scale(1,-1)" d="M13 469h72c7 0 13 -6 13 -13v-910c0 -7 -6 -13 -13 -13h-72c-7 0 -13 6 -13 13v910c0 7 6 13 13 13zM627 -261c0 -140 -103 -219 -224 -219c-75 0 -182 31 -182 123c0 49 34 81 83 81c44 0 75 -32 75 -76c0 -43 -29 -74 -73 -74c-6 0 -10 1 -11 1c23 -16 54 -25 85 -25 c105 0 122 84 122 174c0 77 -2 189 -90 189s-106 -95 -108 -106c0 -1 0 -13 -14 -13s-15 12 -15 13c-11 56 -33 151 -92 175v-436c0 -7 -5 -13 -12 -13s-13 6 -13 13v910c0 7 6 13 13 13s12 -6 12 -13v-436c56 23 83 119 92 174c0 1 1 14 15 14s14 -13 14 -14 c2 -10 20 -105 108 -105s90 112 90 189c0 90 -17 174 -122 174c-31 0 -62 -9 -85 -25c48 0 84 -18 84 -73c0 -44 -31 -76 -75 -76c-49 0 -83 32 -83 81c0 92 107 123 182 123c121 0 224 -79 224 -219c0 -108 -60 -221 -182 -221c-43 0 -56 3 -94 26c-2 -4 -22 -44 -55 -67 c33 -23 53 -63 55 -67c39 24 56 26 79 26c131 0 197 -97 197 -221z" />
+      </g>
+      <g id="E0A2-jpqq0br">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#jpqq0br g.ending, #jpqq0br g.fing, #jpqq0br g.reh, #jpqq0br g.tempo {font-weight:bold;}#jpqq0br g.dir, #jpqq0br g.dynam, #jpqq0br g.mNum {font-style:italic;}#jpqq0br g.label {font-weight:normal;}#jpqq0br ellipse, #jpqq0br path, #jpqq0br polygon, #jpqq0br polyline, #jpqq0br rect {stroke:currentColor}#jpqq0br g.cursor {fill:dodgerblue; color:dodgerblue;}#jpqq0br g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 2600 2180">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="k1vk351u" class="mdiv pageMilestone" />
+         <g id="lqzjkhs" class="score pageMilestone" />
+         <g id="p2j2rqb" class="system">
+            <g id="ysez58o" class="section systemMilestone" />
+            <g id="z12ukrx3" class="measure">
+               <g id="i11ddyr7" class="staff">
+                  <path d="M0 728 L2401 728" stroke-width="13" />
+                  <path d="M0 908 L2401 908" stroke-width="13" />
+                  <path d="M0 1088 L2401 1088" stroke-width="13" />
+                  <path d="M0 1268 L2401 1268" stroke-width="13" />
+                  <path d="M0 1448 L2401 1448" stroke-width="13" />
+                  <g id="bw8ag7h" class="clef">
+                     <use href="#E05C-jpqq0br" transform="translate(90, 1088) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="cx2qrnb" class="keySig" />
+                  <g class="ledgerLines above">
+                     <path d="M763 548 L1127 548" stroke-width="22" />
+                     <path d="M763 368 L1127 368" stroke-width="22" />
+                     <path d="M763 188 L1127 188" stroke-width="22" />
+                  </g>
+                  <g id="j1ou95xj" class="layer">
+                     <g id="k1ebavh" class="note">
+                        <g class="notehead">
+                           <use href="#E0A2-jpqq0br" transform="translate(811, 98) scale(0.72, 0.72)" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="h1nbsjx2" class="barLine" />
+            </g>
+            <g id="s1gkiy10" class="systemMilestoneEnd ysez58o" />
+         </g>
+         <g id="t1ggimk5" class="pageMilestoneEnd lqzjkhs" />
+         <g id="u110dlpd" class="pageMilestoneEnd k1vk351u" />
+      </g>
+   </svg>
+</svg>

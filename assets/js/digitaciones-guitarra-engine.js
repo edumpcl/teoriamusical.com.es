@@ -158,22 +158,10 @@
     }
 
     function renderStaff(m) {
-      var el = document.getElementById(uid + '_staff'); if (!el || typeof Vex === 'undefined') return;
+      var el = document.getElementById(uid + '_staff'); if (!el) return;
       el.innerHTML = '';
-      var V = Vex.Flow, r = new V.Renderer(el, V.Renderer.Backends.SVG);
-      r.resize(160, 150); var ctx = r.getContext(); ctx.setFillStyle('#1a1a1a'); ctx.setStrokeStyle('#1a1a1a');
-      var stave = new V.Stave(2, 30, 150); stave.addClef('treble').setContext(ctx).draw();
       var vn = vfKey(m);
-      var note = new V.StaveNote({ keys: [vn.key], duration: 'w', clef: 'treble' });
-      if (vn.acc) note.addModifier(new V.Accidental(vn.acc), 0);
-      var voice = new V.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false).addTickables([note]);
-      new V.Formatter().joinVoices([voice]).format([voice], 90); voice.draw(ctx, stave);
-      var svg = el.querySelector('svg');
-      if (svg) {
-        var vb = '0 0 160 150';
-        try { var bb = svg.getBBox(); if (bb && bb.height) { var q = 6; vb = (bb.x - q) + ' ' + (bb.y - q) + ' ' + (bb.width + 2 * q) + ' ' + (bb.height + 2 * q); } } catch (e) {}
-        svg.setAttribute('viewBox', vb); svg.style.width = '150px'; svg.style.maxWidth = '100%'; svg.style.height = 'auto';
-      }
+      if (window.tmPentNota) tmPentNota(el, 'treble', vn.key);
     }
 
     function tabLines(pos) {
