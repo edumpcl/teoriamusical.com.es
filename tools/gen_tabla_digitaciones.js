@@ -52,6 +52,11 @@ const INSTRUMENTOS = {
   // Trompa DOBLE: dos digitaciones por nota (lado de Fa y lado de Si♭), y la clave cambia con la altura.
   // Suena una 5.ª justa (7 semitonos) por debajo de lo escrito. Datos: CHART del motor ('fa|sib').
   trompa:     { pagina: 'diccionario-musical/notas-de-la-trompa',     transpone: -7,  doble: true, nombre: 'la trompa doble en Fa/Si♭' },
+  // Trombones de VARA: no hay pistones; la nota se elige con la posicion de la vara (1.ª a 7.ª) y el armonico
+  // de los labios. No transponen (lo escrito es lo que suena, clave de fa). El bajo anade dos valvulas.
+  trombon:      { pagina: 'diccionario-musical/notas-del-trombon',      transpone: 0, vara: true, clave: 'fa', nombre: 'trombón de varas (tenor, en Si♭)',
+                  antes: /<h2>Las posiciones del trombón<\/h2>/ },
+  'trombon-bajo': { pagina: 'diccionario-musical/notas-del-trombon-bajo', transpone: 0, vara: true, valvulas: true, clave: 'fa', nombre: 'trombón bajo' },
 };
 
 const OCULTO = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap';
@@ -166,7 +171,56 @@ function tablaDoble(inst) {
     MARCA_FIN].join('\n');
 }
 
+/* ---- trombones de vara ----
+   El motor guarda FING = { 'Mi2': { pos: 7, harm: 2 }, ... } y, en el bajo, { pos: 3, valves: 'both' } para el registro grave
+   (ahi el armonico no se indica). FUND = nota de la serie al aire de cada posicion. */
+function leerVara(inst) {
+  const src = fs.readFileSync(path.join(RAIZ, 'assets/js/digitaciones-' + inst + '-engine.js'), 'utf8');
+  const caja = {};
+  for (const [nom, re] of [['FING', /var FING = \{[\s\S]*?\n  \};/], ['ORDEN', /var ORDEN = \[[\s\S]*?\];/], ['FUND', /var FUND = \{[^}]*\};/]]) {
+    const m = src.match(re);
+    if (!m) throw new Error(`${inst}: no encuentro ${nom} en el motor`);
+    // eslint-disable-next-line no-eval
+    eval(m[0].replace('var ' + nom, 'caja.' + nom));
+  }
+  return caja;
+}
+const VALV_TXT = { F: 'F', Gb: 'G♭', both: 'F + G♭' };
+
+function tablaVara(inst) {
+  const cfg = INSTRUMENTOS[inst];
+  const { FING, ORDEN, FUND } = leerVara(inst);
+  const filas = ORDEN.map((clave) => {
+    const d = FING[clave];
+    const midi = aMidi(clave);
+    const [esc, escBem] = nombre(midi);
+    const dib = [1, 2, 3, 4, 5, 6, 7].map((k) => (k === d.pos ? '<b class="tm-dg-on">●</b>' : '<span class="tm-dg-off">○</span>')).join('');
+    const arm = d.harm ? `${d.harm}.º` : '<span class="tm-dg-na">—</span>';
+    const texto = `${d.pos}.ª posición`
+      + (d.valves ? `, con ${d.valves === 'both' ? 'las dos válvulas (F y G♭, que juntas dan Re)' : 'la válvula ' + VALV_TXT[d.valves]}` : '')
+      + (d.harm ? `, ${d.harm}.º armónico sobre el ${FUND[d.pos]}` : '');
+    return '<tr>'
+      + `<th scope="row">${esc}${escBem ? `<small>${escBem}</small>` : ''}</th>`
+      + `<td class="tm-dg-pent">${pentagrama(clave, cfg.clave)}</td>`
+      + `<td class="tm-dg-dib">${dib}<span style="${OCULTO}">${texto}</span></td>`
+      + `<td class="tm-dg-suena">${arm}</td>`
+      + (cfg.valvulas ? `<td class="tm-dg-suena">${d.valves ? VALV_TXT[d.valves] : '<span class="tm-dg-na">—</span>'}</td>` : '')
+      + '</tr>';
+  });
+  const cab = '<abbr title="1.ª posición: la vara recogida">1</abbr> 2 3 4 5 6 <abbr title="7.ª posición: la vara más extendida">7</abbr>';
+  return [MARCA_INI,
+    '<div class="tm-table-wrap">',
+    '<table class="tm-table tm-digitaciones">',
+    `<caption style="caption-side:top;text-align:left;font-weight:600;padding:0 0 8px">Todas las posiciones del ${cfg.nombre}: ${filas.length} notas</caption>`,
+    `<thead><tr><th scope="col">Nota escrita</th><th scope="col">En el pentagrama<small>clave de fa</small></th><th scope="col">Posición de la vara<small>${cab}</small></th><th scope="col">Armónico</th>${cfg.valvulas ? '<th scope="col">Válvulas</th>' : ''}</tr></thead>`,
+    '<tbody>', filas.join('\n'), '</tbody></table></div>',
+    `<p class="tm-nota-tabla"><strong>●</strong> marca la posición de la vara: la <strong>1.ª</strong> es la vara recogida y la <strong>7.ª</strong>, la más extendida; cada posición baja la nota un semitono. La columna <strong>Armónico</strong> dice con cuál de los armónicos de esa posición se toca la nota, ajustándolo con los labios${cfg.valvulas ? '. Las notas del registro grave se tocan con las <strong>válvulas</strong> del trombón bajo (F, G♭ o las dos a la vez, que dan Re), y por eso no llevan armónico' : ''}. <strong>—</strong>: no hay dato.</p>`,
+    `<p class="tm-nota-tabla">${cfg.valvulas ? 'El trombón bajo' : 'El trombón'} <strong>no transpone</strong>: lo escrito es lo que suena.</p>`,
+    MARCA_FIN].join('\n');
+}
+
 function tabla(inst) {
+  if (INSTRUMENTOS[inst].vara) return tablaVara(inst);
   if (INSTRUMENTOS[inst].doble) return tablaDoble(inst);
   const cfg = INSTRUMENTOS[inst];
   const { FING, ORDEN, KEYS } = leerMotor(inst);
@@ -243,7 +297,7 @@ function poner(inst) {
     console.log(`  ${inst}: tabla sustituida`);
   } else {
     // Justo antes del diagrama interactivo: primero el dato, luego el juguete.
-    const m = /<h[23][^>]*>[^<]*(?:diagrama|Pru[eé]balo|digitaci)[^<]*<\/h[23]>/i.exec(html);
+    const m = (INSTRUMENTOS[inst].antes || /<h[23][^>]*>[^<]*(?:diagrama|Pru[eé]balo|digitaci)[^<]*<\/h[23]>/i).exec(html);
     if (!m) throw new Error(`${inst}: no encuentro dónde meter la tabla`);
     html = html.slice(0, m.index) + nueva + '\n' + html.slice(m.index);
     console.log(`  ${inst}: tabla insertada antes de «${m[0].replace(/<[^>]*>/g, '').trim()}»`);

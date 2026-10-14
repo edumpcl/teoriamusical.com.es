@@ -38,6 +38,11 @@ const INSTRUMENTOS = {
   // debajo de Do4, sol desde Do4). Son 49 notas: dos hojas A4, una por clave. Suena una 5.ª justa mas grave.
   trompa:     { transpone: -7, doble: true, nombre: 'la trompa doble en Fa/Si♭', corto: 'trompa',
                 pagina: '/diccionario-musical/notas-de-la-trompa/', mm: 1.7 },
+  // Trombones de VARA: posicion de la vara (1.ª a 7.ª) y armonico; el bajo anade dos valvulas. No transponen.
+  trombon:    { transpone: 0, vara: true, clef: 'fa', nombre: 'el trombón de varas (tenor, en Si♭)', de: 'del trombón de varas (tenor, en Si♭)', corto: 'trombón',
+                pagina: '/diccionario-musical/notas-del-trombon/', motor: 'tmTrombonEngine' },
+  'trombon-bajo': { transpone: 0, vara: true, valvulas: true, clef: 'fa', nombre: 'el trombón bajo', de: 'del trombón bajo', corto: 'trombón bajo',
+                pagina: '/diccionario-musical/notas-del-trombon-bajo/', motor: 'tmTrombonBajoEngine', mm: 1.15 },
 };
 
 const SHARP = ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
@@ -91,7 +96,30 @@ function datosDoble(inst) {
   return { cfg, filas };
 }
 
+/* Trombones de vara: FING = { 'Mi2': { pos: 7, harm: 2 }, ... } (en el bajo, el registro grave lleva valves: 'F' | 'Gb' | 'both'
+   y no armonico) y ORDEN. Mismo origen que la tabla de la pagina (tools/gen_tabla_digitaciones.js). */
+function datosVara(inst) {
+  const cfg = INSTRUMENTOS[inst];
+  const src = fs.readFileSync(path.join(RAIZ, 'assets/js/digitaciones-' + inst + '-engine.js'), 'utf8');
+  const caja = {};
+  for (const nom of ['FING', 'ORDEN']) {
+    const ini = src.indexOf('var ' + nom + ' = ');
+    const fin = src.indexOf(nom === 'FING' ? '};' : '];', ini) + 2;
+    // eslint-disable-next-line no-eval
+    eval(src.slice(ini, fin).replace('var ' + nom, 'caja.' + nom));
+  }
+  const filas = caja.ORDEN.map((clave) => {
+    const midi = aMidi(clave);
+    const [esc, escBem] = nombre(midi);
+    const d = caja.FING[clave];
+    return { clave, esc, escBem, clef: 'fa', pos: d.pos, harm: d.harm || null, valves: d.valves || null };
+  });
+  pentagramasDe(inst, filas).forEach((p, i) => { filas[i].pent = p; });
+  return { cfg, filas };
+}
+
 function datos(inst) {
+  if (INSTRUMENTOS[inst].vara) return datosVara(inst);
   if (INSTRUMENTOS[inst].doble) return datosDoble(inst);
   const cfg = INSTRUMENTOS[inst];
   const { FING, ORDEN, KEYS } = leerMotor(inst);
@@ -271,7 +299,59 @@ function htmlDoble(inst, rellenar) {
   return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS} .hoja { page-break-after: always; } .hoja.ultima { page-break-after: auto; } td.dib .na { color: #aaa; }</style></head><body>${hojas}</body></html>`;
 }
 
+/* ---- trombones de vara: una hoja a dos columnas (posicion de la vara, armonico y, en el bajo, valvulas) ---- */
+const VALV_TXT = { F: 'F', Gb: 'G♭', both: 'F + G♭' };
+function tablaVaraHtml(filas, cfg, rellenar) {
+  const anchos = cfg.valvulas ? [14, 24, 28, 17, 17] : [17, 30, 31, 22];
+  const cab = `<thead><tr><th style="width:${anchos[0]}%">Nota</th>`
+    + `<th style="width:${anchos[1]}%">Pentagrama</th>`
+    + `<th style="width:${anchos[2]}%">Posición<small style="letter-spacing:.08em">1 2 3 4 5 6 7</small></th>`
+    + `<th style="width:${anchos[3]}%">Armónico</th>`
+    + (cfg.valvulas ? `<th style="width:${anchos[4]}%">Válvulas</th>` : '') + '</tr></thead>';
+  const tr = filas.map((f) => '<tr>'
+    + `<td class="nota">${f.esc}${f.escBem ? `<small>${f.escBem}</small>` : ''}</td>`
+    + `<td class="pent"><img src="${f.pent}" alt=""></td>`
+    + (rellenar ? '<td class="dib hueco"></td><td class="hueco"></td>'
+      : `<td class="dib">${[1, 2, 3, 4, 5, 6, 7].map((k) => (k === f.pos ? '●' : '○')).join('')}</td><td>${f.harm ? f.harm + '.º' : '—'}</td>`)
+    + (cfg.valvulas ? `<td${rellenar ? ' class="hueco"' : ''}>${rellenar ? '' : (f.valves ? VALV_TXT[f.valves] : '—')}</td>` : '')
+    + '</tr>');
+  return `<table>${cab}<tbody>${tr.join('')}</tbody></table>`;
+}
+
+function htmlVara(inst, rellenar) {
+  const { cfg, filas } = datos(inst);
+  const corte = Math.ceil(filas.length / 2);
+  const titulo = rellenar ? `Posiciones ${cfg.de}: complétalas` : `Posiciones ${cfg.de}`;
+  const instr = rellenar
+    ? `Escribe en qué posición de la vara (1.ª a 7.ª) se toca cada nota: marca con un círculo ● la posición y anota el armónico${cfg.valvulas ? ' y, en el registro grave, qué válvulas hay que usar' : ''}. Las notas son las escritas.`
+    : `Las ${filas.length} notas del registro habitual con su posición de vara. ● marca la posición: la 1.ª es la vara recogida y la 7.ª, la más extendida.`;
+  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+<div class="hoja">
+  <div class="cab">
+    <div class="cab-top">
+      <div>
+        <div class="marca">TEORÍA MUSICAL</div>
+        <h1>${titulo}${rellenar ? '' : '<span class="sol-tag">referencia</span>'}</h1>
+        <p class="instr">${instr}</p>
+      </div>
+      <img class="logo" src="${LOGO}" alt="">
+    </div>
+    ${rellenar ? '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>' : ''}
+  </div>
+  <div class="cols">
+    <div style="flex:1">${tablaVaraHtml(filas.slice(0, corte), cfg, rellenar)}</div>
+    <div style="flex:1">${tablaVaraHtml(filas.slice(corte), cfg, rellenar)}</div>
+  </div>
+  <div class="leyenda">
+    <p>Cada posición baja la nota un semitono. La nota concreta se elige además con el <b>armónico</b> (la posición de los labios): por eso la misma posición sirve para varias notas.${cfg.valvulas ? ' El registro grave del trombón bajo se toca con las <b>válvulas</b> (F, G♭ o las dos juntas, que dan Re).' : ''}</p>
+    <p><b>${cfg.valvulas ? 'El trombón bajo' : 'El trombón'} no transpone</b>: lo escrito es lo que suena. <b>Fa♯ y Sol♭ son la misma nota</b>; por eso las alteradas llevan los dos nombres. Los subíndices son la octava.</p>
+  </div>
+  <div class="pie"><span>Posiciones del ${cfg.corto}${rellenar ? ' · para completar' : ''} · teoriamusical.com.es${cfg.pagina}</span><span>teoriamusical.com.es</span></div>
+</div></body></html>`;
+}
+
 function html(inst, rellenar) {
+  if (INSTRUMENTOS[inst].vara) return htmlVara(inst, rellenar);
   if (INSTRUMENTOS[inst].doble) return htmlDoble(inst, rellenar);
   const { cfg, filas, pistones } = datos(inst);
   const corte = Math.ceil(filas.length / 2);
@@ -332,7 +412,25 @@ function bloqueDoble(inst) {
 ${MARCA_FIN}`;
 }
 
+function bloqueVara(inst) {
+  const cfg = INSTRUMENTOS[inst];
+  const n = datos(inst).filas.length;
+  const base = '/assets/img/digitaciones/fichas/ficha-digitaciones-' + inst;
+  const prev = '/assets/img/digitaciones/fichas/preview-ficha-digitaciones-' + inst;
+  return `${MARCA_INI}
+<h2>Ficha para imprimir (PDF)</h2>
+<p>La misma tabla en papel, en una cara de A4 a dos columnas, para el atril. Y una <strong>segunda hoja para completar</strong>: las ${n} notas con las columnas de la posición de la vara${cfg.valvulas ? ', el armónico y las válvulas' : ' y el armónico'} en blanco, para escribirlas tú. La hoja de referencia hace de solucionario.</p>
+<figure class="tm-staff">
+  <a href="${base}.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="${prev}.webp"><img src="${prev}.png" width="300" height="424" loading="lazy" alt="Ficha imprimible en PDF con las posiciones de la vara del ${cfg.corto}"></picture></a>
+  <figcaption>Hoja A4 con las ${n} notas y su posición de vara.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="${base}.pdf" target="_blank" rel="noopener">Descargar las posiciones (PDF)</a>
+<a class="tm-btn" href="${base}-rellenar.pdf" target="_blank" rel="noopener">Descargar la hoja para completar (PDF)</a></p>
+${MARCA_FIN}`;
+}
+
 function bloque(inst) {
+  if (INSTRUMENTOS[inst].vara) return bloqueVara(inst);
   if (INSTRUMENTOS[inst].doble) return bloqueDoble(inst);
   const cfg = INSTRUMENTOS[inst];
   const n = datos(inst).filas.length;
@@ -360,7 +458,7 @@ function ponerBloque(inst) {
     h = h.slice(0, h.indexOf(MARCA_INI)) + nuevo + h.slice(h.indexOf(MARCA_FIN) + MARCA_FIN.length);
     console.log(`  ${inst}: bloque de descarga sustituido`);
   } else {
-    const motor = new RegExp('tm' + inst[0].toUpperCase() + inst.slice(1) + 'Engine', 'i');
+    const motor = new RegExp(INSTRUMENTOS[inst].motor || ('tm' + inst[0].toUpperCase() + inst.slice(1) + 'Engine'), 'i');
     const m = motor.exec(h);
     if (!m) throw new Error(`${inst}: no encuentro el arranque del diagrama`);
     const sig = h.indexOf('<h2', m.index);

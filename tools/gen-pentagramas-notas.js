@@ -35,7 +35,7 @@ const SALIDA = path.join(RAIZ, 'assets/img/digitaciones/pentagramas');
 
 /* Los cuatro instrumentos y su clave. Las notas salen de su propio motor. */
 const INSTRUMENTOS = {
-  trompeta: 'sol', fliscorno: 'sol', bombardino: 'fa', tuba: 'fa',
+  trompeta: 'sol', fliscorno: 'sol', bombardino: 'fa', tuba: 'fa', trombon: 'fa', 'trombon-bajo': 'fa',
 };
 const CLAVES = {
   sol: { shape: 'G', line: 2, glifo: 'E050', base: 4 * 7 + 2, nombre: 'clave de sol' },   // línea inferior: Mi4
