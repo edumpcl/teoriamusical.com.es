@@ -56,6 +56,9 @@ const INSTRUMENTOS = {
   // de los labios. No transponen (lo escrito es lo que suena, clave de fa). El bajo anade dos valvulas.
   trombon:      { pagina: 'diccionario-musical/notas-del-trombon',      transpone: 0, vara: true, clave: 'fa', nombre: 'trombón de varas (tenor, en Si♭)',
                   antes: /<h2>Las posiciones del trombón<\/h2>/ },
+  // Corneta de palometa (Do/Re♭): sin pistones; 16 notas = armonicos 3.º a 10.º de dos series (Do y Re♭). La tabla
+  // REEMPLAZA a la que ya tenia la pagina (la misma, sin pentagramas): armonico x serie, con la nota dibujada.
+  corneta:    { pagina: 'diccionario-musical/notas-de-la-corneta',    transpone: 0, corneta: true, clave: 'solc', nombre: 'la corneta Do/Re♭' },
   'trombon-bajo': { pagina: 'diccionario-musical/notas-del-trombon-bajo', transpone: 0, vara: true, valvulas: true, clave: 'fa', nombre: 'trombón bajo' },
 };
 
@@ -219,7 +222,38 @@ function tablaVara(inst) {
     MARCA_FIN].join('\n');
 }
 
+/* ---- corneta ---- */
+function leerNotasCorneta() {
+  const src = fs.readFileSync(path.join(RAIZ, 'assets/js/digitaciones-corneta-engine.js'), 'utf8');
+  const m = src.match(/var NOTES = \[[\s\S]*?\n  \];/);
+  if (!m) throw new Error('corneta: no encuentro NOTES en el motor');
+  const caja = {};
+  // eslint-disable-next-line no-eval
+  eval(m[0].replace('var NOTES', 'caja.NOTES'));
+  return caja.NOTES;
+}
+function tablaCorneta(inst) {
+  const cfg = INSTRUMENTOS[inst];
+  const NOTES = leerNotasCorneta();
+  const celda = (o) => `<td class="tm-dg-corneta">${pentagrama(o.n, cfg.clave)}<strong>${o.lbl}</strong>${o.calante ? '<small>calante</small>' : ''}</td>`;
+  const filas = [];
+  for (let h = 3; h <= 10; h++) {
+    const doo = NOTES.find((o) => o.h === h && o.s === 'do'), reb = NOTES.find((o) => o.h === h && o.s === 'reb');
+    if (!doo || !reb) throw new Error('corneta: falta una nota del armónico ' + h);
+    filas.push(`<tr><th scope="row">${h}.º</th>${celda(doo)}${celda(reb)}</tr>`);
+  }
+  return [MARCA_INI,
+    '<div class="tm-table-wrap">',
+    '<table class="tm-table tm-digitaciones">',
+    `<caption style="caption-side:top;text-align:left;font-weight:600;padding:0 0 8px">Las ${NOTES.length} notas de ${cfg.nombre}, con su pentagrama</caption>`,
+    '<thead><tr><th scope="col">Armónico</th><th scope="col">Palometa en do<small>serie de Do</small></th><th scope="col">Palometa girada<small>serie de Re♭</small></th></tr></thead>',
+    '<tbody>', filas.join('\n'), '</tbody></table></div>',
+    '<p class="tm-nota-tabla">Las notas de las dos series se <strong>alternan</strong>: cada una está a un semitono de la otra. El <strong>7.º armónico</strong> suena naturalmente bajo (<em>calante</em>) y apenas se usa. La corneta se escribe en clave de sol y no transpone.</p>',
+    MARCA_FIN].join('\n');
+}
+
 function tabla(inst) {
+  if (INSTRUMENTOS[inst].corneta) return tablaCorneta(inst);
   if (INSTRUMENTOS[inst].vara) return tablaVara(inst);
   if (INSTRUMENTOS[inst].doble) return tablaDoble(inst);
   const cfg = INSTRUMENTOS[inst];
@@ -282,6 +316,9 @@ const CSS = `
 .tm-dg-off { color: #b9b2a4; }
 .tm-dg-suena { color: #686868; }
 .tm-dg-na { color: #b9b2a4; }
+.tm-digitaciones td.tm-dg-corneta { padding: 4px 10px; }
+.tm-dg-corneta img { display: block; margin: 0 auto 2px; max-width: none; }
+.tm-dg-corneta strong { display: block; }
 .tm-dg-pent { padding: 2px 6px; }
 .tm-nota-tabla { font-size: .94rem; }
 `;
@@ -295,6 +332,14 @@ function poner(inst) {
     html = html.slice(0, html.indexOf(MARCA_INI)) + nueva
       + html.slice(html.indexOf(MARCA_FIN) + MARCA_FIN.length);
     console.log(`  ${inst}: tabla sustituida`);
+  } else if (INSTRUMENTOS[inst].corneta) {
+    // la pagina ya trae su tabla (armonico x serie, sin pentagramas): se sustituye por la nueva
+    const ini = html.indexOf('<thead><tr><th>Armónico</th>');
+    if (ini < 0) throw new Error('corneta: no encuentro la tabla antigua de armónicos');
+    const a = html.lastIndexOf('<div class="tm-table-wrap">', ini);
+    const b = html.indexOf('</table></div>', ini) + '</table></div>'.length;
+    html = html.slice(0, a) + nueva + html.slice(b);
+    console.log(`  ${inst}: tabla antigua sustituida`);
   } else {
     // Justo antes del diagrama interactivo: primero el dato, luego el juguete.
     const m = (INSTRUMENTOS[inst].antes || /<h[23][^>]*>[^<]*(?:diagrama|Pru[eé]balo|digitaci)[^<]*<\/h[23]>/i).exec(html);

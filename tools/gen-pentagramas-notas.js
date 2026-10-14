@@ -40,6 +40,9 @@ const INSTRUMENTOS = {
 const CLAVES = {
   sol: { shape: 'G', line: 2, glifo: 'E050', base: 4 * 7 + 2, nombre: 'clave de sol' },   // línea inferior: Mi4
   fa:  { shape: 'F', line: 4, glifo: 'E062', base: 2 * 7 + 4, nombre: 'clave de fa' },    // línea inferior: Sol2
+  // La corneta (Sol4–Fa6, con bemoles) lleva su PROPIO lienzo: sube dos líneas adicionales más que la trompeta y
+  // alinearla con ella agrandaría todas las filas de las tablas de trompeta, fliscorno y trompa.
+  solc: { shape: 'G', line: 2, glifo: 'E050', base: 4 * 7 + 2, nombre: 'clave de sol' },
 };
 const LETRA = { Do: 'c', Re: 'd', Mi: 'e', Fa: 'f', Sol: 'g', La: 'a', Si: 'b' };
 const GRADO = { c: 0, d: 1, e: 2, f: 3, g: 4, a: 5, b: 6 };
@@ -50,16 +53,16 @@ function pulsadosDe(v) {
   return (v && Array.isArray(v.keys)) ? v.keys : [];
 }
 
-/** 'Fa#3' -> { letra:'f', alt:1, oct:3, paso, fichero:'f3s', texto:'Fa♯₃' } */
+/** 'Fa#3' | 'Lab4' -> { letra:'f', alt:1 | -1, oct:3, paso, fichero:'fs3' | 'af4', texto:'Fa♯₃' | 'La♭₄' } */
 function analizar(clave) {
-  const m = /^([A-Za-z]+)(#)?(-?\d+)$/.exec(clave);
-  if (!m || !LETRA[m[1]]) throw new Error('nota rara: ' + clave);
-  const letra = LETRA[m[1]], oct = Number(m[3]), alt = m[2] ? 1 : 0;
+  const m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#|b)?(-?\d+)$/.exec(clave);
+  if (!m) throw new Error('nota rara: ' + clave);
+  const letra = LETRA[m[1]], oct = Number(m[3]), alt = m[2] === '#' ? 1 : m[2] === 'b' ? -1 : 0;
   return {
     letra, alt, oct,
     paso: oct * 7 + GRADO[letra],
-    fichero: letra + (alt ? 's' : '') + oct,
-    texto: m[1] + (alt ? '♯' : '') + String(oct).split('').map((c) => SUB[c] || c).join(''),
+    fichero: letra + (alt === 1 ? 's' : alt === -1 ? 'f' : '') + oct,
+    texto: m[1] + (alt === 1 ? '♯' : alt === -1 ? '♭' : '') + String(oct).split('').map((c) => SUB[c] || c).join(''),
   };
 }
 
@@ -78,7 +81,7 @@ function aMEI(a, clave) {
   const c = CLAVES[clave];
   return '<?xml version="1.0" encoding="UTF-8"?><mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="5.0"><meiHead><fileDesc><titleStmt><title/></titleStmt><pubStmt/></fileDesc></meiHead><music><body><mdiv><score><scoreDef><staffGrp>'
     + `<staffDef n="1" lines="5" clef.shape="${c.shape}" clef.line="${c.line}"/></staffGrp></scoreDef><section>`
-    + `<measure n="1" right="invis"><staff n="1"><layer n="1"><note pname="${a.letra}" oct="${a.oct}" dur="1"${a.alt ? ' accid="s"' : ''}/></layer></staff></measure>`
+    + `<measure n="1" right="invis"><staff n="1"><layer n="1"><note pname="${a.letra}" oct="${a.oct}" dur="1"${a.alt === 1 ? ' accid="s"' : a.alt === -1 ? ' accid="f"' : ''}/></layer></staff></measure>`
     + '</section></score></mdiv></body></music></mei>';
 }
 
@@ -87,7 +90,7 @@ function leerMEI(mei) {
   const t = mei.match(/<note [^>]*\/>/g) || [];
   if (t.length !== 1) return null;
   const a = (n) => (new RegExp('\\b' + n + '="([^"]*)"').exec(t[0]) || [])[1];
-  return { letra: a('pname'), oct: Number(a('oct')), alt: a('accid') === 's' ? 1 : 0, dur: a('dur') };
+  return { letra: a('pname'), oct: Number(a('oct')), alt: a('accid') === 's' ? 1 : a('accid') === 'f' ? -1 : 0, dur: a('dur') };
 }
 
 /** Mide el SVG ya dibujado. */
@@ -115,9 +118,10 @@ function verificar(clave, a, mei, svg) {
     else if (c.base + dif !== a.paso) err.push(`la cabeza está en el paso ${c.base + dif} y se pedía el ${a.paso}`);
   }
   if (m.glifos(c.glifo) !== 1) err.push('la clave dibujada no es la de ' + clave);
-  if (m.glifos(clave === 'sol' ? 'E062' : 'E050') !== 0) err.push('hay una clave de más');
-  if (m.glifos('E262') !== (a.alt ? 1 : 0)) err.push(`${m.glifos('E262')} sostenido(s) dibujado(s) y se esperaban ${a.alt}`);
-  if (m.glifos('E260') + m.glifos('E261') + m.glifos('E263') !== 0) err.push('alteración que no es un sostenido');
+  if (m.glifos(clave.startsWith('sol') ? 'E062' : 'E050') !== 0) err.push('hay una clave de más');
+  if (m.glifos('E262') !== (a.alt === 1 ? 1 : 0)) err.push(`${m.glifos('E262')} sostenido(s) dibujado(s) y se esperaban ${a.alt === 1 ? 1 : 0}`);
+  if (m.glifos('E260') !== (a.alt === -1 ? 1 : 0)) err.push(`${m.glifos('E260')} bemol(es) dibujado(s) y se esperaban ${a.alt === -1 ? 1 : 0}`);
+  if (m.glifos('E261') + m.glifos('E263') !== 0) err.push('alteración que no es un sostenido ni un bemol');
   if (/class="stem"/.test(svg)) err.push('lleva plica');
   return err;
 }
@@ -147,8 +151,12 @@ if (require.main !== module) return;
   const tk = new VerovioToolkit(await createVerovioModule());
 
   /* Reúne, por clave, todas las notas que hacen falta. */
-  const porClave = { sol: new Set(), fa: new Set() };
+  const porClave = { sol: new Set(), fa: new Set(), solc: new Set() };
   for (const [inst, clave] of Object.entries(INSTRUMENTOS)) for (const n of notasDe(inst)) porClave[clave].add(n);
+  // corneta: sus 16 notas estan en NOTES = [{ n: 'Sol4', ...}, ...] del motor
+  const srcCorneta = fs.readFileSync(path.join(RAIZ, 'assets/js/digitaciones-corneta-engine.js'), 'utf8');
+  for (const m of srcCorneta.matchAll(/n:'([A-Za-z]+\d)'/g)) porClave.solc.add(m[1]);
+  if (porClave.solc.size !== 16) throw new Error('corneta: se esperaban 16 notas y hay ' + porClave.solc.size);
 
   fs.mkdirSync(SALIDA, { recursive: true });
   for (const f of fs.readdirSync(SALIDA)) if (f.endsWith('.svg')) fs.unlinkSync(path.join(SALIDA, f));   // sin restos de VexFlow

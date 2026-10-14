@@ -38,6 +38,9 @@ const INSTRUMENTOS = {
   // debajo de Do4, sol desde Do4). Son 49 notas: dos hojas A4, una por clave. Suena una 5.ª justa mas grave.
   trompa:     { transpone: -7, doble: true, nombre: 'la trompa doble en Fa/Si♭', corto: 'trompa',
                 pagina: '/diccionario-musical/notas-de-la-trompa/', mm: 1.7 },
+  // Corneta de palometa (Do/Re♭): sin pistones; 16 notas = armonicos 3.º a 10.º de dos series. Una hoja, tabla armonico x serie.
+  corneta:    { transpone: 0, corneta: true, clef: 'solc', nombre: 'la corneta Do/Re♭', de: 'de la corneta Do/Re♭', corto: 'corneta',
+                pagina: '/diccionario-musical/notas-de-la-corneta/', motor: 'tmCornetaEngine', mm: 1.8 },
   // Trombones de VARA: posicion de la vara (1.ª a 7.ª) y armonico; el bajo anade dos valvulas. No transponen.
   trombon:    { transpone: 0, vara: true, clef: 'fa', nombre: 'el trombón de varas (tenor, en Si♭)', de: 'del trombón de varas (tenor, en Si♭)', corto: 'trombón',
                 pagina: '/diccionario-musical/notas-del-trombon/', motor: 'tmTrombonEngine' },
@@ -118,7 +121,22 @@ function datosVara(inst) {
   return { cfg, filas };
 }
 
+/* Corneta: NOTES del motor = [{ n:'Sol4', lbl:'Sol₄', s:'do'|'reb', h: armonico 3..10, calante? }, ...]. */
+function datosCorneta(inst) {
+  const cfg = INSTRUMENTOS[inst];
+  const src = fs.readFileSync(path.join(RAIZ, 'assets/js/digitaciones-corneta-engine.js'), 'utf8');
+  const ini = src.indexOf('var NOTES = ');
+  const fin = src.indexOf('];', ini) + 2;
+  const caja = {};
+  // eslint-disable-next-line no-eval
+  eval(src.slice(ini, fin).replace('var NOTES', 'caja.NOTES'));
+  const filas = caja.NOTES.map((o) => ({ clave: o.n, clef: cfg.clef, lbl: o.lbl, serie: o.s, h: o.h, calante: !!o.calante }));
+  pentagramasDe(inst, filas).forEach((p, i) => { filas[i].pent = p; });
+  return { cfg, filas };
+}
+
 function datos(inst) {
+  if (INSTRUMENTOS[inst].corneta) return datosCorneta(inst);
   if (INSTRUMENTOS[inst].vara) return datosVara(inst);
   if (INSTRUMENTOS[inst].doble) return datosDoble(inst);
   const cfg = INSTRUMENTOS[inst];
@@ -350,7 +368,52 @@ function htmlVara(inst, rellenar) {
 </div></body></html>`;
 }
 
+/* ---- corneta: una hoja, armonico x serie, con la nota dibujada (en la de completar, sin nombre) ---- */
+function htmlCorneta(inst, rellenar) {
+  const { cfg, filas } = datos(inst);
+  const celda = (f) => `<td class="cor"><img src="${f.pent}" alt="">${rellenar
+    ? '<div class="nom hueco-nom">Nota: </div>'
+    : `<div class="nom">${f.lbl}${f.calante ? '<small>calante</small>' : ''}</div>`}</td>`;
+  const tr = [];
+  for (let h = 3; h <= 10; h++) {
+    const a = filas.find((f) => f.h === h && f.serie === 'do'), b = filas.find((f) => f.h === h && f.serie === 'reb');
+    tr.push(`<tr><td class="nota">${h}.º</td>${celda(a)}${celda(b)}</tr>`);
+  }
+  const titulo = rellenar ? `Las notas ${cfg.de}: complétalas` : `Las notas ${cfg.de}`;
+  const instr = rellenar
+    ? 'Escribe el nombre de cada nota (con su octava en subíndice, por ejemplo Sol₄). Las dos series se alternan: cada nota está a un semitono de la de al lado. La hoja de referencia hace de solucionario.'
+    : `Las ${filas.length} notas de la corneta de palometa: los armónicos 3.º a 10.º de cada serie. Con la palometa en do suenan los armónicos de Do; girada, los de Re♭.`;
+  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}
+  td.cor { text-align: center; padding: 1.2mm 2mm; }
+  td.cor img { display: block; margin: 0 auto 1mm; }
+  td.cor .nom { font-weight: bold; font-size: 11pt; }
+  td.cor .nom small { display: block; font-size: 7.5pt; font-weight: normal; color: #a05a00; }
+  td.cor .hueco-nom { font-weight: normal; font-size: 10pt; color: #888; border-bottom: 1px solid #bbb; width: 70%; margin: 1mm auto 0; text-align: left; height: 6mm; }
+  td.nota { text-align: center; padding-left: 1mm; font-size: 12pt; }
+  </style></head><body>
+<div class="hoja">
+  <div class="cab">
+    <div class="cab-top">
+      <div>
+        <div class="marca">TEORÍA MUSICAL</div>
+        <h1>${titulo}${rellenar ? '' : '<span class="sol-tag">referencia</span>'}</h1>
+        <p class="instr">${instr}</p>
+      </div>
+      <img class="logo" src="${LOGO}" alt="">
+    </div>
+    ${rellenar ? '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>' : ''}
+  </div>
+  <table><thead><tr><th style="width:16%">Armónico</th><th>Palometa en do<small>serie de Do</small></th><th>Palometa girada<small>serie de Re♭</small></th></tr></thead><tbody>${tr.join('')}</tbody></table>
+  <div class="leyenda">
+    <p>La corneta <b>no tiene pistones</b>: solo da los sonidos de la serie armónica de su tubo. La palometa (la llave) desvía el aire por la bomba y cambia de serie; el armónico se elige con los labios. El <b>7.º armónico</b> suena naturalmente bajo (<i>calante</i>) y apenas se usa.</p>
+    <p>La corneta se escribe en <b>clave de sol</b> y no transpone. Los subíndices son la octava.</p>
+  </div>
+  <div class="pie"><span>Notas ${cfg.de}${rellenar ? ' · para completar' : ''} · teoriamusical.com.es${cfg.pagina}</span><span>teoriamusical.com.es</span></div>
+</div></body></html>`;
+}
+
 function html(inst, rellenar) {
+  if (INSTRUMENTOS[inst].corneta) return htmlCorneta(inst, rellenar);
   if (INSTRUMENTOS[inst].vara) return htmlVara(inst, rellenar);
   if (INSTRUMENTOS[inst].doble) return htmlDoble(inst, rellenar);
   const { cfg, filas, pistones } = datos(inst);
@@ -429,7 +492,25 @@ function bloqueVara(inst) {
 ${MARCA_FIN}`;
 }
 
+function bloqueCorneta(inst) {
+  const cfg = INSTRUMENTOS[inst];
+  const n = datos(inst).filas.length;
+  const base = '/assets/img/digitaciones/fichas/ficha-digitaciones-' + inst;
+  const prev = '/assets/img/digitaciones/fichas/preview-ficha-digitaciones-' + inst;
+  return `${MARCA_INI}
+<h2>Ficha para imprimir (PDF)</h2>
+<p>La tabla de las ${n} notas de la corneta, con su pentagrama, en una cara de A4 para el atril. Y una <strong>segunda hoja para completar</strong>: los mismos pentagramas con el nombre de la nota en blanco, para practicar la lectura en clave de sol. La hoja de referencia hace de solucionario.</p>
+<figure class="tm-staff">
+  <a href="${base}.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="${prev}.webp"><img src="${prev}.png" width="300" height="424" loading="lazy" alt="Ficha imprimible en PDF con las notas de la ${cfg.corto} y su pentagrama"></picture></a>
+  <figcaption>Hoja A4 con las ${n} notas de la corneta.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="${base}.pdf" target="_blank" rel="noopener">Descargar las notas (PDF)</a>
+<a class="tm-btn" href="${base}-rellenar.pdf" target="_blank" rel="noopener">Descargar la hoja para completar (PDF)</a></p>
+${MARCA_FIN}`;
+}
+
 function bloque(inst) {
+  if (INSTRUMENTOS[inst].corneta) return bloqueCorneta(inst);
   if (INSTRUMENTOS[inst].vara) return bloqueVara(inst);
   if (INSTRUMENTOS[inst].doble) return bloqueDoble(inst);
   const cfg = INSTRUMENTOS[inst];

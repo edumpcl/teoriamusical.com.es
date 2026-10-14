@@ -442,5 +442,101 @@
   "w": 176,
   "h": 168,
   "alt": "La♯₄ en clave de fa"
+ },
+ "solc|Sol4": {
+  "f": "solc-g4.svg",
+  "w": 160,
+  "h": 142,
+  "alt": "Sol₄ en clave de sol"
+ },
+ "solc|Lab4": {
+  "f": "solc-af4.svg",
+  "w": 171,
+  "h": 142,
+  "alt": "La♭₄ en clave de sol"
+ },
+ "solc|Do5": {
+  "f": "solc-c5.svg",
+  "w": 160,
+  "h": 142,
+  "alt": "Do₅ en clave de sol"
+ },
+ "solc|Reb5": {
+  "f": "solc-df5.svg",
+  "w": 171,
+  "h": 142,
+  "alt": "Re♭₅ en clave de sol"
+ },
+ "solc|Mi5": {
+  "f": "solc-e5.svg",
+  "w": 160,
+  "h": 142,
+  "alt": "Mi₅ en clave de sol"
+ },
+ "solc|Fa5": {
+  "f": "solc-f5.svg",
+  "w": 160,
+  "h": 142,
+  "alt": "Fa₅ en clave de sol"
+ },
+ "solc|Sol5": {
+  "f": "solc-g5.svg",
+  "w": 160,
+  "h": 142,
+  "alt": "Sol₅ en clave de sol"
+ },
+ "solc|Lab5": {
+  "f": "solc-af5.svg",
+  "w": 173,
+  "h": 142,
+  "alt": "La♭₅ en clave de sol"
+ },
+ "solc|Sib5": {
+  "f": "solc-bf5.svg",
+  "w": 173,
+  "h": 142,
+  "alt": "Si♭₅ en clave de sol"
+ },
+ "solc|Dob6": {
+  "f": "solc-cf6.svg",
+  "w": 173,
+  "h": 142,
+  "alt": "Do♭₆ en clave de sol"
+ },
+ "solc|Do6": {
+  "f": "solc-c6.svg",
+  "w": 160,
+  "h": 142,
+  "alt": "Do₆ en clave de sol"
+ },
+ "solc|Reb6": {
+  "f": "solc-df6.svg",
+  "w": 173,
+  "h": 142,
+  "alt": "Re♭₆ en clave de sol"
+ },
+ "solc|Re6": {
+  "f": "solc-d6.svg",
+  "w": 160,
+  "h": 142,
+  "alt": "Re₆ en clave de sol"
+ },
+ "solc|Mib6": {
+  "f": "solc-ef6.svg",
+  "w": 173,
+  "h": 142,
+  "alt": "Mi♭₆ en clave de sol"
+ },
+ "solc|Mi6": {
+  "f": "solc-e6.svg",
+  "w": 160,
+  "h": 142,
+  "alt": "Mi₆ en clave de sol"
+ },
+ "solc|Fa6": {
+  "f": "solc-f6.svg",
+  "w": 160,
+  "h": 142,
+  "alt": "Fa₆ en clave de sol"
  }
 }

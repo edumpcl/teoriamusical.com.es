@@ -65,6 +65,23 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué notas puede tocar una corneta?","acceptedAnswer":{"@type":"Answer","text":"Solo las de la serie armónica de su tubo, porque no tiene agujeros ni los tres pistones de la trompeta. La palometa le da dos series: en posición de do suenan los armónicos de Do (Sol₄, Do₅, Mi₅, Sol₅, Do₆, Re₆, Mi₆) y, girada, los de Re♭ (La♭₄, Re♭₅, Fa₅, La♭₅, Re♭₆, Mi♭₆, Fa₆). En total, un ámbito de Sol₄ a Fa₆ en la corneta Do/Re♭, la más usada en las bandas de cornetas y tambores."}},{"@type":"Question","name":"¿Qué es la palometa de la corneta?","acceptedAnswer":{"@type":"Answer","text":"Es la llave que desvía el aire por un camino u otro dentro del instrumento. En posición de do el aire sigue el tubo normal y suenan los armónicos de Do; girada en horizontal, el aire pasa por una bomba añadida que alarga el tubo y suenan los armónicos de Re♭. Por eso también se la llama transpositor: es la misma idea que la válvula de pulgar de la trompa doble, dos instrumentos en uno."}},{"@type":"Question","name":"¿Por qué las marchas de Semana Santa están en fa menor?","acceptedAnswer":{"@type":"Answer","text":"Porque es lo que la corneta puede tocar. Al juntar las dos series de armónicos de una corneta Do/Re♭ salen las notas Do, Re♭, Mi♭, Mi natural, Fa, Sol, La♭ y Si♭: exactamente fa menor armónica, con sus cuatro bemoles. Con ese mismo material salen también La♭ mayor, Do menor y Mi♭ mayor. No es una decisión estética del compositor, es el instrumento."}},{"@type":"Question","name":"¿Es lo mismo la corneta que el cornetín o la trompeta?","acceptedAnswer":{"@type":"Answer","text":"No. La corneta es de tubo cónico, con palometa o pocos pistones, y vive en las bandas de cornetas y tambores y en los toques militares. El cornetín es un metal de tres pistones en Si♭, de banda y brass band, que se digita igual que la trompeta y suena dulce como el fliscorno. La trompeta es de tubo cilíndrico, más brillante y directa, y toca todas las notas."}}]}
 </script>
+<style data-tm="digitaciones">.tm-dg-pent img { display: block; margin: 0 auto; max-width: none; }
+.tm-digitaciones th, .tm-digitaciones td { text-align: center; white-space: nowrap; padding: 5px 10px; }
+.tm-digitaciones th[scope="row"] { text-align: left; font-weight: 600; }
+.tm-digitaciones small { display: block; font-size: .78em; opacity: .75; font-weight: 400; }
+.tm-digitaciones thead small { letter-spacing: .35em; opacity: .85; }
+.tm-digitaciones abbr { text-decoration: none; border: 0; }
+/* El dibujo de los pistones en monoespaciada para que las columnas cuadren. */
+.tm-dg-dib { font-family: ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: .28em; font-size: 1.05em; }
+.tm-dg-on { color: var(--brand); }
+.tm-dg-off { color: #b9b2a4; }
+.tm-dg-suena { color: #686868; }
+.tm-dg-na { color: #b9b2a4; }
+.tm-digitaciones td.tm-dg-corneta { padding: 4px 10px; }
+.tm-dg-corneta img { display: block; margin: 0 auto 2px; max-width: none; }
+.tm-dg-corneta strong { display: block; }
+.tm-dg-pent { padding: 2px 6px; }
+.tm-nota-tabla { font-size: .94rem; }</style>
 </head>
 <body class="tm-page">
 <a class="tm-skip" href="#main">Saltar al contenido</a>
@@ -258,19 +275,23 @@
 
 <p>Estas son las notas reales que da cada posición de la palometa. Los números son el <strong>armónico</strong> de cada serie:</p>
 
-<div class="tm-table-wrap"><table class="tm-table">
-<thead><tr><th>Armónico</th><th>Palometa en do<br><span style="font-weight:400">(serie de Do)</span></th><th>Palometa girada<br><span style="font-weight:400">(serie de Re♭)</span></th></tr></thead>
+<!-- TABLA-DIGITACIONES:inicio (generada por tools/gen_tabla_digitaciones.js) -->
+<div class="tm-table-wrap">
+<table class="tm-table tm-digitaciones">
+<caption style="caption-side:top;text-align:left;font-weight:600;padding:0 0 8px">Las 16 notas de la corneta Do/Re♭, con su pentagrama</caption>
+<thead><tr><th scope="col">Armónico</th><th scope="col">Palometa en do<small>serie de Do</small></th><th scope="col">Palometa girada<small>serie de Re♭</small></th></tr></thead>
 <tbody>
-<tr><td>3º</td><td>Sol₄</td><td>La♭₄</td></tr>
-<tr><td>4º</td><td>Do₅</td><td>Re♭₅</td></tr>
-<tr><td>5º</td><td>Mi₅</td><td>Fa₅</td></tr>
-<tr><td>6º</td><td>Sol₅</td><td>La♭₅</td></tr>
-<tr><td>7º</td><td>Si♭₅ <em>(calante)</em></td><td>Do♭₆ <em>(calante)</em></td></tr>
-<tr><td>8º</td><td>Do₆</td><td>Re♭₆</td></tr>
-<tr><td>9º</td><td>Re₆</td><td>Mi♭₆</td></tr>
-<tr><td>10º</td><td>Mi₆</td><td>Fa₆</td></tr>
-</tbody>
-</table></div>
+<tr><th scope="row">3.º</th><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-g4.svg" width="88" height="78" alt="Sol₄ en clave de sol" loading="lazy" decoding="async"><strong>Sol₄</strong></td><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-af4.svg" width="94" height="78" alt="La♭₄ en clave de sol" loading="lazy" decoding="async"><strong>La♭₄</strong></td></tr>
+<tr><th scope="row">4.º</th><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-c5.svg" width="88" height="78" alt="Do₅ en clave de sol" loading="lazy" decoding="async"><strong>Do₅</strong></td><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-df5.svg" width="94" height="78" alt="Re♭₅ en clave de sol" loading="lazy" decoding="async"><strong>Re♭₅</strong></td></tr>
+<tr><th scope="row">5.º</th><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-e5.svg" width="88" height="78" alt="Mi₅ en clave de sol" loading="lazy" decoding="async"><strong>Mi₅</strong></td><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-f5.svg" width="88" height="78" alt="Fa₅ en clave de sol" loading="lazy" decoding="async"><strong>Fa₅</strong></td></tr>
+<tr><th scope="row">6.º</th><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-g5.svg" width="88" height="78" alt="Sol₅ en clave de sol" loading="lazy" decoding="async"><strong>Sol₅</strong></td><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-af5.svg" width="95" height="78" alt="La♭₅ en clave de sol" loading="lazy" decoding="async"><strong>La♭₅</strong></td></tr>
+<tr><th scope="row">7.º</th><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-bf5.svg" width="95" height="78" alt="Si♭₅ en clave de sol" loading="lazy" decoding="async"><strong>Si♭₅</strong><small>calante</small></td><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-cf6.svg" width="95" height="78" alt="Do♭₆ en clave de sol" loading="lazy" decoding="async"><strong>Do♭₆</strong><small>calante</small></td></tr>
+<tr><th scope="row">8.º</th><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-c6.svg" width="88" height="78" alt="Do₆ en clave de sol" loading="lazy" decoding="async"><strong>Do₆</strong></td><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-df6.svg" width="95" height="78" alt="Re♭₆ en clave de sol" loading="lazy" decoding="async"><strong>Re♭₆</strong></td></tr>
+<tr><th scope="row">9.º</th><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-d6.svg" width="88" height="78" alt="Re₆ en clave de sol" loading="lazy" decoding="async"><strong>Re₆</strong></td><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-ef6.svg" width="95" height="78" alt="Mi♭₆ en clave de sol" loading="lazy" decoding="async"><strong>Mi♭₆</strong></td></tr>
+<tr><th scope="row">10.º</th><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-e6.svg" width="88" height="78" alt="Mi₆ en clave de sol" loading="lazy" decoding="async"><strong>Mi₆</strong></td><td class="tm-dg-corneta"><img src="/assets/img/digitaciones/pentagramas/solc-f6.svg" width="88" height="78" alt="Fa₆ en clave de sol" loading="lazy" decoding="async"><strong>Fa₆</strong></td></tr>
+</tbody></table></div>
+<p class="tm-nota-tabla">Las notas de las dos series se <strong>alternan</strong>: cada una está a un semitono de la otra. El <strong>7.º armónico</strong> suena naturalmente bajo (<em>calante</em>) y apenas se usa. La corneta se escribe en clave de sol y no transpone.</p>
+<!-- TABLA-DIGITACIONES:fin -->
 
 <p>En total, un ámbito de <strong>Sol₄ a Fa₆</strong> —del sol sobre el pentagrama al fa muy agudo—, en el <a href="/diccionario-musical/indice-acustico/">sistema internacional</a> (Do₄ es el do central). El <strong>7º armónico</strong> aparece entre paréntesis porque suena naturalmente <strong>bajo</strong>: cae unos <strong>31 cents por debajo</strong> del Si♭ del piano —casi un tercio de semitono—, y por eso resulta inservible frente a un instrumento temperado. No es un fallo del intérprete: es <a href="/diccionario-musical/serie-armonica/">física de la serie armónica</a>, y le ocurre igual a la trompeta o a la trompa. Por debajo del 3º armónico están el Do y el Re♭ <strong>pedales</strong> —el fundamental del tubo, un Do₃ de unos 131 Hz—: existen, pero «la frecuencia no es buena» y apenas se usan.</p>
 
@@ -285,6 +306,17 @@
 
 <p class="tm-embed-cap" style="font-size:.9rem;color:#686868">Armónicos 3.º al 10.º de cada serie en una corneta Do/Re♭. La corneta no tiene digitaciones: solo la posición de la palometa y el armónico que ajustes con los labios.</p>
 
+
+<!-- FICHA-DIGITACIONES:inicio -->
+<h2>Ficha para imprimir (PDF)</h2>
+<p>La tabla de las 16 notas de la corneta, con su pentagrama, en una cara de A4 para el atril. Y una <strong>segunda hoja para completar</strong>: los mismos pentagramas con el nombre de la nota en blanco, para practicar la lectura en clave de sol. La hoja de referencia hace de solucionario.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/digitaciones/fichas/ficha-digitaciones-corneta.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-corneta.webp"><img src="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-corneta.png" width="300" height="424" loading="lazy" alt="Ficha imprimible en PDF con las notas de la corneta y su pentagrama"></picture></a>
+  <figcaption>Hoja A4 con las 16 notas de la corneta.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/digitaciones/fichas/ficha-digitaciones-corneta.pdf" target="_blank" rel="noopener">Descargar las notas (PDF)</a>
+<a class="tm-btn" href="/assets/img/digitaciones/fichas/ficha-digitaciones-corneta-rellenar.pdf" target="_blank" rel="noopener">Descargar la hoja para completar (PDF)</a></p>
+<!-- FICHA-DIGITACIONES:fin -->
 
 <h2>Por qué las marchas de Semana Santa suenan a fa menor</h2>
 
