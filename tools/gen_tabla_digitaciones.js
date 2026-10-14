@@ -49,6 +49,9 @@ const INSTRUMENTOS = {
   // NO transpone. Lo dice la cabecera de su propio motor.
   bombardino: { pagina: 'diccionario-musical/notas-del-bombardino',   transpone: 0,   clave: 'fa',  nombre: 'el bombardino' },
   tuba:       { pagina: 'diccionario-musical/notas-de-la-tuba',       transpone: 0,   clave: 'fa',  nombre: 'la tuba' },
+  // Trompa DOBLE: dos digitaciones por nota (lado de Fa y lado de Si♭), y la clave cambia con la altura.
+  // Suena una 5.ª justa (7 semitonos) por debajo de lo escrito. Datos: CHART del motor ('fa|sib').
+  trompa:     { pagina: 'diccionario-musical/notas-de-la-trompa',     transpone: -7,  doble: true, nombre: 'la trompa doble en Fa/Si♭' },
 };
 
 const OCULTO = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap';
@@ -106,7 +109,65 @@ function dibujo(pulsados, todos) {
     ? '<b class="tm-dg-on">●</b>' : '<span class="tm-dg-off">○</span>')).join('');
 }
 
+/* ---- trompa doble ----
+   El motor guarda CHART = { 'Do2': '0|13', ... }: «lado de Fa | lado de Si♭». 0 = al aire, dígitos = rotores
+   de los dedos, '-' = esa nota no se toca por ese lado. En el lado de Fa el pulgar va SIEMPRE pulsado; en el de
+   Si♭, suelto. Los cuatro rotores se dibujan en el orden de la foto (1, 2, 3 y 4 = pulgar). */
+function leerChartTrompa() {
+  const src = fs.readFileSync(path.join(RAIZ, 'assets/js/digitaciones-trompa-engine.js'), 'utf8');
+  const m = src.match(/var CHART = \{[\s\S]*?\n  \};/);
+  if (!m) throw new Error('trompa: no encuentro CHART en el motor');
+  const caja = {};
+  // eslint-disable-next-line no-eval
+  eval(m[0].replace('var CHART', 'caja.CHART'));
+  return caja.CHART;
+}
+/** '13' -> ['1','3'] · '0' -> [] · '-' -> null */
+function dedosDe(s) { return s === '-' ? null : s === '0' ? [] : s.split(''); }
+function lado(dedos, pulgar) {
+  if (dedos === null) return { dib: '<span class="tm-dg-na">—</span>', texto: 'esta nota no se toca por este lado' };
+  const todos = ['1', '2', '3', 'T'];
+  const lit = dedos.concat(pulgar ? ['T'] : []);
+  const dib = todos.map((k) => (lit.indexOf(k) > -1 ? '<b class="tm-dg-on">●</b>' : '<span class="tm-dg-off">○</span>')).join('');
+  const nums = dedos.map((d) => d + '.º');
+  const lista = nums.length === 0 ? '' : nums.length === 1 ? nums[0] : nums.slice(0, -1).join(', ') + ' y ' + nums[nums.length - 1];
+  const texto = pulgar ? (lista ? 'pulgar y ' + lista : 'solo el pulgar') : (lista || 'al aire');
+  return { dib, texto };
+}
+
+function tablaDoble(inst) {
+  const cfg = INSTRUMENTOS[inst];
+  const CHART = leerChartTrompa();
+  const filas = Object.keys(CHART).map((clave) => {
+    const midi = aMidi(clave);
+    const [esc, escBem] = nombre(midi);
+    const [pf, ps] = CHART[clave].split('|');
+    const fa = lado(dedosDe(pf), true), sib = lado(dedosDe(ps), false);
+    const clef = midi < 60 ? 'fa' : 'sol';   // la misma regla que el motor: por debajo de Do₄, clave de fa
+    const [s, sb] = nombre(midi + cfg.transpone);
+    const suena = sb ? `${s}<small>${sb}</small>` : s;
+    return '<tr>'
+      + `<th scope="row">${esc}${escBem ? `<small>${escBem}</small>` : ''}</th>`
+      + `<td class="tm-dg-pent">${pentagrama(clave, clef)}</td>`
+      + `<td class="tm-dg-dib">${fa.dib}<span style="${OCULTO}">${fa.texto}</span></td>`
+      + `<td class="tm-dg-dib">${sib.dib}<span style="${OCULTO}">${sib.texto}</span></td>`
+      + `<td class="tm-dg-suena">${suena}</td>`
+      + '</tr>';
+  });
+  const rot = '<abbr title="1.er rotor (dedo)">1</abbr> <abbr title="2.º rotor (dedo)">2</abbr> <abbr title="3.er rotor (dedo)">3</abbr> <abbr title="4.º rotor (pulgar)">4</abbr>';
+  return [MARCA_INI,
+    '<div class="tm-table-wrap">',
+    '<table class="tm-table tm-digitaciones">',
+    `<caption style="caption-side:top;text-align:left;font-weight:600;padding:0 0 8px">Todas las digitaciones de ${cfg.nombre}: ${filas.length} notas</caption>`,
+    `<thead><tr><th scope="col">Nota escrita</th><th scope="col">En el pentagrama<small>fa · sol</small></th><th scope="col">Lado de Fa<small>pulgar pulsado</small><small>${rot}</small></th><th scope="col">Lado de Si♭<small>pulgar suelto</small><small>${rot}</small></th><th scope="col">Suena<small>en Fa</small></th></tr></thead>`,
+    '<tbody>', filas.join('\n'), '</tbody></table></div>',
+    '<p class="tm-nota-tabla"><strong>●</strong> es rotor pulsado y <strong>○</strong> suelto. Los rotores <strong>1, 2 y 3</strong> son los de los dedos y el <strong>4</strong> es el del pulgar, el que cambia de un lado al otro: pulsado, tocas por el <strong>lado de Fa</strong>; suelto, por el <strong>lado de Si♭</strong>. <strong>—</strong> significa que esa nota no se toca por ese lado. Es la digitación más afinada de cada lado: el intérprete elige la que suene mejor en cada pasaje. Desde el Do₄ la nota va en clave de sol y por debajo, en clave de fa.</p>',
+    '<p class="tm-nota-tabla">La trompa en Fa es un instrumento <strong>transpositor</strong>: suena una <strong>quinta justa por debajo</strong> de lo escrito. Si tocas un <strong>Do₄ escrito</strong> suena un <strong>Fa₃</strong>. Por eso la última columna.</p>',
+    MARCA_FIN].join('\n');
+}
+
 function tabla(inst) {
+  if (INSTRUMENTOS[inst].doble) return tablaDoble(inst);
   const cfg = INSTRUMENTOS[inst];
   const { FING, ORDEN, KEYS } = leerMotor(inst);
   const orden = (ORDEN && ORDEN.length ? ORDEN : Object.keys(FING)).filter((k) => FING[k]);
@@ -166,6 +227,7 @@ const CSS = `
 .tm-dg-on { color: var(--brand); }
 .tm-dg-off { color: #b9b2a4; }
 .tm-dg-suena { color: #686868; }
+.tm-dg-na { color: #b9b2a4; }
 .tm-dg-pent { padding: 2px 6px; }
 .tm-nota-tabla { font-size: .94rem; }
 `;

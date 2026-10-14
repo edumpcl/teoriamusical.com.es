@@ -32,7 +32,10 @@ const lamejs = (() => {          // lamejs 1.2.1 no exporta por require(); ver r
 
 const ROOT = path.join(__dirname, '..');
 const BASE = 'http://localhost:8099';
-const POOL = 'assets/audio/.pool';
+const argS = (n) => { const x = process.argv.find((v) => v.startsWith('--' + n + '=')); return x ? x.slice(n.length + 3) : null; };
+/* --pool=RUTA (relativa a la raiz) elige otra carpeta de tomas y --salida=RUTA escribe las muestras en otra carpeta:
+   asi se puede probar un banco nuevo sin pisar las muestras publicadas. */
+const POOL = argS('pool') || 'assets/audio/.pool';
 const SR = 44100, KBPS = 64;
 const ENTRADA = 0.03;      // silencio antes del ataque: lo justo para no comerse el golpe de lengua
 const FUNDIDO = 0.20;
@@ -45,7 +48,7 @@ const DURACION = argN('duracion', 1.2);
 const RMS = argN('rms', 0.10);
 const dry = process.argv.includes('--dry');
 
-const DIR = path.join(ROOT, 'assets/audio', instrumento);
+const DIR = argS('salida') ? path.resolve(ROOT, argS('salida')) : path.join(ROOT, 'assets/audio', instrumento);
 const SEMIS = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
 const midiDe = n => { const m = /^([A-G])(s?)(\d)$/.exec(n); return m ? SEMIS[m[1]] + (m[2] ? 1 : 0) + (+m[3] + 1) * 12 : null; };
 const freqDe = midi => 440 * Math.pow(2, (midi - 69) / 12);
@@ -54,6 +57,7 @@ const freqDe = midi => 440 * Math.pow(2, (midi - 69) / 12);
   const sel = JSON.parse(fs.readFileSync(path.join(ROOT, POOL, 'seleccion.json'), 'utf8'));
   const notas = Object.keys(sel).sort((a, b) => midiDe(a) - midiDe(b));
 
+  if (!dry) fs.mkdirSync(DIR, { recursive: true });
   const browser = await chromium.launch();
   const page = await browser.newPage();
   await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });

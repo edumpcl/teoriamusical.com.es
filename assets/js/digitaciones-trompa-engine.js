@@ -3,7 +3,8 @@
    pulsado) y por el lado de SI♭ (pulgar suelto). Se iluminan los rotores usados
    (T = pulgar/cambio, 1·2·3 = dedos). El intérprete elige el lado que suene mejor.
    La trompa en Fa TRANSPONE: suena una 5ª justa (7 semitonos) por debajo de lo escrito.
-   Rango escrito Do2–Do6. Audio real de Fa2 a Do6; las 5 graves (Do2–Mi2), pendientes.
+   Rango escrito Do2–Do6. Audio: trompa de FluidR3 GM / MuseScore_General (MIT), una muestra por nota,
+   afinada, de 2 s y al mismo nivel (tools/construir-muestras-audio.js); las 49 notas tienen sonido.
    Uso: <div id="x"></div><script>tmTrompaEngine('x');</script>
    Convención (según la trompa del autor): pulgar SUELTO = Si♭, pulgar PULSADO = Fa. */
 (function () {
@@ -34,7 +35,7 @@
     'Do6':'0|0'
   };
   var ORDEN = Object.keys(CHART);
-  // Las 5 graves aún no tienen audio (las grabará el autor con su trompa).
+  // Todas las notas tienen audio; si alguna faltara, se marca aquí y el botón ▶ se desactiva.
   var SIN_AUDIO = {};
 
   function parseVal(s) {
@@ -168,7 +169,7 @@
           sideBlock(uid, 'fa', 'Digitación en Fa', 'pulgar pulsado') +
           sideBlock(uid, 'sib', 'Digitación en Si♭', 'pulgar suelto') +
         '</div>' +
-        '<p class="tm-tp-credit">Foto: Yamaha Corporation vía <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Horn_YHR-667V.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0 · Audio: Univ. of Iowa Musical Instrument Samples</p>' +
+        '<p class="tm-tp-credit">Foto: Yamaha Corporation vía <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Horn_YHR-667V.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0 · Audio: banco <a href="https://member.keymusician.com/Member/FluidR3_GM/index.html" target="_blank" rel="nofollow noopener">FluidR3 GM</a> de Frank Wen, en la adaptación <em>MuseScore_General</em> de S. Christian Collins (licencia MIT)</p>' +
         '<div class="tm-tp-btns">' + btns + '</div>' +
       '</div>';
 
@@ -180,7 +181,7 @@
       var f = sampleFile(n);
       if (!f) return;
       try { audio.pause(); } catch (e) {}
-      audio.src = AUDIO_BASE + f + '.mp3';
+      audio.src = AUDIO_BASE + f + '.mp3?v=2';
       audio.currentTime = 0;
       var pr = audio.play();
       if (pr && pr.catch) pr.catch(function () {});

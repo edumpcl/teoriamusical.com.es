@@ -34,6 +34,10 @@ const INSTRUMENTOS = {
                 pagina: '/diccionario-musical/notas-del-bombardino/' },
   tuba:       { transpone: 0,  clef: 'fa', nombre: 'la tuba', corto: 'tuba',
                 pagina: '/diccionario-musical/notas-de-la-tuba/' },
+  // Trompa DOBLE: dos digitaciones por nota (lado de Fa y de Si♭) y la clave cambia con la altura (fa por
+  // debajo de Do4, sol desde Do4). Son 49 notas: dos hojas A4, una por clave. Suena una 5.ª justa mas grave.
+  trompa:     { transpone: -7, doble: true, nombre: 'la trompa doble en Fa/Si♭', corto: 'trompa',
+                pagina: '/diccionario-musical/notas-de-la-trompa/', mm: 1.7 },
 };
 
 const SHARP = ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
@@ -63,7 +67,32 @@ function leerMotor(inst) {
   return caja;
 }
 
+/* Trompa doble: CHART del motor = { 'Do2': '0|13', ... } (lado de Fa | lado de Si♭; '-' = no se toca por ese lado).
+   El lado de Fa lleva SIEMPRE el pulgar (4.º rotor) pulsado; el de Si♭, suelto. Dibujo: rotores 1, 2, 3 y 4. */
+function datosDoble(inst) {
+  const cfg = INSTRUMENTOS[inst];
+  const src = fs.readFileSync(path.join(RAIZ, 'assets/js/digitaciones-trompa-engine.js'), 'utf8');
+  const caja = {};
+  // eslint-disable-next-line no-eval
+  eval(src.match(/var CHART = [{][^}]*[}];/)[0].replace('var CHART', 'caja.CHART'));
+  const lado = (v, pulgar) => {
+    if (v === '-') return null;
+    const dedos = v === '0' ? [] : v.split('');
+    return [dedos.indexOf('1') > -1, dedos.indexOf('2') > -1, dedos.indexOf('3') > -1, !!pulgar];
+  };
+  const filas = Object.keys(caja.CHART).map((clave) => {
+    const midi = aMidi(clave);
+    const [esc, escBem] = nombre(midi);
+    const [pf, ps] = caja.CHART[clave].split('|');
+    const [sue, sueBem] = nombre(midi + cfg.transpone);
+    return { clave, esc, escBem, clef: midi < 60 ? 'fa' : 'sol', fa: lado(pf, true), sib: lado(ps, false), sue, sueBem };
+  });
+  pentagramasDe(inst, filas).forEach((p, i) => { filas[i].pent = p; });
+  return { cfg, filas };
+}
+
 function datos(inst) {
+  if (INSTRUMENTOS[inst].doble) return datosDoble(inst);
   const cfg = INSTRUMENTOS[inst];
   const { FING, ORDEN, KEYS } = leerMotor(inst);
   const orden = (ORDEN && ORDEN.length ? ORDEN : Object.keys(FING)).filter((k) => FING[k]);
@@ -103,10 +132,11 @@ const ESPACIO_SVG = 180;      // unidades internas entre dos lineas
 function pentagramasDe(inst, filas) {
   const cfg = INSTRUMENTOS[inst];
   const indice = JSON.parse(fs.readFileSync(path.join(PENT_DIR, 'indice.json'), 'utf8'));
-  const k = MM_ENTRE_LINEAS / ESPACIO_SVG;                 // mm por unidad interna
+  const k = (cfg.mm || MM_ENTRE_LINEAS) / ESPACIO_SVG;                 // mm por unidad interna
   return filas.map((f) => {
-    const e = indice[cfg.clef + '|' + f.clave];
-    if (!e) throw new Error('falta el pentagrama de ' + f.clave + ' en clave de ' + cfg.clef + '; corre tools/gen-pentagramas-notas.js');
+    const clef = f.clef || cfg.clef;
+    const e = indice[clef + '|' + f.clave];
+    if (!e) throw new Error('falta el pentagrama de ' + f.clave + ' en clave de ' + clef + '; corre tools/gen-pentagramas-notas.js');
     let svg = fs.readFileSync(path.join(PENT_DIR, e.f), 'utf8');
     const vb = /<svg class="definition-scale"[^>]*viewBox="0 ([-\d.]+) (\d+) (\d+)"/.exec(svg);
     const ty = Number(/class="page-margin"[^>]*transform="translate\(([\d.]+), ([\d.]+)\)"/.exec(svg)[2]);
@@ -186,7 +216,63 @@ function tablaHtml(filas, cfg, pistones, rellenar) {
   return `<table>${cab}<tbody>${tr.join('')}</tbody></table>`;
 }
 
+/* ---- trompa doble: dos hojas (clave de fa y clave de sol), cada una a dos columnas ---- */
+function tablaDobleHtml(filas, rellenar) {
+  const rot = '1 2 3 4';
+  const cab = '<thead><tr><th style="width:14%">Nota</th>'
+    + '<th style="width:28%">Pentagrama</th>'
+    + `<th style="width:21%">Lado de Fa<small>pulgar pulsado</small><small>${rot}</small></th>`
+    + `<th style="width:21%">Lado de Si♭<small>pulgar suelto</small><small>${rot}</small></th>`
+    + '<th style="width:16%">Suena</th></tr></thead>';
+  const dib = (l) => (l === null ? '<span class="na">—</span>' : l.map((on) => (on ? '●' : '○')).join(''));
+  const tr = filas.map((f) => '<tr>'
+    + `<td class="nota">${f.esc}${f.escBem ? `<small>${f.escBem}</small>` : ''}</td>`
+    + `<td class="pent"><img src="${f.pent}" alt=""></td>`
+    + (rellenar ? '<td class="dib hueco"></td><td class="dib hueco"></td>'
+      : `<td class="dib">${dib(f.fa)}</td><td class="dib">${dib(f.sib)}</td>`)
+    + `<td class="suena">${f.sue}${f.sueBem ? `<small>${f.sueBem}</small>` : ''}</td>`
+    + '</tr>');
+  return `<table>${cab}<tbody>${tr.join('')}</tbody></table>`;
+}
+
+function htmlDoble(inst, rellenar) {
+  const { cfg, filas } = datos(inst);
+  const grupos = [['fa', 'Notas graves, en clave de fa'], ['sol', 'Notas agudas, en clave de sol']]
+    .map(([clef, rotulo]) => ({ rotulo, filas: filas.filter((f) => f.clef === clef) }));
+  const titulo = rellenar ? `Digitaciones de ${cfg.nombre}: complétalas` : `Digitaciones de ${cfg.nombre}`;
+  const instr = rellenar
+    ? 'Escribe qué rotores hay que pulsar en cada nota, por el lado de Fa (pulgar pulsado) y por el de Si♭ (pulgar suelto): ● pulsado, ○ suelto. Si una nota no se toca por un lado, pon una raya. La columna «Suena» te la damos como pista.'
+    : `Las ${filas.length} notas de la trompa doble, con sus dos digitaciones. ● es rotor pulsado y ○ suelto; 1, 2 y 3 son los de los dedos y 4 es el del pulgar, que cambia de lado. «—»: esa nota no se toca por ese lado.`;
+  const hojas = grupos.map((g, i) => {
+    const corte = Math.ceil(g.filas.length / 2);
+    return `<div class="hoja${i ? ' ultima' : ''}">
+  <div class="cab">
+    <div class="cab-top">
+      <div>
+        <div class="marca">TEORÍA MUSICAL · HOJA ${i + 1} DE ${grupos.length}</div>
+        <h1>${titulo}${rellenar ? '' : '<span class="sol-tag">referencia</span>'}</h1>
+        <p class="instr"><b>${g.rotulo}</b> (${g.filas.length} notas). ${instr}</p>
+      </div>
+      <img class="logo" src="${LOGO}" alt="">
+    </div>
+    ${rellenar ? '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>' : ''}
+  </div>
+  <div class="cols">
+    <div style="flex:1">${tablaDobleHtml(g.filas.slice(0, corte), rellenar)}</div>
+    <div style="flex:1">${tablaDobleHtml(g.filas.slice(corte), rellenar)}</div>
+  </div>
+  <div class="leyenda">
+    <p><b>Es un instrumento transpositor:</b> la trompa en Fa suena una <b>quinta justa más grave</b> de lo escrito. Un <b>Do₄ escrito</b> suena un <b>Fa₃</b>.</p>
+    <p><b>Fa♯ y Sol♭ son la misma nota</b>, solo cambia cómo se escribe según la tonalidad. Los subíndices son la octava. Es la digitación más afinada de cada lado; el intérprete elige la que suene mejor.</p>
+  </div>
+  <div class="pie"><span>Digitaciones de ${cfg.corto}${rellenar ? ' · para completar' : ''} · teoriamusical.com.es${cfg.pagina}</span><span>teoriamusical.com.es</span></div>
+</div>`;
+  }).join('');
+  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS} .hoja { page-break-after: always; } .hoja.ultima { page-break-after: auto; } td.dib .na { color: #aaa; }</style></head><body>${hojas}</body></html>`;
+}
+
 function html(inst, rellenar) {
+  if (INSTRUMENTOS[inst].doble) return htmlDoble(inst, rellenar);
   const { cfg, filas, pistones } = datos(inst);
   const corte = Math.ceil(filas.length / 2);
   const titulo = rellenar
@@ -229,7 +315,25 @@ function html(inst, rellenar) {
 const MARCA_INI = '<!-- FICHA-DIGITACIONES:inicio -->';
 const MARCA_FIN = '<!-- FICHA-DIGITACIONES:fin -->';
 
+function bloqueDoble(inst) {
+  const cfg = INSTRUMENTOS[inst];
+  const n = datos(inst).filas.length;
+  const base = '/assets/img/digitaciones/fichas/ficha-digitaciones-' + inst;
+  const prev = '/assets/img/digitaciones/fichas/preview-ficha-digitaciones-' + inst;
+  return `${MARCA_INI}
+<h2>Ficha para imprimir (PDF)</h2>
+<p>La misma tabla en papel, en <strong>dos hojas de A4</strong> (las notas graves, en clave de fa, y las agudas, en clave de sol), con las dos digitaciones de cada nota: lado de Fa y lado de Si♭. Y otras <strong>dos hojas para completar</strong>: las ${n} notas con las columnas de los rotores en blanco, para escribir tú la digitación. Las hojas de referencia hacen de solucionario.</p>
+<figure class="tm-staff">
+  <a href="${base}.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="${prev}.webp"><img src="${prev}.png" width="300" height="424" loading="lazy" alt="Ficha imprimible en PDF con las digitaciones de la trompa doble, lado de Fa y lado de Si bemol"></picture></a>
+  <figcaption>Primera hoja de dos: las notas graves de la trompa con sus dos digitaciones.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="${base}.pdf" target="_blank" rel="noopener">Descargar las digitaciones (PDF, 2 hojas)</a>
+<a class="tm-btn" href="${base}-rellenar.pdf" target="_blank" rel="noopener">Descargar las hojas para completar (PDF, 2 hojas)</a></p>
+${MARCA_FIN}`;
+}
+
 function bloque(inst) {
+  if (INSTRUMENTOS[inst].doble) return bloqueDoble(inst);
   const cfg = INSTRUMENTOS[inst];
   const n = datos(inst).filas.length;
   const base = '/assets/img/digitaciones/fichas/ficha-digitaciones-' + inst;
@@ -291,7 +395,8 @@ const sharp = require('sharp');
       await page.setContent(html(inst, rellenar));
       const nom = 'ficha-digitaciones-' + inst + (rellenar ? '-rellenar' : '');
       const pdfPath = path.join(OUT_DIR, nom + '.pdf');
-      const sobra = await page.evaluate((h) => Math.round(document.querySelector('.hoja').scrollHeight - h), ALTO);
+      const esperadas = INSTRUMENTOS[inst].doble ? 2 : 1;
+      const sobra = await page.evaluate((h) => Math.round(Math.max(...[...document.querySelectorAll('.hoja')].map((x) => x.scrollHeight)) - h), ALTO);
       await page.pdf({ path: pdfPath, format: 'A4', printBackground: true, margin: { top: '0', bottom: '0', left: '0', right: '0' } });
       const paginas = Number((fs.readFileSync(pdfPath).toString('latin1').match(/\/Count\s+(\d+)/) || [])[1] || 0);
       if (png) await page.screenshot({ path: path.join(png, nom + '.png'), fullPage: true });
@@ -302,7 +407,7 @@ const sharp = require('sharp');
         await base.clone().webp({ quality: 82 }).toFile(path.join(OUT_DIR, 'preview-' + nom + '.webp'));
       }
       await page.close();
-      if (paginas !== 1) { console.log(`  ! ${nom}.pdf ocupa ${paginas} páginas (sobran ${sobra}px)`); avisos++; }
+      if (paginas !== esperadas) { console.log(`  ! ${nom}.pdf ocupa ${paginas} páginas y tenían que ser ${esperadas} (sobran ${sobra}px)`); avisos++; }
       else console.log(`  ✓ ${nom}.pdf  (margen ${-sobra}px)`);
     }
     if (args.includes('--poner')) ponerBloque(inst);
