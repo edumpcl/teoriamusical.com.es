@@ -279,7 +279,7 @@ ${jsonld}
         </ul>
       </li>
         <li><a href="/blog/" class="">Blog</a></li>
-        <li><a href="/test-tecnico-de-laboratorio/" class="">Test Laboratorio</a></li>
+        <li><a href="/tecnico-especialista-en-laboratorio/" class="">Laboratorio</a></li>
       </ul>
     </nav>
   </div>

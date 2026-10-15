@@ -126,7 +126,7 @@ HEADER_NAV = '''\
           </ul>
         </li>
         <li><a href="/blog/">Blog</a></li>
-        <li><a href="/test-tecnico-de-laboratorio/">Test Laboratorio</a></li>
+        <li><a href="/tecnico-especialista-en-laboratorio/">Laboratorio</a></li>
       </ul>
     </nav>
   </div>

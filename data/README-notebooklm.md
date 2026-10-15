@@ -1,78 +1,72 @@
-# Recursos NotebookLM — cómo añadir unidades
+# Técnico Especialista en Laboratorio — hub, libros, apuntes y tests
 
-Las tarjetas de **"Recursos de estudio (NotebookLM)"** que aparecen en la página
-[`/test-tecnico-de-laboratorio/`](../test-tecnico-de-laboratorio/index.html) se
-generan automáticamente a partir de un fichero de datos. **No se editan a mano en
-el HTML.**
+La sección **`/tecnico-especialista-en-laboratorio/`** se genera entera desde
+[`notebooklm.json`](notebooklm.json). **No se editan a mano las páginas generadas.**
 
-## Flujo para publicar una unidad
-
-1. Subes la unidad a Google NotebookLM y copias su enlace
-   (algo como `https://notebooklm.google.com/notebook/XXXXXXXX-...`).
-2. Abres [`data/notebooklm.json`](notebooklm.json) y buscas esa unidad
-   (por libro y número). Verás que ya tiene el título puesto y `"url": null`.
-3. Sustituyes `null` por el enlace **entre comillas**:
-   ```json
-   { "n": 3, "title": "Frotis sanguíneo: preparación y evaluación", "url": "https://notebooklm.google.com/notebook/51973e68-..." },
-   ```
-4. Ejecutas el generador desde la raíz del proyecto:
-   ```
-   python tools/build_notebooklm.py
-   ```
-5. Listo: las tarjetas del HTML se regeneran solas, en orden y agrupadas por libro.
-
-## Reglas que conviene recordar
-
-- **Solo se pintan las unidades que tienen `url`.** Las que están a `null` quedan
-  en el JSON (con su título listo) pero no aparecen en la web.
-- **Un libro no se muestra hasta que tiene al menos una unidad con enlace.** Por eso
-  ahora mismo solo se ve *Hematología*: el resto de libros están cargados pero sin
-  enlaces todavía.
-- El **orden** de los libros y de las unidades en la web es el mismo que tienen en el
-  JSON. Para reordenar, mueve los bloques en el JSON.
-- Para **cambiar un título**, edita el campo `"title"` y vuelve a ejecutar el script.
-- El script es **idempotente**: puedes ejecutarlo las veces que quieras; solo toca el
-  bloque entre los marcadores `<!-- NOTEBOOKLM:START -->` y `<!-- NOTEBOOKLM:END -->`
-  del HTML.
-
-## Añadir un libro nuevo
-
-Añade un objeto más al array `"books"` en el JSON:
-
-```json
-{
-  "name": "Nombre del libro",
-  "units": [
-    { "n": 1, "title": "Título del tema 1", "url": null },
-    { "n": 2, "title": "Título del tema 2", "url": null }
-  ]
-}
+```
+/tecnico-especialista-en-laboratorio/                 hub: tarjetas de libro + todos los tests
+/tecnico-especialista-en-laboratorio/<slug>/          un libro: apuntes NotebookLM + sus tests
 ```
 
-Y ejecuta `python tools/build_notebooklm.py`.
+Antes era `/test-tecnico-de-laboratorio/` (una sola página); esa URL redirige (301) a la nueva.
+
+## Ejecutar el generador
+
+```
+python tools/build_tel.py
+node tools/version_assets.cjs      # antes de subir, para sellar versiones de CSS/JS
+```
+
+Regenera el hub y las 8 subpáginas desde cero (idempotente).
+
+## Publicar una unidad de apuntes
+
+1. En NotebookLM, el cuaderno debe estar compartido como *«Cualquier persona con el enlace»*.
+2. En `notebooklm.json`, en el libro y la unidad correspondientes, sustituye `"url": null`
+   por el enlace entre comillas.
+3. `python tools/build_tel.py`
+
+Solo se pintan las unidades que tienen `url`. Los títulos de unidad son el campo `"title"`.
+
+## Cambiar un test de libro
+
+Cada libro tiene la lista `"tests"` con los códigos de banco (los de
+`assets/js/quiz-oposiciones.js`). **Un test va en un solo libro** (el generador falla si
+está en dos o si falta alguno). Los títulos de test están en el objeto raíz `"tests"`.
+
+## Añadir un libro
+
+Añade un objeto a `"books"` con `name`, `slug`, `emoji`, `intro`, `tests` y `units`.
+El orden del JSON es el orden en el hub.
 
 ## Ficheros implicados
 
 | Fichero | Para qué |
 |---------|----------|
-| [`data/notebooklm.json`](notebooklm.json) | **Lo único que editas**: libros, unidades, títulos y enlaces. |
-| [`tools/build_notebooklm.py`](../tools/build_notebooklm.py) | El generador. Lee el JSON y reescribe las tarjetas del HTML. |
-| [`test-tecnico-de-laboratorio/index.html`](../test-tecnico-de-laboratorio/index.html) | La página. Contiene los marcadores `NOTEBOOKLM:START/END` (generado, no editar a mano esa zona). |
-| [`assets/css/style.css`](../assets/css/style.css) | Estilos de las tarjetas (clases `.tm-nlm-*` y `.tm-book*`). |
+| `data/notebooklm.json` | **Lo único que editas**: libros, unidades, enlaces, tests. |
+| `tools/build_tel.py` | El generador (hub + subpáginas). |
+| `tools/tel-template.html` | Plantilla de página (cabecera, menú, pie). Si cambia la cabecera del sitio, actualizarla aquí. |
+| `tools/tel-faq.html` | Preguntas frecuentes del hub (también genera el schema FAQPage). |
+| `assets/css/style.css` | Estilos `.tm-nlm-*`, `.tm-book*`, `.tm-nlm-grid--libros`. |
 
-## Estado actual del temario (oposición TEL)
+## Estado (15-10-2026)
 
-Títulos extraídos de las carpetas de `Escritorio/OPO TEL 2026/ALGOR/`.
+| Libro | Unidades | Tests |
+|-------|----------|-------|
+| Hematología | 24/24 | 4 |
+| Técnicas Generales de Laboratorio | 6/6 | 2 |
+| Gestión de Muestras Biológicas | 10/10 | 2 |
+| Bioquímica | 10/10 | 9 |
+| Inmunología | 17/18 (la 17, MHC, tiene el cuaderno vacío) | 2 |
+| Microbiología | 9/9 | 6 |
+| Biología Molecular | 7/7 | 1 |
+| Fisiopatología | 13/16 (faltan 14, 15 y 16: sin título confirmado) | 0 |
 
-| Libro | Temas | Estado |
-|-------|-------|--------|
-| Hematología | 24 | Todas publicadas |
-| Técnicas Generales de Laboratorio | 6 | Títulos listos, sin enlaces |
-| Gestión de Muestras Biológicas | 10 | Títulos listos, sin enlaces |
-| Bioquímica | 9 | Títulos listos, sin enlaces |
-| Inmunología | 18 | Títulos listos, sin enlaces |
-| Microbiología | 9 | Títulos listos, sin enlaces |
-| Biología Molecular | 7 | Títulos listos, sin enlaces |
-
-**Nota:** la carpeta `bioquímica/tema 10` estaba vacía, por eso Bioquímica figura
-con 9 temas. Si ese tema existe, añade su título al JSON.
+Notas:
+- Los enlaces salen de la cuenta de NotebookLM de Inma; los cuadernos están compartidos
+  como «cualquier persona con el enlace».
+- Bioquímica 10 («Determinaciones clínicas especiales: hormonas y otras») y los títulos
+  de Fisiopatología 1–13 se dedujeron del resumen de cada cuaderno: conviene revisarlos.
+- Fisiopatología 14, 15 y 16 (ids `99a731aa`, `2c64371e`, `27a611c0`): añadir cuando se
+  sepa su tema.
+- Huecos de tests: Fisiopatología (0) y Biología Molecular (1).

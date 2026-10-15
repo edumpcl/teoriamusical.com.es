@@ -11,7 +11,7 @@ import os
 SKIP = [
     'assets', 'node_modules',
     'aviso-legal', 'politica-de-privacidad', 'politica-de-cookies', 'contacto',
-    'test-tecnico-de-laboratorio',
+    'tecnico-especialista-en-laboratorio',
     'panel',   # panel interno: noindex y con contrasena, no se anuncia a nadie
     'pruebas', # paginas de comparacion (p. ej. VexFlow vs Verovio): noindex, no son contenido
 ]

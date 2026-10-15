@@ -63,6 +63,11 @@
   ],
   "redirects": [
     {
+      "source": "/test-tecnico-de-laboratorio/",
+      "destination": "/tecnico-especialista-en-laboratorio/",
+      "permanent": true
+    },
+    {
       "source": "/teoria-musical/",
       "destination": "/",
       "permanent": true

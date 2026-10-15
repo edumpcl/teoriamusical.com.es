@@ -578,6 +578,7 @@ a.tm-card-dic-titulo::after { content: ""; position: absolute; inset: 0; }
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
   margin: 1.5rem 0;
 }
+.tm-nlm-grid--libros { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
 .tm-nlm-card {
   position: relative;
   display: flex; align-items: center; gap: .9rem;

@@ -448,7 +448,7 @@ TOP_NAV = [
     ('Ejercicios', '/ejercicios/'),
     ('Herramientas', '/herramientas/'),
     ('Blog', '/blog/'),
-    ('Test Laboratorio', '/test-tecnico-de-laboratorio/'),
+    ('Laboratorio', '/tecnico-especialista-en-laboratorio/'),
 ]
 
 # Children per top-level (from pages)
