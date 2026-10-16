@@ -1055,7 +1055,11 @@
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/alteraciones/alteracion-doble-bemol.svg</image:loc></image:image>
   </url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/cualidades-del-sonido/</loc><lastmod>2026-06-11</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/dinamica-musical/</loc><lastmod>2026-06-11</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/dinamica-musical/</loc><lastmod>2026-06-11</lastmod>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/dinamica/grados.svg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/dinamica/reguladores.svg</image:loc></image:image>
+    <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/dinamica/subitos.svg</image:loc></image:image>
+  </url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/tempo-musical/</loc><lastmod>2026-06-29</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/agogica/</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/articulacion-musical/</loc><lastmod>2026-06-12</lastmod>
