@@ -1317,3 +1317,21 @@ figcaption, .wp-element-caption {
 .co-nav span { font-weight: 700; color: var(--heading); }
 .co-nav a { padding: .2rem .6rem; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface); text-decoration: none; }
 .co-nav a:hover { border-color: var(--brand); }
+
+/* Filtros de fecha de la agenda de conciertos */
+.co-fechas { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: flex-end; gap: .5rem 1rem; }
+.co-fechas-t { flex: 1 1 100%; font-size: .9rem; font-weight: 600; color: var(--heading); }
+.co-rapidos { display: flex; flex-wrap: wrap; gap: .4rem; }
+.co-rapidos button { font: inherit; font-size: .9rem; padding: .35rem .85rem; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface); color: var(--text); cursor: pointer; }
+.co-rapidos button:hover { border-color: var(--brand); }
+.co-rapidos button[aria-pressed="true"] { background: var(--brand-dark); border-color: var(--brand-dark); color: #fff; }
+.co-rapidos button:focus-visible, .co-rango input:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.co-rango { display: grid; grid-template-columns: repeat(2, minmax(0, 11rem)); gap: .5rem 1rem; }
+.co-rango label { display: flex; flex-direction: column; gap: .25rem; font-size: .9rem; font-weight: 600; color: var(--heading); min-width: 0; }
+.co-rango input { font: inherit; font-weight: 400; padding: .4rem .55rem; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); min-width: 0; }
+.co-vacio { padding: 1rem 1.25rem; border: 1px dashed var(--border-strong); border-radius: var(--radius); background: var(--surface-alt); color: var(--text-muted); }
+.co-nav[hidden] { display: none; }
+
+/* Páginas de agrupación de la agenda de conciertos */
+.co-meta { margin: 0 0 .75rem; color: var(--text-muted); }
+.tm-co-pasado { background: var(--surface-alt); }

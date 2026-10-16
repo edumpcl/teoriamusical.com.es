@@ -1,0 +1,99 @@
+{
+  "nota": "Une las agrupaciones de una misma entidad bajo una sola página. Cada «agrupaciones» es el nombre tal como figura en conciertos.json (se compara sin acentos, sin mayúsculas y sin lo que va entre paréntesis). Lo que no está aquí forma su propia entidad con su nombre. Umbral para tener página: 3 conciertos (2 para bandas, sociedades y escuelas).",
+  "entidades": [
+    {
+      "nombre": "Orquesta y Coro Nacionales de España (OCNE)",
+      "agrupaciones": [
+        "Orquesta y Coro Nacionales de España (OCNE)",
+        "Orquesta Nacional de España"
+      ]
+    },
+    {
+      "nombre": "Orquesta y Coro de la Comunidad de Madrid (ORCAM)",
+      "agrupaciones": [
+        "Orquesta de la Comunidad de Madrid (ORCAM)",
+        "Orquesta y Coro de la Comunidad de Madrid (ORCAM)"
+      ]
+    },
+    {
+      "nombre": "Orquesta Sinfónica de Galicia (OSG)",
+      "agrupaciones": [
+        "Orquesta Sinfónica de Galicia",
+        "Orquesta Joven de la Sinfónica de Galicia"
+      ]
+    },
+    {
+      "nombre": "Orquesta Sinfónica de Viena",
+      "agrupaciones": [
+        "Orquesta Sinfónica de Viena",
+        "Johann Strauss Ensemble de la Orquesta Sinfónica de Viena"
+      ]
+    },
+    {
+      "nombre": "Orquestra Simfònica de Castelló",
+      "agrupaciones": [
+        "Orquestra Simfònica de Castelló, Big Band UJI y David Pastor",
+        "Orquestra Simfònica de Castelló y Cor Jove de la Comunitat Valenciana"
+      ]
+    },
+    {
+      "nombre": "Societat Filharmònica Alteanense",
+      "agrupaciones": [
+        "Societat Filharmònica Alteanense",
+        "Banda Simfònica de la Societat Filharmònica Alteanense",
+        "Orquestra de Pols i Pua de la Societat Filharmònica Alteanense",
+        "Coral Polifònica y Orquestra de Pols i Pua de la Societat Filharmònica Alteanense"
+      ]
+    },
+    {
+      "nombre": "Sociedad Musical «La Artística» de Buñol",
+      "agrupaciones": [
+        "Banda Sinfónica de la Sociedad Musical «La Artística» de Buñol",
+        "Artística Big Band (S. M. «La Artística» de Buñol)",
+        "Banda de Iniciación «La Bandica» y Banda Juvenil de la S. M. «La Artística» de Buñol",
+        "Orquesta Sinfónica de la Sociedad Musical «La Artística» de Buñol",
+        "Sociedad Musical «La Artística» de Buñol (Banda Juvenil, Orquesta y coro Orfeón)"
+      ]
+    },
+    {
+      "nombre": "Conservatori Superior de Música Joaquín Rodrigo de València",
+      "agrupaciones": [
+        "Conservatori Superior de Música Joaquín Rodrigo de València",
+        "Banda del Conservatori Superior de Música Joaquín Rodrigo de València"
+      ]
+    },
+    {
+      "nombre": "Conservatori Superior de Música del Liceu",
+      "agrupaciones": [
+        "Liceu Big Band (Conservatori Liceu)",
+        "Liceu Jazz Grup (Conservatori Superior de Música del Liceu)",
+        "Liceu Big Band (Conservatori Liceu) amb Ethan Iverson",
+        "Alumnat del Conservatori Superior de Música del Liceu",
+        "Departament de Cant del Conservatori Superior de Música del Liceu"
+      ]
+    },
+    {
+      "nombre": "Conservatorio Superior de Música de Castilla-La Mancha",
+      "agrupaciones": [
+        "Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha",
+        "Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha"
+      ]
+    },
+    {
+      "nombre": "Federación de Sociedades Musicales de la Comunitat Valenciana (FSMCV)",
+      "agrupaciones": [
+        "Federación de Sociedades Musicales de la Comunitat Valenciana (FSMCV)",
+        "Bandas juveniles federadas de la FSMCV",
+        "Ayuntamiento de Cullera y FSMCV",
+        "Sociedades musicales de La Costera"
+      ]
+    },
+    {
+      "nombre": "Banda Municipal de Bilbao (Bilboko Udal Musika Banda)",
+      "slug": "banda-municipal-de-bilbao",
+      "agrupaciones": [
+        "Bilboko Udal Musika Banda (Banda Municipal de Bilbao)"
+      ]
+    }
+  ]
+}

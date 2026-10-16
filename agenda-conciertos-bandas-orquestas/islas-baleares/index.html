@@ -54,7 +54,7 @@
 
 <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css?v=f89f413e">
+<link rel="stylesheet" href="/assets/css/style.css?v=aebed9a2">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article","headline":"Conciertos de bandas y orquestas en las Islas Baleares","description":"Agenda de conciertos de bandas sinfónicas, orquestas y bandas de sociedades musicales en las Islas Baleares, comprobados en fuentes oficiales y actualizados cada semana.","url":"https://www.teoriamusical.com.es/agenda-conciertos-bandas-orquestas/islas-baleares/","inLanguage":"es","isAccessibleForFree":true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-agenda-conciertos-bandas-orquestas-islas-baleares.png"},"author":{"@type":"Person","name":"Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},"datePublished":"2026-10-12","dateModified":"2026-10-12","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.teoriamusical.com.es/agenda-conciertos-bandas-orquestas/islas-baleares/"},"publisher":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es","logo":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-diccionario.png"}}}
@@ -195,8 +195,24 @@
 
 <form class="tm-op-filtros" id="co-filtros" aria-label="Filtrar conciertos">
   <label>Tipo <select id="co-f-tipo"><option value="">Todos</option><option value="orquesta">Orquesta</option><option value="banda">Banda profesional</option></select></label>
+  <div class="co-fechas">
+    <span class="co-fechas-t" id="co-fechas-t">Fecha</span>
+    <div class="co-rapidos" role="group" aria-labelledby="co-fechas-t">
+      <button type="button" data-rango="todas" aria-pressed="true">Todas</button>
+      <button type="button" data-rango="hoy" aria-pressed="false">Hoy</button>
+      <button type="button" data-rango="semana" aria-pressed="false">Esta semana</button>
+      <button type="button" data-rango="proxima" aria-pressed="false">Próxima semana</button>
+      <button type="button" data-rango="finde" aria-pressed="false">Este fin de semana</button>
+      <button type="button" data-rango="mes" aria-pressed="false">Este mes</button>
+    </div>
+    <div class="co-rango">
+      <label>Desde <input type="date" id="co-f-desde"></label>
+      <label>Hasta <input type="date" id="co-f-hasta"></label>
+    </div>
+  </div>
 </form>
 <p class="tm-op-contador" id="co-contador" role="status" aria-live="polite"></p>
+<p class="co-vacio" id="co-vacio" hidden>No hay conciertos con esos filtros. Prueba con otras fechas o con otro tipo de agrupación.</p>
 <nav class="co-nav" aria-label="Ir a un mes"><span>Ir a:</span> <a href="#co-2026-11">Noviembre 2026</a> <a href="#co-2026-12">Diciembre 2026</a> <a href="#co-2027-01">Enero 2027</a></nav>
 
 <h2 class="co-mes" id="co-2026-11">Noviembre de 2026</h2>
@@ -204,7 +220,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Islas Baleares" data-fecha="2026-11-05">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Islas Baleares</span></p>
   <h3>Concierto de Aranjuez</h3>
-  <p class="tm-op-entidad">Orquestra Simfònica Illes Balears (OSIB)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquestra-simfonica-illes-balears/">Orquestra Simfònica Illes Balears (OSIB)</a></p>
   <p class="tm-op-plazo"><strong>Jueves 5 de noviembre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Auditorium de Palma, Palma</dd><dt>Programa</dt><dd>Dir. Gianna Fratta; José María Gallardo del Rey, guitarra. Rodrigo: Concierto de Aranjuez; Gallardo del Rey: Diamantes para Aranjuez; Ravel: Alborada del gracioso; Albéniz: Suite española (selección)</dd><dt>Entrada</dt><dd>Platea 35 €, anfiteatro 30 €; 5 € estudiantes de escuelas de música hasta 30 años</dd></dl>
   
@@ -235,7 +251,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Islas Baleares" data-fecha="2026-12-03">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Islas Baleares</span></p>
   <h3>Gershwin, Coll y Prokófiev</h3>
-  <p class="tm-op-entidad">Orquestra Simfònica Illes Balears (OSIB)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquestra-simfonica-illes-balears/">Orquestra Simfònica Illes Balears (OSIB)</a></p>
   <p class="tm-op-plazo"><strong>Jueves 3 de diciembre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Auditorium de Palma, Palma</dd><dt>Programa</dt><dd>Dir. Guillermo García Calvo; Ian Bousfield, trombón. Gershwin: Obertura cubana; Francisco Coll: Tapias; Tributo a Glenn Miller y Tommy Dorsey; Prokófiev: Romeo y Julieta (selección)</dd><dt>Entrada</dt><dd>Platea 35 €, anfiteatro 30 €; 5 € estudiantes de escuelas de música hasta 30 años</dd></dl>
   
@@ -244,7 +260,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Islas Baleares" data-fecha="2026-12-10">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Islas Baleares</span></p>
   <h3>La Creación de Haydn</h3>
-  <p class="tm-op-entidad">Orquestra Simfònica Illes Balears (OSIB)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquestra-simfonica-illes-balears/">Orquestra Simfònica Illes Balears (OSIB)</a></p>
   <p class="tm-op-plazo"><strong>Jueves 10 de diciembre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Auditorium de Palma, Palma</dd><dt>Programa</dt><dd>Dir. Pablo Mielgo; Irene Mas, soprano; David Alegret, tenor; José Antonio López, barítono; Coral Universitat Illes Balears (dir. Núria Cunillera). Haydn: La Creación</dd><dt>Entrada</dt><dd>Platea 35 €, anfiteatro 30 €; 5 € estudiantes de escuelas de música hasta 30 años</dd></dl>
   
@@ -257,14 +273,25 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Islas Baleares" data-fecha="2027-01-21">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Islas Baleares</span></p>
   <h3>Rossini, Britten y Chaikovski</h3>
-  <p class="tm-op-entidad">Orquestra Simfònica Illes Balears (OSIB)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquestra-simfonica-illes-balears/">Orquestra Simfònica Illes Balears (OSIB)</a></p>
   <p class="tm-op-plazo"><strong>Jueves 21 de enero de 2027 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Auditorium de Palma, Palma</dd><dt>Programa</dt><dd>Dir. Lorenzo Passerini; Ellinor D'Melon, violín. Rossini: Guillermo Tell, obertura; Britten: Concierto para violín y orquesta; Chaikovski: Sinfonía n.º 2 «Pequeña Rusia»</dd><dt>Entrada</dt><dd>Platea 35 €, anfiteatro 30 €; 5 € estudiantes de escuelas de música hasta 30 años</dd></dl>
   <p class="tm-op-nota">La fuente indica que la programación puede modificarse puntualmente.</p>
   <p class="tm-op-fuentes">Fuente: <a href="https://simfonicadebalears.com/wp-content/uploads/2026/07/TEMPORADA-2026-27.pdf" rel="noopener">OSIB, programa de la temporada 2026-27 (PDF oficial)</a> · <a href="https://simfonicadebalears.com/sona/auditorium-palma/" rel="noopener">OSIB, temporada de abono en el Auditorium de Palma</a>. <span class="tm-op-nota">Confirma fecha y hora en la fuente enlazada.</span></p>
 </div>
 </div>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Event","name":"Concierto de Aranjuez — Orquestra Simfònica Illes Balears (OSIB)","startDate":"2026-11-05T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Auditorium de Palma","address":{"@type":"PostalAddress","addressLocality":"Palma","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquestra Simfònica Illes Balears (OSIB)"},"url":"https://simfonicadebalears.com/wp-content/uploads/2026/07/TEMPORADA-2026-27.pdf","description":"Dir. Gianna Fratta; José María Gallardo del Rey, guitarra. Rodrigo: Concierto de Aranjuez; Gallardo del Rey: Diamantes para Aranjuez; Ravel: Alborada del gracioso; Albéniz: Suite española (selección)"},{"@type":"Event","name":"La màgia de Disney - Dia Internacional de la Infància — Banda Municipal de Música de Palma","startDate":"2026-11-14T18:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"TM Xesc Forteza (Teatre Municipal Xesc Forteza)","address":{"@type":"PostalAddress","addressLocality":"Palma","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Municipal de Música de Palma"},"url":"https://palmacultura.es/banda-municipal-palma"},{"@type":"Event","name":"Concert extraordinari de Santa Cecília — Banda Municipal de Música de Santanyí","startDate":"2026-11-22T18:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Teatre Principal de Palma","address":{"@type":"PostalAddress","addressLocality":"Palma","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Municipal de Música de Santanyí"},"url":"https://teatreprincipal.koobin.com/ca/concert-extraordinari-de-santa-cecilia-20261122-1800"},{"@type":"Event","name":"Gershwin, Coll y Prokófiev — Orquestra Simfònica Illes Balears (OSIB)","startDate":"2026-12-03T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Auditorium de Palma","address":{"@type":"PostalAddress","addressLocality":"Palma","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquestra Simfònica Illes Balears (OSIB)"},"url":"https://simfonicadebalears.com/wp-content/uploads/2026/07/TEMPORADA-2026-27.pdf","description":"Dir. Guillermo García Calvo; Ian Bousfield, trombón. Gershwin: Obertura cubana; Francisco Coll: Tapias; Tributo a Glenn Miller y Tommy Dorsey; Prokófiev: Romeo y Julieta (selección)"},{"@type":"Event","name":"La Creación de Haydn — Orquestra Simfònica Illes Balears (OSIB)","startDate":"2026-12-10T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Auditorium de Palma","address":{"@type":"PostalAddress","addressLocality":"Palma","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquestra Simfònica Illes Balears (OSIB)"},"url":"https://simfonicadebalears.com/wp-content/uploads/2026/07/TEMPORADA-2026-27.pdf","description":"Dir. Pablo Mielgo; Irene Mas, soprano; David Alegret, tenor; José Antonio López, barítono; Coral Universitat Illes Balears (dir. Núria Cunillera). Haydn: La Creación"},{"@type":"Event","name":"Rossini, Britten y Chaikovski — Orquestra Simfònica Illes Balears (OSIB)","startDate":"2027-01-21T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Auditorium de Palma","address":{"@type":"PostalAddress","addressLocality":"Palma","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquestra Simfònica Illes Balears (OSIB)"},"url":"https://simfonicadebalears.com/wp-content/uploads/2026/07/TEMPORADA-2026-27.pdf","description":"Dir. Lorenzo Passerini; Ellinor D'Melon, violín. Rossini: Guillermo Tell, obertura; Britten: Concierto para violín y orquesta; Chaikovski: Sinfonía n.º 2 «Pequeña Rusia»"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Event","name":"Concierto de Aranjuez — Orquestra Simfònica Illes Balears (OSIB)","startDate":"2026-11-05T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Auditorium de Palma","address":{"@type":"PostalAddress","addressLocality":"Palma","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquestra Simfònica Illes Balears (OSIB)"},"performer":{"@type":"PerformingGroup","name":"Orquestra Simfònica Illes Balears (OSIB)"},"description":"Dir. Gianna Fratta; José María Gallardo del Rey, guitarra. Rodrigo: Concierto de Aranjuez; Gallardo del Rey: Diamantes para Aranjuez; Ravel: Alborada del gracioso; Albéniz: Suite española (selección)","url":"https://simfonicadebalears.com/wp-content/uploads/2026/07/TEMPORADA-2026-27.pdf","offers":{"@type":"AggregateOffer","lowPrice":30,"highPrice":35,"priceCurrency":"EUR","url":"https://simfonicadebalears.com/wp-content/uploads/2026/07/TEMPORADA-2026-27.pdf"}},{"@type":"Event","name":"La màgia de Disney - Dia Internacional de la Infància — Banda Municipal de Música de Palma","startDate":"2026-11-14T18:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"TM Xesc Forteza (Teatre Municipal Xesc Forteza)","address":{"@type":"PostalAddress","addressLocality":"Palma","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Municipal de Música de Palma"},"performer":{"@type":"PerformingGroup","name":"Banda Municipal de Música de Palma"},"description":"La màgia de Disney - Dia Internacional de la Infància. Banda Municipal de Música de Palma en TM Xesc Forteza (Teatre Municipal Xesc Forteza), Palma.","url":"https://palmacultura.es/banda-municipal-palma"},{"@type":"Event","name":"Concert extraordinari de Santa Cecília — Banda Municipal de Música de Santanyí","startDate":"2026-11-22T18:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Teatre Principal de Palma","address":{"@type":"PostalAddress","addressLocality":"Palma","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Municipal de Música de Santanyí"},"performer":{"@type":"PerformingGroup","name":"Banda Municipal de Música de Santanyí"},"description":"Concert extraordinari de Santa Cecília. Banda Municipal de Música de Santanyí en Teatre Principal de Palma, Palma.","url":"https://teatreprincipal.koobin.com/ca/concert-extraordinari-de-santa-cecilia-20261122-1800","offers":{"@type":"Offer","price":0,"priceCurrency":"EUR","url":"https://teatreprincipal.koobin.com/ca/concert-extraordinari-de-santa-cecilia-20261122-1800"}},{"@type":"Event","name":"Gershwin, Coll y Prokófiev — Orquestra Simfònica Illes Balears (OSIB)","startDate":"2026-12-03T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Auditorium de Palma","address":{"@type":"PostalAddress","addressLocality":"Palma","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquestra Simfònica Illes Balears (OSIB)"},"performer":{"@type":"PerformingGroup","name":"Orquestra Simfònica Illes Balears (OSIB)"},"description":"Dir. Guillermo García Calvo; Ian Bousfield, trombón. Gershwin: Obertura cubana; Francisco Coll: Tapias; Tributo a Glenn Miller y Tommy Dorsey; Prokófiev: Romeo y Julieta (selección)","url":"https://simfonicadebalears.com/wp-content/uploads/2026/07/TEMPORADA-2026-27.pdf","offers":{"@type":"AggregateOffer","lowPrice":30,"highPrice":35,"priceCurrency":"EUR","url":"https://simfonicadebalears.com/wp-content/uploads/2026/07/TEMPORADA-2026-27.pdf"}},{"@type":"Event","name":"La Creación de Haydn — Orquestra Simfònica Illes Balears (OSIB)","startDate":"2026-12-10T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Auditorium de Palma","address":{"@type":"PostalAddress","addressLocality":"Palma","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquestra Simfònica Illes Balears (OSIB)"},"performer":{"@type":"PerformingGroup","name":"Orquestra Simfònica Illes Balears (OSIB)"},"description":"Dir. Pablo Mielgo; Irene Mas, soprano; David Alegret, tenor; José Antonio López, barítono; Coral Universitat Illes Balears (dir. Núria Cunillera). Haydn: La Creación","url":"https://simfonicadebalears.com/wp-content/uploads/2026/07/TEMPORADA-2026-27.pdf","offers":{"@type":"AggregateOffer","lowPrice":30,"highPrice":35,"priceCurrency":"EUR","url":"https://simfonicadebalears.com/wp-content/uploads/2026/07/TEMPORADA-2026-27.pdf"}},{"@type":"Event","name":"Rossini, Britten y Chaikovski — Orquestra Simfònica Illes Balears (OSIB)","startDate":"2027-01-21T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Auditorium de Palma","address":{"@type":"PostalAddress","addressLocality":"Palma","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquestra Simfònica Illes Balears (OSIB)"},"performer":{"@type":"PerformingGroup","name":"Orquestra Simfònica Illes Balears (OSIB)"},"description":"Dir. Lorenzo Passerini; Ellinor D'Melon, violín. Rossini: Guillermo Tell, obertura; Britten: Concierto para violín y orquesta; Chaikovski: Sinfonía n.º 2 «Pequeña Rusia»","url":"https://simfonicadebalears.com/wp-content/uploads/2026/07/TEMPORADA-2026-27.pdf","offers":{"@type":"AggregateOffer","lowPrice":30,"highPrice":35,"priceCurrency":"EUR","url":"https://simfonicadebalears.com/wp-content/uploads/2026/07/TEMPORADA-2026-27.pdf"}}]}</script>
+
+<h2>Orquestas, bandas y conservatorios en las Islas Baleares</h2>
+<p>Estas agrupaciones tienen su propia página, con sus próximos conciertos y su programación anterior.</p>
+<ul>
+<li><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquestra-simfonica-illes-balears/">Orquestra Simfònica Illes Balears (OSIB)</a> <span class="tm-op-nota">(4 próximos)</span></li>
+</ul>
+<p><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/">Ver todas las agrupaciones</a></p>
+
+<div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
 
 <h2>Otras comunidades</h2>
 <ul>
@@ -288,12 +315,12 @@
 </ul>
 <!-- CO:END -->
 
-<div class="tm-ad">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div>
-
 <h2>¿Tu banda o tu orquesta da un concierto en las Islas Baleares?</h2>
 <p><a href="/contacto/">Escríbenos desde la página de contacto</a> con el nombre de la agrupación, la fecha, la hora, el lugar, el programa, el precio y <strong>un enlace a la página oficial donde figure</strong>. Lo comprobamos y lo añadimos. Es gratis.</p>
+<div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
 <div class="tm-seccion-cabecera">
@@ -316,11 +343,7 @@
   </div>
 </div>
 </div>
-</section><div class="tm-ad">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div>
-
-</article>
+</section></article>
 
 <aside class="tm-related">
   <h2>Páginas relacionadas</h2>
@@ -374,7 +397,7 @@
   </div>
 </footer>
 
-<script src="/assets/js/conciertos.js?v=7bf01c0d" defer></script>
+<script src="/assets/js/conciertos.js?v=e9e5db87" defer></script>
 <script src="/assets/js/main.js?v=58d478c2" defer></script>
 </body>
 </html>

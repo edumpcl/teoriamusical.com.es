@@ -54,7 +54,7 @@
 
 <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css?v=f89f413e">
+<link rel="stylesheet" href="/assets/css/style.css?v=aebed9a2">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article","headline":"Conciertos de bandas y orquestas en Castilla-La Mancha","description":"Agenda de conciertos de bandas sinfónicas, orquestas y bandas de sociedades musicales en Castilla-La Mancha, comprobados en fuentes oficiales y actualizados cada semana.","url":"https://www.teoriamusical.com.es/agenda-conciertos-bandas-orquestas/castilla-la-mancha/","inLanguage":"es","isAccessibleForFree":true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-agenda-conciertos-bandas-orquestas-castilla-la-mancha.png"},"author":{"@type":"Person","name":"Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},"datePublished":"2026-10-12","dateModified":"2026-10-12","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.teoriamusical.com.es/agenda-conciertos-bandas-orquestas/castilla-la-mancha/"},"publisher":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es","logo":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-diccionario.png"}}}
@@ -195,8 +195,24 @@
 
 <form class="tm-op-filtros" id="co-filtros" aria-label="Filtrar conciertos">
   <label>Tipo <select id="co-f-tipo"><option value="">Todos</option><option value="orquesta">Orquesta</option><option value="banda">Banda profesional</option><option value="conservatorio">Conservatorio</option><option value="escuela">Escuela de música</option></select></label>
+  <div class="co-fechas">
+    <span class="co-fechas-t" id="co-fechas-t">Fecha</span>
+    <div class="co-rapidos" role="group" aria-labelledby="co-fechas-t">
+      <button type="button" data-rango="todas" aria-pressed="true">Todas</button>
+      <button type="button" data-rango="hoy" aria-pressed="false">Hoy</button>
+      <button type="button" data-rango="semana" aria-pressed="false">Esta semana</button>
+      <button type="button" data-rango="proxima" aria-pressed="false">Próxima semana</button>
+      <button type="button" data-rango="finde" aria-pressed="false">Este fin de semana</button>
+      <button type="button" data-rango="mes" aria-pressed="false">Este mes</button>
+    </div>
+    <div class="co-rango">
+      <label>Desde <input type="date" id="co-f-desde"></label>
+      <label>Hasta <input type="date" id="co-f-hasta"></label>
+    </div>
+  </div>
 </form>
 <p class="tm-op-contador" id="co-contador" role="status" aria-live="polite"></p>
+<p class="co-vacio" id="co-vacio" hidden>No hay conciertos con esos filtros. Prueba con otras fechas o con otro tipo de agrupación.</p>
 <nav class="co-nav" aria-label="Ir a un mes"><span>Ir a:</span> <a href="#co-2026-10">Octubre 2026</a> <a href="#co-2026-11">Noviembre 2026</a> <a href="#co-2026-12">Diciembre 2026</a> <a href="#co-2027-01">Enero 2027</a></nav>
 
 <h2 class="co-mes" id="co-2026-10">Octubre de 2026</h2>
@@ -213,7 +229,7 @@
 <div class="tm-op tm-co" data-tipo="banda" data-ccaa="Castilla-La Mancha" data-fecha="2026-10-18">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--banda">Banda profesional</span><span>Castilla-La Mancha</span></p>
   <h3>Monográfico dedicado al compositor José Suñer-Oriola</h3>
-  <p class="tm-op-entidad">Banda Sinfónica Municipal de Albacete</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/banda-sinfonica-municipal-de-albacete/">Banda Sinfónica Municipal de Albacete</a></p>
   <p class="tm-op-plazo"><strong>Domingo 18 de octubre de 2026</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Albacete</dd><dt>Programa</dt><dd>Monográfico dedicado al compositor José Suñer-Oriola.</dd></dl>
   <p class="tm-op-nota">Fecha y título según la nota de prensa del Ayuntamiento de Albacete sobre el arranque de la temporada otoño-invierno (4-10-2026). La nota no publica hora ni lugar de este concierto (el del 4 de octubre fue en el Teatro Circo).</p>
@@ -235,7 +251,7 @@
 <div class="tm-op tm-co" data-tipo="banda" data-ccaa="Castilla-La Mancha" data-fecha="2026-11-05">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--banda">Banda profesional</span><span>Castilla-La Mancha</span></p>
   <h3>Pinturas en la Música</h3>
-  <p class="tm-op-entidad">Banda Sinfónica Municipal de Albacete</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/banda-sinfonica-municipal-de-albacete/">Banda Sinfónica Municipal de Albacete</a></p>
   <p class="tm-op-plazo"><strong>Jueves 5 de noviembre de 2026</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Albacete</dd><dt>Programa</dt><dd>Dedicado a Johan de Meij, figura internacional de la música para banda sinfónica.</dd></dl>
   <p class="tm-op-nota">Fecha y título según la nota de prensa del Ayuntamiento de Albacete sobre el arranque de la temporada otoño-invierno (4-10-2026). La nota no publica hora ni lugar de este concierto (el del 4 de octubre fue en el Teatro Circo).</p>
@@ -253,7 +269,7 @@
 <div class="tm-op tm-co" data-tipo="banda" data-ccaa="Castilla-La Mancha" data-fecha="2026-11-22">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--banda">Banda profesional</span><span>Castilla-La Mancha</span></p>
   <h3>Concierto Extraordinario de Santa Cecilia</h3>
-  <p class="tm-op-entidad">Banda Sinfónica Municipal de Albacete</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/banda-sinfonica-municipal-de-albacete/">Banda Sinfónica Municipal de Albacete</a></p>
   <p class="tm-op-plazo"><strong>Domingo 22 de noviembre de 2026</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Albacete</dd><dt>Programa</dt><dd>Programa no publicado en la fuente.</dd></dl>
   <p class="tm-op-nota">Fecha y título según la nota de prensa del Ayuntamiento de Albacete sobre el arranque de la temporada otoño-invierno (4-10-2026). La nota no publica hora ni lugar de este concierto (el del 4 de octubre fue en el Teatro Circo).</p>
@@ -266,7 +282,7 @@
 <div class="tm-op tm-co" data-tipo="conservatorio" data-ccaa="Castilla-La Mancha" data-fecha="2026-12-11">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--conservatorio">Conservatorio</span><span>Castilla-La Mancha</span></p>
   <h3>Concierto Banda Sinfónica</h3>
-  <p class="tm-op-entidad">Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/conservatorio-superior-de-musica-de-castilla-la-mancha/">Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha</a></p>
   <p class="tm-op-plazo"><strong>Viernes 11 de diciembre de 2026 · 19:30 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Teatro Circo, Albacete</dd></dl>
   <p class="tm-op-nota">Fuente: calendario oficial del Conservatorio Superior (se muestra al navegar por los meses; la hora es la de inicio del tramo indicado). Programa y entrada no publicados todavía. El calendario dice «Teatro Circo» sin ciudad; se entiende Albacete (sede del conservatorio y escenario de sus conciertos anteriores).</p>
@@ -275,7 +291,7 @@
 <div class="tm-op tm-co" data-tipo="conservatorio" data-ccaa="Castilla-La Mancha" data-fecha="2026-12-12">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--conservatorio">Conservatorio</span><span>Castilla-La Mancha</span></p>
   <h3>Concierto Banda Sinfónica</h3>
-  <p class="tm-op-entidad">Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/conservatorio-superior-de-musica-de-castilla-la-mancha/">Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha</a></p>
   <p class="tm-op-plazo"><strong>Sábado 12 de diciembre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Quintanar del Rey (lugar exacto no indicado), Quintanar del Rey</dd></dl>
   <p class="tm-op-nota">Fuente: calendario oficial del Conservatorio Superior (se muestra al navegar por los meses; la hora es la de inicio del tramo indicado). Programa y entrada no publicados todavía.</p>
@@ -284,7 +300,7 @@
 <div class="tm-op tm-co" data-tipo="banda" data-ccaa="Castilla-La Mancha" data-fecha="2026-12-13">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--banda">Banda profesional</span><span>Castilla-La Mancha</span></p>
   <h3>Teatro y Destino</h3>
-  <p class="tm-op-entidad">Banda Sinfónica Municipal de Albacete</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/banda-sinfonica-municipal-de-albacete/">Banda Sinfónica Municipal de Albacete</a></p>
   <p class="tm-op-plazo"><strong>Domingo 13 de diciembre de 2026</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Albacete</dd><dt>Programa</dt><dd>Obras de Chapí, Verdi y Tchaikovski.</dd></dl>
   <p class="tm-op-nota">Fecha y título según la nota de prensa del Ayuntamiento de Albacete sobre el arranque de la temporada otoño-invierno (4-10-2026). La nota no publica hora ni lugar de este concierto (el del 4 de octubre fue en el Teatro Circo).</p>
@@ -293,7 +309,7 @@
 <div class="tm-op tm-co" data-tipo="conservatorio" data-ccaa="Castilla-La Mancha" data-fecha="2026-12-19">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--conservatorio">Conservatorio</span><span>Castilla-La Mancha</span></p>
   <h3>Concierto Orquesta Sinfónica</h3>
-  <p class="tm-op-entidad">Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/conservatorio-superior-de-musica-de-castilla-la-mancha/">Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha</a></p>
   <p class="tm-op-plazo"><strong>Sábado 19 de diciembre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Lugar exacto no indicado, Cuenca</dd></dl>
   <p class="tm-op-nota">Fuente: calendario oficial del Conservatorio Superior (se muestra al navegar por los meses; la hora es la de inicio del tramo indicado). Programa y entrada no publicados todavía.</p>
@@ -306,14 +322,26 @@
 <div class="tm-op tm-co" data-tipo="conservatorio" data-ccaa="Castilla-La Mancha" data-fecha="2027-01-13">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--conservatorio">Conservatorio</span><span>Castilla-La Mancha</span></p>
   <h3>Concierto Orquesta Sinfónica</h3>
-  <p class="tm-op-entidad">Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/conservatorio-superior-de-musica-de-castilla-la-mancha/">Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha</a></p>
   <p class="tm-op-plazo"><strong>Miércoles 13 de enero de 2027 · 19:30 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Teatro Circo, Albacete</dd></dl>
   <p class="tm-op-nota">Fuente: calendario oficial del Conservatorio Superior (se muestra al navegar por los meses; la hora es la de inicio del tramo indicado). Programa y entrada no publicados todavía. El calendario dice «Teatro Circo» sin ciudad; se entiende Albacete.</p>
   <p class="tm-op-fuentes">Fuente: <a href="https://csmclm.com/calendario/" rel="noopener">CSMCLM: calendario de actividades</a>. <span class="tm-op-nota">Confirma fecha y hora en la fuente enlazada.</span></p>
 </div>
 </div>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Event","name":"Encuentro de formaciones orquestales de la ciudad de Cuenca — Orquesta de Acordeones «Ciudad de Cuenca» y Joven Orquesta de Cuenca","startDate":"2026-10-17T20:00:00+02:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Auditorio José Luis Perales (Sala 1)","address":{"@type":"PostalAddress","addressLocality":"Cuenca","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Acordeones «Ciudad de Cuenca» y Joven Orquesta de Cuenca"},"url":"https://auditoriodecuenca.es/miseventos/encuentro-de-formaciones-orquestales-de-la-ciudad-de-cuenca/","description":"Orquesta de Acordeones «Ciudad de Cuenca» (director: Daniel Pérez Huelves) y Joven Orquesta de Cuenca (director: Manuel Murgui). Repertorio clásico y lírico español, música sinfónica contemporánea vinculada al cine, canción popular y melodías de raíz folclórica."},{"@type":"Event","name":"Monográfico dedicado al compositor José Suñer-Oriola — Banda Sinfónica Municipal de Albacete","startDate":"2026-10-18","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Albacete","address":{"@type":"PostalAddress","addressLocality":"Albacete","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Sinfónica Municipal de Albacete"},"url":"https://www.albacete.es/es/noticias/concierto-banda-sinfonica-municipal-pedro-piqueras-como-narrador-abre-temporada-elevando","description":"Monográfico dedicado al compositor José Suñer-Oriola."},{"@type":"Event","name":"Concierto de clausura del VIII Ciclo de Historia Militar de Cuenca y celebración del Día de la Hispanidad — Banda de adultos de la Escuela de Música y Artes Escénicas «Ismael Martínez Marín» y Coro Sotovocce","startDate":"2026-10-22T19:30:00+02:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Auditorio José Luis Perales (Sala 1)","address":{"@type":"PostalAddress","addressLocality":"Cuenca","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda de adultos de la Escuela de Música y Artes Escénicas «Ismael Martínez Marín» y Coro Sotovocce"},"url":"https://auditoriodecuenca.es/miseventos/concierto-de-clausura-del-viii-ciclo-de-historia-militar-de-cuenca-y-celebracion-del-dia-de-la-hispanidad/","description":"Directores: Juan Carlos Aguilar y José García Llopis. Programa de obras no publicado en la fuente."},{"@type":"Event","name":"Pinturas en la Música — Banda Sinfónica Municipal de Albacete","startDate":"2026-11-05","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Albacete","address":{"@type":"PostalAddress","addressLocality":"Albacete","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Sinfónica Municipal de Albacete"},"url":"https://www.albacete.es/es/noticias/concierto-banda-sinfonica-municipal-pedro-piqueras-como-narrador-abre-temporada-elevando","description":"Dedicado a Johan de Meij, figura internacional de la música para banda sinfónica."},{"@type":"Event","name":"Mesías de Händel – Gloria de Vivaldi (Guadalajara a la luz de las velas) — Orquesta Cervantes y Schola Cantorum","startDate":"2026-11-08T19:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Teatro Auditorio Buero Vallejo","address":{"@type":"PostalAddress","addressLocality":"Guadalajara","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Cervantes y Schola Cantorum"},"url":"https://teatrobuerovallejo.guadalajara.es/mesias-de-handel-gloria-de-vivaldi/","description":"Mesías de Händel y Gloria de Vivaldi, por la Orquesta Cervantes y Schola Cantorum (director no indicado en la fuente)."},{"@type":"Event","name":"Concierto Extraordinario de Santa Cecilia — Banda Sinfónica Municipal de Albacete","startDate":"2026-11-22","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Albacete","address":{"@type":"PostalAddress","addressLocality":"Albacete","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Sinfónica Municipal de Albacete"},"url":"https://www.albacete.es/es/noticias/concierto-banda-sinfonica-municipal-pedro-piqueras-como-narrador-abre-temporada-elevando","description":"Programa no publicado en la fuente."},{"@type":"Event","name":"Concierto Banda Sinfónica — Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha","startDate":"2026-12-11T19:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Teatro Circo","address":{"@type":"PostalAddress","addressLocality":"Albacete","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha"},"url":"https://csmclm.com/calendario/"},{"@type":"Event","name":"Concierto Banda Sinfónica — Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha","startDate":"2026-12-12T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Quintanar del Rey (lugar exacto no indicado)","address":{"@type":"PostalAddress","addressLocality":"Quintanar del Rey","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha"},"url":"https://csmclm.com/calendario/"},{"@type":"Event","name":"Teatro y Destino — Banda Sinfónica Municipal de Albacete","startDate":"2026-12-13","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Albacete","address":{"@type":"PostalAddress","addressLocality":"Albacete","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Sinfónica Municipal de Albacete"},"url":"https://www.albacete.es/es/noticias/concierto-banda-sinfonica-municipal-pedro-piqueras-como-narrador-abre-temporada-elevando","description":"Obras de Chapí, Verdi y Tchaikovski."},{"@type":"Event","name":"Concierto Orquesta Sinfónica — Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha","startDate":"2026-12-19T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Lugar exacto no indicado","address":{"@type":"PostalAddress","addressLocality":"Cuenca","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha"},"url":"https://csmclm.com/calendario/"},{"@type":"Event","name":"Concierto Orquesta Sinfónica — Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha","startDate":"2027-01-13T19:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Teatro Circo","address":{"@type":"PostalAddress","addressLocality":"Albacete","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha"},"url":"https://csmclm.com/calendario/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Event","name":"Encuentro de formaciones orquestales de la ciudad de Cuenca — Orquesta de Acordeones «Ciudad de Cuenca» y Joven Orquesta de Cuenca","startDate":"2026-10-17T20:00:00+02:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Auditorio José Luis Perales (Sala 1)","address":{"@type":"PostalAddress","addressLocality":"Cuenca","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Acordeones «Ciudad de Cuenca» y Joven Orquesta de Cuenca"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Acordeones «Ciudad de Cuenca» y Joven Orquesta de Cuenca"},"description":"Orquesta de Acordeones «Ciudad de Cuenca» (director: Daniel Pérez Huelves) y Joven Orquesta de Cuenca (director: Manuel Murgui). Repertorio clásico y lírico español, música sinfónica contemporánea vinculada al cine, canción popular y melodías de raíz folclórica.","url":"https://auditoriodecuenca.es/miseventos/encuentro-de-formaciones-orquestales-de-la-ciudad-de-cuenca/","offers":{"@type":"AggregateOffer","lowPrice":10,"priceCurrency":"EUR","url":"https://auditoriodecuenca.es/miseventos/encuentro-de-formaciones-orquestales-de-la-ciudad-de-cuenca/"}},{"@type":"Event","name":"Monográfico dedicado al compositor José Suñer-Oriola — Banda Sinfónica Municipal de Albacete","startDate":"2026-10-18","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Albacete","address":{"@type":"PostalAddress","addressLocality":"Albacete","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Sinfónica Municipal de Albacete"},"performer":{"@type":"PerformingGroup","name":"Banda Sinfónica Municipal de Albacete"},"description":"Monográfico dedicado al compositor José Suñer-Oriola.","url":"https://www.albacete.es/es/noticias/concierto-banda-sinfonica-municipal-pedro-piqueras-como-narrador-abre-temporada-elevando"},{"@type":"Event","name":"Concierto de clausura del VIII Ciclo de Historia Militar de Cuenca y celebración del Día de la Hispanidad — Banda de adultos de la Escuela de Música y Artes Escénicas «Ismael Martínez Marín» y Coro Sotovocce","startDate":"2026-10-22T19:30:00+02:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Auditorio José Luis Perales (Sala 1)","address":{"@type":"PostalAddress","addressLocality":"Cuenca","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda de adultos de la Escuela de Música y Artes Escénicas «Ismael Martínez Marín» y Coro Sotovocce"},"performer":{"@type":"PerformingGroup","name":"Banda de adultos de la Escuela de Música y Artes Escénicas «Ismael Martínez Marín» y Coro Sotovocce"},"description":"Directores: Juan Carlos Aguilar y José García Llopis. Programa de obras no publicado en la fuente.","url":"https://auditoriodecuenca.es/miseventos/concierto-de-clausura-del-viii-ciclo-de-historia-militar-de-cuenca-y-celebracion-del-dia-de-la-hispanidad/","offers":{"@type":"Offer","price":0,"priceCurrency":"EUR","url":"https://auditoriodecuenca.es/miseventos/concierto-de-clausura-del-viii-ciclo-de-historia-militar-de-cuenca-y-celebracion-del-dia-de-la-hispanidad/"}},{"@type":"Event","name":"Pinturas en la Música — Banda Sinfónica Municipal de Albacete","startDate":"2026-11-05","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Albacete","address":{"@type":"PostalAddress","addressLocality":"Albacete","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Sinfónica Municipal de Albacete"},"performer":{"@type":"PerformingGroup","name":"Banda Sinfónica Municipal de Albacete"},"description":"Dedicado a Johan de Meij, figura internacional de la música para banda sinfónica.","url":"https://www.albacete.es/es/noticias/concierto-banda-sinfonica-municipal-pedro-piqueras-como-narrador-abre-temporada-elevando"},{"@type":"Event","name":"Mesías de Händel – Gloria de Vivaldi (Guadalajara a la luz de las velas) — Orquesta Cervantes y Schola Cantorum","startDate":"2026-11-08T19:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Teatro Auditorio Buero Vallejo","address":{"@type":"PostalAddress","addressLocality":"Guadalajara","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Cervantes y Schola Cantorum"},"performer":{"@type":"PerformingGroup","name":"Orquesta Cervantes y Schola Cantorum"},"description":"Mesías de Händel y Gloria de Vivaldi, por la Orquesta Cervantes y Schola Cantorum (director no indicado en la fuente).","url":"https://teatrobuerovallejo.guadalajara.es/mesias-de-handel-gloria-de-vivaldi/","offers":{"@type":"Offer","price":12,"priceCurrency":"EUR","url":"https://teatrobuerovallejo.guadalajara.es/mesias-de-handel-gloria-de-vivaldi/"}},{"@type":"Event","name":"Concierto Extraordinario de Santa Cecilia — Banda Sinfónica Municipal de Albacete","startDate":"2026-11-22","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Albacete","address":{"@type":"PostalAddress","addressLocality":"Albacete","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Sinfónica Municipal de Albacete"},"performer":{"@type":"PerformingGroup","name":"Banda Sinfónica Municipal de Albacete"},"description":"Programa no publicado en la fuente.","url":"https://www.albacete.es/es/noticias/concierto-banda-sinfonica-municipal-pedro-piqueras-como-narrador-abre-temporada-elevando"},{"@type":"Event","name":"Concierto Banda Sinfónica — Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha","startDate":"2026-12-11T19:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Teatro Circo","address":{"@type":"PostalAddress","addressLocality":"Albacete","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha"},"performer":{"@type":"PerformingGroup","name":"Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha"},"description":"Concierto Banda Sinfónica. Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha en Teatro Circo, Albacete.","url":"https://csmclm.com/calendario/"},{"@type":"Event","name":"Concierto Banda Sinfónica — Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha","startDate":"2026-12-12T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Quintanar del Rey (lugar exacto no indicado)","address":{"@type":"PostalAddress","addressLocality":"Quintanar del Rey","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha"},"performer":{"@type":"PerformingGroup","name":"Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha"},"description":"Concierto Banda Sinfónica. Banda Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha en Quintanar del Rey (lugar exacto no indicado), Quintanar del Rey.","url":"https://csmclm.com/calendario/"},{"@type":"Event","name":"Teatro y Destino — Banda Sinfónica Municipal de Albacete","startDate":"2026-12-13","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Albacete","address":{"@type":"PostalAddress","addressLocality":"Albacete","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Banda Sinfónica Municipal de Albacete"},"performer":{"@type":"PerformingGroup","name":"Banda Sinfónica Municipal de Albacete"},"description":"Obras de Chapí, Verdi y Tchaikovski.","url":"https://www.albacete.es/es/noticias/concierto-banda-sinfonica-municipal-pedro-piqueras-como-narrador-abre-temporada-elevando"},{"@type":"Event","name":"Concierto Orquesta Sinfónica — Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha","startDate":"2026-12-19T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Lugar exacto no indicado","address":{"@type":"PostalAddress","addressLocality":"Cuenca","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha"},"performer":{"@type":"PerformingGroup","name":"Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha"},"description":"Concierto Orquesta Sinfónica. Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha en Lugar exacto no indicado, Cuenca.","url":"https://csmclm.com/calendario/"},{"@type":"Event","name":"Concierto Orquesta Sinfónica — Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha","startDate":"2027-01-13T19:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Teatro Circo","address":{"@type":"PostalAddress","addressLocality":"Albacete","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha"},"performer":{"@type":"PerformingGroup","name":"Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha"},"description":"Concierto Orquesta Sinfónica. Orquesta Sinfónica del Conservatorio Superior de Música de Castilla-La Mancha en Teatro Circo, Albacete.","url":"https://csmclm.com/calendario/"}]}</script>
+
+<h2>Orquestas, bandas y conservatorios en Castilla-La Mancha</h2>
+<p>Estas agrupaciones tienen su propia página, con sus próximos conciertos y su programación anterior.</p>
+<ul>
+<li><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/banda-sinfonica-municipal-de-albacete/">Banda Sinfónica Municipal de Albacete</a> <span class="tm-op-nota">(4 próximos)</span></li>
+<li><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/conservatorio-superior-de-musica-de-castilla-la-mancha/">Conservatorio Superior de Música de Castilla-La Mancha</a> <span class="tm-op-nota">(4 próximos)</span></li>
+</ul>
+<p><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/">Ver todas las agrupaciones</a></p>
+
+<div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
 
 <h2>Otras comunidades</h2>
 <ul>
@@ -337,12 +365,12 @@
 </ul>
 <!-- CO:END -->
 
-<div class="tm-ad">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div>
-
 <h2>¿Tu banda o tu orquesta da un concierto en Castilla-La Mancha?</h2>
 <p><a href="/contacto/">Escríbenos desde la página de contacto</a> con el nombre de la agrupación, la fecha, la hora, el lugar, el programa, el precio y <strong>un enlace a la página oficial donde figure</strong>. Lo comprobamos y lo añadimos. Es gratis.</p>
+<div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
 <div class="tm-seccion-cabecera">
@@ -365,11 +393,7 @@
   </div>
 </div>
 </div>
-</section><div class="tm-ad">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div>
-
-</article>
+</section></article>
 
 <aside class="tm-related">
   <h2>Páginas relacionadas</h2>
@@ -423,7 +447,7 @@
   </div>
 </footer>
 
-<script src="/assets/js/conciertos.js?v=7bf01c0d" defer></script>
+<script src="/assets/js/conciertos.js?v=e9e5db87" defer></script>
 <script src="/assets/js/main.js?v=58d478c2" defer></script>
 </body>
 </html>

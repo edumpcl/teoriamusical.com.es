@@ -54,7 +54,7 @@
 
 <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css?v=f89f413e">
+<link rel="stylesheet" href="/assets/css/style.css?v=aebed9a2">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article","headline":"Conciertos de bandas y orquestas en Extremadura","description":"Agenda de conciertos de bandas sinfónicas, orquestas y bandas de sociedades musicales en Extremadura, comprobados en fuentes oficiales y actualizados cada semana.","url":"https://www.teoriamusical.com.es/agenda-conciertos-bandas-orquestas/extremadura/","inLanguage":"es","isAccessibleForFree":true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-agenda-conciertos-bandas-orquestas-extremadura.png"},"author":{"@type":"Person","name":"Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},"datePublished":"2026-10-12","dateModified":"2026-10-12","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.teoriamusical.com.es/agenda-conciertos-bandas-orquestas/extremadura/"},"publisher":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es","logo":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-diccionario.png"}}}
@@ -195,8 +195,24 @@
 
 <form class="tm-op-filtros" id="co-filtros" aria-label="Filtrar conciertos">
   <label>Tipo <select id="co-f-tipo"><option value="">Todos</option><option value="orquesta">Orquesta</option></select></label>
+  <div class="co-fechas">
+    <span class="co-fechas-t" id="co-fechas-t">Fecha</span>
+    <div class="co-rapidos" role="group" aria-labelledby="co-fechas-t">
+      <button type="button" data-rango="todas" aria-pressed="true">Todas</button>
+      <button type="button" data-rango="hoy" aria-pressed="false">Hoy</button>
+      <button type="button" data-rango="semana" aria-pressed="false">Esta semana</button>
+      <button type="button" data-rango="proxima" aria-pressed="false">Próxima semana</button>
+      <button type="button" data-rango="finde" aria-pressed="false">Este fin de semana</button>
+      <button type="button" data-rango="mes" aria-pressed="false">Este mes</button>
+    </div>
+    <div class="co-rango">
+      <label>Desde <input type="date" id="co-f-desde"></label>
+      <label>Hasta <input type="date" id="co-f-hasta"></label>
+    </div>
+  </div>
 </form>
 <p class="tm-op-contador" id="co-contador" role="status" aria-live="polite"></p>
+<p class="co-vacio" id="co-vacio" hidden>No hay conciertos con esos filtros. Prueba con otras fechas o con otro tipo de agrupación.</p>
 <nav class="co-nav" aria-label="Ir a un mes"><span>Ir a:</span> <a href="#co-2026-10">Octubre 2026</a> <a href="#co-2026-11">Noviembre 2026</a> <a href="#co-2026-12">Diciembre 2026</a> <a href="#co-2027-01">Enero 2027</a></nav>
 
 <h2 class="co-mes" id="co-2026-10">Octubre de 2026</h2>
@@ -204,7 +220,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2026-10-29">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>Programa 03 «Norte y sur»</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Jueves 29 de octubre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Badajoz Manuel Rojas, Badajoz</dd><dt>Programa</dt><dd>Dir. Roberto Forés. Casablancas: Tres interludios para orquesta; Casella: La giara (suite sinfónica); Brahms (arr. Schönberg): Cuarteto para piano n.º 1.</dd></dl>
   <p class="tm-op-nota">Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
@@ -213,7 +229,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2026-10-30">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>Programa 03 «Norte y sur»</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Viernes 30 de octubre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Plasencia, Plasencia</dd><dt>Programa</dt><dd>Dir. Roberto Forés. Casablancas: Tres interludios para orquesta; Casella: La giara (suite sinfónica); Brahms (arr. Schönberg): Cuarteto para piano n.º 1.</dd></dl>
   <p class="tm-op-nota">Programa leído en la página de Badajoz (misma serie). Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
@@ -226,7 +242,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2026-11-12">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>Programa 04 «Crónicas de viajes»</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Jueves 12 de noviembre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Badajoz Manuel Rojas, Badajoz</dd><dt>Programa</dt><dd>Antje Weithaas, violín. Mendelssohn: Las Hébridas (La gruta de Fingal); Concierto para violín; Sinfonía n.º 4 «Italiana».</dd></dl>
   <p class="tm-op-nota">Director no indicado en la página. Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
@@ -235,7 +251,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2026-11-13">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>Programa 04 «Crónicas de viajes»</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Viernes 13 de noviembre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Villanueva de la Serena, Villanueva de la Serena</dd><dt>Programa</dt><dd>Antje Weithaas, violín. Mendelssohn: Las Hébridas (La gruta de Fingal); Concierto para violín; Sinfonía n.º 4 «Italiana».</dd></dl>
   <p class="tm-op-nota">Programa leído en la página de Badajoz (misma serie). Director no indicado. Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
@@ -244,7 +260,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2026-11-19">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>Luz, Cámara... ¡Orquesta!</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Jueves 19 de noviembre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Badajoz Manuel Rojas, Badajoz</dd><dt>Programa</dt><dd>Espectáculo de Emilio Aragón con estreno mundial, a partir de su música de cine y televisión. Programa detallado no publicado.</dd></dl>
   <p class="tm-op-nota">Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
@@ -253,7 +269,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2026-11-20">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>Luz, Cámara... ¡Orquesta!</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Viernes 20 de noviembre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Cáceres, Cáceres</dd><dt>Programa</dt><dd>Espectáculo de Emilio Aragón con estreno mundial, a partir de su música de cine y televisión. Programa detallado no publicado.</dd></dl>
   <p class="tm-op-nota">Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
@@ -266,7 +282,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2026-12-03">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>Programa 05 «Honor y despedida»</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Jueves 3 de diciembre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Badajoz Manuel Rojas, Badajoz</dd><dt>Programa</dt><dd>Dir. Martín García García. Chopin: Concierto para piano n.º 1; Dvořák: Sinfonía n.º 8. Anna-Maria Helsing figura entre los intérpretes.</dd></dl>
   <p class="tm-op-nota">La página no etiqueta el papel de Anna-Maria Helsing. Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
@@ -275,7 +291,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2026-12-04">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>Programa 05 «Honor y despedida»</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Viernes 4 de diciembre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Mérida, Mérida</dd><dt>Programa</dt><dd>Dir. Martín García García. Chopin: Concierto para piano n.º 1; Dvořák: Sinfonía n.º 8. Anna-Maria Helsing figura entre los intérpretes.</dd></dl>
   <p class="tm-op-nota">Programa leído en la página de Badajoz (misma serie). Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
@@ -284,7 +300,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2026-12-17">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>OEXpecial de Navidad</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Jueves 17 de diciembre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Badajoz Manuel Rojas, Badajoz</dd><dt>Programa</dt><dd>Dir. Roberto Forés; Orquesta de Extremadura y Coro de Cámara de Extremadura. Berlioz: La infancia de Cristo, op. 25. Solistas no indicados.</dd></dl>
   <p class="tm-op-nota">Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
@@ -293,7 +309,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2026-12-18">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>OEXpecial de Navidad</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Viernes 18 de diciembre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Cáceres, Cáceres</dd><dt>Programa</dt><dd>Programa por confirmar: la página de Cáceres no se ha abierto; el de Badajoz es Berlioz: La infancia de Cristo, op. 25.</dd></dl>
   <p class="tm-op-nota">Programa no verificado en la página de Cáceres. Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
@@ -306,7 +322,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2027-01-01">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>Concierto de Año Nuevo</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Viernes 1 de enero de 2027 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Badajoz Manuel Rojas, Badajoz</dd><dt>Programa</dt><dd>«Las mejores obras clásicas y populares». Programa detallado no publicado.</dd></dl>
   <p class="tm-op-nota">Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
@@ -315,7 +331,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2027-01-02">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>Concierto de Año Nuevo</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Sábado 2 de enero de 2027 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Mérida, Mérida</dd><dt>Programa</dt><dd>Programa detallado no publicado.</dd></dl>
   <p class="tm-op-nota">Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
@@ -324,7 +340,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2027-01-03">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>Concierto de Año Nuevo</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Domingo 3 de enero de 2027 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Villanueva de la Serena, Villanueva de la Serena</dd><dt>Programa</dt><dd>Programa detallado no publicado.</dd></dl>
   <p class="tm-op-nota">Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
@@ -333,7 +349,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2027-01-04">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>Concierto de Año Nuevo</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Lunes 4 de enero de 2027 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Plasencia, Plasencia</dd><dt>Programa</dt><dd>Programa detallado no publicado.</dd></dl>
   <p class="tm-op-nota">Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
@@ -342,7 +358,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2027-01-14">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>Programa 06 «La Polaca, el cura y el faraón»</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Jueves 14 de enero de 2027 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Badajoz Manuel Rojas, Badajoz</dd><dt>Programa</dt><dd>Dir. Roberto Forés; Jessica Crutzen figura entre los intérpretes (flautín, por el programa). Mozart: Thamos, rey de Egipto; Vivaldi: Conciertos para flautín RV 445 y RV 443; Chaikovski: Sinfonía n.º 3.</dd></dl>
   <p class="tm-op-nota">Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
@@ -351,14 +367,25 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Extremadura" data-fecha="2027-01-15">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Extremadura</span></p>
   <h3>Programa 06 «La Polaca, el cura y el faraón»</h3>
-  <p class="tm-op-entidad">Orquesta de Extremadura</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a></p>
   <p class="tm-op-plazo"><strong>Viernes 15 de enero de 2027 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Congresos de Mérida, Mérida</dd><dt>Programa</dt><dd>Dir. Roberto Forés; Jessica Crutzen figura entre los intérpretes (flautín, por el programa). Mozart: Thamos, rey de Egipto; Vivaldi: Conciertos para flautín RV 445 y RV 443; Chaikovski: Sinfonía n.º 3.</dd></dl>
   <p class="tm-op-nota">Programa leído en la página de Badajoz (misma serie). Precio no publicado en la fuente. Taquilla en taquilla.orquestadeextremadura.com.</p>
   <p class="tm-op-fuentes">Fuente: <a href="https://www.orquestadeextremadura.com/eventos/2026-2027-programa-06-merida/" rel="noopener">Orquesta de Extremadura: página del concierto</a> · <a href="https://www.orquestadeextremadura.com/calendario/" rel="noopener">Orquesta de Extremadura: calendario</a>. <span class="tm-op-nota">Confirma fecha y hora en la fuente enlazada.</span></p>
 </div>
 </div>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Event","name":"Programa 03 «Norte y sur» — Orquesta de Extremadura","startDate":"2026-10-29T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Badajoz Manuel Rojas","address":{"@type":"PostalAddress","addressLocality":"Badajoz","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/2026-2027-%c2%b7-programa-03-%c2%b7-badajoz/","description":"Dir. Roberto Forés. Casablancas: Tres interludios para orquesta; Casella: La giara (suite sinfónica); Brahms (arr. Schönberg): Cuarteto para piano n.º 1."},{"@type":"Event","name":"Programa 03 «Norte y sur» — Orquesta de Extremadura","startDate":"2026-10-30T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Plasencia","address":{"@type":"PostalAddress","addressLocality":"Plasencia","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/2026-2027-%c2%b7-programa-03-%c2%b7-plasencia/","description":"Dir. Roberto Forés. Casablancas: Tres interludios para orquesta; Casella: La giara (suite sinfónica); Brahms (arr. Schönberg): Cuarteto para piano n.º 1."},{"@type":"Event","name":"Programa 04 «Crónicas de viajes» — Orquesta de Extremadura","startDate":"2026-11-12T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Badajoz Manuel Rojas","address":{"@type":"PostalAddress","addressLocality":"Badajoz","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/2026-2027-%c2%b7-programa-04-%c2%b7-badajoz/","description":"Antje Weithaas, violín. Mendelssohn: Las Hébridas (La gruta de Fingal); Concierto para violín; Sinfonía n.º 4 «Italiana»."},{"@type":"Event","name":"Programa 04 «Crónicas de viajes» — Orquesta de Extremadura","startDate":"2026-11-13T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Villanueva de la Serena","address":{"@type":"PostalAddress","addressLocality":"Villanueva de la Serena","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/2026-2027-%c2%b7-programa-04-%c2%b7-villanueva-de-la-serena/","description":"Antje Weithaas, violín. Mendelssohn: Las Hébridas (La gruta de Fingal); Concierto para violín; Sinfonía n.º 4 «Italiana»."},{"@type":"Event","name":"Luz, Cámara... ¡Orquesta! — Orquesta de Extremadura","startDate":"2026-11-19T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Badajoz Manuel Rojas","address":{"@type":"PostalAddress","addressLocality":"Badajoz","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/luz-camara-orquesta-%c2%b7-badajoz/","description":"Espectáculo de Emilio Aragón con estreno mundial, a partir de su música de cine y televisión. Programa detallado no publicado."},{"@type":"Event","name":"Luz, Cámara... ¡Orquesta! — Orquesta de Extremadura","startDate":"2026-11-20T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Cáceres","address":{"@type":"PostalAddress","addressLocality":"Cáceres","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/luz-camara-orquesta-%c2%b7-caceres/","description":"Espectáculo de Emilio Aragón con estreno mundial, a partir de su música de cine y televisión. Programa detallado no publicado."},{"@type":"Event","name":"Programa 05 «Honor y despedida» — Orquesta de Extremadura","startDate":"2026-12-03T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Badajoz Manuel Rojas","address":{"@type":"PostalAddress","addressLocality":"Badajoz","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/2026-2027-%c2%b7-programa-05-%c2%b7-badajoz/","description":"Dir. Martín García García. Chopin: Concierto para piano n.º 1; Dvořák: Sinfonía n.º 8. Anna-Maria Helsing figura entre los intérpretes."},{"@type":"Event","name":"Programa 05 «Honor y despedida» — Orquesta de Extremadura","startDate":"2026-12-04T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Mérida","address":{"@type":"PostalAddress","addressLocality":"Mérida","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/2026-2027-%c2%b7-programa-05-%c2%b7-merida/","description":"Dir. Martín García García. Chopin: Concierto para piano n.º 1; Dvořák: Sinfonía n.º 8. Anna-Maria Helsing figura entre los intérpretes."},{"@type":"Event","name":"OEXpecial de Navidad — Orquesta de Extremadura","startDate":"2026-12-17T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Badajoz Manuel Rojas","address":{"@type":"PostalAddress","addressLocality":"Badajoz","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/oexpecial-de-navidad-%c2%b7-badajoz/","description":"Dir. Roberto Forés; Orquesta de Extremadura y Coro de Cámara de Extremadura. Berlioz: La infancia de Cristo, op. 25. Solistas no indicados."},{"@type":"Event","name":"OEXpecial de Navidad — Orquesta de Extremadura","startDate":"2026-12-18T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Cáceres","address":{"@type":"PostalAddress","addressLocality":"Cáceres","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/oexpecial-de-navidad-%c2%b7-caceres-3/","description":"Programa por confirmar: la página de Cáceres no se ha abierto; el de Badajoz es Berlioz: La infancia de Cristo, op. 25."},{"@type":"Event","name":"Concierto de Año Nuevo — Orquesta de Extremadura","startDate":"2027-01-01T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Badajoz Manuel Rojas","address":{"@type":"PostalAddress","addressLocality":"Badajoz","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/concierto-de-ano-nuevo-2027-badajoz/","description":"«Las mejores obras clásicas y populares». Programa detallado no publicado."},{"@type":"Event","name":"Concierto de Año Nuevo — Orquesta de Extremadura","startDate":"2027-01-02T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Mérida","address":{"@type":"PostalAddress","addressLocality":"Mérida","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/concierto-de-ano-nuevo-2027-merida/","description":"Programa detallado no publicado."},{"@type":"Event","name":"Concierto de Año Nuevo — Orquesta de Extremadura","startDate":"2027-01-03T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Villanueva de la Serena","address":{"@type":"PostalAddress","addressLocality":"Villanueva de la Serena","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/concierto-de-ano-nuevo-2027-villanueva-de-la-serena/","description":"Programa detallado no publicado."},{"@type":"Event","name":"Concierto de Año Nuevo — Orquesta de Extremadura","startDate":"2027-01-04T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Plasencia","address":{"@type":"PostalAddress","addressLocality":"Plasencia","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/concierto-de-ano-nuevo-2027-plasencia/","description":"Programa detallado no publicado."},{"@type":"Event","name":"Programa 06 «La Polaca, el cura y el faraón» — Orquesta de Extremadura","startDate":"2027-01-14T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Badajoz Manuel Rojas","address":{"@type":"PostalAddress","addressLocality":"Badajoz","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/2026-2027-%c2%b7-programa-06-%c2%b7-badajoz/","description":"Dir. Roberto Forés; Jessica Crutzen figura entre los intérpretes (flautín, por el programa). Mozart: Thamos, rey de Egipto; Vivaldi: Conciertos para flautín RV 445 y RV 443; Chaikovski: Sinfonía n.º 3."},{"@type":"Event","name":"Programa 06 «La Polaca, el cura y el faraón» — Orquesta de Extremadura","startDate":"2027-01-15T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Mérida","address":{"@type":"PostalAddress","addressLocality":"Mérida","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"url":"https://www.orquestadeextremadura.com/eventos/2026-2027-programa-06-merida/","description":"Dir. Roberto Forés; Jessica Crutzen figura entre los intérpretes (flautín, por el programa). Mozart: Thamos, rey de Egipto; Vivaldi: Conciertos para flautín RV 445 y RV 443; Chaikovski: Sinfonía n.º 3."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Event","name":"Programa 03 «Norte y sur» — Orquesta de Extremadura","startDate":"2026-10-29T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Badajoz Manuel Rojas","address":{"@type":"PostalAddress","addressLocality":"Badajoz","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"Dir. Roberto Forés. Casablancas: Tres interludios para orquesta; Casella: La giara (suite sinfónica); Brahms (arr. Schönberg): Cuarteto para piano n.º 1.","url":"https://www.orquestadeextremadura.com/eventos/2026-2027-%c2%b7-programa-03-%c2%b7-badajoz/"},{"@type":"Event","name":"Programa 03 «Norte y sur» — Orquesta de Extremadura","startDate":"2026-10-30T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Plasencia","address":{"@type":"PostalAddress","addressLocality":"Plasencia","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"Dir. Roberto Forés. Casablancas: Tres interludios para orquesta; Casella: La giara (suite sinfónica); Brahms (arr. Schönberg): Cuarteto para piano n.º 1.","url":"https://www.orquestadeextremadura.com/eventos/2026-2027-%c2%b7-programa-03-%c2%b7-plasencia/"},{"@type":"Event","name":"Programa 04 «Crónicas de viajes» — Orquesta de Extremadura","startDate":"2026-11-12T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Badajoz Manuel Rojas","address":{"@type":"PostalAddress","addressLocality":"Badajoz","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"Antje Weithaas, violín. Mendelssohn: Las Hébridas (La gruta de Fingal); Concierto para violín; Sinfonía n.º 4 «Italiana».","url":"https://www.orquestadeextremadura.com/eventos/2026-2027-%c2%b7-programa-04-%c2%b7-badajoz/"},{"@type":"Event","name":"Programa 04 «Crónicas de viajes» — Orquesta de Extremadura","startDate":"2026-11-13T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Villanueva de la Serena","address":{"@type":"PostalAddress","addressLocality":"Villanueva de la Serena","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"Antje Weithaas, violín. Mendelssohn: Las Hébridas (La gruta de Fingal); Concierto para violín; Sinfonía n.º 4 «Italiana».","url":"https://www.orquestadeextremadura.com/eventos/2026-2027-%c2%b7-programa-04-%c2%b7-villanueva-de-la-serena/"},{"@type":"Event","name":"Luz, Cámara... ¡Orquesta! — Orquesta de Extremadura","startDate":"2026-11-19T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Badajoz Manuel Rojas","address":{"@type":"PostalAddress","addressLocality":"Badajoz","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"Espectáculo de Emilio Aragón con estreno mundial, a partir de su música de cine y televisión. Programa detallado no publicado.","url":"https://www.orquestadeextremadura.com/eventos/luz-camara-orquesta-%c2%b7-badajoz/"},{"@type":"Event","name":"Luz, Cámara... ¡Orquesta! — Orquesta de Extremadura","startDate":"2026-11-20T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Cáceres","address":{"@type":"PostalAddress","addressLocality":"Cáceres","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"Espectáculo de Emilio Aragón con estreno mundial, a partir de su música de cine y televisión. Programa detallado no publicado.","url":"https://www.orquestadeextremadura.com/eventos/luz-camara-orquesta-%c2%b7-caceres/"},{"@type":"Event","name":"Programa 05 «Honor y despedida» — Orquesta de Extremadura","startDate":"2026-12-03T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Badajoz Manuel Rojas","address":{"@type":"PostalAddress","addressLocality":"Badajoz","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"Dir. Martín García García. Chopin: Concierto para piano n.º 1; Dvořák: Sinfonía n.º 8. Anna-Maria Helsing figura entre los intérpretes.","url":"https://www.orquestadeextremadura.com/eventos/2026-2027-%c2%b7-programa-05-%c2%b7-badajoz/"},{"@type":"Event","name":"Programa 05 «Honor y despedida» — Orquesta de Extremadura","startDate":"2026-12-04T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Mérida","address":{"@type":"PostalAddress","addressLocality":"Mérida","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"Dir. Martín García García. Chopin: Concierto para piano n.º 1; Dvořák: Sinfonía n.º 8. Anna-Maria Helsing figura entre los intérpretes.","url":"https://www.orquestadeextremadura.com/eventos/2026-2027-%c2%b7-programa-05-%c2%b7-merida/"},{"@type":"Event","name":"OEXpecial de Navidad — Orquesta de Extremadura","startDate":"2026-12-17T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Badajoz Manuel Rojas","address":{"@type":"PostalAddress","addressLocality":"Badajoz","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"Dir. Roberto Forés; Orquesta de Extremadura y Coro de Cámara de Extremadura. Berlioz: La infancia de Cristo, op. 25. Solistas no indicados.","url":"https://www.orquestadeextremadura.com/eventos/oexpecial-de-navidad-%c2%b7-badajoz/"},{"@type":"Event","name":"OEXpecial de Navidad — Orquesta de Extremadura","startDate":"2026-12-18T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Cáceres","address":{"@type":"PostalAddress","addressLocality":"Cáceres","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"Programa por confirmar: la página de Cáceres no se ha abierto; el de Badajoz es Berlioz: La infancia de Cristo, op. 25.","url":"https://www.orquestadeextremadura.com/eventos/oexpecial-de-navidad-%c2%b7-caceres-3/"},{"@type":"Event","name":"Concierto de Año Nuevo — Orquesta de Extremadura","startDate":"2027-01-01T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Badajoz Manuel Rojas","address":{"@type":"PostalAddress","addressLocality":"Badajoz","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"«Las mejores obras clásicas y populares». Programa detallado no publicado.","url":"https://www.orquestadeextremadura.com/eventos/concierto-de-ano-nuevo-2027-badajoz/"},{"@type":"Event","name":"Concierto de Año Nuevo — Orquesta de Extremadura","startDate":"2027-01-02T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Mérida","address":{"@type":"PostalAddress","addressLocality":"Mérida","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"Programa detallado no publicado.","url":"https://www.orquestadeextremadura.com/eventos/concierto-de-ano-nuevo-2027-merida/"},{"@type":"Event","name":"Concierto de Año Nuevo — Orquesta de Extremadura","startDate":"2027-01-03T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Villanueva de la Serena","address":{"@type":"PostalAddress","addressLocality":"Villanueva de la Serena","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"Programa detallado no publicado.","url":"https://www.orquestadeextremadura.com/eventos/concierto-de-ano-nuevo-2027-villanueva-de-la-serena/"},{"@type":"Event","name":"Concierto de Año Nuevo — Orquesta de Extremadura","startDate":"2027-01-04T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Plasencia","address":{"@type":"PostalAddress","addressLocality":"Plasencia","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"Programa detallado no publicado.","url":"https://www.orquestadeextremadura.com/eventos/concierto-de-ano-nuevo-2027-plasencia/"},{"@type":"Event","name":"Programa 06 «La Polaca, el cura y el faraón» — Orquesta de Extremadura","startDate":"2027-01-14T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Badajoz Manuel Rojas","address":{"@type":"PostalAddress","addressLocality":"Badajoz","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"Dir. Roberto Forés; Jessica Crutzen figura entre los intérpretes (flautín, por el programa). Mozart: Thamos, rey de Egipto; Vivaldi: Conciertos para flautín RV 445 y RV 443; Chaikovski: Sinfonía n.º 3.","url":"https://www.orquestadeextremadura.com/eventos/2026-2027-%c2%b7-programa-06-%c2%b7-badajoz/"},{"@type":"Event","name":"Programa 06 «La Polaca, el cura y el faraón» — Orquesta de Extremadura","startDate":"2027-01-15T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Congresos de Mérida","address":{"@type":"PostalAddress","addressLocality":"Mérida","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta de Extremadura"},"performer":{"@type":"PerformingGroup","name":"Orquesta de Extremadura"},"description":"Dir. Roberto Forés; Jessica Crutzen figura entre los intérpretes (flautín, por el programa). Mozart: Thamos, rey de Egipto; Vivaldi: Conciertos para flautín RV 445 y RV 443; Chaikovski: Sinfonía n.º 3.","url":"https://www.orquestadeextremadura.com/eventos/2026-2027-programa-06-merida/"}]}</script>
+
+<h2>Orquestas, bandas y conservatorios en Extremadura</h2>
+<p>Estas agrupaciones tienen su propia página, con sus próximos conciertos y su programación anterior.</p>
+<ul>
+<li><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-de-extremadura/">Orquesta de Extremadura</a> <span class="tm-op-nota">(16 próximos)</span></li>
+</ul>
+<p><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/">Ver todas las agrupaciones</a></p>
+
+<div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
 
 <h2>Otras comunidades</h2>
 <ul>
@@ -382,12 +409,12 @@
 </ul>
 <!-- CO:END -->
 
-<div class="tm-ad">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div>
-
 <h2>¿Tu banda o tu orquesta da un concierto en Extremadura?</h2>
 <p><a href="/contacto/">Escríbenos desde la página de contacto</a> con el nombre de la agrupación, la fecha, la hora, el lugar, el programa, el precio y <strong>un enlace a la página oficial donde figure</strong>. Lo comprobamos y lo añadimos. Es gratis.</p>
+<div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
 <div class="tm-seccion-cabecera">
@@ -410,11 +437,7 @@
   </div>
 </div>
 </div>
-</section><div class="tm-ad">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div>
-
-</article>
+</section></article>
 
 <aside class="tm-related">
   <h2>Páginas relacionadas</h2>
@@ -468,7 +491,7 @@
   </div>
 </footer>
 
-<script src="/assets/js/conciertos.js?v=7bf01c0d" defer></script>
+<script src="/assets/js/conciertos.js?v=e9e5db87" defer></script>
 <script src="/assets/js/main.js?v=58d478c2" defer></script>
 </body>
 </html>

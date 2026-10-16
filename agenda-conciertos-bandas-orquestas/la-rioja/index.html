@@ -54,7 +54,7 @@
 
 <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css?v=f89f413e">
+<link rel="stylesheet" href="/assets/css/style.css?v=aebed9a2">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article","headline":"Conciertos de bandas y orquestas en La Rioja","description":"Agenda de conciertos de bandas sinfónicas, orquestas y bandas de sociedades musicales en La Rioja, comprobados en fuentes oficiales y actualizados cada semana.","url":"https://www.teoriamusical.com.es/agenda-conciertos-bandas-orquestas/la-rioja/","inLanguage":"es","isAccessibleForFree":true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-agenda-conciertos-bandas-orquestas-la-rioja.png"},"author":{"@type":"Person","name":"Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},"datePublished":"2026-10-12","dateModified":"2026-10-12","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.teoriamusical.com.es/agenda-conciertos-bandas-orquestas/la-rioja/"},"publisher":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es","logo":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-diccionario.png"}}}
@@ -195,8 +195,24 @@
 
 <form class="tm-op-filtros" id="co-filtros" aria-label="Filtrar conciertos">
   <label>Tipo <select id="co-f-tipo"><option value="">Todos</option><option value="orquesta">Orquesta</option><option value="conservatorio">Conservatorio</option></select></label>
+  <div class="co-fechas">
+    <span class="co-fechas-t" id="co-fechas-t">Fecha</span>
+    <div class="co-rapidos" role="group" aria-labelledby="co-fechas-t">
+      <button type="button" data-rango="todas" aria-pressed="true">Todas</button>
+      <button type="button" data-rango="hoy" aria-pressed="false">Hoy</button>
+      <button type="button" data-rango="semana" aria-pressed="false">Esta semana</button>
+      <button type="button" data-rango="proxima" aria-pressed="false">Próxima semana</button>
+      <button type="button" data-rango="finde" aria-pressed="false">Este fin de semana</button>
+      <button type="button" data-rango="mes" aria-pressed="false">Este mes</button>
+    </div>
+    <div class="co-rango">
+      <label>Desde <input type="date" id="co-f-desde"></label>
+      <label>Hasta <input type="date" id="co-f-hasta"></label>
+    </div>
+  </div>
 </form>
 <p class="tm-op-contador" id="co-contador" role="status" aria-live="polite"></p>
+<p class="co-vacio" id="co-vacio" hidden>No hay conciertos con esos filtros. Prueba con otras fechas o con otro tipo de agrupación.</p>
 <nav class="co-nav" aria-label="Ir a un mes"><span>Ir a:</span> <a href="#co-2026-10">Octubre 2026</a> <a href="#co-2026-11">Noviembre 2026</a> <a href="#co-2026-12">Diciembre 2026</a> <a href="#co-2027-01">Enero 2027</a></nav>
 
 <h2 class="co-mes" id="co-2026-10">Octubre de 2026</h2>
@@ -204,7 +220,7 @@
 <div class="tm-op tm-co" data-tipo="conservatorio" data-ccaa="La Rioja" data-fecha="2026-10-23">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--conservatorio">Conservatorio</span><span>La Rioja</span></p>
   <h3>Concierto Grupo Enigma (Festival de Música Contemporánea)</h3>
-  <p class="tm-op-entidad">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/conservatorio-profesional-de-musica-eliseo-pinedo/">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</a></p>
   <p class="tm-op-plazo"><strong>Viernes 23 de octubre de 2026 · 19:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Salón de Actos del Conservatorio, Logroño</dd><dt>Entrada</dt><dd>Sin coste</dd></dl>
   <p class="tm-op-nota">Organizan el equipo directivo y Rioja Filarmonía. No se publica programa.</p>
@@ -213,7 +229,7 @@
 <div class="tm-op tm-co" data-tipo="conservatorio" data-ccaa="La Rioja" data-fecha="2026-10-28">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--conservatorio">Conservatorio</span><span>La Rioja</span></p>
   <h3>Concierto compartido: Orquesta de Plectro del Conservatorio y Joven Orquesta de Guitarras de Baden-Württemberg (JGO)</h3>
-  <p class="tm-op-entidad">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/conservatorio-profesional-de-musica-eliseo-pinedo/">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</a></p>
   <p class="tm-op-plazo"><strong>Miércoles 28 de octubre de 2026 · 18:30 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Salón de Actos del Conservatorio, Logroño</dd></dl>
   <p class="tm-op-nota">Público: todos los públicos. Precio no indicado como tal (los costes corren a cargo de JGO y la Asociación Contrastes). No se publica programa.</p>
@@ -226,7 +242,7 @@
 <div class="tm-op tm-co" data-tipo="conservatorio" data-ccaa="La Rioja" data-fecha="2026-11-09">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--conservatorio">Conservatorio</span><span>La Rioja</span></p>
   <h3>Concierto en la Semana de la Ciencia de la Universidad de La Rioja</h3>
-  <p class="tm-op-entidad">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/conservatorio-profesional-de-musica-eliseo-pinedo/">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</a></p>
   <p class="tm-op-plazo"><strong>Lunes 9 de noviembre de 2026 · 19:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Aula 100, Edificio Vives, Universidad de La Rioja, Logroño</dd><dt>Entrada</dt><dd>Sin coste</dd></dl>
   <p class="tm-op-nota">Concierto del alumnado de Enseñanzas Profesionales dentro de la Semana de la Ciencia. No se publica programa.</p>
@@ -235,7 +251,7 @@
 <div class="tm-op tm-co" data-tipo="conservatorio" data-ccaa="La Rioja" data-fecha="2026-11-19">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--conservatorio">Conservatorio</span><span>La Rioja</span></p>
   <h3>Concierto de Santa Cecilia 2026</h3>
-  <p class="tm-op-entidad">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/conservatorio-profesional-de-musica-eliseo-pinedo/">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</a></p>
   <p class="tm-op-plazo"><strong>Jueves 19 de noviembre de 2026 · 19:30 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Salón de Actos del Conservatorio, Logroño</dd><dt>Entrada</dt><dd>Sin coste</dd></dl>
   <p class="tm-op-nota">Alumnado de Enseñanzas Profesionales. No se publica programa.</p>
@@ -244,7 +260,7 @@
 <div class="tm-op tm-co" data-tipo="conservatorio" data-ccaa="La Rioja" data-fecha="2026-11-24">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--conservatorio">Conservatorio</span><span>La Rioja</span></p>
   <h3>Ciclo de conciertos de otoño/invierno: Orquesta del Conservatorio</h3>
-  <p class="tm-op-entidad">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/conservatorio-profesional-de-musica-eliseo-pinedo/">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</a></p>
   <p class="tm-op-plazo"><strong>Martes 24 de noviembre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Sala de Cámara de Riojaforum, Logroño</dd></dl>
   <p class="tm-op-nota">Precio de entrada no indicado en la fuente. No se publica programa.</p>
@@ -257,7 +273,7 @@
 <div class="tm-op tm-co" data-tipo="conservatorio" data-ccaa="La Rioja" data-fecha="2026-12-21">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--conservatorio">Conservatorio</span><span>La Rioja</span></p>
   <h3>Ciclo de conciertos de otoño/invierno: Banda del Conservatorio</h3>
-  <p class="tm-op-entidad">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/conservatorio-profesional-de-musica-eliseo-pinedo/">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</a></p>
   <p class="tm-op-plazo"><strong>Lunes 21 de diciembre de 2026 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Sala de Cámara de Riojaforum, Logroño</dd></dl>
   <p class="tm-op-nota">Precio de entrada no indicado en la fuente. No se publica programa.</p>
@@ -279,7 +295,7 @@
 <div class="tm-op tm-co" data-tipo="conservatorio" data-ccaa="La Rioja" data-fecha="2027-01-20">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--conservatorio">Conservatorio</span><span>La Rioja</span></p>
   <h3>Ciclo de conciertos de otoño/invierno: Orquesta de Plectro del Conservatorio</h3>
-  <p class="tm-op-entidad">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/conservatorio-profesional-de-musica-eliseo-pinedo/">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</a></p>
   <p class="tm-op-plazo"><strong>Miércoles 20 de enero de 2027 · 20:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Sala de Cámara de Riojaforum, Logroño</dd></dl>
   <p class="tm-op-nota">Precio de entrada no indicado en la fuente. No se publica programa.</p>
@@ -288,7 +304,7 @@
 <div class="tm-op tm-co" data-tipo="conservatorio" data-ccaa="La Rioja" data-fecha="2027-01-21">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--conservatorio">Conservatorio</span><span>La Rioja</span></p>
   <h3>Ciclo «El Conservatorio suena en Fundación Ibercaja»</h3>
-  <p class="tm-op-entidad">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/conservatorio-profesional-de-musica-eliseo-pinedo/">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</a></p>
   <p class="tm-op-plazo"><strong>Jueves 21 de enero de 2027 · 19:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Centro Cultural Ibercaja, Logroño</dd><dt>Entrada</dt><dd>Sin coste</dd></dl>
   <p class="tm-op-nota">Primer concierto del ciclo (siguen el 18 de febrero y el 18 de marzo de 2027). Alumnado de todos los departamentos. No se publica programa.</p>
@@ -297,14 +313,25 @@
 <div class="tm-op tm-co" data-tipo="conservatorio" data-ccaa="La Rioja" data-fecha="2027-01-22">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--conservatorio">Conservatorio</span><span>La Rioja</span></p>
   <h3>Ciclo «Pianos en el Círculo»</h3>
-  <p class="tm-op-entidad">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/conservatorio-profesional-de-musica-eliseo-pinedo/">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</a></p>
   <p class="tm-op-plazo"><strong>Viernes 22 de enero de 2027 · 19:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Sala Sagasta, Círculo Logroñés, Logroño</dd><dt>Entrada</dt><dd>Sin coste</dd></dl>
   <p class="tm-op-nota">Primer concierto del ciclo (siguen 19 de febrero, 19 de marzo y 30 de abril). Alumnado de piano de Enseñanzas Elementales y Profesionales. No se publica programa.</p>
   <p class="tm-op-fuentes">Fuente: <a href="https://www.conservatoriorioja.com/actividades/" rel="noopener">Actividades del curso 2026-2027 del Conservatorio Eliseo Pinedo</a>. <span class="tm-op-nota">Confirma fecha y hora en la fuente enlazada.</span></p>
 </div>
 </div>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Event","name":"Concierto Grupo Enigma (Festival de Música Contemporánea) — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2026-10-23T19:00:00+02:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Salón de Actos del Conservatorio","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"url":"https://www.conservatoriorioja.com/actividades/"},{"@type":"Event","name":"Concierto compartido: Orquesta de Plectro del Conservatorio y Joven Orquesta de Guitarras de Baden-Württemberg (JGO) — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2026-10-28T18:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Salón de Actos del Conservatorio","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"url":"https://www.conservatoriorioja.com/actividades/"},{"@type":"Event","name":"Concierto en la Semana de la Ciencia de la Universidad de La Rioja — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2026-11-09T19:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Aula 100, Edificio Vives, Universidad de La Rioja","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"url":"https://www.conservatoriorioja.com/actividades/"},{"@type":"Event","name":"Concierto de Santa Cecilia 2026 — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2026-11-19T19:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Salón de Actos del Conservatorio","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"url":"https://www.conservatoriorioja.com/actividades/"},{"@type":"Event","name":"Ciclo de conciertos de otoño/invierno: Orquesta del Conservatorio — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2026-11-24T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Sala de Cámara de Riojaforum","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"url":"https://www.conservatoriorioja.com/actividades/"},{"@type":"Event","name":"Ciclo de conciertos de otoño/invierno: Banda del Conservatorio — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2026-12-21T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Sala de Cámara de Riojaforum","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"url":"https://www.conservatoriorioja.com/actividades/"},{"@type":"Event","name":"Viena en La Rioja — Orquesta Filarmonía de Madrid","startDate":"2026-12-27T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Riojaforum (Auditorio)","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Filarmonía de Madrid"},"url":"https://riojaforum.com/evento/nueva-temporada-riojaforum-orquesta-filarmonia-de/36600f13-ac3b-db1c-1e41-891d8556cde0","description":"Dirección musical: Rafael Albiñana; dirección artística: Pascual Osa. Selección de valses y polcas de la familia Strauss, con tres parejas de ballet."},{"@type":"Event","name":"Ciclo de conciertos de otoño/invierno: Orquesta de Plectro del Conservatorio — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2027-01-20T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Sala de Cámara de Riojaforum","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"url":"https://www.conservatoriorioja.com/actividades/"},{"@type":"Event","name":"Ciclo «El Conservatorio suena en Fundación Ibercaja» — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2027-01-21T19:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Centro Cultural Ibercaja","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"url":"https://www.conservatoriorioja.com/actividades/"},{"@type":"Event","name":"Ciclo «Pianos en el Círculo» — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2027-01-22T19:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Sala Sagasta, Círculo Logroñés","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"url":"https://www.conservatoriorioja.com/actividades/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Event","name":"Concierto Grupo Enigma (Festival de Música Contemporánea) — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2026-10-23T19:00:00+02:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Salón de Actos del Conservatorio","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"performer":{"@type":"PerformingGroup","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"description":"Concierto Grupo Enigma (Festival de Música Contemporánea). Conservatorio Profesional de Música Eliseo Pinedo (La Rioja) en Salón de Actos del Conservatorio, Logroño.","url":"https://www.conservatoriorioja.com/actividades/","offers":{"@type":"Offer","price":0,"priceCurrency":"EUR","url":"https://www.conservatoriorioja.com/actividades/"}},{"@type":"Event","name":"Concierto compartido: Orquesta de Plectro del Conservatorio y Joven Orquesta de Guitarras de Baden-Württemberg (JGO) — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2026-10-28T18:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Salón de Actos del Conservatorio","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"performer":{"@type":"PerformingGroup","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"description":"Concierto compartido: Orquesta de Plectro del Conservatorio y Joven Orquesta de Guitarras de Baden-Württemberg (JGO). Conservatorio Profesional de Música Eliseo Pinedo (La Rioja) en Salón de Actos del Conservatorio, Logroño.","url":"https://www.conservatoriorioja.com/actividades/"},{"@type":"Event","name":"Concierto en la Semana de la Ciencia de la Universidad de La Rioja — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2026-11-09T19:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Aula 100, Edificio Vives, Universidad de La Rioja","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"performer":{"@type":"PerformingGroup","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"description":"Concierto en la Semana de la Ciencia de la Universidad de La Rioja. Conservatorio Profesional de Música Eliseo Pinedo (La Rioja) en Aula 100, Edificio Vives, Universidad de La Rioja, Logroño.","url":"https://www.conservatoriorioja.com/actividades/","offers":{"@type":"Offer","price":0,"priceCurrency":"EUR","url":"https://www.conservatoriorioja.com/actividades/"}},{"@type":"Event","name":"Concierto de Santa Cecilia 2026 — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2026-11-19T19:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Salón de Actos del Conservatorio","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"performer":{"@type":"PerformingGroup","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"description":"Concierto de Santa Cecilia 2026. Conservatorio Profesional de Música Eliseo Pinedo (La Rioja) en Salón de Actos del Conservatorio, Logroño.","url":"https://www.conservatoriorioja.com/actividades/","offers":{"@type":"Offer","price":0,"priceCurrency":"EUR","url":"https://www.conservatoriorioja.com/actividades/"}},{"@type":"Event","name":"Ciclo de conciertos de otoño/invierno: Orquesta del Conservatorio — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2026-11-24T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Sala de Cámara de Riojaforum","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"performer":{"@type":"PerformingGroup","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"description":"Ciclo de conciertos de otoño/invierno: Orquesta del Conservatorio. Conservatorio Profesional de Música Eliseo Pinedo (La Rioja) en Sala de Cámara de Riojaforum, Logroño.","url":"https://www.conservatoriorioja.com/actividades/"},{"@type":"Event","name":"Ciclo de conciertos de otoño/invierno: Banda del Conservatorio — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2026-12-21T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Sala de Cámara de Riojaforum","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"performer":{"@type":"PerformingGroup","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"description":"Ciclo de conciertos de otoño/invierno: Banda del Conservatorio. Conservatorio Profesional de Música Eliseo Pinedo (La Rioja) en Sala de Cámara de Riojaforum, Logroño.","url":"https://www.conservatoriorioja.com/actividades/"},{"@type":"Event","name":"Viena en La Rioja — Orquesta Filarmonía de Madrid","startDate":"2026-12-27T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Riojaforum (Auditorio)","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Filarmonía de Madrid"},"performer":{"@type":"PerformingGroup","name":"Orquesta Filarmonía de Madrid"},"description":"Dirección musical: Rafael Albiñana; dirección artística: Pascual Osa. Selección de valses y polcas de la familia Strauss, con tres parejas de ballet.","url":"https://riojaforum.com/evento/nueva-temporada-riojaforum-orquesta-filarmonia-de/36600f13-ac3b-db1c-1e41-891d8556cde0","offers":{"@type":"Offer","price":29,"priceCurrency":"EUR","url":"https://riojaforum.com/evento/nueva-temporada-riojaforum-orquesta-filarmonia-de/36600f13-ac3b-db1c-1e41-891d8556cde0"}},{"@type":"Event","name":"Ciclo de conciertos de otoño/invierno: Orquesta de Plectro del Conservatorio — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2027-01-20T20:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Sala de Cámara de Riojaforum","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"performer":{"@type":"PerformingGroup","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"description":"Ciclo de conciertos de otoño/invierno: Orquesta de Plectro del Conservatorio. Conservatorio Profesional de Música Eliseo Pinedo (La Rioja) en Sala de Cámara de Riojaforum, Logroño.","url":"https://www.conservatoriorioja.com/actividades/"},{"@type":"Event","name":"Ciclo «El Conservatorio suena en Fundación Ibercaja» — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2027-01-21T19:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Centro Cultural Ibercaja","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"performer":{"@type":"PerformingGroup","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"description":"Ciclo «El Conservatorio suena en Fundación Ibercaja». Conservatorio Profesional de Música Eliseo Pinedo (La Rioja) en Centro Cultural Ibercaja, Logroño.","url":"https://www.conservatoriorioja.com/actividades/","offers":{"@type":"Offer","price":0,"priceCurrency":"EUR","url":"https://www.conservatoriorioja.com/actividades/"}},{"@type":"Event","name":"Ciclo «Pianos en el Círculo» — Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)","startDate":"2027-01-22T19:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Sala Sagasta, Círculo Logroñés","address":{"@type":"PostalAddress","addressLocality":"Logroño","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"performer":{"@type":"PerformingGroup","name":"Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)"},"description":"Ciclo «Pianos en el Círculo». Conservatorio Profesional de Música Eliseo Pinedo (La Rioja) en Sala Sagasta, Círculo Logroñés, Logroño.","url":"https://www.conservatoriorioja.com/actividades/","offers":{"@type":"Offer","price":0,"priceCurrency":"EUR","url":"https://www.conservatoriorioja.com/actividades/"}}]}</script>
+
+<h2>Orquestas, bandas y conservatorios en La Rioja</h2>
+<p>Estas agrupaciones tienen su propia página, con sus próximos conciertos y su programación anterior.</p>
+<ul>
+<li><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/conservatorio-profesional-de-musica-eliseo-pinedo/">Conservatorio Profesional de Música Eliseo Pinedo (La Rioja)</a> <span class="tm-op-nota">(9 próximos)</span></li>
+</ul>
+<p><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/">Ver todas las agrupaciones</a></p>
+
+<div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
 
 <h2>Otras comunidades</h2>
 <ul>
@@ -328,12 +355,12 @@
 </ul>
 <!-- CO:END -->
 
-<div class="tm-ad">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div>
-
 <h2>¿Tu banda o tu orquesta da un concierto en La Rioja?</h2>
 <p><a href="/contacto/">Escríbenos desde la página de contacto</a> con el nombre de la agrupación, la fecha, la hora, el lugar, el programa, el precio y <strong>un enlace a la página oficial donde figure</strong>. Lo comprobamos y lo añadimos. Es gratis.</p>
+<div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
 <div class="tm-seccion-cabecera">
@@ -356,11 +383,7 @@
   </div>
 </div>
 </div>
-</section><div class="tm-ad">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div>
-
-</article>
+</section></article>
 
 <aside class="tm-related">
   <h2>Páginas relacionadas</h2>
@@ -414,7 +437,7 @@
   </div>
 </footer>
 
-<script src="/assets/js/conciertos.js?v=7bf01c0d" defer></script>
+<script src="/assets/js/conciertos.js?v=e9e5db87" defer></script>
 <script src="/assets/js/main.js?v=58d478c2" defer></script>
 </body>
 </html>

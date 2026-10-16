@@ -43,7 +43,7 @@ Datos en `data/conciertos.json`; se pinta con `node tools/gen-conciertos.js` (ag
 2. Para cada concierto nuevo: abrir la fuente oficial, copiar fecha, hora, lugar y programa literales y **comprobar el día de la semana** (la fecha y el día deben coincidir). Los resúmenes de WebSearch mezclan años: leer siempre la fuente. Si la fuente no da hora o lugar, dejarlo vacío y poner `nota`.
 3. `tipo`: `orquesta`, `banda` (banda sinfónica profesional o municipal) o `sociedad` (banda de música / sociedad musical).
 4. Poner `comprobado` = hoy, `node tools/gen-conciertos.js`, `node tools/validate_jsonld.js agenda-conciertos-bandas-orquestas/index.html`, `node tools/version_assets.cjs`.
-5. Los conciertos pasados se omiten solos; borrar del JSON los de más de 2 meses. Santa Cecilia es el 22 de noviembre: en octubre-noviembre buscar los conciertos de las bandas en esa fecha.
+5. Los conciertos pasados se omiten solos de las páginas de comunidad y **NO se borran del JSON**: alimentan las páginas de agrupación («conciertos anteriores»). El generador solo usa los de los últimos 12 meses; borrar del JSON los de más de un año. Santa Cecilia es el 22 de noviembre: en octubre-noviembre buscar los conciertos de las bandas en esa fecha.
 6. Cada mes, el resumen del boletín (`blog/`) se escribe a partir de este JSON.
 
 ## Estructura por comunidades (decidida el 12-10-2026)
@@ -68,3 +68,6 @@ Por cada comunidad, buscar y apuntar: (1) orquestas y bandas profesionales/munic
 
 ## Boletín mensual del blog
 Es una pieza EDITORIAL corta (8-15 conciertos destacados, con prioridad a bandas y sociedades musicales, más orquestas y conservatorios), NO un volcado de la agenda ni un listado de oposiciones (tienen su página). Se escribe a partir de `data/conciertos.json` con enlaces a la fuente oficial (URL exacta del JSON) y a las páginas de comunidad. Slug: `/blog/conciertos-de-bandas-y-orquestas-<mes>-2026/`. Edición de octubre publicada el 12-10-2026 (la primera, «octubre y noviembre», se rehízo así). La de **noviembre** se escribe el 3-5 de noviembre, con los conciertos de Santa Cecilia (22-nov) ya publicados.
+
+## Páginas de agrupación (16-10-2026)
+`/agenda-conciertos-bandas-orquestas/agrupaciones/<slug>/`: una página por orquesta, banda, sociedad o conservatorio con datos suficientes (umbral: 3 conciertos; 2 en bandas, sociedades y escuelas; cuentan los pasados de los últimos 12 meses) + índice en `.../agrupaciones/`. `node tools/gen-conciertos.js` las crea y regenera (50 el primer día). **`data/entidades.json` une los nombres de una misma entidad** (p. ej. la banda, la orquesta de púa y la coral de la SFA de Altea → una página): al añadir conciertos de una agrupación ya existente con otro nombre, añadir el alias ahí; opcionalmente `slug` para una URL más buscable (Bilbao). Los conciertos pasados se muestran como «figuraban en la programación oficial» (nunca «se celebraron»). Event JSON-LD solo en las páginas de comunidad (no en las de agrupación, para no duplicar). Si una agrupación sin alias aparece con dos nombres que normalizan igual (sin acentos ni paréntesis), ya se unifican solas.

@@ -54,7 +54,7 @@
 
 <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css?v=f89f413e">
+<link rel="stylesheet" href="/assets/css/style.css?v=aebed9a2">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article","headline":"Conciertos de bandas y orquestas en Cantabria","description":"Agenda de conciertos de bandas sinfónicas, orquestas y bandas de sociedades musicales en Cantabria, comprobados en fuentes oficiales y actualizados cada semana.","url":"https://www.teoriamusical.com.es/agenda-conciertos-bandas-orquestas/cantabria/","inLanguage":"es","isAccessibleForFree":true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-agenda-conciertos-bandas-orquestas-cantabria.png"},"author":{"@type":"Person","name":"Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},"datePublished":"2026-10-12","dateModified":"2026-10-12","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.teoriamusical.com.es/agenda-conciertos-bandas-orquestas/cantabria/"},"publisher":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es","logo":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-diccionario.png"}}}
@@ -195,8 +195,24 @@
 
 <form class="tm-op-filtros" id="co-filtros" aria-label="Filtrar conciertos">
   <label>Tipo <select id="co-f-tipo"><option value="">Todos</option><option value="orquesta">Orquesta</option></select></label>
+  <div class="co-fechas">
+    <span class="co-fechas-t" id="co-fechas-t">Fecha</span>
+    <div class="co-rapidos" role="group" aria-labelledby="co-fechas-t">
+      <button type="button" data-rango="todas" aria-pressed="true">Todas</button>
+      <button type="button" data-rango="hoy" aria-pressed="false">Hoy</button>
+      <button type="button" data-rango="semana" aria-pressed="false">Esta semana</button>
+      <button type="button" data-rango="proxima" aria-pressed="false">Próxima semana</button>
+      <button type="button" data-rango="finde" aria-pressed="false">Este fin de semana</button>
+      <button type="button" data-rango="mes" aria-pressed="false">Este mes</button>
+    </div>
+    <div class="co-rango">
+      <label>Desde <input type="date" id="co-f-desde"></label>
+      <label>Hasta <input type="date" id="co-f-hasta"></label>
+    </div>
+  </div>
 </form>
 <p class="tm-op-contador" id="co-contador" role="status" aria-live="polite"></p>
+<p class="co-vacio" id="co-vacio" hidden>No hay conciertos con esos filtros. Prueba con otras fechas o con otro tipo de agrupación.</p>
 <nav class="co-nav" aria-label="Ir a un mes"><span>Ir a:</span> <a href="#co-2026-10">Octubre 2026</a> <a href="#co-2026-11">Noviembre 2026</a> <a href="#co-2026-12">Diciembre 2026</a> <a href="#co-2027-01">Enero 2027</a></nav>
 
 <h2 class="co-mes" id="co-2026-10">Octubre de 2026</h2>
@@ -204,7 +220,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Cantabria" data-fecha="2026-10-21">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Cantabria</span></p>
   <h3>Concierto solidario OSCAN Valdecilla (Fundación Real Racing Club y Gobierno de Cantabria)</h3>
-  <p class="tm-op-entidad">Orquesta Sinfónica del Cantábrico (OSCAN)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-sinfonica-del-cantabrico/">Orquesta Sinfónica del Cantábrico (OSCAN)</a></p>
   <p class="tm-op-plazo"><strong>Miércoles 21 de octubre de 2026 · 19:30 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Festivales de Cantabria (Sala Argenta), Santander</dd><dt>Programa</dt><dd>La OSCAN comparte escenario con el Coro del Colegio de Economistas y el Coro Joven de Santander. Programa musical definitivo aún por anunciar en la fuente.</dd><dt>Entrada</dt><dd>De pago: 15, 25, 35 y 40 €</dd></dl>
   <p class="tm-op-nota">Concierto benéfico (fondos para un gimnasio pediátrico del Hospital de Valdecilla). Programa y director no publicados todavía.</p>
@@ -230,7 +246,7 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Cantabria" data-fecha="2026-12-03">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Cantabria</span></p>
   <h3>Bajo el cielo de Mar del Plata</h3>
-  <p class="tm-op-entidad">Orquesta Sinfónica del Cantábrico (OSCAN)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-sinfonica-del-cantabrico/">Orquesta Sinfónica del Cantábrico (OSCAN)</a></p>
   <p class="tm-op-plazo"><strong>Jueves 3 de diciembre de 2026 · 19:30 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Festivales de Cantabria (Sala Argenta), Santander</dd><dt>Programa</dt><dd>Paula Sumillera, dirección; Marta Cubas Hondal, acordeón y bandoneón; Cristina Cubas Hondal, violín. A. Vivas: Concierto Indálico para acordeón y orquesta; A. Piazzolla: Aconcagua, concierto para bandoneón; G. Hermosa: Atlantia para acordeón, violín y orquesta.</dd><dt>Entrada</dt><dd>De pago: 12 € a 32 €</dd></dl>
   
@@ -270,14 +286,25 @@
 <div class="tm-op tm-co" data-tipo="orquesta" data-ccaa="Cantabria" data-fecha="2027-01-16">
   <p class="tm-op-meta"><span class="tm-op-tipo tm-op-tipo--orquesta">Orquesta</span><span>Cantabria</span></p>
   <h3>El carnaval de los animales (ciclo «En familia»)</h3>
-  <p class="tm-op-entidad">Orquesta Sinfónica del Cantábrico (OSCAN)</p>
+  <p class="tm-op-entidad"><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-sinfonica-del-cantabrico/">Orquesta Sinfónica del Cantábrico (OSCAN)</a></p>
   <p class="tm-op-plazo"><strong>Sábado 16 de enero de 2027 · 17:00 h</strong></p>
   <dl class="tm-op-datos"><dt>Dónde</dt><dd>Palacio de Festivales de Cantabria (Sala Pereda), Santander</dd><dt>Programa</dt><dd>Paula Sumillera, dirección; Pedro Herrero, narrador y actor. Camille Saint-Saëns: El carnaval de los animales.</dd><dt>Entrada</dt><dd>De pago: 6 € a 8 €</dd></dl>
   
   <p class="tm-op-fuentes">Fuente: <a href="https://oscan.es/evento/el-carnaval-de-los-animales-palacio-festivales/" rel="noopener">OSCAN: ficha del concierto</a> · <a href="http://oscan.es/eventos" rel="noopener">OSCAN: agenda de próximos conciertos</a>. <span class="tm-op-nota">Confirma fecha y hora en la fuente enlazada.</span></p>
 </div>
 </div>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Event","name":"Concierto solidario OSCAN Valdecilla (Fundación Real Racing Club y Gobierno de Cantabria) — Orquesta Sinfónica del Cantábrico (OSCAN)","startDate":"2026-10-21T19:30:00+02:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Festivales de Cantabria (Sala Argenta)","address":{"@type":"PostalAddress","addressLocality":"Santander","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Sinfónica del Cantábrico (OSCAN)"},"url":"https://oscan.es/evento/concierto-solidario-oscan-valdecilla/","description":"La OSCAN comparte escenario con el Coro del Colegio de Economistas y el Coro Joven de Santander. Programa musical definitivo aún por anunciar en la fuente."},{"@type":"Event","name":"Beethoven y Strauss: dos visiones del héroe — Orquesta Sinfónica SWR Stuttgart (SWR Symphonieorchester)","startDate":"2026-11-12T19:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Festivales de Cantabria (Sala Argenta)","address":{"@type":"PostalAddress","addressLocality":"Santander","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Sinfónica SWR Stuttgart (SWR Symphonieorchester)"},"url":"https://palaciofestivales.com/evento/orquesta-sinfonica-swr-stuttgart/","description":"François-Xavier Roth, dirección; Isabelle Faust, violín. Beethoven: Concierto para violín en Re mayor, Op. 61. R. Strauss: Una vida de héroe (Ein Heldenleben), Op. 40."},{"@type":"Event","name":"Bajo el cielo de Mar del Plata — Orquesta Sinfónica del Cantábrico (OSCAN)","startDate":"2026-12-03T19:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Festivales de Cantabria (Sala Argenta)","address":{"@type":"PostalAddress","addressLocality":"Santander","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Sinfónica del Cantábrico (OSCAN)"},"url":"https://oscan.es/evento/concierto-orquesta-sinfonica-del-cantabrico-bajo-cielo-mar-del-plata/","description":"Paula Sumillera, dirección; Marta Cubas Hondal, acordeón y bandoneón; Cristina Cubas Hondal, violín. A. Vivas: Concierto Indálico para acordeón y orquesta; A. Piazzolla: Aconcagua, concierto para bandoneón; G. Hermosa: Atlantia para acordeón, violín y orquesta."},{"@type":"Event","name":"De la esencia hispana al exotismo azteca (homenaje 150.º aniversario del nacimiento de Manuel de Falla) — Orquesta Sinfónica Juvenil UIMP Ataúlfo Argenta","startDate":"2026-12-30T19:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Festivales de Cantabria (Sala Argenta)","address":{"@type":"PostalAddress","addressLocality":"Santander","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Sinfónica Juvenil UIMP Ataúlfo Argenta"},"url":"https://palaciofestivales.com/evento/orquesta-sinfonica-juvenil-uimp-ataulfo-argenta/","description":"Allen Vladimir Gómez Ruiz, director invitado. Parte I: Massenet, El Cid (obertura); Chabrier, España (rapsodia); Giménez, El baile de Luis Alonso (intermezzo); Falla, El sombrero de tres picos (suite 1). Parte II: Bizet, Carmen (suite n.º 1); Moncayo, Huapango; Márquez, Conga del nuevo fuego y Danzón n.º 2."},{"@type":"Event","name":"Concierto de Año Nuevo de Viena — Johann Strauss Ensemble de la Orquesta Sinfónica de Viena","startDate":"2027-01-02T19:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Festivales de Cantabria (Sala Argenta)","address":{"@type":"PostalAddress","addressLocality":"Santander","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Johann Strauss Ensemble de la Orquesta Sinfónica de Viena"},"url":"https://palaciofestivales.com/evento/johann-strauss-ensemble-orquesta-sinfonica-viena/","description":"Matthias Honeck, violín y director. Obras de Johann Strauss II y Josef Strauss (Obertura de El barón gitano, Sangre vienesa, Rosas del sur, Polca del champán, A orillas del hermoso Danubio, entre otras)."},{"@type":"Event","name":"Musikkollegium Winterthur con Pablo Ferrández — Musikkollegium Winterthur","startDate":"2027-01-10T19:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Festivales de Cantabria (Sala Argenta)","address":{"@type":"PostalAddress","addressLocality":"Santander","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Musikkollegium Winterthur"},"url":"https://palaciofestivales.com/evento/musikkollegium-winterthur/","description":"Roberto González Monjas, dirección; Pablo Ferrández, violonchelo. Dubugnon: Caprice à l'espagnole, Op. 72/6 (estreno); Dvořák: Concierto para violonchelo en Si menor, Op. 104; Mendelssohn: Sinfonía n.º 5 en Re menor, Op. 107 «La reforma»."},{"@type":"Event","name":"El carnaval de los animales (ciclo «En familia») — Orquesta Sinfónica del Cantábrico (OSCAN)","startDate":"2027-01-16T17:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Festivales de Cantabria (Sala Pereda)","address":{"@type":"PostalAddress","addressLocality":"Santander","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Sinfónica del Cantábrico (OSCAN)"},"url":"https://oscan.es/evento/el-carnaval-de-los-animales-palacio-festivales/","description":"Paula Sumillera, dirección; Pedro Herrero, narrador y actor. Camille Saint-Saëns: El carnaval de los animales."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Event","name":"Concierto solidario OSCAN Valdecilla (Fundación Real Racing Club y Gobierno de Cantabria) — Orquesta Sinfónica del Cantábrico (OSCAN)","startDate":"2026-10-21T19:30:00+02:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Festivales de Cantabria (Sala Argenta)","address":{"@type":"PostalAddress","addressLocality":"Santander","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Sinfónica del Cantábrico (OSCAN)"},"performer":{"@type":"PerformingGroup","name":"Orquesta Sinfónica del Cantábrico (OSCAN)"},"description":"La OSCAN comparte escenario con el Coro del Colegio de Economistas y el Coro Joven de Santander. Programa musical definitivo aún por anunciar en la fuente.","url":"https://oscan.es/evento/concierto-solidario-oscan-valdecilla/","offers":{"@type":"AggregateOffer","lowPrice":15,"highPrice":40,"priceCurrency":"EUR","url":"https://oscan.es/evento/concierto-solidario-oscan-valdecilla/"}},{"@type":"Event","name":"Beethoven y Strauss: dos visiones del héroe — Orquesta Sinfónica SWR Stuttgart (SWR Symphonieorchester)","startDate":"2026-11-12T19:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Festivales de Cantabria (Sala Argenta)","address":{"@type":"PostalAddress","addressLocality":"Santander","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Sinfónica SWR Stuttgart (SWR Symphonieorchester)"},"performer":{"@type":"PerformingGroup","name":"Orquesta Sinfónica SWR Stuttgart (SWR Symphonieorchester)"},"description":"François-Xavier Roth, dirección; Isabelle Faust, violín. Beethoven: Concierto para violín en Re mayor, Op. 61. R. Strauss: Una vida de héroe (Ein Heldenleben), Op. 40.","url":"https://palaciofestivales.com/evento/orquesta-sinfonica-swr-stuttgart/"},{"@type":"Event","name":"Bajo el cielo de Mar del Plata — Orquesta Sinfónica del Cantábrico (OSCAN)","startDate":"2026-12-03T19:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Festivales de Cantabria (Sala Argenta)","address":{"@type":"PostalAddress","addressLocality":"Santander","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Sinfónica del Cantábrico (OSCAN)"},"performer":{"@type":"PerformingGroup","name":"Orquesta Sinfónica del Cantábrico (OSCAN)"},"description":"Paula Sumillera, dirección; Marta Cubas Hondal, acordeón y bandoneón; Cristina Cubas Hondal, violín. A. Vivas: Concierto Indálico para acordeón y orquesta; A. Piazzolla: Aconcagua, concierto para bandoneón; G. Hermosa: Atlantia para acordeón, violín y orquesta.","url":"https://oscan.es/evento/concierto-orquesta-sinfonica-del-cantabrico-bajo-cielo-mar-del-plata/","offers":{"@type":"AggregateOffer","lowPrice":12,"highPrice":32,"priceCurrency":"EUR","url":"https://oscan.es/evento/concierto-orquesta-sinfonica-del-cantabrico-bajo-cielo-mar-del-plata/"}},{"@type":"Event","name":"De la esencia hispana al exotismo azteca (homenaje 150.º aniversario del nacimiento de Manuel de Falla) — Orquesta Sinfónica Juvenil UIMP Ataúlfo Argenta","startDate":"2026-12-30T19:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Festivales de Cantabria (Sala Argenta)","address":{"@type":"PostalAddress","addressLocality":"Santander","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Sinfónica Juvenil UIMP Ataúlfo Argenta"},"performer":{"@type":"PerformingGroup","name":"Orquesta Sinfónica Juvenil UIMP Ataúlfo Argenta"},"description":"Allen Vladimir Gómez Ruiz, director invitado. Parte I: Massenet, El Cid (obertura); Chabrier, España (rapsodia); Giménez, El baile de Luis Alonso (intermezzo); Falla, El sombrero de tres picos (suite 1). Parte II: Bizet, Carmen (suite n.º 1); Moncayo, Huapango; Márquez, Conga del nuevo fuego y Danzón n.º 2.","url":"https://palaciofestivales.com/evento/orquesta-sinfonica-juvenil-uimp-ataulfo-argenta/"},{"@type":"Event","name":"Concierto de Año Nuevo de Viena — Johann Strauss Ensemble de la Orquesta Sinfónica de Viena","startDate":"2027-01-02T19:30:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Festivales de Cantabria (Sala Argenta)","address":{"@type":"PostalAddress","addressLocality":"Santander","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Johann Strauss Ensemble de la Orquesta Sinfónica de Viena"},"performer":{"@type":"PerformingGroup","name":"Johann Strauss Ensemble de la Orquesta Sinfónica de Viena"},"description":"Matthias Honeck, violín y director. Obras de Johann Strauss II y Josef Strauss (Obertura de El barón gitano, Sangre vienesa, Rosas del sur, Polca del champán, A orillas del hermoso Danubio, entre otras).","url":"https://palaciofestivales.com/evento/johann-strauss-ensemble-orquesta-sinfonica-viena/"},{"@type":"Event","name":"Musikkollegium Winterthur con Pablo Ferrández — Musikkollegium Winterthur","startDate":"2027-01-10T19:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Festivales de Cantabria (Sala Argenta)","address":{"@type":"PostalAddress","addressLocality":"Santander","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Musikkollegium Winterthur"},"performer":{"@type":"PerformingGroup","name":"Musikkollegium Winterthur"},"description":"Roberto González Monjas, dirección; Pablo Ferrández, violonchelo. Dubugnon: Caprice à l'espagnole, Op. 72/6 (estreno); Dvořák: Concierto para violonchelo en Si menor, Op. 104; Mendelssohn: Sinfonía n.º 5 en Re menor, Op. 107 «La reforma».","url":"https://palaciofestivales.com/evento/musikkollegium-winterthur/"},{"@type":"Event","name":"El carnaval de los animales (ciclo «En familia») — Orquesta Sinfónica del Cantábrico (OSCAN)","startDate":"2027-01-16T17:00:00+01:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Palacio de Festivales de Cantabria (Sala Pereda)","address":{"@type":"PostalAddress","addressLocality":"Santander","addressCountry":"ES"}},"organizer":{"@type":"Organization","name":"Orquesta Sinfónica del Cantábrico (OSCAN)"},"performer":{"@type":"PerformingGroup","name":"Orquesta Sinfónica del Cantábrico (OSCAN)"},"description":"Paula Sumillera, dirección; Pedro Herrero, narrador y actor. Camille Saint-Saëns: El carnaval de los animales.","url":"https://oscan.es/evento/el-carnaval-de-los-animales-palacio-festivales/","offers":{"@type":"AggregateOffer","lowPrice":6,"highPrice":8,"priceCurrency":"EUR","url":"https://oscan.es/evento/el-carnaval-de-los-animales-palacio-festivales/"}}]}</script>
+
+<h2>Orquestas, bandas y conservatorios en Cantabria</h2>
+<p>Estas agrupaciones tienen su propia página, con sus próximos conciertos y su programación anterior.</p>
+<ul>
+<li><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/orquesta-sinfonica-del-cantabrico/">Orquesta Sinfónica del Cantábrico (OSCAN)</a> <span class="tm-op-nota">(3 próximos)</span></li>
+</ul>
+<p><a href="/agenda-conciertos-bandas-orquestas/agrupaciones/">Ver todas las agrupaciones</a></p>
+
+<div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
 
 <h2>Otras comunidades</h2>
 <ul>
@@ -301,12 +328,12 @@
 </ul>
 <!-- CO:END -->
 
-<div class="tm-ad">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div>
-
 <h2>¿Tu banda o tu orquesta da un concierto en Cantabria?</h2>
 <p><a href="/contacto/">Escríbenos desde la página de contacto</a> con el nombre de la agrupación, la fecha, la hora, el lugar, el programa, el precio y <strong>un enlace a la página oficial donde figure</strong>. Lo comprobamos y lo añadimos. Es gratis.</p>
+<div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
 <div class="tm-seccion-cabecera">
@@ -329,11 +356,7 @@
   </div>
 </div>
 </div>
-</section><div class="tm-ad">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div>
-
-</article>
+</section></article>
 
 <aside class="tm-related">
   <h2>Páginas relacionadas</h2>
@@ -387,7 +410,7 @@
   </div>
 </footer>
 
-<script src="/assets/js/conciertos.js?v=7bf01c0d" defer></script>
+<script src="/assets/js/conciertos.js?v=e9e5db87" defer></script>
 <script src="/assets/js/main.js?v=58d478c2" defer></script>
 </body>
 </html>
