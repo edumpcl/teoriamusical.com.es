@@ -500,6 +500,22 @@
       cap.appendChild(document.createTextNode(' '));
       cap.appendChild(makeBtn(tokens, 'Escuchar la escala'));
     });
+    creditoPiano();
+  }
+
+  /* Las muestras de piano son las del Salamander Grand Piano de Alexander Holm, con licencia CC BY 3.0: obliga a CITAR al
+     autor. En toda página que lleve botones ▶ de este módulo se añade, una sola vez, una línea al final del artículo. Si la
+     página ya lo cita por su cuenta (contiene «Salamander»), no se repite. */
+  function creditoPiano() {
+    if (!document.querySelector('.tm-play-scale')) return;
+    if (document.querySelector('.tm-credito-piano') || (document.body.textContent || '').indexOf('Salamander') > -1) return;
+    var art = document.querySelector('article.tm-article') || document.querySelector('main');
+    if (!art) return;
+    var p = document.createElement('p');
+    p.className = 'tm-credito-piano';
+    p.style.cssText = 'font-size:.8rem;color:#686868;margin-top:1.5rem';
+    p.innerHTML = 'Audio de piano: muestras <em>Salamander Grand Piano</em>, de Alexander Holm, bajo licencia <a href="https://creativecommons.org/licenses/by/3.0/" rel="nofollow noopener">CC BY 3.0</a>.';
+    art.appendChild(p);
   }
 
   window.tmPiano = { playScale: playScale, playMidi: playMidi, playMelody: playMelody, nameToPc: nameToPc };
