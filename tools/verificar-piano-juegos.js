@@ -9,7 +9,7 @@
  * CÓMO: se interceptan la descarga y la decodificación de las muestras (para saber de qué fichero viene cada buffer) y los arranques
  * de AudioBufferSourceNode y OscillatorNode. Cada nota que suena = nota del fichero + semitonos de la velocidad de reproducción.
  * Se compara con las notas del juego por dos vías: su frecuencia (midi calculado aparte) y el NOMBRE que enseña la pantalla.
- * Esperado: salto de longitud, 1 nota; triple salto, el arpegio (3) y el acorde (3); salto de altura, las 2 notas y las 2 juntas
+ * Esperado: salto de longitud, 1 nota; triple salto, el arpegio (3) y el acorde (3); salto de altura, las 2 notas una tras otra (intervalo melódico, nunca a la vez)
  * (o solo la primera con «solo la primera nota»). Y NINGÚN oscilador: si suena la voz sintética, es que el piano no se está usando.
  * --sabotaje: bloquea las muestras (cae la voz sintética) y comprueba que la verificación lo detecta.
  */
@@ -71,7 +71,7 @@ async function escucha(b, ruta, preparar, esperaN) {
   return { ev, notas: info.notas };
 }
 
-function compara(etq, r, esperadoOrden) {
+function compara(etq, r, esperadoOrden, huecoMin) {
   const osc = r.ev.filter((e) => e.tipo === 'oscilador'), mu = r.ev.filter((e) => e.tipo === 'muestra');
   ok(osc.length === 0, `${etq}: suenan ${osc.length} osciladores (voz sintética) en vez de piano`);
   const sonadas = mu.map((e) => (e.nombre ? midiDeFichero(e.nombre) + Math.round(12 * Math.log2(e.rate)) : null));
@@ -79,7 +79,8 @@ function compara(etq, r, esperadoOrden) {
   ok(JSON.stringify(sonadas) === JSON.stringify(esperadas), `${etq}: suena ${JSON.stringify(sonadas)} y el juego toca ${JSON.stringify(esperadas)}`);
   // segunda vía: el nombre que enseña la pantalla
   sonadas.forEach((m, k) => { const nom = r.notas[esperadoOrden[k]].n; ok(m !== null && ((m % 12) + 12) % 12 === pcDeNombre(nom), `${etq}: la nota ${k + 1} suena como ${m} y la pantalla dice «${nom}»`); });
-  // las dos mitades (arpegio y acorde) empiezan en tiempos distintos; el acorde va junto
+  // intervalo melódico: cada nota entra después de la anterior (separación mínima en segundos), nunca a la vez
+  if (huecoMin) for (let k = 1; k < mu.length; k++) ok(mu[k].cuando - mu[k - 1].cuando >= huecoMin, `${etq}: las notas ${k} y ${k + 1} entran con ${(mu[k].cuando - mu[k - 1].cuando).toFixed(2)} s de diferencia (mínimo ${huecoMin}): suenan a la vez`);
   console.log(`  ${etq}: ${mu.length} muestras de piano, ${osc.length} osciladores · ${JSON.stringify(sonadas)}`);
 }
 
@@ -88,7 +89,7 @@ function compara(etq, r, esperadoOrden) {
   compara('salto de longitud', await escucha(b, '/juegos/entonacion/salto-de-longitud/juego/', null, 1), [0]);
   compara('triple salto (3 notas, arpegio y acorde)', await escucha(b, '/juegos/entonacion/triple-salto/juego/', null, 6), [0, 1, 2, 0, 1, 2]);
   for (const grupo of ['segundas_terceras', 'cuartas_quintas', 'sextas_septimas', 'todos']) {
-    compara(`salto de altura · ${grupo} (2 notas, arpegio y juntas)`, await escucha(b, '/juegos/entonacion/salto-de-altura/juego/', async (p) => { await p.check(`input[name=gru][value=${grupo}]`, { force: true }); }, 4), [0, 1, 0, 1]);
+    compara(`salto de altura · ${grupo} (2 notas, una tras otra)`, await escucha(b, '/juegos/entonacion/salto-de-altura/juego/', async (p) => { await p.check(`input[name=gru][value=${grupo}]`, { force: true }); }, 2), [0, 1], 1.0);
   }
   compara('salto de altura · Maestro (solo la primera nota)', await escucha(b, '/juegos/entonacion/salto-de-altura/juego/', async (p) => { await p.check('input[name=dif][value=maestro]', { force: true }); }, 1), [0]);
   await b.close();

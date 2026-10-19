@@ -618,7 +618,7 @@ function setState(s, now = performance.now()) {
     $('#chordNotes').textContent = S.dif === 'facil' ? S.chord.n[0] + ' → ' + S.chord.n[1] : '';
     $('#listenTxt').textContent = S.dif === 'maestro'
       ? 'Solo oyes la primera nota. Tú sabes el intervalo: canta esa nota (la carrera) y después la que está a una ' + iv.n + ' (el salto), ' + PHASE + ' segundos cada una. Vale cualquier octava.'
-      : 'Escucha las dos notas, una tras otra y luego juntas. Después cantarás la primera (la carrera) y la segunda (el salto), ' + PHASE + ' segundos cada una. Vale cualquier octava.';
+      : 'Escucha las dos notas, una tras otra, como en un intervalo melódico. Después cantarás la primera (la carrera) y la segunda (el salto), ' + PHASE + ' segundos cada una. Vale cualquier octava.';
     setTimeout(() => { if (S.state === 'listen') hearNote(); }, 450);
   }
   if (s === 'count') {
@@ -646,9 +646,9 @@ function hearNoteYa() {
   const ts = S.targets; let total;
   if (S.dif === 'maestro') { playNote(ts[0].f, 1.6); total = 1600; }
   else {
-    ts.forEach((t, i) => playNote(t.f, 0.9, i * 0.75));
-    ts.forEach(t => playNote(t.f, 1.5, 2.2, 0.12));
-    total = 3700;
+    // intervalo melódico: las dos notas una tras otra, nunca a la vez
+    playNote(ts[0].f, 1.0, 0); playNote(ts[1].f, 1.5, 1.2);
+    total = 2800;
   }
   S.noteUntil = performance.now() + total;
   $('#speaker').classList.add('on');
