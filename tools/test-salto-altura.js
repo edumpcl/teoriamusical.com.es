@@ -38,7 +38,7 @@ const PC = { Do: 0, Re: 2, Mi: 4, Fa: 5, Sol: 7, La: 9, Si: 11 };
 const LETRAS = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
 const ALT = { '': 0, '♯': 1, '♭': -1 };
 const pcDe = (n) => { const m = /^(Do|Re|Mi|Fa|Sol|La|Si)([♯♭]?)$/.exec(n); return m ? { letra: m[1], pc: (PC[m[1]] + ALT[m[2]] + 12) % 12 } : null; };
-const NIVELES_ESPERADOS = { facil: [2, 3], medio: [4, 5], dificil: [6, 7], maestro: [2, 3, 4, 5, 6, 7] };
+const NIVELES_ESPERADOS = { segundas_terceras: [2, 3], cuartas_quintas: [4, 5], sextas_septimas: [6, 7], todos: [2, 3, 4, 5, 6, 7] };
 
 function fuente() {
   const g = leer(DIR + '/juego/index.html');
@@ -46,9 +46,9 @@ function fuente() {
   return {
     base: Number(m(/const BASE = ([\d.]+)/)), rate: JSON.parse(m(/const RATE = (\[[^\]]+\])/)), rec: Number(m(/REC = ([\d.]+)/)),
     nulo: Number(m(/S\.nulo = S\.tuned < ([\d.]+)/)), phase: Number(m(/const PHASE = (\d+)/)),
-    margen: (() => { const r = /const MARGEN = \{ amplio: (\d+), normal: (\d+), fino: (\d+) \}/.exec(g); return r.slice(1, 4).map(Number); })(),
+    margen: (() => { const r = /const DIF = \{ facil: (\d+), normal: (\d+), maestro: (\d+) \}/.exec(g); return r.slice(1, 4).map(Number); })(),
     ints: [...g.matchAll(/\{ id: '(\w+)', n: '([^']+)', num: (\d), st: (\d+) \}/g)].map((r) => ({ id: r[1], n: r[2], num: Number(r[3]), st: Number(r[4]) })),
-    niveles: Object.fromEntries([...g.matchAll(/(facil|medio|dificil|maestro): \[([\d, ]+)\]/g)].map((r) => [r[1], r[2].split(',').map((x) => Number(x.trim()))])),
+    niveles: Object.fromEntries([...g.matchAll(/(segundas_terceras|cuartas_quintas|sextas_septimas|todos): \[([\d, ]+)\]/g)].map((r) => [r[1], r[2].split(',').map((x) => Number(x.trim()))])),
   };
 }
 const lista = (xs) => xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' y ' + xs[xs.length - 1];
@@ -65,14 +65,14 @@ function comprobarTexto(f) {
   tiene(f.phase + ' segundos', 'duración de cada nota');
   f.margen.forEach((m) => tiene('±' + m + ' cents', 'margen'));
   // la tabla de niveles = NIVELES del código
-  const filas = { facil: 'Fácil', medio: 'Medio', dificil: 'Difícil' };
+  const filas = { segundas_terceras: '2ªs y 3ªs', cuartas_quintas: '4ªs y 5ªs', sextas_septimas: '6ªs y 7ªs' };
   for (const [k, etiqueta] of Object.entries(filas)) {
     const ivs = f.ints.filter((i) => f.niveles[k].includes(i.num));
-    tiene(lista(ivs.map((i) => i.n)), `intervalos del nivel ${etiqueta}`);
-    tiene(lista(ivs.map((i) => String(i.st))), `semitonos del nivel ${etiqueta}`);
+    tiene(lista(ivs.map((i) => i.n)), `intervalos del grupo ${etiqueta}`);
+    tiene(lista(ivs.map((i) => String(i.st))), `semitonos del grupo ${etiqueta}`);
   }
   const todos = f.ints.map((i) => i.st);
-  tiene('de ' + Math.min(...todos) + ' a ' + Math.max(...todos), 'semitonos de Maestro');
+  tiene('de ' + Math.min(...todos) + ' a ' + Math.max(...todos), 'semitonos de «Todos»');
   ok(JSON.stringify(f.niveles) === JSON.stringify(NIVELES_ESPERADOS), `niveles del código ${JSON.stringify(f.niveles)} ≠ los pedidos ${JSON.stringify(NIVELES_ESPERADOS)}`);
   // récord y máximo coherentes con el mundo real: el máximo supera por poco al récord
   ok(max > f.rec && max < f.rec * 1.1, `el máximo (${max}) debería superar el récord (${f.rec}) por poco`);
@@ -86,7 +86,7 @@ async function comprobarIntervalos(b, f) {
   for (const nivel of Object.keys(NIVELES_ESPERADOS)) {
     const muestras = await p.evaluate((n) => {
       const { S, setState } = window.__salto; const r = [];
-      S.niv = n; S.ayuda = 'dos';
+      S.gru = n; S.dif = 'normal';
       for (let i = 0; i < 600; i++) { setState('listen'); r.push({ nombre: S.chord.iv.n, id: S.chord.iv.id, notas: S.targets.map((t) => ({ n: t.n, f: t.f })), mostrado: S.chord.q }); }
       return r;
     }, nivel);
@@ -111,12 +111,33 @@ async function comprobarIntervalos(b, f) {
   await p.close();
 }
 
-async function jugar(b, cents, nivel) {
+/* La dificultad cambia el margen y la ayuda, igual que en el triple salto: Fácil ves las notas, Normal el nombre del intervalo,
+   Maestro solo oyes la primera nota. Se entra en la pantalla de escuchar por la interfaz y se mira lo que enseña. */
+async function comprobarDificultades(b, f) {
+  for (const [i, dif] of ['facil', 'normal', 'maestro'].entries()) {
+    const p = await b.newPage({ viewport: { width: 1100, height: 900 } });
+    await p.route(/consent\.js|adsbygoogle|googlesyndication|googletagmanager/, (r) => r.abort());
+    await p.goto(`${BASE}${URL}juego/`, { waitUntil: 'load' });
+    await p.check(`input[name=dif][value=${dif}]`, { force: true });
+    await p.click('#btnDemo'); await p.click('#btnStart');
+    await p.waitForSelector('#btnSing', { state: 'visible', timeout: 8000 });
+    const r = await p.evaluate(() => ({ tol: window.__salto.S.tol, notas: document.getElementById('chordNotes').textContent, nombre: document.getElementById('chordName').textContent, txt: document.getElementById('listenTxt').textContent, n: window.__salto.S.chord.n, iv: window.__salto.S.chord.iv.n }));
+    ok(r.tol === f.margen[i], `${dif}: el margen es ±${r.tol} y el código dice ±${f.margen[i]}`);
+    ok(r.nombre.includes(r.iv), `${dif}: no enseña el nombre del intervalo («${r.nombre}» / ${r.iv})`);
+    if (dif === 'facil') ok(r.notas === r.n[0] + ' → ' + r.n[1], `${dif}: debería enseñar las notas y enseña «${r.notas}»`);
+    else ok(r.notas === '', `${dif}: no debería enseñar las notas y enseña «${r.notas}»`);
+    ok(dif === 'maestro' ? /Solo oyes la primera nota/.test(r.txt) : /Escucha las dos notas/.test(r.txt), `${dif}: el texto de escuchar dice «${r.txt.slice(0, 50)}»`);
+    await p.close();
+  }
+}
+
+async function jugar(b, cents, nivel, dif) {
   const p = await b.newPage({ viewport: { width: 1100, height: 900 } });
   await p.route(/consent\.js|adsbygoogle|googlesyndication|googletagmanager/, (r) => r.abort());
   await p.goto(`${BASE}${URL}`, { waitUntil: 'load' });
   const fr = p.frameLocator('iframe.tm-juego');
-  if (nivel) await fr.locator(`input[name=niv][value=${nivel}]`).check({ force: true });
+  if (nivel) await fr.locator(`input[name=gru][value=${nivel}]`).check({ force: true });
+  if (dif) await fr.locator(`input[name=dif][value=${dif}]`).check({ force: true });
   await fr.locator('#btnDemo').click();
   await fr.locator('#btnStart').click();
   await fr.locator('#btnSing').waitFor({ state: 'visible', timeout: 8000 });
@@ -140,10 +161,11 @@ async function jugar(b, cents, nivel) {
   comprobarTexto(f);
   const b = await chromium.launch({ args: ['--autoplay-policy=no-user-gesture-required'] });
   await comprobarIntervalos(b, f);
+  await comprobarDificultades(b, f);
 
   const max = f.base + f.phase * (f.rate[0] + f.rate[1]);
-  const PERMITIDOS = ['juego', 'nivel', 'margen', 'ayuda', 'modo', 'resultado', 'intervalo', 'metros', 'carrera', 'salto', 'motivo'];
-  for (const nivel of ['facil', 'maestro']) {
+  const PERMITIDOS = ['juego', 'dificultad', 'intervalos', 'modo', 'resultado', 'intervalo', 'metros', 'carrera', 'salto', 'motivo'];
+  for (const nivel of ['segundas_terceras', 'todos']) {
     const bien = await jugar(b, 0, nivel), mal = await jugar(b, 200, nivel);
     ok(bien.dist >= f.base + 0.6 * f.phase * f.rate[1] && bien.dist <= max + 0.01, `${nivel}: afinado salta ${bien.dist} m (máximo ${max})`);
     ok(mal.dist === 0 && /nulo/i.test(mal.titulo), `${nivel}: desafinado debería ser nulo y dio ${mal.dist} m («${mal.titulo}»)`);
@@ -155,11 +177,11 @@ async function jugar(b, cents, nivel) {
       const ini = r.eventos.filter((e) => e.evento === 'juego_inicio'), fin = r.eventos.filter((e) => e.evento === 'juego_fin');
       ok(ini.length === 1 && fin.length === 1, `${nivel}: eventos por ronda ${ini.length}/${fin.length}`);
       const e = fin[0] && fin[0].params, i0 = ini[0] && ini[0].params;
-      ok(e && e.juego === 'salto_altura' && e.nivel === nivel && e.margen === 'normal' && e.ayuda === 'dos_notas' && e.modo === 'demo' && e.resultado === esp, `${nivel}: fin = ${JSON.stringify(e)}`);
+      ok(e && e.juego === 'salto_altura' && e.intervalos === nivel && e.dificultad === 'normal' && e.modo === 'demo' && e.resultado === esp, `${nivel}: fin = ${JSON.stringify(e)}`);
       ok(e && e.metros === Math.round(r.dist * 100) / 100, `${nivel}: metros del evento ${e && e.metros} y la pantalla ${r.dist}`);
       ok(e && f.ints.some((i) => i.id === e.intervalo && f.niveles[nivel].includes(i.num)), `${nivel}: intervalo del evento «${e && e.intervalo}» no es del nivel`);
       ok(e && typeof e.carrera === 'number' && typeof e.salto === 'number' && e.carrera <= f.phase && e.salto <= f.phase, `${nivel}: carrera/salto del evento ${e && e.carrera}/${e && e.salto}`);
-      ok(i0 && i0.nivel === nivel && i0.modo === 'demo', `${nivel}: inicio = ${JSON.stringify(i0)}`);
+      ok(i0 && i0.intervalos === nivel && i0.dificultad === 'normal' && i0.modo === 'demo', `${nivel}: inicio = ${JSON.stringify(i0)}`);
       r.eventos.forEach((ev) => ok(Object.keys(ev.params).every((k) => PERMITIDOS.includes(k)), `${nivel}: parámetro no permitido en ${JSON.stringify(ev.params)}`));
       ok(!/nombre|Músico/i.test(JSON.stringify(r.eventos)), `${nivel}: el evento lleva el nombre del jugador`);
     }

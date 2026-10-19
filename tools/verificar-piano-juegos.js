@@ -87,10 +87,10 @@ function compara(etq, r, esperadoOrden) {
   const b = await chromium.launch({ args: ['--autoplay-policy=no-user-gesture-required'] });
   compara('salto de longitud', await escucha(b, '/juegos/entonacion/salto-de-longitud/juego/', null, 1), [0]);
   compara('triple salto (3 notas, arpegio y acorde)', await escucha(b, '/juegos/entonacion/triple-salto/juego/', null, 6), [0, 1, 2, 0, 1, 2]);
-  for (const nivel of ['facil', 'medio', 'dificil', 'maestro']) {
-    compara(`salto de altura · ${nivel} (2 notas, arpegio y juntas)`, await escucha(b, '/juegos/entonacion/salto-de-altura/juego/', async (p) => { await p.check(`input[name=niv][value=${nivel}]`, { force: true }); }, 4), [0, 1, 0, 1]);
+  for (const grupo of ['segundas_terceras', 'cuartas_quintas', 'sextas_septimas', 'todos']) {
+    compara(`salto de altura · ${grupo} (2 notas, arpegio y juntas)`, await escucha(b, '/juegos/entonacion/salto-de-altura/juego/', async (p) => { await p.check(`input[name=gru][value=${grupo}]`, { force: true }); }, 4), [0, 1, 0, 1]);
   }
-  compara('salto de altura · solo la primera nota', await escucha(b, '/juegos/entonacion/salto-de-altura/juego/', async (p) => { await p.check('input[name=ayu][value=una]', { force: true }); }, 1), [0]);
+  compara('salto de altura · Maestro (solo la primera nota)', await escucha(b, '/juegos/entonacion/salto-de-altura/juego/', async (p) => { await p.check('input[name=dif][value=maestro]', { force: true }); }, 1), [0]);
   await b.close();
   console.log(`\n${comprobaciones} comprobaciones · ${fallos ? fallos + ' FALLO(S)' : '0 discrepancias'}${SABOTAJE ? ' (con sabotaje: tienen que salir varios)' : ''}`);
   process.exit(SABOTAJE ? (fallos ? 0 : 1) : (fallos ? 1 : 0));

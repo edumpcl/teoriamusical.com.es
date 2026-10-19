@@ -123,6 +123,8 @@ body {
 img, video, iframe { max-width: 100%; height: auto; display: block; }
 a { color: var(--brand); text-decoration: none; transition: color .15s ease; }
 a:hover { color: var(--brand-dark); text-decoration: underline; }
+/* Los botones de las tarjetas (.ej-btn) llevan su propio fondo y texto blanco: sin esto, al pasar el ratón el texto pasaba al dorado oscuro del enlace (1,0-2,2:1 sobre el fondo del botón). */
+.ej-btn:hover, .ej-btn:focus-visible { color: #fff; }
 
 /* Los enlaces del TEXTO CORRIDO van subrayados a proposito. Si solo se
    distinguen por el color, quien no distingue el dorado no los ve: Lighthouse

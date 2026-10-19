@@ -138,25 +138,20 @@ h3{margin:0;font:400 20px var(--display)}
         <label class="field" for="nombre">Tu nombre
           <input type="text" id="nombre" maxlength="14" placeholder="Escribe tu nombre" autocomplete="off">
         </label>
-        <fieldset class="seg s4">
-          <legend>Nivel (intervalos)</legend>
-          <label class="pill"><input type="radio" name="niv" value="facil" checked><span>Fácil<small>2ªs y 3ªs</small></span></label>
-          <label class="pill"><input type="radio" name="niv" value="medio"><span>Medio<small>4ªs y 5ªs</small></span></label>
-          <label class="pill"><input type="radio" name="niv" value="dificil"><span>Difícil<small>6ªs y 7ªs</small></span></label>
-          <label class="pill"><input type="radio" name="niv" value="maestro"><span>Maestro<small>todas</small></span></label>
-        </fieldset>
         <fieldset class="seg">
-          <legend>Margen de afinación</legend>
-          <label class="pill"><input type="radio" name="mar" value="amplio"><span>Amplio<small>±50</small></span></label>
-          <label class="pill"><input type="radio" name="mar" value="normal" checked><span>Normal<small>±30</small></span></label>
-          <label class="pill"><input type="radio" name="mar" value="fino"><span>Fino<small>±15</small></span></label>
+          <legend>Dificultad</legend>
+          <label class="pill"><input type="radio" name="dif" value="facil"><span>Fácil</span></label>
+          <label class="pill"><input type="radio" name="dif" value="normal" checked><span>Normal</span></label>
+          <label class="pill"><input type="radio" name="dif" value="maestro"><span>Maestro</span></label>
         </fieldset>
-        <fieldset class="seg s2">
-          <legend>Ayuda al escuchar</legend>
-          <label class="pill"><input type="radio" name="ayu" value="dos" checked><span>Las dos notas</span></label>
-          <label class="pill"><input type="radio" name="ayu" value="una"><span>Solo la primera</span></label>
+        <p class="muted">Fácil: ves las notas. Normal: ves el nombre del intervalo. Maestro: solo oyes la primera nota.</p>
+        <fieldset class="seg s4">
+          <legend>Intervalos</legend>
+          <label class="pill"><input type="radio" name="gru" value="segundas_terceras" checked><span>2ªs y 3ªs</span></label>
+          <label class="pill"><input type="radio" name="gru" value="cuartas_quintas"><span>4ªs y 5ªs</span></label>
+          <label class="pill"><input type="radio" name="gru" value="sextas_septimas"><span>6ªs y 7ªs</span></label>
+          <label class="pill"><input type="radio" name="gru" value="todos"><span>Todos</span></label>
         </fieldset>
-        <p class="muted">Primero cantas la nota de la carrera y después la del salto, que está a la distancia del intervalo.</p>
         <button class="btn" id="btnStart">¡A saltar!</button>
         <p class="err" id="micErr" hidden></p>
         <button class="link" id="btnDemo" type="button">Probar sin micrófono (modo demostración)</button>
@@ -277,7 +272,7 @@ const W = 1000, H = 520, GROUND = 430, PXH = 100, BAR_X = 700, START_X = 90, TAK
 const PHASE = 3, NP = 2, SING = PHASE * NP, COUNT = 3.4, APPROACH = 0.85;
 const BASE = 0.5;                                // altura de salida (m)
 const RATE = [0.30, 0.40];                       // metros por segundo afinado: [carrera, salto]
-const MARGEN = { amplio: 50, normal: 30, fino: 15 };           // tolerancia en centésimas (±)
+const DIF = { facil: 50, normal: 30, maestro: 15 };            // tolerancia en centésimas (±)
 /* Intervalos ascendentes desde Do, Re, Mi, Fa, Sol y La. num = número del intervalo, st = semitonos. */
 const LET = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'], LET_ST = [0, 2, 4, 5, 7, 9, 11];
 const ROOTS = [0, 1, 2, 3, 4, 5];
@@ -288,7 +283,7 @@ const INTS = [
   { id: 'sexta_menor', n: '6ª menor', num: 6, st: 8 }, { id: 'sexta_mayor', n: '6ª mayor', num: 6, st: 9 },
   { id: 'septima_menor', n: '7ª menor', num: 7, st: 10 }, { id: 'septima_mayor', n: '7ª mayor', num: 7, st: 11 }
 ];
-const NIVELES = { facil: [2, 3], medio: [4, 5], dificil: [6, 7], maestro: [2, 3, 4, 5, 6, 7] };
+const GRUPOS = { segundas_terceras: [2, 3], cuartas_quintas: [4, 5], sextas_septimas: [6, 7], todos: [2, 3, 4, 5, 6, 7] };
 /* Nombre de la nota que cae en la letra dada a «semis» semitonos sobre el Do central (con su ♯ o ♭). */
 function nombreNota(letra, semis) {
   let d = (((semis - LET_ST[letra]) % 12) + 12) % 12; if (d > 6) d -= 12;
@@ -469,7 +464,7 @@ function drawMusico(c, m, x, y, o = {}) {
    ============================================================ */
 const S = {
   state: 'menu', t0: 0, clock: 0,
-  musico: 0, nombre: '', niv: 'facil', mar: 'normal', ayuda: 'dos', tol: 30, demo: false,
+  musico: 0, nombre: '', dif: 'normal', gru: 'segundas_terceras', tol: 30, demo: false,
   chord: null, targets: [], phase: 0, phaseT0: 0, tp: [0, 0], ds: [0, 0],
   note: null, lastNote: -1, noteUntil: 0,
   tuned: 0, voiced: false, tunedNow: false, cents: 0, hist: [], lastVoice: -1e9,
@@ -611,7 +606,7 @@ function setState(s, now = performance.now()) {
   if (s === 'menu') { refreshRankMenu(); S.runSpeed = 0; S.proj = 0; S.dist = 0; P.length = 0; }
   if (s === 'listen') {
     S.tuned = 0; S.tp = [0, 0]; S.proj = 0; S.dist = 0; S.landed = false; S.nulo = false; P.length = 0;
-    const pool = INTS.filter(iv => NIVELES[S.niv].includes(iv.num));
+    const pool = INTS.filter(iv => GRUPOS[S.gru].includes(iv.num));
     let r, iv, clave;
     do { r = ROOTS[Math.floor(Math.random() * ROOTS.length)]; iv = pool[Math.floor(Math.random() * pool.length)]; clave = r + iv.id; } while (clave === S.lastNote);
     S.lastNote = clave;
@@ -620,8 +615,8 @@ function setState(s, now = performance.now()) {
     S.targets = [{ n: S.chord.n[0], f: hzOf(rs) }, { n: S.chord.n[1], f: hzOf(ts) }];
     S.phase = 0; S.note = S.targets[0];
     $('#chordName').textContent = 'Intervalo de ' + iv.n;
-    $('#chordNotes').textContent = S.niv === 'facil' ? S.chord.n[0] + ' → ' + S.chord.n[1] : '';
-    $('#listenTxt').textContent = S.ayuda === 'una'
+    $('#chordNotes').textContent = S.dif === 'facil' ? S.chord.n[0] + ' → ' + S.chord.n[1] : '';
+    $('#listenTxt').textContent = S.dif === 'maestro'
       ? 'Solo oyes la primera nota. Tú sabes el intervalo: canta esa nota (la carrera) y después la que está a una ' + iv.n + ' (el salto), ' + PHASE + ' segundos cada una. Vale cualquier octava.'
       : 'Escucha las dos notas, una tras otra y luego juntas. Después cantarás la primera (la carrera) y la segunda (el salto), ' + PHASE + ' segundos cada una. Vale cualquier octava.';
     setTimeout(() => { if (S.state === 'listen') hearNote(); }, 450);
@@ -649,7 +644,7 @@ function setState(s, now = performance.now()) {
 function hearNote() { preparaPiano(S.targets.map(t => t.f)).then(() => { if (S.state === 'listen') hearNoteYa(); }); }
 function hearNoteYa() {
   const ts = S.targets; let total;
-  if (S.ayuda === 'una') { playNote(ts[0].f, 1.6); total = 1600; }
+  if (S.dif === 'maestro') { playNote(ts[0].f, 1.6); total = 1600; }
   else {
     ts.forEach((t, i) => playNote(t.f, 0.9, i * 0.75));
     ts.forEach(t => playNote(t.f, 1.5, 2.2, 0.12));
@@ -665,7 +660,7 @@ function renderSteps(ph) {
   const el = $('#steps'); el.replaceChildren();
   S.targets.forEach((t, i) => {
     const sp = document.createElement('span');
-    sp.textContent = S.niv === 'facil' ? ETAPAS[i] + ' · ' + t.n : ETAPAS[i];
+    sp.textContent = S.dif === 'facil' ? ETAPAS[i] + ' · ' + t.n : ETAPAS[i];
     sp.className = i < ph ? 'done' : i === ph ? 'on' : '';
     el.appendChild(sp);
   });
@@ -678,7 +673,7 @@ function track(evento, params) {
 }
 function finishRound() {
   const m = MUSICOS[S.musico], d = S.dist;
-  track('juego_fin', { nivel: S.niv, margen: S.mar, ayuda: S.ayuda === 'una' ? 'una_nota' : 'dos_notas', modo: S.demo ? 'demo' : 'microfono', resultado: S.nulo ? 'nulo' : 'valido', metros: Math.round(d * 100) / 100, intervalo: S.chord.iv.id, carrera: Math.round(S.tp[0] * 10) / 10, salto: Math.round(S.tp[1] * 10) / 10 });
+  track('juego_fin', { dificultad: S.dif, intervalos: S.gru, modo: S.demo ? 'demo' : 'microfono', resultado: S.nulo ? 'nulo' : 'valido', metros: Math.round(d * 100) / 100, intervalo: S.chord.iv.id, carrera: Math.round(S.tp[0] * 10) / 10, salto: Math.round(S.tp[1] * 10) / 10 });
   const list = loadRank(); const id = Date.now(); S.rankId = id;
   list.push({ id, n: S.nombre || 'Músico', m: m.n, d }); saveRank(list);
   const pos = list.slice().sort((a, b) => b.d - a.d || a.id - b.id).findIndex(e => e.id === id) + 1;
@@ -982,11 +977,10 @@ function buildPicker() {
 function saveName() { S.nombre = $('#nombre').value.trim(); try { localStorage.setItem('altura-nombre', S.nombre); } catch (e) { } }
 function startFromMenu() {
   saveName();
-  S.niv = document.querySelector('input[name=niv]:checked').value;
-  S.mar = document.querySelector('input[name=mar]:checked').value; S.tol = MARGEN[S.mar];
-  S.ayuda = document.querySelector('input[name=ayu]:checked').value;
+  S.dif = document.querySelector('input[name=dif]:checked').value; S.tol = DIF[S.dif];
+  S.gru = document.querySelector('input[name=gru]:checked').value;
   setState('listen');
-  track('juego_inicio', { nivel: S.niv, margen: S.mar, ayuda: S.ayuda === 'una' ? 'una_nota' : 'dos_notas', modo: S.demo ? 'demo' : 'microfono' });
+  track('juego_inicio', { dificultad: S.dif, intervalos: S.gru, modo: S.demo ? 'demo' : 'microfono' });
 }
 $('#btnStart').addEventListener('click', async () => {
   const btn = $('#btnStart'), err = $('#micErr'); err.hidden = true;

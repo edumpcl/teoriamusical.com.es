@@ -10,6 +10,8 @@
  * Para cada elemento con texto visible: color del texto y fondo EFECTIVO (se compone, de dentro a fuera, la opacidad de los fondos
  * de los ancestros; un fondo con degradado o imagen no se puede calcular y se avisa aparte). Un color solo se juzga con el fondo
  * que tiene detrás.
+ * También se revisa el estado HOVER de los enlaces con fondo propio (botones y tarjetas): el reposo puede pasar y el color de
+ * `a:hover` del sitio (dorado oscuro) dejar el texto ilegible sobre ese fondo. Se espera 350 ms por la transición de color.
  * Se exige margen (≥ 4,8 en texto normal): Lighthouse mide algo por debajo de lo que sale a mano.
  */
 const path = require('path');
@@ -59,6 +61,28 @@ const AUDITA = () => {
 };
 
 let problemas = 0, textos = 0;
+
+const lumR = ([r, g, b]) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
+const ratioR = (a, b) => { const x = lumR(a), y = lumR(b); return Math.round((Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05) * 100) / 100; };
+async function auditaHover(p, pag) {
+  const sel = 'main a, article a, .tm-article a';
+  const n = await p.locator(sel).count();
+  const vistos = new Set();
+  for (let i = 0; i < n; i++) {
+    const a = p.locator(sel).nth(i);
+    if (!(await a.isVisible())) continue;
+    const bg = await a.evaluate((e) => getComputedStyle(e).backgroundColor);
+    if (/rgba\(0, 0, 0, 0\)|transparent/.test(bg)) continue;                // solo enlaces con fondo propio
+    const clave = (await a.evaluate((e) => e.className)) + '|' + bg;
+    if (vistos.has(clave)) continue; vistos.add(clave); textos++;
+    await a.hover({ timeout: 3000 }).catch(() => {}); await p.waitForTimeout(350);
+    const d = await a.evaluate((e) => { const c = getComputedStyle(e); return [c.color, c.backgroundColor]; });
+    const rgb = (x) => x.match(/[\d.]+/g).slice(0, 3).map(Number);
+    const r = ratioR(rgb(d[0]), rgb(d[1]));
+    if (r < 4.5) { problemas++; console.log(`  ✗ ${pag} (hover): «${(await a.textContent()).trim().slice(0, 30)}» ${r}:1 texto ${d[0]} sobre ${d[1]}`); }
+    await p.mouse.move(0, 0);
+  }
+}
 function informa(pag, lista) {
   textos += lista.length;
   const vistos = new Set();
@@ -85,6 +109,7 @@ function informa(pag, lista) {
     await p.waitForTimeout(1000);
     if (!JUEGO) {
       informa(u, await p.evaluate(AUDITA));
+      await auditaHover(p, u);
       const marcos = p.frames().filter((f) => f !== p.mainFrame());
       for (const f of marcos) { await f.waitForLoadState('load'); informa(u + ' [juego incrustado]', await f.evaluate(AUDITA)); }
     } else {
