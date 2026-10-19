@@ -454,9 +454,7 @@ function crearEnvio() {
       { q: '¿Cuándo aparece mi concierto?', a: 'Lo revisamos cada semana, normalmente los lunes. Si falta algún dato (hora, lugar, programa) te escribimos al correo que nos indiques.' },
     ],
     related: RELACIONADAS,
-  }, `<style>#gracias{display:none}#gracias:target{display:block}</style>
-<div id="gracias" class="tm-op co-envia"><h3>¡Gracias!</h3><p>Hemos recibido tu concierto. Lo comprobamos en la fuente que nos has indicado y lo añadimos en la próxima revisión semanal. Si necesitamos algún dato más, te escribiremos.</p></div>
-
+  }, `
 <p>Si tu <strong>banda, sociedad musical, orquesta o conservatorio</strong> da un concierto, mándanoslo y lo incluimos en la <a href="/${BASE}/">agenda de conciertos</a>. Es gratis y sin condiciones. Muchas bandas casi no usan su web y publican sus conciertos en redes: por eso <strong>también vale la publicación oficial de tu agrupación en Facebook o Instagram</strong>.</p>
 
 <h2>Qué necesitamos</h2>
@@ -474,7 +472,7 @@ function crearEnvio() {
 <form class="tm-contact-form" action="https://formsubmit.co/3e2cc4c937fc5f3f0495fd4f63601ebc" method="POST">
   <input type="hidden" name="_subject" value="Concierto para la agenda de conciertos">
   <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_next" value="${url}#gracias">
+  <input type="hidden" name="_next" value="${url}gracias/">
   <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
   <label>Nombre de la agrupación (requerido)
     <input type="text" name="agrupacion" required>
@@ -530,6 +528,30 @@ function crearEnvio() {
 `);
 }
 
+/* Página a la que formsubmit lleva tras enviar (campo _next). noindex, sin anuncios y fuera del sitemap. */
+function crearGracias() {
+  scaffold({
+    dir: `${ENVIAR}/gracias`,
+    title: 'Concierto recibido: gracias',
+    desc: 'Hemos recibido el concierto de tu agrupación. Lo comprobamos en la fuente oficial y lo añadimos en la revisión semanal.',
+    h1: '¡Gracias! Hemos recibido tu concierto',
+    breadcrumb: [{ name: 'Agenda de conciertos', url: `/${BASE}/` }, { name: 'Enviar un concierto', url: `/${ENVIAR}/` }],
+    related: RELACIONADAS,
+  }, `<p>Comprobamos el concierto en la fuente que nos has indicado y lo añadimos en la <strong>revisión semanal</strong>, normalmente los lunes. Si necesitamos algún dato más (hora, lugar, programa), te escribiremos al correo que nos has dejado.</p>
+
+<h2>¿Y ahora?</h2>
+<ul>
+<li><a href="/${ENVIAR}/"><strong>Enviar otro concierto</strong></a>, si tu agrupación tiene más fechas.</li>
+<li>Ver la <a href="/${BASE}/">agenda de conciertos</a> y buscar tu comunidad.</li>
+<li>Mirar las <a href="/${BASE_AGR}/">agrupaciones con página propia</a>.</li>
+</ul>
+`);
+  const file = path.join(ROOT, ENVIAR, 'gracias', 'index.html');
+  let page = fs.readFileSync(file, 'utf8');
+  page = page.replace(/<meta name="robots" content="[^"]*">/, '<meta name="robots" content="noindex, follow">');
+  fs.writeFileSync(file, page);
+}
+
 function crearIndice() {
   scaffold({
     dir: BASE_AGR,
@@ -558,6 +580,7 @@ for (const n of conPagina) {
 escribirBloque(HUB, bloqueHub());
 const PAG_ENVIO = path.join(ROOT, ENVIAR, 'index.html');
 if (!fs.existsSync(PAG_ENVIO)) { crearEnvio(); creadas++; }
+if (!fs.existsSync(path.join(ROOT, ENVIAR, 'gracias', 'index.html'))) { crearGracias(); creadas++; }
 const INDICE_AGR = path.join(ROOT, BASE_AGR, 'index.html');
 if (!fs.existsSync(INDICE_AGR)) { crearIndice(); creadas++; }
 escribirBloque(INDICE_AGR, bloqueIndice());
