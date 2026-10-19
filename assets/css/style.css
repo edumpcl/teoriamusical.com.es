@@ -217,6 +217,12 @@ figure.tm-staff img { display: inline-block; }
   height: 2px; background: var(--brand); border-radius: 2px;
 }
 
+/* Con siete entradas en el menú, entre el menú móvil y los ~1100 px el menú se partía en dos filas: se compacta. */
+@media (min-width: 861px) and (max-width: 1120px) {
+  .tm-nav-list { gap: 1.05rem; }
+  .tm-nav-list a { font-size: .92rem; }
+}
+
 @media (max-width: 860px) {
   .tm-nav-toggle { display: inline-flex; }
   .tm-nav {

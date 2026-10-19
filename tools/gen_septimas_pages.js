@@ -272,6 +272,7 @@ ${jsonld}
         <li><a href="/" class="">Inicio</a></li>
         <li><a href="/diccionario-musical/" class="">Diccionario Musical</a></li>
         <li><a href="/ejercicios/" class="is-active">Ejercicios</a></li>
+        <li><a href="/juegos/entonacion/" class="">Juegos</a></li>
         <li class="tm-has-sub"><a href="/herramientas/" class="">Herramientas</a>
         <ul class="tm-subnav">
           <li><a href="/herramientas/metronomo/">Metrónomo</a></li>
