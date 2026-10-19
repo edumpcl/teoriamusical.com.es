@@ -33,6 +33,8 @@ const coma = (n) => String(n).replace('.', ',');
 const JUEGOS = {
   salto: { dir: 'juegos/entonacion/salto-de-longitud', url: '/juegos/entonacion/salto-de-longitud/', t: 'Salto de longitud', demoSecs: 5.6 },
   triple: { dir: 'juegos/entonacion/triple-salto', url: '/juegos/entonacion/triple-salto/', t: 'Triple salto', demoSecs: 9.6 },
+  // el salto de altura tiene su propia prueba (tools/test-salto-altura.js): aquí solo se comprueba lo común (incrustado, marca, micrófono)
+  altura: { dir: 'juegos/entonacion/salto-de-altura', url: '/juegos/entonacion/salto-de-altura/', t: 'Salto de altura', propio: true },
 };
 
 function cifras() {
@@ -78,8 +80,17 @@ function comprobarTextos(c) {
   tiene(leer(JUEGOS.salto.dir + '/index.html'), coma(c.sRate.toFixed(2)) + ' metros', 'salto (FAQ/JSON-LD)');
 }
 
+// El piano de los juegos son las muestras del Salamander (CC BY 3.0): la licencia obliga a citar al autor en cada página que lo usa
+function comprobarCredito() {
+  for (const j of Object.values(JUEGOS)) {
+    const t = leer(j.dir + '/index.html');
+    ok(/Salamander Grand Piano/.test(t) && /Alexander Holm/.test(t) && /creativecommons\.org\/licenses\/by\/3\.0/.test(t), `${j.dir}: falta el crédito del piano (Salamander, Alexander Holm, CC BY 3.0)`);
+    ok((t.match(/Salamander/g) || []).length === 1, `${j.dir}: el crédito del piano sale más de una vez`);
+  }
+}
+
 function comprobarMarca() {
-  let todo = [JUEGOS.salto.dir + '/juego/index.html', JUEGOS.triple.dir + '/juego/index.html', JUEGOS.salto.dir + '/index.html', JUEGOS.triple.dir + '/index.html', 'juegos/entonacion/index.html'].map(leer);
+  let todo = [JUEGOS.salto.dir + '/juego/index.html', JUEGOS.triple.dir + '/juego/index.html', JUEGOS.salto.dir + '/index.html', JUEGOS.triple.dir + '/index.html', JUEGOS.altura.dir + '/juego/index.html', JUEGOS.altura.dir + '/index.html', 'juegos/entonacion/index.html'].map(leer);
   if (SABOTAJE) todo.push('<p>CIUM Sot de Chera · 100 AÑOS</p>');
   todo.forEach((t, i) => ok(!/CIUM|Sot de Chera|centenar|100\s*A[ÑN]OS|>100</i.test(t), 'queda marca en el archivo ' + i));
 }
@@ -110,6 +121,7 @@ async function jugar(browser, j, cents) {
   console.log(`Cifras del código: salto ${c.sRate} m/s × ${c.sSing} s = ${c.sMax} m (récord ${c.sRec}); triple ${c.tRate.join('/')} × ${c.tPhase} s = ${c.tMax} m (récord ${c.tRec})`);
   comprobarTextos(c);
   comprobarMarca();
+  comprobarCredito();
 
   const b = await chromium.launch({ args: ['--autoplay-policy=no-user-gesture-required', '--use-fake-ui-for-media-stream'] });
 
@@ -150,6 +162,7 @@ async function jugar(browser, j, cents) {
 
   // 2. se juega de verdad
   for (const [clave, j] of Object.entries(JUEGOS)) {
+    if (j.propio) continue;
     const max = clave === 'salto' ? c.sMax : c.tMax;
     const bien = await jugar(b, j, 0);
     ok(bien.dist > max * 0.6 && bien.dist <= max + 0.01, `${clave}: cantando afinado salta ${bien.dist} m (máximo ${max})`);

@@ -85,7 +85,7 @@ input[type=text]{-webkit-user-select:text;user-select:text;font:800 20px var(--b
 .rank .nm small{color:var(--mute);font-weight:700}
 .rank .dd{font:400 18px var(--display)}
 h3{margin:0;font:400 20px var(--display)}
-.speaker{display:grid;place-content:center;height:96px;border-radius:14px;background:var(--paper2);font:400 56px var(--display);color:var(--brass-d)}
+.speaker{display:grid;place-content:center;height:96px;border-radius:14px;background:var(--paper2);font:400 56px var(--display);color:#8c6609}
 .speaker.on{animation:throb .5s ease-in-out infinite alternate}
 @keyframes throb{from{transform:scale(1)}to{transform:scale(1.12)}}
 .level{display:grid;gap:4px;font:800 14px var(--body);color:var(--mute)}
@@ -103,6 +103,7 @@ h3{margin:0;font:400 20px var(--display)}
 .kicker{font:800 14px var(--body);text-transform:uppercase;letter-spacing:.1em;color:var(--mute)}
 .demo{display:grid;gap:10px;padding:12px;border:3px dashed var(--mute);border-radius:12px}
 .foot{color:#9fb6cf;font-size:15px}
+.foot .link{color:#c4daed}
 @media (max-width:900px){.game{grid-template-columns:minmax(0,1fr)}.hud-timer,.hud-dist{top:20%}}
 @media (prefers-reduced-motion:reduce){.speaker.on,.hud-count.pop{animation:none}}
 </style>
@@ -454,7 +455,7 @@ async function ensureMic() {
   buf = new Float32Array(analyser.fftSize);
   return true;
 }
-function playNote(f, dur = 2) {
+function playSynth(f, dur = 2) {
   if (!AC) return;
   const t = AC.currentTime, g = AC.createGain();
   g.gain.setValueAtTime(0.0001, t);
@@ -467,6 +468,40 @@ function playNote(f, dur = 2) {
     const gg = AC.createGain(); gg.gain.value = amp;
     o.connect(gg); gg.connect(g); o.start(t); o.stop(t + dur + 0.05);
   }
+}
+/* PIANO: el sonido de referencia es el de las muestras del Salamander Grand Piano (Alexander Holm, CC BY 3.0), las mismas que usa el
+   resto de la web. Si una muestra aún no se ha descargado (o no hay red), suena la voz sintética de siempre. */
+const PIANO_SAMP = { 0: ['C', 0, 0], 1: ['C', 0, 1], 2: ['Ds', 0, -1], 3: ['Ds', 0, 0], 4: ['Ds', 0, 1], 5: ['Fs', 0, -1], 6: ['Fs', 0, 0], 7: ['Fs', 0, 1], 8: ['A', 0, -1], 9: ['A', 0, 0], 10: ['A', 0, 1], 11: ['C', 1, -1] };
+const pianoProm = {}, pianoListo = {};
+const midiDe = f => Math.round(69 + 12 * Math.log2(f / 440));
+function pianoDe(m) { const pc = ((m % 12) + 12) % 12, oct = Math.floor(m / 12) - 1, mp = PIANO_SAMP[pc]; return { file: mp[0] + (oct + mp[1]), rate: Math.pow(2, mp[2] / 12) }; }
+function cargaPiano(file) {
+  if (!pianoProm[file]) {
+    pianoProm[file] = fetch('/assets/audio/piano/' + file + '.ogg')
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
+      .then(a => new Promise((res, rej) => AC.decodeAudioData(a, res, rej)))
+      .then(b => { pianoListo[file] = b; return b; })
+      .catch(() => { delete pianoProm[file]; return null; });
+  }
+  return pianoProm[file];
+}
+function preparaPiano(freqs) {
+  if (!AC) return Promise.resolve();
+  return Promise.race([Promise.all(freqs.map(f => cargaPiano(pianoDe(midiDe(f)).file))), new Promise(r => setTimeout(r, 1500))]);
+}
+function playNote(f, dur = 2, when = 0, vol = 0.26) {
+  if (!AC) return;
+  const p = pianoDe(midiDe(f)), b = pianoListo[p.file];
+  if (!b) { cargaPiano(p.file); return playSynth(f, dur, when, vol); }
+  const t = AC.currentTime + when, end = t + dur, src = AC.createBufferSource(), g = AC.createGain(), peak = Math.min(1, vol * 3.2);
+  src.buffer = b; src.playbackRate.value = p.rate;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + 0.012);
+  g.gain.setValueAtTime(peak, end); g.gain.exponentialRampToValueAtTime(0.0008, end + 0.5);
+  src.connect(g); g.connect(AC.destination); src.start(t); src.stop(end + 0.55);
+}
+function jinglePiano(freqs, step = 0.13) {
+  if (!AC) return;
+  preparaPiano(freqs).then(() => freqs.forEach((f, i) => playNote(f, step * 2.4, i * step, 0.3)));
 }
 function jingle(freqs, step = 0.13, type = 'triangle') {
   if (!AC) return;
@@ -553,7 +588,8 @@ function setState(s, now = performance.now()) {
   if (s === 'jump') { S.tJump = now; }
   if (s === 'result') finishRound();
 }
-function hearNote() {
+function hearNote() { preparaPiano([S.note.f]).then(() => { if (S.state === 'listen') hearNoteYa(); }); }
+function hearNoteYa() {
   playNote(S.note.f, 2);
   S.noteUntil = performance.now() + 2000;
   $('#speaker').classList.add('on');
@@ -583,9 +619,9 @@ function finishRound() {
   $('#resNote').textContent = 'La nota era ' + S.note.n.toUpperCase() + '. Afinaste ' + fmt1(S.tuned) + ' de ' + SING + ' segundos.';
   $('#resRank').textContent = 'Puesto n.º ' + pos + ' de ' + list.length + (list.length === 1 ? ' salto.' : ' saltos.');
   renderRank($('#rankRes'), id);
-  if (d >= 5) { const n = reduce ? 30 : 110; for (let i = 0; i < n; i++) spawnConfetti(); jingle([523, 659, 784, 1047], 0.12); }
+  if (d >= 5) { const n = reduce ? 30 : 110; for (let i = 0; i < n; i++) spawnConfetti(); jinglePiano([523, 659, 784, 1047], 0.12); }
   else if (S.nulo) jingle([220, 175, 147], 0.18, 'sawtooth');
-  else jingle([392, 523], 0.14);
+  else jinglePiano([392, 523], 0.14);
 }
 
 /* ============================================================
