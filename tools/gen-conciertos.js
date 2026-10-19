@@ -471,7 +471,7 @@ function crearEnvio() {
 <p>Solo publicamos lo que figura en una fuente de la propia agrupación o de quien organiza el concierto: su web, su página o perfil en redes, el auditorio, el ayuntamiento o la federación de bandas. No sirven la prensa, los agregadores ni los mensajes sin enlace. Si el cartel solo está en una imagen, súbela a la publicación oficial y mándanos el enlace. Si todavía no tienes ninguno, envía el formulario sin enlace: para publicarlo necesitaremos confirmarlo en una fuente oficial, y te escribiremos si hace falta.</p>
 
 <h2>Formulario</h2>
-<form class="tm-contact-form" action="https://formsubmit.co/agendateoriamusical@gmail.com" method="POST">
+<form class="tm-contact-form" action="https://formsubmit.co/3e2cc4c937fc5f3f0495fd4f63601ebc" method="POST">
   <input type="hidden" name="_subject" value="Concierto para la agenda de conciertos">
   <input type="hidden" name="_captcha" value="false">
   <input type="hidden" name="_next" value="${url}#gracias">
