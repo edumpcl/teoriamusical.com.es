@@ -1,5 +1,5 @@
 {
-  "comprobado": "2026-10-12",
+  "comprobado": "2026-10-19",
   "conciertos": [
     {
       "id": "bsmm-2026-11-03",
@@ -9452,6 +9452,125 @@
         {
           "texto": "Noticia en la web de la banda (14 de septiembre)",
           "url": "https://www.bandadebenicarlo.com/noticias/ferrer-ferran-dedica-una-obra-a-la-banda-de-benicarlo"
+        }
+      ]
+    },
+    {
+      "id": "fsmcv-xvi-certamen-de-musica-festera-de-altea-la-vella-1025",
+      "agrupacion": "Federación de Sociedades Musicales de la Comunitat Valenciana (FSMCV)",
+      "titulo": "XVI Certamen de Música Festera de Altea la Vella",
+      "fecha": "2026-10-25",
+      "hora": "10:00",
+      "lugar": "Centro Cultural de Altea la Vella",
+      "ciudad": "Altea",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "nota": "Actividad de la FSMCV: horarios y programa en su agenda.",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda/xvi-certamen-de-musica-festera-de-altea-la-vella/?occurrence=2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "fsmcv-xxv-encuentro-bandas-juveniles-comarca-horta-sud-1025",
+      "agrupacion": "Federación de Sociedades Musicales de la Comunitat Valenciana (FSMCV)",
+      "titulo": "XXV Encuentro de bandas juveniles de la comarca de l'Horta Sud",
+      "fecha": "2026-10-25",
+      "hora": "10:30",
+      "lugar": "Ayuntamiento de Catarroja",
+      "ciudad": "Catarroja",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "nota": "Actividad de la FSMCV: horarios y programa en su agenda.",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda/xxv-encuentro-bandas-juveniles-comarca-horta-sud/?occurrence=2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "fsmcv-la-musica-que-nos-une-camp-de-morvedre-1025",
+      "agrupacion": "Federación de Sociedades Musicales de la Comunitat Valenciana (FSMCV)",
+      "titulo": "La Música que nos une, Camp de Morvedre",
+      "fecha": "2026-10-25",
+      "hora": "17:30",
+      "ciudad": "Faura",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "nota": "Actividad de la FSMCV: horarios y programa en su agenda.",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda/la-musica-que-nos-une-camp-de-morvedre/?occurrence=2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "fsmcv-actividad-comarcal-encuentro-de-orquestas-de-la-comarca-horta-sud-1031",
+      "agrupacion": "Federación de Sociedades Musicales de la Comunitat Valenciana (FSMCV)",
+      "titulo": "Encuentro de orquestas de la comarca de l'Horta Sud",
+      "fecha": "2026-10-31",
+      "ciudad": "Paiporta",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "nota": "Actividad de la FSMCV: horarios y programa en su agenda.",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda/actividad-comarcal-encuentro-de-orquestas-de-la-comarca-horta-sud/?occurrence=2026-10-31"
+        }
+      ]
+    },
+    {
+      "id": "fsmcv-v-certamen-de-interpretacion-de-musica-festera-premios-sant-jordi-1031",
+      "agrupacion": "Federación de Sociedades Musicales de la Comunitat Valenciana (FSMCV)",
+      "titulo": "V Certamen de Interpretación de Música Festera, Premios Sant Jordi",
+      "fecha": "2026-10-31",
+      "hora": "19:30",
+      "lugar": "Teatro Calderón",
+      "ciudad": "Alcoi",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "nota": "Actividad de la FSMCV: horarios y programa en su agenda.",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda/v-certamen-de-interpretacion-de-musica-festera-premios-sant-jordi/?occurrence=2026-10-31"
+        }
+      ]
+    },
+    {
+      "id": "fsmcv-46-certamen-de-bandas-de-musica-de-la-comunitat-valenciana-4a-y-3a-seccion-1107",
+      "agrupacion": "Federación de Sociedades Musicales de la Comunitat Valenciana (FSMCV)",
+      "titulo": "46 Certamen de Bandas de Música de la Comunitat Valenciana (4.ª y 3.ª sección)",
+      "fecha": "2026-11-07",
+      "ciudad": "València",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "nota": "Certamen de la FSMCV: la agenda no indica hora ni sala; consúltalas allí.",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda/46-certamen-de-bandas-de-musica-de-la-comunitat-valenciana-4a-y-3a-seccion/?occurrence=2026-11-07"
+        }
+      ]
+    },
+    {
+      "id": "fsmcv-46-certamen-de-bandas-de-musica-de-la-comunitat-valenciana-2a-y-1a-seccion-1108",
+      "agrupacion": "Federación de Sociedades Musicales de la Comunitat Valenciana (FSMCV)",
+      "titulo": "46 Certamen de Bandas de Música de la Comunitat Valenciana (2.ª y 1.ª sección)",
+      "fecha": "2026-11-08",
+      "ciudad": "València",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "nota": "Certamen de la FSMCV: la agenda no indica hora ni sala; consúltalas allí.",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda/46-certamen-de-bandas-de-musica-de-la-comunitat-valenciana-2a-y-1a-seccion/?occurrence=2026-11-08"
         }
       ]
     }
