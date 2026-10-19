@@ -52,7 +52,9 @@ const AUDITA = () => {
     vistos.add(el);
     const cs = getComputedStyle(el);
     const { base, incalculable } = fondo(el);
-    let fg = parse(cs.color); fg = over([fg[0], fg[1], fg[2], fg[3] * (Number(cs.opacity) || 1)], base);
+    // el texto de un SVG se pinta con `fill`, no con `color`
+    const esSvg = el.namespaceURI === 'http://www.w3.org/2000/svg';
+    let fg = parse(esSvg ? cs.fill : cs.color); fg = over([fg[0], fg[1], fg[2], fg[3] * (Number(cs.opacity) || 1)], base);
     const px = parseFloat(cs.fontSize), peso = Number(cs.fontWeight) || 400;
     const grande = px >= 24 || (px >= 18.66 && peso >= 700);
     out.push({ txt: n.nodeValue.trim().slice(0, 40), tag: el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.split(' ')[0] : ''), r: Math.round(ratio(fg, base) * 100) / 100, grande, fg: fg.slice(0, 3).map(Math.round).join(','), bg: base.slice(0, 3).map(Math.round).join(','), incalculable });

@@ -281,7 +281,7 @@ figure.tm-staff img { display: inline-block; }
 }
 .tm-breadcrumb a { color: var(--text-muted); }
 .tm-breadcrumb a:hover { color: var(--brand); }
-.tm-crumb-sep { margin: 0 .5em; color: var(--border-strong); }
+.tm-crumb-sep { margin: 0 .5em; color: #686868; }
 
 /* ---------- Page header ---------- */
 .tm-page-header {

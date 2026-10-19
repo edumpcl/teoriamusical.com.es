@@ -261,7 +261,7 @@
     '.tm-fe-datos{display:none;}',
     '.tm-fe-fila{position:relative;border:1px solid #e8e0cc;border-radius:6px;padding:3px 6px 4px;margin-bottom:5px;break-inside:avoid;page-break-inside:avoid;}',
     '.tm-fe-fila svg{display:block;}',
-    '.tm-fe-n{position:absolute;top:3px;left:7px;font-size:.72rem;font-weight:700;color:#9a7b28;}',
+    '.tm-fe-n{position:absolute;top:3px;left:7px;font-size:.72rem;font-weight:700;color:#85600a;}',
     '.tm-fe-pide{font-size:.9rem;margin:0 0 2px 22px;line-height:1.3;color:#1a1a1a;}',
     '.tm-fe-linea{display:flex;align-items:baseline;gap:6px;font-size:.85rem;margin:0 6px 2px;}',
     '.tm-fe-linea > span{flex:1;border-bottom:1px solid #9a9a9a;min-height:1.05em;}',

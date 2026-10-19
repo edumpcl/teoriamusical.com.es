@@ -228,7 +228,7 @@
     }
     ejercicios.forEach(function (e, i) {
       var izq = dx + cajas[i].izq, der = dx + cajas[i].der, cx = (izq + der) / 2, w = der - izq;
-      poner(izq + 5, 0, String(opts.desde + i), 'font-size:10.5px;color:#9a7b28;');
+      poner(izq + 5, 0, String(opts.desde + i), 'font-size:10.5px;color:#85600a;');
       var flecha = e.dir > 0 ? '\u2191' : '\u2193';
       var yTxt = yInf + opts.gap - 10;
       if (opts.modo === 'analizar') {
