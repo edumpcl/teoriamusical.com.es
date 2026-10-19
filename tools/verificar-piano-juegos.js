@@ -9,7 +9,8 @@
  * CÓMO: se interceptan la descarga y la decodificación de las muestras (para saber de qué fichero viene cada buffer) y los arranques
  * de AudioBufferSourceNode y OscillatorNode. Cada nota que suena = nota del fichero + semitonos de la velocidad de reproducción.
  * Se compara con las notas del juego por dos vías: su frecuencia (midi calculado aparte) y el NOMBRE que enseña la pantalla.
- * Esperado: salto de longitud, 1 nota; triple salto, el arpegio (3) y el acorde (3); salto de altura, las 2 notas una tras otra (intervalo melódico, nunca a la vez)
+ * Esperado: lanzamiento de jabalina, la nota A en piano, un glissando sintético (2 osciladores) de A a B en 2 s que sale 1 s después de A, y la nota B en piano a los 3 s;
+ * salto de longitud, 1 nota; triple salto, el arpegio (3) y el acorde (3); salto de altura, las 2 notas una tras otra (intervalo melódico, nunca a la vez)
  * (o solo la primera con «solo la primera nota»). Y NINGÚN oscilador: si suena la voz sintética, es que el piano no se está usando.
  * --sabotaje: bloquea las muestras (cae la voz sintética) y comprueba que la verificación lo detecta.
  */
@@ -46,6 +47,10 @@ const INSTRUMENTACION = () => {
   };
   const st = AudioBufferSourceNode.prototype.start;
   AudioBufferSourceNode.prototype.start = function (when) { window.__ev.push({ tipo: 'muestra', nombre: this.buffer && this.buffer.__nombre, rate: this.playbackRate.value, cuando: when }); return st.apply(this, arguments); };
+  // frecuencias que fija o a las que se desliza un oscilador (los volúmenes son < 20 y se ignoran)
+  const er = AudioParam.prototype.exponentialRampToValueAtTime, sv = AudioParam.prototype.setValueAtTime;
+  AudioParam.prototype.exponentialRampToValueAtTime = function (v, t) { if (v > 20) window.__ev.push({ tipo: 'rampa', valor: v, hasta: t }); return er.apply(this, arguments); };
+  AudioParam.prototype.setValueAtTime = function (v, t) { if (v > 20) window.__ev.push({ tipo: 'fijar', valor: v, cuando: t }); return sv.apply(this, arguments); };
   const so = OscillatorNode.prototype.start;
   OscillatorNode.prototype.start = function (when) { window.__ev.push({ tipo: 'oscilador', f: this.frequency.value, cuando: when }); return so.apply(this, arguments); };
 };
@@ -71,9 +76,21 @@ async function escucha(b, ruta, preparar, esperaN) {
   return { ev, notas: info.notas };
 }
 
-function compara(etq, r, esperadoOrden, huecoMin) {
+function compara(etq, r, esperadoOrden, huecoMin, glissando) {
   const osc = r.ev.filter((e) => e.tipo === 'oscilador'), mu = r.ev.filter((e) => e.tipo === 'muestra');
-  ok(osc.length === 0, `${etq}: suenan ${osc.length} osciladores (voz sintética) en vez de piano`);
+  if (!glissando) ok(osc.length === 0, `${etq}: suenan ${osc.length} osciladores (voz sintética) en vez de piano`);
+  else {
+    // el glissando es sintético (un piano no puede deslizar): 2 osciladores (seno y triángulo) que van de A a B en P2 segundos
+    const rampas = r.ev.filter((e) => e.tipo === 'rampa'), fijos = r.ev.filter((e) => e.tipo === 'fijar');
+    ok(osc.length === 2 && rampas.length === 2, `${etq}: el glissando debería ser 2 osciladores con rampa y hay ${osc.length} y ${rampas.length}`);
+    const fA = r.notas[0].f, fB = r.notas[1].f;
+    rampas.forEach((rp, i) => {
+      ok(Math.abs(rp.valor - fB) < 0.01, `${etq}: el glissando acaba en ${rp.valor.toFixed(2)} Hz y la nota B es ${fB.toFixed(2)} Hz`);
+      ok(fijos[i] && Math.abs(fijos[i].valor - fA) < 0.01, `${etq}: el glissando sale de ${fijos[i] && fijos[i].valor.toFixed(2)} Hz y la nota A es ${fA.toFixed(2)} Hz`);
+      ok(fijos[i] && Math.abs((rp.hasta - fijos[i].cuando) - glissando.dur) < 0.01, `${etq}: el glissando dura ${fijos[i] && (rp.hasta - fijos[i].cuando).toFixed(2)} s y debería durar ${glissando.dur} s`);
+      ok(fijos[i] && Math.abs((fijos[i].cuando - mu[0].cuando) - glissando.sale) < 0.01, `${etq}: el glissando sale ${fijos[i] && (fijos[i].cuando - mu[0].cuando).toFixed(2)} s después de la nota A y debería salir a los ${glissando.sale} s`);
+    });
+  }
   const sonadas = mu.map((e) => (e.nombre ? midiDeFichero(e.nombre) + Math.round(12 * Math.log2(e.rate)) : null));
   const esperadas = esperadoOrden.map((i) => 60 + Math.round(12 * Math.log2(r.notas[i].f / 261.6256)));
   ok(JSON.stringify(sonadas) === JSON.stringify(esperadas), `${etq}: suena ${JSON.stringify(sonadas)} y el juego toca ${JSON.stringify(esperadas)}`);
@@ -91,6 +108,10 @@ function compara(etq, r, esperadoOrden, huecoMin) {
   for (const grupo of ['segundas_terceras', 'cuartas_quintas', 'sextas_septimas', 'todos']) {
     compara(`salto de altura · ${grupo} (2 notas, una tras otra)`, await escucha(b, '/juegos/entonacion/salto-de-altura/juego/', async (p) => { await p.check(`input[name=gru][value=${grupo}]`, { force: true }); }, 2), [0, 1], 1.0);
   }
+  const juegoJ = '/juegos/entonacion/lanzamiento-de-jabalina/juego/';
+  compara('lanzamiento de jabalina (A en piano, glissando, B en piano)', await escucha(b, juegoJ, null, 4), [0, 1], 2.5, { dur: 2, sale: 1 });
+  for (const grupo of ['segundas_terceras', 'sextas_septimas', 'todos']) compara(`lanzamiento de jabalina · ${grupo}`, await escucha(b, juegoJ, async (p) => { await p.check(`input[name=gru][value=${grupo}]`, { force: true }); }, 4), [0, 1], 2.5, { dur: 2, sale: 1 });
+  compara('lanzamiento de jabalina · Maestro (solo la primera nota)', await escucha(b, juegoJ, async (p) => { await p.check('input[name=dif][value=maestro]', { force: true }); }, 1), [0]);
   compara('salto de altura · Maestro (solo la primera nota)', await escucha(b, '/juegos/entonacion/salto-de-altura/juego/', async (p) => { await p.check('input[name=dif][value=maestro]', { force: true }); }, 1), [0]);
   await b.close();
   console.log(`\n${comprobaciones} comprobaciones · ${fallos ? fallos + ' FALLO(S)' : '0 discrepancias'}${SABOTAJE ? ' (con sabotaje: tienen que salir varios)' : ''}`);

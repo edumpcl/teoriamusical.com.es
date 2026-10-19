@@ -33,8 +33,9 @@ const coma = (n) => String(n).replace('.', ',');
 const JUEGOS = {
   salto: { dir: 'juegos/entonacion/salto-de-longitud', url: '/juegos/entonacion/salto-de-longitud/', t: 'Salto de longitud', demoSecs: 5.6 },
   triple: { dir: 'juegos/entonacion/triple-salto', url: '/juegos/entonacion/triple-salto/', t: 'Triple salto', demoSecs: 9.6 },
-  // el salto de altura tiene su propia prueba (tools/test-salto-altura.js): aquí solo se comprueba lo común (incrustado, marca, micrófono)
+  // el salto de altura y la jabalina tienen su propia prueba (tools/test-salto-altura.js, tools/test-jabalina.js): aquí solo se comprueba lo común (incrustado, marca, micrófono)
   altura: { dir: 'juegos/entonacion/salto-de-altura', url: '/juegos/entonacion/salto-de-altura/', t: 'Salto de altura', propio: true },
+  jabalina: { dir: 'juegos/entonacion/lanzamiento-de-jabalina', url: '/juegos/entonacion/lanzamiento-de-jabalina/', t: 'Lanzamiento de jabalina', propio: true },   // prueba propia: tools/test-jabalina.js
 };
 
 function cifras() {
@@ -90,7 +91,7 @@ function comprobarCredito() {
 }
 
 function comprobarMarca() {
-  let todo = [JUEGOS.salto.dir + '/juego/index.html', JUEGOS.triple.dir + '/juego/index.html', JUEGOS.salto.dir + '/index.html', JUEGOS.triple.dir + '/index.html', JUEGOS.altura.dir + '/juego/index.html', JUEGOS.altura.dir + '/index.html', 'juegos/entonacion/index.html'].map(leer);
+  let todo = [JUEGOS.salto.dir + '/juego/index.html', JUEGOS.triple.dir + '/juego/index.html', JUEGOS.salto.dir + '/index.html', JUEGOS.triple.dir + '/index.html', JUEGOS.altura.dir + '/juego/index.html', JUEGOS.altura.dir + '/index.html', JUEGOS.jabalina.dir + '/juego/index.html', JUEGOS.jabalina.dir + '/index.html', 'juegos/entonacion/index.html'].map(leer);
   if (SABOTAJE) todo.push('<p>CIUM Sot de Chera · 100 AÑOS</p>');
   todo.forEach((t, i) => ok(!/CIUM|Sot de Chera|centenar|100\s*A[ÑN]OS|>100</i.test(t), 'queda marca en el archivo ' + i));
 }
