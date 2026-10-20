@@ -27,7 +27,7 @@
      gtag ya está cargado con Consent Mode: si la persona no ha aceptado la analítica, no se guardan cookies ni se identifica a nadie.
      Solo se admiten eventos y parámetros conocidos, con valores cortos: nunca nombres ni nada escrito por el jugador. */
   var EVENTOS = { juego_inicio: 1, juego_fin: 1, juego_mic_error: 1 };
-  var PARAMS = { juego: 'texto', dificultad: 'texto', modo: 'texto', resultado: 'texto', acordes: 'texto', motivo: 'texto', intervalos: 'texto', intervalo: 'texto', sentido: 'texto', metros: 'numero', carrera: 'numero', salto: 'numero', glissando: 'numero', remate: 'numero' };
+  var PARAMS = { juego: 'texto', dificultad: 'texto', modo: 'texto', resultado: 'texto', acordes: 'texto', motivo: 'texto', intervalos: 'texto', intervalo: 'texto', sentido: 'texto', escalas: 'texto', metros: 'numero', carrera: 'numero', salto: 'numero', glissando: 'numero', remate: 'numero', tiempo: 'numero', superadas: 'numero' };
   function mide(e) {
     var d = e.data;
     if (e.origin !== location.origin || !d || d.tmJuego !== true || !EVENTOS[d.evento]) return;

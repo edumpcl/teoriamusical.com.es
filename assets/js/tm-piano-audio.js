@@ -11,7 +11,7 @@
   var SAMP = { 0: ['C', 0, 0], 1: ['C', 0, 1], 2: ['Ds', 0, -1], 3: ['Ds', 0, 0], 4: ['Ds', 0, 1], 5: ['Fs', 0, -1], 6: ['Fs', 0, 0], 7: ['Fs', 0, 1], 8: ['A', 0, -1], 9: ['A', 0, 0], 10: ['A', 0, 1], 11: ['C', 1, -1] };
   var BASE = { Do: 0, Re: 2, Mi: 4, Fa: 5, Sol: 7, La: 9, Si: 11 };
 
-  var actx = null, cache = {};
+  var actx = null, cache = {}, bus = null, gen = 0;
   function ctx() { if (!actx) { var AC = window.AudioContext || window.webkitAudioContext; if (AC) actx = new AC(); } return actx; }
   function loadBuf(file) {
     if (cache[file]) return cache[file];
@@ -19,6 +19,16 @@
       .then(function (r) { return r.arrayBuffer(); })
       .then(function (a) { return new Promise(function (res, rej) { ctx().decodeAudioData(a, res, rej); }); });
     return cache[file];
+  }
+  /* Todas las notas salen por un «bus» común: stopAll() lo apaga con un fundido corto y crea otro, así se puede cortar lo que suena
+     (y lo que aún estaba cargando) sin tocar el resto del módulo. */
+  function salida(c) { if (!bus) { bus = c.createGain(); bus.connect(c.destination); } return bus; }
+  function stopAll() {
+    gen++;
+    var b = bus, c = actx; bus = null;
+    if (!b || !c) return;
+    try { var t = c.currentTime; b.gain.cancelScheduledValues(t); b.gain.setValueAtTime(b.gain.value, t); b.gain.linearRampToValueAtTime(0, t + 0.04); } catch (e) {}
+    setTimeout(function () { try { b.disconnect(); } catch (e) {} }, 250);
   }
   function sampOf(m) { var s = ((m % 12) + 12) % 12, oct = Math.floor(m / 12) - 1, map = SAMP[s]; return { file: map[0] + (oct + map[1]), rate: Math.pow(2, map[2] / 12) }; }
   /* Envolvente: la nota sostiene hasta que entra la siguiente y luego hace un
@@ -32,7 +42,7 @@
     g.gain.exponentialRampToValueAtTime(peak, when + 0.012);   // ataque rápido
     g.gain.setValueAtTime(peak, end);                          // sostiene hasta el relevo
     g.gain.exponentialRampToValueAtTime(0.0008, end + rel);    // release breve que solapa la siguiente
-    src.connect(g).connect(c.destination);
+    src.connect(g).connect(salida(c));
     src.start(when); src.stop(end + rel + 0.03);
   }
 
@@ -150,13 +160,33 @@
     });
     if (!ev.length) return Promise.resolve();
     var files = {}; ev.forEach(function (e) { files[sampOf(e.midi).file] = 1; });
+    var g0 = gen;   // si se llama a stopAll() mientras cargan las muestras, esta melodía ya no arranca
     return Promise.all(Object.keys(files).map(function (f) { return loadBuf(f).then(function (b) { return [f, b]; }); }))
       .then(function (arr) {
         var bmap = {}; arr.forEach(function (o) { bmap[o[0]] = o[1]; });
+        if (g0 !== gen) return 0;
         var t0 = c.currentTime + 0.06, last = ev.length - 1;
         ev.forEach(function (e, i) { startAt(c, e.midi, t0 + e.when, bmap, e.dur, i === last); });
         return t + 0.6;
       }).catch(function () {});
+  }
+
+  /* Reproduce notas con su momento y su duración exactos: ev = [{midi, when, dur}] (segundos desde ahora). Cada nota sostiene su duración
+     (la última, con su cola), lo que permite acordes que se mantienen sonando mientras entran otras notas (arpegiados) o notas repetidas. */
+  function playEvents(ev) {
+    var c = ctx(); if (!c) return Promise.resolve(0);
+    if (c.state === 'suspended') c.resume();
+    if (!ev || !ev.length) return Promise.resolve(0);
+    var files = {}, fin = 0; ev.forEach(function (e) { files[sampOf(e.midi).file] = 1; fin = Math.max(fin, e.when + e.dur); });
+    var g0 = gen;   // si se llama a stopAll() mientras cargan las muestras, no arranca
+    return Promise.all(Object.keys(files).map(function (f) { return loadBuf(f).then(function (b) { return [f, b]; }); }))
+      .then(function (arr) {
+        if (g0 !== gen) return 0;
+        var bmap = {}; arr.forEach(function (o) { bmap[o[0]] = o[1]; });
+        var t0 = c.currentTime + 0.06;
+        ev.forEach(function (e) { startAt(c, e.midi, t0 + e.when, bmap, e.dur, e.when + e.dur >= fin - 1e-9); });
+        return fin + 0.6;
+      }).catch(function () { return 0; });
   }
 
   /* Extrae los nombres de nota de un texto libre, con alteraciones por símbolo o palabra
@@ -518,7 +548,7 @@
     art.appendChild(p);
   }
 
-  window.tmPiano = { playScale: playScale, playMidi: playMidi, playMelody: playMelody, nameToPc: nameToPc };
+  window.tmPiano = { playScale: playScale, playMidi: playMidi, playMelody: playMelody, nameToPc: nameToPc, stopAll: stopAll, playEvents: playEvents };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wire);
   else wire();
 })();
