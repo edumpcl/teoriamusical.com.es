@@ -1,0 +1,1121 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Carrera de obstáculos musical</title>
+<style>
+@font-face{font-family:'Lilita One';src:url(/assets/fonts/juegos/lilita.woff2) format('woff2');font-weight:400;font-display:block}
+@font-face{font-family:'Nunito';src:url(/assets/fonts/juegos/nunito600.woff2) format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Nunito';src:url(/assets/fonts/juegos/nunito800.woff2) format('woff2');font-weight:800;font-display:block}
+/* Diseño: pista de papel recortado a la izquierda, panel de juego a la derecha; en móvil se apilan. */
+:root{
+  --navy:#14213d; --ink:#14213d; --paper:#f7fbff; --paper2:#e1eef8;
+  --brass:#f4b52e; --brass-d:#b9810a; --track:#c8553d; --sky:#8fd0ee;
+  --ok:#238a4c; --bad:#c93a2d; --mute:#51627f; --focus:#2f6fe4;
+  --display:'Lilita One','Arial Rounded MT Bold','Trebuchet MS',system-ui,sans-serif;
+  --body:'Nunito','Segoe UI',system-ui,-apple-system,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{
+  -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+  background:var(--navy); color:var(--ink);
+  font:600 18px/1.4 var(--body);
+  padding-block:16px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.app{max-width:1180px;margin:0 auto;display:grid;gap:16px}
+.game{display:grid;grid-template-columns:minmax(0,1.85fr) minmax(330px,1fr);gap:16px;align-items:start}
+.stage{position:relative;border-radius:18px;overflow:hidden;border:4px solid #fff;background:var(--sky);box-shadow:0 8px 0 rgba(0,0,0,.35)}
+.stage canvas{display:block;width:100%;height:auto;aspect-ratio:1000/520}
+.hud{position:absolute;pointer-events:none}
+.hud-timer{left:12px;top:17%;width:clamp(58px,10vw,86px);aspect-ratio:1;border-radius:50%;
+  background:conic-gradient(var(--brass) calc(var(--p)*1%),#fff 0);display:grid;place-content:center;border:3px solid var(--ink);text-align:center;line-height:1}
+.hud-timer::before{content:"";position:absolute;inset:7px;border-radius:50%;background:#fff;border:2px solid var(--ink)}
+.hud-timer span,.hud-timer small{position:relative}
+.hud-timer span{font:400 clamp(24px,4.4vw,38px) var(--display)} .hud-timer small{font:800 12px var(--body);margin-top:-2px}
+.hud-dist{left:50%;top:17%;transform:translateX(-50%);background:#fff;border:3px solid var(--ink);border-radius:999px;padding:4px 16px;
+  font:800 clamp(14px,2.4vw,20px) var(--body);white-space:nowrap}
+.hud-dist b{font:400 1.5em var(--display)}
+.hud-count{inset:0;display:grid;place-content:center;font:400 clamp(60px,14vw,130px) var(--display);color:#fff;
+  -webkit-text-stroke:6px var(--ink);paint-order:stroke fill;text-shadow:0 8px 0 rgba(20,33,61,.35);text-align:center}
+.hud-count.pop{animation:pop .45s ease-out}
+@keyframes pop{from{transform:scale(1.6);opacity:.2}to{transform:scale(1);opacity:1}}
+.panel{background:var(--paper);border-radius:18px;border:4px solid #fff;padding:18px;box-shadow:0 8px 0 rgba(0,0,0,.35);min-width:0}
+.view{display:grid;gap:14px}
+h2{margin:0;font:400 28px/1.1 var(--display);text-wrap:balance}
+p{margin:0}
+.muted{color:var(--mute);font-size:16px}
+.btn{font:400 24px var(--display);background:var(--brass);color:var(--ink);border:3px solid var(--ink);border-radius:14px;
+  padding:12px 20px;min-height:58px;cursor:pointer;box-shadow:0 5px 0 var(--ink);transition:transform .06s,box-shadow .06s;width:100%}
+.btn:active,.btn.held{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.btn.alt{background:#fff} .btn[disabled]{opacity:.6;cursor:wait}
+.btn.small{font-size:19px;min-height:48px}
+.link{background:none;border:0;color:var(--mute);font:800 15px var(--body);text-decoration:underline;cursor:pointer;padding:8px;justify-self:start}
+:is(button,input,label.pill):focus-visible,.pill:has(input:focus-visible){outline:4px solid var(--focus);outline-offset:3px}
+.picker{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.mus{background:#fff;border:3px solid var(--paper2);border-radius:12px;padding:4px 2px 6px;cursor:pointer;color:var(--ink);font:800 13px var(--body);display:grid;justify-items:center;gap:0}
+.mus canvas{width:100%;max-width:80px;height:auto;aspect-ratio:3/4}
+.mus[aria-checked="true"]{border-color:var(--brass-d);background:#fff1c7}
+label.field{display:grid;gap:6px;font:800 16px var(--body)}
+input[type=text]{-webkit-user-select:text;user-select:text;font:800 20px var(--body);padding:10px 12px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);min-height:50px;width:100%}
+.seg{border:0;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg.s4{grid-template-columns:repeat(2,1fr)}
+.seg legend{font:800 16px var(--body);padding:0 0 6px}
+.pill{position:relative;display:block}
+.pill input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.pill span{display:block;text-align:center;padding:10px 4px;border:3px solid var(--ink);border-radius:12px;background:#fff;font:400 19px var(--display)}
+.pill input:checked + span{background:var(--brass)}
+.err{background:#fde5e1;border:3px solid var(--bad);border-radius:12px;padding:10px 12px;font-size:16px}
+.rank{list-style:none;margin:0;padding:0;display:grid;gap:4px;counter-reset:r}
+.rank li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:8px;align-items:baseline;padding:5px 10px;border-radius:10px;background:#fff;font-size:16px}
+.rank li::before{counter-increment:r;content:counter(r);font:400 18px var(--display);color:var(--brass-d)}
+.rank li.me{background:#fff1c7;outline:3px solid var(--brass)}
+.rank .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank .nm small{color:var(--mute);font-weight:700}
+.rank .dd{font:400 18px var(--display)}
+h3{margin:0;font:400 20px var(--display)}
+.speaker{display:grid;place-content:center;height:96px;border-radius:14px;background:var(--paper2);font:400 56px var(--display);color:#8c6609}
+.speaker.on{animation:throb .5s ease-in-out infinite alternate}
+@keyframes throb{from{transform:scale(1)}to{transform:scale(1.12)}}
+.level{display:grid;gap:4px;font:800 14px var(--body);color:var(--mute)}
+.level i{display:block;height:12px;border-radius:6px;background:var(--paper2);overflow:hidden;border:2px solid var(--ink)}
+.level i b{display:block;height:100%;width:calc(var(--lv,0)*100%);background:var(--ok);transition:width .06s}
+.tuner{position:relative;height:56px;border-radius:28px;border:3px solid var(--ink);background:linear-gradient(90deg,#d5e6f4,#fff 50%,#d5e6f4);overflow:hidden}
+.tuner .zone{position:absolute;top:0;bottom:0;left:50%;width:var(--zw,20%);transform:translateX(-50%);background:rgba(35,138,76,.28);border-inline:3px solid var(--ok)}
+.tuner .needle{position:absolute;top:5px;bottom:5px;width:10px;border-radius:5px;background:var(--ink);left:var(--nx,50%);transform:translateX(-50%)}
+.tuner.on .needle{background:var(--ok)} .tuner.off .needle{opacity:.18}
+.tuner-lbl{display:flex;justify-content:space-between;font:800 14px var(--body);color:var(--mute)}
+.hint{font:400 27px/1.15 var(--display);min-height:2.3em;display:grid;align-items:center}
+.hint[data-s="on"]{color:var(--ok)} .hint[data-s="hi"],.hint[data-s="lo"]{color:#a85a00}
+.tunedtime{font:800 17px var(--body)}
+.distance{display:flex;align-items:baseline;gap:8px;font:400 92px/0.95 var(--display)} .distance small{font-size:36px}
+.kicker{font:800 14px var(--body);text-transform:uppercase;letter-spacing:.1em;color:var(--mute)}
+.demo{display:grid;gap:10px;padding:12px;border:3px dashed var(--mute);border-radius:12px}
+.foot{color:#9fb6cf;font-size:15px}
+.foot .link{color:#c4daed}
+.chordname{font:400 38px/1.1 var(--display);text-align:center;color:var(--ink)}
+.chordnotes{font:800 20px var(--body);text-align:center;color:var(--brass-d);min-height:1.4em}
+.steps{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}
+.steps span{display:block;text-align:center;padding:6px 2px;border:3px solid var(--ink);border-radius:10px;background:#fff;font:400 16px var(--display);opacity:.55}
+.steps span small{display:block;font:800 10px var(--body);color:var(--mute);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.steps span.on{background:var(--brass);opacity:1}
+.steps span.done{opacity:1}
+.steps span.done.ok{background:#d9efe0}
+.steps span.done.ko{background:#fde5e1}
+.steps span.ria{border-color:#2f6fe4}
+.brk{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:16px}
+.brk li{background:#fff;border-radius:10px;padding:6px 10px;display:flex;justify-content:space-between;gap:8px}
+.brk b{font:400 18px var(--display)}
+@media (max-width:900px){.game{grid-template-columns:minmax(0,1fr)}.hud-timer,.hud-dist{top:20%}}
+@media (max-width:420px){.steps span{font-size:13px;padding:5px 1px}}
+@media (prefers-reduced-motion:reduce){.speaker.on,.hud-count.pop{animation:none}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <main class="game">
+    <section class="stage" aria-label="Pista de carrera de obstáculos">
+      <canvas id="scene" width="1000" height="520" role="img" aria-label="Un músico de la banda corre una carrera de obstáculos cantando intervalos, saltando vallas y una ría"></canvas>
+      <div class="hud hud-timer" id="hudTimer" hidden style="--p:0"><span id="hudSecs">3</span><small>seg</small></div>
+      <div class="hud hud-dist" id="hudDist" hidden>Tiempo <b id="hudTiempo">0,0</b> s</div>
+      <div class="hud hud-count" id="hudCount" hidden></div>
+    </section>
+
+    <aside class="panel">
+      <!-- MENÚ -->
+      <section class="view" id="v-menu">
+        <h2>Elige a tu músico</h2>
+        <div class="picker" id="picker" role="radiogroup" aria-label="Músico"></div>
+        <label class="field" for="nombre">Tu nombre
+          <input type="text" id="nombre" maxlength="14" placeholder="Escribe tu nombre" autocomplete="off">
+        </label>
+        <fieldset class="seg">
+          <legend>Dificultad</legend>
+          <label class="pill"><input type="radio" name="dif" value="facil"><span>Fácil</span></label>
+          <label class="pill"><input type="radio" name="dif" value="normal" checked><span>Normal</span></label>
+          <label class="pill"><input type="radio" name="dif" value="maestro"><span>Maestro</span></label>
+        </fieldset>
+        <p class="muted">Fácil: ves el nombre de las dos notas de cada obstáculo. Normal: ves el nombre del intervalo y el sentido. Maestro: solo oyes la nota base; el salto lo tienes que construir tú.</p>
+        <fieldset class="seg s4">
+          <legend>Intervalos</legend>
+          <label class="pill"><input type="radio" name="gru" value="segundas_terceras" checked><span>2ªs y 3ªs</span></label>
+          <label class="pill"><input type="radio" name="gru" value="cuartas_quintas"><span>4ªs y 5ªs</span></label>
+          <label class="pill"><input type="radio" name="gru" value="sextas_septimas"><span>6ªs y 7ªs</span></label>
+          <label class="pill"><input type="radio" name="gru" value="todos"><span>Todos</span></label>
+        </fieldset>
+        <button class="btn" id="btnStart">¡A correr!</button>
+        <p class="err" id="micErr" hidden></p>
+        <button class="link" id="btnDemo" type="button">Probar sin micrófono (modo demostración)</button>
+        <div>
+          <h3>Clasificación</h3>
+          <ol class="rank" id="rankMenu"></ol>
+          <p class="muted" id="rankEmpty">Todavía no hay carreras. ¡Sé el primero!</p>
+        </div>
+      </section>
+
+      <!-- ESCUCHAR -->
+      <section class="view" id="v-listen" hidden>
+        <h2>Escucha los obstáculos</h2>
+        <div class="speaker" id="speaker" aria-hidden="true">♪</div>
+        <div class="chordname" id="chordName"></div>
+        <div class="steps" id="preview" aria-hidden="true"></div>
+        <p id="listenTxt"></p>
+        <button class="btn alt small" id="btnRepeat">Escuchar otra vez</button>
+        <div class="level"><span>Prueba tu voz: la barra debe moverse</span><i><b id="lvListen"></b></i></div>
+        <button class="btn" id="btnSing">¡Cantar!</button>
+        <button class="link" id="btnBack" type="button">Cambiar de músico</button>
+      </section>
+
+      <!-- CANTAR / CORRER -->
+      <section class="view" id="v-play" hidden>
+        <h2 id="playTitle">Prepárate…</h2>
+        <div class="steps" id="steps" aria-hidden="true"></div>
+        <div class="hint" id="hint" data-s="">Respira hondo</div>
+        <div class="tuner off" id="tuner" aria-hidden="true"><div class="zone"></div><div class="needle"></div></div>
+        <div class="tuner-lbl" aria-hidden="true"><span>↓ Más grave</span><span>Más agudo ↑</span></div>
+        <p class="tunedtime">Afinado en esta nota: <b id="tunedTime">0,0</b> s</p>
+        <div class="level"><span>Micrófono</span><i><b id="lvPlay"></b></i></div>
+        <div class="demo" id="demoBox" hidden>
+          <button class="btn alt small" id="demoHold" type="button">Toca para cantar</button>
+          <label class="field" for="demoCents">Afinación simulada
+            <input type="range" id="demoCents" min="-200" max="200" value="0">
+          </label>
+        </div>
+      </section>
+
+      <!-- SPRINT FINAL -->
+      <section class="view" id="v-flight" hidden>
+        <h2>¡Último tramo!</h2>
+        <p>Cuanto menos tiempo hayas tardado en superar cada valla, mejor marca harás.</p>
+      </section>
+
+      <!-- RESULTADO -->
+      <section class="view" id="v-result" hidden>
+        <p class="kicker" id="resWho">Tu carrera</p>
+        <div class="distance"><span id="resDist">0,0</span><small>s</small></div>
+        <h2 id="resTitle"></h2>
+        <p id="resText"></p>
+        <p id="resNote" class="muted"></p>
+        <ul class="brk" id="resBrk"></ul>
+        <p id="resRank"></p>
+        <button class="btn" id="btnAgain">Correr otra vez</button>
+        <button class="btn alt small" id="btnChange">Cambiar de músico</button>
+        <div>
+          <h3>Clasificación</h3>
+          <ol class="rank" id="rankRes"></ol>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="foot">
+    Superar cada obstáculo rápido y sin dudar baja tu tiempo: con los 8 obstáculos perfectos (7 vallas + 1 ría) se corre en unos 18,4 s.
+    A diferencia del steeplechase real (3000 m con 7 vallas y 1 ría por vuelta, una prueba de resistencia de varios minutos), aquí cada
+    obstáculo dura solo unos segundos cantados: la marca de 19,5 s es una referencia de este juego, no un récord real. Tropezar en un
+    obstáculo añade penalización, y la ría exige un poco más de afinación sostenida.
+    La clasificación se guarda solo en este dispositivo.
+    <button class="link" id="btnClear" type="button">Borrar clasificación</button>
+  </footer>
+</div>
+
+<script>
+'use strict';
+
+/* ============================================================
+   DETECCIÓN DE TONO (YIN) Y AFINACIÓN
+   ============================================================ */
+// <PITCH-CORE>
+function yin(buf, sr, minHz = 80, maxHz = 900, thr = 0.15) {
+  const N = buf.length, half = N >> 1;
+  const tauMin = Math.max(2, Math.floor(sr / maxHz));
+  const tauMax = Math.min(half - 2, Math.floor(sr / minHz));
+  const d = new Float32Array(tauMax + 2);
+  for (let tau = 1; tau <= tauMax + 1; tau++) {
+    let sum = 0;
+    for (let i = 0; i < half; i++) { const df = buf[i] - buf[i + tau]; sum += df * df; }
+    d[tau] = sum;
+  }
+  const cm = new Float32Array(tauMax + 2);
+  cm[0] = 1;
+  let run = 0;
+  for (let tau = 1; tau <= tauMax + 1; tau++) { run += d[tau]; cm[tau] = run > 0 ? d[tau] * tau / run : 1; }
+  let tau = -1;
+  for (let t = tauMin; t <= tauMax; t++) {
+    if (cm[t] < thr) { while (t + 1 <= tauMax && cm[t + 1] < cm[t]) t++; tau = t; break; }
+  }
+  if (tau < 0) return null;
+  const a = cm[tau - 1], b = cm[tau], c = cm[tau + 1];
+  const den = a - 2 * b + c;
+  const shift = den !== 0 ? 0.5 * (a - c) / den : 0;
+  return { freq: sr / (tau + Math.max(-1, Math.min(1, shift))), clarity: 1 - b };
+}
+// Diferencia en centésimas (100 = un semitono) ignorando la octava: cantar una octava arriba o abajo cuenta igual.
+function centsOff(freq, ref) {
+  const c = 1200 * Math.log2(freq / ref);
+  return ((c % 1200) + 1800) % 1200 - 600;
+}
+// </PITCH-CORE>
+
+/* ============================================================
+   DATOS DEL JUEGO
+   ============================================================ */
+const F_DISP = "'Lilita One','Arial Rounded MT Bold','Trebuchet MS',sans-serif";
+const F_BODY = "Nunito,'Segoe UI',system-ui,sans-serif";
+const INK = '#14213d';
+const W = 1000, H = 520, GROUND = 430, START_X = 150, HURDLE_X = 560, FINISH_X = 930;
+const NV = 8;                      // número de obstáculos: 7 vallas + 1 ría, como en el steeplechase real (7 vallas y 1 ría por vuelta)
+const RIA = NV - 1;                // índice del último obstáculo (la ría, un poco más grande)
+const VENTANA = [4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.6];  // segundos máximos por obstáculo (hay que cantar dos notas); la ría da algo más de margen
+const NEC = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.2];       // segundos afinados acumulados por NOTA para superarla (dos notas por obstáculo); la ría exige un poco más
+const TROPIEZO = 1.8;               // penalización en segundos al tropezar, además de agotar la ventana
+const SALIDA = 1.0, LLEGADA = 1.0;  // reacción de salida y tramo final hasta la meta (segundos fijos)
+const REC = 19.5;                   // marca de referencia de este juego (no un récord real: el steeplechase real son 3000 m en varios minutos)
+const COUNT = 3.4, HOP_T = 0.4;
+const DIF = { facil: 50, normal: 30, maestro: 15 };            // tolerancia en centésimas (±)
+const ETAPAS = ['Nota base', 'Salto'];
+/* Intervalos ascendentes o descendentes desde Do, Re, Mi, Fa, Sol y La (misma base que el salto de altura y el
+   lanzamiento de jabalina, pero aquí cada obstáculo elige también su propio sentido al azar). */
+const LET = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'], LET_ST = [0, 2, 4, 5, 7, 9, 11];
+const ROOTS = [0, 1, 2, 3, 4, 5];
+const INTS = [
+  { id: 'segunda_menor', n: '2ª menor', ab: '2m', num: 2, st: 1 }, { id: 'segunda_mayor', n: '2ª mayor', ab: '2M', num: 2, st: 2 },
+  { id: 'tercera_menor', n: '3ª menor', ab: '3m', num: 3, st: 3 }, { id: 'tercera_mayor', n: '3ª mayor', ab: '3M', num: 3, st: 4 },
+  { id: 'cuarta_justa', n: '4ª justa', ab: '4J', num: 4, st: 5 }, { id: 'quinta_justa', n: '5ª justa', ab: '5J', num: 5, st: 7 },
+  { id: 'sexta_menor', n: '6ª menor', ab: '6m', num: 6, st: 8 }, { id: 'sexta_mayor', n: '6ª mayor', ab: '6M', num: 6, st: 9 },
+  { id: 'septima_menor', n: '7ª menor', ab: '7m', num: 7, st: 10 }, { id: 'septima_mayor', n: '7ª mayor', ab: '7M', num: 7, st: 11 }
+];
+const GRUPOS = { segundas_terceras: [2, 3], cuartas_quintas: [4, 5], sextas_septimas: [6, 7], todos: [2, 3, 4, 5, 6, 7] };
+/* Nombre de la nota que cae en la letra dada a «semis» semitonos sobre el Do central (con su ♯ o ♭). */
+function nombreNota(letra, semis) {
+  let d = (((semis - LET_ST[letra]) % 12) + 12) % 12; if (d > 6) d -= 12;
+  return LET[letra] + (d === 1 ? '♯' : d === -1 ? '♭' : d === 0 ? '' : '?');
+}
+const hzOf = st => 261.63 * Math.pow(2, st / 12);
+/* Genera un obstáculo al azar: tónica, intervalo del grupo elegido y sentido (sube o baja), evitando repetir
+   el obstáculo anterior. Extiende la lógica del salto de altura (solo ascendente) con el sentido de la jabalina. */
+function nuevoObstaculo(gru, prevClave) {
+  const pool = INTS.filter(iv => GRUPOS[gru].includes(iv.num));
+  let r, iv, dir, clave;
+  do {
+    r = ROOTS[Math.floor(Math.random() * ROOTS.length)];
+    iv = pool[Math.floor(Math.random() * pool.length)];
+    dir = Math.random() < 0.5 ? 1 : -1;
+    clave = r + iv.id + dir;
+  } while (clave === prevClave);
+  const rs = LET_ST[r], ts = rs + dir * iv.st;
+  const n2 = nombreNota((((r + dir * (iv.num - 1)) % 7) + 7) % 7, ts);
+  return { clave, r: LET[r], iv, dir, n: [LET[r], n2], targets: [{ n: LET[r], f: hzOf(rs) }, { n: n2, f: hzOf(ts) }] };
+}
+/* Para poner a los músicos reales de la banda: cambia n (nombre), colores de piel y pelo,
+   estilo (corto, largo, rizado, coleta, calvo), gafas, bigote, barba y ancho (1 = normal). */
+const MUSICOS = [
+  { n: 'Clarinete', instr: 'clarinete', piel: '#f2cba6', pelo: '#4a3426', estilo: 'corto', gafas: true },
+  { n: 'Trompeta', instr: 'trompeta', piel: '#c98f64', pelo: '#1d1612', estilo: 'corto', bigote: true },
+  { n: 'Bombo', instr: 'bombo', piel: '#f2cba6', pelo: '#6b5444', estilo: 'calvo', barba: true, ancho: 1.3 },
+  { n: 'Caja', instr: 'caja', piel: '#d9a67c', pelo: '#2a1d17', estilo: 'rizado' },
+  { n: 'Flauta', instr: 'flauta', piel: '#f6d6b8', pelo: '#e0b04a', estilo: 'largo' },
+  { n: 'Trombón', instr: 'trombon', piel: '#e3b38c', pelo: '#9aa0a8', estilo: 'corto', bigote: true, gafas: true },
+  { n: 'Tuba', instr: 'tuba', piel: '#8a5a3c', pelo: '#17110d', estilo: 'corto', barba: true, ancho: 1.25 },
+  { n: 'Platillos', instr: 'platillos', piel: '#f2cba6', pelo: '#b5532a', estilo: 'coleta' }
+];
+
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+const $ = s => document.querySelector(s);
+const mix = (a, b, k) => a + (b - a) * k;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const easeOut = u => 1 - (1 - u) * (1 - u);
+const fmt = n => n.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const fmt1 = n => n.toLocaleString('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ============================================================
+   DIBUJO: MÚSICOS DE PAPEL RECORTADO
+   ============================================================ */
+function paint(c, fill, lw = 2.5) {
+  if (fill) { c.fillStyle = fill; c.fill(); }
+  if (lw) { c.lineWidth = lw; c.strokeStyle = INK; c.lineJoin = 'round'; c.lineCap = 'round'; c.stroke(); }
+}
+function rrect(c, x, y, w, h, r) {
+  c.beginPath();
+  if (c.roundRect) { c.roundRect(x, y, w, h, r); return; }
+  r = Math.min(r, w / 2, h / 2);
+  c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
+  c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath();
+}
+function limb(c, x, y, ang, len, w, col, extra) {
+  c.save(); c.translate(x, y); c.rotate(ang);
+  rrect(c, -w / 2, -2, w, len, w / 2.5); paint(c, col, 2.2);
+  if (extra && extra.hand) { c.beginPath(); c.arc(0, len + 1, 5.5, 0, 7); paint(c, extra.hand, 2.2); }
+  if (extra && extra.shoe) { c.beginPath(); c.ellipse(5, len + 1, 11, 5, 0, 0, 7); paint(c, '#1a1a22', 2.2); }
+  c.restore();
+}
+function hairBack(c, m) {
+  if (m.estilo === 'largo') { rrect(c, -34, -120, 68, 78, 16); paint(c, m.pelo, 2.4); }
+  else if (m.estilo === 'coleta') { c.beginPath(); c.ellipse(-37, -88, 8, 14, 0.4, 0, 7); paint(c, m.pelo, 2.4); }
+  else if (m.estilo === 'rizado') {
+    for (const [x, y] of [[-22, -116], [-31, -102], [-33, -86], [22, -116], [31, -102], [33, -86], [0, -122]]) {
+      c.beginPath(); c.arc(x, y, 9.5, 0, 7); paint(c, m.pelo, 2.2);
+    }
+  }
+}
+function drawHead(c, m, o, t) {
+  const hy = -92, dir = o.dir == null ? 1 : o.dir, dx = 7 * dir;
+  c.beginPath(); c.ellipse(0, hy, 29.5, 28, 0, 0, 7); paint(c, m.piel, 2.6);
+  if (m.estilo === 'corto') {
+    rrect(c, -31, -102, 8, 20, 3); paint(c, m.pelo, 2);
+    rrect(c, 23, -102, 8, 20, 3); paint(c, m.pelo, 2);
+  }
+  if (m.barba) { c.beginPath(); c.ellipse(0, hy, 29.5, 28, 0, 0.25 * Math.PI, 0.75 * Math.PI); c.closePath(); paint(c, m.pelo, 2.6); }
+  const blink = (t % 3.4) < 0.12 ? 0.12 : 1;
+  for (const ex of [-9 + dx, 9 + dx]) {
+    c.beginPath(); c.ellipse(ex, -89, 6.6, 7.4 * blink, 0, 0, 7); paint(c, '#fff', 2);
+    c.fillStyle = INK; c.beginPath(); c.ellipse(ex + 2.4 * dir, -88.5, 2.3, 2.3 * blink, 0, 0, 7); c.fill();
+    if (m.gafas) { c.beginPath(); c.arc(ex, -89, 9, 0, 7); c.lineWidth = 2.4; c.strokeStyle = INK; c.stroke(); }
+  }
+  if (m.bigote) { c.beginPath(); c.ellipse(dx * 0.8, -77, 10, 3.4, 0, 0, 7); paint(c, m.pelo, 1.8); }
+  const mx = dx * 0.8, my = -72, mo = o.mouth || 0;
+  if (o.mood === 'happy') { c.beginPath(); c.arc(mx, my - 3, 8, 0.1 * Math.PI, 0.9 * Math.PI); c.closePath(); paint(c, '#7a1f2a', 2); }
+  else if (o.mood === 'sad') { c.beginPath(); c.arc(mx, my + 6, 7, 1.15 * Math.PI, 1.85 * Math.PI); c.lineWidth = 2.6; c.strokeStyle = INK; c.lineCap = 'round'; c.stroke(); }
+  else if (mo > 0.05) { c.beginPath(); c.ellipse(mx, my, 6 + mo * 1.5, 2 + mo * 8, 0, 0, 7); paint(c, '#7a1f2a', 2.2); }
+  else { c.beginPath(); c.moveTo(mx - 6, my); c.lineTo(mx + 6, my); c.lineWidth = 2.6; c.strokeStyle = INK; c.lineCap = 'round'; c.stroke(); }
+  // gorra de banda
+  c.beginPath(); c.ellipse(0, -108, 31, 15, 0, Math.PI, 2 * Math.PI); c.lineTo(31, -100); c.lineTo(-31, -100); c.closePath(); paint(c, '#27458f', 2.6);
+  rrect(c, -31, -106, 62, 8, 2); paint(c, '#f4b52e', 2);
+  c.beginPath(); c.ellipse(dir * 13, -99, 17 + dir * 9, 4, 0, 0, 7); paint(c, '#101a33', 2);
+  c.beginPath(); c.arc(dx, -113, 4.5, 0, 7); paint(c, '#f4b52e', 1.8);
+}
+function drawInstr(c, m, bw) {
+  const GOLD = '#f2b632', SILVER = '#cfd6df';
+  c.save();
+  switch (m.instr) {
+    case 'clarinete':
+      c.translate(24 * bw, -40); c.rotate(-0.12);
+      rrect(c, -3, -42, 6, 64, 2); paint(c, '#1c1c24', 2);
+      c.beginPath(); c.moveTo(-3, 20); c.lineTo(-8, 30); c.lineTo(8, 30); c.lineTo(3, 20); c.closePath(); paint(c, '#1c1c24', 2);
+      c.fillStyle = SILVER; for (const y of [-28, -16, -4, 8]) { c.beginPath(); c.arc(0, y, 2, 0, 7); c.fill(); }
+      rrect(c, -3, -47, 6, 7, 2); paint(c, '#555', 1.8);
+      break;
+    case 'trompeta':
+      c.translate(20 * bw, -48);
+      c.beginPath(); c.arc(10, 8, 9, 0, 7); c.lineWidth = 8; c.strokeStyle = INK; c.stroke();
+      c.lineWidth = 4.5; c.strokeStyle = GOLD; c.stroke();
+      rrect(c, -6, -3, 44, 6, 3); paint(c, GOLD, 2);
+      c.beginPath(); c.moveTo(36, -3); c.lineTo(54, -13); c.lineTo(54, 13); c.lineTo(36, 3); c.closePath(); paint(c, GOLD, 2.2);
+      c.fillStyle = SILVER; for (const x of [14, 20, 26]) { rrect(c, x, -10, 4, 7, 1); c.fill(); }
+      break;
+    case 'trombon':
+      c.translate(8 * bw, -54);
+      rrect(c, 0, -3, 70, 4, 2); paint(c, GOLD, 2); rrect(c, 0, 6, 70, 4, 2); paint(c, GOLD, 2); rrect(c, 67, -3, 6, 14, 2); paint(c, GOLD, 2);
+      c.beginPath(); c.arc(2, -15, 12, 0, 7); paint(c, GOLD, 2.2);
+      c.beginPath(); c.ellipse(2, -15, 5, 8, 0, 0, 7); paint(c, '#7a5a10', 1.6);
+      break;
+    case 'flauta':
+      c.translate(18 * bw, -56); c.rotate(-0.1);
+      rrect(c, 0, -2.5, 62, 5, 2.5); paint(c, SILVER, 2);
+      c.fillStyle = INK; for (let x = 12; x < 56; x += 8) { c.beginPath(); c.arc(x, 0, 1.6, 0, 7); c.fill(); }
+      break;
+    case 'bombo':
+      c.translate(10 * bw + 6, -64);
+      rrect(c, 0, 0, 32, 54, 6); paint(c, '#b8402f', 2.4);
+      rrect(c, 0, 3, 32, 5, 1); paint(c, GOLD, 1.8); rrect(c, 0, 46, 32, 5, 1); paint(c, GOLD, 1.8);
+      c.beginPath(); c.ellipse(32, 27, 5, 26, 0, 0, 7); paint(c, '#f4efe3', 2.2);
+      break;
+    case 'caja':
+      c.translate(6 * bw, -40);
+      rrect(c, 0, 0, 34, 20, 3); paint(c, '#9aa6b8', 2.2);
+      c.beginPath(); c.ellipse(17, 0, 17, 4.5, 0, 0, 7); paint(c, '#f4efe3', 2.2);
+      c.lineWidth = 3; c.strokeStyle = INK; c.lineCap = 'round';
+      c.beginPath(); c.moveTo(6, -14); c.lineTo(18, -2); c.moveTo(32, -14); c.lineTo(20, -2); c.stroke();
+      break;
+    case 'tuba':
+      c.translate(10 * bw, -50);
+      c.beginPath(); c.arc(0, 0, 22, 0, 7); c.lineWidth = 13; c.strokeStyle = INK; c.stroke(); c.lineWidth = 8.5; c.strokeStyle = GOLD; c.stroke();
+      c.beginPath(); c.moveTo(-8, -22); c.lineTo(-22, -54); c.lineTo(16, -54); c.lineTo(8, -22); c.closePath(); paint(c, GOLD, 2.4);
+      c.beginPath(); c.ellipse(-3, -54, 19, 4, 0, 0, 7); paint(c, '#7a5a10', 1.8);
+      break;
+    case 'platillos':
+      c.translate(26 * bw, -46);
+      c.beginPath(); c.ellipse(-4, 0, 5, 18, 0.2, 0, 7); paint(c, GOLD, 2.2);
+      c.beginPath(); c.ellipse(7, 0, 5, 18, -0.2, 0, 7); paint(c, '#f7cc63', 2.2);
+      break;
+  }
+  c.restore();
+}
+/* o: s escala, run 0..1, t tiempo, air/land 0..1 (pose de salto), sit 0..1, rot, arms 'up'|'down', mouth 0..1, mood, dir 0..1 */
+function drawMusico(c, m, x, y, o = {}) {
+  const s = o.s || 1, run = o.run || 0, t = o.t || 0, bw = m.ancho || 1, sit = o.sit || 0;
+  const SUIT = '#27458f', TROUSER = '#2a3350';
+  c.save(); c.translate(x, y); c.scale(s, s);
+  if (o.rot) { c.translate(0, -30); c.rotate(o.rot); c.translate(0, 30); }
+  const ph = t * 12, sw = Math.sin(ph) * run;
+  const bob = run ? -Math.abs(Math.cos(ph)) * 4 * run : Math.sin(t * 2.2) * 1.2;
+  c.translate(0, bob + 22 * sit);
+  let lL = sw * 0.9, lR = -sw * 0.9, aB = -sw, aF = sw;
+  if (!run) { aB = 0.08 + Math.sin(t * 2.2) * 0.04; aF = -aB; }
+  const air = o.air || 0, land = o.land || 0;
+  if (air) { lL = mix(lL, 0.55, air); lR = mix(lR, -1.15, air); aB = mix(aB, -1.3, air); aF = mix(aF, -2.5, air); }
+  if (land) { lL = mix(lL, -1.25, land); lR = mix(lR, -1.3, land); aB = mix(aB, -1.5, land); aF = mix(aF, -1.9, land); }
+  if (sit) { lL = mix(lL, -1.45, sit); lR = mix(lR, -1.45, sit); }
+  if (o.arms === 'up') { const w = Math.sin(t * 9) * 0.18; aB = 2.4 + w; aF = -2.4 - w; }
+  else if (o.arms === 'down') { aB = 0.2; aF = -0.2; }
+  hairBack(c, m);
+  limb(c, -8, -27, lL, 21, 11, TROUSER, { shoe: 1 });
+  limb(c, -18 * bw, -58, aB, 25, 10, SUIT, { hand: m.piel });
+  rrect(c, -22 * bw, -64, 44 * bw, 42, 9); paint(c, SUIT, 2.6);
+  rrect(c, -22 * bw, -30, 44 * bw, 6, 2); paint(c, '#f4b52e', 1.8);
+  c.fillStyle = '#f4b52e'; for (const by of [-54, -44]) { c.beginPath(); c.arc(0, by, 2.8, 0, 7); c.fill(); }
+  c.beginPath(); c.ellipse(-20 * bw, -62, 7, 4, 0, 0, 7); paint(c, '#f4b52e', 1.8);
+  c.beginPath(); c.ellipse(20 * bw, -62, 7, 4, 0, 0, 7); paint(c, '#f4b52e', 1.8);
+  limb(c, 8, -27, lR, 21, 11, TROUSER, { shoe: 1 });
+  drawHead(c, m, o, t);
+  limb(c, 18 * bw, -58, aF, 25, 10, SUIT, { hand: m.piel });
+  drawInstr(c, m, bw);
+  c.restore();
+}
+
+/* ============================================================
+   ESTADO
+   ============================================================ */
+const S = {
+  state: 'menu', t0: 0, clock: 0,
+  musico: 0, nombre: '', dif: 'normal', gru: 'segundas_terceras', tol: 30, demo: false,
+  obstaculos: [], note: null, lastClave: null, noteUntil: 0,
+  vIdx: 0, vT0: 0, phase: 0, tp: [0, 0], cleared: [], extra: [],
+  tuned: 0, voiced: false, tunedNow: false, cents: 0, hist: [], lastVoice: -1e9,
+  level: 0, rms: 0, gate: 0.01, noiseSum: 0, noiseN: 0,
+  runSpeed: 0, nulo: false, total: 0, tDash: 0, raceBase: 0,
+  scroll: 0, bg: 0, noteTimer: 0, lastCount: '', rankId: 0,
+  hopUntil: 0, hopKind: '',
+  demoHold: false, demoCents: 0,
+  R: { x: START_X, y: GROUND, run: 0 }
+};
+const P = [];                 // partículas (confeti, notas, texto volador)
+
+/* ============================================================
+   AUDIO
+   ============================================================ */
+let AC = null, micStream = null, analyser = null, buf = null;
+async function ensureAudio() {
+  if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
+  if (AC.state === 'suspended') await AC.resume();
+}
+async function ensureMic() {
+  await ensureAudio();
+  if (micStream && micStream.active) return true;
+  micStream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+  const src = AC.createMediaStreamSource(micStream);
+  analyser = AC.createAnalyser(); analyser.fftSize = 2048; analyser.smoothingTimeConstant = 0;
+  src.connect(analyser);                       // sin conectar a los altavoces: evita el eco
+  buf = new Float32Array(analyser.fftSize);
+  return true;
+}
+function playSynth(f, dur = 2, when = 0, vol = 0.26) {
+  if (!AC) return;
+  const t = AC.currentTime + when, g = AC.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(vol, t + 0.04);
+  g.gain.setValueAtTime(vol, t + dur - 0.25);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  g.connect(AC.destination);
+  for (const [type, mul, amp] of [['sine', 1, 1], ['triangle', 1, 0.35], ['sine', 2, 0.12]]) {
+    const o = AC.createOscillator(); o.type = type; o.frequency.value = f * mul;
+    const gg = AC.createGain(); gg.gain.value = amp;
+    o.connect(gg); gg.connect(g); o.start(t); o.stop(t + dur + 0.05);
+  }
+}
+/* PIANO: el sonido de referencia es el de las muestras del Salamander Grand Piano (Alexander Holm, CC BY 3.0), las mismas que usa el
+   resto de la web. Si una muestra aún no se ha descargado (o no hay red), suena la voz sintética de siempre. */
+const PIANO_SAMP = { 0: ['C', 0, 0], 1: ['C', 0, 1], 2: ['Ds', 0, -1], 3: ['Ds', 0, 0], 4: ['Ds', 0, 1], 5: ['Fs', 0, -1], 6: ['Fs', 0, 0], 7: ['Fs', 0, 1], 8: ['A', 0, -1], 9: ['A', 0, 0], 10: ['A', 0, 1], 11: ['C', 1, -1] };
+const pianoProm = {}, pianoListo = {};
+const midiDe = f => Math.round(69 + 12 * Math.log2(f / 440));
+function pianoDe(m) { const pc = ((m % 12) + 12) % 12, oct = Math.floor(m / 12) - 1, mp = PIANO_SAMP[pc]; return { file: mp[0] + (oct + mp[1]), rate: Math.pow(2, mp[2] / 12) }; }
+function cargaPiano(file) {
+  if (!pianoProm[file]) {
+    pianoProm[file] = fetch('/assets/audio/piano/' + file + '.ogg')
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
+      .then(a => new Promise((res, rej) => AC.decodeAudioData(a, res, rej)))
+      .then(b => { pianoListo[file] = b; return b; })
+      .catch(() => { delete pianoProm[file]; return null; });
+  }
+  return pianoProm[file];
+}
+function preparaPiano(freqs) {
+  if (!AC) return Promise.resolve();
+  return Promise.race([Promise.all(freqs.map(f => cargaPiano(pianoDe(midiDe(f)).file))), new Promise(r => setTimeout(r, 1500))]);
+}
+function playNote(f, dur = 2, when = 0, vol = 0.26) {
+  if (!AC) return;
+  const p = pianoDe(midiDe(f)), b = pianoListo[p.file];
+  if (!b) { cargaPiano(p.file); return playSynth(f, dur, when, vol); }
+  const t = AC.currentTime + when, end = t + dur, src = AC.createBufferSource(), g = AC.createGain(), peak = Math.min(1, vol * 3.2);
+  src.buffer = b; src.playbackRate.value = p.rate;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + 0.012);
+  g.gain.setValueAtTime(peak, end); g.gain.exponentialRampToValueAtTime(0.0008, end + 0.5);
+  src.connect(g); g.connect(AC.destination); src.start(t); src.stop(end + 0.55);
+}
+function jinglePiano(freqs, step = 0.13) {
+  if (!AC) return;
+  preparaPiano(freqs).then(() => freqs.forEach((f, i) => playNote(f, step * 2.4, i * step, 0.3)));
+}
+function jingle(freqs, step = 0.13, type = 'triangle') {
+  if (!AC) return;
+  freqs.forEach((f, i) => {
+    const t = AC.currentTime + i * step, o = AC.createOscillator(), g = AC.createGain();
+    o.type = type; o.frequency.value = f;
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.2, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + step * 1.8);
+    o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + step * 2);
+  });
+}
+function sampleMic() {
+  if (S.demo) { S.rms = S.demoHold ? 0.12 : 0; S.level = S.level * 0.6 + S.rms * 0.4; return; }
+  if (!analyser) return;
+  analyser.getFloatTimeDomainData(buf);
+  let s = 0; for (let i = 0; i < buf.length; i++) s += buf[i] * buf[i];
+  S.rms = Math.sqrt(s / buf.length);
+  S.level = S.level * 0.65 + S.rms * 0.35;
+}
+function readPitch(now) {
+  if (S.demo) {
+    if (!S.demoHold) return null;
+    return S.note.f * Math.pow(2, (S.demoCents + Math.sin(now / 170) * 5) / 1200);
+  }
+  if (!analyser || S.rms < S.gate) return null;
+  const r = yin(buf, AC.sampleRate);
+  return r && r.clarity >= 0.8 ? r.freq : null;
+}
+
+/* ============================================================
+   CLASIFICACIÓN (solo en este dispositivo). Al ser una carrera, menos tiempo es mejor;
+   las carreras nulas (ninguna valla superada) se guardan pero siempre van al final. */
+const RK = 'carrera-obstaculos-clasificacion';
+function loadRank() { try { const a = JSON.parse(localStorage.getItem(RK) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+function saveRank(a) { try { localStorage.setItem(RK, JSON.stringify(a)); } catch (e) { /* sin almacenamiento */ } }
+function cmpRank(a, b) { return (a.nulo ? 1e9 : a.t) - (b.nulo ? 1e9 : b.t) || a.id - b.id; }
+function renderRank(ol, hi) {
+  const all = loadRank().sort(cmpRank).slice(0, 8);
+  ol.replaceChildren();
+  for (const e of all) {
+    const li = document.createElement('li');
+    if (e.id === hi) li.className = 'me';
+    const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = e.n + ' ';
+    const sm = document.createElement('small'); sm.textContent = e.m; nm.appendChild(sm);
+    const dd = document.createElement('span'); dd.className = 'dd'; dd.textContent = e.nulo ? '—' : fmt1(e.t) + ' s';
+    li.append(nm, dd); ol.appendChild(li);
+  }
+  return all.length;
+}
+function refreshRankMenu() { $('#rankEmpty').hidden = renderRank($('#rankMenu')) > 0; }
+
+/* ============================================================
+   FLUJO DEL JUEGO
+   ============================================================ */
+const VIEWS = { menu: 'menu', listen: 'listen', count: 'play', race: 'play', dash: 'flight', result: 'result' };
+/* Devuelve un pequeño rótulo del obstáculo i para la vista previa y el desglose final.
+   Fácil: las dos notas reales (Do→Mi). Normal y Maestro: el intervalo abreviado y el sentido (3M↑ / 6m↓). */
+function etiquetaObstaculo(o, facil) {
+  return facil ? (o.n[0] + '→' + o.n[1]) : (o.iv.ab + (o.dir > 0 ? '↑' : '↓'));
+}
+function renderPreview() {
+  const el = $('#preview'); if (!el) return; el.replaceChildren();
+  S.obstaculos.forEach((o, i) => {
+    const sp = document.createElement('span');
+    sp.textContent = String(i + 1);
+    const sm = document.createElement('small'); sm.textContent = etiquetaObstaculo(o, S.dif === 'facil');
+    sp.appendChild(sm);
+    if (i === RIA) sp.classList.add('ria');
+    el.appendChild(sp);
+  });
+}
+function showView(n) { document.querySelectorAll('.view').forEach(v => { v.hidden = v.id !== 'v-' + n; }); }
+
+function setState(s, now = performance.now()) {
+  S.state = s; S.t0 = now;
+  showView(VIEWS[s]);
+  $('#hudTimer').hidden = s !== 'race';
+  $('#hudDist').hidden = !(s === 'race' || s === 'dash');
+  $('#hudCount').hidden = !(s === 'count' || s === 'race');
+  $('#demoBox').hidden = !(S.demo && (s === 'count' || s === 'race'));
+  if (s === 'menu') { refreshRankMenu(); S.runSpeed = 0; P.length = 0; }
+  if (s === 'listen') {
+    P.length = 0;
+    S.obstaculos = [];
+    let prev = S.lastClave;
+    for (let i = 0; i < NV; i++) { const o = nuevoObstaculo(S.gru, prev); S.obstaculos.push(o); prev = o.clave; }
+    S.lastClave = S.obstaculos[0].clave;
+    S.note = S.obstaculos[0].targets[0];
+    $('#chordName').textContent = 'Carrera de ' + NV + ' obstáculos';
+    renderPreview();
+    $('#listenTxt').textContent = S.dif === 'maestro'
+      ? 'Por cada obstáculo solo oyes la nota base: tú sabes el intervalo y el sentido (mira la lista de arriba) y tienes que construir de oído la nota del salto. El último obstáculo, remarcado en azul, es la ría.'
+      : 'Escucha los ' + NV + ' obstáculos, uno tras otro: la nota base y la nota del salto de cada uno. Después los cantarás en el mismo orden; cada obstáculo es una valla que no se supera hasta que aciertas las dos notas. El último, remarcado en azul, es la ría.';
+    setTimeout(() => { if (S.state === 'listen') hearNote(); }, 450);
+  }
+  if (s === 'count') {
+    S.noiseSum = 0; S.noiseN = 0; S.lastCount = ''; setHold(false);
+    $('#playTitle').textContent = 'Prepárate…';
+    $('#hint').dataset.s = ''; $('#hint').textContent = 'Respira hondo y piensa en el primer obstáculo';
+    S.note = S.obstaculos[0].targets[0]; renderSteps(-1);
+  }
+  if (s === 'race') {
+    S.vIdx = 0; S.vT0 = now; S.phase = 0; S.tp = [0, 0]; S.cleared = new Array(NV).fill(false); S.extra = new Array(NV).fill(0);
+    S.hist = []; S.voiced = false; S.lastVoice = -1e9; S.tunedNow = false;
+    S.note = S.obstaculos[0].targets[0]; S.hopUntil = 0; S.hopKind = '';
+    renderSteps(0); setRaceTitle();
+  }
+  if (s === 'dash') {
+    S.nulo = S.cleared.every(c => !c);
+    S.raceBase = SALIDA + S.extra.reduce((a, b) => a + b, 0);
+    S.total = Math.round((S.raceBase + LLEGADA) * 10) / 10;
+    S.tDash = now;
+  }
+  if (s === 'result') finishRound();
+}
+/* Escucha previa: suena la nota base de cada obstáculo y, salvo en Maestro, también la nota del salto.
+   En Maestro el intervalo y el sentido ya se han dado por escrito (arriba y en el texto); lo que se oculta es
+   el sonido de la nota resultado, para forzar a construirla de oído en vez de solo repetirla. */
+function hearNote() { preparaPiano(S.obstaculos.flatMap(o => o.targets.map(t => t.f))).then(() => { if (S.state === 'listen') hearNoteYa(); }); }
+function hearNoteYa() {
+  let t = 0;
+  S.obstaculos.forEach(o => {
+    playNote(o.targets[0].f, 0.4, t); t += 0.26;
+    if (S.dif !== 'maestro') { playNote(o.targets[1].f, 0.4, t); t += 0.26; }
+    t += 0.14;
+  });
+  const total = t * 1000 + 400;
+  S.noteUntil = performance.now() + total;
+  $('#speaker').classList.add('on');
+  setTimeout(() => $('#speaker').classList.remove('on'), total);
+}
+function renderSteps(idx) {
+  const el = $('#steps'); el.replaceChildren();
+  for (let i = 0; i < NV; i++) {
+    const sp = document.createElement('span');
+    sp.textContent = String(i + 1);
+    if (i < idx || (idx === NV)) sp.className = 'done ' + (S.cleared[i] ? 'ok' : 'ko');
+    else if (i === idx) sp.className = 'on';
+    if (i === RIA) sp.classList.add('ria');
+    el.appendChild(sp);
+  }
+}
+function setRaceTitle() {
+  const o = S.obstaculos[S.vIdx], tipo = S.vIdx === RIA ? 'Ría' : 'Valla';
+  const info = S.dif === 'facil' ? ' · ' + S.note.n : ' · ' + o.iv.n + (o.dir > 0 ? ' ↑' : ' ↓');
+  $('#playTitle').textContent = tipo + ' ' + (S.vIdx + 1) + ' de ' + NV + ' · ' + ETAPAS[S.phase] + info;
+}
+/* Medición de uso (anónima): avisa a la página que contiene el juego, que la envía a Analytics solo con su consentimiento.
+   Nunca se envía el nombre del jugador ni el audio: solo dificultad, modo y resultado. */
+function track(evento, params) {
+  try { if (window.parent && window.parent !== window) window.parent.postMessage({ tmJuego: true, evento: evento, params: Object.assign({ juego: 'carrera_obstaculos' }, params) }, location.origin); } catch (e) { /* sin medición */ }
+}
+function finishRound() {
+  const m = MUSICOS[S.musico], t = S.total, superadas = S.cleared.filter(Boolean).length;
+  track('juego_fin', { dificultad: S.dif, intervalos: S.gru, modo: S.demo ? 'demo' : 'microfono', resultado: S.nulo ? 'nulo' : 'valido', tiempo: Math.round((S.nulo ? 0 : t) * 10) / 10, superadas: superadas });
+  const list = loadRank(); const id = Date.now(); S.rankId = id;
+  list.push({ id, n: S.nombre || 'Corredor/a', m: m.n, t, nulo: S.nulo }); saveRank(list);
+  const pos = list.slice().sort(cmpRank).findIndex(e => e.id === id) + 1;
+  let title, text;
+  if (S.nulo) { title = '¡Descalificado!'; text = 'Has tropezado en los ' + NV + ' obstáculos. Escucha la carrera otra vez y prueba de nuevo.'; }
+  else if (t <= REC) { title = '¡Marca de referencia superada!'; text = 'Carrera perfecta: ni una duda en ningún obstáculo, ni siquiera en la ría.'; }
+  else if (t <= 22.5) { title = '¡Espectacular!'; text = 'Casi sin dudar en ningún obstáculo. Muy pocos corren así una carrera tan larga.'; }
+  else if (t <= 28.0) { title = '¡Gran carrera!'; text = 'Ritmo sólido, con algún obstáculo que te ha costado un poco más.'; }
+  else if (t <= 37.0) { title = 'Buena carrera'; text = 'Has llegado a la meta, pero algún obstáculo te ha hecho tropezar. Con más práctica bajarás el tiempo.'; }
+  else { title = 'Calentando motores'; text = 'Truco: en cuanto notes que suena afinada la nota base, no esperes a cantar el salto: eso es lo que te hace superar el obstáculo.'; }
+  $('#resWho').textContent = (S.nombre || 'Corredor/a') + ' · ' + m.n;
+  $('#resDist').textContent = S.nulo ? '—' : fmt1(t);
+  $('#resTitle').textContent = title; $('#resText').textContent = text;
+  $('#resNote').textContent = 'Intervalos: ' + S.gru.replace(/_/g, ' y ') + '. Dificultad: ' + S.dif + '.';
+  const brk = $('#resBrk'); brk.replaceChildren();
+  S.obstaculos.forEach((o, i) => {
+    const li = document.createElement('li');
+    const tipo = i === RIA ? 'Ría' : ('Obstáculo ' + (i + 1));
+    const a = document.createElement('span'); a.textContent = tipo + ' · ' + o.iv.n + (o.dir > 0 ? ' ascendente' : ' descendente') + ' (' + o.n[0] + ' → ' + o.n[1] + ') · ' + (S.cleared[i] ? 'superado' : 'tropiezo');
+    const b = document.createElement('b'); b.textContent = (S.cleared[i] ? '' : '+') + fmt1(S.extra[i]) + ' s';
+    li.append(a, b); brk.appendChild(li);
+  });
+  $('#resRank').textContent = 'Puesto n.º ' + pos + ' de ' + list.length + (list.length === 1 ? ' carrera.' : ' carreras.');
+  renderRank($('#rankRes'), id);
+  if (!S.nulo && t <= 22.5) { const n = reduce ? 30 : 110; for (let i = 0; i < n; i++) spawnConfetti(); jinglePiano([523, 659, 784, 1047], 0.12); }
+  else if (S.nulo) jingle([220, 175, 147], 0.18, 'sawtooth');
+  else jinglePiano([392, 523], 0.14);
+}
+
+/* ============================================================
+   PARTÍCULAS
+   ============================================================ */
+function spawnNote(x, y) { P.push({ k: 'note', x, y, vx: (Math.random() - .3) * 30, vy: -60 - Math.random() * 40, life: 1.2, max: 1.2, r: 24 + Math.random() * 12, col: Math.random() < .5 ? '#f4b52e' : '#2fb36b', ch: Math.random() < .5 ? '♪' : '♫' }); }
+function spawnTxt(x, y, txt, col) { P.push({ k: 'txt', x, y, vx: 0, vy: -46, life: 1.0, max: 1.0, r: 22, col, ch: txt }); }
+function spawnConfetti() { P.push({ k: 'conf', x: Math.random() * W, y: -10 - Math.random() * 120, vx: (Math.random() - .5) * 60, vy: 60 + Math.random() * 120, life: 4, max: 4, r: 5 + Math.random() * 5, col: ['#f4b52e', '#d9483b', '#ffffff', '#2f6fe4', '#2fb36b'][Math.floor(Math.random() * 5)], rot: Math.random() * 6, vr: (Math.random() - .5) * 10 }); }
+function updateParticles(dt) {
+  for (let i = P.length - 1; i >= 0; i--) {
+    const p = P[i]; p.life -= dt; if (p.life <= 0) { P.splice(i, 1); continue; }
+    p.x += p.vx * dt; p.y += p.vy * dt;
+    if (p.k === 'note') p.x += Math.sin(p.life * 6) * 0.6;
+    if (p.k === 'conf') { p.rot += p.vr * dt; p.x += Math.sin(p.life * 3 + p.r) * 0.8; }
+  }
+}
+
+/* ============================================================
+   ACTUALIZACIÓN
+   ============================================================ */
+function hopDelta(u, trip) {
+  if (!trip) { const arc = Math.sin(Math.PI * u); return { dx: 20 * arc, dy: -48 * arc, rot: 0.22 * Math.sin(Math.PI * u), air: arc }; }
+  return { dx: 8 * Math.sin(Math.PI * u), dy: 10 * Math.abs(Math.sin(Math.PI * u)), rot: 0.9 * u * u, mood: 'sad' };
+}
+function resolveHurdle(now, ok) {
+  const i = S.vIdx;
+  S.cleared[i] = ok;
+  S.extra[i] = ok ? Math.round(((now - S.vT0) / 1000) * 10) / 10 : Math.round((VENTANA[i] + TROPIEZO) * 10) / 10;
+  const label = i === RIA ? (ok ? '¡Ría salvada!' : '¡Al agua!') : (ok ? '¡Vamos!' : '¡Tropiezo!');
+  spawnTxt(HURDLE_X, GROUND - 180, label, ok ? '#238a4c' : '#c93a2d');
+  if (ok) { for (let k = 0; k < 6; k++) spawnNote(HURDLE_X + (Math.random() - .5) * 30, GROUND - 160); jingle([880], 0.08); }
+  else jingle([260, 190], 0.12, 'sawtooth');
+  S.hopUntil = now + HOP_T * 1000; S.hopKind = ok ? 'clear' : 'trip';
+  S.vIdx++;
+  if (S.vIdx >= NV) { renderSteps(NV); setState('dash', now); return; }
+  S.vT0 = now; S.phase = 0; S.tp = [0, 0]; S.note = S.obstaculos[S.vIdx].targets[0]; S.hist.length = 0; S.voiced = false; S.lastVoice = -1e9;
+  renderSteps(S.vIdx); setRaceTitle();
+  const h = $('#hudCount'); h.textContent = String(S.vIdx + 1); h.classList.remove('pop'); void h.offsetWidth; h.classList.add('pop');
+}
+function update(dt, now) {
+  S.clock += dt;
+  const st = (now - S.t0) / 1000;
+  const R = { x: START_X, y: GROUND, run: 0, dir: 1 };
+  if (S.state === 'listen' || S.state === 'count' || S.state === 'race') sampleMic();
+  if (S.state === 'listen') { $('#lvListen').style.setProperty('--lv', clamp(Math.sqrt(S.level * 10), 0, 1)); }
+  let target = 0;
+
+  if (S.state === 'count') {
+    if (st > 0.5 && st < 2.9 && !S.demo) { S.noiseSum += S.rms; S.noiseN++; }
+    const label = st < 1 ? '3' : st < 2 ? '2' : st < 3 ? '1' : '¡Canta!';
+    if (label !== S.lastCount) {
+      S.lastCount = label; const h = $('#hudCount'); h.textContent = label;
+      h.classList.remove('pop'); void h.offsetWidth; h.classList.add('pop');
+    }
+    $('#lvPlay').style.setProperty('--lv', clamp(Math.sqrt(S.level * 10), 0, 1));
+    if (st >= COUNT) {
+      const mean = S.noiseN ? S.noiseSum / S.noiseN : 0.003;
+      S.gate = clamp(mean * 2.5, 0.006, 0.03);   // tope: si alguien ya canta en la cuenta atrás, no se ignora su voz
+      setState('race', now);
+    }
+  } else if (S.state === 'race') {
+    const nec = NEC[S.vIdx], ventana = VENTANA[S.vIdx];
+    const f = readPitch(now);
+    if (f) {
+      S.lastVoice = now;
+      S.hist.push(centsOff(f, S.note.f)); if (S.hist.length > 5) S.hist.shift();
+      S.cents = S.hist.slice().sort((a, b) => a - b)[S.hist.length >> 1]; S.voiced = true;
+    } else if (now - S.lastVoice > 110) { S.voiced = false; S.hist.length = 0; }
+    S.tunedNow = S.voiced && Math.abs(S.cents) <= S.tol;
+    if (S.tunedNow) S.tp[S.phase] = Math.min(nec, S.tp[S.phase] + Math.min(dt, 0.1));
+    target = S.tunedNow ? 1 : S.voiced ? 0.5 : 0.12;
+    S.noteTimer -= dt;
+    if (S.tunedNow && S.noteTimer <= 0) { spawnNote(R.x + 10, GROUND - 130); S.noteTimer = 0.28; }
+    if (S.phase === 0 && S.tp[0] >= nec) {
+      // primera nota (base) afinada: se pasa a la segunda (el salto), sin consumir más ventana de la ya gastada
+      S.phase = 1; S.note = S.obstaculos[S.vIdx].targets[1];
+      S.hist.length = 0; S.voiced = false; S.lastVoice = -1e9;
+      setRaceTitle(); jingle([880], 0.1);
+    } else if (S.phase === 1 && S.tp[1] >= nec) {
+      resolveHurdle(now, true);
+    } else {
+      const ventanaT0 = (now - S.vT0) / 1000;
+      if (ventanaT0 >= ventana) resolveHurdle(now, false);
+    }
+    // panel (si el obstáculo se ha resuelto arriba, S.vT0/S.vIdx/S.phase ya son los del siguiente)
+    if (S.state === 'race') {
+      const ventanaT = (now - S.vT0) / 1000, left = Math.max(0, ventana - ventanaT);
+      $('#hudSecs').textContent = Math.ceil(left);
+      $('#hudTimer').style.setProperty('--p', (ventanaT / ventana * 100).toFixed(1));
+      const shown = SALIDA + S.extra.slice(0, S.vIdx).reduce((a, b) => a + b, 0) + Math.min(ventanaT, ventana);
+      $('#hudTiempo').textContent = fmt1(shown);
+      $('#tunedTime').textContent = fmt1(S.tp[S.phase] || 0);
+      $('#lvPlay').style.setProperty('--lv', clamp(Math.sqrt(S.level * 10), 0, 1));
+      const tn = $('#tuner'), hint = $('#hint');
+      tn.style.setProperty('--zw', (S.tol * 2 / 300 * 100) + '%');
+      tn.classList.toggle('off', !S.voiced); tn.classList.toggle('on', S.tunedNow);
+      tn.style.setProperty('--nx', clamp((S.cents + 150) / 300 * 100, 2, 98) + '%');
+      let hs, ht;
+      if (!S.voiced) { hs = 'none'; ht = 'Canta la nota…'; }
+      else if (S.tunedNow) { hs = 'on'; ht = '¡Afinado! ¡Sigue así!'; }
+      else if (S.cents > 0) { hs = 'hi'; ht = 'Un poco más grave ↓'; }
+      else { hs = 'lo'; ht = 'Un poco más agudo ↑'; }
+      if (hint.dataset.s !== hs) { hint.dataset.s = hs; hint.textContent = ht; }
+    }
+  } else if (S.state === 'dash') {
+    const u = clamp(((now - S.tDash) / 1000) / LLEGADA, 0, 1);
+    R.x = HURDLE_X + 60 + (FINISH_X - (HURDLE_X + 60)) * easeOut(u); target = 1; S.runSpeed = 1;
+    $('#hudTiempo').textContent = fmt1(S.raceBase + LLEGADA * u);
+    if (u >= 1) { R.arms = (!S.nulo && S.total <= 22.5) ? 'up' : 'down'; R.mood = (!S.nulo && S.total <= 22.5) ? 'happy' : 'sad'; R.sit = clamp((((now - S.tDash) / 1000) - LLEGADA) / 0.3, 0, 1); }
+    if ((now - S.tDash) / 1000 >= LLEGADA + 0.4) setState('result', now);
+  } else if (S.state === 'result') {
+    R.x = FINISH_X; R.sit = 1; R.arms = (!S.nulo && S.total <= 22.5) ? 'up' : 'down'; R.mood = (!S.nulo && S.total <= 22.5) ? 'happy' : 'sad';
+  }
+
+  if (S.state !== 'dash') S.runSpeed += (target - S.runSpeed) * Math.min(1, dt * 6);
+  if (S.state === 'listen' || S.state === 'menu') {
+    S.runSpeed = 0;
+    if (S.note && performance.now() < S.noteUntil && S.state === 'listen') R.bubble = '♪';
+  }
+  if (S.state === 'count' || S.state === 'race') {
+    R.run = S.runSpeed; R.mouth = S.state === 'race' && S.voiced ? 0.35 + clamp(Math.sqrt(S.level * 8), 0, 1) * 0.65 : 0;
+    if (now < S.hopUntil) {
+      const u = clamp(1 - (S.hopUntil - now) / (HOP_T * 1000), 0, 1), h = hopDelta(u, S.hopKind === 'trip');
+      R.x += h.dx; R.y += h.dy; R.rot = h.rot; if (h.air != null) R.air = Math.max(R.air || 0, h.air); if (h.mood) R.mood = h.mood;
+    }
+  } else if (S.state === 'dash') { R.run = 1; }
+  if (S.state === 'count' || S.state === 'race' || S.state === 'dash') {
+    S.scroll += dt * (20 + 220 * S.runSpeed); S.bg += dt * (6 + 40 * S.runSpeed);
+  }
+  S.R = R;
+  updateParticles(dt);
+}
+
+/* ============================================================
+   ESCENA
+   ============================================================ */
+const farY = x => 352 - 26 * Math.sin(x * 0.006 + 1) - 13 * Math.sin(x * 0.013);
+const nearY = (x, off) => 398 - 18 * Math.sin((x + off) * 0.008) - 9 * Math.sin((x + off) * 0.021 + 2);
+function cloud(c, x, y, k) {
+  c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = '#fff'; c.shadowColor = 'rgba(20,33,61,.22)'; c.shadowOffsetY = 5;
+  c.beginPath(); c.moveTo(22, 0); c.arc(0, 0, 22, 0, 7); c.moveTo(54, -10); c.arc(26, -10, 28, 0, 7);
+  c.moveTo(80, 0); c.arc(58, 0, 22, 0, 7); c.rect(0, 0, 58, 22); c.fill(); c.restore();
+}
+function house(c, x, y, w, h, wall, roof) {
+  rrect(c, x, y - h, w, h, 2); paint(c, wall, 1.6);
+  c.beginPath(); c.moveTo(x - 3, y - h); c.lineTo(x + w / 2, y - h - 12); c.lineTo(x + w + 3, y - h); c.closePath(); paint(c, roof, 1.6);
+}
+function drawScene(c, tm) {
+  // cielo, sol y nubes
+  const g = c.createLinearGradient(0, 0, 0, 380); g.addColorStop(0, '#7cc6ea'); g.addColorStop(1, '#d4effa');
+  c.fillStyle = g; c.fillRect(0, 0, W, H);
+  c.save(); c.shadowColor = 'rgba(20,33,61,.25)'; c.shadowOffsetY = 4;
+  c.fillStyle = '#ffd25a'; c.beginPath(); c.arc(130, 150, 40, 0, 7); c.fill(); c.restore();
+  const drift = reduce ? 0 : tm;
+  for (const [bx, by, k, sp] of [[60, 130, 1, 9], [380, 90, .8, 6], [640, 170, 1.1, 8], [860, 215, .7, 5]]) {
+    cloud(c, ((bx + drift * sp) % (W + 220)) - 110, by, k);
+  }
+  // colinas lejanas con pueblo
+  c.save(); c.shadowColor = 'rgba(20,33,61,.2)'; c.shadowOffsetY = -3;
+  c.fillStyle = '#8ccf98'; c.beginPath(); c.moveTo(0, H);
+  for (let x = 0; x <= W; x += 10) c.lineTo(x, farY(x)); c.lineTo(W, H); c.closePath(); c.fill(); c.restore();
+  const vy = x => farY(x) + 3;
+  house(c, 664, vy(676), 26, 20, '#f1e1c0', '#c8553d'); house(c, 698, vy(710), 30, 26, '#e6cfa6', '#a8472f');
+  rrect(c, 738, vy(745) - 58, 15, 58, 2); paint(c, '#efe0bd', 1.6);
+  c.beginPath(); c.moveTo(735, vy(745) - 58); c.lineTo(745.5, vy(745) - 84); c.lineTo(756, vy(745) - 58); c.closePath(); paint(c, '#a8472f', 1.6);
+  house(c, 762, vy(775), 32, 22, '#f1e1c0', '#c8553d'); house(c, 802, vy(815), 24, 17, '#e6cfa6', '#a8472f');
+  // colinas cercanas (se desplazan al correr)
+  const off = S.bg * 10;
+  c.save(); c.shadowColor = 'rgba(20,33,61,.25)'; c.shadowOffsetY = -4;
+  c.fillStyle = '#5fae6e'; c.beginPath(); c.moveTo(0, H);
+  for (let x = 0; x <= W; x += 10) c.lineTo(x, nearY(x, off)); c.lineTo(W, H); c.closePath(); c.fill(); c.restore();
+  // banderines
+  const cols = ['#f4b52e', '#d9483b', '#ffffff', '#2f6fe4'];
+  c.lineWidth = 2.5; c.strokeStyle = INK; c.beginPath();
+  for (let x = 0; x <= W; x += 10) { const u = x / W, y = 14 + 28 * 4 * u * (1 - u); x ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke();
+  for (let i = 0, x = 24; x < W; x += 44, i++) {
+    const u = x / W, y = 14 + 28 * 4 * u * (1 - u);
+    c.beginPath(); c.moveTo(x - 15, y); c.lineTo(x + 15, y); c.lineTo(x, y + 34); c.closePath(); paint(c, cols[i % 4], 1.8);
+  }
+  // cartel
+  c.save(); c.translate(832, 72);
+  c.lineWidth = 2.5; c.strokeStyle = INK; c.beginPath(); c.moveTo(24, -30); c.lineTo(24, 4); c.moveTo(126, -30); c.lineTo(126, 4); c.stroke();
+  rrect(c, 0, 0, 150, 58, 10); paint(c, '#f4b52e', 3.2);
+  rrect(c, 7, 7, 136, 44, 6); c.lineWidth = 2; c.strokeStyle = INK; c.setLineDash([5, 4]); c.stroke(); c.setLineDash([]);
+  c.fillStyle = INK; c.font = `400 31px ${F_DISP}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('¡CANTA!', 75, 31, 124); c.restore();
+  // suelo y pista de vallas
+  c.fillStyle = '#4f9a5e'; c.fillRect(0, GROUND, W, H - GROUND);
+  c.fillStyle = '#9c3a28'; c.fillRect(0, GROUND, W, 48); c.fillStyle = '#c8553d'; c.fillRect(0, GROUND + 6, W, 42);
+  c.save(); c.beginPath(); c.rect(0, GROUND + 6, W, 42); c.clip(); c.fillStyle = 'rgba(255,255,255,.85)';
+  const sc = ((S.scroll % 64) + 64) % 64; for (let x = -64 + (64 - sc); x < W; x += 64) c.fillRect(x, GROUND + 25, 34, 4); c.restore();
+  c.lineWidth = 3; c.strokeStyle = INK; c.strokeRect(-2, GROUND, W + 4, 48);
+  rrect(c, START_X - 6, GROUND + 3, 12, 8, 2); paint(c, '#ffffff', 2.4);          // marca de salida
+  rrect(c, FINISH_X - 6, GROUND - 4, 12, 56, 2); paint(c, '#ffffff', 2.4);        // línea de meta
+  c.save(); c.setLineDash([9, 9]); c.lineWidth = 3; c.strokeStyle = '#ffffff'; c.beginPath(); c.moveTo(FINISH_X, GROUND - 60); c.lineTo(FINISH_X, GROUND + 4); c.stroke(); c.restore();
+  // panel de la marca de referencia (no es un récord real: ver nota en la página)
+  rrect(c, W - 190, 18, 174, 46, 10); paint(c, '#fff', 2.4);
+  c.fillStyle = '#c93a2d'; c.font = `800 13px ${F_BODY}`; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.fillText('MARCA ' + fmt1(REC) + ' s', W - 103, 32); c.fillStyle = INK; c.font = `800 12px ${F_BODY}`; c.fillText(NV + ' obstáculos (referencia)', W - 103, 50);
+}
+/* La valla delante del corredor: se tumba cuando se tropieza y vuelve a ponerse de pie con la siguiente. */
+function drawHurdle(c, x, topple) {
+  const rot = topple * 1.25;
+  c.save(); c.translate(x, GROUND + 2); c.rotate(rot);
+  c.lineCap = 'round';
+  c.lineWidth = 7; c.strokeStyle = INK; c.beginPath(); c.moveTo(-26, 0); c.lineTo(0, -6); c.lineTo(26, 0); c.stroke();
+  c.lineWidth = 4; c.strokeStyle = '#cfd6df'; c.beginPath(); c.moveTo(-26, 0); c.lineTo(0, -6); c.lineTo(26, 0); c.stroke();
+  for (const px of [-20, 20]) {
+    c.lineWidth = 8; c.strokeStyle = INK; c.beginPath(); c.moveTo(px, -4); c.lineTo(px, -92); c.stroke();
+    c.lineWidth = 4; c.strokeStyle = '#eef2f6'; c.beginPath(); c.moveTo(px, -4); c.lineTo(px, -92); c.stroke();
+  }
+  const barY = -92;
+  c.lineCap = 'butt'; c.lineWidth = 13; c.strokeStyle = INK; c.beginPath(); c.moveTo(-30, barY); c.lineTo(30, barY); c.stroke();
+  c.save(); c.beginPath(); c.rect(-29, barY - 5, 58, 10); c.clip();
+  c.fillStyle = '#fff'; c.fillRect(-29, barY - 5, 58, 10);
+  c.fillStyle = '#d9483b';
+  for (let sx = -34; sx < 34; sx += 12) { c.beginPath(); c.moveTo(sx, barY - 6); c.lineTo(sx + 7, barY - 6); c.lineTo(sx + 1, barY + 6); c.lineTo(sx - 6, barY + 6); c.closePath(); c.fill(); }
+  c.restore();
+  c.restore();
+}
+/* La ría (último obstáculo): como la valla pero con un foso de agua al otro lado y una valla algo más baja. */
+function drawWaterJump(c, x, topple) {
+  c.save();
+  const g = c.createLinearGradient(x - 70, GROUND - 6, x - 70, GROUND + 38);
+  g.addColorStop(0, '#8fd0ee'); g.addColorStop(1, '#2f6fe4');
+  c.fillStyle = g; rrect(c, x - 70, GROUND - 6, 140, 44, 10); c.fill();
+  c.lineWidth = 3; c.strokeStyle = INK; rrect(c, x - 70, GROUND - 6, 140, 44, 10); c.stroke();
+  c.strokeStyle = 'rgba(255,255,255,.65)'; c.lineWidth = 2;
+  for (const wy of [GROUND + 8, GROUND + 20, GROUND + 32]) {
+    c.beginPath();
+    for (let wx = x - 62; wx <= x + 62; wx += 8) { const yy = wy + Math.sin((wx + S.clock * 60) * 0.25) * 2; wx === x - 62 ? c.moveTo(wx, yy) : c.lineTo(wx, yy); }
+    c.stroke();
+  }
+  c.restore();
+  const rot = topple * 1.25;
+  c.save(); c.translate(x, GROUND + 2); c.rotate(rot);
+  c.lineCap = 'round';
+  for (const px of [-20, 20]) {
+    c.lineWidth = 7; c.strokeStyle = INK; c.beginPath(); c.moveTo(px, -2); c.lineTo(px, -58); c.stroke();
+    c.lineWidth = 3.5; c.strokeStyle = '#eef2f6'; c.beginPath(); c.moveTo(px, -2); c.lineTo(px, -58); c.stroke();
+  }
+  const barY = -58;
+  c.lineCap = 'butt'; c.lineWidth = 11; c.strokeStyle = INK; c.beginPath(); c.moveTo(-26, barY); c.lineTo(26, barY); c.stroke();
+  c.lineWidth = 6; c.strokeStyle = '#ffffff'; c.beginPath(); c.moveTo(-26, barY); c.lineTo(26, barY); c.stroke();
+  c.restore();
+}
+function drawProgress(c) {
+  const n = NV, cw = 30, gap = 8, totalW = n * cw + (n - 1) * gap, x0 = (W - totalW) / 2, y = 14;
+  for (let i = 0; i < n; i++) {
+    const x = x0 + i * (cw + gap), done = i < S.vIdx || S.state === 'dash' || S.state === 'result', cur = i === S.vIdx && S.state === 'race';
+    let fill = '#ffffff';
+    if (done) fill = S.cleared[i] ? '#2fb36b' : '#d9483b'; else if (cur) fill = '#f4b52e';
+    rrect(c, x, y, cw, 22, 6); paint(c, fill, 2.2);
+    c.fillStyle = INK; c.font = `800 13px ${F_BODY}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(String(i + 1), x + cw / 2, y + 12);
+  }
+}
+function draw(now) {
+  const c = ctx; c.setTransform(S.k, 0, 0, S.k, 0, 0);
+  const tm = now / 1000; drawScene(c, tm);
+  const R = S.R, m = MUSICOS[S.musico];
+  if (S.state === 'count' || S.state === 'race' || S.state === 'dash' || S.state === 'result') drawProgress(c);
+  if (S.state === 'count' || S.state === 'race') {
+    const topple = (S.hopKind === 'trip' && now < S.hopUntil) ? clamp(1 - (S.hopUntil - now) / (HOP_T * 1000), 0, 1) : 0;
+    if (S.vIdx === RIA) drawWaterJump(c, HURDLE_X, topple); else drawHurdle(c, HURDLE_X, topple);
+  }
+  if (S.nulo && (S.state === 'dash' || S.state === 'result') && (now - S.tDash) / 1000 > 0.2) {
+    c.font = `400 30px ${F_DISP}`; c.textAlign = 'center'; c.lineWidth = 6; c.strokeStyle = INK; c.strokeText('¡DESCALIFICADO!', (HURDLE_X + FINISH_X) / 2, GROUND - 150); c.fillStyle = '#ff6a55'; c.fillText('¡DESCALIFICADO!', (HURDLE_X + FINISH_X) / 2, GROUND - 150);
+  }
+  c.fillStyle = 'rgba(20,33,61,.22)'; const sh = clamp(1 - (GROUND - R.y) / 240, 0.3, 1);
+  c.beginPath(); c.ellipse(R.x, GROUND + 4, 34 * sh, 7 * sh, 0, 0, 7); c.fill();
+  drawMusico(c, m, R.x, R.y, { ...R, t: S.clock, s: 1.15 });
+  if (R.bubble) {
+    const bx = R.x + 38, by = R.y - 150 + Math.sin(S.clock * 8) * 3;
+    rrect(c, bx, by, 54, 44, 14); paint(c, '#fff', 3); c.fillStyle = INK; c.font = `400 30px ${F_DISP}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('♪', bx + 27, by + 24);
+  }
+  for (const p of P) {
+    const a = clamp(p.life / p.max * 1.6, 0, 1); c.globalAlpha = a;
+    if (p.k === 'note') { c.font = `400 ${p.r}px ${F_DISP}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.lineWidth = 5; c.strokeStyle = INK; c.strokeText(p.ch, p.x, p.y); c.fillStyle = p.col; c.fillText(p.ch, p.x, p.y); }
+    else if (p.k === 'txt') { c.font = `400 22px ${F_DISP}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.lineWidth = 5; c.strokeStyle = INK; c.strokeText(p.ch, p.x, p.y); c.fillStyle = p.col; c.fillText(p.ch, p.x, p.y); }
+    else if (p.k === 'conf') { c.save(); c.translate(p.x, p.y); c.rotate(p.rot); c.fillStyle = p.col; c.fillRect(-p.r, -p.r / 2, p.r * 2, p.r); c.restore(); }
+    else { c.fillStyle = p.col; c.beginPath(); c.arc(p.x, p.y, p.r, 0, 7); c.fill(); }
+    c.globalAlpha = 1;
+  }
+}
+
+/* ============================================================
+   INTERFAZ
+   ============================================================ */
+const cvs = $('#scene'), ctx = cvs.getContext('2d');
+S.k = 1;
+function resize() {
+  const dpr = Math.min(2, window.devicePixelRatio || 1), w = cvs.clientWidth || W;
+  cvs.width = Math.round(w * dpr); cvs.height = Math.round(w * dpr * H / W); S.k = cvs.width / W;
+}
+new ResizeObserver(resize).observe(cvs); resize();
+
+function buildPicker() {
+  const box = $('#picker');
+  MUSICOS.forEach((m, i) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'mus'; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(i === S.musico));
+    const cv = document.createElement('canvas'); cv.width = 180; cv.height = 240;
+    const cx = cv.getContext('2d'); cx.scale(2, 2); drawMusico(cx, m, 45, 112, { s: 0.88, dir: 0, t: 0.4 });
+    const sp = document.createElement('span'); sp.textContent = m.n;
+    b.append(cv, sp);
+    b.addEventListener('click', () => { S.musico = i; box.querySelectorAll('.mus').forEach((x, j) => x.setAttribute('aria-checked', String(j === i))); try { localStorage.setItem('obstaculos-musico', i); } catch (e) { } });
+    box.appendChild(b);
+  });
+}
+function saveName() { S.nombre = $('#nombre').value.trim(); try { localStorage.setItem('obstaculos-nombre', S.nombre); } catch (e) { } }
+function startFromMenu() {
+  saveName();
+  S.dif = document.querySelector('input[name=dif]:checked').value; S.tol = DIF[S.dif];
+  S.gru = document.querySelector('input[name=gru]:checked').value;
+  setState('listen');
+  track('juego_inicio', { dificultad: S.dif, intervalos: S.gru, modo: S.demo ? 'demo' : 'microfono' });
+}
+$('#btnStart').addEventListener('click', async () => {
+  const btn = $('#btnStart'), err = $('#micErr'); err.hidden = true;
+  try {
+    btn.disabled = true; btn.textContent = 'Activando micrófono…';
+    if (S.demo) await ensureAudio(); else await ensureMic();
+    startFromMenu();
+  } catch (e) {
+    err.hidden = false;
+    const segura = window.isSecureContext && !!navigator.mediaDevices;
+    err.textContent = !segura
+      ? 'El navegador no deja usar el micrófono porque el juego se ha abierto desde un archivo del dispositivo. Hay que abrirlo desde una dirección https (una web) o desde un ordenador con Chrome. Mientras tanto, puedes probar el modo demostración.'
+      : (e && e.name === 'NotAllowedError')
+        ? 'El navegador no ha dado permiso al micrófono. Permítelo en el candado de la barra de direcciones y vuelve a pulsar.'
+        : 'No se puede usar el micrófono. Comprueba que hay uno conectado y que no lo está usando otra aplicación. También puedes probar el modo demostración.';
+    if (!S.demo) track('juego_mic_error', { motivo: (e && e.name) || 'otro' });
+  } finally { btn.disabled = false; btn.textContent = '¡A correr!'; }
+});
+$('#btnDemo').addEventListener('click', () => {
+  S.demo = !S.demo; $('#micErr').hidden = true;
+  $('#btnDemo').textContent = S.demo ? 'Modo demostración ACTIVADO (pulsa para volver al micrófono)' : 'Probar sin micrófono (modo demostración)';
+});
+$('#btnRepeat').addEventListener('click', hearNote);
+$('#btnSing').addEventListener('click', () => setState('count'));
+$('#btnBack').addEventListener('click', () => setState('menu'));
+$('#btnAgain').addEventListener('click', () => setState('listen'));
+$('#btnChange').addEventListener('click', () => setState('menu'));
+let clearArm = 0;
+$('#btnClear').addEventListener('click', e => {
+  const b = e.currentTarget;
+  if (!clearArm) { clearArm = setTimeout(() => { clearArm = 0; b.textContent = 'Borrar clasificación'; }, 4000); b.textContent = 'Pulsa otra vez para borrar todo'; return; }
+  clearTimeout(clearArm); clearArm = 0; b.textContent = 'Borrar clasificación'; saveRank([]); refreshRankMenu();
+});
+// modo demostración: un toque empieza a "cantar" y otro toque para (también con la barra espaciadora)
+const dh = $('#demoHold');
+function setHold(v) { S.demoHold = v; dh.classList.toggle('held', v); dh.textContent = v ? 'Cantando… toca para parar' : 'Toca para cantar'; }
+dh.addEventListener('click', () => setHold(!S.demoHold));
+$('#demoCents').addEventListener('input', e => { S.demoCents = +e.target.value; });
+addEventListener('keydown', e => {
+  if (S.demo && e.code === 'Space' && (S.state === 'count' || S.state === 'race') && e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON') {
+    e.preventDefault(); if (!e.repeat) setHold(!S.demoHold);
+  }
+});
+addEventListener('contextmenu', e => { if (e.target.tagName !== 'INPUT') e.preventDefault(); });
+addEventListener('pagehide', () => { if (micStream) micStream.getTracks().forEach(t => t.stop()); });
+
+(function init() {
+  try { const i = parseInt(localStorage.getItem('obstaculos-musico'), 10); if (i >= 0 && i < MUSICOS.length) S.musico = i; $('#nombre').value = localStorage.getItem('obstaculos-nombre') || ''; } catch (e) { }
+  buildPicker(); refreshRankMenu();
+  if (document.fonts && document.fonts.load) { document.fonts.load(`28px 'Lilita One'`).catch(() => { }); document.fonts.load('800 14px Nunito').catch(() => { }); }
+  let last = performance.now();
+  (function frame(now) { const dt = Math.min(0.05, (now - last) / 1000); last = now; update(dt, now); draw(now); requestAnimationFrame(frame); })(last);
+  window.__obstaculos = { S, setState };
+})();
+</script>
+<noscript>Este juego necesita JavaScript.</noscript>
+</body>
+</html>

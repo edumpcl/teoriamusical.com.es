@@ -307,3 +307,4 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Recursos Gratuitos para Estudiar Teoría Musical](https://www.teoriamusical.com.es/blog/recursos-gratuitos-teoria-musical/): Libros, partituras de dominio público y programas realmente gratuitos, con su idioma, nivel y límites: Hutchinson (inglés), cuadernos de Néstor Crespo, método de solfeo de Eslava, musictheory.net, IMSLP y MuseScore Studio.
 - [Agenda de Conciertos y Oposiciones de Música](https://www.teoriamusical.com.es/agenda/): Agenda de conciertos de bandas y orquestas en España y oposiciones de música con el plazo abierto, comprobadas en fuentes oficiales.
 - [Vallas musicales](https://www.teoriamusical.com.es/juegos/entonacion/vallas/juego/)
+- [Carrera de obstáculos musical](https://www.teoriamusical.com.es/juegos/entonacion/carrera-de-obstaculos/juego/)
