@@ -780,6 +780,9 @@ function update(dt, now) {
     if (label !== S.lastCount) {
       S.lastCount = label; const h = $('#hudCount'); h.textContent = label;
       h.classList.remove('pop'); void h.offsetWidth; h.classList.add('pop');
+      // Pitido de la cuenta atrás: para saber cuándo entrar sin mirar la pantalla.
+      if (label === '¡Canta!') jingle([523, 784], 0.08, 'sine');
+      else jingle([{ '3': 392, '2': 440, '1': 494 }[label]], 0.07, 'sine');
     }
     $('#lvPlay').style.setProperty('--lv', clamp(Math.sqrt(S.level * 10), 0, 1));
     if (st >= COUNT) {

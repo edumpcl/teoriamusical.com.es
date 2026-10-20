@@ -308,3 +308,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Agenda de Conciertos y Oposiciones de Música](https://www.teoriamusical.com.es/agenda/): Agenda de conciertos de bandas y orquestas en España y oposiciones de música con el plazo abierto, comprobadas en fuentes oficiales.
 - [Vallas musicales](https://www.teoriamusical.com.es/juegos/entonacion/vallas/juego/)
 - [Carrera de obstáculos musical](https://www.teoriamusical.com.es/juegos/entonacion/carrera-de-obstaculos/juego/)
+- [Salto de longitud musical](https://www.teoriamusical.com.es/juegos/entonacion/salto-de-longitud/juego/)
+- [Salto de altura musical](https://www.teoriamusical.com.es/juegos/entonacion/salto-de-altura/juego/)
+- [Lanzamiento de jabalina musical](https://www.teoriamusical.com.es/juegos/entonacion/lanzamiento-de-jabalina/juego/)
+- [Triple salto musical](https://www.teoriamusical.com.es/juegos/entonacion/triple-salto/juego/)
