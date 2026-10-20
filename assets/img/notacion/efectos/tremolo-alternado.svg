@@ -1,0 +1,63 @@
+<svg id="itmqwao" viewBox="0 0 152 80" width="232" height="122" role="img" xmlns="http://www.w3.org/2000/svg"><title>Trémolo alternado entre dos notas, Do y Mi, unidas por tres barras: se alternan las dos notas en fusas durante la duración de las dos blancas.</title>
+   <defs>
+      <g id="E050-itmqwao">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A3-itmqwao">
+         <path transform="scale(1,-1)" d="M75 -86c46 0 215 85 215 135c0 22 -16 36 -40 36c-47 0 -215 -86 -215 -135c0 -9 7 -36 40 -36zM213 132c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91c0 93 116 174 213 174z" />
+      </g>
+   </defs>
+   <style type="text/css">#itmqwao g.ending, #itmqwao g.fing, #itmqwao g.reh, #itmqwao g.tempo {font-weight:bold;}#itmqwao g.dir, #itmqwao g.dynam, #itmqwao g.mNum {font-style:italic;}#itmqwao g.label {font-weight:normal;}#itmqwao ellipse, #itmqwao path, #itmqwao polygon, #itmqwao polyline, #itmqwao rect {stroke:currentColor}#itmqwao g.cursor {fill:dodgerblue; color:dodgerblue;}#itmqwao g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 3800 2000">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="j1cuvukc" class="mdiv pageMilestone" />
+         <g id="k9wlh1r" class="score pageMilestone" />
+         <g id="q1xmys1u" class="system">
+            <g id="x1i9si23" class="section systemMilestone" />
+            <g id="yada7qj" class="measure">
+               <g id="h17q02ge" class="staff">
+                  <path d="M0 540 L3600 540" stroke-width="13" />
+                  <path d="M0 720 L3600 720" stroke-width="13" />
+                  <path d="M0 900 L3600 900" stroke-width="13" />
+                  <path d="M0 1080 L3600 1080" stroke-width="13" />
+                  <path d="M0 1260 L3600 1260" stroke-width="13" />
+                  <g id="d12tol5i" class="clef">
+                     <use href="#E050-itmqwao" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="evlws1r" class="keySig" />
+                  <g class="ledgerLines below">
+                     <path d="M772 1440 L1102 1440" stroke-width="22" />
+                  </g>
+                  <g id="ikhe1lz" class="layer">
+                     <g id="ft" class="fTrem">
+                        <polygon points="1035,855 2443,675 2443,765 1035,945" />
+                        <polygon points="1035,990 2443,810 2443,900 1035,1080" />
+                        <polygon points="1035,1125 2443,945 2443,1035 1035,1215" />
+                        <g id="n1" class="note">
+                           <g class="notehead">
+                              <use href="#E0A3-itmqwao" transform="translate(820, 1440) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="y1r0a26u" class="stem">
+                              <path d="M1044 1412 L1044 873" stroke-width="18" />
+                           </g>
+                        </g>
+                        <g id="n2" class="note">
+                           <g class="notehead">
+                              <use href="#E0A3-itmqwao" transform="translate(2210, 1260) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="z17g48mh" class="stem">
+                              <path d="M2434 1232 L2434 693" stroke-width="18" />
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="gyteg4z" class="barLine" />
+            </g>
+            <g id="t1sh7hqb" class="systemMilestoneEnd x1i9si23" />
+         </g>
+         <g id="u93xn0y" class="pageMilestoneEnd k9wlh1r" />
+         <g id="vfru0od" class="pageMilestoneEnd j1cuvukc" />
+      </g>
+   </svg>
+</svg>
