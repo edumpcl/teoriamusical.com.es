@@ -312,3 +312,4 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Salto de altura musical](https://www.teoriamusical.com.es/juegos/entonacion/salto-de-altura/juego/)
 - [Lanzamiento de jabalina musical](https://www.teoriamusical.com.es/juegos/entonacion/lanzamiento-de-jabalina/juego/)
 - [Triple salto musical](https://www.teoriamusical.com.es/juegos/entonacion/triple-salto/juego/)
+- [100 metros lisos musical](https://www.teoriamusical.com.es/juegos/entonacion/100-metros-lisos/juego/)
