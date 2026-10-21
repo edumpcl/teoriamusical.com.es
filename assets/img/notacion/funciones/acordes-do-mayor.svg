@@ -1,0 +1,301 @@
+<svg id="hadb3my" viewBox="0 0 846 85" width="1293" height="130" role="img" xmlns="http://www.w3.org/2000/svg"><title>Seis acordes de Do mayor con su función: encima, la letra de la función, y debajo, el grado. I (Do, Mi, Sol) y VI (La, Do, Mi), tónica; IV (Fa, La, Do) y II (Re, Fa, La), subdominante; V (Sol, Si, Re) y VII (Si, Re, Fa), dominante.</title>
+   <defs>
+      <g id="E050-hadb3my">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A2-hadb3my">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#hadb3my g.ending, #hadb3my g.fing, #hadb3my g.reh, #hadb3my g.tempo {font-weight:bold;}#hadb3my g.dir, #hadb3my g.dynam, #hadb3my g.mNum {font-style:italic;}#hadb3my g.label {font-weight:normal;}#hadb3my ellipse, #hadb3my path, #hadb3my polygon, #hadb3my polyline, #hadb3my rect {stroke:currentColor}#hadb3my g.cursor {fill:dodgerblue; color:dodgerblue;}#hadb3my g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 21130 2120">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="ifdbity" class="mdiv pageMilestone" />
+         <g id="j1rydi27" class="score pageMilestone" />
+         <g id="n13w26qt" class="system">
+            <g id="yl5c4n4" class="section systemMilestone" />
+            <g id="z4oznd1" class="measure">
+               <g id="i1l5hoby" class="staff">
+                  <path d="M0 540 L4023 540" stroke-width="13" />
+                  <path d="M0 720 L4023 720" stroke-width="13" />
+                  <path d="M0 900 L4023 900" stroke-width="13" />
+                  <path d="M0 1080 L4023 1080" stroke-width="13" />
+                  <path d="M0 1260 L4023 1260" stroke-width="13" />
+                  <g id="k1g92tro" class="clef">
+                     <use href="#E050-hadb3my" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="l11eovmd" class="keySig" />
+                  <g id="m3vkkgx" class="meterSig" visibility="hidden" />
+                  <g class="ledgerLines below">
+                     <path d="M772 1440 L1136 1440" stroke-width="22" />
+                  </g>
+                  <g id="j1j4gybd" class="layer">
+                     <g id="c0" class="chord">
+                        <g id="l1rokvig" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(820, 1440) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="m1q5lrgw" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(820, 1260) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="nk175pe" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(820, 1080) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="f0" class="dir">
+                  <text x="820" y="412" font-size="0px">
+                     <tspan id="p1w4b646" class="text">
+                        <tspan font-size="405px">T</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="r0" class="dir">
+                  <text x="820" y="1846" font-size="0px">
+                     <tspan id="rolhvrr" class="text">
+                        <tspan font-size="405px">I</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="h1vimlln" class="barLine">
+                  <path d="M4010 540 L4010 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="s36yeoj" class="measure">
+               <g id="bjpae88" class="staff">
+                  <path d="M4023 540 L7406 540" stroke-width="13" />
+                  <path d="M4023 720 L7406 720" stroke-width="13" />
+                  <path d="M4023 900 L7406 900" stroke-width="13" />
+                  <path d="M4023 1080 L7406 1080" stroke-width="13" />
+                  <path d="M4023 1260 L7406 1260" stroke-width="13" />
+                  <g id="c1qwag2q" class="layer">
+                     <g id="c1" class="chord">
+                        <g id="ekutldi" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(4203, 990) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="fqe096x" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(4203, 810) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="g1woakuq" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(4203, 630) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="f1" class="dir">
+                  <text x="4203" y="404" font-size="0px">
+                     <tspan id="ieaa66b" class="text">
+                        <tspan font-size="405px">T</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="r1" class="dir">
+                  <text x="4203" y="1570" font-size="0px">
+                     <tspan id="knqe7p3" class="text">
+                        <tspan font-size="405px">VI</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="ah348va" class="barLine">
+                  <path d="M7393 540 L7393 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="lyuiwpa" class="measure">
+               <g id="u1qyaou0" class="staff">
+                  <path d="M7406 540 L10789 540" stroke-width="13" />
+                  <path d="M7406 720 L10789 720" stroke-width="13" />
+                  <path d="M7406 900 L10789 900" stroke-width="13" />
+                  <path d="M7406 1080 L10789 1080" stroke-width="13" />
+                  <path d="M7406 1260 L10789 1260" stroke-width="13" />
+                  <g id="v12g5hre" class="layer">
+                     <g id="c2" class="chord">
+                        <g id="x1uekkm1" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(7586, 1170) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="y17uifuy" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(7586, 990) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="zx62wl1" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(7586, 810) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="f2" class="dir">
+                  <text x="7586" y="412" font-size="0px">
+                     <tspan id="b13ej8az" class="text">
+                        <tspan font-size="405px">S</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="r2" class="dir">
+                  <text x="7586" y="1570" font-size="0px">
+                     <tspan id="d1ym5t2v" class="text">
+                        <tspan font-size="405px">IV</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="t1eyn1ra" class="barLine">
+                  <path d="M10776 540 L10776 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="e185v15t" class="measure">
+               <g id="n1usmsi8" class="staff">
+                  <path d="M10789 540 L14172 540" stroke-width="13" />
+                  <path d="M10789 720 L14172 720" stroke-width="13" />
+                  <path d="M10789 900 L14172 900" stroke-width="13" />
+                  <path d="M10789 1080 L14172 1080" stroke-width="13" />
+                  <path d="M10789 1260 L14172 1260" stroke-width="13" />
+                  <g id="o1l8aw60" class="layer">
+                     <g id="c3" class="chord">
+                        <g id="q1h7n4pp" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(10969, 1350) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="r12yu7oj" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(10969, 1170) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="s1542lyh" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(10969, 990) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="f3" class="dir">
+                  <text x="10969" y="412" font-size="0px">
+                     <tspan id="uu88773" class="text">
+                        <tspan font-size="405px">S</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="r3" class="dir">
+                  <text x="10969" y="1756" font-size="0px">
+                     <tspan id="w1w1k8dj" class="text">
+                        <tspan font-size="405px">II</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="mflnyfy" class="barLine">
+                  <path d="M14159 540 L14159 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="x1o40e4x" class="measure">
+               <g id="g4s368m" class="staff">
+                  <path d="M14172 540 L17555 540" stroke-width="13" />
+                  <path d="M14172 720 L17555 720" stroke-width="13" />
+                  <path d="M14172 900 L17555 900" stroke-width="13" />
+                  <path d="M14172 1080 L17555 1080" stroke-width="13" />
+                  <path d="M14172 1260 L17555 1260" stroke-width="13" />
+                  <g id="he3pskw" class="layer">
+                     <g id="c4" class="chord">
+                        <g id="j1roricy" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(14352, 1080) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="k14836dz" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(14352, 900) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="lsme0w" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(14352, 720) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="f4" class="dir">
+                  <text x="14352" y="412" font-size="0px">
+                     <tspan id="n131cysj" class="text">
+                        <tspan font-size="405px">D</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="r4" class="dir">
+                  <text x="14352" y="1570" font-size="0px">
+                     <tspan id="pks91er" class="text">
+                        <tspan font-size="405px">V</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="fps43ht" class="barLine">
+                  <path d="M17542 540 L17542 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="qhtch7u" class="measure">
+               <g id="z1sh8val" class="staff">
+                  <path d="M17555 540 L20938 540" stroke-width="13" />
+                  <path d="M17555 720 L20938 720" stroke-width="13" />
+                  <path d="M17555 900 L20938 900" stroke-width="13" />
+                  <path d="M17555 1080 L20938 1080" stroke-width="13" />
+                  <path d="M17555 1260 L20938 1260" stroke-width="13" />
+                  <g id="a1s4kc0x" class="layer">
+                     <g id="c5" class="chord">
+                        <g id="cilfhfr" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(17735, 900) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="d1pwmotk" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(17735, 720) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="eaigyjl" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-hadb3my" transform="translate(17735, 540) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="f5" class="dir">
+                  <text x="17735" y="314" font-size="0px">
+                     <tspan id="gl8n1wx" class="text">
+                        <tspan font-size="405px">D</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="r5" class="dir">
+                  <text x="17735" y="1570" font-size="0px">
+                     <tspan id="iuveib5" class="text">
+                        <tspan font-size="405px">VII</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="y175jhb3" class="barLine">
+                  <path d="M20925 540 L20925 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="q16n4zcx" class="systemMilestoneEnd yl5c4n4" />
+         </g>
+         <g id="r53wc6n" class="pageMilestoneEnd j1rydi27" />
+         <g id="s12ifkkt" class="pageMilestoneEnd ifdbity" />
+      </g>
+   </svg>
+</svg>

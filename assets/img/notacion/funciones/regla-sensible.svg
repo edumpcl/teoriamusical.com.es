@@ -1,0 +1,163 @@
+<svg id="e1yeq8vi" viewBox="0 0 440 82" width="672" height="125" role="img" xmlns="http://www.w3.org/2000/svg"><title>Tres acordes de Do mayor con la nota clave marcada en rojo: Sol, Si, Re lleva la sensible (Si), dominante; Re, Fa, La lleva el cuarto grado (Fa) y no la sensible, subdominante; La, Do, Mi no lleva ni Si ni Fa, tónica.</title>
+   <defs>
+      <g id="E050-e1yeq8vi">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E0A2-e1yeq8vi">
+         <path transform="scale(1,-1)" d="M195 -102c41 0 75 8 75 57c0 25 -18 89 -32 116s-32 33 -60 33c-15 0 -31 -2 -43 -6c-24 -8 -34 -24 -32 -51c1 -27 19 -91 32 -116s32 -33 60 -33zM187 136c138 0 186 -70 186 -135s-48 -135 -186 -135s-187 70 -187 135s49 135 187 135z" />
+      </g>
+   </defs>
+   <style type="text/css">#e1yeq8vi g.ending, #e1yeq8vi g.fing, #e1yeq8vi g.reh, #e1yeq8vi g.tempo {font-weight:bold;}#e1yeq8vi g.dir, #e1yeq8vi g.dynam, #e1yeq8vi g.mNum {font-style:italic;}#e1yeq8vi g.label {font-weight:normal;}#e1yeq8vi ellipse, #e1yeq8vi path, #e1yeq8vi polygon, #e1yeq8vi polyline, #e1yeq8vi rect {stroke:currentColor}#e1yeq8vi g.cursor {fill:dodgerblue; color:dodgerblue;}#e1yeq8vi g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 10980 2050">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="f1hzutqm" class="mdiv pageMilestone" />
+         <g id="g6vdufr" class="score pageMilestone" />
+         <g id="ffja9ph" class="system">
+            <g id="vmgu80n" class="section systemMilestone" />
+            <g id="wke8m4g" class="measure">
+               <g id="f138hlmk" class="staff">
+                  <path d="M0 540 L4023 540" stroke-width="13" />
+                  <path d="M0 720 L4023 720" stroke-width="13" />
+                  <path d="M0 900 L4023 900" stroke-width="13" />
+                  <path d="M0 1080 L4023 1080" stroke-width="13" />
+                  <path d="M0 1260 L4023 1260" stroke-width="13" />
+                  <g id="qfam9l5" class="clef">
+                     <use href="#E050-e1yeq8vi" transform="translate(90, 1080) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="r1r58lzu" class="keySig" />
+                  <g id="s14c3pxq" class="meterSig" visibility="hidden" />
+                  <g id="gif42hs" class="layer">
+                     <g id="c0" class="chord">
+                        <g id="i8we5wu" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-e1yeq8vi" transform="translate(820, 1080) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="jq27xjf" class="note" color="#c0392b" fill="#c0392b">
+                           <g class="notehead">
+                              <use href="#E0A2-e1yeq8vi" transform="translate(820, 900) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="k1y5kyvq" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-e1yeq8vi" transform="translate(820, 720) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="f0" class="dir">
+                  <text x="820" y="412" font-size="0px">
+                     <tspan id="m1jbnopk" class="text">
+                        <tspan font-size="405px">D</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="r0" class="dir">
+                  <text x="820" y="1582" font-size="0px">
+                     <tspan id="ovlgmek" class="text">
+                        <tspan font-size="405px">V lleva Si</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="e1t8xiiz" class="barLine">
+                  <path d="M4010 540 L4010 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="pk9kmtr" class="measure">
+               <g id="yea7uih" class="staff">
+                  <path d="M4023 540 L7406 540" stroke-width="13" />
+                  <path d="M4023 720 L7406 720" stroke-width="13" />
+                  <path d="M4023 900 L7406 900" stroke-width="13" />
+                  <path d="M4023 1080 L7406 1080" stroke-width="13" />
+                  <path d="M4023 1260 L7406 1260" stroke-width="13" />
+                  <g id="zywey10" class="layer">
+                     <g id="c1" class="chord">
+                        <g id="b1mmejne" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-e1yeq8vi" transform="translate(4203, 1350) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="cn7uhpj" class="note" color="#c0392b" fill="#c0392b">
+                           <g class="notehead">
+                              <use href="#E0A2-e1yeq8vi" transform="translate(4203, 1170) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="dueqt4c" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-e1yeq8vi" transform="translate(4203, 990) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="f1" class="dir">
+                  <text x="4203" y="412" font-size="0px">
+                     <tspan id="f1ehmf4o" class="text">
+                        <tspan font-size="405px">S</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="r1" class="dir">
+                  <text x="4203" y="1768" font-size="0px">
+                     <tspan id="h1pkazz2" class="text">
+                        <tspan font-size="405px">II lleva Fa</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="xlr9cnq" class="barLine">
+                  <path d="M7393 540 L7393 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="igsb60f" class="measure">
+               <g id="r1hqmdm1" class="staff">
+                  <path d="M7406 540 L10789 540" stroke-width="13" />
+                  <path d="M7406 720 L10789 720" stroke-width="13" />
+                  <path d="M7406 900 L10789 900" stroke-width="13" />
+                  <path d="M7406 1080 L10789 1080" stroke-width="13" />
+                  <path d="M7406 1260 L10789 1260" stroke-width="13" />
+                  <g id="scaqcbt" class="layer">
+                     <g id="c2" class="chord">
+                        <g id="u16zzuxi" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-e1yeq8vi" transform="translate(7586, 990) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="v136fefm" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-e1yeq8vi" transform="translate(7586, 810) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                        <g id="w1tahkny" class="note">
+                           <g class="notehead">
+                              <use href="#E0A2-e1yeq8vi" transform="translate(7586, 630) scale(0.72, 0.72)" />
+                           </g>
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="f2" class="dir">
+                  <text x="7586" y="404" font-size="0px">
+                     <tspan id="y1rsq9yc" class="text">
+                        <tspan font-size="405px">T</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="r2" class="dir">
+                  <text x="7586" y="1575" font-size="0px">
+                     <tspan id="a14hvayb" class="text">
+                        <tspan font-size="405px">VI ni Si ni Fa</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="qs4pjh3" class="barLine">
+                  <path d="M10776 540 L10776 1260" stroke-width="27" />
+               </g>
+            </g>
+            <g id="is93l6i" class="systemMilestoneEnd vmgu80n" />
+         </g>
+         <g id="j1l6pp2c" class="pageMilestoneEnd g6vdufr" />
+         <g id="kgtlzg8" class="pageMilestoneEnd f1hzutqm" />
+      </g>
+   </svg>
+</svg>
