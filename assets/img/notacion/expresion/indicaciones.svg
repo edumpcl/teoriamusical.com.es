@@ -1,0 +1,154 @@
+<svg id="m1dque78" viewBox="0 0 514 82" width="785" height="125" role="img" xmlns="http://www.w3.org/2000/svg"><title>Dos compases con indicaciones de expresión escritas en la partitura: encima del principio, «Andante con moto»; debajo de la primera nota, «dolce»; y encima del segundo compás, «espressivo» y «poco rit.».</title>
+   <defs>
+      <g id="E050-m1dque78">
+         <path transform="scale(1,-1)" d="M420 -206l-58 329c-59 -14 -104 -63 -104 -124c0 -49 22 -75 61 -99c12 -8 22 -13 22 -22s-9 -13 -17 -13c-80 0 -135 96 -135 166c0 94 62 190 153 217c-7 41 -14 88 -23 142c-15 -15 -31 -29 -48 -44c-88 -76 -174 -185 -174 -307c0 -151 122 -251 265 -251 c19 0 38 2 58 6zM332 822c-8 -31 -11 -65 -11 -102c0 -42 5 -81 11 -121c69 68 146 146 146 250c0 69 -24 118 -39 118c-52 0 -98 -105 -107 -145zM562 -21c0 89 -65 150 -155 150c7 -44 34 -203 55 -323c71 29 100 102 100 173zM122 -513c0 66 45 123 115 123 c75 0 116 -57 116 -111c0 -64 -47 -104 -94 -111c-3 -1 -5 -2 -5 -4c0 -1 2 -2 3 -3c2 0 23 -5 47 -5c101 0 154 55 154 159c0 53 -11 123 -30 219c-23 -4 -50 -7 -79 -7c-186 0 -349 147 -349 334c0 200 126 321 217 406c21 17 73 70 74 71c-17 112 -22 161 -22 215 c0 84 18 212 82 288c33 39 64 51 71 51c18 0 47 -35 71 -86c16 -36 44 -110 44 -201c0 -159 -73 -284 -179 -395c9 -56 19 -115 29 -175c146 0 253 -102 253 -253c0 -103 -73 -205 -171 -237c6 -39 12 -69 15 -89c10 -57 16 -102 16 -141c0 -63 -14 -129 -68 -167 c-36 -22 -77 -34 -124 -34c-135 0 -186 87 -186 153z" />
+      </g>
+      <g id="E084-m1dque78">
+         <path transform="scale(1,-1)" d="M208 -127h-172c-9 0 -11 6 -11 6s-7 11 -10 18c-1 2 -1 4 -1 6c0 6 3 11 3 11c26 37 56 87 82 168s31 155 31 155c1 6 6 12 13 12h149c4 0 7 -2 10 -4l22 -22c1 -1 3 -5 3 -10c0 -4 -1 -9 -5 -14c-118 -158 -230 -278 -230 -278h116v82c0 4 1 8 4 11l91 83c3 3 7 3 11 3 c2 0 3 0 5 -1l12 -6c4 -2 7 -7 7 -13v-159h90c8 0 14 -7 14 -14v-19c0 -8 -6 -15 -14 -15h-90v-74h90c8 0 14 -6 14 -14v-19c0 -8 -6 -14 -14 -14h-303c-7 0 -14 6 -14 14v19c0 8 7 14 14 14h83v74z" />
+      </g>
+      <g id="E0A4-m1dque78">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+   </defs>
+   <style type="text/css">#m1dque78 g.ending, #m1dque78 g.fing, #m1dque78 g.reh, #m1dque78 g.tempo {font-weight:bold;}#m1dque78 g.dir, #m1dque78 g.dynam, #m1dque78 g.mNum {font-style:italic;}#m1dque78 g.label {font-weight:normal;}#m1dque78 ellipse, #m1dque78 path, #m1dque78 polygon, #m1dque78 polyline, #m1dque78 rect {stroke:currentColor}#m1dque78 g.cursor {fill:dodgerblue; color:dodgerblue;}#m1dque78 g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 12830 2040">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="na3mcrs" class="mdiv pageMilestone" />
+         <g id="o1xdnm0v" class="score pageMilestone" />
+         <g id="tt9xfi7" class="system">
+            <g id="c18fpmbg" class="section systemMilestone" />
+            <g id="d1rcla2k" class="measure">
+               <g id="m1my7tem" class="staff">
+                  <path d="M0 584 L6881 584" stroke-width="13" />
+                  <path d="M0 764 L6881 764" stroke-width="13" />
+                  <path d="M0 944 L6881 944" stroke-width="13" />
+                  <path d="M0 1124 L6881 1124" stroke-width="13" />
+                  <path d="M0 1304 L6881 1304" stroke-width="13" />
+                  <g id="autxmus" class="clef">
+                     <use href="#E050-m1dque78" transform="translate(90, 1124) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="b1j48yu" class="keySig" />
+                  <g id="c1h7grx2" class="meterSig">
+                     <use href="#E084-m1dque78" transform="translate(720, 764) scale(0.72, 0.72)" />
+                     <use href="#E084-m1dque78" transform="translate(720, 1124) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="n1dd7oto" class="layer">
+                     <g id="n0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-m1dque78" transform="translate(1308, 1304) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="glktpzi" class="stem">
+                           <path d="M1532 1276 L1532 674" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n1" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-m1dque78" transform="translate(2698, 1124) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="hw9uw94" class="stem">
+                           <path d="M2922 1096 L2922 494" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n2" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-m1dque78" transform="translate(4088, 854) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="ikm8cgo" class="stem">
+                           <path d="M4097 884 L4097 1484" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-m1dque78" transform="translate(5478, 944) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="jkzrylj" class="stem">
+                           <path d="M5487 974 L5487 1544" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="tempo" class="tempo">
+                  <text x="720" y="357" font-size="0px">
+                     <tspan id="t1malpgz" class="text">
+                        <tspan font-size="405px">Andante con moto</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="dolce" class="dir">
+                  <text x="1308" y="1722" font-size="0px">
+                     <tspan id="v8mersu" class="text">
+                        <tspan font-size="405px">dolce</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="l43ymne" class="barLine">
+                  <path d="M6868 584 L6868 1304" stroke-width="27" />
+               </g>
+            </g>
+            <g id="w34i4u1" class="measure">
+               <g id="f2mtta1" class="staff">
+                  <path d="M6881 584 L12634 584" stroke-width="13" />
+                  <path d="M6881 764 L12634 764" stroke-width="13" />
+                  <path d="M6881 944 L12634 944" stroke-width="13" />
+                  <path d="M6881 1124 L12634 1124" stroke-width="13" />
+                  <path d="M6881 1304 L12634 1304" stroke-width="13" />
+                  <g id="g1hwgefv" class="layer">
+                     <g id="n4" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-m1dque78" transform="translate(7061, 1034) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="k1j76mrt" class="stem">
+                           <path d="M7285 1006 L7285 404" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n5" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-m1dque78" transform="translate(8451, 764) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="ls0l3df" class="stem">
+                           <path d="M8460 794 L8460 1394" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n6" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-m1dque78" transform="translate(9841, 854) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="m1ce92jf" class="stem">
+                           <path d="M9850 884 L9850 1484" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="n7" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-m1dque78" transform="translate(11231, 1124) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="nvlme29" class="stem">
+                           <path d="M11455 1096 L11455 494" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="espressivo" class="dir">
+                  <text x="7061" y="267" font-size="0px">
+                     <tspan id="mxk5fzv" class="text">
+                        <tspan font-size="405px">espressivo</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="rit" class="dir">
+                  <text x="9841" y="456" font-size="0px">
+                     <tspan id="o1o2sfki" class="text">
+                        <tspan font-size="405px">poco rit.</tspan>
+                     </tspan>
+                  </text>
+               </g>
+               <g id="e17uw9o4" class="barLine">
+                  <path d="M12621 584 L12621 1304" stroke-width="27" />
+               </g>
+            </g>
+            <g id="w1yax1it" class="systemMilestoneEnd c18fpmbg" />
+         </g>
+         <g id="x1k87dct" class="pageMilestoneEnd o1xdnm0v" />
+         <g id="y1frbgf2" class="pageMilestoneEnd na3mcrs" />
+      </g>
+   </svg>
+</svg>
