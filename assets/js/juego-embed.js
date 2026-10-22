@@ -28,11 +28,29 @@
      Solo se admiten eventos y parámetros conocidos, con valores cortos: nunca nombres ni nada escrito por el jugador. */
   var EVENTOS = { juego_inicio: 1, juego_fin: 1, juego_mic_error: 1 };
   var PARAMS = { juego: 'texto', dificultad: 'texto', modo: 'texto', resultado: 'texto', acordes: 'texto', motivo: 'texto', intervalos: 'texto', intervalo: 'texto', sentido: 'texto', escalas: 'texto', melodias: 'texto', metros: 'numero', carrera: 'numero', salto: 'numero', glissando: 'numero', remate: 'numero', tiempo: 'numero', superadas: 'numero', jugadores: 'numero' };
+  /* Al pulsar "jugar", el juego (dentro del iframe) reemplaza su menú largo por la vista de juego, mucho
+     más corta: el iframe se encoge (ajusta()) pero el scroll de la página no se mueve solo, así que si el
+     jugador había bajado para llegar al botón, se queda mirando el hueco bajo el juego. Lo subimos nosotros. */
+  function llevaAlaVista(f) {
+    try {
+      var header = document.querySelector('.tm-site-header');
+      var headerH = header ? header.getBoundingClientRect().height : 0;
+      var rect = f.getBoundingClientRect();
+      var destino = window.scrollY + rect.top - headerH - 12;
+      if (Math.abs(destino - window.scrollY) > 20) window.scrollTo({ top: Math.max(0, destino), behavior: 'smooth' });
+    } catch (e) {}
+  }
   function mide(e) {
     var d = e.data;
     if (e.origin !== location.origin || !d || d.tmJuego !== true || !EVENTOS[d.evento]) return;
-    var ours = Array.prototype.some.call(document.querySelectorAll('iframe.tm-juego'), function (f) { return f.contentWindow === e.source; });
-    if (!ours || typeof window.gtag !== 'function') return;
+    var frame = null;
+    Array.prototype.some.call(document.querySelectorAll('iframe.tm-juego'), function (f) {
+      if (f.contentWindow === e.source) { frame = f; return true; }
+      return false;
+    });
+    if (!frame) return;
+    if (d.evento === 'juego_inicio') llevaAlaVista(frame);
+    if (typeof window.gtag !== 'function') return;
     var p = {};
     Object.keys(d.params || {}).forEach(function (k) {
       var v = d.params[k];

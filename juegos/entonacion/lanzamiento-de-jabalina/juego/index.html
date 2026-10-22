@@ -103,7 +103,6 @@ h3{margin:0;font:400 20px var(--display)}
 .tunedtime{font:800 17px var(--body)}
 .distance{display:flex;align-items:baseline;gap:8px;font:400 92px/0.95 var(--display)} .distance small{font-size:36px}
 .kicker{font:800 14px var(--body);text-transform:uppercase;letter-spacing:.1em;color:var(--mute)}
-.demo{display:grid;gap:10px;padding:12px;border:3px dashed var(--mute);border-radius:12px}
 .foot{color:#9fb6cf;font-size:15px}
 .foot .link{color:#c4daed}
 .chordname{font:400 38px/1.1 var(--display);text-align:center;color:var(--ink)}
@@ -157,7 +156,6 @@ h3{margin:0;font:400 20px var(--display)}
         </fieldset>
         <button class="btn" id="btnStart">¡A lanzar!</button>
         <p class="err" id="micErr" hidden></p>
-        <button class="link" id="btnDemo" type="button">Probar sin micrófono (modo demostración)</button>
         <div>
           <h3>Clasificación</h3>
           <ol class="rank" id="rankMenu"></ol>
@@ -189,12 +187,6 @@ h3{margin:0;font:400 20px var(--display)}
         <div class="tuner-lbl" aria-hidden="true"><span>↓ Más grave</span><span>Más agudo ↑</span></div>
         <p class="tunedtime">Tiempo afinado: <b id="tunedTime">0,0</b> s</p>
         <div class="level"><span>Micrófono</span><i><b id="lvPlay"></b></i></div>
-        <div class="demo" id="demoBox" hidden>
-          <button class="btn alt small" id="demoHold" type="button">Toca para cantar</button>
-          <label class="field" for="demoCents">Afinación simulada
-            <input type="range" id="demoCents" min="-200" max="200" value="0">
-          </label>
-        </div>
       </section>
 
       <!-- SALTO -->
@@ -470,14 +462,13 @@ function drawMusico(c, m, x, y, o = {}) {
    ============================================================ */
 const S = {
   state: 'menu', t0: 0, clock: 0,
-  musico: 0, nombre: '', dif: 'normal', gru: 'segundas_terceras', tol: 30, demo: false, dir: 1, fA: 261.63, trace: [], jav: null,
+  musico: 0, nombre: '', dif: 'normal', gru: 'segundas_terceras', tol: 30, dir: 1, fA: 261.63, trace: [], jav: null,
   chord: null, targets: [], phase: 0, phaseT0: 0, tp: [0, 0, 0], ds: [0, 0, 0],
   note: null, lastNote: -1, noteUntil: 0,
   tuned: 0, voiced: false, tunedNow: false, cents: 0, hist: [], lastVoice: -1e9,
   level: 0, rms: 0, gate: 0.01, noiseSum: 0, noiseN: 0,
   runSpeed: 0, proj: 0, dist: 0, nulo: false, T: 1, tJump: 0, landed: false,
   scroll: 0, bg: 0, noteTimer: 0, lastCount: '', rankId: 0,
-  demoHold: false, demoCents: 0,
   R: { x: START_X, y: GROUND, run: 0 }
 };
 const P = [];                 // partículas (arena, notas, confeti)
@@ -563,7 +554,6 @@ function jingle(freqs, step = 0.13, type = 'triangle') {
   });
 }
 function sampleMic() {
-  if (S.demo) { S.rms = S.demoHold ? 0.12 : 0; S.level = S.level * 0.6 + S.rms * 0.4; return; }
   if (S.fake) { buf = S.fake(performance.now()); let q = 0; for (let i = 0; i < buf.length; i++) q += buf[i] * buf[i]; S.rms = Math.sqrt(q / buf.length); S.level = S.level * 0.65 + S.rms * 0.35; return; }   // gancho de pruebas
   if (!analyser) return;
   analyser.getFloatTimeDomainData(buf);
@@ -572,10 +562,6 @@ function sampleMic() {
   S.level = S.level * 0.65 + S.rms * 0.35;
 }
 function readPitch(now) {
-  if (S.demo) {
-    if (!S.demoHold) return null;
-    return S.note.f * Math.pow(2, (S.demoCents + Math.sin(now / 170) * 5) / 1200);
-  }
   if ((!analyser && !S.fake) || S.rms < S.gate) return null;
   const r = yin(buf, AC.sampleRate);
   return r && r.clarity >= 0.8 ? r.freq : null;
@@ -614,7 +600,6 @@ function setState(s, now = performance.now()) {
   $('#hudTimer').hidden = s !== 'sing';
   $('#hudDist').hidden = s !== 'sing';
   $('#hudCount').hidden = !(s === 'count' || s === 'sing');
-  $('#demoBox').hidden = !(S.demo && (s === 'count' || s === 'sing'));
   if (s === 'menu') { refreshRankMenu(); S.runSpeed = 0; S.proj = 0; S.dist = 0; P.length = 0; }
   if (s === 'listen') {
     S.tuned = 0; S.tp = [0, 0, 0]; S.proj = 0; S.dist = 0; S.landed = false; S.nulo = false; S.jav = null; S.trace = []; P.length = 0;
@@ -636,7 +621,7 @@ function setState(s, now = performance.now()) {
     setTimeout(() => { if (S.state === 'listen') hearNote(); }, 450);
   }
   if (s === 'count') {
-    S.noiseSum = 0; S.noiseN = 0; S.lastCount = ''; setHold(false);
+    S.noiseSum = 0; S.noiseN = 0; S.lastCount = '';
     $('#playTitle').textContent = 'Prepárate…';
     $('#hint').dataset.s = ''; $('#hint').textContent = 'Respira hondo y piensa en el pasillo';
     S.phase = 0; S.note = { n: S.chord.n[0], f: S.fA }; renderSteps(-1);
@@ -702,7 +687,7 @@ function track(evento, params) {
 }
 function finishRound() {
   const m = MUSICOS[S.musico], d = S.dist;
-  track('juego_fin', { dificultad: S.dif, intervalos: S.gru, modo: S.demo ? 'demo' : 'microfono', resultado: S.nulo ? 'nulo' : 'valido', metros: Math.round(d * 100) / 100, intervalo: S.chord.iv.id, sentido: S.chord.dir > 0 ? 'sube' : 'baja', carrera: Math.round(S.tp[0] * 10) / 10, glissando: Math.round(S.tp[1] * 10) / 10, remate: Math.round(S.tp[2] * 10) / 10 });
+  track('juego_fin', { dificultad: S.dif, intervalos: S.gru, resultado: S.nulo ? 'nulo' : 'valido', metros: Math.round(d * 100) / 100, intervalo: S.chord.iv.id, sentido: S.chord.dir > 0 ? 'sube' : 'baja', carrera: Math.round(S.tp[0] * 10) / 10, glissando: Math.round(S.tp[1] * 10) / 10, remate: Math.round(S.tp[2] * 10) / 10 });
   const list = loadRank(); const id = Date.now(); S.rankId = id;
   list.push({ id, n: S.nombre || 'Músico', m: m.n, d }); saveRank(list);
   const pos = list.slice().sort((a, b) => b.d - a.d || a.id - b.id).findIndex(e => e.id === id) + 1;
@@ -775,7 +760,7 @@ function update(dt, now) {
   let target = 0;
 
   if (S.state === 'count') {
-    if (st > 0.5 && st < 2.9 && !S.demo) { S.noiseSum += S.rms; S.noiseN++; }
+    if (st > 0.5 && st < 2.9) { S.noiseSum += S.rms; S.noiseN++; }
     const label = st < 1 ? '3' : st < 2 ? '2' : st < 3 ? '1' : '¡Canta!';
     if (label !== S.lastCount) {
       S.lastCount = label; const h = $('#hudCount'); h.textContent = label;
@@ -792,7 +777,7 @@ function update(dt, now) {
     }
   } else if (S.state === 'sing') {
     const ph = st < P1 ? 0 : st < P1 + P2 ? 1 : 2;
-    const tCmp = S.demo ? st : Math.max(0, st - LAG_VOZ);
+    const tCmp = Math.max(0, st - LAG_VOZ);
     S.note = { n: '', f: fCamino(tCmp) };          // la nota que hay que cantar: se mueve durante el glissando
     if (ph !== S.phase) {
       S.phase = ph; S.phaseT0 = now;
@@ -1047,28 +1032,24 @@ function startFromMenu() {
   S.dif = document.querySelector('input[name=dif]:checked').value; S.tol = DIF[S.dif];
   S.gru = document.querySelector('input[name=gru]:checked').value;
   setState('listen');
-  track('juego_inicio', { dificultad: S.dif, intervalos: S.gru, modo: S.demo ? 'demo' : 'microfono' });
+  track('juego_inicio', { dificultad: S.dif, intervalos: S.gru });
 }
 $('#btnStart').addEventListener('click', async () => {
   const btn = $('#btnStart'), err = $('#micErr'); err.hidden = true;
   try {
     btn.disabled = true; btn.textContent = 'Activando micrófono…';
-    if (S.demo) await ensureAudio(); else await ensureMic();
+    await ensureMic();
     startFromMenu();
   } catch (e) {
     err.hidden = false;
     const segura = window.isSecureContext && !!navigator.mediaDevices;
     err.textContent = !segura
-      ? 'El navegador no deja usar el micrófono porque el juego se ha abierto desde un archivo del dispositivo. Hay que abrirlo desde una dirección https (una web) o desde un ordenador con Chrome. Mientras tanto, puedes probar el modo demostración.'
+      ? 'El navegador no deja usar el micrófono porque el juego se ha abierto desde un archivo del dispositivo. Hay que abrirlo desde una dirección https (una web) o desde un ordenador con Chrome.'
       : (e && e.name === 'NotAllowedError')
         ? 'El navegador no ha dado permiso al micrófono. Permítelo en el candado de la barra de direcciones y vuelve a pulsar.'
-        : 'No se puede usar el micrófono. Comprueba que hay uno conectado y que no lo está usando otra aplicación. También puedes probar el modo demostración.';
-    if (!S.demo) track('juego_mic_error', { motivo: (e && e.name) || 'otro' });
+        : 'No se puede usar el micrófono. Comprueba que hay uno conectado y que no lo está usando otra aplicación.';
+    track('juego_mic_error', { motivo: (e && e.name) || 'otro' });
   } finally { btn.disabled = false; btn.textContent = '¡A lanzar!'; }
-});
-$('#btnDemo').addEventListener('click', () => {
-  S.demo = !S.demo; $('#micErr').hidden = true;
-  $('#btnDemo').textContent = S.demo ? 'Modo demostración ACTIVADO (pulsa para volver al micrófono)' : 'Probar sin micrófono (modo demostración)';
 });
 $('#btnRepeat').addEventListener('click', hearNote);
 $('#btnSing').addEventListener('click', () => setState('count'));
@@ -1080,16 +1061,6 @@ $('#btnClear').addEventListener('click', e => {
   const b = e.currentTarget;
   if (!clearArm) { clearArm = setTimeout(() => { clearArm = 0; b.textContent = 'Borrar clasificación'; }, 4000); b.textContent = 'Pulsa otra vez para borrar todo'; return; }
   clearTimeout(clearArm); clearArm = 0; b.textContent = 'Borrar clasificación'; saveRank([]); refreshRankMenu();
-});
-// modo demostración: un toque empieza a "cantar" y otro toque para (también con la barra espaciadora)
-const dh = $('#demoHold');
-function setHold(v) { S.demoHold = v; dh.classList.toggle('held', v); dh.textContent = v ? 'Cantando… toca para parar' : 'Toca para cantar'; }
-dh.addEventListener('click', () => setHold(!S.demoHold));
-$('#demoCents').addEventListener('input', e => { S.demoCents = +e.target.value; });
-addEventListener('keydown', e => {
-  if (S.demo && e.code === 'Space' && (S.state === 'count' || S.state === 'sing') && e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON') {
-    e.preventDefault(); if (!e.repeat) setHold(!S.demoHold);
-  }
 });
 addEventListener('contextmenu', e => { if (e.target.tagName !== 'INPUT') e.preventDefault(); });
 addEventListener('pagehide', () => { if (micStream) micStream.getTracks().forEach(t => t.stop()); });

@@ -1,0 +1,1232 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Canasta: reconoce escalas</title>
+<style>
+@font-face{font-family:'Lilita One';src:url(/assets/fonts/juegos/lilita.woff2) format('woff2');font-weight:400;font-display:block}
+@font-face{font-family:'Nunito';src:url(/assets/fonts/juegos/nunito600.woff2) format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Nunito';src:url(/assets/fonts/juegos/nunito800.woff2) format('woff2');font-weight:800;font-display:block}
+:root{
+  --navy:#14213d; --ink:#14213d; --paper:#f7fbff; --paper2:#e1eef8;
+  --brass:#f4b52e; --brass-d:#b9810a; --ok:#238a4c; --bad:#c93a2d; --mute:#51627f; --focus:#2f6fe4;
+  --display:'Lilita One','Arial Rounded MT Bold','Trebuchet MS',system-ui,sans-serif;
+  --body:'Nunito','Segoe UI',system-ui,-apple-system,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{
+  -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+  background:var(--navy); color:var(--ink);
+  font:600 18px/1.4 var(--body);
+  padding-block:16px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.app{max-width:1180px;margin:0 auto;display:grid;gap:16px}
+.head{display:flex;align-items:center;gap:14px}
+.seal{flex:none;width:68px;height:68px;border-radius:50%;background:var(--brass);border:4px solid #fff;color:var(--ink);
+  display:grid;place-content:center;text-align:center;line-height:.9;box-shadow:0 4px 0 rgba(0,0,0,.35)}
+.seal b{font:400 28px var(--display)} .seal span{font:800 12px var(--body);text-transform:uppercase;letter-spacing:.08em}
+h1{margin:0;font:400 clamp(26px,4.6vw,42px)/1.05 var(--display);color:#fff;text-wrap:balance}
+.sub{margin:4px 0 0;color:#c4daed;font-size:16px}
+.game{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(330px,1fr);gap:16px;align-items:start}
+.stage{position:relative;border-radius:18px;overflow:hidden;border:4px solid #fff;background:#e3c991;box-shadow:0 8px 0 rgba(0,0,0,.35)}
+.stage canvas{display:block;width:100%;height:auto;aspect-ratio:1000/520}
+.hud{position:absolute;pointer-events:none}
+.hud-timer{left:12px;top:5%;width:clamp(58px,10vw,86px);aspect-ratio:1;border-radius:50%;
+  background:conic-gradient(var(--brass) calc(var(--p)*1%),#fff 0);display:grid;place-content:center;border:3px solid var(--ink);text-align:center;line-height:1}
+.hud-timer::before{content:"";position:absolute;inset:7px;border-radius:50%;background:#fff;border:2px solid var(--ink)}
+.hud-timer span,.hud-timer small{position:relative}
+.hud-timer span{font:400 clamp(22px,4vw,34px) var(--display)} .hud-timer small{font:800 11px var(--body);margin-top:-2px}
+.hud-turno{left:50%;top:5%;transform:translateX(-50%);background:#fff;border:3px solid var(--ink);border-radius:999px;padding:4px 16px;
+  font:800 clamp(12px,2vw,16px) var(--body);white-space:nowrap;max-width:68%;overflow:hidden;text-overflow:ellipsis}
+.hud-pts{right:12px;top:5%;background:#fff;border:3px solid var(--ink);border-radius:999px;padding:4px 16px;
+  font:800 clamp(12px,2vw,16px) var(--body);white-space:nowrap}
+.hud-zone{inset:0;display:grid;place-content:center;font:400 clamp(40px,9vw,80px) var(--display);color:#fff;
+  -webkit-text-stroke:5px var(--ink);paint-order:stroke fill;text-shadow:0 8px 0 rgba(20,33,61,.35);text-align:center}
+.hud-zone small{display:block;font:800 clamp(13px,2.3vw,19px) var(--body);-webkit-text-stroke:0;color:#fff;text-shadow:0 2px 0 rgba(20,33,61,.5)}
+.hud-zone.pop{animation:pop .4s ease-out}
+@keyframes pop{from{transform:scale(1.5);opacity:.1}to{transform:scale(1);opacity:1}}
+.panel{background:var(--paper);border-radius:18px;border:4px solid #fff;padding:18px;box-shadow:0 8px 0 rgba(0,0,0,.35);min-width:0}
+.view{display:grid;gap:14px}
+h2{margin:0;font:400 28px/1.1 var(--display);text-wrap:balance}
+p{margin:0}
+.muted{color:var(--mute);font-size:16px}
+.btn{font:400 24px var(--display);background:var(--brass);color:var(--ink);border:3px solid var(--ink);border-radius:14px;
+  padding:12px 20px;min-height:58px;cursor:pointer;box-shadow:0 5px 0 var(--ink);transition:transform .06s,box-shadow .06s;width:100%}
+.btn:active,.btn.held{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.btn.alt{background:#fff} .btn[disabled]{opacity:.6;cursor:wait}
+.btn.small{font-size:19px;min-height:48px}
+.link{background:none;border:0;color:var(--mute);font:800 15px var(--body);text-decoration:underline;cursor:pointer;padding:8px;justify-self:start}
+:is(button,input,label.pill):focus-visible,.pill:has(input:focus-visible){outline:4px solid var(--focus);outline-offset:3px}
+.picker{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.mus{background:#fff;border:3px solid var(--paper2);border-radius:12px;padding:4px 2px 6px;cursor:pointer;color:var(--ink);font:800 13px var(--body);display:grid;justify-items:center;gap:0}
+.mus canvas{width:100%;max-width:80px;height:auto;aspect-ratio:3/4}
+.mus[aria-checked="true"]{border-color:var(--brass-d);background:#fff1c7}
+label.field{display:grid;gap:6px;font:800 16px var(--body)}
+input[type=text]{-webkit-user-select:text;user-select:text;font:800 20px var(--body);padding:10px 12px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);min-height:50px;width:100%}
+.seg{border:0;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg legend{font:800 16px var(--body);padding:0 0 6px}
+.pill{position:relative;display:block}
+.pill input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.pill span{display:block;text-align:center;padding:10px 4px;border:3px solid var(--ink);border-radius:12px;background:#fff;font:400 17px var(--display)}
+.pill input:checked + span{background:var(--brass)}
+.rank{list-style:none;margin:0;padding:0;display:grid;gap:4px;counter-reset:r}
+.rank li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:8px;align-items:baseline;padding:5px 10px;border-radius:10px;background:#fff;font-size:16px}
+.rank li::before{counter-increment:r;content:counter(r);font:400 18px var(--display);color:var(--brass-d)}
+.rank li.me{background:#fff1c7;outline:3px solid var(--brass)}
+.rank .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank .nm small{color:var(--mute);font-weight:700}
+.rank .dd{font:400 18px var(--display)}
+#nombresWrap{display:grid;gap:14px}
+.jugadorBloque{display:grid;gap:4px}
+.miniPicker{display:flex;gap:4px;overflow-x:auto;padding:2px 1px 4px}
+.miniPicker button{flex:none;background:#fff;border:2px solid var(--paper2);border-radius:8px;padding:2px;cursor:pointer;line-height:0}
+.miniPicker button[aria-checked="true"]{border-color:var(--brass-d);background:#fff1c7}
+.marcador{display:flex;flex-wrap:wrap;gap:6px}
+.marcador .j{display:inline-flex;align-items:center;gap:5px;background:#fff;border:3px solid var(--paper2);border-radius:999px;padding:4px 12px 4px 4px;font:800 13px var(--body);color:var(--ink);line-height:1}
+.marcador .j.activo{background:var(--brass);border-color:var(--brass-d)}
+.marcador .j canvas{border-radius:999px;flex:none}
+.ranking{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.ranking li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px 12px;border-radius:10px;background:#fff;font:800 17px var(--body)}
+.ranking li.ganador{background:#fff1c7;outline:3px solid var(--brass)}
+.ranking .nm{display:flex;align-items:center;gap:8px;overflow:hidden}
+.ranking .nm canvas{flex:none}
+.ranking .nm span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ranking .dd{font:400 20px var(--display);white-space:nowrap}
+h3{margin:0;font:400 20px var(--display)}
+.staff-box{background:#fdfcf9;border:3px solid var(--ink);border-radius:12px;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.staff-line{width:100%}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{font:800 15px var(--body);padding:12px 8px;border:3px solid var(--ink);background:#fff;border-radius:12px;cursor:pointer;min-height:54px;transition:transform .05s}
+.opt:active{transform:translateY(2px)}
+.opt[disabled]{cursor:default}
+.opt.ok{background:var(--ok);color:#fff}
+.opt.ko{background:var(--bad);color:#fff}
+.kicker{font:800 14px var(--body);text-transform:uppercase;letter-spacing:.1em;color:var(--mute)}
+.distance{display:flex;align-items:baseline;gap:8px;font:400 76px/0.95 var(--display)} .distance small{font-size:30px}
+.foot{color:#9fb6cf;font-size:15px}
+.foot .link{color:#c4daed}
+@media (max-width:900px){.game{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){.hud-zone.pop{animation:none}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <main class="game">
+    <section class="stage" aria-label="Canasta de baloncesto">
+      <canvas id="scene" width="1000" height="520" role="img" aria-label="Un músico de la banda lanza un tiro libre a una canasta"></canvas>
+      <div class="hud hud-timer" id="hudTimer" hidden style="--p:100"><span id="hudSecs">9</span><small>seg</small></div>
+      <div class="hud hud-turno" id="hudTurno" hidden>Turno 1/3 · Tiro 1/3</div>
+      <div class="hud hud-pts" id="hudPts" hidden>0 pts</div>
+      <div class="hud hud-zone" id="hudZone" hidden></div>
+    </section>
+
+    <aside class="panel">
+      <!-- MENÚ -->
+      <section class="view" id="v-menu">
+        <label class="field" for="numJugadores">Número de jugadores
+          <input type="number" id="numJugadores" min="1" value="1" inputmode="numeric" style="max-width:110px">
+        </label>
+        <div id="nombresWrap"></div>
+        <div id="pickerCompartido">
+          <h2>Elige a tu músico</h2>
+          <div class="picker" id="picker" role="radiogroup" aria-label="Músico"></div>
+        </div>
+        <fieldset class="seg">
+          <legend>Dificultad</legend>
+          <label class="pill"><input type="radio" name="dif" value="0"><span>Fácil</span></label>
+          <label class="pill"><input type="radio" name="dif" value="1" checked><span>Medio</span></label>
+          <label class="pill"><input type="radio" name="dif" value="2"><span>Difícil</span></label>
+        </fieldset>
+        <button class="btn" id="btnStart">¡A jugar!</button>
+        <div>
+          <h3>Clasificación</h3>
+          <ol class="rank" id="rankMenu"></ol>
+          <p class="muted" id="rankEmpty">Todavía no hay partidas. ¡Sé el primero!</p>
+        </div>
+      </section>
+
+      <!-- CAMBIO DE TURNO (solo multijugador) -->
+      <section class="view" id="v-turno" hidden>
+        <p class="kicker">Cambio de turno</p>
+        <h2 id="turnoNombre"></h2>
+        <p class="muted">Pasad el turno a esta persona y pulsad «¡Tirar!» cuando esté lista.</p>
+        <div class="marcador" id="marcadorTurno"></div>
+        <button class="btn" id="btnLanzar">¡Tirar!</button>
+      </section>
+
+      <!-- JUGAR -->
+      <section class="view" id="v-play" hidden>
+        <div class="marcador" id="marcador" hidden></div>
+        <h2 id="playTitle">¿Qué escala es?</h2>
+        <div class="staff-box" id="staffBox"></div>
+        <div class="opts" id="opts"></div>
+      </section>
+
+      <!-- RESULTADO -->
+      <section class="view" id="v-result" hidden>
+        <div id="resSoloWrap">
+          <p class="kicker" id="resWho">Tu partida</p>
+          <div class="distance"><span id="resPts">0</span><small>pts</small></div>
+          <h2 id="resTitle"></h2>
+          <p id="resText"></p>
+          <p id="resNote" class="muted"></p>
+          <p id="resRank"></p>
+        </div>
+        <div id="resMultiWrap" hidden>
+          <p class="kicker">Resultado final</p>
+          <h2 id="resTituloMulti"></h2>
+          <ol class="ranking" id="resRanking"></ol>
+        </div>
+        <button class="btn" id="btnAgain">Jugar otra vez</button>
+        <button class="btn alt small" id="btnChange">Cambiar de músico</button>
+        <div id="clasifWrap">
+          <h3>Clasificación</h3>
+          <ol class="rank" id="rankRes"></ol>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="foot">
+    Acierta rápido para que el balón entre limpio, solo red (50 pts), con tablero (25), con aro (15) o raspando y entrando (5).
+    Si fallas o se acaba el tiempo, es air ball (0 pts). La clasificación se guarda solo en este dispositivo.
+    <button class="link" id="btnClear" type="button">Borrar clasificación</button>
+  </footer>
+</div>
+
+<script src="/assets/js/tm-mei.js?v=c45ec1b4"></script>
+<script src="/assets/js/tm-notacion.js?v=11d92644"></script>
+<script>
+'use strict';
+
+/* ============================================================
+   FUENTE DE ESCALAS VERIFICADA
+   Copiado literalmente de los datasets ya verificados del motor de construir
+   escalas (no se inventa una tabla nueva de alteraciones):
+     - Mayor: SCALES_MAYOR, tal cual está en assets/js/escalas-construir-engine.js.
+     - Menor natural / Menor armónica: los arrays "menor-natural" y "menor-armonica"
+       de window.TM_CONSTRUIR_SCALES, generados por tools/gen_construir_scales.py
+       y servidos en assets/js/escalas-construir-data.js. Formato {notes, acc}:
+       notes = las 8 notas ascendentes; acc = mapa nota->signo ABSOLUTO solo en
+       las notas alteradas (igual que usa tmNotacion.dibujarEscala).
+     - Menor melódica: el array "menor-melodica" de la misma fuente, en formato
+       {seq:[[letra,octava,alteración],...]} con las 15 notas de la forma
+       ascendente+descendente completa (según MEMORIA del proyecto: la melódica
+       aquí es UNA sola forma de ida y vuelta, nunca dos escalas separadas).
+   LAS 4 escalas se muestran SIEMPRE completas, de ida y vuelta (15 notas): si
+   solo la melódica se mostrara completa y las otras 3 solo ascendentes (8
+   notas), se reconocería a simple vista por tener más notas, sin leer ninguna
+   alteración. Mayor/menor natural/menor armónica son simétricas (bajan igual
+   que suben, mismo criterio que usa escalas-construir-engine.js, que no las
+   distingue ascendente/descendente), así que scaleKeys() las refleja sin
+   inventar ninguna fórmula nueva; solo la melódica es asimétrica de verdad
+   y ya trae su propia secuencia de 15 notas verificada.
+   Se pregunta por la escala COMPLETA (tónica + tipo, p.ej. "Re♯ Menor
+   Armónica"), no solo por el tipo: ver buildOptions() más abajo.
+   Este juego solo añade su propia capa de turnos, cronómetro y puntuación de
+   baloncesto; la notación se dibuja con tmNotacion/tm-mei.js igual que Dardos:
+   al pasar cada nota ya con su alteración absoluta en la clave ('f#/5', 'bb/4'...)
+   es tm-mei.js quien decide, con la regla del compás, qué signos se escriben
+   (mismo algoritmo que measureAccidentals() del motor de construir). Las 15
+   notas NO caben legibles en una sola línea en móvil (dibujarAAncho encoge el
+   SVG entero por CSS si ni con la separación mínima caben, y entonces las
+   cabezas de nota quedan diminutas): se dibujan en DOS pentagramas, 8 notas
+   ascendentes arriba y 7 descendentes abajo, cada uno con su propia llamada a
+   dibujarAAncho (ver drawStaff), igual que se escribe a mano una escala larga.
+   ============================================================ */
+function accStr(a) { return a === 2 ? '##' : a === 1 ? '#' : a === -1 ? 'b' : a === -2 ? 'bb' : ''; }
+
+var SCALES_MAYOR = [
+  { name: 'Do Mayor',   numAlts: 0, notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {} },
+  { name: 'Sol Mayor',  numAlts: 1, notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'f/5':'#'} },
+  { name: 'Re Mayor',   numAlts: 2, notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'f/4':'#','c/5':'#'} },
+  { name: 'La Mayor',   numAlts: 3, notes: ['a/4','b/4','c/5','d/5','e/5','f/5','g/5','a/5'], acc: {'c/5':'#','f/5':'#','g/5':'#'} },
+  { name: 'Mi Mayor',   numAlts: 4, notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'f/4':'#','g/4':'#','c/5':'#','d/5':'#'} },
+  { name: 'Si Mayor',   numAlts: 5, notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'c/4':'#','d/4':'#','f/4':'#','g/4':'#','a/4':'#'} },
+  { name: 'Fa♯ Mayor', numAlts: 6, notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'f/4':'#','g/4':'#','a/4':'#','c/5':'#','d/5':'#','e/5':'#','f/5':'#'} },
+  { name: 'Do♯ Mayor', numAlts: 7, notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'#','d/4':'#','e/4':'#','f/4':'#','g/4':'#','a/4':'#','b/4':'#','c/5':'#'} },
+  { name: 'Fa Mayor',   numAlts: 1, notes: ['f/4','g/4','a/4','b/4','c/5','d/5','e/5','f/5'], acc: {'b/4':'b'} },
+  { name: 'Si♭ Mayor', numAlts: 2, notes: ['b/3','c/4','d/4','e/4','f/4','g/4','a/4','b/4'], acc: {'b/3':'b','e/4':'b','b/4':'b'} },
+  { name: 'Mi♭ Mayor', numAlts: 3, notes: ['e/4','f/4','g/4','a/4','b/4','c/5','d/5','e/5'], acc: {'e/4':'b','a/4':'b','b/4':'b','e/5':'b'} },
+  { name: 'La♭ Mayor', numAlts: 4, notes: ['a/3','b/3','c/4','d/4','e/4','f/4','g/4','a/4'], acc: {'a/3':'b','b/3':'b','d/4':'b','e/4':'b','a/4':'b'} },
+  { name: 'Re♭ Mayor', numAlts: 5, notes: ['d/4','e/4','f/4','g/4','a/4','b/4','c/5','d/5'], acc: {'d/4':'b','e/4':'b','g/4':'b','a/4':'b','b/4':'b','d/5':'b'} },
+  { name: 'Sol♭ Mayor',numAlts: 6, notes: ['g/3','a/3','b/3','c/4','d/4','e/4','f/4','g/4'], acc: {'g/3':'b','a/3':'b','b/3':'b','c/4':'b','d/4':'b','e/4':'b','g/4':'b'} },
+  { name: 'Do♭ Mayor', numAlts: 7, notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {'c/4':'b','d/4':'b','e/4':'b','f/4':'b','g/4':'b','a/4':'b','b/4':'b','c/5':'b'} }
+];
+var MENOR_NATURAL = [
+  {"name":"La Menor Natural","numAlts":0,"notes":["a/4","b/4","c/5","d/5","e/5","f/5","g/5","a/5"],"acc":{}},
+  {"name":"Mi Menor Natural","numAlts":1,"notes":["e/4","f/4","g/4","a/4","b/4","c/5","d/5","e/5"],"acc":{"f/4":"#"}},
+  {"name":"Re Menor Natural","numAlts":1,"notes":["d/4","e/4","f/4","g/4","a/4","b/4","c/5","d/5"],"acc":{"b/4":"b"}},
+  {"name":"Si Menor Natural","numAlts":2,"notes":["b/4","c/5","d/5","e/5","f/5","g/5","a/5","b/5"],"acc":{"c/5":"#","f/5":"#"}},
+  {"name":"Sol Menor Natural","numAlts":2,"notes":["g/4","a/4","b/4","c/5","d/5","e/5","f/5","g/5"],"acc":{"b/4":"b","e/5":"b"}},
+  {"name":"Fa♯ Menor Natural","numAlts":3,"notes":["f/4","g/4","a/4","b/4","c/5","d/5","e/5","f/5"],"acc":{"f/4":"#","g/4":"#","c/5":"#","f/5":"#"}},
+  {"name":"Do Menor Natural","numAlts":3,"notes":["c/4","d/4","e/4","f/4","g/4","a/4","b/4","c/5"],"acc":{"e/4":"b","a/4":"b","b/4":"b"}},
+  {"name":"Do♯ Menor Natural","numAlts":4,"notes":["c/4","d/4","e/4","f/4","g/4","a/4","b/4","c/5"],"acc":{"c/4":"#","d/4":"#","f/4":"#","g/4":"#","c/5":"#"}},
+  {"name":"Fa Menor Natural","numAlts":4,"notes":["f/4","g/4","a/4","b/4","c/5","d/5","e/5","f/5"],"acc":{"a/4":"b","b/4":"b","d/5":"b","e/5":"b"}},
+  {"name":"Sol♯ Menor Natural","numAlts":5,"notes":["g/4","a/4","b/4","c/5","d/5","e/5","f/5","g/5"],"acc":{"g/4":"#","a/4":"#","c/5":"#","d/5":"#","f/5":"#","g/5":"#"}},
+  {"name":"Si♭ Menor Natural","numAlts":5,"notes":["b/4","c/5","d/5","e/5","f/5","g/5","a/5","b/5"],"acc":{"b/4":"b","d/5":"b","e/5":"b","g/5":"b","a/5":"b","b/5":"b"}},
+  {"name":"Re♯ Menor Natural","numAlts":6,"notes":["d/4","e/4","f/4","g/4","a/4","b/4","c/5","d/5"],"acc":{"d/4":"#","e/4":"#","f/4":"#","g/4":"#","a/4":"#","c/5":"#","d/5":"#"}},
+  {"name":"Mi♭ Menor Natural","numAlts":6,"notes":["e/4","f/4","g/4","a/4","b/4","c/5","d/5","e/5"],"acc":{"e/4":"b","g/4":"b","a/4":"b","b/4":"b","c/5":"b","d/5":"b","e/5":"b"}},
+  {"name":"La♯ Menor Natural","numAlts":7,"notes":["a/4","b/4","c/5","d/5","e/5","f/5","g/5","a/5"],"acc":{"a/4":"#","b/4":"#","c/5":"#","d/5":"#","e/5":"#","f/5":"#","g/5":"#","a/5":"#"}},
+  {"name":"La♭ Menor Natural","numAlts":7,"notes":["a/4","b/4","c/5","d/5","e/5","f/5","g/5","a/5"],"acc":{"a/4":"b","b/4":"b","c/5":"b","d/5":"b","e/5":"b","f/5":"b","g/5":"b","a/5":"b"}}
+];
+var MENOR_ARMONICA = [
+  {"name":"La Menor Armónica","numAlts":1,"notes":["a/4","b/4","c/5","d/5","e/5","f/5","g/5","a/5"],"acc":{"g/5":"#"}},
+  {"name":"Mi Menor Armónica","numAlts":2,"notes":["e/4","f/4","g/4","a/4","b/4","c/5","d/5","e/5"],"acc":{"f/4":"#","d/5":"#"}},
+  {"name":"Re Menor Armónica","numAlts":2,"notes":["d/4","e/4","f/4","g/4","a/4","b/4","c/5","d/5"],"acc":{"b/4":"b","c/5":"#"}},
+  {"name":"Do Menor Armónica","numAlts":2,"notes":["c/4","d/4","e/4","f/4","g/4","a/4","b/4","c/5"],"acc":{"e/4":"b","a/4":"b"}},
+  {"name":"Si Menor Armónica","numAlts":3,"notes":["b/4","c/5","d/5","e/5","f/5","g/5","a/5","b/5"],"acc":{"c/5":"#","f/5":"#","a/5":"#"}},
+  {"name":"Sol Menor Armónica","numAlts":3,"notes":["g/4","a/4","b/4","c/5","d/5","e/5","f/5","g/5"],"acc":{"b/4":"b","e/5":"b","f/5":"#"}},
+  {"name":"Fa Menor Armónica","numAlts":3,"notes":["f/4","g/4","a/4","b/4","c/5","d/5","e/5","f/5"],"acc":{"a/4":"b","b/4":"b","d/5":"b"}},
+  {"name":"Fa♯ Menor Armónica","numAlts":4,"notes":["f/4","g/4","a/4","b/4","c/5","d/5","e/5","f/5"],"acc":{"f/4":"#","g/4":"#","c/5":"#","e/5":"#","f/5":"#"}},
+  {"name":"Si♭ Menor Armónica","numAlts":4,"notes":["b/4","c/5","d/5","e/5","f/5","g/5","a/5","b/5"],"acc":{"b/4":"b","d/5":"b","e/5":"b","g/5":"b","b/5":"b"}},
+  {"name":"Do♯ Menor Armónica","numAlts":5,"notes":["c/4","d/4","e/4","f/4","g/4","a/4","b/4","c/5"],"acc":{"c/4":"#","d/4":"#","f/4":"#","g/4":"#","b/4":"#","c/5":"#"}},
+  {"name":"Mi♭ Menor Armónica","numAlts":5,"notes":["e/4","f/4","g/4","a/4","b/4","c/5","d/5","e/5"],"acc":{"e/4":"b","g/4":"b","a/4":"b","b/4":"b","c/5":"b","e/5":"b"}},
+  {"name":"La♭ Menor Armónica","numAlts":6,"notes":["a/4","b/4","c/5","d/5","e/5","f/5","g/5","a/5"],"acc":{"a/4":"b","b/4":"b","c/5":"b","d/5":"b","e/5":"b","f/5":"b","a/5":"b"}}
+];
+var MENOR_MELODICA = [
+  {"name":"La Menor Melódica","numAlts":2,"seq":[["a","4",0],["b","4",0],["c","5",0],["d","5",0],["e","5",0],["f","5",1],["g","5",1],["a","5",0],["g","5",0],["f","5",0],["e","5",0],["d","5",0],["c","5",0],["b","4",0],["a","4",0]]},
+  {"name":"Re Menor Melódica","numAlts":2,"seq":[["d","4",0],["e","4",0],["f","4",0],["g","4",0],["a","4",0],["b","4",0],["c","5",1],["d","5",0],["c","5",0],["b","4",-1],["a","4",0],["g","4",0],["f","4",0],["e","4",0],["d","4",0]]},
+  {"name":"Mi Menor Melódica","numAlts":3,"seq":[["e","4",0],["f","4",1],["g","4",0],["a","4",0],["b","4",0],["c","5",1],["d","5",1],["e","5",0],["d","5",0],["c","5",0],["b","4",0],["a","4",0],["g","4",0],["f","4",1],["e","4",0]]},
+  {"name":"Sol Menor Melódica","numAlts":3,"seq":[["g","4",0],["a","4",0],["b","4",-1],["c","5",0],["d","5",0],["e","5",0],["f","5",1],["g","5",0],["f","5",0],["e","5",-1],["d","5",0],["c","5",0],["b","4",-1],["a","4",0],["g","4",0]]},
+  {"name":"Do Menor Melódica","numAlts":3,"seq":[["c","4",0],["d","4",0],["e","4",-1],["f","4",0],["g","4",0],["a","4",0],["b","4",0],["c","5",0],["b","4",-1],["a","4",-1],["g","4",0],["f","4",0],["e","4",-1],["d","4",0],["c","4",0]]},
+  {"name":"Si Menor Melódica","numAlts":4,"seq":[["b","4",0],["c","5",1],["d","5",0],["e","5",0],["f","5",1],["g","5",1],["a","5",1],["b","5",0],["a","5",0],["g","5",0],["f","5",1],["e","5",0],["d","5",0],["c","5",1],["b","4",0]]},
+  {"name":"Fa Menor Melódica","numAlts":4,"seq":[["f","4",0],["g","4",0],["a","4",-1],["b","4",-1],["c","5",0],["d","5",0],["e","5",0],["f","5",0],["e","5",-1],["d","5",-1],["c","5",0],["b","4",-1],["a","4",-1],["g","4",0],["f","4",0]]},
+  {"name":"Fa♯ Menor Melódica","numAlts":6,"seq":[["f","4",1],["g","4",1],["a","4",0],["b","4",0],["c","5",1],["d","5",1],["e","5",1],["f","5",1],["e","5",0],["d","5",0],["c","5",1],["b","4",0],["a","4",0],["g","4",1],["f","4",1]]},
+  {"name":"Si♭ Menor Melódica","numAlts":6,"seq":[["b","4",-1],["c","5",0],["d","5",-1],["e","5",-1],["f","5",0],["g","5",0],["a","5",0],["b","5",-1],["a","5",-1],["g","5",-1],["f","5",0],["e","5",-1],["d","5",-1],["c","5",0],["b","4",-1]]},
+  {"name":"Do♯ Menor Melódica","numAlts":7,"seq":[["c","4",1],["d","4",1],["e","4",0],["f","4",1],["g","4",1],["a","4",1],["b","4",1],["c","5",1],["b","4",0],["a","4",0],["g","4",1],["f","4",1],["e","4",0],["d","4",1],["c","4",1]]},
+  {"name":"Mi♭ Menor Melódica","numAlts":7,"seq":[["e","4",-1],["f","4",0],["g","4",-1],["a","4",-1],["b","4",-1],["c","5",0],["d","5",0],["e","5",-1],["d","5",-1],["c","5",-1],["b","4",-1],["a","4",-1],["g","4",-1],["f","4",0],["e","4",-1]]},
+  {"name":"La♭ Menor Melódica","numAlts":8,"seq":[["a","4",-1],["b","4",-1],["c","5",-1],["d","5",-1],["e","5",-1],["f","5",0],["g","5",0],["a","5",-1],["g","5",-1],["f","5",-1],["e","5",-1],["d","5",-1],["c","5",-1],["b","4",-1],["a","4",-1]]}
+];
+
+/* Los 4 tipos de escala del alcance decidido (sin modos gregorianos). Se
+   pregunta por la escala COMPLETA (tónica + tipo, p.ej. "Re♯ Menor Armónica"),
+   no solo por el tipo: las opciones de respuesta son siempre nombres completos
+   de escala (ver buildOptions más abajo, con sus 3 distractores de criterio
+   pedagógico), nunca solo "Mayor"/"Menor natural"/etc. sueltos. .lbl se usa
+   solo para textos de UI/SEO que SÍ hablan del tipo en general (p.ej. el
+   selector de dificultad no lo usa; queda por si hiciera falta en el futuro). */
+var TYPES = [
+  { id: 'mayor',    lbl: 'Mayor',           pool: SCALES_MAYOR },
+  { id: 'natural',  lbl: 'Menor natural',   pool: MENOR_NATURAL },
+  { id: 'armonica', lbl: 'Menor armónica',  pool: MENOR_ARMONICA },
+  { id: 'melodica', lbl: 'Menor melódica',  pool: MENOR_MELODICA, seq: true }
+];
+/* 3 niveles como en Dardos (maxAlt + tiempo), pero aplicados al número de
+   alteraciones de la escala (numAlts) para evitar tónicas con armadura
+   excesiva en Fácil/Medio, igual que hace intervalos-engine.js con maxAlt.
+   Los 4 tipos pueden salir en cualquier dificultad (lo que cambia es la
+   tónica disponible dentro de cada tipo); el tiempo compensa la dificultad
+   de lectura de los 15 compases de la melódica. */
+var DIF = [
+  { lbl: 'Fácil',   maxAlt: 2,  time: 9000, id: 'facil'   },
+  { lbl: 'Medio',   maxAlt: 4,  time: 7000, id: 'medio'   },
+  { lbl: 'Difícil', maxAlt: 99, time: 5500, id: 'dificil' }
+];
+
+function poolForLevel(type, dif) {
+  var p = type.pool.filter(function (s) { return s.numAlts <= dif.maxAlt; });
+  return p.length ? p : type.pool;   // salvaguarda: nunca quedarse sin fondo (igual que el motor de construir)
+}
+function genQuestion(dif) {
+  var type = TYPES[Math.floor(Math.random() * TYPES.length)];
+  var pool = poolForLevel(type, dif);
+  var scale = pool[Math.floor(Math.random() * pool.length)];
+  return { type: type, scale: scale };
+}
+/* Claves absolutas en orden ('f#/5', 'bb/4'...) para pasar a tmNotacion: la
+   decision de que signo se escribe la toma tm-mei.js con la regla del compas
+   (ver cabecera de este bloque), asi que basta con dar la altura real.
+   SIEMPRE se devuelve la forma completa de ida y vuelta (15 notas): si se
+   mostrara la melodica completa y las otras 3 solo ascendentes (8 notas), la
+   melodica se reconoceria a simple vista por tener mas notas, sin leer nada.
+   Mayor/menor natural/menor armonica son simetricas (bajan igual que suben:
+   mismo criterio que usa escalas-construir-engine.js, que no distingue
+   ascendente/descendente para estos 3 tipos), asi que basta con reflejar las
+   8 notas ascendentes sin repetir la mas aguda. Solo la melodica es asimetrica
+   de verdad (baja como la menor natural) y ya trae su propia secuencia de 15
+   notas verificada (seq, ver cabecera de datos). */
+function scaleKeys(q) {
+  if (q.type.seq) return q.scale.seq.map(function (t) { return t[0] + accStr(t[2]) + '/' + t[1]; });
+  var asc = q.scale.notes.map(function (note) {
+    var p = note.split('/');
+    return p[0] + (q.scale.acc[note] || '') + '/' + p[1];
+  });
+  var desc = asc.slice(0, 7).reverse();   // refleja sin repetir la nota mas aguda (8ª): 8 + 7 = 15, igual que la melodica
+  return asc.concat(desc);
+}
+function shuffleInPlace(arr) {
+  for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+  return arr;
+}
+/* El nombre de cada escala ya viene como "Tónica Tipo" en los datos verificados
+   (p.ej. "Re♯ Menor Armónica"), sin espacio entre la tónica y su símbolo de
+   alteración: el primer token es siempre la tónica. */
+function tonicOf(name) { return name.split(' ')[0]; }
+/* Se pregunta por la escala COMPLETA (tónica + tipo), no solo el tipo: las 4
+   opciones son siempre nombres completos de escala. Los 3 distractores se
+   eligen con criterio pedagógico, no al azar puro:
+     1) misma tónica, tipo distinto — comprueba que de verdad distingue el
+        tipo (patrón de alteraciones) y no solo reconoce la tónica.
+     2) tónica cercana (alteraciones parecidas), mismo tipo — comprueba que
+        de verdad lee la tónica y no solo el tipo.
+     3) tónica cercana Y tipo distinto — un tercer señuelo plausible, ni la
+        tónica ni el tipo coinciden con el correcto.
+   "Cercana" = de entre las tónicas del mismo fondo (pool) con menos
+   alteraciones de diferencia, nunca una tónica elegida al azar sin relación. */
+function nearestByAlt(pool, exclude, numAlts, n) {
+  var cand = pool.filter(function (s) { return s.name !== exclude; });
+  cand.sort(function (a, b) { return Math.abs(a.numAlts - numAlts) - Math.abs(b.numAlts - numAlts); });
+  return cand.slice(0, Math.min(n, cand.length));
+}
+function buildOptions(q) {
+  var correct = q.scale.name, correctTonic = tonicOf(correct);
+  var used = { }; used[correct] = true;
+  var otherTypes = shuffleInPlace(TYPES.filter(function (t) { return t.id !== q.type.id; }));
+
+  var d1 = null;   // misma tonica, tipo distinto
+  otherTypes.some(function (t) {
+    var m = t.pool.filter(function (s) { return tonicOf(s.name) === correctTonic && !used[s.name]; });
+    if (m.length) { d1 = m[Math.floor(Math.random() * m.length)].name; return true; }
+    return false;
+  });
+  if (d1) used[d1] = true;
+
+  var near1 = nearestByAlt(q.type.pool, correct, q.scale.numAlts, 4).filter(function (s) { return !used[s.name]; });
+  var d2 = near1.length ? near1[Math.floor(Math.random() * near1.length)].name : null;   // tonica cercana, mismo tipo
+  if (d2) used[d2] = true;
+
+  var d3 = null;   // tonica cercana (de otro tipo), tipo distinto
+  otherTypes.some(function (t) {
+    var pool = t.pool.filter(function (s) { return tonicOf(s.name) !== correctTonic && !used[s.name]; });
+    var near2 = nearestByAlt(pool, null, q.scale.numAlts, 4);
+    if (near2.length) { d3 = near2[Math.floor(Math.random() * near2.length)].name; return true; }
+    return false;
+  });
+  if (d3) used[d3] = true;
+
+  var opts = [{ lbl: correct, ok: true }];
+  [d1, d2, d3].forEach(function (lbl) { if (lbl) opts.push({ lbl: lbl, ok: false }); });
+
+  // relleno de seguridad (en la practica nunca hace falta: los 4 fondos tienen de sobra)
+  if (opts.length < 4) {
+    var todas = shuffleInPlace(TYPES.reduce(function (a, t) { return a.concat(t.pool.map(function (s) { return s.name; })); }, []));
+    todas.some(function (lbl) {
+      if (opts.length >= 4) return true;
+      if (!used[lbl]) { opts.push({ lbl: lbl, ok: false }); used[lbl] = true; }
+      return false;
+    });
+  }
+  return shuffleInPlace(opts);
+}
+/* Las 15 notas no caben legibles en una sola línea en móvil: dibujarAAncho() busca la
+   separación (0,15-1,0) que más llene el ancho sin desbordar, pero si ni con la mínima
+   caben las 15, además encoge el SVG entero por CSS (ancho Y alto de cada cabeza de
+   nota), y a tamaño de pantalla estrecho queda ilegible. Solución: partir SIEMPRE en
+   DOS pentagramas, como se escribe a mano una escala larga: arriba las 8 notas
+   ascendentes (hasta la más aguda), abajo las 7 descendentes (sin repetirla), cada una
+   con su propia clave de sol y su propia llamada a dibujarAAncho — así cada línea solo
+   tiene que caber con la mitad de las notas y puede usar una separación mayor, legible,
+   sin necesitar el encogimiento forzado. Aplica a los 4 tipos por igual (los 4 se
+   muestran con 15 notas, ver scaleKeys). */
+function drawStaff(q) {
+  var box = document.getElementById('staffBox');
+  box.replaceChildren();
+  var elAsc = document.createElement('div'); elAsc.className = 'staff-line';
+  var elDesc = document.createElement('div'); elDesc.className = 'staff-line';
+  box.appendChild(elAsc); box.appendChild(elDesc);
+
+  var keys = scaleKeys(q);
+  var asc = keys.slice(0, 8), desc = keys.slice(8);   // 8 ascendentes (incluida la más aguda) + 7 descendentes
+
+  var ancho = Math.max(220, (box.clientWidth || 420) - 16);
+  function drawLine(el, notes, idSuf) {
+    el.style.height = '130px';
+    var eventos = notes.map(function (k) { return { key: k, d: 'w' }; });
+    var fila = { clave: 'sol', compases: [eventos] };
+    var r = window.tmNotacion.dibujarAAncho(el, fila, ancho, { escala: 1.0, id: 'canasta' + idSuf, alt: 'Escala' });
+    var g = window.tmNotacion.geometria(r.elemento);
+    r.elemento.style.display = 'block';
+    r.elemento.style.margin = Math.round(54 - g.lineas[0]) + 'px auto 0';
+  }
+  drawLine(elAsc, asc, '-asc');
+  drawLine(elDesc, desc, '-desc');
+}
+
+/* ============================================================
+   MÚSICOS DE PAPEL RECORTADO (mismo estilo y mismos 8 personajes que Dardos;
+   drawHead/drawInstr/hairBack/limb/paint/rrect copiados tal cual de
+   juegos/teoria/dardos/juego/index.html: son genéricos del cuerpo y el
+   instrumento, no dependen de dardos ni de lanzar un balón)
+   ============================================================ */
+const F_DISP = "'Lilita One','Arial Rounded MT Bold','Trebuchet MS',sans-serif";
+const F_BODY = "Nunito,'Segoe UI',system-ui,sans-serif";
+const INK = '#14213d';
+const W = 1000, H = 520;
+const MUSICOS = [
+  { n: 'Clarinete', piel: '#f2cba6', pelo: '#4a3426', estilo: 'corto', gafas: true, instr: 'clarinete' },
+  { n: 'Trompeta', piel: '#c98f64', pelo: '#1d1612', estilo: 'corto', bigote: true, instr: 'trompeta' },
+  { n: 'Bombo', piel: '#f2cba6', pelo: '#6b5444', estilo: 'calvo', barba: true, ancho: 1.3, instr: 'bombo' },
+  { n: 'Caja', piel: '#d9a67c', pelo: '#2a1d17', estilo: 'rizado', instr: 'caja' },
+  { n: 'Flauta', piel: '#f6d6b8', pelo: '#e0b04a', estilo: 'largo', instr: 'flauta' },
+  { n: 'Trombón', piel: '#e3b38c', pelo: '#9aa0a8', estilo: 'corto', bigote: true, gafas: true, instr: 'trombon' },
+  { n: 'Tuba', piel: '#8a5a3c', pelo: '#17110d', estilo: 'corto', barba: true, ancho: 1.25, instr: 'tuba' },
+  { n: 'Platillos', piel: '#f2cba6', pelo: '#b5532a', estilo: 'coleta', instr: 'platillos' }
+];
+const $ = s => document.querySelector(s);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const mix = (a, b, k) => a + (b - a) * k;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function paint(c, fill, lw = 2.5) {
+  if (fill) { c.fillStyle = fill; c.fill(); }
+  if (lw) { c.lineWidth = lw; c.strokeStyle = INK; c.lineJoin = 'round'; c.lineCap = 'round'; c.stroke(); }
+}
+function rrect(c, x, y, w, h, r) {
+  c.beginPath();
+  if (c.roundRect) { c.roundRect(x, y, w, h, r); return; }
+  r = Math.min(r, w / 2, h / 2);
+  c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
+  c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath();
+}
+function limb(c, x, y, ang, len, w, col, extra) {
+  c.save(); c.translate(x, y); c.rotate(ang);
+  rrect(c, -w / 2, -2, w, len, w / 2.5); paint(c, col, 2.2);
+  if (extra && extra.hand) { c.beginPath(); c.arc(0, len + 1, 5.5, 0, 7); paint(c, extra.hand, 2.2); }
+  if (extra && extra.shoe) { c.beginPath(); c.ellipse(5, len + 1, 11, 5, 0, 0, 7); paint(c, '#1a1a22', 2.2); }
+  c.restore();
+}
+function hairBack(c, m) {
+  if (m.estilo === 'largo') { rrect(c, -34, -120, 68, 78, 16); paint(c, m.pelo, 2.4); }
+  else if (m.estilo === 'coleta') { c.beginPath(); c.ellipse(-37, -88, 8, 14, 0.4, 0, 7); paint(c, m.pelo, 2.4); }
+  else if (m.estilo === 'rizado') {
+    for (const [x, y] of [[-22, -116], [-31, -102], [-33, -86], [22, -116], [31, -102], [33, -86], [0, -122]]) {
+      c.beginPath(); c.arc(x, y, 9.5, 0, 7); paint(c, m.pelo, 2.2);
+    }
+  }
+}
+function drawHead(c, m, o, t) {
+  const hy = -92, dir = o.dir == null ? 1 : o.dir, dx = 7 * dir;
+  c.beginPath(); c.ellipse(0, hy, 29.5, 28, 0, 0, 7); paint(c, m.piel, 2.6);
+  if (m.estilo === 'corto') {
+    rrect(c, -31, -102, 8, 20, 3); paint(c, m.pelo, 2);
+    rrect(c, 23, -102, 8, 20, 3); paint(c, m.pelo, 2);
+  }
+  if (m.barba) { c.beginPath(); c.ellipse(0, hy, 29.5, 28, 0, 0.25 * Math.PI, 0.75 * Math.PI); c.closePath(); paint(c, m.pelo, 2.6); }
+  const blink = (t % 3.4) < 0.12 ? 0.12 : 1;
+  for (const ex of [-9 + dx, 9 + dx]) {
+    c.beginPath(); c.ellipse(ex, -89, 6.6, 7.4 * blink, 0, 0, 7); paint(c, '#fff', 2);
+    c.fillStyle = INK; c.beginPath(); c.ellipse(ex + 2.4 * dir, -88.5, 2.3, 2.3 * blink, 0, 0, 7); c.fill();
+    if (m.gafas) { c.beginPath(); c.arc(ex, -89, 9, 0, 7); c.lineWidth = 2.4; c.strokeStyle = INK; c.stroke(); }
+  }
+  if (m.bigote) { c.beginPath(); c.ellipse(dx * 0.8, -77, 10, 3.4, 0, 0, 7); paint(c, m.pelo, 1.8); }
+  const mx = dx * 0.8, my = -72, mo = o.mouth || 0;
+  if (o.mood === 'happy') { c.beginPath(); c.arc(mx, my - 3, 8, 0.1 * Math.PI, 0.9 * Math.PI); c.closePath(); paint(c, '#7a1f2a', 2); }
+  else if (o.mood === 'sad') { c.beginPath(); c.arc(mx, my + 6, 7, 1.15 * Math.PI, 1.85 * Math.PI); c.lineWidth = 2.6; c.strokeStyle = INK; c.lineCap = 'round'; c.stroke(); }
+  else if (mo > 0.05) { c.beginPath(); c.ellipse(mx, my, 6 + mo * 1.5, 2 + mo * 8, 0, 0, 7); paint(c, '#7a1f2a', 2.2); }
+  else { c.beginPath(); c.moveTo(mx - 6, my); c.lineTo(mx + 6, my); c.lineWidth = 2.6; c.strokeStyle = INK; c.lineCap = 'round'; c.stroke(); }
+  c.beginPath(); c.ellipse(0, -108, 31, 15, 0, Math.PI, 2 * Math.PI); c.lineTo(31, -100); c.lineTo(-31, -100); c.closePath(); paint(c, '#27458f', 2.6);
+  rrect(c, -31, -106, 62, 8, 2); paint(c, '#f4b52e', 2);
+  c.beginPath(); c.ellipse(dir * 13, -99, 17 + dir * 9, 4, 0, 0, 7); paint(c, '#101a33', 2);
+  c.beginPath(); c.arc(dx, -113, 4.5, 0, 7); paint(c, '#f4b52e', 1.8);
+}
+/* Instrumento de cada músico (copiado tal cual de juegos/teoria/dardos/juego/index.html,
+   mismas proporciones de torso que el cuerpo de aquí, por eso encaja sin ajustes). */
+function drawInstr(c, m, bw) {
+  const GOLD = '#f2b632', SILVER = '#cfd6df';
+  c.save();
+  switch (m.instr) {
+    case 'clarinete':
+      c.translate(24 * bw, -40); c.rotate(-0.12);
+      rrect(c, -3, -42, 6, 64, 2); paint(c, '#1c1c24', 2);
+      c.beginPath(); c.moveTo(-3, 20); c.lineTo(-8, 30); c.lineTo(8, 30); c.lineTo(3, 20); c.closePath(); paint(c, '#1c1c24', 2);
+      c.fillStyle = SILVER; for (const y of [-28, -16, -4, 8]) { c.beginPath(); c.arc(0, y, 2, 0, 7); c.fill(); }
+      rrect(c, -3, -47, 6, 7, 2); paint(c, '#555', 1.8);
+      break;
+    case 'trompeta':
+      c.translate(20 * bw, -48);
+      c.beginPath(); c.arc(10, 8, 9, 0, 7); c.lineWidth = 8; c.strokeStyle = INK; c.stroke();
+      c.lineWidth = 4.5; c.strokeStyle = GOLD; c.stroke();
+      rrect(c, -6, -3, 44, 6, 3); paint(c, GOLD, 2);
+      c.beginPath(); c.moveTo(36, -3); c.lineTo(54, -13); c.lineTo(54, 13); c.lineTo(36, 3); c.closePath(); paint(c, GOLD, 2.2);
+      c.fillStyle = SILVER; for (const x of [14, 20, 26]) { rrect(c, x, -10, 4, 7, 1); c.fill(); }
+      break;
+    case 'trombon':
+      c.translate(8 * bw, -54);
+      rrect(c, 0, -3, 70, 4, 2); paint(c, GOLD, 2); rrect(c, 0, 6, 70, 4, 2); paint(c, GOLD, 2); rrect(c, 67, -3, 6, 14, 2); paint(c, GOLD, 2);
+      c.beginPath(); c.arc(2, -15, 12, 0, 7); paint(c, GOLD, 2.2);
+      c.beginPath(); c.ellipse(2, -15, 5, 8, 0, 0, 7); paint(c, '#7a5a10', 1.6);
+      break;
+    case 'flauta':
+      c.translate(18 * bw, -56); c.rotate(-0.1);
+      rrect(c, 0, -2.5, 62, 5, 2.5); paint(c, SILVER, 2);
+      c.fillStyle = INK; for (let x = 12; x < 56; x += 8) { c.beginPath(); c.arc(x, 0, 1.6, 0, 7); c.fill(); }
+      break;
+    case 'bombo':
+      c.translate(10 * bw + 6, -64);
+      rrect(c, 0, 0, 32, 54, 6); paint(c, '#b8402f', 2.4);
+      rrect(c, 0, 3, 32, 5, 1); paint(c, GOLD, 1.8); rrect(c, 0, 46, 32, 5, 1); paint(c, GOLD, 1.8);
+      c.beginPath(); c.ellipse(32, 27, 5, 26, 0, 0, 7); paint(c, '#f4efe3', 2.2);
+      break;
+    case 'caja':
+      c.translate(6 * bw, -40);
+      rrect(c, 0, 0, 34, 20, 3); paint(c, '#9aa6b8', 2.2);
+      c.beginPath(); c.ellipse(17, 0, 17, 4.5, 0, 0, 7); paint(c, '#f4efe3', 2.2);
+      c.lineWidth = 3; c.strokeStyle = INK; c.lineCap = 'round';
+      c.beginPath(); c.moveTo(6, -14); c.lineTo(18, -2); c.moveTo(32, -14); c.lineTo(20, -2); c.stroke();
+      break;
+    case 'tuba':
+      c.translate(10 * bw, -50);
+      c.beginPath(); c.arc(0, 0, 22, 0, 7); c.lineWidth = 13; c.strokeStyle = INK; c.stroke(); c.lineWidth = 8.5; c.strokeStyle = GOLD; c.stroke();
+      c.beginPath(); c.moveTo(-8, -22); c.lineTo(-22, -54); c.lineTo(16, -54); c.lineTo(8, -22); c.closePath(); paint(c, GOLD, 2.4);
+      c.beginPath(); c.ellipse(-3, -54, 19, 4, 0, 0, 7); paint(c, '#7a5a10', 1.8);
+      break;
+    case 'platillos':
+      c.translate(26 * bw, -46);
+      c.beginPath(); c.ellipse(-4, 0, 5, 18, 0.2, 0, 7); paint(c, GOLD, 2.2);
+      c.beginPath(); c.ellipse(7, 0, 5, 18, -0.2, 0, 7); paint(c, '#f7cc63', 2.2);
+      break;
+  }
+  c.restore();
+}
+/* Pose fija de tiro libre (sin carrera): o.wind 0..1 = fase del lanzamiento
+   (0 = balón sujeto a la altura del pecho, preparado; 1 = brazos extendidos
+   arriba, balón soltado). Adaptada de drawDardero (Dardos): mismo torso,
+   piernas, cabeza e instrumento; solo cambian los ángulos de los brazos (suben
+   en vez de barrer de lado) y el objeto sujeto (balón en vez de dardo). */
+function drawTirador(c, m, x, y, o = {}) {
+  const s = o.s || 1, t = o.t || 0, bw = m.ancho || 1;
+  const SUIT = '#27458f', TROUSER = '#2a3350';
+  c.save(); c.translate(x, y); c.scale(s, s);
+  const bob = Math.sin(t * 2.2) * 1.2;
+  c.translate(0, bob);
+  const wind = o.wind || 0;                          // 0 = balón al pecho (preparado), 1 = brazos arriba (soltado)
+  const lL = -0.14, lR = 0.2;                         // piernas: postura fija, ligeramente flexionada, de perfil
+  const aB = mix(0.95, -2.9, wind);                   // brazo trasero (sostiene el balón): del pecho hacia arriba
+  const aF = mix(0.55, -2.55, wind);                  // brazo delantero: acompaña el lanzamiento
+  hairBack(c, m);
+  limb(c, -8, -27, lL, 21, 11, TROUSER, { shoe: 1 });
+  limb(c, -18 * bw, -58, aB, 25, 10, SUIT, { hand: m.piel });
+  rrect(c, -22 * bw, -64, 44 * bw, 42, 9); paint(c, SUIT, 2.6);
+  rrect(c, -22 * bw, -30, 44 * bw, 6, 2); paint(c, '#f4b52e', 1.8);
+  c.fillStyle = '#f4b52e'; for (const by of [-54, -44]) { c.beginPath(); c.arc(0, by, 2.8, 0, 7); c.fill(); }
+  limb(c, 8, -27, lR, 21, 11, TROUSER, { shoe: 1 });
+  drawHead(c, m, o, t);
+  limb(c, 18 * bw, -58, aF, 25, 10, SUIT, { hand: m.piel });
+  drawInstr(c, m, bw);
+  /* balón en las manos (se dibuja hasta que se suelta, encima del instrumento) */
+  if (!o.released) {
+    c.save();
+    c.translate(-18 * bw, -58); c.rotate(aB);
+    c.translate(0, 25 + 7);
+    drawBall(c, 0, 0, 0.85);
+    c.restore();
+  }
+  c.restore();
+}
+/* Balón de baloncesto: circulo naranja con costuras (cruz + dos arcos). k = escala, rot = giro (radianes) */
+function drawBall(c, x, y, k = 1, rot = 0) {
+  c.save(); c.translate(x, y); c.rotate(rot); c.scale(k, k);
+  c.beginPath(); c.arc(0, 0, 11, 0, 7); paint(c, '#d9731c', 2);
+  c.lineWidth = 1.6; c.strokeStyle = '#1a1a22';
+  c.beginPath(); c.moveTo(0, -11); c.lineTo(0, 11); c.stroke();
+  c.beginPath(); c.moveTo(-11, 0); c.lineTo(11, 0); c.stroke();
+  c.beginPath(); c.arc(0, 0, 11, -0.55, 0.55); c.stroke();
+  c.beginPath(); c.arc(0, 0, 11, Math.PI - 0.55, Math.PI + 0.55); c.stroke();
+  c.restore();
+}
+
+/* ============================================================
+   CANASTA (tablero + aro elíptico + red cónica): una canasta real, no una
+   diana. A diferencia de Dardos (donde la zona de acierto SÍ se ve como un
+   anillo, porque una diana real tiene anillos), aquí la canasta se dibuja
+   SIEMPRE igual; lo que cambia con la zona de acierto es la TRAYECTORIA del
+   balón (ver buildFlight más abajo): limpio por el centro, rebote en el
+   tablero, rebote en el aro, roce leve en el aro, o fuera sin tocar nada.
+   Mismos puntos que el diseño original (50/25/15/5/0) según la fracción de
+   tiempo usada en un acierto (zoneByElapsedFrac, sin cambios).
+   ============================================================ */
+const BOARD = { cx: 740, cy: 235, rx: 95, ry: 26 };
+const ZONES = [
+  { id: 'red',     lbl: '¡SOLO RED!',    pts: 50 },
+  { id: 'tablero', lbl: 'CON TABLERO',   pts: 25 },
+  { id: 'aro',     lbl: 'CON ARO',       pts: 15 },
+  { id: 'raspa',   lbl: 'RASPA Y ENTRA', pts: 5  },
+  { id: 'fuera',   lbl: 'AIR BALL',      pts: 0  }
+];
+function zoneByElapsedFrac(frac) {
+  // frac = tiempo usado / tiempo limite, ya comprobado que la respuesta es correcta
+  if (frac <= 0.25) return ZONES[0];
+  if (frac <= 0.50) return ZONES[1];
+  if (frac <= 0.75) return ZONES[2];
+  return ZONES[3];
+}
+function drawBoard(c) {
+  const { cx, cy, rx, ry } = BOARD;
+  // poste, desde justo debajo del aro hasta el suelo
+  c.save(); c.shadowColor = 'rgba(20,33,61,.3)'; c.shadowOffsetY = 6;
+  rrect(c, cx - 10, cy + ry + 8, 20, 131, 6); paint(c, '#6b4a2e', 3);
+  c.restore();
+  // tablero: rectangulo blanco, con la "caja" naranja marcada dentro (como en una canasta real)
+  const bx = cx - 115, by = cy - 150, bw = 230, bh = 130;
+  rrect(c, bx, by, bw, bh, 10); paint(c, '#fdfcf9', 3);
+  c.lineWidth = 5; c.strokeStyle = '#f4722b';
+  c.strokeRect(cx - 45, by + 55, 90, 55);
+  // aro: una elipse achatada (vista en perspectiva), no un circulo; una segunda elipse
+  // interior mas oscura sugiere el grosor del tubo, sin rellenar el interior del aro
+  c.lineCap = 'round';
+  c.lineWidth = 9; c.strokeStyle = '#f4722b';
+  c.beginPath(); c.ellipse(cx, cy, rx, ry, 0, 0, 7); c.stroke();
+  c.lineWidth = 5; c.strokeStyle = '#c2531a';
+  c.beginPath(); c.ellipse(cx, cy, rx * 0.86, ry * 0.7, 0, 0, 7); c.stroke();
+  // red: cono de hilos desde todo el borde del aro hasta una elipse mas pequena debajo,
+  // mas 2 "anillos" horizontales que cruzan los hilos (como teje una red real)
+  const netBy = cy + ry * 2.6, netRx = rx * 0.42, netRy = ry * 0.42, N = 12;
+  const top = [], bot = [];
+  for (let i = 0; i < N; i++) {
+    const a = (Math.PI * 2 * i) / N;
+    top.push({ x: cx + Math.cos(a) * rx, y: cy + Math.sin(a) * ry });
+    bot.push({ x: cx + Math.cos(a) * netRx, y: netBy + Math.sin(a) * netRy });
+  }
+  c.lineWidth = 1.6; c.strokeStyle = '#cfd6df';
+  for (let i = 0; i < N; i++) { c.beginPath(); c.moveTo(top[i].x, top[i].y); c.lineTo(bot[i].x, bot[i].y); c.stroke(); }
+  [0.35, 0.68].forEach(function (k) {
+    c.beginPath();
+    for (let i = 0; i <= N; i++) {
+      const p0 = top[i % N], p1 = bot[i % N];
+      const px = mix(p0.x, p1.x, k), py = mix(p0.y, p1.y, k);
+      if (i === 0) c.moveTo(px, py); else c.lineTo(px, py);
+    }
+    c.stroke();
+  });
+  // linea de tiro libre en el suelo, a los pies del tirador
+  c.lineWidth = 3; c.strokeStyle = '#fff7e0';
+  c.beginPath(); c.moveTo(130, 412); c.lineTo(300, 412); c.stroke();
+}
+/* Trayectoria del balon SEGUN LA ZONA: en vez de un punto de impacto en un anillo (como
+   en Dardos), cada zona es una ruta distinta de 1 a 3 tramos (cada tramo con su propia
+   duracion y altura de arco; arco 0 = tramo recto/rebote corto). "red" entra limpio por
+   el centro; "tablero" toca antes el tablero; "aro" roza el borde del aro con un pequeno
+   rebote; "raspa" lo roza mas levemente; "fuera" no llega a tocar el aro ni la red.
+   Devuelve { segs:[{from,to,dur,arc}], totalDur, restPoint } para animar en drawScene(). */
+function buildFlight(zone) {
+  const { cx, cy, rx, ry } = BOARD;
+  const HAND = { x: 250, y: 266 };
+  const rimC = { x: cx, y: cy };
+  const netBottom = { x: cx, y: cy + ry * 2.6 };
+  const backboardHit = { x: cx + rx * 0.12, y: cy - ry * 4.4 };
+  const rimEdgeAro = { x: cx - rx * 0.92, y: cy + ry * 0.3 };
+  const rimEdgeRaspa = { x: cx - rx * 0.55, y: cy + ry * 0.75 };
+  let tramos;
+  if (zone.id === 'red') {
+    tramos = [
+      { to: rimC, dur: 430, arc: 95 },
+      { to: netBottom, dur: 160, arc: 0 }
+    ];
+  } else if (zone.id === 'tablero') {
+    tramos = [
+      { to: backboardHit, dur: 380, arc: 60 },
+      { to: rimC, dur: 130, arc: 0 },
+      { to: netBottom, dur: 150, arc: 0 }
+    ];
+  } else if (zone.id === 'aro') {
+    tramos = [
+      { to: rimEdgeAro, dur: 400, arc: 85 },
+      { to: { x: rimEdgeAro.x + 16, y: rimEdgeAro.y - 11 }, dur: 90, arc: 0 },
+      { to: netBottom, dur: 170, arc: 0 }
+    ];
+  } else if (zone.id === 'raspa') {
+    tramos = [
+      { to: rimEdgeRaspa, dur: 400, arc: 90 },
+      { to: { x: rimEdgeRaspa.x + 7, y: rimEdgeRaspa.y - 3 }, dur: 60, arc: 0 },
+      { to: netBottom, dur: 170, arc: 0 }
+    ];
+  } else {
+    // fuera: no entra. Pasa de largo por un lado, por arriba o corto, sin rebotar en nada.
+    const misses = [
+      { x: cx - rx * 2.3, y: cy + 10 },     // se queda corto, delante del aro
+      { x: cx + rx * 2.2, y: cy - ry * 3 },  // demasiado largo, pasa por encima
+      { x: cx + rx * 1.9, y: cy + 60 }       // se va lateral
+    ];
+    tramos = [{ to: misses[Math.floor(Math.random() * misses.length)], dur: 480, arc: 70 }];
+  }
+  let from = HAND;
+  const segs = tramos.map(function (t) { const s = Object.assign({ from: from }, t); from = t.to; return s; });
+  const totalDur = segs.reduce(function (a, s) { return a + s.dur; }, 0);
+  return { segs: segs, totalDur: totalDur, restPoint: from };
+}
+
+/* ============================================================
+   SONIDO (pitidos sencillos, sin ficheros)
+   ============================================================ */
+let AC = null;
+function ensureAudio() { if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } if (AC && AC.state === 'suspended') AC.resume(); }
+function beep(freqs, step = 0.09, type = 'triangle', vol = 0.18) {
+  if (!AC) return;
+  freqs.forEach((f, i) => {
+    const t = AC.currentTime + i * step, o = AC.createOscillator(), g = AC.createGain();
+    o.type = type; o.frequency.value = f;
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.015); g.gain.exponentialRampToValueAtTime(0.0001, t + step * 1.7);
+    o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + step * 1.8);
+  });
+}
+
+/* ============================================================
+   ESTADO Y FLUJO DEL JUEGO
+   ============================================================ */
+/* TURNOS·TIROS_POR_TURNO = preguntas por jugador (igual con 1 o varios jugadores: 9).
+   S.total = PERQ * S.numJugadores = tiros de la partida entera (todas las personas).
+   Con P jugadores: P turnos por ronda x 3 rondas = 3P turnos, 3 tiros cada uno. */
+const TURNOS = 3, TIROS_POR_TURNO = 3, PERQ = TURNOS * TIROS_POR_TURNO;
+const S = {
+  state: 'menu', musico: 0, dif: DIF[1],
+  numJugadores: 1,
+  jugadores: [{ nombre: '', puntos: 0, aciertos: 0, tiempos: [] }],
+  turnoActual: 0, rondaActual: 1, total: PERQ,
+  tiro: 0,
+  stuck: [],                 // balones que han caido en este turno: {x,y,color}
+  fly: null,                 // balon en vuelo: {t0,dur,from,to,zone}
+  cQ: null, qStart: 0, answered: false, timerId: 0,
+  clock: 0
+};
+
+const RK = 'canasta-clasificacion';
+function loadRank() { try { const a = JSON.parse(localStorage.getItem(RK) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+function saveRank(a) { try { localStorage.setItem(RK, JSON.stringify(a)); } catch (e) {} }
+function renderRank(ol, hi) {
+  const all = loadRank().sort((a, b) => b.d - a.d || a.id - b.id).slice(0, 8);
+  ol.replaceChildren();
+  for (const e of all) {
+    const li = document.createElement('li');
+    if (e.id === hi) li.className = 'me';
+    const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = e.n + ' ';
+    const sm = document.createElement('small'); sm.textContent = e.m; nm.appendChild(sm);
+    const dd = document.createElement('span'); dd.className = 'dd'; dd.textContent = e.d + ' pts';
+    li.append(nm, dd); ol.appendChild(li);
+  }
+  return all.length;
+}
+function refreshRankMenu() { $('#rankEmpty').hidden = renderRank($('#rankMenu')) > 0; }
+
+function track(evento, params) {
+  try { if (window.parent && window.parent !== window) window.parent.postMessage({ tmJuego: true, evento: evento, params: Object.assign({ juego: 'canasta' }, params) }, location.origin); } catch (e) {}
+}
+
+function showView(n) { document.querySelectorAll('.view').forEach(v => { v.hidden = v.id !== 'v-' + n; }); }
+
+function parsedNumJugadores() {
+  let n = parseInt($('#numJugadores').value, 10);
+  if (!Number.isFinite(n) || n < 1) n = 1;
+  return Math.min(n, 500);   // tope practico de seguridad (no es un limite que se muestre ni se avise)
+}
+function collectNombres(n) {
+  const out = [];
+  if (n <= 1) {
+    out.push($('#nombre') ? $('#nombre').value.trim() : '');
+  } else {
+    for (let i = 0; i < n; i++) {
+      const el = document.getElementById('nombre' + i);
+      out.push(el ? el.value.trim() : '');
+    }
+  }
+  return out.map((v, i) => v || (n <= 1 ? 'Músico' : ('Jugador ' + (i + 1))));
+}
+/* Músico de cada jugador en multijugador: cada fila de #nombresWrap trae su propio
+   mini-selector (.miniPicker) con el índice elegido en data-musico. Con 1 jugador se
+   usa directamente S.musico (el selector grande de siempre), sin tocar ese camino. */
+function collectMusicosMulti(n) {
+  const pickers = $('#nombresWrap').querySelectorAll('.miniPicker');
+  const out = [];
+  for (let i = 0; i < n; i++) {
+    const el = pickers[i];
+    let idx = el ? parseInt(el.dataset.musico, 10) : NaN;
+    if (!Number.isFinite(idx) || idx < 0 || idx >= MUSICOS.length) idx = i % MUSICOS.length;
+    out.push(idx);
+  }
+  return out;
+}
+
+async function startGame() {
+  S.dif = DIF[parseInt(document.querySelector('input[name=dif]:checked').value, 10)];
+  S.numJugadores = parsedNumJugadores();
+  S.total = PERQ * S.numJugadores;
+  if (S.numJugadores <= 1) {
+    const raw = $('#nombre') ? $('#nombre').value.trim() : '';
+    try { localStorage.setItem('canasta-nombre', raw); } catch (e) {}
+  }
+  const nombres = collectNombres(S.numJugadores);
+  const musicos = S.numJugadores <= 1 ? [S.musico] : collectMusicosMulti(S.numJugadores);
+  S.jugadores = nombres.map((n, i) => ({ nombre: n, musico: musicos[i], puntos: 0, aciertos: 0, tiempos: [] }));
+  S.tiro = 0; S.stuck = []; S.turnoActual = 0; S.rondaActual = 1;
+  ensureAudio();
+  const btn = $('#btnStart');
+  btn.disabled = true; btn.textContent = 'Cargando…';
+  try { await window.tmNotacion.listo(); } catch (e) {}
+  btn.disabled = false; btn.textContent = '¡A jugar!';
+  S.state = 'play';
+  showView('play');
+  $('#hudTimer').hidden = false; $('#hudTurno').hidden = false; $('#hudPts').hidden = false;
+  $('#marcador').hidden = S.numJugadores <= 1;
+  track('juego_inicio', { dificultad: S.dif.id, jugadores: S.numJugadores });
+  nextTiro();
+}
+
+function updateTurnContext() {
+  const turnoGlobal0 = Math.floor((S.tiro - 1) / TIROS_POR_TURNO);   // 0-based: turno de ALGUN jugador
+  S.turnoActual = turnoGlobal0 % S.numJugadores;
+  S.rondaActual = Math.floor(turnoGlobal0 / S.numJugadores) + 1;
+}
+function renderMarcadorEn(el) {
+  if (!el) return;
+  el.replaceChildren();
+  S.jugadores.forEach((j, i) => {
+    const s = document.createElement('span');
+    s.className = 'j' + (i === S.turnoActual ? ' activo' : '');
+    if (Number.isFinite(j.musico)) s.appendChild(miniAvatarCanvas(j.musico, 18, 24));
+    const txt = document.createElement('span'); txt.textContent = j.nombre + ': ' + j.puntos;
+    s.appendChild(txt);
+    el.appendChild(s);
+  });
+}
+function renderMarcadores() {
+  if (S.numJugadores <= 1) return;
+  renderMarcadorEn($('#marcador'));
+  renderMarcadorEn($('#marcadorTurno'));
+}
+function updateHud() {
+  const j = S.jugadores[S.turnoActual];
+  const enTurno = ((S.tiro - 1) % TIROS_POR_TURNO) + 1;
+  $('#hudTurno').textContent = S.numJugadores > 1
+    ? (j.nombre + ' · Ronda ' + S.rondaActual + '/' + TURNOS + ' · Tiro ' + enTurno + '/' + TIROS_POR_TURNO)
+    : ('Turno ' + S.rondaActual + '/' + TURNOS + ' · Tiro ' + enTurno + '/' + TIROS_POR_TURNO);
+  $('#hudPts').textContent = j.puntos + ' pts';
+}
+
+function nextTiro() {
+  S.tiro++;
+  if (S.tiro > S.total) { finishGame(); return; }
+  const turnoNuevo = (S.tiro - 1) % TIROS_POR_TURNO === 0;
+  if (turnoNuevo) {
+    S.stuck = [];                    // turno nuevo: pista limpia
+    updateTurnContext();
+    if (S.numJugadores > 1 && S.tiro > 1) { showTurnChange(); return; }
+  }
+  presentQuestion();
+}
+function showTurnChange() {
+  S.state = 'turno';
+  showView('turno');
+  $('#hudTimer').hidden = true; $('#hudTurno').hidden = true; $('#hudPts').hidden = true;
+  $('#turnoNombre').textContent = 'Turno de ' + S.jugadores[S.turnoActual].nombre;
+  renderMarcadores();
+}
+function presentQuestion() {
+  S.answered = false;
+  S.fly = null;
+  updateHud();
+  renderMarcadores();
+  S.cQ = genQuestion(S.dif);
+  drawStaff(S.cQ);
+  renderOptions();
+  S.qStart = performance.now();
+  startTimerBar();
+}
+function renderOptions() {
+  const box = $('#opts');
+  box.replaceChildren();
+  buildOptions(S.cQ).forEach(o => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'opt'; b.textContent = o.lbl; b.dataset.ok = o.ok ? '1' : '0';
+    b.addEventListener('click', () => answer(o.ok, b));
+    box.appendChild(b);
+  });
+}
+function startTimerBar() {
+  clearInterval(S.timerId);
+  const dur = S.dif.time, t0 = performance.now();
+  $('#hudTimer').style.setProperty('--p', '100');
+  $('#hudSecs').textContent = Math.ceil(dur / 1000);
+  S.timerId = setInterval(() => {
+    if (S.answered) return;
+    const left = Math.max(0, dur - (performance.now() - t0));
+    $('#hudTimer').style.setProperty('--p', (left / dur * 100).toFixed(1));
+    $('#hudSecs').textContent = Math.ceil(left / 1000);
+    if (left <= 0) { clearInterval(S.timerId); answer(false, null, true); }
+  }, 80);
+}
+function answer(ok, btn, timedOut) {
+  if (S.answered) return;
+  S.answered = true;
+  clearInterval(S.timerId);
+  const elapsed = performance.now() - S.qStart;
+  const frac = clamp(elapsed / S.dif.time, 0, 1);
+  const opts = $('#opts').querySelectorAll('.opt');
+  opts.forEach(b => {
+    b.disabled = true;
+    if (b.dataset.ok === '1') b.classList.add('ok');
+    else if (b === btn) b.classList.add('ko');
+  });
+  const zone = ok ? zoneByElapsedFrac(frac) : ZONES[4];
+  const j = S.jugadores[S.turnoActual];
+  j.puntos += zone.pts;
+  if (ok) { j.aciertos++; j.tiempos.push(elapsed / 1000); }
+  $('#hudPts').textContent = j.puntos + ' pts';
+  renderMarcadores();
+  showZone(zone);
+  throwBall(zone);
+  beep(ok ? (zone.id === 'red' ? [660, 880, 1100] : [523, 659]) : [220, 165], 0.1, ok ? 'triangle' : 'sawtooth', ok ? 0.16 : 0.14);
+  setTimeout(() => { hideZone(); nextTiro(); }, timedOut ? 1300 : 1100);
+}
+function showZone(zone) {
+  const el = $('#hudZone');
+  el.innerHTML = '<span>' + (zone.id === 'fuera' ? '¡FUERA!' : '+' + zone.pts) + '</span><small>' + zone.lbl + '</small>';
+  el.hidden = false; el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+}
+function hideZone() { $('#hudZone').hidden = true; }
+function throwBall(zone) {
+  const flight = buildFlight(zone);
+  S.fly = { t0: performance.now(), segs: flight.segs, totalDur: flight.totalDur, zone };
+  setTimeout(() => { S.stuck.push({ x: flight.restPoint.x, y: flight.restPoint.y }); S.fly = null; }, flight.totalDur + 40);
+}
+
+function classify(pts) {
+  const max = PERQ * 50;
+  if (pts >= max * 0.85) return { title: '¡MVP del tiro libre!', text: 'Casi todos tus tiros han entrado solo red. Puntería de base titular.' };
+  if (pts >= max * 0.55) return { title: '¡Buen ojo para la canasta!', text: 'Reconoces las escalas rápido y con seguridad.' };
+  if (pts >= max * 0.25) return { title: 'Vas calentando el brazo', text: 'Cuanto antes reconozcas la escala, más limpio entra el balón.' };
+  return { title: 'A entrenar el tiro', text: 'Prueba en Fácil para reconocer las escalas con calma y sube de dificultad poco a poco.' };
+}
+function finishGame() {
+  S.state = 'result';
+  showView('result');
+  $('#hudTimer').hidden = true; $('#hudTurno').hidden = true; $('#hudPts').hidden = true;
+  if (S.numJugadores <= 1) finishSolo(); else finishMulti();
+}
+function finishSolo() {
+  $('#resSoloWrap').hidden = false; $('#resMultiWrap').hidden = true; $('#clasifWrap').hidden = false;
+  const m = MUSICOS[S.musico];
+  const j = S.jugadores[0];
+  const avgT = j.tiempos.length ? (j.tiempos.reduce((a, b) => a + b, 0) / j.tiempos.length) : 0;
+  const resultado = j.puntos >= PERQ * 50 * 0.85 ? 'perfecto' : j.puntos >= PERQ * 50 * 0.55 ? 'bueno' : j.puntos >= PERQ * 50 * 0.25 ? 'flojo' : 'nulo';
+  track('juego_fin', { dificultad: S.dif.id, resultado: resultado, superadas: j.aciertos, tiempo: Math.round(avgT), jugadores: 1 });
+  const list = loadRank(); const id = Date.now(); S.rankId = id;
+  list.push({ id, n: j.nombre, m: m.n, d: j.puntos }); saveRank(list);
+  const pos = list.slice().sort((a, b) => b.d - a.d || a.id - b.id).findIndex(e => e.id === id) + 1;
+  const cl = classify(j.puntos);
+  $('#resWho').textContent = j.nombre + ' · ' + m.n + ' · ' + S.dif.lbl;
+  $('#resPts').textContent = j.puntos;
+  $('#resTitle').textContent = cl.title; $('#resText').textContent = cl.text;
+  $('#resNote').textContent = 'Aciertos: ' + j.aciertos + ' de ' + PERQ + (j.tiempos.length ? ('. Tiempo medio en acertar: ' + avgT.toFixed(1) + ' s.') : '.');
+  $('#resRank').textContent = 'Puesto n.º ' + pos + ' de ' + list.length + (list.length === 1 ? ' partida.' : ' partidas.');
+  renderRank($('#rankRes'), id);
+}
+function finishMulti() {
+  $('#resSoloWrap').hidden = true; $('#resMultiWrap').hidden = false; $('#clasifWrap').hidden = true;
+  const ordenados = S.jugadores.map((j, i) => ({ nombre: j.nombre, musico: j.musico, puntos: j.puntos, aciertos: j.aciertos, idx: i })).sort((a, b) => b.puntos - a.puntos);
+  let puesto = 1;
+  const filas = ordenados.map((j, k) => {
+    if (k > 0 && j.puntos < ordenados[k - 1].puntos) puesto = k + 1;
+    return Object.assign({}, j, { puesto: puesto });
+  });
+  const ganadores = filas.filter(f => f.puesto === 1).map(f => f.nombre);
+  track('juego_fin', { dificultad: S.dif.id, resultado: 'multi', superadas: filas[0].aciertos, tiempo: 0, jugadores: S.numJugadores });
+  const listaGanadores = ganadores.length > 2
+    ? ganadores.slice(0, -1).join(', ') + ' y ' + ganadores[ganadores.length - 1]
+    : ganadores.join(' y ');
+  $('#resTituloMulti').textContent = ganadores.length > 1 ? '¡Empate entre ' + listaGanadores + '!' : '¡Gana ' + ganadores[0] + '!';
+  const ol = $('#resRanking'); ol.replaceChildren();
+  filas.forEach(f => {
+    const li = document.createElement('li');
+    if (f.puesto === 1) li.className = 'ganador';
+    const nm = document.createElement('span'); nm.className = 'nm';
+    if (Number.isFinite(f.musico)) nm.appendChild(miniAvatarCanvas(f.musico, 26, 34));
+    const txt = document.createElement('span'); txt.textContent = f.puesto + '.º ' + f.nombre;
+    nm.appendChild(txt);
+    const dd = document.createElement('span'); dd.className = 'dd'; dd.textContent = f.puntos + ' pts';
+    li.append(nm, dd); ol.appendChild(li);
+  });
+}
+
+/* ============================================================
+   ESCENA Y BUCLE DE DIBUJO
+   ============================================================ */
+const cvs = $('#scene'), ctx = cvs.getContext('2d');
+let K = 1;
+function resize() {
+  const dpr = Math.min(2, window.devicePixelRatio || 1), w = cvs.clientWidth || W;
+  cvs.width = Math.round(w * dpr); cvs.height = Math.round(w * dpr * H / W); K = cvs.width / W;
+}
+new ResizeObserver(resize).observe(cvs); resize();
+
+function drawScene(now) {
+  const c = ctx; c.setTransform(K, 0, 0, K, 0, 0);
+  const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#f3e4c0'); g.addColorStop(1, '#d9b872');
+  c.fillStyle = g; c.fillRect(0, 0, W, H);
+  c.fillStyle = '#c9a05a'; c.fillRect(0, 400, W, H - 400);
+  drawBoard(c);
+  // balones que ya han caido en este turno (pequenos, donde haya acabado cada tiro)
+  for (const d of S.stuck) { c.save(); c.translate(d.x, d.y); drawBall(c, 0, 0, 0.55); c.restore(); }
+  // balon en vuelo: recorre los tramos de S.fly.segs (ver buildFlight), cada uno con su
+  // propia duracion y altura de arco (arco 0 = tramo recto, un rebote/roce corto)
+  if (S.fly) {
+    const elapsed = now - S.fly.t0;
+    let acc = 0, seg = S.fly.segs[S.fly.segs.length - 1], segElapsed = seg.dur;
+    for (const s of S.fly.segs) {
+      if (elapsed <= acc + s.dur) { seg = s; segElapsed = elapsed - acc; break; }
+      acc += s.dur;
+    }
+    const u = clamp(seg.dur ? segElapsed / seg.dur : 1, 0, 1);
+    const x = mix(seg.from.x, seg.to.x, u);
+    const yy = mix(seg.from.y, seg.to.y, u) - (seg.arc || 0) * Math.sin(Math.PI * u);
+    drawBall(c, x, yy, 1, elapsed / 130);
+  }
+  const m = musicoActivo();
+  const wind = S.fly ? clamp((now - S.fly.t0) / 350, 0, 1) : 0.12;
+  drawTirador(c, m, 170, 412, { t: now / 1000, s: 1.2, dir: 1, wind: wind, released: !!S.fly });
+}
+/* Que musico dibuja el lanzamiento: en multijugador, el del jugador a quien le toca
+   (ya en juego, o a punto de tirar en la pantalla de cambio de turno); fuera de eso
+   (menu, resultado, o 1 jugador) se usa S.musico, el del selector grande de siempre. */
+function musicoActivo() {
+  if (S.numJugadores > 1 && (S.state === 'play' || S.state === 'turno') && S.jugadores[S.turnoActual]) {
+    return MUSICOS[S.jugadores[S.turnoActual].musico];
+  }
+  return MUSICOS[S.musico];
+}
+/* Canvas en miniatura con un musico, reutilizando drawTirador a escala reducida
+   (misma pose que el selector grande: x=45,y=112,s=0.88 sobre un lienzo logico 90x120). */
+function miniAvatarCanvas(musicoIdx, boxW, boxH) {
+  const cv = document.createElement('canvas');
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = Math.round(boxW * dpr); cv.height = Math.round(boxH * dpr);
+  cv.style.width = boxW + 'px'; cv.style.height = boxH + 'px';
+  const cx = cv.getContext('2d');
+  cx.scale(dpr, dpr);
+  const k = boxH / 120;
+  drawTirador(cx, MUSICOS[musicoIdx] || MUSICOS[0], boxW * 0.5, boxH * 0.933, { s: 0.88 * k, dir: 1, t: 0.4, wind: 0.15 });
+  return cv;
+}
+function frame(now) {
+  S.clock = now / 1000;
+  drawScene(now);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+/* ============================================================
+   INTERFAZ: selector de músico, botones, atajos de teclado
+   ============================================================ */
+function buildPicker() {
+  const box = $('#picker');
+  MUSICOS.forEach((m, i) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'mus'; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(i === S.musico));
+    const cv = document.createElement('canvas'); cv.width = 180; cv.height = 240;
+    const cx = cv.getContext('2d'); cx.scale(2, 2); drawTirador(cx, m, 45, 112, { s: 0.88, dir: 1, t: 0.4, wind: 0.15 });
+    const sp = document.createElement('span'); sp.textContent = m.n;
+    b.append(cv, sp);
+    b.addEventListener('click', () => { S.musico = i; box.querySelectorAll('.mus').forEach((x, j) => x.setAttribute('aria-checked', String(j === i))); try { localStorage.setItem('canasta-musico', i); } catch (e) {} });
+    box.appendChild(b);
+  });
+}
+/* Mini-selector de musico para una fila de jugador (multijugador): los mismos 8
+   personajes de MUSICOS, en miniatura, con el elegido guardado en data-musico. */
+function buildMiniPicker(playerIdx, selected) {
+  const box = document.createElement('div');
+  box.className = 'miniPicker'; box.setAttribute('role', 'radiogroup');
+  box.setAttribute('aria-label', 'Músico de Jugador ' + (playerIdx + 1));
+  box.dataset.musico = String(selected);
+  MUSICOS.forEach((m, i) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(i === selected));
+    b.title = m.n;
+    b.appendChild(miniAvatarCanvas(i, 40, 53));
+    b.addEventListener('click', () => {
+      box.dataset.musico = String(i);
+      box.querySelectorAll('button').forEach((x, j) => x.setAttribute('aria-checked', String(j === i)));
+    });
+    box.appendChild(b);
+  });
+  return box;
+}
+function renderNombres(n, preserve) {
+  const wrap = $('#nombresWrap');
+  const prevNombres = preserve ? Array.prototype.map.call(wrap.querySelectorAll('input[type=text]'), i => i.value) : [];
+  const prevMusicos = preserve ? Array.prototype.map.call(wrap.querySelectorAll('.miniPicker'), el => parseInt(el.dataset.musico, 10)) : [];
+  wrap.replaceChildren();
+  if (n <= 1) {
+    const lab = document.createElement('label'); lab.className = 'field'; lab.htmlFor = 'nombre';
+    lab.textContent = 'Tu nombre';
+    const inp = document.createElement('input'); inp.type = 'text'; inp.id = 'nombre'; inp.maxLength = 14;
+    inp.placeholder = 'Escribe tu nombre'; inp.autocomplete = 'off';
+    inp.value = prevNombres[0] || (function () { try { return localStorage.getItem('canasta-nombre') || ''; } catch (e) { return ''; } })();
+    lab.appendChild(inp); wrap.appendChild(lab);
+  } else {
+    for (let i = 0; i < n; i++) {
+      const bloque = document.createElement('div'); bloque.className = 'jugadorBloque';
+      const lab = document.createElement('label'); lab.className = 'field'; lab.htmlFor = 'nombre' + i;
+      lab.textContent = 'Jugador ' + (i + 1);
+      const inp = document.createElement('input'); inp.type = 'text'; inp.id = 'nombre' + i; inp.maxLength = 14;
+      inp.placeholder = 'Nombre del jugador ' + (i + 1); inp.autocomplete = 'off';
+      inp.value = prevNombres[i] || '';
+      lab.appendChild(inp);
+      const prevM = prevMusicos[i];
+      const defaultM = Number.isFinite(prevM) && prevM >= 0 && prevM < MUSICOS.length ? prevM : (i % MUSICOS.length);
+      bloque.append(lab, buildMiniPicker(i, defaultM));
+      wrap.appendChild(bloque);
+    }
+  }
+}
+$('#numJugadores').addEventListener('input', () => {
+  const n = parsedNumJugadores();
+  renderNombres(n, true);
+  $('#pickerCompartido').hidden = n > 1;
+});
+$('#btnStart').addEventListener('click', startGame);
+$('#btnAgain').addEventListener('click', () => { showView('menu'); refreshRankMenu(); startGame(); });
+$('#btnChange').addEventListener('click', () => { S.state = 'menu'; showView('menu'); refreshRankMenu(); });
+$('#btnLanzar').addEventListener('click', () => {
+  S.state = 'play'; showView('play');
+  $('#hudTimer').hidden = false; $('#hudTurno').hidden = false; $('#hudPts').hidden = false;
+  presentQuestion();
+});
+let clearArm = 0;
+$('#btnClear').addEventListener('click', e => {
+  const b = e.currentTarget;
+  if (!clearArm) { clearArm = setTimeout(() => { clearArm = 0; b.textContent = 'Borrar clasificación'; }, 4000); b.textContent = 'Pulsa otra vez para borrar todo'; return; }
+  clearTimeout(clearArm); clearArm = 0; b.textContent = 'Borrar clasificación'; saveRank([]); refreshRankMenu();
+});
+addEventListener('keydown', e => {
+  if (S.state !== 'play' || S.answered) return;
+  const n = parseInt(e.key, 10);
+  if (n >= 1 && n <= 4) {
+    const btns = $('#opts').querySelectorAll('.opt');
+    if (btns[n - 1]) btns[n - 1].click();
+  }
+});
+addEventListener('contextmenu', e => { if (e.target.tagName !== 'INPUT') e.preventDefault(); });
+
+(function init() {
+  try {
+    const i = parseInt(localStorage.getItem('canasta-musico'), 10);
+    if (i >= 0 && i < MUSICOS.length) S.musico = i;
+  } catch (e) {}
+  renderNombres(1, false);
+  buildPicker(); refreshRankMenu();
+  if (document.fonts && document.fonts.load) { document.fonts.load("28px 'Lilita One'").catch(() => {}); document.fonts.load('800 14px Nunito').catch(() => {}); }
+  window.tmNotacion.listo().catch(function () {
+    $('#staffBox').innerHTML = '<p class="muted" style="padding:10px">No se ha podido cargar la notación. Recarga la página.</p>';
+  });
+})();
+</script>
+<noscript>Este juego necesita JavaScript.</noscript>
+</body>
+</html>

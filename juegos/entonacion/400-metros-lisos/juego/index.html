@@ -96,7 +96,6 @@ h3{margin:0;font:400 20px var(--display)}
 .tunedtime{font:800 17px var(--body)}
 .distance{display:flex;align-items:baseline;gap:8px;font:400 92px/0.95 var(--display)} .distance small{font-size:36px}
 .kicker{font:800 14px var(--body);text-transform:uppercase;letter-spacing:.1em;color:var(--mute)}
-.demo{display:grid;gap:10px;padding:12px;border:3px dashed var(--mute);border-radius:12px}
 .foot{color:#9fb6cf;font-size:15px}
 .foot .link{color:#c4daed}
 .chordname{font:400 38px/1.1 var(--display);text-align:center;color:var(--ink)}
@@ -150,7 +149,6 @@ h3{margin:0;font:400 20px var(--display)}
         <p class="muted">Sencillas: grados conjuntos y terceras (4-5 notas). Con saltos: añade saltos de 4ª y 5ª (5-6 notas). Todas: añade también saltos de 6ª.</p>
         <button class="btn" id="btnStart">¡A correr!</button>
         <p class="err" id="micErr" hidden></p>
-        <button class="link" id="btnDemo" type="button">Probar sin micrófono (modo demostración)</button>
         <div>
           <h3>Clasificación</h3>
           <ol class="rank" id="rankMenu"></ol>
@@ -181,12 +179,6 @@ h3{margin:0;font:400 20px var(--display)}
         <div class="tuner-lbl" aria-hidden="true"><span>↓ Más grave</span><span>Más agudo ↑</span></div>
         <p class="tunedtime">Afinado en esta nota: <b id="tunedTime">0,0</b> s</p>
         <div class="level"><span>Micrófono</span><i><b id="lvPlay"></b></i></div>
-        <div class="demo" id="demoBox" hidden>
-          <button class="btn alt small" id="demoHold" type="button">Toca para cantar</button>
-          <label class="field" for="demoCents">Afinación simulada
-            <input type="range" id="demoCents" min="-200" max="200" value="0">
-          </label>
-        </div>
       </section>
 
       <!-- SPRINT FINAL -->
@@ -218,9 +210,8 @@ h3{margin:0;font:400 20px var(--display)}
     Aquí no se mide el ritmo, solo la afinación: cada nota se da por buena en cuanto suena afinada el tiempo mínimo, sin prisa.
     Esta melodía es el doble de larga que la de 200 metros lisos (y el cuádruple que la de 100): concatena 4 formas distintas
     de la tabla. Con las 19 notas perfectas de la melodía más corta (las 4 formas sencillas, de 4, 5, 5 y 5 notas) se cantan
-    en 50,0 s. A diferencia de los 400 m reales (43,03 s, Wayde van Niekerk, 2016), cantar varias notas con un margen realista
-    para que el micrófono las detecte tarda más: la marca de 54,0 s es una referencia de este juego, no un récord real.
-    Tropezar en una nota añade penalización.
+    en 21,5 s. No es comparable con los 400 m reales (43,03 s, Wayde van Niekerk, 2016): la marca de 23,2 s es una referencia
+    propia de este juego, cantando, no un récord de atletismo. Tropezar en una nota añade penalización.
     La clasificación se guarda solo en este dispositivo.
     <button class="link" id="btnClear" type="button">Borrar clasificación</button>
   </footer>
@@ -274,18 +265,21 @@ const W = 1000, H = 520, GROUND = 430, START_X = 150, FINISH_X = 930;
 const NOTE_X = START_X + 60;      // punto donde aparecen los avisos de cada nota (no hay obstáculo físico: es un sprint liso)
 let NV = 19;                       // número de notas de la melodía de esta ronda (19 a 24: cuatro formas de 4-6 notas concatenadas)
 const VENTANA = 4.0;               // segundos máximos para afinar cada nota antes de tropezar
-const NEC = 2.5;                   // segundos afinados acumulados (no hace falta que sean seguidos) para superar la nota
+const NEC = 1.0;                   // segundos afinados acumulados (no hace falta que sean seguidos) para superar la nota
 const TROPIEZO = 1.5;               // penalización en segundos al tropezar, además de agotar la ventana
 const SALIDA = 1.2, LLEGADA = 1.3;  // reacción de salida y tramo final hasta la meta (segundos fijos)
 /* MARCA DE REFERENCIA (no un récord real de atletismo): esta melodía concatena 4 formas DISTINTAS de la misma tabla de 100
    metros lisos (equivale a dos "mitades" de 200 metros lisos seguidas; nunca se repite una forma). La combinación más corta
    posible sale del grupo "sencillas", que tiene EXACTAMENTE 4 formas (4, 5, 5 y 5 notas): al sortear las 4 sin reemplazo no
    hay otra posibilidad que usarlas todas, así que el mínimo es fijo: 4+5+5+5 = 19 notas. Cantada perfecta (afinada desde el
-   primer instante de cada nota) tarda SALIDA + 19·NEC + LLEGADA = 1,2 + 47,5 + 1,3 = 50,0 s. La marca se fija con el MISMO
-   margen proporcional que usó 100 metros lisos (13,5 / 12,5 = ×1,08): 50,0 × 1,08 = 54,0 s — el cuádruple de 13,5 s. Verificado
-   simulando el bucle de afinado con pasos de 16, 33 y 50 ms (ver resolveNota/update) forzando esa melodía mínima: el resultado
-   redondea siempre a 50,0 s con 19 notas, y a 62,5 s con las 24 notas más largas (cuatro formas de 6).*/
-const REC = 54.0;
+   primer instante de cada nota) tarda SALIDA + 19·NEC + LLEGADA = 1,2 + 19,0 + 1,3 = 21,5 s. La marca se fija con el MISMO
+   margen proporcional que usa 100 metros lisos (×1,08): 21,5 × 1,08 = 23,22 ≈ 23,2 s. OJO: a diferencia de antes, ya NO es
+   literalmente el cuádruple de la marca de 100 m lisos (7,0 s): ese múltiplo exacto solo se daba porque el NEC viejo (2,5 s)
+   coincidía con SALIDA+LLEGADA (2,5 s); con NEC=1,0 esa coincidencia desaparece y el tiempo fijo de salida/llegada pesa
+   proporcionalmente más en las distancias cortas. Verificado simulando el bucle de afinado con pasos de 16, 33 y 50 ms (ver
+   resolveNota/update) forzando esa melodía mínima: el resultado redondea siempre a 21,5 s con 19 notas, y a 26,5 s con las
+   24 notas más largas (cuatro formas de 6).*/
+const REC = 23.2;
 const COUNT = 3.4, HOP_T = 0.4, BOOST_T = 0.5;
 const DIF = { facil: 50, normal: 30, maestro: 15 };            // tolerancia en centésimas (±)
 /* Escalas mayores y menores naturales (ascendentes) sobre Do, Re, Mi, Fa, Sol y La: misma tabla que usan 110 m vallas y
@@ -518,7 +512,7 @@ function drawMusico(c, m, x, y, o = {}) {
    ============================================================ */
 const S = {
   state: 'menu', t0: 0, clock: 0,
-  musico: 0, nombre: '', dif: 'normal', gru: 'sencillas', tol: 30, demo: false,
+  musico: 0, nombre: '', dif: 'normal', gru: 'sencillas', tol: 30,
   melodia: null, targets: [], note: null, lastClave: null, noteUntil: 0,
   vIdx: 0, vT0: 0, tp: [0, 0, 0, 0], cleared: [], extra: [],
   tuned: 0, voiced: false, tunedNow: false, cents: 0, hist: [], lastVoice: -1e9,
@@ -526,7 +520,6 @@ const S = {
   runSpeed: 0, nulo: false, total: 0, tDash: 0, raceBase: 0, boostUntil: 0,
   scroll: 0, bg: 0, noteTimer: 0, lastCount: '', rankId: 0,
   hopUntil: 0, hopKind: '',
-  demoHold: false, demoCents: 0,
   R: { x: START_X, y: GROUND, run: 0 }
 };
 const P = [];                 // partículas (confeti, notas, texto volador)
@@ -607,7 +600,6 @@ function jingle(freqs, step = 0.13, type = 'triangle') {
   });
 }
 function sampleMic() {
-  if (S.demo) { S.rms = S.demoHold ? 0.12 : 0; S.level = S.level * 0.6 + S.rms * 0.4; return; }
   if (!analyser) return;
   analyser.getFloatTimeDomainData(buf);
   let s = 0; for (let i = 0; i < buf.length; i++) s += buf[i] * buf[i];
@@ -615,10 +607,6 @@ function sampleMic() {
   S.level = S.level * 0.65 + S.rms * 0.35;
 }
 function readPitch(now) {
-  if (S.demo) {
-    if (!S.demoHold) return null;
-    return S.note.f * Math.pow(2, (S.demoCents + Math.sin(now / 170) * 5) / 1200);
-  }
   if (!analyser || S.rms < S.gate) return null;
   const r = yin(buf, AC.sampleRate);
   return r && r.clarity >= 0.8 ? r.freq : null;
@@ -658,7 +646,6 @@ function setState(s, now = performance.now()) {
   $('#hudTimer').hidden = s !== 'race';
   $('#hudDist').hidden = !(s === 'race' || s === 'dash');
   $('#hudCount').hidden = !(s === 'count' || s === 'race');
-  $('#demoBox').hidden = !(S.demo && (s === 'count' || s === 'race'));
   if (s === 'menu') { refreshRankMenu(); S.runSpeed = 0; P.length = 0; }
   if (s === 'listen') {
     P.length = 0;
@@ -678,7 +665,7 @@ function setState(s, now = performance.now()) {
     setTimeout(() => { if (S.state === 'listen') hearNote(); }, 450);
   }
   if (s === 'count') {
-    S.noiseSum = 0; S.noiseN = 0; S.lastCount = ''; setHold(false);
+    S.noiseSum = 0; S.noiseN = 0; S.lastCount = '';
     $('#playTitle').textContent = 'Prepárate…';
     $('#hint').dataset.s = ''; $('#hint').textContent = 'Respira hondo y piensa en la melodía';
     S.note = S.targets[0]; renderSteps(-1);
@@ -727,7 +714,7 @@ function track(evento, params) {
 }
 function finishRound() {
   const m = MUSICOS[S.musico], t = S.total, superadas = S.cleared.filter(Boolean).length;
-  track('juego_fin', { dificultad: S.dif, melodias: S.gru, modo: S.demo ? 'demo' : 'microfono', resultado: S.nulo ? 'nulo' : 'valido', tiempo: Math.round((S.nulo ? 0 : t) * 10) / 10, superadas: superadas });
+  track('juego_fin', { dificultad: S.dif, melodias: S.gru, resultado: S.nulo ? 'nulo' : 'valido', tiempo: Math.round((S.nulo ? 0 : t) * 10) / 10, superadas: superadas });
   const list = loadRank(); const id = Date.now(); S.rankId = id;
   list.push({ id, n: S.nombre || 'Corredor/a', m: m.n, t, nulo: S.nulo }); saveRank(list);
   const pos = list.slice().sort(cmpRank).findIndex(e => e.id === id) + 1;
@@ -818,7 +805,7 @@ function update(dt, now) {
   let target = 0;
 
   if (S.state === 'count') {
-    if (st > 0.5 && st < 2.9 && !S.demo) { S.noiseSum += S.rms; S.noiseN++; }
+    if (st > 0.5 && st < 2.9) { S.noiseSum += S.rms; S.noiseN++; }
     const label = st < 1 ? '3' : st < 2 ? '2' : st < 3 ? '1' : '¡Canta!';
     if (label !== S.lastCount) {
       S.lastCount = label; const h = $('#hudCount'); h.textContent = label;
@@ -963,7 +950,7 @@ function drawScene(c, tm) {
   // panel de la marca de referencia (no un récord real: ver nota en el pie de la página)
   rrect(c, W - 190, 18, 174, 46, 10); paint(c, '#fff', 2.4);
   c.fillStyle = '#c93a2d'; c.font = `800 13px ${F_BODY}`; c.textAlign = 'center'; c.textBaseline = 'middle';
-  c.fillText('MARCA 54,0 s', W - 103, 32); c.fillStyle = INK; c.font = `800 12px ${F_BODY}`; c.fillText('400 m lisos (referencia del juego)', W - 103, 50);
+  c.fillText('MARCA ' + fmt1(REC) + ' s', W - 103, 32); c.fillStyle = INK; c.font = `800 12px ${F_BODY}`; c.fillText('400 m lisos (referencia del juego)', W - 103, 50);
 }
 function drawProgress(c) {
   const n = NV, cw = 30, gap = 8, totalW = n * cw + (n - 1) * gap, x0 = (W - totalW) / 2, y = 14;
@@ -1031,28 +1018,24 @@ function startFromMenu() {
   S.dif = document.querySelector('input[name=dif]:checked').value; S.tol = DIF[S.dif];
   S.gru = document.querySelector('input[name=gru]:checked').value;
   setState('listen');
-  track('juego_inicio', { dificultad: S.dif, modo: S.demo ? 'demo' : 'microfono', melodias: S.gru });
+  track('juego_inicio', { dificultad: S.dif, melodias: S.gru });
 }
 $('#btnStart').addEventListener('click', async () => {
   const btn = $('#btnStart'), err = $('#micErr'); err.hidden = true;
   try {
     btn.disabled = true; btn.textContent = 'Activando micrófono…';
-    if (S.demo) await ensureAudio(); else await ensureMic();
+    await ensureMic();
     startFromMenu();
   } catch (e) {
     err.hidden = false;
     const segura = window.isSecureContext && !!navigator.mediaDevices;
     err.textContent = !segura
-      ? 'El navegador no deja usar el micrófono porque el juego se ha abierto desde un archivo del dispositivo. Hay que abrirlo desde una dirección https (una web) o desde un ordenador con Chrome. Mientras tanto, puedes probar el modo demostración.'
+      ? 'El navegador no deja usar el micrófono porque el juego se ha abierto desde un archivo del dispositivo. Hay que abrirlo desde una dirección https (una web) o desde un ordenador con Chrome.'
       : (e && e.name === 'NotAllowedError')
         ? 'El navegador no ha dado permiso al micrófono. Permítelo en el candado de la barra de direcciones y vuelve a pulsar.'
-        : 'No se puede usar el micrófono. Comprueba que hay uno conectado y que no lo está usando otra aplicación. También puedes probar el modo demostración.';
-    if (!S.demo) track('juego_mic_error', { motivo: (e && e.name) || 'otro' });
+        : 'No se puede usar el micrófono. Comprueba que hay uno conectado y que no lo está usando otra aplicación.';
+    track('juego_mic_error', { motivo: (e && e.name) || 'otro' });
   } finally { btn.disabled = false; btn.textContent = '¡A correr!'; }
-});
-$('#btnDemo').addEventListener('click', () => {
-  S.demo = !S.demo; $('#micErr').hidden = true;
-  $('#btnDemo').textContent = S.demo ? 'Modo demostración ACTIVADO (pulsa para volver al micrófono)' : 'Probar sin micrófono (modo demostración)';
 });
 $('#btnRepeat').addEventListener('click', hearNote);
 $('#btnSing').addEventListener('click', () => setState('count'));
@@ -1064,16 +1047,6 @@ $('#btnClear').addEventListener('click', e => {
   const b = e.currentTarget;
   if (!clearArm) { clearArm = setTimeout(() => { clearArm = 0; b.textContent = 'Borrar clasificación'; }, 4000); b.textContent = 'Pulsa otra vez para borrar todo'; return; }
   clearTimeout(clearArm); clearArm = 0; b.textContent = 'Borrar clasificación'; saveRank([]); refreshRankMenu();
-});
-// modo demostración: un toque empieza a "cantar" y otro toque para (también con la barra espaciadora)
-const dh = $('#demoHold');
-function setHold(v) { S.demoHold = v; dh.classList.toggle('held', v); dh.textContent = v ? 'Cantando… toca para parar' : 'Toca para cantar'; }
-dh.addEventListener('click', () => setHold(!S.demoHold));
-$('#demoCents').addEventListener('input', e => { S.demoCents = +e.target.value; });
-addEventListener('keydown', e => {
-  if (S.demo && e.code === 'Space' && (S.state === 'count' || S.state === 'race') && e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON') {
-    e.preventDefault(); if (!e.repeat) setHold(!S.demoHold);
-  }
 });
 addEventListener('contextmenu', e => { if (e.target.tagName !== 'INPUT') e.preventDefault(); });
 addEventListener('pagehide', () => { if (micStream) micStream.getTracks().forEach(t => t.stop()); });

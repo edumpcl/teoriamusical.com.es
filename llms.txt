@@ -315,3 +315,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [100 metros lisos musical](https://www.teoriamusical.com.es/juegos/entonacion/100-metros-lisos/juego/)
 - [200 metros lisos musical](https://www.teoriamusical.com.es/juegos/entonacion/200-metros-lisos/juego/)
 - [400 metros lisos musical](https://www.teoriamusical.com.es/juegos/entonacion/400-metros-lisos/juego/)
+- [Juegos de Teoría Musical Online](https://www.teoriamusical.com.es/juegos/teoria/): Juegos gratis para reconocer teoría musical a toda velocidad, sin micrófono: identifica intervalos, escalas y más, y pulsa la respuesta correcta antes de que se acabe el tiempo.
+- [Dardos: juego para reconocer intervalos](https://www.teoriamusical.com.es/juegos/teoria/dardos/): Juego gratis sin micrófono: aparece un intervalo escrito en el pentagrama y tienes que acertarlo antes de que se acabe el tiempo. Cuanto más rápido, más cerca del centro de la diana.
+- [Dardos: reconoce intervalos](https://www.teoriamusical.com.es/juegos/teoria/dardos/juego/)
+- [Canasta: reconoce escalas](https://www.teoriamusical.com.es/juegos/teoria/canasta/juego/)
