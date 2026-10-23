@@ -63,6 +63,7 @@ p{margin:0}
 .btn.alt{background:#fff} .btn[disabled]{opacity:.6;cursor:wait}
 .btn.small{font-size:19px;min-height:48px}
 .link{background:none;border:0;color:var(--mute);font:800 15px var(--body);text-decoration:underline;cursor:pointer;padding:8px;justify-self:start}
+.err{background:#fde5e1;border:3px solid var(--bad);border-radius:12px;padding:10px 12px;font-size:16px}
 :is(button,input,label.pill):focus-visible,.pill:has(input:focus-visible){outline:4px solid var(--focus);outline-offset:3px}
 .picker{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .mus{background:#fff;border:3px solid var(--paper2);border-radius:12px;padding:4px 2px 6px;cursor:pointer;color:var(--ink);font:800 13px var(--body);display:grid;justify-items:center;gap:0}
@@ -145,6 +146,7 @@ h3{margin:0;font:400 20px var(--display)}
           <label class="pill"><input type="radio" name="dif" value="2"><span>Difícil</span></label>
         </fieldset>
         <button class="btn" id="btnStart">¡A jugar!</button>
+        <p class="err" id="notacionErr" hidden></p>
         <div>
           <h3>Clasificación</h3>
           <ol class="rank" id="rankMenu"></ol>
@@ -232,9 +234,9 @@ const TIPO_LABEL = { "Dis":"Disminuida", "Aum":"Aumentada", "menor":"menor", "Ma
                      "DblAum":"Doble Aumentada", "DblDis":"Doble Disminuida" };
 /* Mismos tres niveles que DIF_BASIC en intervalos-engine.js (maxAlt/types), con su tiempo de respuesta para Dardos. */
 const DIF = [
-  { lbl:'Fácil',   maxAlt:0, types:'basic',  time:8000, id:'facil'   },
-  { lbl:'Medio',   maxAlt:1, types:'single', time:6500, id:'medio'   },
-  { lbl:'Difícil', maxAlt:2, types:'all',    time:5200, id:'dificil' }
+  { lbl:'Fácil',   maxAlt:0, types:'basic',  time:12000, id:'facil'   },
+  { lbl:'Medio',   maxAlt:1, types:'single', time:9000, id:'medio'   },
+  { lbl:'Difícil', maxAlt:2, types:'all',    time:7000, id:'dificil' }
 ];
 
 function keysForLevel(dif) {
@@ -247,20 +249,46 @@ function accStr(a) { return a === 2 ? '##' : a === 1 ? '#' : a === -1 ? 'b' : a 
 function claveMEI(letter, acc, oct) { return letter + accStr(acc) + '/' + oct; }
 function correctLabel(def) { return def[2] + '\xaa ' + (TIPO_LABEL[def[3]] || def[3]); }
 
+/* Calcula, para una nota base n1 (0..6, Do..Si) y un tipo de intervalo k, qué alteración (a2) hay que
+   ponerle a la nota de llegada para que el intervalo sea exacto (misma fórmula que antes, aislada aquí
+   para poder enumerar combinaciones en vez de tirar al azar con reintentos). */
+function comboFor(k, n1) {
+  var def = DEFS[k];
+  var n2 = (n1 + def[0]) % 7;
+  var nd = NS[n2] - NS[n1]; if (nd < 0) nd += 12;
+  var a2 = def[0] >= 7 ? (def[1] - 12) - nd : def[1] - nd;
+  return { k: k, def: def, n1: n1, n2: n2, a2: a2 };
+}
+/* Elige nota base + intervalo SIEMPRE entre combinaciones que cumplen el maxAlt del nivel: se enumeran
+   las 7 notas base x cada intervalo de "keys" (como mucho unas pocas decenas de combinaciones, barato de
+   calcular en cada pregunta) y se descartan las que superan la alteración permitida, en vez del bucle
+   anterior de hasta 150 intentos al azar que, en teoría, podía agotarse y devolver una combinación inválida.
+   La elección final es uniforme entre las combinaciones válidas: estadísticamente equivale a lo que ya hacía
+   el bucle de reintento cuando SÍ encontraba una combinación válida (rechazo uniforme = uniforme entre las
+   válidas), así que no cambia la variedad de preguntas que ve el jugador. */
 function genQuestion(dif, keys) {
-  var attempts = 0, k, def, n1, n2, nd, a2;
-  do {
-    k = keys[Math.floor(Math.random() * keys.length)];
-    def = DEFS[k];
-    n1 = Math.floor(Math.random() * 7);
-    n2 = (n1 + def[0]) % 7;
-    nd = NS[n2] - NS[n1]; if (nd < 0) nd += 12;
-    a2 = def[0] >= 7 ? (def[1] - 12) - nd : def[1] - nd;
-    attempts++;
-  } while (Math.abs(a2) > dif.maxAlt && attempts < 150);
-  var oct2 = (n2 < n1 || def[0] === 7) ? 5 : 4;
+  var combos = [], i, n1;
+  for (i = 0; i < keys.length; i++) {
+    for (n1 = 0; n1 < 7; n1++) {
+      var c = comboFor(keys[i], n1);
+      if (Math.abs(c.a2) <= dif.maxAlt) combos.push(c);
+    }
+  }
+  var chosen;
+  if (combos.length > 0) {
+    chosen = combos[Math.floor(Math.random() * combos.length)];
+  } else {
+    // Fallback defensivo: con los intervalos y niveles reales de este juego nunca debería hacer falta
+    // (verificado generando miles de preguntas por nivel), pero si para alguna combinación rara de nivel/
+    // grupo de intervalos no hubiera ninguna válida, se toma la de menor alteración posible en vez de romper.
+    var all = [];
+    for (i = 0; i < keys.length; i++) for (n1 = 0; n1 < 7; n1++) all.push(comboFor(keys[i], n1));
+    all.sort(function (a, b) { return Math.abs(a.a2) - Math.abs(b.a2); });
+    chosen = all[0];
+  }
+  var oct2 = (chosen.n2 < chosen.n1 || chosen.def[0] === 7) ? 5 : 4;
   var ascending = Math.random() < 0.5;
-  return { k: k, def: def, n1: n1, n2: n2, a2: a2, oct2: oct2, ascending: ascending };
+  return { k: chosen.k, def: chosen.def, n1: chosen.n1, n2: chosen.n2, a2: chosen.a2, oct2: oct2, ascending: ascending };
 }
 function buildOptions(cQ, keys) {
   var correct = correctLabel(cQ.def);
@@ -598,9 +626,17 @@ async function startGame() {
   S.jugadores = nombres.map((n, i) => ({ nombre: n, musico: musicos[i], puntos: 0, aciertos: 0, tiempos: [] }));
   S.dardo = 0; S.stuck = []; S.turnoActual = 0; S.rondaActual = 1;
   ensureAudio();
-  const btn = $('#btnStart');
+  const btn = $('#btnStart'), err = $('#notacionErr');
+  err.hidden = true;
   btn.disabled = true; btn.textContent = 'Cargando…';
-  try { await window.tmNotacion.listo(); } catch (e) {}
+  try {
+    await window.tmNotacion.listo();
+  } catch (e) {
+    btn.disabled = false; btn.textContent = '¡A jugar!';
+    err.hidden = false;
+    err.textContent = 'No se ha podido cargar el motor de notación. Recarga la página e inténtalo de nuevo.';
+    return;
+  }
   btn.disabled = false; btn.textContent = '¡A jugar!';
   S.state = 'play';
   showView('play');

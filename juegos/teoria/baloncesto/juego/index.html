@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Canasta: reconoce escalas</title>
+<title>Baloncesto: reconoce escalas</title>
 <style>
 @font-face{font-family:'Lilita One';src:url(/assets/fonts/juegos/lilita.woff2) format('woff2');font-weight:400;font-display:block}
 @font-face{font-family:'Nunito';src:url(/assets/fonts/juegos/nunito600.woff2) format('woff2');font-weight:600;font-display:block}
@@ -88,10 +88,20 @@ input[type=text]{-webkit-user-select:text;user-select:text;font:800 20px var(--b
 .miniPicker{display:flex;gap:4px;overflow-x:auto;padding:2px 1px 4px}
 .miniPicker button{flex:none;background:#fff;border:2px solid var(--paper2);border-radius:8px;padding:2px;cursor:pointer;line-height:0}
 .miniPicker button[aria-checked="true"]{border-color:var(--brass-d);background:#fff1c7}
-.marcador{display:flex;flex-wrap:wrap;gap:6px}
-.marcador .j{display:inline-flex;align-items:center;gap:5px;background:#fff;border:3px solid var(--paper2);border-radius:999px;padding:4px 12px 4px 4px;font:800 13px var(--body);color:var(--ink);line-height:1}
-.marcador .j.activo{background:var(--brass);border-color:var(--brass-d)}
-.marcador .j canvas{border-radius:999px;flex:none}
+.err{background:#fde5e1;border:3px solid var(--bad);border-radius:12px;padding:10px 12px;font-size:16px}
+.scoreboard{background:#0b1222;border:4px solid var(--ink);border-radius:14px;padding:10px;display:grid;gap:6px;
+  box-shadow:inset 0 0 0 3px #1d2b4a,0 6px 0 rgba(0,0,0,.35)}
+.scoreboard .sb-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:5px 8px;border-radius:8px}
+.scoreboard .sb-row.activo{background:rgba(244,181,46,.16);box-shadow:inset 0 0 0 2px var(--brass)}
+.scoreboard .sb-nm{display:flex;align-items:center;gap:8px;color:#cfe3f5;font:800 13px var(--body);overflow:hidden;min-width:0}
+.scoreboard .sb-nm span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.scoreboard .sb-nm canvas{border-radius:999px;flex:none;background:#162238}
+.scoreboard .sb-pts{font:400 30px var(--display);color:#ffb020;text-shadow:0 0 8px rgba(255,176,32,.55);letter-spacing:.02em;flex:none}
+.tirosPicker{display:grid;gap:10px}
+.tiroBtn{display:grid;gap:2px;text-align:left;padding:12px 16px}
+.tiroBtn .tb-nm{font:400 23px var(--display)}
+.tiroBtn .tb-pts{font:800 13px var(--body);color:#5c4000}
+.tiroBtn .tb-desc{font:700 12px var(--body);color:var(--mute)}
 .ranking{list-style:none;margin:0;padding:0;display:grid;gap:5px}
 .ranking li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px 12px;border-radius:10px;background:#fff;font:800 17px var(--body)}
 .ranking li.ganador{background:#fff1c7;outline:3px solid var(--brass)}
@@ -120,8 +130,8 @@ h3{margin:0;font:400 20px var(--display)}
 <div class="app">
 
   <main class="game">
-    <section class="stage" aria-label="Canasta de baloncesto">
-      <canvas id="scene" width="1000" height="520" role="img" aria-label="Un músico de la banda lanza un tiro libre a una canasta"></canvas>
+    <section class="stage" aria-label="Pista de baloncesto">
+      <canvas id="scene" width="1000" height="520" role="img" aria-label="Un músico de la banda lanza un tiro a una canasta"></canvas>
       <div class="hud hud-timer" id="hudTimer" hidden style="--p:100"><span id="hudSecs">9</span><small>seg</small></div>
       <div class="hud hud-turno" id="hudTurno" hidden>Turno 1/3 · Tiro 1/3</div>
       <div class="hud hud-pts" id="hudPts" hidden>0 pts</div>
@@ -129,6 +139,8 @@ h3{margin:0;font:400 20px var(--display)}
     </section>
 
     <aside class="panel">
+      <div class="scoreboard" id="scoreboard" hidden></div>
+
       <!-- MENÚ -->
       <section class="view" id="v-menu">
         <label class="field" for="numJugadores">Número de jugadores
@@ -139,13 +151,8 @@ h3{margin:0;font:400 20px var(--display)}
           <h2>Elige a tu músico</h2>
           <div class="picker" id="picker" role="radiogroup" aria-label="Músico"></div>
         </div>
-        <fieldset class="seg">
-          <legend>Dificultad</legend>
-          <label class="pill"><input type="radio" name="dif" value="0"><span>Fácil</span></label>
-          <label class="pill"><input type="radio" name="dif" value="1" checked><span>Medio</span></label>
-          <label class="pill"><input type="radio" name="dif" value="2"><span>Difícil</span></label>
-        </fieldset>
         <button class="btn" id="btnStart">¡A jugar!</button>
+        <p class="err" id="notacionErr" hidden></p>
         <div>
           <h3>Clasificación</h3>
           <ol class="rank" id="rankMenu"></ol>
@@ -158,13 +165,19 @@ h3{margin:0;font:400 20px var(--display)}
         <p class="kicker">Cambio de turno</p>
         <h2 id="turnoNombre"></h2>
         <p class="muted">Pasad el turno a esta persona y pulsad «¡Tirar!» cuando esté lista.</p>
-        <div class="marcador" id="marcadorTurno"></div>
         <button class="btn" id="btnLanzar">¡Tirar!</button>
+      </section>
+
+      <!-- ELEGIR TIPO DE TIRO (antes de cada pregunta) -->
+      <section class="view" id="v-tiro" hidden>
+        <p class="kicker" id="tiroKicker">Tiro 1/3</p>
+        <h2>Elige tu tiro</h2>
+        <p class="muted">Cuanto más difícil el tiro, más tonalidades posibles, menos tiempo y más puntos si aciertas.</p>
+        <div class="tirosPicker" id="tirosPicker"></div>
       </section>
 
       <!-- JUGAR -->
       <section class="view" id="v-play" hidden>
-        <div class="marcador" id="marcador" hidden></div>
         <h2 id="playTitle">¿Qué escala es?</h2>
         <div class="staff-box" id="staffBox"></div>
         <div class="opts" id="opts"></div>
@@ -196,8 +209,9 @@ h3{margin:0;font:400 20px var(--display)}
   </main>
 
   <footer class="foot">
-    Acierta rápido para que el balón entre limpio, solo red (50 pts), con tablero (25), con aro (15) o raspando y entrando (5).
-    Si fallas o se acaba el tiempo, es air ball (0 pts). La clasificación se guarda solo en este dispositivo.
+    Antes de cada tiro eliges: tiro libre (1 punto, tonalidades sencillas y más tiempo), tiro de 2 (2 puntos) o triple
+    (3 puntos, cualquier tonalidad y menos tiempo). Acertar a tiempo suma los puntos íntegros de ese tiro; fallar o
+    agotar el tiempo no suma nada. La clasificación se guarda solo en este dispositivo.
     <button class="link" id="btnClear" type="button">Borrar clasificación</button>
   </footer>
 </div>
@@ -320,16 +334,20 @@ var TYPES = [
   { id: 'armonica', lbl: 'Menor armónica',  pool: MENOR_ARMONICA },
   { id: 'melodica', lbl: 'Menor melódica',  pool: MENOR_MELODICA, seq: true }
 ];
-/* 3 niveles como en Dardos (maxAlt + tiempo), pero aplicados al número de
-   alteraciones de la escala (numAlts) para evitar tónicas con armadura
-   excesiva en Fácil/Medio, igual que hace intervalos-engine.js con maxAlt.
-   Los 4 tipos pueden salir en cualquier dificultad (lo que cambia es la
-   tónica disponible dentro de cada tipo); el tiempo compensa la dificultad
-   de lectura de los 15 compases de la melódica. */
-var DIF = [
-  { lbl: 'Fácil',   maxAlt: 2,  time: 9000, id: 'facil'   },
-  { lbl: 'Medio',   maxAlt: 4,  time: 7000, id: 'medio'   },
-  { lbl: 'Difícil', maxAlt: 99, time: 5500, id: 'dificil' }
+/* Mecánica real de baloncesto: en un partido de verdad da igual CÓMO entra el
+   balón (limpio, con aro, con tablero) — o entra o no entra. Lo que varía de
+   verdad son los puntos SEGÚN EL TIPO DE TIRO (libre=1, de 2=2, triple=3). Por
+   eso la dificultad ya no se elige una vez para toda la partida: el jugador a
+   quien le toca elige el TIPO DE TIRO antes de CADA uno de los 9 tiros (ver
+   showShotPicker/presentQuestion), y esa elección fija a la vez la dificultad
+   de esa pregunta y los puntos si acierta. Son los mismos 3 niveles de
+   siempre (maxAlt + tiempo, aplicados a numAlts igual que intervalos-engine.js
+   con maxAlt), solo que ahora se escogen tiro a tiro y llevan puntos reales
+   de baloncesto en vez de una puntuación por rapidez. */
+var TIROS = [
+  { id: 'libre',  lbl: 'Tiro libre', maxAlt: 2,  time: 15000, pts: 1, desc: 'Tonalidades sencillas · 15 s' },
+  { id: 'dos',    lbl: 'Tiro de 2',  maxAlt: 4,  time: 11000, pts: 2, desc: 'Más alteraciones · 11 s' },
+  { id: 'triple', lbl: 'Triple',     maxAlt: 99, time: 8000,  pts: 3, desc: 'Cualquier tonalidad · 8 s' }
 ];
 
 function poolForLevel(type, dif) {
@@ -381,32 +399,38 @@ function tonicOf(name) { return name.split(' ')[0]; }
      3) tónica cercana Y tipo distinto — un tercer señuelo plausible, ni la
         tónica ni el tipo coinciden con el correcto.
    "Cercana" = de entre las tónicas del mismo fondo (pool) con menos
-   alteraciones de diferencia, nunca una tónica elegida al azar sin relación. */
+   alteraciones de diferencia, nunca una tónica elegida al azar sin relación.
+   IMPORTANTE: los 3 distractores se sacan SIEMPRE del fondo ya filtrado por
+   el tiro elegido (poolForLevel(tipo, dif)), igual que la propia pregunta —
+   nunca del pool completo sin filtrar, o un distractor de Tiro libre podría
+   salir con una tonalidad de 7 alteraciones que no pega con ese nivel. */
 function nearestByAlt(pool, exclude, numAlts, n) {
   var cand = pool.filter(function (s) { return s.name !== exclude; });
   cand.sort(function (a, b) { return Math.abs(a.numAlts - numAlts) - Math.abs(b.numAlts - numAlts); });
   return cand.slice(0, Math.min(n, cand.length));
 }
-function buildOptions(q) {
+function buildOptions(q, dif) {
   var correct = q.scale.name, correctTonic = tonicOf(correct);
   var used = { }; used[correct] = true;
   var otherTypes = shuffleInPlace(TYPES.filter(function (t) { return t.id !== q.type.id; }));
+  var ownPool = poolForLevel(q.type, dif);
 
   var d1 = null;   // misma tonica, tipo distinto
   otherTypes.some(function (t) {
-    var m = t.pool.filter(function (s) { return tonicOf(s.name) === correctTonic && !used[s.name]; });
+    var pool = poolForLevel(t, dif);
+    var m = pool.filter(function (s) { return tonicOf(s.name) === correctTonic && !used[s.name]; });
     if (m.length) { d1 = m[Math.floor(Math.random() * m.length)].name; return true; }
     return false;
   });
   if (d1) used[d1] = true;
 
-  var near1 = nearestByAlt(q.type.pool, correct, q.scale.numAlts, 4).filter(function (s) { return !used[s.name]; });
+  var near1 = nearestByAlt(ownPool, correct, q.scale.numAlts, 4).filter(function (s) { return !used[s.name]; });
   var d2 = near1.length ? near1[Math.floor(Math.random() * near1.length)].name : null;   // tonica cercana, mismo tipo
   if (d2) used[d2] = true;
 
   var d3 = null;   // tonica cercana (de otro tipo), tipo distinto
   otherTypes.some(function (t) {
-    var pool = t.pool.filter(function (s) { return tonicOf(s.name) !== correctTonic && !used[s.name]; });
+    var pool = poolForLevel(t, dif).filter(function (s) { return tonicOf(s.name) !== correctTonic && !used[s.name]; });
     var near2 = nearestByAlt(pool, null, q.scale.numAlts, 4);
     if (near2.length) { d3 = near2[Math.floor(Math.random() * near2.length)].name; return true; }
     return false;
@@ -416,9 +440,10 @@ function buildOptions(q) {
   var opts = [{ lbl: correct, ok: true }];
   [d1, d2, d3].forEach(function (lbl) { if (lbl) opts.push({ lbl: lbl, ok: false }); });
 
-  // relleno de seguridad (en la practica nunca hace falta: los 4 fondos tienen de sobra)
+  // relleno de seguridad (en la practica nunca hace falta: los 4 fondos filtrados tienen de sobra),
+  // tambien sacado del pool filtrado por el tiro, nunca del pool completo sin filtrar
   if (opts.length < 4) {
-    var todas = shuffleInPlace(TYPES.reduce(function (a, t) { return a.concat(t.pool.map(function (s) { return s.name; })); }, []));
+    var todas = shuffleInPlace(TYPES.reduce(function (a, t) { return a.concat(poolForLevel(t, dif).map(function (s) { return s.name; })); }, []));
     todas.some(function (lbl) {
       if (opts.length >= 4) return true;
       if (!used[lbl]) { opts.push({ lbl: lbl, ok: false }); used[lbl] = true; }
@@ -646,29 +671,26 @@ function drawBall(c, x, y, k = 1, rot = 0) {
 
 /* ============================================================
    CANASTA (tablero + aro elíptico + red cónica): una canasta real, no una
-   diana. A diferencia de Dardos (donde la zona de acierto SÍ se ve como un
-   anillo, porque una diana real tiene anillos), aquí la canasta se dibuja
-   SIEMPRE igual; lo que cambia con la zona de acierto es la TRAYECTORIA del
-   balón (ver buildFlight más abajo): limpio por el centro, rebote en el
-   tablero, rebote en el aro, roce leve en el aro, o fuera sin tocar nada.
-   Mismos puntos que el diseño original (50/25/15/5/0) según la fracción de
-   tiempo usada en un acierto (zoneByElapsedFrac, sin cambios).
+   diana. La canasta se dibuja SIEMPRE igual; lo que varía en cada acierto es
+   la TRAYECTORIA del balón (ver buildFlight más abajo): limpio por el centro,
+   rebote en el tablero, rebote en el aro, roce leve en el aro. En baloncesto
+   real da igual CÓMO entra el balón (limpio, con aro o con tablero) — o
+   entra o no entra, así que esa variedad es puramente decorativa y se elige
+   al azar en cada acierto (randomMakeZone): NO afecta a la puntuación. Lo que
+   sí determina los puntos es el TIPO DE TIRO elegido antes de la pregunta
+   (TIROS: libre=1/de2=2/triple=3, ver answer()), igual que en un partido real.
    ============================================================ */
 const BOARD = { cx: 740, cy: 235, rx: 95, ry: 26 };
 const ZONES = [
-  { id: 'red',     lbl: '¡SOLO RED!',    pts: 50 },
-  { id: 'tablero', lbl: 'CON TABLERO',   pts: 25 },
-  { id: 'aro',     lbl: 'CON ARO',       pts: 15 },
-  { id: 'raspa',   lbl: 'RASPA Y ENTRA', pts: 5  },
-  { id: 'fuera',   lbl: 'AIR BALL',      pts: 0  }
+  { id: 'red',     lbl: '¡SOLO RED!'    },
+  { id: 'tablero', lbl: 'CON TABLERO'   },
+  { id: 'aro',     lbl: 'CON ARO'       },
+  { id: 'raspa',   lbl: 'RASPA Y ENTRA' },
+  { id: 'fuera',   lbl: 'AIR BALL'      }
 ];
-function zoneByElapsedFrac(frac) {
-  // frac = tiempo usado / tiempo limite, ya comprobado que la respuesta es correcta
-  if (frac <= 0.25) return ZONES[0];
-  if (frac <= 0.50) return ZONES[1];
-  if (frac <= 0.75) return ZONES[2];
-  return ZONES[3];
-}
+/* Zona de entrada puramente decorativa en un acierto: da igual cuál salga,
+   los puntos ya los fija el tipo de tiro elegido (ver answer()). */
+function randomMakeZone() { return ZONES[Math.floor(Math.random() * 4)]; }
 function drawBoard(c) {
   const { cx, cy, rx, ry } = BOARD;
   // poste, desde justo debajo del aro hasta el suelo
@@ -787,7 +809,7 @@ function beep(freqs, step = 0.09, type = 'triangle', vol = 0.18) {
    Con P jugadores: P turnos por ronda x 3 rondas = 3P turnos, 3 tiros cada uno. */
 const TURNOS = 3, TIROS_POR_TURNO = 3, PERQ = TURNOS * TIROS_POR_TURNO;
 const S = {
-  state: 'menu', musico: 0, dif: DIF[1],
+  state: 'menu', musico: 0, dif: null,   // dif = tipo de tiro elegido para la pregunta EN CURSO (ver showShotPicker); no hay dificultad de partida
   numJugadores: 1,
   jugadores: [{ nombre: '', puntos: 0, aciertos: 0, tiempos: [] }],
   turnoActual: 0, rondaActual: 1, total: PERQ,
@@ -798,7 +820,7 @@ const S = {
   clock: 0
 };
 
-const RK = 'canasta-clasificacion';
+const RK = 'baloncesto-clasificacion';
 function loadRank() { try { const a = JSON.parse(localStorage.getItem(RK) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
 function saveRank(a) { try { localStorage.setItem(RK, JSON.stringify(a)); } catch (e) {} }
 function renderRank(ol, hi) {
@@ -817,7 +839,7 @@ function renderRank(ol, hi) {
 function refreshRankMenu() { $('#rankEmpty').hidden = renderRank($('#rankMenu')) > 0; }
 
 function track(evento, params) {
-  try { if (window.parent && window.parent !== window) window.parent.postMessage({ tmJuego: true, evento: evento, params: Object.assign({ juego: 'canasta' }, params) }, location.origin); } catch (e) {}
+  try { if (window.parent && window.parent !== window) window.parent.postMessage({ tmJuego: true, evento: evento, params: Object.assign({ juego: 'baloncesto' }, params) }, location.origin); } catch (e) {}
 }
 
 function showView(n) { document.querySelectorAll('.view').forEach(v => { v.hidden = v.id !== 'v-' + n; }); }
@@ -855,27 +877,31 @@ function collectMusicosMulti(n) {
 }
 
 async function startGame() {
-  S.dif = DIF[parseInt(document.querySelector('input[name=dif]:checked').value, 10)];
   S.numJugadores = parsedNumJugadores();
   S.total = PERQ * S.numJugadores;
   if (S.numJugadores <= 1) {
     const raw = $('#nombre') ? $('#nombre').value.trim() : '';
-    try { localStorage.setItem('canasta-nombre', raw); } catch (e) {}
+    try { localStorage.setItem('baloncesto-nombre', raw); } catch (e) {}
   }
   const nombres = collectNombres(S.numJugadores);
   const musicos = S.numJugadores <= 1 ? [S.musico] : collectMusicosMulti(S.numJugadores);
   S.jugadores = nombres.map((n, i) => ({ nombre: n, musico: musicos[i], puntos: 0, aciertos: 0, tiempos: [] }));
   S.tiro = 0; S.stuck = []; S.turnoActual = 0; S.rondaActual = 1;
   ensureAudio();
-  const btn = $('#btnStart');
+  const btn = $('#btnStart'), err = $('#notacionErr');
+  err.hidden = true;
   btn.disabled = true; btn.textContent = 'Cargando…';
-  try { await window.tmNotacion.listo(); } catch (e) {}
+  try {
+    await window.tmNotacion.listo();
+  } catch (e) {
+    btn.disabled = false; btn.textContent = '¡A jugar!';
+    err.hidden = false;
+    err.textContent = 'No se ha podido cargar el motor de notación. Recarga la página e inténtalo de nuevo.';
+    return;
+  }
   btn.disabled = false; btn.textContent = '¡A jugar!';
-  S.state = 'play';
-  showView('play');
-  $('#hudTimer').hidden = false; $('#hudTurno').hidden = false; $('#hudPts').hidden = false;
-  $('#marcador').hidden = S.numJugadores <= 1;
-  track('juego_inicio', { dificultad: S.dif.id, jugadores: S.numJugadores });
+  $('#scoreboard').hidden = false;
+  track('juego_inicio', { jugadores: S.numJugadores });
   nextTiro();
 }
 
@@ -884,26 +910,28 @@ function updateTurnContext() {
   S.turnoActual = turnoGlobal0 % S.numJugadores;
   S.rondaActual = Math.floor(turnoGlobal0 / S.numJugadores) + 1;
 }
-function renderMarcadorEn(el) {
+/* Marcador de partido (pabellón/arena): siempre visible durante la partida, con 1
+   jugador o con varios; resalta al jugador activo solo tiene sentido en multijugador. */
+function renderScoreboard() {
+  const el = $('#scoreboard');
   if (!el) return;
   el.replaceChildren();
   S.jugadores.forEach((j, i) => {
-    const s = document.createElement('span');
-    s.className = 'j' + (i === S.turnoActual ? ' activo' : '');
-    if (Number.isFinite(j.musico)) s.appendChild(miniAvatarCanvas(j.musico, 18, 24));
-    const txt = document.createElement('span'); txt.textContent = j.nombre + ': ' + j.puntos;
-    s.appendChild(txt);
-    el.appendChild(s);
+    const row = document.createElement('div');
+    row.className = 'sb-row' + (S.numJugadores > 1 && i === S.turnoActual ? ' activo' : '');
+    const nm = document.createElement('div'); nm.className = 'sb-nm';
+    if (Number.isFinite(j.musico)) nm.appendChild(miniAvatarCanvas(j.musico, 22, 29));
+    const txt = document.createElement('span'); txt.textContent = j.nombre;
+    nm.appendChild(txt);
+    const pts = document.createElement('div'); pts.className = 'sb-pts'; pts.textContent = j.puntos;
+    row.append(nm, pts);
+    el.appendChild(row);
   });
 }
-function renderMarcadores() {
-  if (S.numJugadores <= 1) return;
-  renderMarcadorEn($('#marcador'));
-  renderMarcadorEn($('#marcadorTurno'));
-}
+function enTurnoActual() { return ((S.tiro - 1) % TIROS_POR_TURNO) + 1; }
 function updateHud() {
   const j = S.jugadores[S.turnoActual];
-  const enTurno = ((S.tiro - 1) % TIROS_POR_TURNO) + 1;
+  const enTurno = enTurnoActual();
   $('#hudTurno').textContent = S.numJugadores > 1
     ? (j.nombre + ' · Ronda ' + S.rondaActual + '/' + TURNOS + ' · Tiro ' + enTurno + '/' + TIROS_POR_TURNO)
     : ('Turno ' + S.rondaActual + '/' + TURNOS + ' · Tiro ' + enTurno + '/' + TIROS_POR_TURNO);
@@ -919,20 +947,49 @@ function nextTiro() {
     updateTurnContext();
     if (S.numJugadores > 1 && S.tiro > 1) { showTurnChange(); return; }
   }
-  presentQuestion();
+  showShotPicker();
 }
 function showTurnChange() {
   S.state = 'turno';
   showView('turno');
   $('#hudTimer').hidden = true; $('#hudTurno').hidden = true; $('#hudPts').hidden = true;
   $('#turnoNombre').textContent = 'Turno de ' + S.jugadores[S.turnoActual].nombre;
-  renderMarcadores();
+  renderScoreboard();
+}
+/* Pantalla "elige tu tiro": aparece antes de CADA uno de los 9 tiros (no solo al
+   principio de la partida). La elección fija, solo para ese tiro, la dificultad de
+   la pregunta (TIROS.maxAlt/time) y los puntos si acierta (TIROS.pts, ver answer()). */
+function showShotPicker() {
+  S.state = 'tiro';
+  showView('tiro');
+  $('#hudTimer').hidden = true; $('#hudTurno').hidden = true; $('#hudPts').hidden = true;
+  renderScoreboard();
+  const nombre = S.numJugadores > 1 ? S.jugadores[S.turnoActual].nombre + ' · ' : '';
+  $('#tiroKicker').textContent = nombre + 'Tiro ' + enTurnoActual() + '/' + TIROS_POR_TURNO + ' · Ronda ' + S.rondaActual + '/' + TURNOS;
+  renderTirosPicker();
+}
+function renderTirosPicker() {
+  const box = $('#tirosPicker');
+  box.replaceChildren();
+  TIROS.forEach(t => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'btn tiroBtn';
+    const nm = document.createElement('span'); nm.className = 'tb-nm'; nm.textContent = t.lbl;
+    const pts = document.createElement('span'); pts.className = 'tb-pts'; pts.textContent = t.pts + (t.pts === 1 ? ' punto' : ' puntos');
+    const desc = document.createElement('span'); desc.className = 'tb-desc'; desc.textContent = t.desc;
+    b.append(nm, pts, desc);
+    b.addEventListener('click', () => { S.dif = t; presentQuestion(); });
+    box.appendChild(b);
+  });
 }
 function presentQuestion() {
+  S.state = 'play';
+  showView('play');
+  $('#hudTimer').hidden = false; $('#hudTurno').hidden = false; $('#hudPts').hidden = false;
   S.answered = false;
   S.fly = null;
   updateHud();
-  renderMarcadores();
+  renderScoreboard();
   S.cQ = genQuestion(S.dif);
   drawStaff(S.cQ);
   renderOptions();
@@ -942,7 +999,7 @@ function presentQuestion() {
 function renderOptions() {
   const box = $('#opts');
   box.replaceChildren();
-  buildOptions(S.cQ).forEach(o => {
+  buildOptions(S.cQ, S.dif).forEach(o => {
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'opt'; b.textContent = o.lbl; b.dataset.ok = o.ok ? '1' : '0';
     b.addEventListener('click', () => answer(o.ok, b));
@@ -962,32 +1019,36 @@ function startTimerBar() {
     if (left <= 0) { clearInterval(S.timerId); answer(false, null, true); }
   }, 80);
 }
+/* Puntuación real de baloncesto: acertar a tiempo suma los puntos ÍNTEGROS del
+   tipo de tiro elegido en showShotPicker (libre=1/de2=2/triple=3), sin importar
+   lo rápido que se acierte; fallar o agotar el tiempo no suma nada. La zona de
+   entrada del balón (randomMakeZone) es pura decoración, no afecta a esto. */
 function answer(ok, btn, timedOut) {
   if (S.answered) return;
   S.answered = true;
   clearInterval(S.timerId);
   const elapsed = performance.now() - S.qStart;
-  const frac = clamp(elapsed / S.dif.time, 0, 1);
   const opts = $('#opts').querySelectorAll('.opt');
   opts.forEach(b => {
     b.disabled = true;
     if (b.dataset.ok === '1') b.classList.add('ok');
     else if (b === btn) b.classList.add('ko');
   });
-  const zone = ok ? zoneByElapsedFrac(frac) : ZONES[4];
+  const zone = ok ? randomMakeZone() : ZONES[4];
+  const pts = ok ? S.dif.pts : 0;
   const j = S.jugadores[S.turnoActual];
-  j.puntos += zone.pts;
+  j.puntos += pts;
   if (ok) { j.aciertos++; j.tiempos.push(elapsed / 1000); }
   $('#hudPts').textContent = j.puntos + ' pts';
-  renderMarcadores();
-  showZone(zone);
+  renderScoreboard();
+  showZone(zone, pts);
   throwBall(zone);
   beep(ok ? (zone.id === 'red' ? [660, 880, 1100] : [523, 659]) : [220, 165], 0.1, ok ? 'triangle' : 'sawtooth', ok ? 0.16 : 0.14);
   setTimeout(() => { hideZone(); nextTiro(); }, timedOut ? 1300 : 1100);
 }
-function showZone(zone) {
+function showZone(zone, pts) {
   const el = $('#hudZone');
-  el.innerHTML = '<span>' + (zone.id === 'fuera' ? '¡FUERA!' : '+' + zone.pts) + '</span><small>' + zone.lbl + '</small>';
+  el.innerHTML = '<span>' + (zone.id === 'fuera' ? '¡FUERA!' : '+' + pts) + '</span><small>' + zone.lbl + '</small>';
   el.hidden = false; el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
 }
 function hideZone() { $('#hudZone').hidden = true; }
@@ -997,17 +1058,21 @@ function throwBall(zone) {
   setTimeout(() => { S.stuck.push({ x: flight.restPoint.x, y: flight.restPoint.y }); S.fly = null; }, flight.totalDur + 40);
 }
 
-function classify(pts) {
-  const max = PERQ * 50;
-  if (pts >= max * 0.85) return { title: '¡MVP del tiro libre!', text: 'Casi todos tus tiros han entrado solo red. Puntería de base titular.' };
-  if (pts >= max * 0.55) return { title: '¡Buen ojo para la canasta!', text: 'Reconoces las escalas rápido y con seguridad.' };
-  if (pts >= max * 0.25) return { title: 'Vas calentando el brazo', text: 'Cuanto antes reconozcas la escala, más limpio entra el balón.' };
-  return { title: 'A entrenar el tiro', text: 'Prueba en Fácil para reconocer las escalas con calma y sube de dificultad poco a poco.' };
+/* Clasifica por ACIERTOS (no por puntos): los puntos ya no miden solo destreza,
+   premian tambien arriesgar con tiros de más valor, asi que el mensaje final se
+   basa en la proporcion de tiros acertados sobre el total de la partida. */
+function classify(aciertos) {
+  const r = aciertos / PERQ;
+  if (r >= 0.85) return { title: '¡MVP del partido!', text: 'Casi todos tus tiros han entrado. Puntería de base titular.' };
+  if (r >= 0.55) return { title: '¡Buen ojo para la canasta!', text: 'Reconoces las escalas rápido y con seguridad.' };
+  if (r >= 0.25) return { title: 'Vas calentando el brazo', text: 'Cuanto antes reconozcas la escala, más tiros entran.' };
+  return { title: 'A entrenar el tiro', text: 'Prueba más tiros libres para reconocer las escalas con calma antes de arriesgar con triples.' };
 }
 function finishGame() {
   S.state = 'result';
   showView('result');
   $('#hudTimer').hidden = true; $('#hudTurno').hidden = true; $('#hudPts').hidden = true;
+  $('#scoreboard').hidden = true;
   if (S.numJugadores <= 1) finishSolo(); else finishMulti();
 }
 function finishSolo() {
@@ -1015,13 +1080,14 @@ function finishSolo() {
   const m = MUSICOS[S.musico];
   const j = S.jugadores[0];
   const avgT = j.tiempos.length ? (j.tiempos.reduce((a, b) => a + b, 0) / j.tiempos.length) : 0;
-  const resultado = j.puntos >= PERQ * 50 * 0.85 ? 'perfecto' : j.puntos >= PERQ * 50 * 0.55 ? 'bueno' : j.puntos >= PERQ * 50 * 0.25 ? 'flojo' : 'nulo';
-  track('juego_fin', { dificultad: S.dif.id, resultado: resultado, superadas: j.aciertos, tiempo: Math.round(avgT), jugadores: 1 });
+  const r = j.aciertos / PERQ;
+  const resultado = r >= 0.85 ? 'perfecto' : r >= 0.55 ? 'bueno' : r >= 0.25 ? 'flojo' : 'nulo';
+  track('juego_fin', { resultado: resultado, superadas: j.aciertos, tiempo: Math.round(avgT), jugadores: 1 });
   const list = loadRank(); const id = Date.now(); S.rankId = id;
   list.push({ id, n: j.nombre, m: m.n, d: j.puntos }); saveRank(list);
   const pos = list.slice().sort((a, b) => b.d - a.d || a.id - b.id).findIndex(e => e.id === id) + 1;
-  const cl = classify(j.puntos);
-  $('#resWho').textContent = j.nombre + ' · ' + m.n + ' · ' + S.dif.lbl;
+  const cl = classify(j.aciertos);
+  $('#resWho').textContent = j.nombre + ' · ' + m.n;
   $('#resPts').textContent = j.puntos;
   $('#resTitle').textContent = cl.title; $('#resText').textContent = cl.text;
   $('#resNote').textContent = 'Aciertos: ' + j.aciertos + ' de ' + PERQ + (j.tiempos.length ? ('. Tiempo medio en acertar: ' + avgT.toFixed(1) + ' s.') : '.');
@@ -1037,7 +1103,7 @@ function finishMulti() {
     return Object.assign({}, j, { puesto: puesto });
   });
   const ganadores = filas.filter(f => f.puesto === 1).map(f => f.nombre);
-  track('juego_fin', { dificultad: S.dif.id, resultado: 'multi', superadas: filas[0].aciertos, tiempo: 0, jugadores: S.numJugadores });
+  track('juego_fin', { resultado: 'multi', superadas: filas[0].aciertos, tiempo: 0, jugadores: S.numJugadores });
   const listaGanadores = ganadores.length > 2
     ? ganadores.slice(0, -1).join(', ') + ' y ' + ganadores[ganadores.length - 1]
     : ganadores.join(' y ');
@@ -1096,7 +1162,7 @@ function drawScene(now) {
    (ya en juego, o a punto de tirar en la pantalla de cambio de turno); fuera de eso
    (menu, resultado, o 1 jugador) se usa S.musico, el del selector grande de siempre. */
 function musicoActivo() {
-  if (S.numJugadores > 1 && (S.state === 'play' || S.state === 'turno') && S.jugadores[S.turnoActual]) {
+  if (S.numJugadores > 1 && (S.state === 'play' || S.state === 'turno' || S.state === 'tiro') && S.jugadores[S.turnoActual]) {
     return MUSICOS[S.jugadores[S.turnoActual].musico];
   }
   return MUSICOS[S.musico];
@@ -1133,7 +1199,7 @@ function buildPicker() {
     const cx = cv.getContext('2d'); cx.scale(2, 2); drawTirador(cx, m, 45, 112, { s: 0.88, dir: 1, t: 0.4, wind: 0.15 });
     const sp = document.createElement('span'); sp.textContent = m.n;
     b.append(cv, sp);
-    b.addEventListener('click', () => { S.musico = i; box.querySelectorAll('.mus').forEach((x, j) => x.setAttribute('aria-checked', String(j === i))); try { localStorage.setItem('canasta-musico', i); } catch (e) {} });
+    b.addEventListener('click', () => { S.musico = i; box.querySelectorAll('.mus').forEach((x, j) => x.setAttribute('aria-checked', String(j === i))); try { localStorage.setItem('baloncesto-musico', i); } catch (e) {} });
     box.appendChild(b);
   });
 }
@@ -1167,7 +1233,7 @@ function renderNombres(n, preserve) {
     lab.textContent = 'Tu nombre';
     const inp = document.createElement('input'); inp.type = 'text'; inp.id = 'nombre'; inp.maxLength = 14;
     inp.placeholder = 'Escribe tu nombre'; inp.autocomplete = 'off';
-    inp.value = prevNombres[0] || (function () { try { return localStorage.getItem('canasta-nombre') || ''; } catch (e) { return ''; } })();
+    inp.value = prevNombres[0] || (function () { try { return localStorage.getItem('baloncesto-nombre') || ''; } catch (e) { return ''; } })();
     lab.appendChild(inp); wrap.appendChild(lab);
   } else {
     for (let i = 0; i < n; i++) {
@@ -1193,11 +1259,7 @@ $('#numJugadores').addEventListener('input', () => {
 $('#btnStart').addEventListener('click', startGame);
 $('#btnAgain').addEventListener('click', () => { showView('menu'); refreshRankMenu(); startGame(); });
 $('#btnChange').addEventListener('click', () => { S.state = 'menu'; showView('menu'); refreshRankMenu(); });
-$('#btnLanzar').addEventListener('click', () => {
-  S.state = 'play'; showView('play');
-  $('#hudTimer').hidden = false; $('#hudTurno').hidden = false; $('#hudPts').hidden = false;
-  presentQuestion();
-});
+$('#btnLanzar').addEventListener('click', () => { showShotPicker(); });
 let clearArm = 0;
 $('#btnClear').addEventListener('click', e => {
   const b = e.currentTarget;
@@ -1216,7 +1278,7 @@ addEventListener('contextmenu', e => { if (e.target.tagName !== 'INPUT') e.preve
 
 (function init() {
   try {
-    const i = parseInt(localStorage.getItem('canasta-musico'), 10);
+    const i = parseInt(localStorage.getItem('baloncesto-musico'), 10);
     if (i >= 0 && i < MUSICOS.length) S.musico = i;
   } catch (e) {}
   renderNombres(1, false);

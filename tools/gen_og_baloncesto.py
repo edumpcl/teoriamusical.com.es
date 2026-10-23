@@ -1,9 +1,10 @@
 """
-Genera la imagen OG 1200x630 para /juegos/teoria/canasta/, reutilizando la misma
+Genera la imagen OG 1200x630 para /juegos/teoria/baloncesto/, reutilizando la misma
 receta visual que tools/gen_og_juegos_hub_y_dardos.py (ese script genera las de
 /juegos/, /juegos/teoria/ y /juegos/teoria/dardos/; este es su gemelo para la
-pagina nueva de Canasta, sin tocar el script ni las paginas ya existentes):
-solo lee el H1 y la meta description de la pagina y escribe un PNG.
+pagina de Baloncesto (antes "Canasta", renombrada por Eduardo), sin tocar el
+script ni las paginas ya existentes): solo lee el H1 y la meta description de
+la pagina y escribe un PNG.
 """
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
@@ -17,7 +18,7 @@ BACH = os.path.join(OUT, '2026', '04', 'bach_favicon.png')
 os.makedirs(PAGES_DIR, exist_ok=True)
 
 PAGES = [
-    (os.path.join(ROOT, 'juegos', 'teoria', 'canasta', 'index.html'), 'og-juegos-teoria-canasta.png'),
+    (os.path.join(ROOT, 'juegos', 'teoria', 'baloncesto', 'index.html'), 'og-juegos-teoria-baloncesto.png'),
 ]
 
 W, H = 1200, 630

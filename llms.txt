@@ -318,4 +318,6 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Juegos de Teoría Musical Online](https://www.teoriamusical.com.es/juegos/teoria/): Juegos gratis para reconocer teoría musical a toda velocidad, sin micrófono: identifica intervalos, escalas y más, y pulsa la respuesta correcta antes de que se acabe el tiempo.
 - [Dardos: juego para reconocer intervalos](https://www.teoriamusical.com.es/juegos/teoria/dardos/): Juego gratis sin micrófono: aparece un intervalo escrito en el pentagrama y tienes que acertarlo antes de que se acabe el tiempo. Cuanto más rápido, más cerca del centro de la diana.
 - [Dardos: reconoce intervalos](https://www.teoriamusical.com.es/juegos/teoria/dardos/juego/)
-- [Canasta: reconoce escalas](https://www.teoriamusical.com.es/juegos/teoria/canasta/juego/)
+- [Baloncesto: reconoce escalas](https://www.teoriamusical.com.es/juegos/teoria/baloncesto/juego/)
+- [Baloncesto: juego para reconocer escalas](https://www.teoriamusical.com.es/juegos/teoria/baloncesto/): Juego gratis sin micrófono: aparece una escala completa escrita en el pentagrama, de ida y vuelta, y tienes que acertar su tónica y su tipo (mayor, menor natural, menor armónica o menor melódica) antes de que se acabe el tiempo. Elige tiro libre, de 2 o triple: cuanto más arriesgas, más puntos si aciertas. Se puede jugar solo o en grupo, por turnos, como en un partido.
+- [Baloncesto: reconoce escalas](https://www.teoriamusical.com.es/juegos/teoria/baloncesto/juego/)
