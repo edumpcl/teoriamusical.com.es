@@ -43,10 +43,6 @@ h1{margin:0;font:400 clamp(26px,4.6vw,42px)/1.05 var(--display);color:#fff;text-
 .hud-timer::before{content:"";position:absolute;inset:7px;border-radius:50%;background:#fff;border:2px solid var(--ink)}
 .hud-timer span,.hud-timer small{position:relative}
 .hud-timer span{font:400 clamp(22px,4vw,34px) var(--display)} .hud-timer small{font:800 11px var(--body);margin-top:-2px}
-.hud-turno{left:50%;top:5%;transform:translateX(-50%);background:#fff;border:3px solid var(--ink);border-radius:999px;padding:4px 16px;
-  font:800 clamp(12px,2vw,16px) var(--body);white-space:nowrap;max-width:68%;overflow:hidden;text-overflow:ellipsis}
-.hud-pts{right:12px;top:5%;background:#fff;border:3px solid var(--ink);border-radius:999px;padding:4px 16px;
-  font:800 clamp(12px,2vw,16px) var(--body);white-space:nowrap}
 .hud-zone{inset:0;display:grid;place-content:center;font:400 clamp(40px,9vw,80px) var(--display);color:#fff;
   -webkit-text-stroke:5px var(--ink);paint-order:stroke fill;text-shadow:0 8px 0 rgba(20,33,61,.35);text-align:center}
 .hud-zone small{display:block;font:800 clamp(13px,2.3vw,19px) var(--body);-webkit-text-stroke:0;color:#fff;text-shadow:0 2px 0 rgba(20,33,61,.5)}
@@ -89,14 +85,36 @@ input[type=text]{-webkit-user-select:text;user-select:text;font:800 20px var(--b
 .miniPicker button{flex:none;background:#fff;border:2px solid var(--paper2);border-radius:8px;padding:2px;cursor:pointer;line-height:0}
 .miniPicker button[aria-checked="true"]{border-color:var(--brass-d);background:#fff1c7}
 .err{background:#fde5e1;border:3px solid var(--bad);border-radius:12px;padding:10px 12px;font-size:16px}
-.scoreboard{background:#0b1222;border:4px solid var(--ink);border-radius:14px;padding:10px;display:grid;gap:6px;
-  box-shadow:inset 0 0 0 3px #1d2b4a,0 6px 0 rgba(0,0,0,.35)}
-.scoreboard .sb-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:5px 8px;border-radius:8px}
-.scoreboard .sb-row.activo{background:rgba(244,181,46,.16);box-shadow:inset 0 0 0 2px var(--brass)}
-.scoreboard .sb-nm{display:flex;align-items:center;gap:8px;color:#cfe3f5;font:800 13px var(--body);overflow:hidden;min-width:0}
-.scoreboard .sb-nm span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.scoreboard .sb-nm canvas{border-radius:999px;flex:none;background:#162238}
-.scoreboard .sb-pts{font:400 30px var(--display);color:#ffb020;text-shadow:0 0 8px rgba(255,176,32,.55);letter-spacing:.02em;flex:none}
+/* Marcador integrado en la propia escena de la cancha (ya no es un panel aparte del
+   aside): "cuelga" en el cielo vacío por encima del tablero, como el marcador real de
+   un pabellón — así la cancha puede volver a ir arriba del todo sin perder el hueco
+   vertical que ganamos al quitar el bloque del panel. SIEMPRE una sola fila (nunca
+   apilada en varias líneas): el tablero empieza a dibujarse mucho más abajo (ver
+   BOARD/backboard en el JS), así que una fila fina siempre cabe en el cielo sin
+   tocarlo; con muchos jugadores se desplaza en horizontal (overflow-x) en vez de
+   crecer hacia abajo, que es justo donde está el tablero/aro/red. No lleva class
+   "hud" (que es pointer-events:none) porque el desplazamiento horizontal con el dedo
+   sí debe poder tocarse cuando hay muchos jugadores. */
+.scoreboard{position:absolute;top:0;left:calc(12px + clamp(58px,10vw,86px) + 6px);right:6px;
+  display:flex;gap:3px;overflow-x:auto;scrollbar-width:none}
+.scoreboard::-webkit-scrollbar{display:none}
+.scoreboard .sb-row{flex:none;display:flex;align-items:center;gap:2px;background:#0b1222;
+  border:1px solid var(--ink);border-radius:4px;padding:0.5px 4px;box-shadow:0 1.5px 0 rgba(0,0,0,.35)}
+.scoreboard .sb-row.activo{box-shadow:0 1.5px 0 rgba(0,0,0,.35),inset 0 0 0 1.5px var(--brass)}
+.scoreboard .sb-nm{color:#cfe3f5;font:800 7px var(--body);max-width:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.scoreboard .sb-pts{font:400 10px var(--display);color:#ffb020;text-shadow:0 0 3px rgba(255,176,32,.55)}
+/* Marcador "A vs B": solo con exactamente 2 jugadores (renderScoreboard pone .vs). Un
+   color de acento distinto por jugador (borde izquierdo) para diferenciar sin ningún
+   texto "VS" (lo descartó Eduardo); el aro dorado de .activo se mantiene y se combina
+   con el color de equipo en vez de sustituirlo (border-left vs box-shadow, propiedades
+   CSS distintas). Con 3+ jugadores no se añade .vs: misma fila compacta, solo con más
+   chips (se desplaza en horizontal si no caben).   */
+.scoreboard.vs{justify-content:flex-end}
+.scoreboard.vs .sb-row{border-left:3px solid transparent;padding-left:4px}
+.scoreboard.vs .sb-row:nth-child(1){border-left-color:#2f6fe4}
+.scoreboard.vs .sb-row:nth-child(2){border-left-color:#c93a2d}
+.scoreboard.vs .sb-nm{max-width:70px}
+.scoreboard.vs .sb-pts{font-size:11px}
 .tirosPicker{display:grid;gap:10px}
 .tiroBtn{display:grid;gap:2px;text-align:left;padding:12px 16px}
 .tiroBtn .tb-nm{font:400 23px var(--display)}
@@ -122,7 +140,14 @@ h3{margin:0;font:400 20px var(--display)}
 .distance{display:flex;align-items:baseline;gap:8px;font:400 76px/0.95 var(--display)} .distance small{font-size:30px}
 .foot{color:#9fb6cf;font-size:15px}
 .foot .link{color:#c4daed}
-@media (max-width:900px){.game{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:900px){
+  .game{grid-template-columns:minmax(0,1fr)}
+  /* Móvil: la cancha vuelve a ir ARRIBA del todo, en su orden natural (ya no se reordena con
+     `order`: el marcador ya no es un bloque aparte que empuje las opciones fuera de pantalla,
+     ahora vive integrado dentro de la propia cancha). Se mantiene más pequeña para que, junto al
+     pentagrama de dos líneas y las 4 opciones, siga cabiendo todo sin apenas scroll. */
+  .stage{max-width:260px;margin:0 auto}
+}
 @media (prefers-reduced-motion:reduce){.hud-zone.pop{animation:none}}
 </style>
 </head>
@@ -133,14 +158,11 @@ h3{margin:0;font:400 20px var(--display)}
     <section class="stage" aria-label="Pista de baloncesto">
       <canvas id="scene" width="1000" height="520" role="img" aria-label="Un músico de la banda lanza un tiro a una canasta"></canvas>
       <div class="hud hud-timer" id="hudTimer" hidden style="--p:100"><span id="hudSecs">9</span><small>seg</small></div>
-      <div class="hud hud-turno" id="hudTurno" hidden>Turno 1/3 · Tiro 1/3</div>
-      <div class="hud hud-pts" id="hudPts" hidden>0 pts</div>
+      <div class="scoreboard" id="scoreboard" hidden></div>
       <div class="hud hud-zone" id="hudZone" hidden></div>
     </section>
 
     <aside class="panel">
-      <div class="scoreboard" id="scoreboard" hidden></div>
-
       <!-- MENÚ -->
       <section class="view" id="v-menu">
         <label class="field" for="numJugadores">Número de jugadores
@@ -170,7 +192,7 @@ h3{margin:0;font:400 20px var(--display)}
 
       <!-- ELEGIR TIPO DE TIRO (antes de cada pregunta) -->
       <section class="view" id="v-tiro" hidden>
-        <p class="kicker" id="tiroKicker">Tiro 1/3</p>
+        <p class="kicker" id="tiroKicker">Tiro 1/9</p>
         <h2>Elige tu tiro</h2>
         <p class="muted">Cuanto más difícil el tiro, más tonalidades posibles, menos tiempo y más puntos si aciertas.</p>
         <div class="tirosPicker" id="tirosPicker"></div>
@@ -804,10 +826,14 @@ function beep(freqs, step = 0.09, type = 'triangle', vol = 0.18) {
 /* ============================================================
    ESTADO Y FLUJO DEL JUEGO
    ============================================================ */
-/* TURNOS·TIROS_POR_TURNO = preguntas por jugador (igual con 1 o varios jugadores: 9).
-   S.total = PERQ * S.numJugadores = tiros de la partida entera (todas las personas).
-   Con P jugadores: P turnos por ronda x 3 rondas = 3P turnos, 3 tiros cada uno. */
-const TURNOS = 3, TIROS_POR_TURNO = 3, PERQ = TURNOS * TIROS_POR_TURNO;
+/* PERQ = tiros por jugador (igual con 1 o varios jugadores: 9). S.total = PERQ *
+   S.numJugadores = tiros de la partida entera (todas las personas). Rotación TIRO A
+   TIRO en orden round-robin: con N jugadores el orden es J1,J2,...,JN,J1,J2,...,JN,
+   hasta que cada uno ha tirado sus 9 veces — nunca se agrupan varios tiros seguidos
+   de la misma persona, porque en un partido real se alterna de jugador en CADA tiro,
+   no cada 3 (ver updateTurnContext/nextTiro). Con 1 jugador no hay nadie con quien
+   alternar: sigue siendo, como ya era, un tiro tras otro. */
+const PERQ = 9;
 const S = {
   state: 'menu', musico: 0, dif: null,   // dif = tipo de tiro elegido para la pregunta EN CURSO (ver showShotPicker); no hay dificultad de partida
   numJugadores: 1,
@@ -905,54 +931,51 @@ async function startGame() {
   nextTiro();
 }
 
+/* Rotación round-robin tiro a tiro: el tiro GLOBAL (0-based, cuenta todos los tiros de
+   todos los jugadores) decide a quién le toca por su resto al dividir entre N
+   jugadores (0,1,...,N-1,0,1,...), y S.rondaActual es cuántas vueltas completas ya se
+   han dado — que coincide exactamente con el tiro PROPIO de quien le toca (1..PERQ),
+   porque en una rotación perfecta cada vuelta completa es exactamente un tiro de cada
+   persona. Por eso el kicker de "elige tu tiro" solo necesita mostrar un número
+   (ver showShotPicker), no dos. */
 function updateTurnContext() {
-  const turnoGlobal0 = Math.floor((S.tiro - 1) / TIROS_POR_TURNO);   // 0-based: turno de ALGUN jugador
-  S.turnoActual = turnoGlobal0 % S.numJugadores;
-  S.rondaActual = Math.floor(turnoGlobal0 / S.numJugadores) + 1;
+  const g = S.tiro - 1;   // 0-based, tiro GLOBAL de la partida entera
+  S.turnoActual = g % S.numJugadores;
+  S.rondaActual = Math.floor(g / S.numJugadores) + 1;
 }
 /* Marcador de partido (pabellón/arena): siempre visible durante la partida, con 1
    jugador o con varios; resalta al jugador activo solo tiene sentido en multijugador. */
 function renderScoreboard() {
   const el = $('#scoreboard');
   if (!el) return;
+  el.classList.toggle('vs', S.numJugadores === 2);   // lado a lado solo con exactamente 2 jugadores; 3+ sigue en lista
   el.replaceChildren();
   S.jugadores.forEach((j, i) => {
     const row = document.createElement('div');
     row.className = 'sb-row' + (S.numJugadores > 1 && i === S.turnoActual ? ' activo' : '');
-    const nm = document.createElement('div'); nm.className = 'sb-nm';
-    if (Number.isFinite(j.musico)) nm.appendChild(miniAvatarCanvas(j.musico, 22, 29));
-    const txt = document.createElement('span'); txt.textContent = j.nombre;
-    nm.appendChild(txt);
-    const pts = document.createElement('div'); pts.className = 'sb-pts'; pts.textContent = j.puntos;
+    // Sin avatar: el marcador ahora vive integrado y diminuto encima del tablero, no hay
+    // sitio para el mini-canvas del músico sin arriesgar el solape con el dibujo de la cancha.
+    const nm = document.createElement('span'); nm.className = 'sb-nm'; nm.textContent = j.nombre;
+    const pts = document.createElement('span'); pts.className = 'sb-pts'; pts.textContent = j.puntos;
     row.append(nm, pts);
     el.appendChild(row);
   });
 }
-function enTurnoActual() { return ((S.tiro - 1) % TIROS_POR_TURNO) + 1; }
-function updateHud() {
-  const j = S.jugadores[S.turnoActual];
-  const enTurno = enTurnoActual();
-  $('#hudTurno').textContent = S.numJugadores > 1
-    ? (j.nombre + ' · Ronda ' + S.rondaActual + '/' + TURNOS + ' · Tiro ' + enTurno + '/' + TIROS_POR_TURNO)
-    : ('Turno ' + S.rondaActual + '/' + TURNOS + ' · Tiro ' + enTurno + '/' + TIROS_POR_TURNO);
-  $('#hudPts').textContent = j.puntos + ' pts';
-}
-
+/* Cada tiro es ahora su propio "turno" (ver updateTurnContext): con varios jugadores
+   se pasa el balón después de CADA tiro, así que la pista se limpia (S.stuck=[]) y se
+   recalcula de quién es el turno en cada llamada, no solo cada 3. */
 function nextTiro() {
   S.tiro++;
   if (S.tiro > S.total) { finishGame(); return; }
-  const turnoNuevo = (S.tiro - 1) % TIROS_POR_TURNO === 0;
-  if (turnoNuevo) {
-    S.stuck = [];                    // turno nuevo: pista limpia
-    updateTurnContext();
-    if (S.numJugadores > 1 && S.tiro > 1) { showTurnChange(); return; }
-  }
+  S.stuck = [];
+  updateTurnContext();
+  if (S.numJugadores > 1 && S.tiro > 1) { showTurnChange(); return; }
   showShotPicker();
 }
 function showTurnChange() {
   S.state = 'turno';
   showView('turno');
-  $('#hudTimer').hidden = true; $('#hudTurno').hidden = true; $('#hudPts').hidden = true;
+  $('#hudTimer').hidden = true;
   $('#turnoNombre').textContent = 'Turno de ' + S.jugadores[S.turnoActual].nombre;
   renderScoreboard();
 }
@@ -962,10 +985,10 @@ function showTurnChange() {
 function showShotPicker() {
   S.state = 'tiro';
   showView('tiro');
-  $('#hudTimer').hidden = true; $('#hudTurno').hidden = true; $('#hudPts').hidden = true;
+  $('#hudTimer').hidden = true;
   renderScoreboard();
   const nombre = S.numJugadores > 1 ? S.jugadores[S.turnoActual].nombre + ' · ' : '';
-  $('#tiroKicker').textContent = nombre + 'Tiro ' + enTurnoActual() + '/' + TIROS_POR_TURNO + ' · Ronda ' + S.rondaActual + '/' + TURNOS;
+  $('#tiroKicker').textContent = nombre + 'Tiro ' + S.rondaActual + '/' + PERQ;
   renderTirosPicker();
 }
 function renderTirosPicker() {
@@ -985,10 +1008,9 @@ function renderTirosPicker() {
 function presentQuestion() {
   S.state = 'play';
   showView('play');
-  $('#hudTimer').hidden = false; $('#hudTurno').hidden = false; $('#hudPts').hidden = false;
+  $('#hudTimer').hidden = false;
   S.answered = false;
   S.fly = null;
-  updateHud();
   renderScoreboard();
   S.cQ = genQuestion(S.dif);
   drawStaff(S.cQ);
@@ -1039,7 +1061,6 @@ function answer(ok, btn, timedOut) {
   const j = S.jugadores[S.turnoActual];
   j.puntos += pts;
   if (ok) { j.aciertos++; j.tiempos.push(elapsed / 1000); }
-  $('#hudPts').textContent = j.puntos + ' pts';
   renderScoreboard();
   showZone(zone, pts);
   throwBall(zone);
@@ -1071,7 +1092,7 @@ function classify(aciertos) {
 function finishGame() {
   S.state = 'result';
   showView('result');
-  $('#hudTimer').hidden = true; $('#hudTurno').hidden = true; $('#hudPts').hidden = true;
+  $('#hudTimer').hidden = true;
   $('#scoreboard').hidden = true;
   if (S.numJugadores <= 1) finishSolo(); else finishMulti();
 }
