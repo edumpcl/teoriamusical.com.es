@@ -1,5 +1,5 @@
 {
-  "comprobado": "2026-10-19",
+  "comprobado": "2026-10-26",
   "conciertos": [
     {
       "id": "bsmm-2026-11-03",
@@ -6376,7 +6376,7 @@
       "comunidad": "Comunidad Valenciana",
       "tipo": "banda",
       "programa": "Miguel Vidagany Gil, director. P. Sparke, M. Ravel, M. de Falla, Adam Ferrero, J. Peiró.",
-      "nota": "Fuente: folleto de temporada de la banda; no figura en el calendario general del Palau. No indica precio.",
+      "nota": "Fuente: folleto de temporada de la banda; no figura en el calendario general del Palau. No indica precio. La agenda de la FSMCV lo sitúa el miércoles 28 de octubre; el folleto dice jueves 29: confirma el día antes de ir.",
       "fuentes": [
         {
           "texto": "Banda Sinfónica Municipal de València, folleto de temporada 2026-27 (PDF del Palau)",
@@ -9571,6 +9571,78 @@
         {
           "texto": "Agenda de la FSMCV",
           "url": "https://fsmcv.org/agenda/46-certamen-de-bandas-de-musica-de-la-comunitat-valenciana-2a-y-1a-seccion/?occurrence=2026-11-08"
+        }
+      ]
+    },
+    {
+      "id": "adda-2026-12-11",
+      "agrupacion": "ADDA Simfònica",
+      "titulo": "Canto de luz",
+      "fecha": "2026-12-11",
+      "hora": "20:00",
+      "lugar": "Auditorio ADDA",
+      "ciudad": "Alicante",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "orquesta",
+      "programa": "Dirige Margarita Balanas, con el violonchelista Benedict Kloeckner. Sinfonía n.º 35 «Haffner» de Mozart, Concierto para violonchelo en do mayor de Haydn y Sinfonía n.º 2 «Lobgesang» de Mendelssohn.",
+      "fuentes": [
+        {
+          "texto": "Temporada sinfónica del ADDA",
+          "url": "https://addaalicante.es/temporada-sinfonica-alicante-2026-2027/"
+        }
+      ]
+    },
+    {
+      "id": "adda-2027-01-13",
+      "agrupacion": "Musikkollegium Winterthur (en el ADDA)",
+      "titulo": "Júpiter",
+      "fecha": "2027-01-13",
+      "hora": "20:00",
+      "lugar": "Auditorio ADDA",
+      "ciudad": "Alicante",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "orquesta",
+      "programa": "Dirige Roberto González Monjas, con el violonchelista Pablo Ferrández. «Caprice à l'espagnole» de Dubugnon (estreno), Concierto para violonchelo de Elgar y Sinfonía n.º 41 «Júpiter» de Mozart.",
+      "fuentes": [
+        {
+          "texto": "Temporada sinfónica del ADDA",
+          "url": "https://addaalicante.es/temporada-sinfonica-alicante-2026-2027/"
+        }
+      ]
+    },
+    {
+      "id": "adda-2027-01-21",
+      "agrupacion": "ADDA Simfònica",
+      "titulo": "Night at the movies",
+      "fecha": "2027-01-21",
+      "hora": "20:00",
+      "lugar": "Auditorio ADDA",
+      "ciudad": "Alicante",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "orquesta",
+      "programa": "Dirige Josep Vicent, con la violinista Kristīne Balanas. Obra de Fazil Say (estreno absoluto), Concierto para violín de Korngold y «Así habló Zaratustra» de Strauss.",
+      "fuentes": [
+        {
+          "texto": "Temporada sinfónica del ADDA",
+          "url": "https://addaalicante.es/temporada-sinfonica-alicante-2026-2027/"
+        }
+      ]
+    },
+    {
+      "id": "adda-2027-01-26",
+      "agrupacion": "Deutsche Radio Philharmonie (en el ADDA)",
+      "titulo": "Elektra",
+      "fecha": "2027-01-26",
+      "hora": "20:00",
+      "lugar": "Auditorio ADDA",
+      "ciudad": "Alicante",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "orquesta",
+      "programa": "Dirige Josep Pons, con la soprano Elisabeth Teige. «Muerte y transfiguración» de Strauss, Preludio y muerte de «Tristán e Isolda» de Wagner y Suite orquestal «Elektra» de Strauss.",
+      "fuentes": [
+        {
+          "texto": "Temporada sinfónica del ADDA",
+          "url": "https://addaalicante.es/temporada-sinfonica-alicante-2026-2027/"
         }
       ]
     }

@@ -1,5 +1,5 @@
 {
-  "comprobado": "2026-10-19",
+  "comprobado": "2026-10-26",
   "convocatorias": [
     {
       "id": "real-filharmonia-2026",
@@ -387,6 +387,95 @@
         }
       ],
       "nota_plazo": "Fecha sin contrastar con el boletín."
+    },
+    {
+      "id": "tafalla-percusion-2026",
+      "entidad": "Ayuntamiento de Tafalla (Navarra)",
+      "titulo": "Profesor/a de percusión, Escuela Municipal de Música",
+      "tipo": "docencia",
+      "instrumentos": [
+        "percusión"
+      ],
+      "comunidad": "Navarra",
+      "plazas": "1 plaza de personal laboral fijo a jornada parcial",
+      "acceso": "Oposición libre",
+      "inicio": "2026-10-23",
+      "fin": "2026-11-11",
+      "requisitos": "Título de Estudios Superiores en la especialidad de percusión (o Grado Medio del Decreto 2618/1966), o diplomatura/grado universitario más el título profesional de grado medio en percusión.",
+      "tasa": "18,30 € (exentas las personas en desempleo)",
+      "fuentes": [
+        {
+          "texto": "BON nº 211, 22/10/2026 (bases y convocatoria)",
+          "url": "https://bon.navarra.es/es/anuncio/-/texto/2026/211/21"
+        }
+      ],
+      "nota_plazo": "20 días naturales desde el día siguiente a la publicación en el BON (22/10/2026). Contrastado con el boletín."
+    },
+    {
+      "id": "tafalla-saxofon-2026",
+      "entidad": "Ayuntamiento de Tafalla (Navarra)",
+      "titulo": "Profesor/a de saxofón, Escuela Municipal de Música",
+      "tipo": "docencia",
+      "instrumentos": [
+        "saxofón"
+      ],
+      "comunidad": "Navarra",
+      "plazas": "1 plaza de personal laboral fijo a jornada parcial",
+      "acceso": "Oposición libre",
+      "inicio": "2026-10-23",
+      "fin": "2026-11-11",
+      "requisitos": "Título de Estudios Superiores en la especialidad de saxofón (o Grado Medio del Decreto 2618/1966), o diplomatura/grado universitario más el título profesional de grado medio en saxofón.",
+      "tasa": "18,30 € (exentas las personas en desempleo)",
+      "fuentes": [
+        {
+          "texto": "BON nº 211, 22/10/2026 (bases y convocatoria)",
+          "url": "https://bon.navarra.es/es/anuncio/-/texto/2026/211/22"
+        }
+      ],
+      "nota_plazo": "20 días naturales desde el día siguiente a la publicación en el BON (22/10/2026). Contrastado con el boletín."
+    },
+    {
+      "id": "santa-coloma-guitarra-2026",
+      "entidad": "Patronat Municipal de la Música de Santa Coloma de Gramenet (Barcelona)",
+      "titulo": "Profesor/a de guitarra clásica (relevista), Escola Municipal de Música Can Roig i Torres",
+      "tipo": "docencia",
+      "instrumentos": [
+        "guitarra"
+      ],
+      "comunidad": "Cataluña",
+      "plazas": "1 plaza de personal laboral (A1, relevista por jubilación parcial)",
+      "acceso": "Concurso-oposición",
+      "fin": "2026-11-09",
+      "requisitos": "Grado en enseñanzas artísticas superiores de música (o equivalente) en la especialidad de pedagogía o interpretación, modalidad guitarra clásica.",
+      "fuentes": [
+        {
+          "texto": "BOP de Barcelona, octubre de 2026 (bases)",
+          "url": "https://bop.diba.cat/anunci/descarrega-pdf/3999058"
+        }
+      ],
+      "nota_plazo": "Las bases fijan 20 días hábiles desde el día siguiente a la publicación del anuncio en el DOGC, que no hemos podido consultar. Fecha sin contrastar con el boletín (procede del radar de empleo)."
+    },
+    {
+      "id": "solsona-violonchelo-2026",
+      "entidad": "Ayuntamiento de Solsona (Lleida)",
+      "titulo": "Profesor/a de violonchelo (grado superior) y bolsa de trabajo, escuela municipal de música",
+      "tipo": "docencia",
+      "instrumentos": [
+        "violonchelo"
+      ],
+      "comunidad": "Cataluña",
+      "plazas": "1 plaza de personal laboral (A1) y bolsa de trabajo",
+      "acceso": "Concurso-oposición",
+      "fin": "2026-10-30",
+      "requisitos": "Título superior de música en la especialidad de violonchelo, o grado superior en interpretación o pedagogía con itinerario de violonchelo.",
+      "tasa": "20,00 €",
+      "fuentes": [
+        {
+          "texto": "BOP de Lleida nº 185 (bases, convocatoria C16/2026)",
+          "url": "https://ebop.diputaciolleida.cat/aplicacions/bop/bopV1/fitxers/pdf/2026/185/202618507900.pdf"
+        }
+      ],
+      "nota_plazo": "Las bases fijan 20 días hábiles desde el día siguiente a la última publicación del anuncio (DOGC o BOP de Lleida). Fecha sin contrastar con el boletín (procede del radar de empleo)."
     }
   ],
   "anunciadas": [
