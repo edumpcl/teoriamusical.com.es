@@ -37,6 +37,27 @@ FAMILIAS = {
             ('tuba', 'notas-de-la-tuba', 'Tuba', 'Do · 4 válvulas · la más grave'),
         ],
     },
+    'madera': {
+        'pagina': 'diccionario-musical/instrumentos-de-viento-madera/index.html',
+        'ancla': '<h2>¿Qué es un instrumento de viento madera?</h2>',
+        'lead': 'Los instrumentos de viento madera más habituales en la banda y la orquesta son el <strong>flautín</strong>, la <strong>flauta travesera</strong>, el <strong>oboe</strong>, el <strong>requinto</strong>, el <strong>clarinete</strong>, el <strong>saxofón</strong>, el <strong>corno inglés</strong>, el <strong>clarinete bajo</strong>, el <strong>fagot</strong> y el <strong>contrafagot</strong>:',
+        'titulo_alt': 'Los instrumentos de viento madera',
+        'clase': 'tm-fam-galeria--alta',   # fotos estrechas (clarinete, fagot…): área de foto más alta
+        'items': [
+            ('flautin', 'notas-del-flautin', 'Flautín', 'Bisel · suena una 8ª arriba'),
+            ('flauta', 'notas-de-la-flauta-travesera', 'Flauta travesera', 'Bisel · no transpone'),
+            ('oboe', 'notas-del-oboe', 'Oboe', 'Caña doble · no transpone'),
+            ('requinto', 'notas-del-requinto', 'Requinto', 'Caña simple · clarinete en Mi♭'),
+            ('clarinete', 'notas-del-clarinete', 'Clarinete', 'Caña simple · en Si♭'),
+            ('saxofon', 'notas-del-saxofon', 'Saxofón', 'Caña simple · de soprano a barítono'),
+            ('corno-ingles', 'notas-del-corno-ingles', 'Corno inglés', 'Caña doble · en Fa'),
+            ('clarinete-bajo', 'notas-del-clarinete-bajo', 'Clarinete bajo', 'Caña simple · en Si♭, una 9ª abajo'),
+            ('fagot', 'notas-del-fagot', 'Fagot', 'Caña doble · no transpone, grave'),
+            ('contrafagot', 'notas-del-contrafagot', 'Contrafagot', 'Caña doble · suena una 8ª abajo'),
+        ],
+        # el saxofón se acredita con otra fórmula en su página («… Yamaha Corporation, CC BY-SA 4.0, vía Wikimedia Commons»)
+        'credito': {'saxofon': ('<a href="https://commons.wikimedia.org/wiki/File:Yamaha_Saxophone_YAS-62.tif" rel="nofollow">Yamaha Corporation</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>')},
+    },
 }
 
 
@@ -74,11 +95,11 @@ def bloque(fam):
     tarjetas = '\n'.join(tarjeta(*it) for it in fam['items'])
     cred = []
     for carpeta, pagina, nombre, _ in fam['items']:
-        autor, lic = credito(carpeta, pagina)
+        autor, lic = fam.get('credito', {}).get(carpeta) or credito(carpeta, pagina)
         cred.append('%s: %s, %s' % (nombre, autor, lic))
     return (
-        '%s\n<p>%s</p>\n\n<ul class="tm-fam-galeria" aria-label="%s">\n%s\n</ul>\n'
-        '<p class="tm-fam-creditos">Fotos de Wikimedia Commons. %s.</p>\n%s\n' % (INI, fam['lead'], fam['titulo_alt'], tarjetas, '; '.join(cred), FIN))
+        '%s\n<p>%s</p>\n\n<ul class="tm-fam-galeria%s" aria-label="%s">\n%s\n</ul>\n'
+        '<p class="tm-fam-creditos">Fotos de Wikimedia Commons. %s.</p>\n%s\n' % (INI, fam['lead'], (' ' + fam['clase']) if fam.get('clase') else '', fam['titulo_alt'], tarjetas, '; '.join(cred), FIN))
 
 
 def main():
