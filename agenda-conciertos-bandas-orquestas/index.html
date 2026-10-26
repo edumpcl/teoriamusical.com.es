@@ -192,12 +192,38 @@
 <!-- CO:START (generado por tools/gen-conciertos.js; no editar a mano) -->
 <p class="tm-op-comprobado">Última comprobación: <strong>Lunes 26 de octubre de 2026</strong>.</p>
 
+<h2 id="buscar">Buscar conciertos por fechas</h2>
+<p>Elige un rango de fechas, una comunidad o un tipo de agrupación y verás todos los conciertos que caen dentro, de toda España.</p>
+<form class="tm-op-filtros" id="co-filtros" aria-label="Buscar conciertos" data-global="/agenda-conciertos-bandas-orquestas/conciertos.json">
+  <label>Tipo <select id="co-f-tipo"><option value="">Todos</option><option value="orquesta">Orquesta</option><option value="banda">Banda profesional</option><option value="sociedad">Banda de música</option><option value="conservatorio">Conservatorio</option></select></label>
+  <label>Comunidad <select id="co-f-ccaa"><option value="">Todas</option><option value="Andalucía">Andalucía</option><option value="Aragón">Aragón</option><option value="Asturias">Asturias</option><option value="Canarias">Canarias</option><option value="Cantabria">Cantabria</option><option value="Castilla y León">Castilla y León</option><option value="Castilla-La Mancha">Castilla-La Mancha</option><option value="Cataluña">Cataluña</option><option value="Comunidad de Madrid">Comunidad de Madrid</option><option value="Comunidad Valenciana">Comunidad Valenciana</option><option value="Extremadura">Extremadura</option><option value="Galicia">Galicia</option><option value="Islas Baleares">Islas Baleares</option><option value="La Rioja">La Rioja</option><option value="Navarra">Navarra</option><option value="País Vasco">País Vasco</option><option value="Región de Murcia">Región de Murcia</option></select></label>
+  <div class="co-fechas">
+    <span class="co-fechas-t" id="co-fechas-t">Fecha</span>
+    <div class="co-rapidos" role="group" aria-labelledby="co-fechas-t">
+      <button type="button" data-rango="todas" aria-pressed="true">Todas</button>
+      <button type="button" data-rango="hoy" aria-pressed="false">Hoy</button>
+      <button type="button" data-rango="semana" aria-pressed="false">Esta semana</button>
+      <button type="button" data-rango="proxima" aria-pressed="false">Próxima semana</button>
+      <button type="button" data-rango="finde" aria-pressed="false">Este fin de semana</button>
+      <button type="button" data-rango="mes" aria-pressed="false">Este mes</button>
+    </div>
+    <div class="co-rango">
+      <label>Desde <input type="date" id="co-f-desde"></label>
+      <label>Hasta <input type="date" id="co-f-hasta"></label>
+    </div>
+  </div>
+</form>
+<p class="tm-op-contador" id="co-contador" role="status" aria-live="polite"></p>
+<p class="co-vacio" id="co-vacio" hidden>No hay conciertos con esos filtros. Prueba con otras fechas o con otro tipo de agrupación.</p>
+<div id="co-resultados" hidden></div>
+
 <aside class="tm-op co-envia">
   <h3>¿Falta el concierto de tu banda u orquesta?</h3>
   <p>Mándanoslo en un minuto. Vale la publicación oficial de tu agrupación en Facebook o Instagram, además de su web.</p>
   <p><a href="/agenda-conciertos-bandas-orquestas/enviar-concierto/"><strong>Enviar un concierto</strong></a></p>
 </aside>
 
+<div id="co-estatico">
 <h2 id="comunidades">Elige tu comunidad</h2>
 <div class="tm-op-lista co-ccaas">
 <a class="tm-op co-ccaa" href="/agenda-conciertos-bandas-orquestas/andalucia/">
@@ -289,11 +315,6 @@
 <p>¿Buscas una agrupación concreta? <a href="/agenda-conciertos-bandas-orquestas/agrupaciones/">Mira todas las orquestas, bandas y conservatorios</a> (51 con página propia).</p>
 
 
-<form class="tm-op-filtros" id="co-filtros" aria-label="Filtrar conciertos">
-  <label>Tipo <select id="co-f-tipo"><option value="">Todos</option><option value="orquesta">Orquesta</option><option value="banda">Banda profesional</option><option value="sociedad">Banda de música</option><option value="conservatorio">Conservatorio</option></select></label>
-</form>
-<p class="tm-op-contador" id="co-contador" role="status" aria-live="polite"></p>
-<p class="co-vacio" id="co-vacio" hidden>No hay conciertos con esos filtros. Prueba con otras fechas o con otro tipo de agrupación.</p>
 
 <h2 class="co-mes" id="co-proximos">Próximos conciertos</h2>
 <div class="tm-op-lista co-lista">
@@ -371,6 +392,7 @@
 </div>
 </div>
 
+</div>
 <!-- CO:END -->
 
 <div class="tm-ad">
@@ -473,7 +495,7 @@
   </div>
 </footer>
 
-<script src="/assets/js/conciertos.js?v=e9e5db87" defer></script>
+<script src="/assets/js/conciertos.js?v=a93c8a62" defer></script>
 <script src="/assets/js/main.js?v=58d478c2" defer></script>
 </body>
 </html>

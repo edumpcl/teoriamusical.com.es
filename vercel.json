@@ -39,6 +39,15 @@
       ]
     },
     {
+      "source": "/agenda-conciertos-bandas-orquestas/conciertos.json",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
+    {
       "source": "/pruebas/(.*)",
       "headers": [
         {

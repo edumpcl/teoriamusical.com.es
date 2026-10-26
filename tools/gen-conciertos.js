@@ -199,8 +199,9 @@ function porMeses(lista) {
 }
 
 // Filtros: tipo (siempre) y fechas (solo en las páginas de comunidad: en el portal solo se ven los próximos).
-function filtros(lista, fechas) {
+function filtros(lista, fechas, global) {
   const tipos = Object.keys(TIPOS).filter(t => lista.some(c => c.tipo === t));
+  const ccaas = [...new Set(lista.map(c => c.comunidad))].sort((a, b) => a.localeCompare(b, 'es'));
   const rapidos = [['todas', 'Todas'], ['hoy', 'Hoy'], ['semana', 'Esta semana'], ['proxima', 'Próxima semana'], ['finde', 'Este fin de semana'], ['mes', 'Este mes']];
   const bloqueFechas = fechas ? `
   <div class="co-fechas">
@@ -213,8 +214,10 @@ function filtros(lista, fechas) {
       <label>Hasta <input type="date" id="co-f-hasta"></label>
     </div>
   </div>` : '';
-  return `<form class="tm-op-filtros" id="co-filtros" aria-label="Filtrar conciertos">
-  <label>Tipo <select id="co-f-tipo"><option value="">Todos</option>${tipos.map(t => `<option value="${t}">${TIPOS[t]}</option>`).join('')}</select></label>${bloqueFechas}
+  const selCcaa = global ? `
+  <label>Comunidad <select id="co-f-ccaa"><option value="">Todas</option>${ccaas.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join('')}</select></label>` : '';
+  return `<form class="tm-op-filtros" id="co-filtros" aria-label="Buscar conciertos"${global ? ` data-global="/${BASE}/conciertos.json"` : ''}>
+  <label>Tipo <select id="co-f-tipo"><option value="">Todos</option>${tipos.map(t => `<option value="${t}">${TIPOS[t]}</option>`).join('')}</select></label>${selCcaa}${bloqueFechas}
 </form>
 <p class="tm-op-contador" id="co-contador" role="status" aria-live="polite"></p>
 <p class="co-vacio" id="co-vacio" hidden>No hay conciertos con esos filtros. Prueba con otras fechas o con otro tipo de agrupación.</p>`;
@@ -338,8 +341,14 @@ function bloqueHub() {
   return `<!-- CO:START (generado por tools/gen-conciertos.js; no editar a mano) -->
 ${comprobado}
 
+<h2 id="buscar">Buscar conciertos por fechas</h2>
+<p>Elige un rango de fechas, una comunidad o un tipo de agrupación y verás todos los conciertos que caen dentro, de toda España.</p>
+${filtros(futuros, true, true)}
+<div id="co-resultados" hidden></div>
+
 ${avisoEnvio()}
 
+<div id="co-estatico">
 <h2 id="comunidades">Elige tu comunidad</h2>
 <div class="tm-op-lista co-ccaas">
 ${cards}
@@ -347,13 +356,13 @@ ${cards}
 <p>¿Buscas una agrupación concreta? <a href="/${BASE_AGR}/">Mira todas las orquestas, bandas y conservatorios</a> (${entPagina.length} con página propia).</p>
 ${pendientes.length ? `<p class="tm-op-nota">Aún sin conciertos confirmados: ${pendientes.map(esc).join(', ')}. Si tu agrupación está en una de ellas, <a href="/${ENVIAR}/">envíanos su concierto</a>.</p>` : ''}
 
-${filtros(futuros)}
 
 <h2 class="co-mes" id="co-proximos">Próximos conciertos</h2>
 <div class="tm-op-lista co-lista">
 ${prox.map(c => tarjeta(c)).join('\n')}
 </div>
 ${resto.length ? `\n<h2 class="co-mes" id="co-otras">Otras comunidades</h2>\n<div class="tm-op-lista co-lista">\n${resto.map(c => tarjeta(c)).join('\n')}\n</div>\n${ld(resto)}` : ''}
+</div>
 <!-- CO:END -->`;
 }
 
@@ -578,6 +587,16 @@ for (const n of conPagina) {
   escribirBloque(file, bloqueComunidad(n));
 }
 escribirBloque(HUB, bloqueHub());
+// Datos del buscador por fechas del portal (assets/js/conciertos.js): todos los conciertos próximos, sin HTML
+fs.writeFileSync(path.join(ROOT, BASE, 'conciertos.json'), JSON.stringify({
+  generado: hoy,
+  conciertos: futuros.map(c => ({
+    f: c.fecha, h: c.hora || '', t: c.titulo, a: c.agrupacion, au: urlAgrupacion(c) || '',
+    c: c.comunidad, cu: conPagina.includes(c.comunidad) ? urlDe(c.comunidad) : '', ty: c.tipo,
+    l: [c.lugar, c.ciudad].filter(Boolean).join(', '), p: c.programa || '', e: c.entrada || '', n: c.nota || '',
+    s: (c.fuentes || []).map(x => [x.texto, x.url]),
+  })),
+}));
 const PAG_ENVIO = path.join(ROOT, ENVIAR, 'index.html');
 if (!fs.existsSync(PAG_ENVIO)) { crearEnvio(); creadas++; }
 if (!fs.existsSync(path.join(ROOT, ENVIAR, 'gracias', 'index.html'))) { crearGracias(); creadas++; }
