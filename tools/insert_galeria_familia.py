@@ -9,7 +9,7 @@ a Commons y licencia), así que siempre coinciden con la fuente. Es idempotente:
   python tools/insert_galeria_familia.py metal            # solo muestra
   python tools/insert_galeria_familia.py metal --apply    # escribe
 
-Familias: metal, madera, cuerda, percusion.
+Familias: metal, madera, cuerda, percusion, pulsada.
 """
 import html
 import os
@@ -95,6 +95,36 @@ FAMILIAS = {
         ],
         'foto': {'timbales': 'juego-de-cinco', 'crotalos': 'juego-de-dos-octavas'},   # el resto es «teclado»
     },
+    'pulsada': {
+        'pagina': 'diccionario-musical/instrumentos-de-cuerda-pulsada/index.html',
+        'ancla': '<h2>¿Qué es un instrumento de cuerda pulsada?</h2>',
+        'lead': 'Los instrumentos de cuerda pulsada más habituales son la <strong>guitarra</strong>, el <strong>ukelele</strong>, el <strong>bajo eléctrico</strong>, el <strong>arpa</strong>, la <strong>mandolina</strong>, el <strong>banjo</strong> y, en las rondallas, la <strong>bandurria</strong> y el <strong>laúd</strong>:',
+        'titulo_alt': 'Los instrumentos de cuerda pulsada',
+        'clase': 'tm-fam-galeria--alta',
+        'dir_img': 'cuerda-pulsada',
+        'prefijo': 'Fotos de Wikimedia Commons (guitarra, ukelele y bajo, giradas y recortadas).',
+        'foto_def': None,   # el nombre del fichero es la clave de cada tarjeta
+        'items': [
+            ('guitarra', 'notas-de-la-guitarra', 'Guitarra', '6 cuerdas · Mi-La-Re-Sol-Si-Mi · suena una 8ª abajo'),
+            ('ukelele', 'notas-del-ukelele', 'Ukelele', '4 cuerdas · afinación reentrante'),
+            ('bajo-electrico', 'notas-del-bajo-electrico', 'Bajo eléctrico', '4 cuerdas · Mi-La-Re-Sol · suena una 8ª abajo'),
+            ('arpa', '/herramientas/afinador/arpa/', 'Arpa', '47 cuerdas · 7 pedales · sin trastes'),
+            ('mandolina', '/herramientas/afinador/mandolina/', 'Mandolina', '8 cuerdas en 4 pares · como el violín'),
+            ('banjo', '/herramientas/afinador/banjo/', 'Banjo', '5 cuerdas · parche · cuerda corta'),
+            ('bandurria', None, 'Bandurria', '12 cuerdas en 6 pares · con púa'),
+            ('laud', None, 'Laúd', '12 cuerdas en 6 pares · más grave'),
+        ],
+        'credito': {
+            'guitarra': ('<a href="https://commons.wikimedia.org/wiki/File:Gitara_klasyczna_C30M_firmy_Yamaha.jpg" rel="nofollow">muzyczny.pl</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>'),
+            'ukelele': ('<a href="https://commons.wikimedia.org/wiki/File:Concert_Ukulele.jpg" rel="nofollow">Lardyfatboy</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>'),
+            'bajo-electrico': ('<a href="https://commons.wikimedia.org/wiki/File:Gitara_basowa_PBG2T_sygn._Paul_Grey_firmy_Ibanez.jpg" rel="nofollow">muzyczny.pl</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>'),
+            'arpa': ('<a href="https://commons.wikimedia.org/wiki/File:Salvi_harp_Diana.jpg" rel="nofollow">N.S.M. s.p.a.</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>'),
+            'mandolina': ('<a href="https://commons.wikimedia.org/wiki/File:Neapolitan_mandolin_001.jpg" rel="nofollow">Villanueva</a>', 'dominio público'),
+            'banjo': ('<a href="https://commons.wikimedia.org/wiki/File:5string_banjo_deering_goodtime2.jpg" rel="nofollow">דג בלי מלח</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>'),
+            'bandurria': ('<a href="https://commons.wikimedia.org/wiki/File:Bandurria_arrunta.jpg" rel="nofollow">Soinuenea</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>'),
+            'laud': ('<a href="https://commons.wikimedia.org/wiki/File:Spaanse_Laud.png" rel="nofollow">Arent</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>'),
+        },
+    },
 }
 
 
@@ -120,16 +150,23 @@ def credito(carpeta, pagina):
     return autor, lic
 
 
-def tarjeta(carpeta, pagina, nombre, linea, foto='instrumento'):
+def tarjeta(carpeta, pagina, nombre, linea, foto='instrumento', dir_img=None):
+    """pagina: slug de diccionario-musical, ruta absoluta (empieza por «/») o None (sin enlace)."""
+    img = dir_img or carpeta
+    if pagina is None:
+        abre, cierra = '<div class="tm-fam-tarjeta">', '</div>'
+    else:
+        href = pagina if pagina.startswith('/') else '/diccionario-musical/%s/' % pagina
+        abre, cierra = '<a class="tm-fam-tarjeta" href="%s">' % href, '</a>'
     return (
-        '<li><a class="tm-fam-tarjeta" href="/diccionario-musical/%s/">'
+        '<li>%s'
         '<span class="tm-fam-foto"><picture><source type="image/webp" srcset="/assets/img/%s/%s.webp">'
         '<img src="/assets/img/%s/%s.jpg" alt="%s" loading="lazy" decoding="async"></picture></span>'
-        '<strong>%s</strong><span class="tm-fam-linea">%s</span></a></li>' % (pagina, carpeta, foto, carpeta, foto, html.escape(nombre), nombre, linea))
+        '<strong>%s</strong><span class="tm-fam-linea">%s</span>%s</li>' % (abre, img, foto, img, foto, html.escape(nombre), nombre, linea, cierra))
 
 
 def bloque(fam):
-    tarjetas = '\n'.join(tarjeta(*it, foto=fam.get('foto', {}).get(it[0], fam.get('foto_def', 'instrumento'))) for it in fam['items'])
+    tarjetas = '\n'.join(tarjeta(*it, foto=fam.get('foto', {}).get(it[0], fam.get('foto_def', 'instrumento') or it[0]), dir_img=fam.get('dir_img')) for it in fam['items'])
     cred = []
     for carpeta, pagina, nombre, _ in fam['items']:
         if 'ajenas' in fam and carpeta not in fam['ajenas']:
