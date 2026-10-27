@@ -9,7 +9,7 @@ a Commons y licencia), así que siempre coinciden con la fuente. Es idempotente:
   python tools/insert_galeria_familia.py metal            # solo muestra
   python tools/insert_galeria_familia.py metal --apply    # escribe
 
-Familias: metal. (Se irán añadiendo madera, cuerda, percusion.)
+Familias: metal, madera, cuerda, percusion.
 """
 import html
 import os
@@ -58,6 +58,43 @@ FAMILIAS = {
         # el saxofón se acredita con otra fórmula en su página («… Yamaha Corporation, CC BY-SA 4.0, vía Wikimedia Commons»)
         'credito': {'saxofon': ('<a href="https://commons.wikimedia.org/wiki/File:Yamaha_Saxophone_YAS-62.tif" rel="nofollow">Yamaha Corporation</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>')},
     },
+    'cuerda': {
+        'pagina': 'diccionario-musical/instrumentos-de-cuerda-frotada/index.html',
+        'ancla': '<h2>¿Qué es un instrumento de cuerda frotada?</h2>',
+        'lead': 'Del más agudo al más grave, los instrumentos de cuerda frotada son el <strong>violín</strong>, la <strong>viola</strong>, el <strong>violonchelo</strong> y el <strong>contrabajo</strong>:',
+        'titulo_alt': 'Los instrumentos de cuerda frotada',
+        'clase': 'tm-fam-galeria--alta',   # fotos altas (de frente y de perfil)
+        'items': [
+            ('violin', 'notas-del-violin', 'Violín', 'Clave de sol · bajo el mentón'),
+            ('viola', 'notas-de-la-viola', 'Viola', 'Clave de do · bajo el mentón'),
+            ('violonchelo', 'notas-del-violonchelo', 'Violonchelo', 'Clave de fa · sentado, con pica'),
+            ('contrabajo', 'notas-del-contrabajo', 'Contrabajo', 'Clave de fa · suena una 8ª abajo · de pie'),
+        ],
+    },
+    'percusion': {
+        'pagina': 'diccionario-musical/instrumentos-de-percusion-afinada/index.html',
+        'ancla': '<h2>Qué significa «afinada»</h2>',
+        'lead': 'Los siete instrumentos de percusión afinada son los <strong>timbales</strong>, el <strong>xilófono</strong>, la <strong>marimba</strong>, el <strong>vibráfono</strong>, la <strong>lira</strong>, las <strong>campanas tubulares</strong> y los <strong>crótalos</strong>:',
+        'titulo_alt': 'Los instrumentos de percusión afinada',
+        'clase': 'tm-fam-galeria--ancha',   # fotos apaisadas (teclados vistos desde arriba)
+        'prefijo': 'Fotos de Eduardo Escrig, salvo las que se indican.',
+        'foto_def': 'teclado',
+        'credito': {
+            'timbales': ('<a href="https://commons.wikimedia.org/wiki/File:Berliner_Pauken.jpg" rel="nofollow">Lefima GmbH</a>', '<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>'),
+            'crotalos': ('<a href="https://commons.wikimedia.org/wiki/File:Crotales_-_Paiste_brand.jpg" rel="nofollow">Xylosmygame</a>', '<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>'),
+        },
+        'ajenas': ['timbales', 'crotalos'],   # las demás son de Eduardo: solo se acreditan estas
+        'items': [
+            ('timbales', 'notas-de-los-timbales', 'Timbales', 'Parche · una nota cada vez, con pedal'),
+            ('xilofono', 'notas-del-xilofono', 'Xilófono', 'Láminas de madera · suena una 8ª arriba'),
+            ('marimba', 'notas-de-la-marimba', 'Marimba', 'Láminas de madera · no transpone'),
+            ('vibrafono', 'notas-del-vibrafono', 'Vibráfono', 'Láminas de metal · pedal y motor'),
+            ('lira', 'notas-del-glockenspiel', 'Lira', 'Láminas de acero · suena dos 8ª arriba'),
+            ('campanas', 'notas-de-las-campanas-tubulares', 'Campanas tubulares', 'Tubos · imitan el tañido de una torre'),
+            ('crotalos', 'notas-de-los-crotalos', 'Crótalos', 'Discos de bronce · suenan dos 8ª arriba'),
+        ],
+        'foto': {'timbales': 'juego-de-cinco', 'crotalos': 'juego-de-dos-octavas'},   # el resto es «teclado»
+    },
 }
 
 
@@ -83,23 +120,25 @@ def credito(carpeta, pagina):
     return autor, lic
 
 
-def tarjeta(carpeta, pagina, nombre, linea):
+def tarjeta(carpeta, pagina, nombre, linea, foto='instrumento'):
     return (
         '<li><a class="tm-fam-tarjeta" href="/diccionario-musical/%s/">'
-        '<span class="tm-fam-foto"><picture><source type="image/webp" srcset="/assets/img/%s/instrumento.webp">'
-        '<img src="/assets/img/%s/instrumento.jpg" alt="%s" loading="lazy" decoding="async"></picture></span>'
-        '<strong>%s</strong><span class="tm-fam-linea">%s</span></a></li>' % (pagina, carpeta, carpeta, html.escape(nombre), nombre, linea))
+        '<span class="tm-fam-foto"><picture><source type="image/webp" srcset="/assets/img/%s/%s.webp">'
+        '<img src="/assets/img/%s/%s.jpg" alt="%s" loading="lazy" decoding="async"></picture></span>'
+        '<strong>%s</strong><span class="tm-fam-linea">%s</span></a></li>' % (pagina, carpeta, foto, carpeta, foto, html.escape(nombre), nombre, linea))
 
 
 def bloque(fam):
-    tarjetas = '\n'.join(tarjeta(*it) for it in fam['items'])
+    tarjetas = '\n'.join(tarjeta(*it, foto=fam.get('foto', {}).get(it[0], fam.get('foto_def', 'instrumento'))) for it in fam['items'])
     cred = []
     for carpeta, pagina, nombre, _ in fam['items']:
+        if 'ajenas' in fam and carpeta not in fam['ajenas']:
+            continue
         autor, lic = fam.get('credito', {}).get(carpeta) or credito(carpeta, pagina)
         cred.append('%s: %s, %s' % (nombre, autor, lic))
     return (
         '%s\n<p>%s</p>\n\n<ul class="tm-fam-galeria%s" aria-label="%s">\n%s\n</ul>\n'
-        '<p class="tm-fam-creditos">Fotos de Wikimedia Commons. %s.</p>\n%s\n' % (INI, fam['lead'], (' ' + fam['clase']) if fam.get('clase') else '', fam['titulo_alt'], tarjetas, '; '.join(cred), FIN))
+        '<p class="tm-fam-creditos">%s %s.</p>\n%s\n' % (INI, fam['lead'], (' ' + fam['clase']) if fam.get('clase') else '', fam['titulo_alt'], tarjetas, fam.get('prefijo', 'Fotos de Wikimedia Commons.'), '; '.join(cred), FIN))
 
 
 def main():
