@@ -9,7 +9,8 @@ a Commons y licencia), así que siempre coinciden con la fuente. Es idempotente:
   python tools/insert_galeria_familia.py metal            # solo muestra
   python tools/insert_galeria_familia.py metal --apply    # escribe
 
-Familias: metal, madera, cuerda, percusion, pulsada.
+Familias: metal, madera, cuerda, percusion, pulsada, noafinada (esta última con GRUPOS: un subtítulo y una galería por grupo,
+y el bloque ya colocado en la página entre los marcadores).
 """
 import html
 import os
@@ -125,6 +126,68 @@ FAMILIAS = {
             'laud': ('<a href="https://commons.wikimedia.org/wiki/File:Spaanse_Laud.png" rel="nofollow">Arent</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>'),
         },
     },
+    'noafinada': {
+        'pagina': 'diccionario-musical/instrumentos-de-percusion-no-afinada/index.html',
+        'titulo_alt': 'Los instrumentos de percusión no afinada',
+        'clase': 'tm-fam-galeria--cuadro',   # fotos cuadradas (recortadas o con fondo difuminado)
+        'dir_img': 'percusion-no-afinada',
+        'prefijo': 'Fotos de Wikimedia Commons.',
+        'foto_def': None,
+        'grupos': [
+            ('De parche', [
+                ('caja', None, 'Caja', 'Dos parches · bordón · baquetas'),
+                ('bombo', None, 'Bombo', 'Parche grande · maza · el más grave'),
+                ('toms', None, 'Toms', 'Sin bordón · de agudo a grave'),
+                ('bongos', None, 'Bongós', 'Pareja de tambores · con las manos'),
+                ('congas', None, 'Congas', 'Tambor alto · con las manos'),
+                ('pandereta', None, 'Pandereta', 'Parche con sonajas · en la mano'),
+            ]),
+            ('De metal', [
+                ('platos', None, 'Platos', 'Par de platos · chocan'),
+                ('charles', None, 'Charles', 'Dos platos con pedal · batería'),
+                ('triangulo', None, 'Triángulo', 'Barra de acero · baqueta metálica'),
+                ('cencerro', None, 'Cencerro', 'Campana sin badajo · baqueta'),
+                ('tamtam', None, 'Tam-tam', 'Disco colgado · maza blanda'),
+            ]),
+            ('De madera', [
+                ('claves', None, 'Claves', 'Dos palos · se golpean entre sí'),
+                ('cajachina', None, 'Caja china', 'Bloque hueco · baqueta'),
+                ('castanuelas', None, 'Castañuelas', 'Dos conchas · con los dedos'),
+                ('latigo', None, 'Látigo', 'Dos tablas con bisagra · chasquido'),
+                ('matraca', None, 'Carraca', 'Rueda dentada · se hace girar'),
+            ]),
+            ('Sacudidos y raspados', [
+                ('maracas', None, 'Maracas', 'Par de bolas con semillas · se agitan'),
+                ('cascabeles', None, 'Cascabeles', 'Ristra de cascabeles · se agita'),
+                ('guiro', None, 'Güiro', 'Calabaza con muescas · se raspa'),
+            ]),
+            ('El conjunto: la batería', [
+                ('bateria', None, 'Batería', 'Bombo, caja, toms, charles y platos'),
+            ]),
+        ],
+        'credito': {
+            'caja': ('<a href="https://commons.wikimedia.org/wiki/File:Snare_drum_-_Vladimir_Morozov.jpg" rel="nofollow">Vladimir Morozov</a>', '<a href="https://creativecommons.org/licenses/by/2.0/" rel="nofollow">CC BY 2.0</a>'),
+            'bombo': ('<a href="https://commons.wikimedia.org/wiki/File:Mounted_concert_bass_drum.jpg" rel="nofollow">Yooperz</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>'),
+            'toms': ('<a href="https://commons.wikimedia.org/wiki/File:Tom-tom_12x8.jpg" rel="nofollow">Marco van den Hout</a>', '<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>'),
+            'bongos': ('<a href="https://commons.wikimedia.org/wiki/File:Bongos_Meinl_HB100-NT.jpg" rel="nofollow">muzyczny.pl</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>'),
+            'congas': ('<a href="https://commons.wikimedia.org/wiki/File:2006-06-03_Congas1.JPG" rel="nofollow">Stephan Czuratis</a>', '<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>'),
+            'pandereta': ('<a href="https://commons.wikimedia.org/wiki/File:Tambourine_-_1970s_-_Palace_of_the_Viceroy,_Tobolsk.jpg" rel="nofollow">Лапоть</a>', '<a href="https://creativecommons.org/publicdomain/zero/1.0/" rel="nofollow">CC0</a>'),
+            'platos': ('<a href="https://commons.wikimedia.org/wiki/File:Clash_cymbals.jpg" rel="nofollow">Andrewa</a>', '<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>'),
+            'charles': ('<a href="https://commons.wikimedia.org/wiki/File:Hi-hat.jpg" rel="nofollow">Wyglif</a>', 'dominio público'),
+            'triangulo': ('<a href="https://commons.wikimedia.org/wiki/File:Triangle_hg.jpg" rel="nofollow">Hannes Grobe</a>', '<a href="https://creativecommons.org/licenses/by/3.0/" rel="nofollow">CC BY 3.0</a>'),
+            'cencerro': ('<a href="https://commons.wikimedia.org/wiki/File:Cowbell-1.jpg" rel="nofollow">Michael Malak</a>', 'dominio público'),
+            'tamtam': ('<a href="https://commons.wikimedia.org/wiki/File:Gong_from_Nepal.jpg" rel="nofollow">Serg Childed</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>'),
+            'cascabeles': ('<a href="https://commons.wikimedia.org/wiki/File:Sleigh_Bells_Stick.jpg" rel="nofollow">Serg Childed</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>'),
+            'claves': ('<a href="https://commons.wikimedia.org/wiki/File:Claves_hornbeam_wood.jpg" rel="nofollow">Hnidopichwiki</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>'),
+            'cajachina': ('<a href="https://commons.wikimedia.org/wiki/File:Caixa_xinesa.jpg" rel="nofollow">Museu de la Música de Barcelona</a>', '<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>'),
+            'castanuelas': ('<a href="https://commons.wikimedia.org/wiki/File:Castanuelas1.jpg" rel="nofollow">TheMexican</a>', 'dominio público'),
+            'latigo': ('<a href="https://commons.wikimedia.org/wiki/File:Whip01.jpg" rel="nofollow">Foamposite</a>', '<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>'),
+            'matraca': ('<a href="https://commons.wikimedia.org/wiki/File:Purim_gragger.jpg" rel="nofollow">Yoninah</a>', 'dominio público'),
+            'maracas': ('<a href="https://commons.wikimedia.org/wiki/File:Maracas.jpg" rel="nofollow">Axel Heymann</a>', '<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>'),
+            'guiro': ('<a href="https://commons.wikimedia.org/wiki/File:Guiro_cubano.jpg" rel="nofollow">Miguel Andrade</a>', 'dominio público'),
+            'bateria': ('<a href="https://commons.wikimedia.org/wiki/File:OutsideBRX-15.JPG" rel="nofollow">TommySalami</a>', 'dominio público'),
+        },
+    },
 }
 
 
@@ -166,6 +229,16 @@ def tarjeta(carpeta, pagina, nombre, linea, foto='instrumento', dir_img=None):
 
 
 def bloque(fam):
+    if 'grupos' in fam:
+        clase = ' ' + fam['clase'] if fam.get('clase') else ''
+        partes, cred = [], []
+        for titulo, items in fam['grupos']:
+            tj = '\n'.join(tarjeta(*it, foto=fam.get('foto', {}).get(it[0], fam.get('foto_def', 'instrumento') or it[0]), dir_img=fam.get('dir_img')) for it in items)
+            partes.append('<h3>%s</h3>\n<ul class="tm-fam-galeria%s" aria-label="%s">\n%s\n</ul>' % (titulo, clase, html.escape(titulo), tj))
+            for carpeta, pagina, nombre, _ in items:
+                autor, lic = fam.get('credito', {}).get(carpeta) or credito(carpeta, pagina)
+                cred.append('%s: %s, %s' % (nombre, autor, lic))
+        return '%s\n%s\n<p class="tm-fam-creditos">%s %s.</p>\n%s\n' % (INI, '\n\n'.join(partes), fam.get('prefijo', ''), '; '.join(cred), FIN)
     tarjetas = '\n'.join(tarjeta(*it, foto=fam.get('foto', {}).get(it[0], fam.get('foto_def', 'instrumento') or it[0]), dir_img=fam.get('dir_img')) for it in fam['items'])
     cred = []
     for carpeta, pagina, nombre, _ in fam['items']:

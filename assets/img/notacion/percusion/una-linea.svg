@@ -1,0 +1,80 @@
+<svg id="i1y9vxcj" viewBox="0 0 273 52" width="417" height="79" role="img" xmlns="http://www.w3.org/2000/svg"><title>Un ritmo de caja escrito en un pentagrama de una sola línea con clave de percusión: una negra, dos corcheas, una negra y otra negra. Se lee solo el ritmo, porque la línea no representa una nota sino el instrumento.</title>
+   <defs>
+      <g id="E069-i1y9vxcj">
+         <path transform="scale(1,-1)" d="M13 252h110c7 0 13 -6 13 -13v-478c0 -7 -6 -13 -13 -13h-110c-7 0 -13 6 -13 13v478c0 7 6 13 13 13zM229 252h110c7 0 13 -6 13 -13v-478c0 -7 -6 -13 -13 -13h-110c-7 0 -13 6 -13 13v478c0 7 6 13 13 13z" />
+      </g>
+      <g id="E0A4-i1y9vxcj">
+         <path transform="scale(1,-1)" d="M0 -42c0 92 116 174 213 174c62 0 112 -33 112 -92c0 -88 -109 -173 -213 -173c-81 0 -112 48 -112 91z" />
+      </g>
+   </defs>
+   <style type="text/css">#i1y9vxcj g.ending, #i1y9vxcj g.fing, #i1y9vxcj g.reh, #i1y9vxcj g.tempo {font-weight:bold;}#i1y9vxcj g.dir, #i1y9vxcj g.dynam, #i1y9vxcj g.mNum {font-style:italic;}#i1y9vxcj g.label {font-weight:normal;}#i1y9vxcj ellipse, #i1y9vxcj path, #i1y9vxcj polygon, #i1y9vxcj polyline, #i1y9vxcj rect {stroke:currentColor}#i1y9vxcj g.cursor {fill:dodgerblue; color:dodgerblue;}#i1y9vxcj g.cursor.chord {fill:limegreen; color:limegreen;}</style>
+   <svg class="definition-scale" color="black" font-family="Times, serif" viewBox="0 0 6810 1280">
+      <g class="page-margin" transform="translate(100, 100)">
+         <g id="j10221ad" class="mdiv pageMilestone" />
+         <g id="k1ewpicr" class="score pageMilestone" />
+         <g id="t155t539" class="system">
+            <g id="x17ef5oj" class="section systemMilestone" />
+            <g id="y1varsmj" class="measure">
+               <g id="h3xyxih" class="staff">
+                  <path d="M0 540 L6616 540" stroke-width="13" />
+                  <g id="j1536pzv" class="clef">
+                     <use href="#E069-i1y9vxcj" transform="translate(90, 540) scale(0.72, 0.72)" />
+                  </g>
+                  <g id="k1sueftp" class="keySig" />
+                  <g id="ioyb5km" class="layer">
+                     <g id="una-linea-0-0" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-i1y9vxcj" transform="translate(613, 540) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="br4r7t6" class="stem">
+                           <path d="M622 570 L622 1020" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="kwtzm13" class="beam">
+                        <polygon points="2003,990 2931,990 2931,900 2003,900" />
+                        <g id="una-linea-0-1" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-i1y9vxcj" transform="translate(2003, 540) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="coykhqh" class="stem">
+                              <path d="M2012 570 L2012 972" stroke-width="18" />
+                           </g>
+                        </g>
+                        <g id="una-linea-0-2" class="note">
+                           <g class="notehead">
+                              <use href="#E0A4-i1y9vxcj" transform="translate(2913, 540) scale(0.72, 0.72)" />
+                           </g>
+                           <g id="d12sptw0" class="stem">
+                              <path d="M2922 570 L2922 972" stroke-width="18" />
+                           </g>
+                        </g>
+                     </g>
+                     <g id="una-linea-0-3" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-i1y9vxcj" transform="translate(3823, 540) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="e1abb2a0" class="stem">
+                           <path d="M3832 570 L3832 1020" stroke-width="18" />
+                        </g>
+                     </g>
+                     <g id="una-linea-0-4" class="note">
+                        <g class="notehead">
+                           <use href="#E0A4-i1y9vxcj" transform="translate(5213, 540) scale(0.72, 0.72)" />
+                        </g>
+                        <g id="feg78zs" class="stem">
+                           <path d="M5222 570 L5222 1020" stroke-width="18" />
+                        </g>
+                     </g>
+                  </g>
+               </g>
+               <g id="g40bvkb" class="barLine">
+                  <path d="M6603 360 L6603 720" stroke-width="27" />
+               </g>
+            </g>
+            <g id="w15mng5e" class="systemMilestoneEnd x17ef5oj" />
+         </g>
+         <g id="xzjuda" class="pageMilestoneEnd k1ewpicr" />
+         <g id="yfu6iyr" class="pageMilestoneEnd j10221ad" />
+      </g>
+   </svg>
+</svg>

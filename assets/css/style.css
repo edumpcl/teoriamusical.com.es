@@ -1361,3 +1361,6 @@ figcaption, .wp-element-caption {
 .tm-fam-galeria--ancha .tm-fam-foto { height: 120px; }
 .tm-fam-galeria--ancha .tm-fam-foto img { width: 100%; height: 100%; max-height: none; object-fit: cover; }
 .tm-fam-galeria div.tm-fam-tarjeta:hover { border-color: var(--border); box-shadow: var(--shadow-sm); transform: none; }
+.tm-fam-galeria--cuadro { grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); }
+.tm-fam-galeria--cuadro .tm-fam-foto { height: auto; aspect-ratio: 1 / 1; }
+.tm-fam-galeria--cuadro .tm-fam-foto img { width: 100%; height: 100%; max-height: none; object-fit: cover; }
