@@ -75,7 +75,7 @@ p{margin:0}
 .mus canvas{width:100%;max-width:80px;height:auto;aspect-ratio:3/4}
 .mus[aria-checked="true"]{border-color:var(--brass-d);background:#fff1c7}
 /* todas las tarjetas igual de anchas aunque el nombre sea largo (Bombardino, Violonchelo) */
-.mus{min-width:0} .mus span{max-width:100%;line-height:1.15;text-align:center;hyphens:manual}
+.mus{min-width:0} .mus span{max-width:100%;line-height:1.15;text-align:center;hyphens:manual;overflow-wrap:anywhere;font-size:12px}
 label.field{display:grid;gap:6px;font:800 16px var(--body)}
 input[type=text]{-webkit-user-select:text;user-select:text;font:800 20px var(--body);padding:10px 12px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);min-height:50px;width:100%}
 .seg{border:0;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
@@ -118,7 +118,7 @@ h3{margin:0;font:400 20px var(--display)}
 #v-menu .menuL > div:last-child,#v-result .colsL > div:last-child{order:1}
 @media (min-width:640px){
   .stage canvas{aspect-ratio:17/4}   /* VISTA_ANCHA (4,25:1); misma consulta que WIDE_MQ en el JS */
-  .menuL .picker{grid-template-columns:repeat(7,minmax(0,1fr))}   /* cada familia en una fila */
+  .menuL .picker{grid-template-columns:repeat(auto-fill,minmax(76px,1fr))}   /* cada familia en una fila */
   #v-menu{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);column-gap:24px;align-items:start}
   .menuL,.menuR{display:grid;gap:14px;align-content:start}
   /* el resto de pantallas del panel, también en 2 columnas (escuchar, cantar, resultado) */
