@@ -993,7 +993,7 @@ const MUNDO = { periodo: 'semana', datos: null, pedido: 0, toks: [] };
 const nivelMundial = () => rankDif();
 const fmtPts = x => Number(x).toLocaleString('es-ES') + ' pts';
 const apodoEscrito = () => ($('#nombre') ? $('#nombre').value.trim() : '');
-function jugadorId() {
+function jugadorId() {   // crea el identificador: solo se llama al publicar
   try {
     let id = localStorage.getItem('tm-jugador');
     if (!/^[a-f0-9]{24}$/.test(id || '')) {
@@ -1003,9 +1003,14 @@ function jugadorId() {
     return id;
   } catch (e) { return ''; }
 }
+/* Para CONSULTAR se usa el identificador solo si ya existe: no se guarda nada en el navegador hasta
+   que la persona publica (almacenamiento pedido por el usuario, exento de consentimiento). */
+function jugadorIdGuardado() {
+  try { const id = localStorage.getItem('tm-jugador'); return /^[a-f0-9]{24}$/.test(id || '') ? id : ''; } catch (e) { return ''; }
+}
 function cargarMundial() {
   const n = ++MUNDO.pedido;
-  fetch(API_MUNDIAL + '?juego=' + JUEGO_MUNDIAL + '&dif=' + nivelMundial() + '&jugador=' + jugadorId() + '&apodo=' + encodeURIComponent(apodoEscrito()))
+  fetch(API_MUNDIAL + '?juego=' + JUEGO_MUNDIAL + '&dif=' + nivelMundial() + '&jugador=' + jugadorIdGuardado() + '&apodo=' + encodeURIComponent(apodoEscrito()))
     .then(r => r.ok ? r.json() : Promise.reject(r.status))
     .then(d => { if (n === MUNDO.pedido) { MUNDO.datos = d; pintarMundial(); } })
     .catch(() => { if (n === MUNDO.pedido) $('#mundial').hidden = true; });
