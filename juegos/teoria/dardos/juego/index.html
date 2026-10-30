@@ -465,7 +465,8 @@ function drawDardero(c, m, x, y, o = {}) {
   limb(c, 8, -27, lR, 21, 11, TROUSER, { shoe: 1 });
   drawHead(c, m, o, t);
   limb(c, 18 * bw, -58, aF, 25, 10, SUIT, { hand: m.piel });
-  drawInstr(c, m, bw);
+  // al lanzar va sin instrumento (o.sinInstr); en el selector lo lleva y va sin dardo (released)
+  if (!o.sinInstr) drawInstr(c, m, bw);
   /* dardo en la mano trasera (se dibuja hasta que se suelta, encima del instrumento) */
   if (!o.released) {
     c.save();
@@ -854,7 +855,7 @@ function drawScene(now) {
   }
   const m = musicoActivo();
   const wind = S.fly ? clamp((now - S.fly.t0) / S.fly.dur, 0, 1) : 0.12;
-  drawDardero(c, m, 170, 388, { t: now / 1000, s: 1.2, dir: 1, wind: wind, released: !!S.fly });
+  drawDardero(c, m, 170, 388, { t: now / 1000, s: 1.2, dir: 1, wind: wind, released: !!S.fly, sinInstr: true });
 }
 /* Qué músico dibuja el lanzamiento: en multijugador, el del jugador a quien le toca
    (ya en juego, o a punto de lanzar en la pantalla de cambio de turno); fuera de eso
@@ -875,7 +876,7 @@ function miniAvatarCanvas(musicoIdx, boxW, boxH) {
   const cx = cv.getContext('2d');
   cx.scale(dpr, dpr);
   const k = boxH / 120;
-  drawDardero(cx, MUSICOS[musicoIdx] || MUSICOS[0], boxW * 0.5, boxH * 0.933, { s: 0.88 * k, dir: 1, t: 0.4, wind: 0.15 });
+  drawDardero(cx, MUSICOS[musicoIdx] || MUSICOS[0], boxW * 0.5, boxH * 0.933, { s: 0.88 * k, dir: 1, t: 0.4, wind: 0.15, released: true });
   return cv;
 }
 function frame(now) {
@@ -894,7 +895,7 @@ function buildPicker() {
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'mus'; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(i === S.musico));
     const cv = document.createElement('canvas'); cv.width = 180; cv.height = 240;
-    const cx = cv.getContext('2d'); cx.scale(2, 2); drawDardero(cx, m, 45, 112, { s: 0.88, dir: 1, t: 0.4, wind: 0.15 });
+    const cx = cv.getContext('2d'); cx.scale(2, 2); drawDardero(cx, m, 45, 112, { s: 0.88, dir: 1, t: 0.4, wind: 0.15, released: true });
     const sp = document.createElement('span'); sp.textContent = m.n;
     b.append(cv, sp);
     b.addEventListener('click', () => { S.musico = i; box.querySelectorAll('.mus').forEach((x, j) => x.setAttribute('aria-checked', String(j === i))); try { localStorage.setItem('dardos-musico', i); } catch (e) {} });

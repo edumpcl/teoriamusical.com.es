@@ -34,18 +34,40 @@ body{
 .seal b{font:400 28px var(--display)} .seal span{font:800 12px var(--body);text-transform:uppercase;letter-spacing:.08em}
 h1{margin:0;font:400 clamp(26px,4.6vw,42px)/1.05 var(--display);color:#fff;text-wrap:balance}
 .sub{margin:4px 0 0;color:#c4daed;font-size:16px}
-.game{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(330px,1fr);gap:16px;align-items:start}
-.stage{position:relative;border-radius:18px;overflow:hidden;border:4px solid #fff;background:#e3c991;box-shadow:0 8px 0 rgba(0,0,0,.35)}
-.stage canvas{display:block;width:100%;height:auto;aspect-ratio:1000/520}
+/* Cancha SIEMPRE arriba y panel SIEMPRE debajo, a todo el ancho, en cualquier tamaño de
+   pantalla (ya no hay un corte de 2 columnas lado a lado en escritorio): con el iframe
+   incrustado en el sitio real (~836px), 2 columnas dejaban el panel a ~330px de ancho,
+   comprimiendo tanto las tarjetas de "elige tu tiro" como el pentagrama de la pregunta
+   hasta verse diminutos y desproporcionados. En una sola columna, cancha y panel usan
+   SIEMPRE el ancho completo disponible. */
+.game{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+/* .stage (cancha + barra de tiros) se limita a 520px de ancho y se centra: a todo el ancho
+   del iframe real (~836px) la cancha salia desproporcionadamente alta (aspect-ratio 1000/520
+   del canvas => ~435px de alto) y empujaba la pregunta fuera de la pantalla sin hacer scroll.
+   .panel (la pregunta) SI sigue a todo el ancho (no lleva este limite), que es lo que de
+   verdad necesita el espacio.
+   OJO (misma trampa que .court mas abajo): tiene que ser `width` con un valor DEFINIDO
+   (min(520px,100%)), nunca `max-width` a secas con `margin:auto` — ese combo sin un width
+   explicito se calcula por shrink-to-fit, y .court (hijo) lleva container-type:inline-size,
+   que le niega al navegador el tamano del contenido. Con la barra de tiros oculta (pantalla
+   de la pregunta) .court queda como unico hijo visible y el shrink-to-fit lo colapsa a ~0:
+   la cancha entera desaparecia (8px de alto) solo en la pantalla de la pregunta. */
+.stage{position:relative;width:min(520px,100%);margin:0 auto;border-radius:18px;overflow:hidden;border:4px solid #fff;box-shadow:0 8px 0 rgba(0,0,0,.35)}
+/* .court envuelve el canvas + el HUD que cuelga encima (marcador, cronómetro, mensaje de
+   zona): container-type:inline-size vive AQUÍ, no en .stage, para que las unidades cqw de
+   ese HUD escalen siempre con el ancho REAL de la cancha dibujada — que en móvil se encoge
+   aparte (ver @media 520px más abajo) mientras .stage/.tirosPicker siguen a todo el ancho. */
+.court{position:relative;background:#e3c991;container-type:inline-size}
+.court canvas{display:block;width:100%;height:auto;aspect-ratio:1000/520}
 .hud{position:absolute;pointer-events:none}
-.hud-timer{left:12px;top:5%;width:clamp(58px,10vw,86px);aspect-ratio:1;border-radius:50%;
+.hud-timer{left:12px;top:5%;width:clamp(58px,10cqw,86px);aspect-ratio:1;border-radius:50%;
   background:conic-gradient(var(--brass) calc(var(--p)*1%),#fff 0);display:grid;place-content:center;border:3px solid var(--ink);text-align:center;line-height:1}
 .hud-timer::before{content:"";position:absolute;inset:7px;border-radius:50%;background:#fff;border:2px solid var(--ink)}
 .hud-timer span,.hud-timer small{position:relative}
-.hud-timer span{font:400 clamp(22px,4vw,34px) var(--display)} .hud-timer small{font:800 11px var(--body);margin-top:-2px}
-.hud-zone{inset:0;display:grid;place-content:center;font:400 clamp(40px,9vw,80px) var(--display);color:#fff;
+.hud-timer span{font:400 clamp(22px,4cqw,34px) var(--display)} .hud-timer small{font:800 11px var(--body);margin-top:-2px}
+.hud-zone{inset:0;display:grid;place-content:center;font:400 clamp(40px,9cqw,80px) var(--display);color:#fff;
   -webkit-text-stroke:5px var(--ink);paint-order:stroke fill;text-shadow:0 8px 0 rgba(20,33,61,.35);text-align:center}
-.hud-zone small{display:block;font:800 clamp(13px,2.3vw,19px) var(--body);-webkit-text-stroke:0;color:#fff;text-shadow:0 2px 0 rgba(20,33,61,.5)}
+.hud-zone small{display:block;font:800 clamp(13px,2.3cqw,19px) var(--body);-webkit-text-stroke:0;color:#fff;text-shadow:0 2px 0 rgba(20,33,61,.5)}
 .hud-zone.pop{animation:pop .4s ease-out}
 @keyframes pop{from{transform:scale(1.5);opacity:.1}to{transform:scale(1);opacity:1}}
 .panel{background:var(--paper);border-radius:18px;border:4px solid #fff;padding:18px;box-shadow:0 8px 0 rgba(0,0,0,.35);min-width:0}
@@ -95,31 +117,49 @@ input[type=text]{-webkit-user-select:text;user-select:text;font:800 20px var(--b
    crecer hacia abajo, que es justo donde está el tablero/aro/red. No lleva class
    "hud" (que es pointer-events:none) porque el desplazamiento horizontal con el dedo
    sí debe poder tocarse cuando hay muchos jugadores. */
-.scoreboard{position:absolute;top:0;left:calc(12px + clamp(58px,10vw,86px) + 6px);right:6px;
+.scoreboard{position:absolute;top:0;left:calc(12px + clamp(58px,10cqw,86px) + 6px);right:6px;
   display:flex;gap:3px;overflow-x:auto;scrollbar-width:none}
 .scoreboard::-webkit-scrollbar{display:none}
-.scoreboard .sb-row{flex:none;display:flex;align-items:center;gap:2px;background:#0b1222;
-  border:1px solid var(--ink);border-radius:4px;padding:0.5px 4px;box-shadow:0 1.5px 0 rgba(0,0,0,.35)}
+/* Escala proporcional con el ancho REAL de la cancha (cqw, ver container-type en .stage),
+   no con px fijos: con la cancha pequeña de móvil (260px) sale igual que antes (7px), pero
+   con la cancha grande de escritorio (~800px) crece con ella en vez de quedarse diminuta.
+   Patrón de UNA sola medida cqw que manda (font-size de .sb-row) y todo lo demás (padding,
+   radio, tamaños de texto hijos) en "em" relativo a ella — así escala en bloque sin tener
+   que convertir cada propiedad a cqw por separado, igual que el canvas usa un único factor
+   K para toda su escena. El tope superior (16px) evita que se vuelva desproporcionado en
+   un navegador muy ancho (en la práctica la cancha nunca pasa de ~720-760px: la limita el
+   ancho máximo de .app y el reparto de columnas de .game). */
+.scoreboard .sb-row{flex:none;display:flex;align-items:center;gap:0.3em;background:#0b1222;
+  font-size:clamp(7px,2.7cqw,16px);
+  border:1px solid var(--ink);border-radius:0.6em;padding:0.07em 0.6em;box-shadow:0 1.5px 0 rgba(0,0,0,.35)}
 .scoreboard .sb-row.activo{box-shadow:0 1.5px 0 rgba(0,0,0,.35),inset 0 0 0 1.5px var(--brass)}
-.scoreboard .sb-nm{color:#cfe3f5;font:800 7px var(--body);max-width:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.scoreboard .sb-pts{font:400 10px var(--display);color:#ffb020;text-shadow:0 0 3px rgba(255,176,32,.55)}
+.scoreboard .sb-nm{color:#cfe3f5;font:800 1em var(--body);max-width:7.2em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.scoreboard .sb-pts{font:400 1.43em var(--display);color:#ffb020;text-shadow:0 0 3px rgba(255,176,32,.55)}
 /* Marcador "A vs B": solo con exactamente 2 jugadores (renderScoreboard pone .vs). Un
    color de acento distinto por jugador (borde izquierdo) para diferenciar sin ningún
    texto "VS" (lo descartó Eduardo); el aro dorado de .activo se mantiene y se combina
    con el color de equipo en vez de sustituirlo (border-left vs box-shadow, propiedades
    CSS distintas). Con 3+ jugadores no se añade .vs: misma fila compacta, solo con más
-   chips (se desplaza en horizontal si no caben).   */
+   chips (se desplaza en horizontal si no caben). Tamaños también en em, igual que arriba. */
 .scoreboard.vs{justify-content:flex-end}
-.scoreboard.vs .sb-row{border-left:3px solid transparent;padding-left:4px}
+.scoreboard.vs .sb-row{border-left:0.43em solid transparent;padding-left:0.6em}
 .scoreboard.vs .sb-row:nth-child(1){border-left-color:#2f6fe4}
 .scoreboard.vs .sb-row:nth-child(2){border-left-color:#c93a2d}
-.scoreboard.vs .sb-nm{max-width:70px}
-.scoreboard.vs .sb-pts{font-size:11px}
-.tirosPicker{display:grid;gap:10px}
-.tiroBtn{display:grid;gap:2px;text-align:left;padding:12px 16px}
-.tiroBtn .tb-nm{font:400 23px var(--display)}
-.tiroBtn .tb-pts{font:800 13px var(--body);color:#5c4000}
-.tiroBtn .tb-desc{font:700 12px var(--body);color:var(--mute)}
+.scoreboard.vs .sb-nm{max-width:10em}
+.scoreboard.vs .sb-pts{font-size:1.57em}
+/* Barra de "elige tu tiro" integrada DENTRO de la propia cancha (vive en .stage, debajo de
+   .court, no en .panel): .stage ya recorta las esquinas (overflow:hidden+border-radius), así
+   que esta barra sale con las esquinas inferiores redondeadas gratis, como una sola pieza con
+   la cancha de arriba. Las 3 tarjetas van en fila (no apiladas) para que quepan sin alargar
+   la barra. Se oculta/muestra por completo con [hidden] (showShotPicker/showView). */
+.tirosPicker{background:var(--paper);padding:10px 10px 14px;display:grid;gap:8px}
+.tp-kicker{margin:0;text-align:center;font:800 12px var(--body);text-transform:uppercase;letter-spacing:.06em;color:var(--mute)}
+.tp-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tiroBtn{display:grid;gap:2px;text-align:center;padding:10px 4px;background:#fff;border:3px solid var(--ink);border-radius:12px;cursor:pointer;font:inherit;color:inherit;transition:transform .05s}
+.tiroBtn:active{transform:translateY(2px)}
+.tiroBtn .tb-nm{font:400 18px var(--display)}
+.tiroBtn .tb-pts{font:800 11px var(--body);color:#5c4000}
+.tiroBtn .tb-desc{font:700 10px var(--body);color:var(--mute)}
 .ranking{list-style:none;margin:0;padding:0;display:grid;gap:5px}
 .ranking li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px 12px;border-radius:10px;background:#fff;font:800 17px var(--body)}
 .ranking li.ganador{background:#fff1c7;outline:3px solid var(--brass)}
@@ -140,13 +180,27 @@ h3{margin:0;font:400 20px var(--display)}
 .distance{display:flex;align-items:baseline;gap:8px;font:400 76px/0.95 var(--display)} .distance small{font-size:30px}
 .foot{color:#9fb6cf;font-size:15px}
 .foot .link{color:#c4daed}
-@media (max-width:900px){
-  .game{grid-template-columns:minmax(0,1fr)}
-  /* Móvil: la cancha vuelve a ir ARRIBA del todo, en su orden natural (ya no se reordena con
-     `order`: el marcador ya no es un bloque aparte que empuje las opciones fuera de pantalla,
-     ahora vive integrado dentro de la propia cancha). Se mantiene más pequeña para que, junto al
-     pentagrama de dos líneas y las 4 opciones, siga cabiendo todo sin apenas scroll. */
-  .stage{max-width:260px;margin:0 auto}
+/* Cancha compacta solo en móviles de verdad (≤520px): como .stage/.tirosPicker ya van
+   siempre a todo el ancho (ver .game más arriba), aquí solo se encoge el DIBUJO de la
+   cancha (.court) para dejar más alto libre al pentagrama de dos líneas + las 4 opciones
+   que vienen justo debajo, sin apenas scroll. La barra de tiros y el panel de la pregunta
+   NO se encogen, solo .court.
+   OJO (trampa real, ya picada una vez): `width` tiene que ser un valor FIJO (260px), nunca
+   `max-width` a secas con `margin:0 auto` — con `container-type:inline-size` (ver .court más
+   arriba), un ancho "auto" centrado con margin:auto se calcula por "shrink-to-fit", que
+   necesita el tamaño del CONTENIDO — y la containment se lo niega, así que el navegador lo
+   resuelve a prácticamente 0 y la cancha entera desaparece. Con `width:260px` fijo no hace
+   falta mirar el contenido: ya no depende de shrink-to-fit. */
+@media (max-width:520px){
+  .court{width:260px;max-width:100%;margin:0 auto}
+}
+/* Escritorio: la cancha ocupa todo el ancho (como la pregunta) con un encuadre panorámico
+   4:1 (VISTA_ANCHA en el JS: más pista a los lados, sin el cielo de arriba), así que es
+   más ancha pero no más alta y la pregunta sigue cabiendo sin scroll. Misma consulta que
+   WIDE_MQ en el JS. */
+@media (min-width:640px){
+  .stage{width:100%}
+  .court canvas{aspect-ratio:1560/390}
 }
 @media (prefers-reduced-motion:reduce){.hud-zone.pop{animation:none}}
 </style>
@@ -156,10 +210,19 @@ h3{margin:0;font:400 20px var(--display)}
 
   <main class="game">
     <section class="stage" aria-label="Pista de baloncesto">
-      <canvas id="scene" width="1000" height="520" role="img" aria-label="Un músico de la banda lanza un tiro a una canasta"></canvas>
-      <div class="hud hud-timer" id="hudTimer" hidden style="--p:100"><span id="hudSecs">9</span><small>seg</small></div>
-      <div class="scoreboard" id="scoreboard" hidden></div>
-      <div class="hud hud-zone" id="hudZone" hidden></div>
+      <div class="court">
+        <canvas id="scene" width="1000" height="520" role="img" aria-label="Un músico de la banda lanza un tiro a una canasta"></canvas>
+        <div class="hud hud-timer" id="hudTimer" hidden style="--p:100"><span id="hudSecs">9</span><small>seg</small></div>
+        <div class="scoreboard" id="scoreboard" hidden></div>
+        <div class="hud hud-zone" id="hudZone" hidden></div>
+      </div>
+      <!-- ELEGIR TIPO DE TIRO: integrada dentro de la propia cancha (no en .panel), para que
+           cancha+tarjetas se vean como una sola pieza a todo el ancho en vez de un panel
+           lateral estrecho. Se oculta/muestra con showShotPicker()/showView(). -->
+      <div class="tirosPicker" id="tirosPicker" hidden>
+        <p class="tp-kicker" id="tiroKicker"></p>
+        <div class="tp-cards" id="tirosCards"></div>
+      </div>
     </section>
 
     <aside class="panel">
@@ -188,14 +251,6 @@ h3{margin:0;font:400 20px var(--display)}
         <h2 id="turnoNombre"></h2>
         <p class="muted">Pasad el turno a esta persona y pulsad «¡Tirar!» cuando esté lista.</p>
         <button class="btn" id="btnLanzar">¡Tirar!</button>
-      </section>
-
-      <!-- ELEGIR TIPO DE TIRO (antes de cada pregunta) -->
-      <section class="view" id="v-tiro" hidden>
-        <p class="kicker" id="tiroKicker">Tiro 1/9</p>
-        <h2>Elige tu tiro</h2>
-        <p class="muted">Cuanto más difícil el tiro, más tonalidades posibles, menos tiempo y más puntos si aciertas.</p>
-        <div class="tirosPicker" id="tirosPicker"></div>
       </section>
 
       <!-- JUGAR -->
@@ -668,13 +723,14 @@ function drawTirador(c, m, x, y, o = {}) {
   limb(c, 8, -27, lR, 21, 11, TROUSER, { shoe: 1 });
   drawHead(c, m, o, t);
   limb(c, 18 * bw, -58, aF, 25, 10, SUIT, { hand: m.piel });
-  drawInstr(c, m, bw);
+  // al tirar va sin instrumento (o.sinInstr); en el selector lo lleva y va sin balon (released)
+  if (!o.sinInstr) drawInstr(c, m, bw);
   /* balón en las manos (se dibuja hasta que se suelta, encima del instrumento) */
   if (!o.released) {
     c.save();
     c.translate(-18 * bw, -58); c.rotate(aB);
-    c.translate(0, 25 + 7);
-    drawBall(c, 0, 0, 0.85);
+    c.translate(0, 25 + 5);
+    drawBall(c, 0, 0, BALL_K / 1.2);   // mismo tamaño en pantalla que en vuelo (el tirador va a s=1.2)
     c.restore();
   }
   c.restore();
@@ -702,7 +758,13 @@ function drawBall(c, x, y, k = 1, rot = 0) {
    sí determina los puntos es el TIPO DE TIRO elegido antes de la pregunta
    (TIROS: libre=1/de2=2/triple=3, ver answer()), igual que en un partido real.
    ============================================================ */
-const BOARD = { cx: 740, cy: 235, rx: 95, ry: 26 };
+/* Una sola escala (px por metro) para tablero, aro y balon, con sus medidas reales entre
+   si: tablero 1,80 x 1,05 m, aro de 45 cm (1/4 del ancho del tablero), balon de 24 cm
+   (algo mas de la mitad del aro). Un poco mayor que la de la cancha a esa profundidad
+   (~54 px/m) para que el aro y el balon se sigan viendo en movil. */
+const HOOP_S = 80;
+const BOARD = { cx: 740, cy: 235, rx: 0.225 * HOOP_S, ry: 0.225 * HOOP_S * 0.27 };
+const BALL_K = (0.12 * HOOP_S) / 11;   // drawBall dibuja un radio base de 11
 const ZONES = [
   { id: 'red',     lbl: '¡SOLO RED!'    },
   { id: 'tablero', lbl: 'CON TABLERO'   },
@@ -713,34 +775,96 @@ const ZONES = [
 /* Zona de entrada puramente decorativa en un acierto: da igual cuál salga,
    los puntos ya los fija el tipo de tiro elegido (ver answer()). */
 function randomMakeZone() { return ZONES[Math.floor(Math.random() * 4)]; }
+/* Suelo: foto CC0 de una cancha real (Wikideas1, Wikimedia Commons, «NBA basketball court
+   perspective top view»), vista cenital deformada en perspectiva por calculo (homografia)
+   para verla desde la banda: asi todas las lineas de la pista cuadran solas. La imagen se
+   genera fuera del juego; VP es su punto de fuga y FLOOR_Y la fila donde empieza, y la
+   canasta se dibuja con ese mismo punto de fuga para compartir camara con el suelo. */
+const VP = { x: 443, y: 230 };
+const FLOOR_Y = 338, HOOP_FLOOR_Y = 393;   // fila del suelo bajo el aro (a media profundidad)
+/* Encuadre de la escena (en coordenadas logicas): en movil la escena entera de 1000x520; en
+   escritorio un encuadre panoramico 4:1 que enseña mas pista a izquierda y derecha y recorta
+   el cielo de arriba, con su propia imagen de suelo (generada con el mismo script). */
+const VISTA = { x: 0, y: 0, w: W, h: H, src: '/assets/img/juegos/baloncesto/cancha.webp?v=1' };
+const VISTA_ANCHA = { x: -330, y: 130, w: 1560, h: 390, src: '/assets/img/juegos/baloncesto/cancha-ancha.webp?v=1' };
+const WIDE_MQ = matchMedia('(min-width:640px)');
+let V = VISTA;
+const CANCHA = new Image();
+function drawFloor(c) {
+  // pared del pabellon: banda acolchada oscura justo encima del suelo
+  c.fillStyle = '#22406e'; c.fillRect(V.x, FLOOR_Y - 40, V.w, 40);
+  c.fillStyle = 'rgba(255,255,255,.18)'; c.fillRect(V.x, FLOOR_Y - 40, V.w, 3);
+  if (CANCHA.complete && CANCHA.naturalWidth && CANCHA.src.endsWith(V.src)) c.drawImage(CANCHA, V.x, FLOOR_Y, V.w, H - FLOOR_Y);
+  else { c.fillStyle = '#b8895a'; c.fillRect(V.x, FLOOR_Y, V.w, H - FLOOR_Y); }
+}
 function drawBoard(c) {
   const { cx, cy, rx, ry } = BOARD;
-  // poste, desde justo debajo del aro hasta el suelo
-  c.save(); c.shadowColor = 'rgba(20,33,61,.3)'; c.shadowOffsetY = 6;
-  rrect(c, cx - 10, cy + ry + 8, 20, 131, 6); paint(c, '#6b4a2e', 3);
-  c.restore();
-  // tablero: rectangulo blanco, con la "caja" naranja marcada dentro (como en una canasta real)
-  const bx = cx - 115, by = cy - 150, bw = 230, bh = 130;
-  rrect(c, bx, by, bw, bh, 10); paint(c, '#fdfcf9', 3);
-  c.lineWidth = 5; c.strokeStyle = '#f4722b';
-  c.strokeRect(cx - 45, by + 55, 90, 55);
+  // Canasta vista de lado, con el mismo punto de fuga que el suelo: los cantos del tablero
+  // que se alejan en profundidad convergen hacia VP. pr() lleva un punto del plano del aro
+  // hacia delante (m>1) o hacia el fondo (m<1).
+  const pr = (x, y, m) => ({ x: VP.x + (x - VP.x) * m, y: VP.y + (y - VP.y) * m });
+  const lp = (a, b, k) => ({ x: mix(a.x, b.x, k), y: mix(a.y, b.y, k) });
+  const SB = HOOP_S;                                // px por metro del tablero
+  const yB = cy + 0.15 * SB, yT = yB - 1.05 * SB;   // el aro va 15 cm por encima del borde inferior
+  const xb = cx + rx + 0.15 * SB;                   // cara del tablero, detras del aro
+  const NT = pr(xb, yT, 1.16), NB = pr(xb, yB, 1.16), FT = pr(xb, yT, 0.86), FB = pr(xb, yB, 0.86);
+  const bp = (s, t) => lp(lp(FB, NB, s), lp(FT, NT, s), t); // s: fondo->cerca, t: abajo->arriba
+  // sombras en el suelo (ancla la canasta y la base a la pista)
+  c.fillStyle = 'rgba(20,20,30,.22)';
+  c.beginPath(); c.ellipse(cx + 40, HOOP_FLOOR_Y + 2, 80, 7, 0, 0, 7); c.fill();
+  // soporte: base acolchada detras de la linea de fondo, poste y brazo hasta el tablero
+  const poleX = NB.x + 40, padTop = 372, padBot = 404;
+  // caja vista desde delante-izquierda: cara de arriba y cara izquierda se alejan hacia VP
+  const fTL = { x: poleX - 34, y: padTop }, fTR = { x: poleX + 34, y: padTop }, fBL = { x: poleX - 34, y: padBot };
+  const bTL = pr(fTL.x, fTL.y, 0.95), bTR = pr(fTR.x, fTR.y, 0.95), bBL = pr(fBL.x, fBL.y, 0.95);
+  c.beginPath(); c.moveTo(fTL.x, fTL.y); c.lineTo(bTL.x, bTL.y); c.lineTo(bBL.x, bBL.y); c.lineTo(fBL.x, fBL.y); c.closePath();
+  paint(c, '#1a3157', 2.5);
+  c.beginPath(); c.moveTo(fTL.x, fTL.y); c.lineTo(bTL.x, bTL.y); c.lineTo(bTR.x, bTR.y); c.lineTo(fTR.x, fTR.y); c.closePath();
+  paint(c, '#3a5a8c', 2.5);
+  rrect(c, poleX - 34, padTop, 68, padBot - padTop, 3); paint(c, '#22406e', 2.5);
+  const poleTop = yT + 30;
+  rrect(c, poleX - 5, poleTop, 10, padTop - poleTop + 4, 3); paint(c, '#3b3f45', 2.2);
+  c.beginPath();
+  c.moveTo(poleX, poleTop + 6); c.lineTo(xb + 8, (yT + yB) / 2 - 6);
+  c.lineTo(xb + 8, (yT + yB) / 2 + 4); c.lineTo(poleX, poleTop + 17); c.closePath();
+  paint(c, '#3b3f45', 2);
+  // tablero en perspectiva (canto grueso a la derecha) y su recuadro
+  c.beginPath(); c.moveTo(NT.x, NT.y); c.lineTo(NT.x + 6, NT.y + 2); c.lineTo(NB.x + 6, NB.y + 1); c.lineTo(NB.x, NB.y); c.closePath();
+  paint(c, '#9aa3ad', 2);
+  c.beginPath(); c.moveTo(FT.x, FT.y); c.lineTo(NT.x, NT.y); c.lineTo(NB.x, NB.y); c.lineTo(FB.x, FB.y); c.closePath();
+  paint(c, '#fdfcf9', 2.5);
+  const b0 = bp(0.336, 0.143), b1 = bp(0.664, 0.143), b2 = bp(0.664, 0.571), b3 = bp(0.336, 0.571);
+  c.beginPath(); c.moveTo(b0.x, b0.y); c.lineTo(b1.x, b1.y); c.lineTo(b2.x, b2.y); c.lineTo(b3.x, b3.y); c.closePath();
+  c.lineWidth = 3; c.strokeStyle = '#f4722b'; c.lineJoin = 'round'; c.stroke();
+  // anclaje del aro al tablero
+  const anc = bp(0.5, 0.143);
+  c.lineWidth = 3.5; c.strokeStyle = '#c2531a'; c.lineCap = 'round';
+  c.beginPath(); c.moveTo(cx + rx - 2, cy); c.lineTo(anc.x, anc.y); c.stroke();
   // aro: una elipse achatada (vista en perspectiva), no un circulo; una segunda elipse
   // interior mas oscura sugiere el grosor del tubo, sin rellenar el interior del aro
   c.lineCap = 'round';
-  c.lineWidth = 9; c.strokeStyle = '#f4722b';
+  c.lineWidth = 4.5; c.strokeStyle = '#f4722b';
   c.beginPath(); c.ellipse(cx, cy, rx, ry, 0, 0, 7); c.stroke();
-  c.lineWidth = 5; c.strokeStyle = '#c2531a';
+  c.lineWidth = 2.2; c.strokeStyle = '#c2531a';
   c.beginPath(); c.ellipse(cx, cy, rx * 0.86, ry * 0.7, 0, 0, 7); c.stroke();
+}
+/* Borde delantero del aro + red: se pintan DESPUES del balon (ver drawScene), para que al
+   entrar el balon pase por dentro del aro y quede detras de la red, no por encima. */
+function drawRimFront(c) {
+  const { cx, cy, rx, ry } = BOARD;
+  c.lineCap = 'round';
+  c.lineWidth = 4.5; c.strokeStyle = '#f4722b';
+  c.beginPath(); c.ellipse(cx, cy, rx, ry, 0, 0, Math.PI); c.stroke();
   // red: cono de hilos desde todo el borde del aro hasta una elipse mas pequena debajo,
-  // mas 2 "anillos" horizontales que cruzan los hilos (como teje una red real)
-  const netBy = cy + ry * 2.6, netRx = rx * 0.42, netRy = ry * 0.42, N = 12;
+  // mas 2 "anillos" horizontales que cruzan los hilos (como teje una red real); 42 cm de largo
+  const netBy = cy + 0.42 * HOOP_S, netRx = rx * 0.55, netRy = ry * 0.55, N = 12;
   const top = [], bot = [];
   for (let i = 0; i < N; i++) {
     const a = (Math.PI * 2 * i) / N;
     top.push({ x: cx + Math.cos(a) * rx, y: cy + Math.sin(a) * ry });
     bot.push({ x: cx + Math.cos(a) * netRx, y: netBy + Math.sin(a) * netRy });
   }
-  c.lineWidth = 1.6; c.strokeStyle = '#cfd6df';
+  c.lineWidth = 1.2; c.strokeStyle = '#cfd6df';
   for (let i = 0; i < N; i++) { c.beginPath(); c.moveTo(top[i].x, top[i].y); c.lineTo(bot[i].x, bot[i].y); c.stroke(); }
   [0.35, 0.68].forEach(function (k) {
     c.beginPath();
@@ -751,9 +875,6 @@ function drawBoard(c) {
     }
     c.stroke();
   });
-  // linea de tiro libre en el suelo, a los pies del tirador
-  c.lineWidth = 3; c.strokeStyle = '#fff7e0';
-  c.beginPath(); c.moveTo(130, 412); c.lineTo(300, 412); c.stroke();
 }
 /* Trayectoria del balon SEGUN LA ZONA: en vez de un punto de impacto en un anillo (como
    en Dardos), cada zona es una ruta distinta de 1 a 3 tramos (cada tramo con su propia
@@ -765,8 +886,8 @@ function buildFlight(zone) {
   const { cx, cy, rx, ry } = BOARD;
   const HAND = { x: 250, y: 266 };
   const rimC = { x: cx, y: cy };
-  const netBottom = { x: cx, y: cy + ry * 2.6 };
-  const backboardHit = { x: cx + rx * 0.12, y: cy - ry * 4.4 };
+  const netBottom = { x: cx, y: cy + 0.42 * HOOP_S };
+  const backboardHit = { x: cx + rx + 3, y: cy - 0.3 * HOOP_S };   // cara del tablero, vista de lado
   const rimEdgeAro = { x: cx - rx * 0.92, y: cy + ry * 0.3 };
   const rimEdgeRaspa = { x: cx - rx * 0.55, y: cy + ry * 0.75 };
   let tramos;
@@ -784,21 +905,21 @@ function buildFlight(zone) {
   } else if (zone.id === 'aro') {
     tramos = [
       { to: rimEdgeAro, dur: 400, arc: 85 },
-      { to: { x: rimEdgeAro.x + 16, y: rimEdgeAro.y - 11 }, dur: 90, arc: 0 },
+      { to: { x: rimEdgeAro.x + rx * 0.6, y: rimEdgeAro.y - rx * 0.4 }, dur: 90, arc: 0 },
       { to: netBottom, dur: 170, arc: 0 }
     ];
   } else if (zone.id === 'raspa') {
     tramos = [
       { to: rimEdgeRaspa, dur: 400, arc: 90 },
-      { to: { x: rimEdgeRaspa.x + 7, y: rimEdgeRaspa.y - 3 }, dur: 60, arc: 0 },
+      { to: { x: rimEdgeRaspa.x + rx * 0.3, y: rimEdgeRaspa.y - rx * 0.12 }, dur: 60, arc: 0 },
       { to: netBottom, dur: 170, arc: 0 }
     ];
   } else {
     // fuera: no entra. Pasa de largo por un lado, por arriba o corto, sin rebotar en nada.
     const misses = [
-      { x: cx - rx * 2.3, y: cy + 10 },     // se queda corto, delante del aro
-      { x: cx + rx * 2.2, y: cy - ry * 3 },  // demasiado largo, pasa por encima
-      { x: cx + rx * 1.9, y: cy + 60 }       // se va lateral
+      { x: cx - 170, y: cy + 10 },          // se queda corto, delante del aro
+      { x: cx + 120, y: cy - 110 },         // demasiado largo, pasa por encima del tablero
+      { x: cx + 25, y: cy + 150 }           // se queda corto por debajo del aro
     ];
     tramos = [{ to: misses[Math.floor(Math.random() * misses.length)], dur: 480, arc: 70 }];
   }
@@ -868,7 +989,14 @@ function track(evento, params) {
   try { if (window.parent && window.parent !== window) window.parent.postMessage({ tmJuego: true, evento: evento, params: Object.assign({ juego: 'baloncesto' }, params) }, location.origin); } catch (e) {}
 }
 
-function showView(n) { document.querySelectorAll('.view').forEach(v => { v.hidden = v.id !== 'v-' + n; }); }
+/* Cualquier cambio de vista "normal" (menú/turno/pregunta/resultado) vive en .panel y
+   siempre implica volver a dejar la barra de tiros (dentro de la cancha) oculta y el panel
+   visible — solo showShotPicker() hace lo contrario (ver más abajo). */
+function showView(n) {
+  document.querySelectorAll('.view').forEach(v => { v.hidden = v.id !== 'v-' + n; });
+  $('.panel').hidden = false;
+  $('#tirosPicker').hidden = true;
+}
 
 function parsedNumJugadores() {
   let n = parseInt($('#numJugadores').value, 10);
@@ -984,7 +1112,11 @@ function showTurnChange() {
    la pregunta (TIROS.maxAlt/time) y los puntos si acierta (TIROS.pts, ver answer()). */
 function showShotPicker() {
   S.state = 'tiro';
-  showView('tiro');
+  // No usa showView(): la barra de tiros vive DENTRO de la cancha (.stage), no en .panel,
+  // así que aquí se invierte a propósito lo que showView() deja siempre al salir (panel
+  // visible / tirosPicker oculto).
+  $('.panel').hidden = true;
+  $('#tirosPicker').hidden = false;
   $('#hudTimer').hidden = true;
   renderScoreboard();
   const nombre = S.numJugadores > 1 ? S.jugadores[S.turnoActual].nombre + ' · ' : '';
@@ -992,11 +1124,11 @@ function showShotPicker() {
   renderTirosPicker();
 }
 function renderTirosPicker() {
-  const box = $('#tirosPicker');
+  const box = $('#tirosCards');
   box.replaceChildren();
   TIROS.forEach(t => {
     const b = document.createElement('button');
-    b.type = 'button'; b.className = 'btn tiroBtn';
+    b.type = 'button'; b.className = 'tiroBtn';
     const nm = document.createElement('span'); nm.className = 'tb-nm'; nm.textContent = t.lbl;
     const pts = document.createElement('span'); pts.className = 'tb-pts'; pts.textContent = t.pts + (t.pts === 1 ? ' punto' : ' puntos');
     const desc = document.createElement('span'); desc.className = 'tb-desc'; desc.textContent = t.desc;
@@ -1148,19 +1280,21 @@ function finishMulti() {
 const cvs = $('#scene'), ctx = cvs.getContext('2d');
 let K = 1;
 function resize() {
-  const dpr = Math.min(2, window.devicePixelRatio || 1), w = cvs.clientWidth || W;
-  cvs.width = Math.round(w * dpr); cvs.height = Math.round(w * dpr * H / W); K = cvs.width / W;
+  V = WIDE_MQ.matches ? VISTA_ANCHA : VISTA;
+  if (!CANCHA.src.endsWith(V.src)) CANCHA.src = V.src;
+  const dpr = Math.min(2, window.devicePixelRatio || 1), w = cvs.clientWidth || V.w;
+  cvs.width = Math.round(w * dpr); cvs.height = Math.round(w * dpr * V.h / V.w); K = cvs.width / V.w;
 }
 new ResizeObserver(resize).observe(cvs); resize();
 
 function drawScene(now) {
-  const c = ctx; c.setTransform(K, 0, 0, K, 0, 0);
+  const c = ctx; c.setTransform(K, 0, 0, K, -V.x * K, -V.y * K);
   const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#f3e4c0'); g.addColorStop(1, '#d9b872');
-  c.fillStyle = g; c.fillRect(0, 0, W, H);
-  c.fillStyle = '#c9a05a'; c.fillRect(0, 400, W, H - 400);
+  c.fillStyle = g; c.fillRect(V.x, V.y, V.w, V.h);
+  drawFloor(c);
   drawBoard(c);
   // balones que ya han caido en este turno (pequenos, donde haya acabado cada tiro)
-  for (const d of S.stuck) { c.save(); c.translate(d.x, d.y); drawBall(c, 0, 0, 0.55); c.restore(); }
+  for (const d of S.stuck) { c.save(); c.translate(d.x, d.y); drawBall(c, 0, 0, BALL_K * 0.7); c.restore(); }
   // balon en vuelo: recorre los tramos de S.fly.segs (ver buildFlight), cada uno con su
   // propia duracion y altura de arco (arco 0 = tramo recto, un rebote/roce corto)
   if (S.fly) {
@@ -1173,11 +1307,12 @@ function drawScene(now) {
     const u = clamp(seg.dur ? segElapsed / seg.dur : 1, 0, 1);
     const x = mix(seg.from.x, seg.to.x, u);
     const yy = mix(seg.from.y, seg.to.y, u) - (seg.arc || 0) * Math.sin(Math.PI * u);
-    drawBall(c, x, yy, 1, elapsed / 130);
+    drawBall(c, x, yy, BALL_K, elapsed / 130);
   }
+  drawRimFront(c);
   const m = musicoActivo();
   const wind = S.fly ? clamp((now - S.fly.t0) / 350, 0, 1) : 0.12;
-  drawTirador(c, m, 170, 412, { t: now / 1000, s: 1.2, dir: 1, wind: wind, released: !!S.fly });
+  drawTirador(c, m, 170, 412, { t: now / 1000, s: 1.2, dir: 1, wind: wind, released: !!S.fly, sinInstr: true });
 }
 /* Que musico dibuja el lanzamiento: en multijugador, el del jugador a quien le toca
    (ya en juego, o a punto de tirar en la pantalla de cambio de turno); fuera de eso
@@ -1198,7 +1333,7 @@ function miniAvatarCanvas(musicoIdx, boxW, boxH) {
   const cx = cv.getContext('2d');
   cx.scale(dpr, dpr);
   const k = boxH / 120;
-  drawTirador(cx, MUSICOS[musicoIdx] || MUSICOS[0], boxW * 0.5, boxH * 0.933, { s: 0.88 * k, dir: 1, t: 0.4, wind: 0.15 });
+  drawTirador(cx, MUSICOS[musicoIdx] || MUSICOS[0], boxW * 0.5, boxH * 0.933, { s: 0.88 * k, dir: 1, t: 0.4, wind: 0.15, released: true });
   return cv;
 }
 function frame(now) {
@@ -1217,7 +1352,7 @@ function buildPicker() {
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'mus'; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(i === S.musico));
     const cv = document.createElement('canvas'); cv.width = 180; cv.height = 240;
-    const cx = cv.getContext('2d'); cx.scale(2, 2); drawTirador(cx, m, 45, 112, { s: 0.88, dir: 1, t: 0.4, wind: 0.15 });
+    const cx = cv.getContext('2d'); cx.scale(2, 2); drawTirador(cx, m, 45, 112, { s: 0.88, dir: 1, t: 0.4, wind: 0.15, released: true });
     const sp = document.createElement('span'); sp.textContent = m.n;
     b.append(cv, sp);
     b.addEventListener('click', () => { S.musico = i; box.querySelectorAll('.mus').forEach((x, j) => x.setAttribute('aria-checked', String(j === i))); try { localStorage.setItem('baloncesto-musico', i); } catch (e) {} });
