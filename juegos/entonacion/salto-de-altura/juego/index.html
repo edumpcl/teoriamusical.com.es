@@ -163,7 +163,7 @@ h3{margin:0;font:400 20px var(--display)}
         <h2>Elige a tu músico</h2>
         <div class="picker" id="picker" role="radiogroup" aria-label="Músico"></div>
         <div>
-          <h3>Clasificación</h3>
+          <h3>Clasificación <span class="rankDif"></span></h3>
           <ol class="rank" id="rankMenu"></ol>
           <p class="muted" id="rankEmpty">Todavía no hay saltos. ¡Sé el primero!</p>
         </div>
@@ -234,7 +234,7 @@ h3{margin:0;font:400 20px var(--display)}
         <p id="resText"></p>
         <p id="resNote" class="muted"></p>
         <div>
-          <h3>Clasificación</h3>
+          <h3>Clasificación <span class="rankDif"></span></h3>
           <ol class="rank" id="rankRes"></ol>
         </div>
         </div>
@@ -935,9 +935,13 @@ function readPitch(now) {
 const RK = 'salto-altura-clasificacion';
 function loadRank() { try { const a = JSON.parse(localStorage.getItem(RK) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
 function saveRank(a) { try { localStorage.setItem(RK, JSON.stringify(a)); } catch (e) { /* sin almacenamiento */ } }
+/* Una clasificación por nivel: cada partida guarda su dificultad (dif) y solo se comparan las del mismo nivel. */
+function rankDif() { const r = document.querySelector('input[name=dif]:checked'); return r ? r.value : ''; }
+function rankDifLbl() { const r = document.querySelector('input[name=dif]:checked'); return r ? r.nextElementSibling.textContent : ''; }
 function renderRank(ol, hi) {
-  const all = loadRank().sort((a, b) => b.d - a.d || a.id - b.id).slice(0, 8);
+  const all = loadRank().filter(e => e.dif === rankDif()).sort((a, b) => b.d - a.d || a.id - b.id).slice(0, 8);
   ol.replaceChildren();
+  document.querySelectorAll('.rankDif').forEach(x => { x.textContent = '· ' + rankDifLbl(); });
   for (const e of all) {
     const li = document.createElement('li');
     if (e.id === hi) li.className = 'me';
@@ -1034,8 +1038,9 @@ function finishRound() {
   const m = MUSICOS[S.musico], d = S.dist;
   track('juego_fin', { dificultad: S.dif, intervalos: S.gru, resultado: S.nulo ? 'nulo' : 'valido', metros: Math.round(d * 100) / 100, intervalo: S.chord.iv.id, carrera: Math.round(S.tp[0] * 10) / 10, salto: Math.round(S.tp[1] * 10) / 10 });
   const list = loadRank(); const id = Date.now(); S.rankId = id;
-  list.push({ id, n: S.nombre || 'Músico', m: m.n, d }); saveRank(list);
-  const pos = list.slice().sort((a, b) => b.d - a.d || a.id - b.id).findIndex(e => e.id === id) + 1;
+  list.push({ id, dif: rankDif(), n: S.nombre || 'Músico', m: m.n, d }); saveRank(list);
+  const nivel = list.filter(e => e.dif === rankDif());
+  const pos = nivel.slice().sort((a, b) => b.d - a.d || a.id - b.id).findIndex(e => e.id === id) + 1;
   let title, text;
   if (S.nulo) { title = '¡Salto nulo!'; text = 'No se han oído notas afinadas. Escucha otra vez y prueba de nuevo.'; }
   else if (d >= REC) { title = '¡Récord del mundo!'; text = 'Intervalo casi perfecto. La banda te quiere en primera fila.'; }
@@ -1051,7 +1056,7 @@ function finishRound() {
   const fila = (a, b) => { const li = document.createElement('li'); const sa = document.createElement('span'); sa.textContent = a; const sb = document.createElement('b'); sb.textContent = b; li.append(sa, sb); brk.appendChild(li); };
   if (!S.nulo) fila('Altura de salida', fmt(BASE) + ' m');
   S.targets.forEach((t, i) => fila(ETAPAS[i] + ' (' + t.n + ') · ' + fmt1(S.tp[i]) + ' de ' + PHASE + ' s afinado', '+' + fmt(S.ds[i]) + ' m'));
-  $('#resRank').textContent = 'Puesto n.º ' + pos + ' de ' + list.length + (list.length === 1 ? ' salto.' : ' saltos.');
+  $('#resRank').textContent = 'Puesto n.º ' + pos + ' de ' + nivel.length + (nivel.length === 1 ? ' salto.' : ' saltos.');
   renderRank($('#rankRes'), id);
   if (d >= 2.0) { const n = reduce ? 30 : 110; for (let i = 0; i < n; i++) spawnConfetti(); jinglePiano([523, 659, 784, 1047], 0.12); }
   else if (S.nulo) jingle([220, 175, 147], 0.18, 'sawtooth');
@@ -1408,8 +1413,8 @@ $('#btnChange').addEventListener('click', () => setState('menu'));
 let clearArm = 0;
 $('#btnClear').addEventListener('click', e => {
   const b = e.currentTarget;
-  if (!clearArm) { clearArm = setTimeout(() => { clearArm = 0; b.textContent = 'Borrar clasificación'; }, 4000); b.textContent = 'Pulsa otra vez para borrar todo'; return; }
-  clearTimeout(clearArm); clearArm = 0; b.textContent = 'Borrar clasificación'; saveRank([]); refreshRankMenu();
+  if (!clearArm) { clearArm = setTimeout(() => { clearArm = 0; b.textContent = 'Borrar clasificación'; }, 4000); b.textContent = 'Pulsa otra vez para borrar este nivel'; return; }
+  clearTimeout(clearArm); clearArm = 0; b.textContent = 'Borrar clasificación'; saveRank(loadRank().filter(e => e.dif && e.dif !== rankDif())); refreshRankMenu();
 });
 addEventListener('contextmenu', e => { if (e.target.tagName !== 'INPUT') e.preventDefault(); });
 addEventListener('pagehide', () => { if (micStream) micStream.getTracks().forEach(t => t.stop()); });
@@ -1417,6 +1422,7 @@ addEventListener('pagehide', () => { if (micStream) micStream.getTracks().forEac
 (function init() {
   try { const i = parseInt(localStorage.getItem('altura-musico'), 10); if (i >= 0 && i < MUSICOS.length) S.musico = i; $('#nombre').value = localStorage.getItem('altura-nombre') || ''; } catch (e) { }
   buildPicker(); refreshRankMenu();
+  document.querySelectorAll('input[name=dif]').forEach(r => r.addEventListener('change', refreshRankMenu));
   if (document.fonts && document.fonts.load) { document.fonts.load(`28px 'Lilita One'`).catch(() => { }); document.fonts.load('800 14px Nunito').catch(() => { }); }
   let last = performance.now();
   (function frame(now) { const dt = Math.min(0.05, (now - last) / 1000); last = now; update(dt, now); draw(now); requestAnimationFrame(frame); })(last);

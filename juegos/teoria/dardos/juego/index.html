@@ -175,7 +175,7 @@ h3{margin:0;font:400 20px var(--display)}
           <div class="picker" id="picker" role="radiogroup" aria-label="Músico"></div>
         </div>
         <div class="rankWrap">
-          <h3>Clasificación</h3>
+          <h3>Clasificación <span class="rankDif"></span></h3>
           <ol class="rank" id="rankMenu"></ol>
           <p class="muted" id="rankEmpty">Todavía no hay partidas. ¡Sé el primero!</p>
         </div>
@@ -236,7 +236,7 @@ h3{margin:0;font:400 20px var(--display)}
         <button class="btn" id="btnAgain">Jugar otra vez</button>
         <button class="btn alt small" id="btnChange">Cambiar de músico</button>
         <div id="clasifWrap">
-          <h3>Clasificación</h3>
+          <h3>Clasificación <span class="rankDif"></span></h3>
           <ol class="rank" id="rankRes"></ol>
         </div>
         </div>
@@ -942,9 +942,13 @@ const S = {
 const RK = 'dardos-clasificacion';
 function loadRank() { try { const a = JSON.parse(localStorage.getItem(RK) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
 function saveRank(a) { try { localStorage.setItem(RK, JSON.stringify(a)); } catch (e) {} }
+/* Una clasificación por nivel: cada partida guarda su dificultad (dif) y solo se comparan las del mismo nivel. */
+function rankDif() { const r = document.querySelector('input[name=dif]:checked'); return r ? DIF[+r.value].id : ''; }
+function rankDifLbl() { const r = document.querySelector('input[name=dif]:checked'); return r ? r.nextElementSibling.textContent : ''; }
 function renderRank(ol, hi) {
-  const all = loadRank().sort((a, b) => b.d - a.d || a.id - b.id).slice(0, 8);
+  const all = loadRank().filter(e => e.dif === rankDif()).sort((a, b) => b.d - a.d || a.id - b.id).slice(0, 8);
   ol.replaceChildren();
+  document.querySelectorAll('.rankDif').forEach(x => { x.textContent = '· ' + rankDifLbl(); });
   for (const e of all) {
     const li = document.createElement('li');
     if (e.id === hi) li.className = 'me';
@@ -1169,14 +1173,15 @@ function finishSolo() {
   const resultado = j.puntos >= PERQ * 50 * 0.85 ? 'perfecto' : j.puntos >= PERQ * 50 * 0.55 ? 'bueno' : j.puntos >= PERQ * 50 * 0.25 ? 'flojo' : 'nulo';
   track('juego_fin', { dificultad: S.dif.id, resultado: resultado, superadas: j.aciertos, tiempo: Math.round(avgT), jugadores: 1 });
   const list = loadRank(); const id = Date.now(); S.rankId = id;
-  list.push({ id, n: j.nombre, m: m.n, d: j.puntos }); saveRank(list);
-  const pos = list.slice().sort((a, b) => b.d - a.d || a.id - b.id).findIndex(e => e.id === id) + 1;
+  list.push({ id, dif: rankDif(), n: j.nombre, m: m.n, d: j.puntos }); saveRank(list);
+  const nivel = list.filter(e => e.dif === rankDif());
+  const pos = nivel.slice().sort((a, b) => b.d - a.d || a.id - b.id).findIndex(e => e.id === id) + 1;
   const cl = classify(j.puntos);
   $('#resWho').textContent = j.nombre + ' · ' + m.n + ' · ' + S.dif.lbl;
   $('#resPts').textContent = j.puntos;
   $('#resTitle').textContent = cl.title; $('#resText').textContent = cl.text;
   $('#resNote').textContent = 'Aciertos: ' + j.aciertos + ' de ' + PERQ + (j.tiempos.length ? ('. Tiempo medio en acertar: ' + avgT.toFixed(1) + ' s.') : '.');
-  $('#resRank').textContent = 'Puesto n.º ' + pos + ' de ' + list.length + (list.length === 1 ? ' partida.' : ' partidas.');
+  $('#resRank').textContent = 'Puesto n.º ' + pos + ' de ' + nivel.length + (nivel.length === 1 ? ' partida.' : ' partidas.');
   renderRank($('#rankRes'), id);
 }
 function finishMulti() {
@@ -1397,8 +1402,8 @@ $('#btnLanzar').addEventListener('click', () => {
 let clearArm = 0;
 $('#btnClear').addEventListener('click', e => {
   const b = e.currentTarget;
-  if (!clearArm) { clearArm = setTimeout(() => { clearArm = 0; b.textContent = 'Borrar clasificación'; }, 4000); b.textContent = 'Pulsa otra vez para borrar todo'; return; }
-  clearTimeout(clearArm); clearArm = 0; b.textContent = 'Borrar clasificación'; saveRank([]); refreshRankMenu();
+  if (!clearArm) { clearArm = setTimeout(() => { clearArm = 0; b.textContent = 'Borrar clasificación'; }, 4000); b.textContent = 'Pulsa otra vez para borrar este nivel'; return; }
+  clearTimeout(clearArm); clearArm = 0; b.textContent = 'Borrar clasificación'; saveRank(loadRank().filter(e => e.dif && e.dif !== rankDif())); refreshRankMenu();
 });
 addEventListener('keydown', e => {
   if (S.state !== 'play' || S.answered) return;
@@ -1417,6 +1422,7 @@ addEventListener('contextmenu', e => { if (e.target.tagName !== 'INPUT') e.preve
   } catch (e) {}
   renderNombres(1, false);
   buildPicker(); refreshRankMenu();
+  document.querySelectorAll('input[name=dif]').forEach(r => r.addEventListener('change', refreshRankMenu));
   if (document.fonts && document.fonts.load) { document.fonts.load("28px 'Lilita One'").catch(() => {}); document.fonts.load('800 14px Nunito').catch(() => {}); }
   window.tmNotacion.listo().catch(function () {
     $('#staffBox').innerHTML = '<p class="muted" style="padding:10px">No se ha podido cargar la notación. Recarga la página.</p>';
