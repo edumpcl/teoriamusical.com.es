@@ -26,6 +26,9 @@
  * Va HttpOnly (el JavaScript de la página no la puede leer), Secure y
  * SameSite=Lax.
  *
+ * EXCEPCIÓN: /api/clasificacion (clasificación mundial de los juegos) es
+ * pública y se deja pasar antes de mirar nada.
+ *
  * QUÉ PASA CON /api/*: el matcher lo cubre, pero la cookie tiene Path=/panel y
  * nunca se envía ahí, así que /api/panel-datos queda cerrado a cal y canto. El
  * panel no lo llama por esa ruta, sino por /panel/datos-vivo/ (reescritura en
@@ -174,6 +177,9 @@ function irA(destino: string, cookie?: string): Response {
 }
 
 export default async function middleware(request: Request) {
+  // La clasificación mundial de los juegos es pública: se sirve sin sesión.
+  if (new URL(request.url).pathname.replace(/\/+$/, '') === '/api/clasificacion') return;
+
   const usuario = process.env.PANEL_USER;
   const clave = process.env.PANEL_PASS;
 

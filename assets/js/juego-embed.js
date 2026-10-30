@@ -26,8 +26,8 @@
   /* Medición de uso. El juego avisa con postMessage («juego_inicio», «juego_fin», «juego_mic_error»); aquí se pasa a Analytics.
      gtag ya está cargado con Consent Mode: si la persona no ha aceptado la analítica, no se guardan cookies ni se identifica a nadie.
      Solo se admiten eventos y parámetros conocidos, con valores cortos: nunca nombres ni nada escrito por el jugador. */
-  var EVENTOS = { juego_inicio: 1, juego_fin: 1, juego_mic_error: 1 };
-  var PARAMS = { juego: 'texto', dificultad: 'texto', modo: 'texto', resultado: 'texto', acordes: 'texto', motivo: 'texto', intervalos: 'texto', intervalo: 'texto', sentido: 'texto', escalas: 'texto', melodias: 'texto', metros: 'numero', carrera: 'numero', salto: 'numero', glissando: 'numero', remate: 'numero', tiempo: 'numero', superadas: 'numero', jugadores: 'numero' };
+  var EVENTOS = { juego_inicio: 1, juego_fin: 1, juego_mic_error: 1, mundial_publicar: 1 };
+  var PARAMS = { juego: 'texto', dificultad: 'texto', modo: 'texto', resultado: 'texto', acordes: 'texto', motivo: 'texto', intervalos: 'texto', intervalo: 'texto', sentido: 'texto', escalas: 'texto', melodias: 'texto', metros: 'numero', carrera: 'numero', salto: 'numero', glissando: 'numero', remate: 'numero', tiempo: 'numero', superadas: 'numero', jugadores: 'numero', puesto_semana: 'numero' };
   /* Al pulsar "jugar", el juego (dentro del iframe) reemplaza su menú largo por la vista de juego, mucho
      más corta: el iframe se encoge (ajusta()) pero el scroll de la página no se mueve solo, así que si el
      jugador había bajado para llegar al botón, se queda mirando el hueco bajo el juego. Lo subimos nosotros. */
