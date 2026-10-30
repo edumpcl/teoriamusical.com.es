@@ -36,7 +36,9 @@ body{
 .seal b{font:400 28px var(--display)} .seal span{font:800 12px var(--body);text-transform:uppercase;letter-spacing:.08em}
 h1{margin:0;font:400 clamp(26px,4.6vw,42px)/1.05 var(--display);color:#fff;text-wrap:balance}
 .sub{margin:4px 0 0;color:#c4daed;font-size:16px}
-.game{display:grid;grid-template-columns:minmax(0,1.85fr) minmax(330px,1fr);gap:16px;align-items:start}
+/* Escena SIEMPRE arriba y panel debajo, los dos a todo el ancho (mismo esquema que los juegos
+   de teoría); en escritorio la escena es panorámica (VISTA_ANCHA) y el menú va en 2 columnas. */
+.game{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
 .stage{position:relative;border-radius:18px;overflow:hidden;border:4px solid #fff;background:var(--sky);box-shadow:0 8px 0 rgba(0,0,0,.35)}
 .stage canvas{display:block;width:100%;height:auto;aspect-ratio:1000/520}
 .hud{position:absolute;pointer-events:none}
@@ -65,9 +67,15 @@ p{margin:0}
 .link{background:none;border:0;color:var(--mute);font:800 15px var(--body);text-decoration:underline;cursor:pointer;padding:8px;justify-self:start}
 :is(button,input,label.pill):focus-visible,.pill:has(input:focus-visible){outline:4px solid var(--focus);outline-offset:3px}
 .picker{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+/* pestañas de familia encima del selector de músico (ver FAMILIAS en el JS) */
+.familias{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:8px}
+.familias button{font:400 15px/1.1 var(--display);padding:8px 4px;min-height:44px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.familias button[aria-pressed="true"]{background:var(--brass)}
 .mus{background:#fff;border:3px solid var(--paper2);border-radius:12px;padding:4px 2px 6px;cursor:pointer;color:var(--ink);font:800 13px var(--body);display:grid;justify-items:center;gap:0}
 .mus canvas{width:100%;max-width:80px;height:auto;aspect-ratio:3/4}
 .mus[aria-checked="true"]{border-color:var(--brass-d);background:#fff1c7}
+/* todas las tarjetas igual de anchas aunque el nombre sea largo (Bombardino, Violonchelo) */
+.mus{min-width:0} .mus span{max-width:100%;line-height:1.15;text-align:center;hyphens:manual}
 label.field{display:grid;gap:6px;font:800 16px var(--body)}
 input[type=text]{-webkit-user-select:text;user-select:text;font:800 20px var(--body);padding:10px 12px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);min-height:50px;width:100%}
 .seg{border:0;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
@@ -114,7 +122,26 @@ h3{margin:0;font:400 20px var(--display)}
 .brk{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:16px}
 .brk li{background:#fff;border-radius:10px;padding:6px 10px;display:flex;justify-content:space-between;gap:8px}
 .brk b{font:400 18px var(--display)}
-@media (max-width:900px){.game{grid-template-columns:minmax(0,1fr)}.hud-timer,.hud-dist{top:20%}}
+@media (max-width:639px){.hud-timer,.hud-dist{top:20%}}
+/* En móvil las columnas de escritorio no existen (display:contents) y la clasificación vuelve
+   al final de su pantalla, después de los botones, como estaba antes. */
+.menuL,.menuR,.colsL,.colsR{display:contents}
+#v-menu .menuL > div:last-child,#v-result .colsL > div:last-child{order:1}
+@media (min-width:640px){
+  .stage canvas{aspect-ratio:17/4}   /* VISTA_ANCHA (4,25:1); misma consulta que WIDE_MQ en el JS */
+  .menuL .picker{grid-template-columns:repeat(7,minmax(0,1fr))}   /* cada familia en una fila */
+  #v-menu{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);column-gap:24px;align-items:start}
+  .menuL,.menuR{display:grid;gap:14px;align-content:start}
+  /* el resto de pantallas del panel, también en 2 columnas (escuchar, cantar, resultado) */
+  .view:has(> .colsL){grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:24px;align-items:start}
+  .colsL,.colsR{display:grid;gap:14px;align-content:start;min-width:0}
+  /* listas largas (clasificación de 8 y desglose por tramos) en 2 columnas de 4 filas */
+  .rank,.brk{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:8px}
+  .menuR .muted{font-size:14px;line-height:1.35}
+  .distance{font-size:72px} .distance small{font-size:30px}
+  .foot{font-size:13px;line-height:1.35}
+  .panel{padding:14px 18px} .menuL,.menuR,.colsL,.colsR{gap:10px} .seg legend{padding-bottom:4px}   /* compacto: sin scroll */
+}
 @media (prefers-reduced-motion:reduce){.speaker.on,.hud-count.pop{animation:none}}
 </style>
 </head>
@@ -132,8 +159,16 @@ h3{margin:0;font:400 20px var(--display)}
     <aside class="panel">
       <!-- MENÚ -->
       <section class="view" id="v-menu">
+        <div class="menuL">
         <h2>Elige a tu músico</h2>
         <div class="picker" id="picker" role="radiogroup" aria-label="Músico"></div>
+        <div>
+          <h3>Clasificación</h3>
+          <ol class="rank" id="rankMenu"></ol>
+          <p class="muted" id="rankEmpty">Todavía no hay saltos. ¡Sé el primero!</p>
+        </div>
+        </div>
+        <div class="menuR">
         <label class="field" for="nombre">Tu nombre
           <input type="text" id="nombre" maxlength="14" placeholder="Escribe tu nombre" autocomplete="off">
         </label>
@@ -153,24 +188,24 @@ h3{margin:0;font:400 20px var(--display)}
         </fieldset>
         <button class="btn" id="btnStart">¡A saltar!</button>
         <p class="err" id="micErr" hidden></p>
-        <div>
-          <h3>Clasificación</h3>
-          <ol class="rank" id="rankMenu"></ol>
-          <p class="muted" id="rankEmpty">Todavía no hay saltos. ¡Sé el primero!</p>
         </div>
       </section>
 
       <!-- ESCUCHAR -->
       <section class="view" id="v-listen" hidden>
+        <div class="colsL">
         <h2>Escucha el intervalo</h2>
         <div class="speaker" id="speaker" aria-hidden="true">♪</div>
         <div class="chordname" id="chordName"></div>
         <div class="chordnotes" id="chordNotes"></div>
         <p id="listenTxt"></p>
+        </div>
+        <div class="colsR">
         <button class="btn alt small" id="btnRepeat">Escuchar otra vez</button>
         <div class="level"><span>Prueba tu voz: la barra debe moverse</span><i><b id="lvListen"></b></i></div>
         <button class="btn" id="btnSing">¡Cantar!</button>
         <button class="link" id="btnBack" type="button">Cambiar de músico</button>
+        </div>
       </section>
 
       <!-- CANTAR -->
@@ -192,18 +227,22 @@ h3{margin:0;font:400 20px var(--display)}
 
       <!-- RESULTADO -->
       <section class="view" id="v-result" hidden>
+        <div class="colsL">
         <p class="kicker" id="resWho">Tu salto</p>
         <div class="distance"><span id="resDist">0,00</span><small>m</small></div>
         <h2 id="resTitle"></h2>
         <p id="resText"></p>
         <p id="resNote" class="muted"></p>
+        <div>
+          <h3>Clasificación</h3>
+          <ol class="rank" id="rankRes"></ol>
+        </div>
+        </div>
+        <div class="colsR">
         <ul class="brk" id="resBrk"></ul>
         <p id="resRank"></p>
         <button class="btn" id="btnAgain">Saltar otra vez</button>
         <button class="btn alt small" id="btnChange">Cambiar de músico</button>
-        <div>
-          <h3>Clasificación</h3>
-          <ol class="rank" id="rankRes"></ol>
         </div>
       </section>
     </aside>
@@ -292,7 +331,20 @@ const MUSICOS = [
   { n: 'Flauta', instr: 'flauta', piel: '#f6d6b8', pelo: '#e0b04a', estilo: 'largo' },
   { n: 'Trombón', instr: 'trombon', piel: '#e3b38c', pelo: '#9aa0a8', estilo: 'corto', bigote: true, gafas: true },
   { n: 'Tuba', instr: 'tuba', piel: '#8a5a3c', pelo: '#17110d', estilo: 'corto', barba: true, ancho: 1.25 },
-  { n: 'Platillos', instr: 'platillos', piel: '#f2cba6', pelo: '#b5532a', estilo: 'coleta' }
+  { n: 'Platillos', instr: 'platillos', piel: '#f2cba6', pelo: '#b5532a', estilo: 'coleta' },
+  { n: 'Saxofón', instr: 'saxo', piel: '#d9a67c', pelo: '#3a2418', estilo: 'coleta' },
+  { n: 'Trompa', instr: 'trompa', piel: '#f6d6b8', pelo: '#c9772e', estilo: 'corto', gafas: true },
+  { n: 'Violín', instr: 'violin', piel: '#f2cba6', pelo: '#3b2a20', estilo: 'largo', esmoquin: true },
+  { n: 'Contrabajo', instr: 'contrabajo', piel: '#a8704a', pelo: '#1d1612', estilo: 'rizado', bigote: true, esmoquin: true },
+  { n: 'Oboe', instr: 'oboe', piel: '#f6d6b8', pelo: '#e0b04a', estilo: 'rizado' },
+  { n: 'Fagot', instr: 'fagot', piel: '#c98f64', pelo: '#6b5444', estilo: 'corto', barba: true, gafas: true },
+  { n: 'Bombardino', instr: 'bombardino', piel: '#e3b38c', pelo: '#2a1d17', estilo: 'corto', bigote: true },
+  { n: 'Xilófono', instr: 'xilofono', piel: '#f2cba6', pelo: '#b5532a', estilo: 'largo' },
+  { n: 'Viola', instr: 'viola', piel: '#d9a67c', pelo: '#17110d', estilo: 'corto', gafas: true, esmoquin: true },
+  { n: 'Violonchelo', instr: 'violonchelo', piel: '#f6d6b8', pelo: '#c9772e', estilo: 'coleta', esmoquin: true },
+  { n: 'Arpa', instr: 'arpa', piel: '#f2cba6', pelo: '#e0b04a', estilo: 'largo', esmoquin: true },
+  { n: 'Piano', instr: 'piano', piel: '#8a5a3c', pelo: '#17110d', estilo: 'rizado', esmoquin: true },
+  { n: 'Guitarra', instr: 'guitarra', piel: '#e3b38c', pelo: '#4a3426', estilo: 'corto', barba: true, esmoquin: true }
 ];
 
 /* ============================================================
@@ -356,11 +408,52 @@ function drawHead(c, m, o, t) {
   else if (o.mood === 'sad') { c.beginPath(); c.arc(mx, my + 6, 7, 1.15 * Math.PI, 1.85 * Math.PI); c.lineWidth = 2.6; c.strokeStyle = INK; c.lineCap = 'round'; c.stroke(); }
   else if (mo > 0.05) { c.beginPath(); c.ellipse(mx, my, 6 + mo * 1.5, 2 + mo * 8, 0, 0, 7); paint(c, '#7a1f2a', 2.2); }
   else { c.beginPath(); c.moveTo(mx - 6, my); c.lineTo(mx + 6, my); c.lineWidth = 2.6; c.strokeStyle = INK; c.lineCap = 'round'; c.stroke(); }
+  if (m.esmoquin) {
+    // de esmoquin (orquesta) no hay gorra de banda: se ve el pelo de arriba, con flequillo
+    c.beginPath(); c.moveTo(-30, -96); c.ellipse(0, -98, 30.5, 24, 0, Math.PI, 2 * Math.PI);
+    c.lineTo(30, -94); c.quadraticCurveTo(16, -108, -2, -104); c.quadraticCurveTo(-18, -101, -30, -96); c.closePath();
+    paint(c, m.pelo, 2.4);
+    return;
+  }
+  // gorra de banda
+  c.beginPath(); c.ellipse(0, -108, 31, 15, 0, Math.PI, 2 * Math.PI); c.lineTo(31, -100); c.lineTo(-31, -100); c.closePath(); paint(c, '#27458f', 2.6);
+  rrect(c, -31, -106, 62, 8, 2); paint(c, '#f4b52e', 2);
+  c.beginPath(); c.ellipse(dir * 13, -99, 17 + dir * 9, 4, 0, 0, 7); paint(c, '#101a33', 2);
   // gorra de banda
   c.beginPath(); c.ellipse(0, -108, 31, 15, 0, Math.PI, 2 * Math.PI); c.lineTo(31, -100); c.lineTo(-31, -100); c.closePath(); paint(c, '#27458f', 2.6);
   rrect(c, -31, -106, 62, 8, 2); paint(c, '#f4b52e', 2);
   c.beginPath(); c.ellipse(dir * 13, -99, 17 + dir * 9, 4, 0, 0, 7); paint(c, '#101a33', 2);
   c.beginPath(); c.arc(dx, -113, 4.5, 0, 7); paint(c, '#f4b52e', 1.8);
+}
+/* Torso: uniforme de banda (azul, cinturón y botones dorados) o esmoquin para la cuerda de
+   orquesta (m.esmoquin: chaqueta negra, pechera blanca en pico, solapas y pajarita). */
+function drawTorso(c, m, bw) {
+  rrect(c, -22 * bw, -64, 44 * bw, 42, 9); paint(c, m.esmoquin ? '#1b1b22' : '#27458f', 2.6);
+  if (!m.esmoquin) {
+    rrect(c, -22 * bw, -30, 44 * bw, 6, 2); paint(c, '#f4b52e', 1.8);
+    c.fillStyle = '#f4b52e'; for (const by of [-54, -44]) { c.beginPath(); c.arc(0, by, 2.8, 0, 7); c.fill(); }
+    return;
+  }
+  c.beginPath(); c.moveTo(-9, -63); c.lineTo(9, -63); c.lineTo(1.5, -36); c.lineTo(-1.5, -36); c.closePath(); paint(c, '#fdfcf9', 2);
+  c.beginPath(); c.moveTo(-9, -63); c.lineTo(-14, -55); c.lineTo(-1.5, -36); c.closePath(); paint(c, '#34343f', 1.6);
+  c.beginPath(); c.moveTo(9, -63); c.lineTo(14, -55); c.lineTo(1.5, -36); c.closePath(); paint(c, '#34343f', 1.6);
+  c.beginPath(); c.moveTo(0, -59); c.lineTo(-7.5, -63); c.lineTo(-7.5, -55); c.closePath();
+  c.moveTo(0, -59); c.lineTo(7.5, -63); c.lineTo(7.5, -55); c.closePath(); paint(c, '#14141a', 1.4);
+  c.fillStyle = INK; for (const by of [-49, -43]) { c.beginPath(); c.arc(0, by, 1.5, 0, 7); c.fill(); }
+}
+/* Postura sentada (violonchelo, arpa, piano, guitarra): drawSeat pone la banqueta y luego el
+   cuerpo se dibuja 14 más abajo; drawSeatLegs dibuja las piernas dobladas (muslo hacia delante,
+   espinilla al suelo) DESPUÉS del torso, para que se vean por delante de la chaqueta. */
+function drawSeat(c) {
+  rrect(c, -24, -18, 34, 6, 3); paint(c, '#6b4a2e', 2);
+  c.lineWidth = 3; c.strokeStyle = INK; c.lineCap = 'round';
+  c.beginPath(); c.moveTo(-20, -12); c.lineTo(-22, 0); c.moveTo(6, -12); c.lineTo(8, 0); c.stroke();
+}
+function drawSeatLegs(c, TROUSER) {
+  for (const dx of [0, 5]) {
+    limb(c, 15 + dx, -17, 0, 15, 11, TROUSER, { shoe: 1 });
+    limb(c, -6 + dx, -16, -Math.PI / 2, 21, 11, TROUSER);
+  }
 }
 /* Instrumento de cada músico EN POSICIÓN DE TOCAR (de perfil, mirando a la derecha: boca en
    (6,-72), hombros en (±18·bw,-58), pies en (0,0)). instrGrip() dice dónde van las manos
@@ -378,19 +471,74 @@ function instrGrip(m, bw) {
     case 'bombo':     return { b: null, f: { x: 43 + ox, y: -40 } };
     case 'caja':      return { b: { x: 15, y: -52, top: 1 }, f: { x: 35, y: -55 } };
     case 'platillos': return { b: { x: 20, y: -52 }, f: { x: 44, y: -50 } };
+    case 'saxo':      return { b: { x: 22, y: -56, top: 1 }, f: { x: 24, y: -38 } };
+    case 'trompa':    return { b: { x: 24, y: -67, top: 1 }, f: { x: 50, y: -34 } };
+    case 'violin':    return { b: { x: 47, y: -66, top: 1 }, f: { x: 9, y: -43 } };
+    case 'contrabajo':return { b: { x: 27, y: -95, top: 1 }, f: { x: 50, y: -32 } };
+    case 'viola':     return { b: { x: 45, y: -65, top: 1 }, f: { x: 9, y: -43 } };
+    case 'oboe':      return { b: { x: 14, y: -55, top: 1 }, f: { x: 20, y: -36 } };
+    case 'fagot':     return { b: { x: 26, y: -95, top: 1 }, f: { x: 35, y: -46 } };
+    case 'bombardino':return { b: { x: 16, y: -58, top: 1 }, f: { x: 32, y: -30 } };
+    case 'xilofono':  return { b: { x: 20, y: -52, top: 1 }, f: { x: 40, y: -54 } };
+    // sentados (sit): el cuerpo baja 14 y estas coordenadas ya son las del marco bajado
+    case 'violonchelo': return { sit: 1, b: { x: 28, y: -89, top: 1 }, f: { x: 54, y: -40 } };
+    case 'arpa':      return { sit: 1, b: { x: 30, y: -74, top: 1 }, f: { x: 38, y: -60 } };
+    case 'piano':     return { sit: 1, b: { x: 16, y: -58, top: 1 }, f: { x: 29, y: -58 } };
+    case 'guitarra':  return { sit: 1, b: { x: 41, y: -72, top: 1 }, f: { x: 27, y: -32 } };
   }
   return null;
 }
 /* Ángulo y largo de un brazo (limb) para que la mano llegue desde el hombro (sx,sy) al punto p */
 function reachArm(sx, sy, p) {
   const dx = p.x - sx, dy = p.y - sy;
-  return { a: Math.atan2(-dx, dy), l: clamp(Math.hypot(dx, dy) - 1, 12, 46) };
+  return { a: Math.atan2(-dx, dy), l: clamp(Math.hypot(dx, dy) - 1, 12, 70) };
 }
 function drawInstr(c, m, bw) {
   const GOLD = '#f2b632', GOLD_D = '#c48a16', SILVER = '#cfd6df', WOOD = '#e0b070';
   const ox = (bw - 1) * 22;
   // tubo con contorno: trazo grueso de tinta y encima el color
   const tube = (w, col) => { c.lineWidth = w + 3.4; c.strokeStyle = INK; c.stroke(); c.lineWidth = w; c.strokeStyle = col; c.stroke(); };
+  // arco de cuerda frotada: talón en la mano (x0,y0) y punta (x1,y1); las cerdas van al lado
+  const arco = (x0, y0, x1, y1) => {
+    c.beginPath(); c.moveTo(x0, y0); c.lineTo(x1, y1); tube(1.6, '#5a3418');
+    const L = Math.hypot(x1 - x0, y1 - y0), nx = (y1 - y0) / L * -2.6, ny = (x0 - x1) / L * -2.6;
+    c.strokeStyle = '#f4efe3'; c.lineWidth = 1.2; c.beginPath(); c.moveTo(x0 + nx, y0 + ny); c.lineTo(x1 + nx, y1 + ny); c.stroke();
+  };
+  // violín / viola: al hombro bajo la barbilla, apuntando adelante (ancla x,y; escala k)
+  const hombro = (x, y, k, col, hi) => {
+    c.save(); c.translate(x, y); c.rotate(-0.06); c.scale(k, k);
+    const caja = () => { c.beginPath(); c.ellipse(-1, 0, 10, 8, 0, 0, 7); c.moveTo(19, 0); c.ellipse(13, 0, 7, 6.5, 0, 0, 7); };
+    caja(); c.lineWidth = 4.4; c.strokeStyle = INK; c.stroke();                   // contorno de los dos óvalos unidos
+    caja(); c.fillStyle = col; c.fill();
+    c.fillStyle = hi; c.beginPath(); c.ellipse(-2, -2.5, 5, 2.4, 0, 0, 7); c.fill();   // brillo del barniz
+    rrect(c, -11, -2.5, 6, 5, 2); paint(c, '#1c1c24', 1.4);                       // barbada
+    rrect(c, 4, -2.2, 33, 4.4, 2); paint(c, '#1c1c24', 1.4);                      // diapasón
+    c.beginPath(); c.arc(40, 0, 3.6, 0, 7); paint(c, col, 1.6);                   // voluta
+    c.strokeStyle = '#3a2416'; c.lineWidth = 1.1;
+    c.beginPath(); c.moveTo(1, -4.5); c.quadraticCurveTo(3, -3.5, 1.5, -2.5); c.moveTo(1, 4.5); c.quadraticCurveTo(3, 3.5, 1.5, 2.5); c.stroke();   // efes
+    c.strokeStyle = '#e8e2d0'; c.lineWidth = 0.8; c.beginPath(); c.moveTo(-6, -1); c.lineTo(37, -1); c.moveTo(-6, 1); c.lineTo(37, 1); c.stroke();
+    c.restore();
+    arco(9, -43, 37, -83);                                                         // talón abajo, punta arriba-adelante (no cruza la cara)
+  };
+  // contrabajo / violonchelo: de pie en el suelo (ancla x,y; giro; escala k; pica = largo local de la pica)
+  const pie = (x, y, rot, k, col, hi, pica) => {
+    c.save(); c.translate(x, y); c.rotate(rot); c.scale(k, k);
+    c.beginPath(); c.moveTo(0, 32); c.lineTo(0, pica); c.lineWidth = 2.6; c.strokeStyle = INK; c.stroke();   // pica
+    const caja = () => { c.beginPath(); c.ellipse(0, 14, 17, 19, 0, 0, 7); c.moveTo(13, -14); c.ellipse(0, -14, 13, 15, 0, 0, 7); };
+    caja(); c.lineWidth = 4.6; c.strokeStyle = INK; c.stroke();
+    caja(); c.fillStyle = col; c.fill();
+    c.fillStyle = hi; c.beginPath(); c.ellipse(-5, 8, 7, 11, 0, 0, 7); c.fill();     // brillo
+    rrect(c, -2.8, -80, 5.6, 82, 2.5); paint(c, '#1c1c24', 1.6);                  // mástil y diapasón
+    c.beginPath(); c.arc(0, -83, 4.5, 0, 7); paint(c, col, 1.8);                  // voluta
+    c.fillStyle = '#d9d2bd'; for (const yy of [-76, -70]) { c.fillRect(-6, yy, 3, 2); c.fillRect(3, yy, 3, 2); }   // clavijas
+    rrect(c, -4, 16, 8, 13, 2.5); paint(c, '#1c1c24', 1.4);                       // cordal
+    c.strokeStyle = '#3a2416'; c.lineWidth = 1.4;
+    c.beginPath(); c.moveTo(-9, -2); c.quadraticCurveTo(-6, 6, -9, 14); c.moveTo(9, -2); c.quadraticCurveTo(6, 6, 9, 14); c.stroke();   // efes
+    c.fillStyle = '#e8dcc0'; c.fillRect(-7, 7, 14, 2.2);                          // puente
+    c.strokeStyle = '#e8e2d0'; c.lineWidth = 0.9;
+    c.beginPath(); for (const xx of [-1.5, 1.5]) { c.moveTo(xx, 17); c.lineTo(xx, -78); } c.stroke();
+    c.restore();
+  };
   c.save(); c.lineCap = 'round'; c.lineJoin = 'round';
   switch (m.instr) {
     case 'clarinete': {
@@ -494,13 +642,153 @@ function drawInstr(c, m, bw) {
       plato(23, -52, 0.22); plato(43, -50, -0.22);
       break;
     }
+    case 'saxo': {
+      // alto: tudel desde la boca, cuerpo cónico hacia abajo, vuelta en U y campana arriba
+      c.beginPath(); c.moveTo(10, -73); c.quadraticCurveTo(21, -74, 22, -64); tube(2.8, GOLD);
+      rrect(c, 6, -75.5, 6, 5, 2); paint(c, '#1c1c24', 1.6);                       // boquilla
+      c.beginPath();
+      c.moveTo(19.5, -64); c.lineTo(18.5, -30); c.quadraticCurveTo(19, -16, 31, -16);
+      c.quadraticCurveTo(41, -16, 43, -30); c.lineTo(51, -50); c.lineTo(34, -50); c.lineTo(35, -32);
+      c.quadraticCurveTo(34, -25, 30.5, -25); c.quadraticCurveTo(26.5, -25, 26.5, -32); c.lineTo(25, -64); c.closePath();
+      paint(c, GOLD, 2.2);
+      c.beginPath(); c.ellipse(42.5, -50, 8.5, 2.6, 0, 0, 7); paint(c, '#f7cc63', 2);   // boca de la campana
+      c.strokeStyle = GOLD_D; c.lineWidth = 1.2; c.beginPath(); c.moveTo(27.5, -60); c.lineTo(29, -33); c.stroke();
+      for (const y of [-60, -52, -44, -36]) { c.beginPath(); c.arc(22.2 - (y + 60) * 0.025, y, 2, 0, 7); paint(c, '#fdfcf9', 1); }   // llaves
+      break;
+    }
+    case 'trompa': {
+      // vueltas de tubo redondas delante del pecho; campana abajo a la derecha con la mano dentro
+      c.beginPath(); c.moveTo(10, -73); c.quadraticCurveTo(17, -73, 19, -67); tube(2.4, GOLD);
+      rrect(c, 6, -75, 5, 4, 1.5); paint(c, SILVER, 1.4);
+      c.beginPath(); c.arc(29, -55, 15, 0, 7); tube(4.2, GOLD);                     // vuelta grande
+      c.beginPath(); c.arc(29, -55, 8, 0, 7); tube(2.6, GOLD);                      // vuelta interior
+      c.beginPath(); c.moveTo(39, -45); c.quadraticCurveTo(45, -41, 43, -31);        // campana: se abre hacia abajo-atrás
+      c.lineTo(58, -37); c.quadraticCurveTo(48, -40, 42, -48); c.closePath(); paint(c, GOLD, 2);
+      c.beginPath(); c.ellipse(50.5, -34, 8.5, 3.5, -0.38, 0, 7); paint(c, '#7a5a10', 2);
+      for (const x of [19, 25, 31]) { c.beginPath(); c.arc(x, -70, 3, 0, 7); paint(c, SILVER, 1.5); }   // cilindros
+      break;
+    }
+    case 'violin': hombro(16, -63, 1, '#c0652a', '#e08a45'); break;
+    case 'viola':  hombro(13, -62, 1.08, '#94461b', '#b9662f'); break;
+    case 'contrabajo':
+      // de pie delante del músico, más alto que él, con la pica en el suelo y el arco abajo
+      pie(34, -40, -0.12, 1, '#a0501f', '#c96f34', 40);
+      arco(50, -32, 10, -46);
+      break;
+    case 'violonchelo':
+      // sentado (marco desplazado 14: el suelo queda en y=-14), entre las rodillas
+      pie(34, -50, -0.15, 0.8, '#b0582a', '#d27a3e', 46);
+      arco(54, -40, 14, -52);
+      break;
+    case 'oboe': {
+      // como el clarinete pero más fino, cónico, con caña doble y campana pequeña
+      c.translate(8, -74); c.rotate(-0.3);
+      rrect(c, -1.1, -5, 2.2, 6, 0.8); paint(c, '#d9a35c', 1.1);                   // caña doble
+      rrect(c, -2.6, 0, 5.2, 4, 1); paint(c, SILVER, 1.2);
+      c.beginPath(); c.moveTo(-2.6, 4); c.lineTo(-3.6, 54); c.lineTo(3.6, 54); c.lineTo(2.6, 4); c.closePath(); paint(c, '#1c1c24', 2);
+      c.fillStyle = SILVER; for (const y of [12, 30]) c.fillRect(-3, y, 6, 1.6);
+      for (const y of [8, 14, 19, 24, 36, 41, 46]) { c.beginPath(); c.arc(0, y, 1.3, 0, 7); c.fill(); }
+      c.beginPath(); c.moveTo(-3.6, 53); c.lineTo(-5.5, 60); c.lineTo(5.5, 60); c.lineTo(3.6, 53); c.closePath(); paint(c, '#1c1c24', 2);
+      c.fillStyle = SILVER; c.fillRect(-5.5, 58.5, 11, 1.6);
+      break;
+    }
+    case 'fagot': {
+      // tubo largo de madera en diagonal delante del cuerpo; el tudel plateado llega a la boca
+      c.save(); c.translate(36, -26); c.rotate(-0.14);
+      rrect(c, -5, -96, 10, 94, 3); paint(c, '#9c4a1c', 2.2);                       // tubo largo
+      rrect(c, 4, -58, 7, 60, 3); paint(c, '#8a3f17', 2);                            // tudel corto (ala)
+      rrect(c, -6, -6, 18, 12, 4); paint(c, '#7a3612', 2.2);                         // bota
+      rrect(c, -6, -100, 12, 6, 2); paint(c, '#e8dcc0', 1.6);                        // anillo de la campana
+      c.fillStyle = SILVER; for (const y of [-80, -66, -40, -28]) c.fillRect(-5, y, 10, 1.8);
+      c.restore();
+      c.beginPath(); c.moveTo(10, -72); c.quadraticCurveTo(25, -77, 35, -84); tube(1.8, SILVER);
+      rrect(c, 6, -73.5, 5, 3, 1); paint(c, '#d9a35c', 1.2);                         // caña
+      break;
+    }
+    case 'bombardino': {
+      // como una tuba pequeña y plateada, con la campana hacia arriba y algo adelante
+      const SIL = '#d5dbe3';
+      c.beginPath(); c.ellipse(28, -50, 11, 16, 0, 0, 7); tube(4, SIL);
+      c.save(); c.translate(30, -40); c.rotate(0.22);
+      c.beginPath(); c.moveTo(-7, 8); c.lineTo(-5, -38); c.quadraticCurveTo(-6, -50, -14, -58); c.lineTo(14, -58);
+      c.quadraticCurveTo(6, -50, 5, -38); c.lineTo(7, 8); c.arc(0, 8, 7, 0, Math.PI); c.closePath(); paint(c, SIL, 2.2);
+      c.beginPath(); c.ellipse(0, -58, 14, 3.6, 0, 0, 7); paint(c, '#eef1f5', 2);
+      c.beginPath(); c.ellipse(0, -58, 9.5, 2.2, 0, 0, 7); paint(c, '#6b7480', 1.2);
+      c.restore();
+      c.beginPath(); c.moveTo(9, -72); c.lineTo(15, -72); c.lineTo(15, -64); tube(2.6, SIL);
+      for (const y of [-64, -58, -52]) { rrect(c, 11, y, 10, 4, 1.5); paint(c, SILVER, 1.4); }
+      break;
+    }
+    case 'xilofono': {
+      // láminas de madera sobre su soporte, a la altura de la cintura, con dos baquetas
+      c.strokeStyle = INK; c.lineWidth = 3;
+      c.beginPath(); c.moveTo(14, -32); c.lineTo(10, 0); c.moveTo(51, -34); c.lineTo(54, 0); c.stroke();   // patas
+      rrect(c, 8, -37, 47, 6, 2); paint(c, '#5a3418', 2);                           // bastidor
+      for (let k = 0; k < 9; k++) { const h = 13 - k * 0.7; rrect(c, 10 + k * 4.9, -38 - h / 2, 4.2, h, 1.2); paint(c, '#d9a35c', 1.3); }
+      for (const [x0, y0] of [[20, -52], [40, -54]]) {
+        c.beginPath(); c.moveTo(x0, y0); c.lineTo(x0 + 4, y0 + 10); tube(1.6, WOOD);
+        c.beginPath(); c.arc(x0 + 4.5, y0 + 11, 3, 0, 7); paint(c, '#c93a2d', 1.6);
+      }
+      break;
+    }
+    case 'arpa': {
+      // sentado; el arpa en el suelo delante: caja inclinada hacia el hombro, columna delante
+      const WD = '#c9922e';
+      const cuello = [[20, -104], [30, -128], [40, -116], [46, -110], [52, -127]];   // dos curvas cuadráticas
+      const q = (a, b, k, u) => (1 - u) * (1 - u) * a + 2 * (1 - u) * u * k + u * u * b;
+      const pts = [];
+      for (let u = 0; u <= 1; u += 0.05) {
+        pts.push([q(20, 40, 30, u), q(-104, -116, -128, u)]);
+        pts.push([q(40, 52, 46, u), q(-116, -127, -110, u)]);
+      }
+      const yCuello = x => pts.reduce((b, p) => Math.abs(p[0] - x) < Math.abs(b[0] - x) ? p : b)[1];
+      c.strokeStyle = '#f4efe3'; c.lineWidth = 0.9; c.beginPath();
+      for (let k = 1; k < 12; k++) { const u = k / 12, x = mix(41, 22, u), y = mix(-20, -102, u); c.moveTo(x, y); c.lineTo(x, yCuello(x)); }
+      c.stroke();
+      c.strokeStyle = '#c93a2d'; c.beginPath(); for (const k of [3, 7]) { const u = k / 12, x = mix(41, 22, u); c.moveTo(x, mix(-20, -102, u)); c.lineTo(x, yCuello(x)); } c.stroke();
+      c.beginPath(); c.moveTo(36, -18); c.lineTo(46, -20); c.lineTo(24, -106); c.lineTo(18, -102); c.closePath(); paint(c, WD, 2.2);   // caja
+      rrect(c, 48, -128, 5, 110, 2); paint(c, WD, 2.2);                              // columna
+      c.beginPath(); c.moveTo(cuello[0][0], cuello[0][1]); c.quadraticCurveTo(cuello[1][0], cuello[1][1], cuello[2][0], cuello[2][1]);
+      c.quadraticCurveTo(cuello[3][0], cuello[3][1], cuello[4][0], cuello[4][1]); tube(4, WD);
+      c.beginPath(); c.arc(50.5, -129, 4, 0, 7); paint(c, '#f2b632', 1.8);            // capitel
+      rrect(c, 32, -20, 24, 6, 2); paint(c, '#9a6a1c', 2);                           // base
+      break;
+    }
+    case 'piano': {
+      // sentado al piano vertical, visto de lado: mueble de madera, teclado hacia el músico y partitura
+      rrect(c, 32, -110, 24, 96, 4); paint(c, '#6b3a1e', 2.4);                      // mueble
+      rrect(c, 35, -104, 18, 34, 2); paint(c, '#7f4826', 1.4);                        // paneles
+      rrect(c, 35, -40, 18, 22, 2); paint(c, '#7f4826', 1.4);
+      rrect(c, 10, -54, 26, 8, 1.5); paint(c, '#6b3a1e', 2);                          // caja del teclado
+      rrect(c, 10, -59, 24, 5.5, 1); paint(c, '#fdfcf9', 1.6);                         // teclas blancas
+      c.fillStyle = '#1c1c24'; for (const x of [12, 15.5, 21, 24.5, 28]) c.fillRect(x, -59, 2.2, 3);   // negras
+      rrect(c, 12, -46, 4, 32, 1.5); paint(c, '#6b3a1e', 1.8);                        // pata del teclado
+      c.save(); c.translate(33, -68); c.rotate(-0.25); rrect(c, -2, -13, 4, 15, 1); paint(c, '#fdfcf9', 1.4); c.restore();   // partitura
+      c.fillStyle = '#f2b632'; c.fillRect(25, -17, 5, 2); c.fillRect(32, -17, 5, 2);   // pedales
+      break;
+    }
+    case 'guitarra': {
+      // clásica, apoyada en el muslo, con el mástil hacia arriba y adelante
+      c.save(); c.translate(22, -30); c.rotate(-1.15);
+      const caja = () => { c.beginPath(); c.ellipse(0, 0, 13, 11, 0, 0, 7); c.moveTo(29, 0); c.ellipse(19, 0, 10, 9, 0, 0, 7); };
+      caja(); c.lineWidth = 4.4; c.strokeStyle = INK; c.stroke();
+      caja(); c.fillStyle = '#e0a55a'; c.fill();
+      c.fillStyle = '#1c1c24'; c.beginPath(); c.arc(13, 0, 4, 0, 7); c.fill();       // boca
+      rrect(c, -7, -5, 3, 10, 1); paint(c, '#5a3418', 1.2);                          // puente
+      rrect(c, 28, -2.6, 24, 5.2, 1.5); paint(c, '#5a3418', 1.4);                     // mástil
+      rrect(c, 51, -3.4, 9, 6.8, 1.5); paint(c, '#7a4520', 1.4);                      // pala
+      c.strokeStyle = '#f4efe3'; c.lineWidth = 0.7; c.beginPath();
+      for (const y of [-1.8, -0.6, 0.6, 1.8]) { c.moveTo(-5, y); c.lineTo(51, y); } c.stroke();
+      c.restore();
+      break;
+    }
   }
   c.restore();
 }
 /* o: s escala, run 0..1, t tiempo, air/land 0..1 (pose de salto), sit 0..1, rot, arms 'up'|'down', mouth 0..1, mood, dir 0..1 */
 function drawMusico(c, m, x, y, o = {}) {
   const s = o.s || 1, run = o.run || 0, t = o.t || 0, bw = m.ancho || 1, sit = o.sit || 0;
-  const SUIT = '#27458f', TROUSER = '#2a3350';
+  const SUIT = m.esmoquin ? '#1b1b22' : '#27458f', TROUSER = m.esmoquin ? '#15151b' : '#2a3350';
   c.save(); c.translate(x, y); c.scale(s, s);
   if (o.rot) { c.translate(0, -30); c.rotate(o.rot); c.translate(0, 30); }
   const ph = t * 12, sw = Math.sin(ph) * run;
@@ -514,18 +802,19 @@ function drawMusico(c, m, x, y, o = {}) {
   if (sit) { lL = mix(lL, -1.45, sit); lR = mix(lR, -1.45, sit); }
   if (o.arms === 'up') { const w = Math.sin(t * 9) * 0.18; aB = 2.4 + w; aF = -2.4 - w; }
   else if (o.arms === 'down') { aB = 0.2; aF = -0.2; }
-  hairBack(c, m);
-  limb(c, -8, -27, lL, 21, 11, TROUSER, { shoe: 1 });
   // en la prueba va sin instrumento; en el selector (o.conInstr) lo toca y los brazos van a
   // sujetarlo donde diga instrGrip (mismos muñecos que en los juegos de teoría)
   const g = o.conInstr ? instrGrip(m, bw) : null;
   const armB = g && g.b ? reachArm(-18 * bw, -58, g.b) : { a: aB, l: 25 };
   const armF = g ? reachArm(18 * bw, -58, g.f) : { a: aF, l: 25 };
+  const sentado = g && g.sit;   // violonchelo, arpa, piano, guitarra: en banqueta (drawSeat)
+  if (sentado) { drawSeat(c); c.translate(0, 14); }
+  hairBack(c, m);
+  if (!sentado) limb(c, -8, -27, lL, 21, 11, TROUSER, { shoe: 1 });
   limb(c, -18 * bw, -58, armB.a, armB.l, 10, SUIT, { hand: m.piel });
-  rrect(c, -22 * bw, -64, 44 * bw, 42, 9); paint(c, SUIT, 2.6);
-  rrect(c, -22 * bw, -30, 44 * bw, 6, 2); paint(c, '#f4b52e', 1.8);
-  c.fillStyle = '#f4b52e'; for (const by of [-54, -44]) { c.beginPath(); c.arc(0, by, 2.8, 0, 7); c.fill(); }
-  limb(c, 8, -27, lR, 21, 11, TROUSER, { shoe: 1 });
+  drawTorso(c, m, bw);
+  if (!sentado) limb(c, 8, -27, lR, 21, 11, TROUSER, { shoe: 1 });
+  else { c.save(); c.translate(0, -14); drawSeatLegs(c, TROUSER); c.restore(); }
   drawHead(c, m, o, t);
   // con instrumento, la manga delantera va DETRAS del instrumento y solo las manos encima
   limb(c, 18 * bw, -58, armF.a, armF.l, 10, SUIT, g ? {} : { hand: m.piel });
@@ -914,20 +1203,27 @@ function house(c, x, y, w, h, wall, roof) {
   rrect(c, x, y - h, w, h, 2); paint(c, wall, 1.6);
   c.beginPath(); c.moveTo(x - 3, y - h); c.lineTo(x + w / 2, y - h - 12); c.lineTo(x + w + 3, y - h); c.closePath(); paint(c, roof, 1.6);
 }
+/* Escritorio: escena panorámica como en los juegos de teoría. El juego sigue en 0..W y la vista
+   (V) se ensancha a los lados: drawScene pinta cielo, colinas, banderines, suelo y pista a todo
+   el ancho de V, sin uniones. En móvil V es la escena de siempre (0..W). */
+const VISTA = { x: 0, y: 0, w: W, h: H };
+const VISTA_ANCHA = { x: -511.5, y: 14, w: W + 1023, h: 476 };   // 4,25:1, sin el cielo vacío de arriba ni el césped de abajo
+const WIDE_MQ = matchMedia('(min-width:640px)');
+let V = VISTA;
 function drawScene(c, tm) {
   // cielo, sol y nubes
   const g = c.createLinearGradient(0, 0, 0, 380); g.addColorStop(0, '#7cc6ea'); g.addColorStop(1, '#d4effa');
-  c.fillStyle = g; c.fillRect(0, 0, W, H);
+  c.fillStyle = g; c.fillRect(V.x, 0, V.w, H);
   c.save(); c.shadowColor = 'rgba(20,33,61,.25)'; c.shadowOffsetY = 4;
   c.fillStyle = '#ffd25a'; c.beginPath(); c.arc(130, 150, 40, 0, 7); c.fill(); c.restore();
   const drift = reduce ? 0 : tm;
   for (const [bx, by, k, sp] of [[60, 130, 1, 9], [380, 90, .8, 6], [640, 170, 1.1, 8], [860, 215, .7, 5]]) {
-    cloud(c, ((bx + drift * sp) % (W + 220)) - 110, by, k);
+    cloud(c, V.x + ((bx * V.w / W + drift * sp) % (V.w + 220)) - 110, by, k);
   }
   // colinas lejanas con pueblo
   c.save(); c.shadowColor = 'rgba(20,33,61,.2)'; c.shadowOffsetY = -3;
-  c.fillStyle = '#8ccf98'; c.beginPath(); c.moveTo(0, H);
-  for (let x = 0; x <= W; x += 10) c.lineTo(x, farY(x)); c.lineTo(W, H); c.closePath(); c.fill(); c.restore();
+  c.fillStyle = '#8ccf98'; c.beginPath(); c.moveTo(V.x, H);
+  for (let x = V.x; x <= V.x + V.w + 10; x += 10) c.lineTo(x, farY(x)); c.lineTo(V.x + V.w + 10, H); c.closePath(); c.fill(); c.restore();
   const vy = x => farY(x) + 3;
   house(c, 664, vy(676), 26, 20, '#f1e1c0', '#c8553d'); house(c, 698, vy(710), 30, 26, '#e6cfa6', '#a8472f');
   rrect(c, 738, vy(745) - 58, 15, 58, 2); paint(c, '#efe0bd', 1.6);
@@ -936,14 +1232,14 @@ function drawScene(c, tm) {
   // colinas cercanas (se desplazan al correr)
   const off = S.bg * 10;
   c.save(); c.shadowColor = 'rgba(20,33,61,.25)'; c.shadowOffsetY = -4;
-  c.fillStyle = '#5fae6e'; c.beginPath(); c.moveTo(0, H);
-  for (let x = 0; x <= W; x += 10) c.lineTo(x, nearY(x, off)); c.lineTo(W, H); c.closePath(); c.fill(); c.restore();
+  c.fillStyle = '#5fae6e'; c.beginPath(); c.moveTo(V.x, H);
+  for (let x = V.x; x <= V.x + V.w + 10; x += 10) c.lineTo(x, nearY(x, off)); c.lineTo(V.x + V.w + 10, H); c.closePath(); c.fill(); c.restore();
   // banderines
   const cols = ['#f4b52e', '#d9483b', '#ffffff', '#2f6fe4'];
   c.lineWidth = 2.5; c.strokeStyle = INK; c.beginPath();
-  for (let x = 0; x <= W; x += 10) { const u = x / W, y = 14 + 28 * 4 * u * (1 - u); x ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke();
-  for (let i = 0, x = 24; x < W; x += 44, i++) {
-    const u = x / W, y = 14 + 28 * 4 * u * (1 - u);
+  for (let x = V.x; x <= V.x + V.w; x += 10) { const u = (x - V.x) / V.w, y = 14 + 28 * 4 * u * (1 - u); x > V.x ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke();
+  for (let i = 0, x = V.x + 24; x < V.x + V.w; x += 44, i++) {
+    const u = (x - V.x) / V.w, y = 14 + 28 * 4 * u * (1 - u);
     c.beginPath(); c.moveTo(x - 15, y); c.lineTo(x + 15, y); c.lineTo(x, y + 34); c.closePath(); paint(c, cols[i % 4], 1.8);
   }
   // cartel
@@ -953,11 +1249,11 @@ function drawScene(c, tm) {
   rrect(c, 7, 7, 136, 44, 6); c.lineWidth = 2; c.strokeStyle = INK; c.setLineDash([5, 4]); c.stroke(); c.setLineDash([]);
   c.fillStyle = INK; c.font = `400 31px ${F_DISP}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('¡CANTA!', 75, 31, 124); c.restore();
   // suelo y pista de carrera
-  c.fillStyle = '#4f9a5e'; c.fillRect(0, GROUND, W, H - GROUND);
-  c.fillStyle = '#b24630'; c.fillRect(0, GROUND, W, 48); c.fillStyle = '#c8553d'; c.fillRect(0, GROUND + 6, W, 42);
-  c.save(); c.beginPath(); c.rect(0, GROUND + 6, W, 42); c.clip(); c.fillStyle = 'rgba(255,255,255,.85)';
-  const sc = ((S.scroll % 64) + 64) % 64; for (let x = -64 + (64 - sc); x < W; x += 64) c.fillRect(x, GROUND + 25, 34, 4); c.restore();
-  c.lineWidth = 3; c.strokeStyle = INK; c.strokeRect(-2, GROUND, W + 4, 48);
+  c.fillStyle = '#4f9a5e'; c.fillRect(V.x, GROUND, V.w, H - GROUND);
+  c.fillStyle = '#b24630'; c.fillRect(V.x, GROUND, V.w, 48); c.fillStyle = '#c8553d'; c.fillRect(V.x, GROUND + 6, V.w, 42);
+  c.save(); c.beginPath(); c.rect(V.x, GROUND + 6, V.w, 42); c.clip(); c.fillStyle = 'rgba(255,255,255,.85)';
+  const sc = ((S.scroll % 64) + 64) % 64; for (let x = -64 * Math.ceil(1 - V.x / 64) + (64 - sc); x < V.x + V.w; x += 64) c.fillRect(x, GROUND + 25, 34, 4); c.restore();
+  c.lineWidth = 3; c.strokeStyle = INK; c.strokeRect(V.x - 2, GROUND, V.w + 4, 48);
   rrect(c, TAKE_X - 6, GROUND + 3, 12, 8, 2); paint(c, '#ffffff', 2.4);          // marca de batida
   // colchoneta de caída
   rrect(c, LAND_X - 120, GROUND - MAT_H, 240, MAT_H + 14, 12); paint(c, '#2f6fe4', 3.2);
@@ -1000,7 +1296,11 @@ function drawBar(c, m) {
   c.fillStyle = INK; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(label, lx + w / 2, y + 1);
 }
 function draw(now) {
-  const c = ctx; c.setTransform(S.k, 0, 0, S.k, 0, 0);
+  const c = ctx; c.setTransform(S.k, 0, 0, S.k, -V.x * S.k, -V.y * S.k);
+  drawCentro(now);   // la escena original, en su sitio
+}
+function drawCentro(now) {
+  const c = ctx;
   const tm = now / 1000; drawScene(c, tm);
   const R = S.R, m = MUSICOS[S.musico];
   drawBar(c, barM());
@@ -1029,23 +1329,51 @@ function draw(now) {
 const cvs = $('#scene'), ctx = cvs.getContext('2d');
 S.k = 1;
 function resize() {
-  const dpr = Math.min(2, window.devicePixelRatio || 1), w = cvs.clientWidth || W;
-  cvs.width = Math.round(w * dpr); cvs.height = Math.round(w * dpr * H / W); S.k = cvs.width / W;
+  V = WIDE_MQ.matches ? VISTA_ANCHA : VISTA;
+  const dpr = Math.min(2, window.devicePixelRatio || 1), w = cvs.clientWidth || V.w;
+  cvs.width = Math.round(w * dpr); cvs.height = Math.round(w * dpr * V.h / V.w); S.k = cvs.width / V.w;
 }
 new ResizeObserver(resize).observe(cvs); resize();
 
+/* Selector por familias: arriba se elige la familia y debajo salen solo sus músicos, así
+   caben todos los instrumentos sin llenar el menú de tarjetas. Orden de la partitura. */
+const FAMILIAS = [
+  { n: 'Viento madera', instr: ['flauta', 'oboe', 'clarinete', 'fagot', 'saxo'] },
+  { n: 'Viento metal', instr: ['trompa', 'trompeta', 'trombon', 'bombardino', 'tuba'] },
+  { n: 'Percusión', instr: ['caja', 'bombo', 'platillos', 'xilofono'] },
+  { n: 'Cuerda', instr: ['violin', 'viola', 'violonchelo', 'contrabajo', 'arpa', 'piano', 'guitarra'] }
+];
+/* Guion discreto (­) en los nombres largos: en las tarjetas estrechas del móvil parten por
+   la sílaba (Violon-chelo) en vez de por cualquier letra. */
+const CORTES = { 'Violonchelo': 'Violon­chelo', 'Contrabajo': 'Contra­bajo', 'Bombardino': 'Bombar­dino', 'Clarinete': 'Clari­nete' };
 function buildPicker() {
   const box = $('#picker');
-  MUSICOS.forEach((m, i) => {
+  const famOf = i => FAMILIAS.findIndex(f => f.instr.includes(MUSICOS[i].instr));
+  const tabs = document.createElement('div'); tabs.className = 'familias';
+  tabs.setAttribute('role', 'group'); tabs.setAttribute('aria-label', 'Familia de instrumentos');
+  box.before(tabs);
+  const show = fi => {
+    tabs.querySelectorAll('button').forEach((t, j) => t.setAttribute('aria-pressed', String(j === fi)));
+    box.querySelectorAll('.mus').forEach(b => { b.hidden = famOf(+b.dataset.i) !== fi; });
+  };
+  FAMILIAS.forEach((f, fi) => {
+    const t = document.createElement('button'); t.type = 'button'; t.textContent = f.n;
+    t.addEventListener('click', () => show(fi));
+    tabs.appendChild(t);
+  });
+  FAMILIAS.forEach(f => f.instr.forEach(instr => {
+    const i = MUSICOS.findIndex(x => x.instr === instr), m = MUSICOS[i];
+    if (i < 0) return;
     const b = document.createElement('button');
-    b.type = 'button'; b.className = 'mus'; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(i === S.musico));
+    b.type = 'button'; b.className = 'mus'; b.dataset.i = i; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(i === S.musico));
     const cv = document.createElement('canvas'); cv.width = 180; cv.height = 240;
     const cx = cv.getContext('2d'); cx.scale(2, 2); drawMusico(cx, m, 40, 112, { s: 0.88, dir: 1, t: 0.4, conInstr: true });
-    const sp = document.createElement('span'); sp.textContent = m.n;
+    const sp = document.createElement('span'); sp.textContent = CORTES[m.n] || m.n;
     b.append(cv, sp);
-    b.addEventListener('click', () => { S.musico = i; box.querySelectorAll('.mus').forEach((x, j) => x.setAttribute('aria-checked', String(j === i))); try { localStorage.setItem('altura-musico', i); } catch (e) { } });
+    b.addEventListener('click', () => { S.musico = i; box.querySelectorAll('.mus').forEach(x => x.setAttribute('aria-checked', String(+x.dataset.i === i))); try { localStorage.setItem('altura-musico', i); } catch (e) {} });
     box.appendChild(b);
-  });
+  }));
+  show(Math.max(0, famOf(S.musico)));
 }
 function saveName() { S.nombre = $('#nombre').value.trim(); try { localStorage.setItem('altura-nombre', S.nombre); } catch (e) { } }
 function startFromMenu() {
