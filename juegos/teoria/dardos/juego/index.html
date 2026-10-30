@@ -69,7 +69,7 @@ p{margin:0}
 .err{background:#fde5e1;border:3px solid var(--bad);border-radius:12px;padding:10px 12px;font-size:16px}
 :is(button,input,label.pill):focus-visible,.pill:has(input:focus-visible){outline:4px solid var(--focus);outline-offset:3px}
 .picker{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-@media (min-width:640px){.picker{grid-template-columns:repeat(7,minmax(0,1fr))}}   /* panel ancho: cada familia (hasta 7) en una fila */
+@media (min-width:640px){.picker{grid-template-columns:repeat(auto-fill,minmax(76px,1fr))}}   /* panel ancho: cada familia (hasta 7) en una fila */
 /* pestañas de familia encima del selector de músico (ver FAMILIAS en el JS) */
 .familias{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:8px}
 .familias button{font:400 15px/1.1 var(--display);padding:8px 4px;min-height:44px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
@@ -78,7 +78,7 @@ p{margin:0}
 .mus canvas{width:100%;max-width:80px;height:auto;aspect-ratio:3/4}
 .mus[aria-checked="true"]{border-color:var(--brass-d);background:#fff1c7}
 /* todas las tarjetas igual de anchas aunque el nombre sea largo (Bombardino, Violonchelo) */
-.mus{min-width:0} .mus span{max-width:100%;line-height:1.15;text-align:center;hyphens:manual}
+.mus{min-width:0} .mus span{max-width:100%;line-height:1.15;text-align:center;hyphens:manual;overflow-wrap:anywhere;font-size:12px}
 label.field{display:grid;gap:6px;font:800 16px var(--body)}
 input[type=text]{-webkit-user-select:text;user-select:text;font:800 20px var(--body);padding:10px 12px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);min-height:50px;width:100%}
 .seg{border:0;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
