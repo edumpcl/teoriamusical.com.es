@@ -146,6 +146,10 @@ h3{margin:0;font:400 20px var(--display)}
   #v-menu:not(:has(#pickerCompartido[hidden])),#v-result{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);column-gap:24px;align-items:start}
   #v-menu:not(:has(#pickerCompartido[hidden])) .menuL,#v-menu:not(:has(#pickerCompartido[hidden])) .menuR,.colsL,.colsR{display:grid;gap:12px;align-content:start;min-width:0}
   .rank{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:8px}   /* clasificación de 8 en 2 columnas de 4 */
+  /* menú en 2 columnas (1 jugador): la columna derecha es estrecha y la dificultad no cabe al lado
+     del número de jugadores (desbordaba en el iframe de ~836px), así que va encima */
+  #v-menu:not(:has(#pickerCompartido[hidden])) .menuTop{grid-template-columns:minmax(0,1fr)}
+  #v-menu:not(:has(#pickerCompartido[hidden])) .menuTop .seg{order:-1}
 }
 @media (prefers-reduced-motion:reduce){.hud-zone.pop{animation:none}}
 </style>

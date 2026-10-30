@@ -102,6 +102,10 @@
     }
 
     imgs.forEach(function (img) {
+      // una imagen que enlaza a otra PÁGINA (p. ej. la tarjeta de un juego) navega a ella; solo se
+      // amplía si no tiene enlace o si el enlace apunta al propio archivo de imagen
+      var link = img.closest('a');
+      if (link && !/\.(png|jpe?g|webp|gif|svg|avif)([?#]|$)/i.test(link.getAttribute('href') || '')) return;
       img.style.cursor = 'zoom-in';
       img.addEventListener('click', function (e) {
         e.preventDefault();

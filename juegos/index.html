@@ -82,7 +82,7 @@
       "name": "¿Qué diferencia hay entre los juegos de entonación y los de teoría?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Los juegos de entonación se cantan: el micrófono del dispositivo comprueba si afinas la nota. Los juegos de teoría se juegan sin micrófono: ves algo escrito (de momento, un intervalo en el pentagrama) y pulsas la respuesta correcta lo más rápido posible."
+        "text": "Los juegos de entonación se cantan: el micrófono del dispositivo comprueba si afinas la nota. Los juegos de teoría se juegan sin micrófono: ves algo escrito en el pentagrama (un intervalo o una escala) y pulsas la respuesta correcta lo más rápido posible."
       }
     },
     {
@@ -246,7 +246,7 @@
 
   <h2>Dos formas de jugar con la música</h2>
 
-  <p>Esta sección reúne dos categorías de juegos muy distintas. En una <strong>cantas</strong>: el micrófono del móvil o del ordenador comprueba si estás afinado y, cuanto más lo estés, más lejos llega tu músico. En la otra <strong>reconoces</strong>: ves algo escrito en el pentagrama (de momento, un intervalo) y pulsas la respuesta correcta lo más rápido posible, sin usar el micrófono en ningún momento. Ambas son gratuitas y funcionan directamente en el navegador.</p>
+  <p>Esta sección reúne dos categorías de juegos muy distintas. En una <strong>cantas</strong>: el micrófono del móvil o del ordenador comprueba si estás afinado y, cuanto más lo estés, más lejos llega tu músico. En la otra <strong>reconoces</strong>: ves algo escrito en el pentagrama (un intervalo o una escala) y pulsas la respuesta correcta lo más rápido posible, sin usar el micrófono en ningún momento. Ambas son gratuitas y funcionan directamente en el navegador.</p>
 
 <div class="tm-ad">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
@@ -254,10 +254,43 @@
 
 <h2>Qué encontrarás en cada categoría</h2>
 
-  <ul>
-    <li><strong><a href="/juegos/entonacion/">Juegos de entonación</a>:</strong> nueve juegos con tema de atletismo (salto de longitud, vallas, carrera de obstáculos…) en los que cantas una nota, un intervalo, un acorde o una escala y el micrófono mide tu afinación.</li>
-    <li><strong><a href="/juegos/teoria/">Juegos de teoría musical</a>:</strong> juegos sin micrófono en los que reconoces algo escrito y respondes a toda velocidad. El primero, Dardos, pone a prueba cuánto tardas en identificar un intervalo en el pentagrama.</li>
-  </ul>
+<style>
+.ej-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin: 24px 0 40px; }
+.ej-card { background: white; border-radius: 15px; border: 1px solid #e8e0cc; box-shadow: 0 4px 6px rgba(0,0,0,0.02); overflow: hidden; display: flex; flex-direction: column; }
+/* imagen de la escena de un juego de la categoría arriba (también enlaza) y el texto debajo */
+.ej-card-img { display: block; aspect-ratio: 800 / 416; background: #e8f3f8; overflow: hidden; border-bottom: 1px solid #e8e0cc; }
+.ej-card-img img { display: block; width: 100%; height: auto; transition: transform .25s ease; }
+.ej-card:hover .ej-card-img img { transform: scale(1.04); }
+.ej-card-body { padding: 24px 28px 28px; display: flex; flex-direction: column; flex: 1; }
+.ej-card-body p { color: #666; font-size: 0.95rem; margin-bottom: 25px; }
+.ej-card-body h3 { margin-top: 0; }
+.ej-btn { display: inline-block; padding: 12px 24px; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 0.9rem; background: #14213d; margin-top: auto; align-self: flex-start; }
+@media (max-width: 600px) {
+  .ej-cards { grid-template-columns: 1fr; gap: 16px; }
+  .ej-card-body { padding: 18px 20px 20px; }
+  .ej-btn { display: block; text-align: center; align-self: stretch; }
+}
+@media (prefers-reduced-motion: reduce) { .ej-card-img img { transition: none; } }
+</style>
+
+<section class="ej-cards">
+  <div class="ej-card">
+    <a class="ej-card-img" href="/juegos/entonacion/"><img src="/assets/img/juegos/tarjetas/vallas.webp" width="800" height="416" alt="Escena de un juego de entonación: un músico de la banda en la pista de atletismo, listo para correr las vallas" loading="eager"></a>
+    <div class="ej-card-body">
+    <h3>Juegos de entonación</h3>
+    <p>Nueve juegos con tema de atletismo (salto de longitud, vallas, carrera de obstáculos…) en los que cantas una nota, un intervalo, un acorde o una escala y el micrófono mide tu afinación.</p>
+    <a href="/juegos/entonacion/" class="ej-btn">Ver los juegos de entonación</a>
+    </div>
+  </div>
+  <div class="ej-card">
+    <a class="ej-card-img" href="/juegos/teoria/"><img src="/assets/img/juegos/tarjetas/baloncesto.webp" width="800" height="416" alt="Escena de un juego de teoría: un músico de esmoquin con el balón en la cancha de baloncesto, frente a la canasta" loading="eager"></a>
+    <div class="ej-card-body">
+    <h3>Juegos de teoría musical</h3>
+    <p>Juegos sin micrófono en los que reconoces algo escrito en el pentagrama y respondes a toda velocidad: intervalos en Dardos y escalas en Baloncesto.</p>
+    <a href="/juegos/teoria/" class="ej-btn">Ver los juegos de teoría</a>
+    </div>
+  </div>
+</section>
 
   <div class="tm-ad">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>
@@ -272,7 +305,7 @@
 <div class="tm-faq-list">
       <div class="tm-faq-item">
         <div class="tm-faq-q">¿Qué diferencia hay entre los juegos de entonación y los de teoría?</div>
-        <div class="tm-faq-a">Los juegos de entonación se cantan: el micrófono del dispositivo comprueba si afinas la nota. Los juegos de teoría se juegan sin micrófono: ves algo escrito (de momento, un intervalo en el pentagrama) y pulsas la respuesta correcta lo más rápido posible.</div>
+        <div class="tm-faq-a">Los juegos de entonación se cantan: el micrófono del dispositivo comprueba si afinas la nota. Los juegos de teoría se juegan sin micrófono: ves algo escrito en el pentagrama (un intervalo o una escala) y pulsas la respuesta correcta lo más rápido posible.</div>
       </div>
       <div class="tm-faq-item">
         <div class="tm-faq-q">¿Necesito micrófono para jugar?</div>
@@ -352,6 +385,6 @@
   </div>
 </footer>
 
-<script src="/assets/js/main.js?v=58d478c2" defer></script>
+<script src="/assets/js/main.js?v=12303d86" defer></script>
 </body>
 </html>

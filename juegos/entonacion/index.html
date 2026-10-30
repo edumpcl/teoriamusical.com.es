@@ -60,7 +60,7 @@
 {"@context":"https://schema.org","@type":"Article","headline":"Juegos de entonación","description":"Juegos gratis para entrenar la entonación con la voz: canta una nota o un acorde, el micrófono comprueba si estás afinado y tu músico salta más lejos.","url":"https://www.teoriamusical.com.es/juegos/entonacion/","inLanguage":"es","isAccessibleForFree":true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-juegos-entonacion.png"},"author":{"@type":"Person","name":"Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},"datePublished":"2026-10-19","dateModified":"2026-10-21","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.teoriamusical.com.es/juegos/entonacion/"},"publisher":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es","logo":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-diccionario.png"}}}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://www.teoriamusical.com.es/"},{"@type":"ListItem","position":2,"name":"Juegos de entonación","item":"https://www.teoriamusical.com.es/juegos/entonacion/"}]}
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://www.teoriamusical.com.es/"},{"@type":"ListItem","position":2,"name":"Juegos","item":"https://www.teoriamusical.com.es/juegos/"},{"@type":"ListItem","position":3,"name":"Juegos de entonación","item":"https://www.teoriamusical.com.es/juegos/entonacion/"}]}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué es la entonación musical?","acceptedAnswer":{"@type":"Answer","text":"La entonación es la capacidad de cantar o tocar cada nota con su altura exacta. Se entrena escuchando una referencia, reproduciéndola y corrigiendo la diferencia."}},{"@type":"Question","name":"¿Necesito instalar algo para jugar?","acceptedAnswer":{"@type":"Answer","text":"No. Los juegos funcionan en el navegador del móvil o del ordenador. Solo hace falta permitir el uso del micrófono, o usar el modo demostración."}},{"@type":"Question","name":"¿Se graba mi voz?","acceptedAnswer":{"@type":"Answer","text":"No. El audio del micrófono se analiza en tu dispositivo para detectar la altura de la nota y no se graba ni se envía a ningún servidor."}},{"@type":"Question","name":"¿Para quién son estos juegos?","acceptedAnswer":{"@type":"Answer","text":"Para cualquier persona que estudie música, tenga o no experiencia cantando: alumnos de lenguaje musical, instrumentistas de banda u orquesta y coristas."}}]}
@@ -179,7 +179,7 @@
 
   <nav class="tm-breadcrumb" aria-label="Migas">
     <div class="tm-container">
-      <a href="/">Inicio</a><span class="tm-crumb-sep">›</span><span aria-current="page">Juegos de entonación</span>
+      <a href="/">Inicio</a><span class="tm-crumb-sep">›</span><a href="/juegos/">Juegos</a><span class="tm-crumb-sep">›</span><span aria-current="page">Juegos de entonación</span>
     </div>
   </nav>
 
@@ -189,14 +189,21 @@
 
 <style>
 .ej-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin: 24px 0 40px; }
-.ej-card { background: white; border-radius: 15px; padding: 30px; border: 1px solid #e8e0cc; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+.ej-card { background: white; border-radius: 15px; border: 1px solid #e8e0cc; box-shadow: 0 4px 6px rgba(0,0,0,0.02); overflow: hidden; display: flex; flex-direction: column; }
+/* imagen de la escena del juego arriba (también enlaza al juego) y el texto debajo */
+.ej-card-img { display: block; aspect-ratio: 800 / 416; background: #e8f3f8; overflow: hidden; border-bottom: 1px solid #e8e0cc; }
+.ej-card-img img { display: block; width: 100%; height: auto; transition: transform .25s ease; }
+.ej-card:hover .ej-card-img img { transform: scale(1.04); }
+.ej-card-body { padding: 24px 28px 28px; display: flex; flex-direction: column; flex: 1; }
+.ej-card-body .ej-btn { margin-top: auto; align-self: flex-start; }
+@media (prefers-reduced-motion: reduce) { .ej-card-img img { transition: none; } }
 .ej-card p { color: #666; font-size: 0.95rem; margin-bottom: 25px; }
 .ej-card h2 { margin-top: 0; }
 .ej-btn { display: inline-block; padding: 12px 24px; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 0.9rem; background: #14213d; }
 @media (max-width: 600px) {
   .ej-cards { grid-template-columns: 1fr; gap: 16px; }
-  .ej-card { padding: 20px; }
-  .ej-btn { display: block; text-align: center; }
+  .ej-card-body { padding: 18px 20px 20px; }
+  .ej-card-body .ej-btn { display: block; text-align: center; align-self: stretch; }
 }
 </style>
 
@@ -204,49 +211,76 @@
 
 <section class="ej-cards">
   <div class="ej-card">
+    <a class="ej-card-img" href="/juegos/entonacion/salto-de-longitud/"><img src="/assets/img/juegos/tarjetas/salto-de-longitud.webp" width="800" height="416" alt="Escena del juego Salto de longitud: un músico de la banda en la pista, junto al foso de arena" loading="eager"></a>
+    <div class="ej-card-body">
     <h2>Salto de longitud</h2>
     <p>Escucha una nota y cántala durante 5 segundos. Cada segundo afinado suma 1,90 m al salto. Para empezar a entonar notas sueltas.</p>
     <a href="/juegos/entonacion/salto-de-longitud/" class="ej-btn">Jugar al salto de longitud</a>
+    </div>
   </div>
   <div class="ej-card">
+    <a class="ej-card-img" href="/juegos/entonacion/salto-de-altura/"><img src="/assets/img/juegos/tarjetas/salto-de-altura.webp" width="800" height="416" alt="Escena del juego Salto de altura: un músico de la banda ante el listón y la colchoneta" loading="eager"></a>
+    <div class="ej-card-body">
     <h2>Salto de altura</h2>
     <p>Canta dos notas: la primera es la carrera y la segunda, el salto. Niveles de segundas y terceras hasta todos los intervalos.</p>
     <a href="/juegos/entonacion/salto-de-altura/" class="ej-btn">Jugar al salto de altura</a>
+    </div>
   </div>
   <div class="ej-card">
+    <a class="ej-card-img" href="/juegos/entonacion/vallas/"><img src="/assets/img/juegos/tarjetas/vallas.webp" width="800" height="416" alt="Escena del juego 110 m Vallas: un músico de la banda en la salida de la pista" loading="lazy"></a>
+    <div class="ej-card-body">
     <h2>110 m Vallas</h2>
     <p>Canta una escala completa, nota por nota: cada nota es una valla que no se supera hasta que la afinas. Aquí no cuentan los metros, sino el tiempo: gana quien tarda menos.</p>
     <a href="/juegos/entonacion/vallas/" class="ej-btn">Jugar a las vallas</a>
+    </div>
   </div>
   <div class="ej-card">
+    <a class="ej-card-img" href="/juegos/entonacion/100-metros-lisos/"><img src="/assets/img/juegos/tarjetas/100-metros-lisos.webp" width="800" height="416" alt="Escena del juego 100 metros lisos: un músico de la banda en la pista de atletismo" loading="lazy"></a>
+    <div class="ej-card-body">
     <h2>100 metros lisos</h2>
     <p>Canta una melodía corta de memoria, nota por nota: ni una escala ni un acorde, una frase real con algún salto. Aquí no se mide el ritmo, solo la afinación.</p>
     <a href="/juegos/entonacion/100-metros-lisos/" class="ej-btn">Jugar a los 100 metros lisos</a>
+    </div>
   </div>
   <div class="ej-card">
+    <a class="ej-card-img" href="/juegos/entonacion/200-metros-lisos/"><img src="/assets/img/juegos/tarjetas/200-metros-lisos.webp" width="800" height="416" alt="Escena del juego 200 metros lisos: un músico de la banda en la pista de atletismo" loading="lazy"></a>
+    <div class="ej-card-body">
     <h2>200 metros lisos</h2>
     <p>El doble de largo que los 100 metros lisos: dos formas melódicas distintas concatenadas, una detrás de otra, en la misma tonalidad. Sigue sin contar el ritmo, solo la afinación.</p>
     <a href="/juegos/entonacion/200-metros-lisos/" class="ej-btn">Jugar a los 200 metros lisos</a>
+    </div>
   </div>
   <div class="ej-card">
+    <a class="ej-card-img" href="/juegos/entonacion/400-metros-lisos/"><img src="/assets/img/juegos/tarjetas/400-metros-lisos.webp" width="800" height="416" alt="Escena del juego 400 metros lisos: un músico de la banda en la pista de atletismo" loading="lazy"></a>
+    <div class="ej-card-body">
     <h2>400 metros lisos</h2>
     <p>El cuádruple de los 100 metros lisos: cuatro formas melódicas distintas concatenadas en una sola melodía muy larga. El reto de memoria más exigente de los juegos de carrera.</p>
     <a href="/juegos/entonacion/400-metros-lisos/" class="ej-btn">Jugar a los 400 metros lisos</a>
+    </div>
   </div>
   <div class="ej-card">
+    <a class="ej-card-img" href="/juegos/entonacion/lanzamiento-de-jabalina/"><img src="/assets/img/juegos/tarjetas/lanzamiento-de-jabalina.webp" width="800" height="416" alt="Escena del juego Lanzamiento de jabalina: un músico de la banda con la jabalina, junto a la cinta métrica" loading="lazy"></a>
+    <div class="ej-card-body">
     <h2>Lanzamiento de jabalina</h2>
     <p>Canta un glissando entre dos notas: sostén la primera, desliza la voz hasta la segunda y sostenla. Un pasillo te guía y decide hasta dónde llega la jabalina.</p>
     <a href="/juegos/entonacion/lanzamiento-de-jabalina/" class="ej-btn">Jugar al lanzamiento de jabalina</a>
+    </div>
   </div>
   <div class="ej-card">
+    <a class="ej-card-img" href="/juegos/entonacion/triple-salto/"><img src="/assets/img/juegos/tarjetas/triple-salto.webp" width="800" height="416" alt="Escena del juego Triple salto: un músico de la banda en la pista, junto al foso de arena" loading="lazy"></a>
+    <div class="ej-card-body">
     <h2>Triple salto</h2>
     <p>Canta el arpegio de un acorde mayor o menor: fundamental, tercera y quinta. Tres notas, tres saltos. Para entrenar acordes y terceras.</p>
     <a href="/juegos/entonacion/triple-salto/" class="ej-btn">Jugar al triple salto</a>
+    </div>
   </div>
   <div class="ej-card">
+    <a class="ej-card-img" href="/juegos/entonacion/carrera-de-obstaculos/"><img src="/assets/img/juegos/tarjetas/carrera-de-obstaculos.webp" width="800" height="416" alt="Escena del juego Carrera de obstáculos: un músico de la banda en la pista de atletismo" loading="lazy"></a>
+    <div class="ej-card-body">
     <h2>Carrera de obstáculos</h2>
     <p>Canta 8 obstáculos seguidos: cada uno es un intervalo que puede subir o bajar desde una nota base, y no se supera hasta afinar las dos notas. El más completo y difícil de los nueve juegos.</p>
     <a href="/juegos/entonacion/carrera-de-obstaculos/" class="ej-btn">Jugar a la carrera de obstáculos</a>
+    </div>
   </div>
 </section>
 
@@ -361,6 +395,6 @@
   </div>
 </footer>
 
-<script src="/assets/js/main.js?v=58d478c2" defer></script>
+<script src="/assets/js/main.js?v=12303d86" defer></script>
 </body>
 </html>

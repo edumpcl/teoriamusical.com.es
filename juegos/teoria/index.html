@@ -189,14 +189,21 @@
 
 <style>
 .ej-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin: 24px 0 40px; }
-.ej-card { background: white; border-radius: 15px; padding: 30px; border: 1px solid #e8e0cc; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+.ej-card { background: white; border-radius: 15px; border: 1px solid #e8e0cc; box-shadow: 0 4px 6px rgba(0,0,0,0.02); overflow: hidden; display: flex; flex-direction: column; }
+/* imagen de la escena del juego arriba (también enlaza al juego) y el texto debajo */
+.ej-card-img { display: block; aspect-ratio: 800 / 416; background: #e8f3f8; overflow: hidden; border-bottom: 1px solid #e8e0cc; }
+.ej-card-img img { display: block; width: 100%; height: auto; transition: transform .25s ease; }
+.ej-card:hover .ej-card-img img { transform: scale(1.04); }
+.ej-card-body { padding: 24px 28px 28px; display: flex; flex-direction: column; flex: 1; }
+.ej-card-body .ej-btn { margin-top: auto; align-self: flex-start; }
+@media (prefers-reduced-motion: reduce) { .ej-card-img img { transition: none; } }
 .ej-card p { color: #666; font-size: 0.95rem; margin-bottom: 25px; }
 .ej-card h2 { margin-top: 0; }
 .ej-btn { display: inline-block; padding: 12px 24px; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 0.9rem; background: #14213d; }
 @media (max-width: 600px) {
   .ej-cards { grid-template-columns: 1fr; gap: 16px; }
-  .ej-card { padding: 20px; }
-  .ej-btn { display: block; text-align: center; }
+  .ej-card-body { padding: 18px 20px 20px; }
+  .ej-card-body .ej-btn { display: block; text-align: center; align-self: stretch; }
 }
 </style>
 
@@ -204,14 +211,20 @@
 
 <section class="ej-cards">
   <div class="ej-card">
+    <a class="ej-card-img" href="/juegos/teoria/dardos/"><img src="/assets/img/juegos/tarjetas/dardos.webp" width="800" height="416" alt="Escena del juego Dardos: una música de esmoquin con un dardo frente a la diana" loading="eager"></a>
+    <div class="ej-card-body">
     <h2>Dardos</h2>
     <p>Un intervalo aparece escrito en el pentagrama y tienes que acertar cuál es antes de que se acabe el tiempo: cuanto más rápido aciertas, más cerca del centro de la diana cae tu dardo. Tres dardos por turno, tres turnos por partida.</p>
     <a href="/juegos/teoria/dardos/" class="ej-btn">Jugar a Dardos</a>
+    </div>
   </div>
   <div class="ej-card">
+    <a class="ej-card-img" href="/juegos/teoria/baloncesto/"><img src="/assets/img/juegos/tarjetas/baloncesto.webp" width="800" height="416" alt="Escena del juego Baloncesto: un músico de esmoquin con el balón en la cancha, frente a la canasta" loading="eager"></a>
+    <div class="ej-card-body">
     <h2>Baloncesto</h2>
     <p>Una escala completa, de ida y vuelta, aparece escrita en el pentagrama y tienes que acertar cuál es exactamente —tónica y tipo— antes de que se acabe el tiempo. Antes de cada tiro eliges tiro libre, de 2 o triple: cuanto más arriesgas, más puntos ganas si aciertas. Tres tiros por turno, tres turnos por partida.</p>
     <a href="/juegos/teoria/baloncesto/" class="ej-btn">Jugar a Baloncesto</a>
+    </div>
   </div>
 </section>
 
@@ -309,6 +322,6 @@
   </div>
 </footer>
 
-<script src="/assets/js/main.js?v=58d478c2" defer></script>
+<script src="/assets/js/main.js?v=12303d86" defer></script>
 </body>
 </html>
