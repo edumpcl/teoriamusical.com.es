@@ -65,7 +65,7 @@ create or replace function clasif_tabla(p_juego text, p_dif text, p_semana text,
 returns jsonb language plpgsql stable as $$
 declare
   r jsonb := '{}'; k text; per text; t jsonb; mi numeric; tot int; pos int;
-  s int := case when p_orden = 'desc' then -1 else 1 end;
+  s int := case when p_orden = 'asc' then 1 else -1 end;   -- 'desc' y 'suma': más es mejor
 begin
   foreach k in array array['semana', 'siempre'] loop
     per := case when k = 'semana' then 'sem:' || p_semana else 'siempre' end;
@@ -99,7 +99,8 @@ begin
 end $$;
 
 -- Publicar una marca. Todo en una transacción: gastar el permiso, contar el envío,
--- guardar la marca solo si mejora la anterior (semana y siempre) y el apodo.
+-- guardar la marca (semana y siempre) y el apodo. Según p_orden: 'desc'/'asc' guardan
+-- la mejor marca; 'suma' acumula los puntos de cada partida.
 create or replace function clasif_publicar(p_juego text, p_dif text, p_semana text, p_jugador text, p_nombre text,
   p_musico text, p_marca numeric, p_orden text, p_nonce text, p_ip text, p_max int)
 returns jsonb language plpgsql as $$
@@ -111,9 +112,11 @@ begin
   insert into clasif_marcas (juego, dif, periodo, jugador, marca)
   values (p_juego, p_dif, 'siempre', p_jugador, p_marca), (p_juego, p_dif, 'sem:' || p_semana, p_jugador, p_marca)
   on conflict (juego, dif, periodo, jugador) do update
-    set marca = excluded.marca, actualizado = now()
-    where case when p_orden = 'desc' then excluded.marca > clasif_marcas.marca
-               else excluded.marca < clasif_marcas.marca end;
+    set marca = case when p_orden = 'suma' then clasif_marcas.marca + excluded.marca else excluded.marca end,
+        actualizado = now()
+    where case when p_orden = 'suma' then true                                   -- puntos: se acumulan
+               when p_orden = 'desc' then excluded.marca > clasif_marcas.marca   -- metros: solo si mejora
+               else excluded.marca < clasif_marcas.marca end;                    -- segundos: solo si mejora
 
   insert into clasif_jugadores (juego, jugador, nombre, musico) values (p_juego, p_jugador, p_nombre, p_musico)
   on conflict (juego, jugador) do update set nombre = excluded.nombre, musico = excluded.musico;

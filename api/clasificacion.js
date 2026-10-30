@@ -3,13 +3,16 @@
  * el salto de longitud).
  *
  * SIN REGISTRO, A PROPÓSITO: el jugador solo pone un apodo. El navegador guarda
- * un identificador anónimo al azar (localStorage `tm-jugador`) para que sus
- * marcas vayan siempre a la misma fila. No se guarda correo ni nombre real: hay
+ * un identificador anónimo al azar (localStorage `tm-jugador`). Cada jugador de
+ * la tabla es ese identificador + el apodo (claveJugador): así, en una tableta o
+ * un ordenador de clase, cada alumno con su apodo tiene su propia fila, y la
+ * misma persona con el mismo apodo vuelve siempre a la suya («Edu» y «edu» son
+ * el mismo). No se guarda correo ni nombre real: hay
  * muchos menores entre los jugadores. Lo único que toca la IP son los contadores
  * de abuso (abajo): una huella SHA-256 recortada que caduca a los 60 s.
  *
  * TRES ACCIONES:
- *   GET  ?juego=&dif=&jugador=          top 10 de la semana y de siempre + tu puesto
+ *   GET  ?juego=&dif=&jugador=&apodo=   top 10 de la semana y de siempre + tu puesto
  *   POST {accion:'inicio', juego, dif}   da un permiso firmado al EMPEZAR un intento
  *   POST {accion:'enviar', token, jugador, nombre, musico, marca}
  *                                        publica la marca de ese intento
@@ -51,11 +54,23 @@
 
 const crypto = require('crypto');
 
-/* Juegos admitidos. orden 'desc' = más es mejor (metros); 'asc' = menos es mejor (segundos).
+/* Juegos admitidos. orden 'desc' = más es mejor (metros); 'asc' = menos es mejor (segundos);
+   'suma' = los puntos de cada partida se acumulan (juegos de teoría; max = máximo de UNA partida).
    minMs: lo mínimo que tarda un intento real desde que se pide el permiso (cuenta atrás
    3,4 s + 5 s cantando en el salto), con un pequeño margen. */
+const DIFS = ['facil', 'normal', 'maestro'];
 const JUEGOS = {
-  'salto-longitud': { difs: ['facil', 'normal', 'maestro'], min: 0.01, max: 9.5, dec: 2, orden: 'desc', minMs: 8000 },
+  // saltos y lanzamiento: metros, más es mejor. max = todas las notas afinadas todo el tiempo.
+  'salto-longitud': { difs: DIFS, min: 0.01, max: 9.5, dec: 2, orden: 'desc', minMs: 8000 },     // 3,4 + 5 s
+  'salto-altura':   { difs: DIFS, min: 0.5, max: 2.6, dec: 2, orden: 'desc', minMs: 9500 },      // 0,5 + 3·0,3 + 3·0,4; 3,4 + 6 s
+  'triple-salto':   { difs: DIFS, min: 0.01, max: 18.6, dec: 2, orden: 'desc', minMs: 12500 },   // 3·(2,0+1,7+2,5); 3,4 + 9 s
+  'jabalina':       { difs: DIFS, min: 0.01, max: 100, dec: 2, orden: 'desc', minMs: 7500 },     // 20+2·25+30; 3,4 + 4 s
+  // carreras: segundos, menos es mejor. min = salida + cada nota en el mínimo + llegada; max = todas tropezadas.
+  '100-metros':     { difs: DIFS, min: 6.5, max: 35.5, dec: 1, orden: 'asc', minMs: 8500 },      // 4-6 notas; 3,4 + 4 + 1,7 s
+  '200-metros':     { difs: DIFS, min: 11.5, max: 68.5, dec: 1, orden: 'asc', minMs: 13500 },    // 9-12 notas
+  '400-metros':     { difs: DIFS, min: 21.5, max: 134.5, dec: 1, orden: 'asc', minMs: 23500 },   // 19-24 notas
+  'vallas':         { difs: DIFS, min: 12.3, max: 37.9, dec: 1, orden: 'asc', minMs: 14500 },    // 8 vallas de 1,3 s
+  'obstaculos':     { difs: DIFS, min: 18.0, max: 48.4, dec: 1, orden: 'asc', minMs: 20000 },    // 8 obstáculos de 2 notas
 };
 
 const TOP = 10;
@@ -126,6 +141,12 @@ function limpiarNombre(bruto) {
   return n;
 }
 
+/* Jugador de la tabla = navegador + apodo (sin mayúsculas, tildes ni espacios de más). */
+function claveJugador(id, nombre) {
+  const apodo = nombre.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim();
+  return crypto.createHash('sha256').update(id + '|' + apodo).digest('hex').slice(0, 24);
+}
+
 const huellaIp = (ip) => crypto.createHash('sha256').update(String(ip)).digest('hex').slice(0, 16);
 
 function leerCuerpo(req) {
@@ -172,7 +193,7 @@ async function enviar(b, ip) {
   const musico = MUSICOS.includes(b.musico) ? b.musico : '';
 
   const r = await rpc('clasif_publicar', {
-    p_juego: p.j, p_dif: p.d, p_semana: semanaISO(), p_jugador: b.jugador, p_nombre: nombre, p_musico: musico,
+    p_juego: p.j, p_dif: p.d, p_semana: semanaISO(), p_jugador: claveJugador(b.jugador, nombre), p_nombre: nombre, p_musico: musico,
     p_marca: marca, p_orden: cfg.orden, p_nonce: p.n, p_ip: huellaIp(ip), p_max: ENVIOS_POR_MINUTO,
   });
   if (r.error === 'usado') return [400, { error: 'permiso ya usado' }];
@@ -204,7 +225,8 @@ module.exports = async (req, res) => {
       const q = req.query || {};
       const cfg = JUEGOS[q.juego];
       if (!cfg || !cfg.difs.includes(q.dif)) { res.status(400).json({ error: 'juego o nivel' }); return; }
-      const jugador = JUGADOR_RE.test(String(q.jugador || '')) ? q.jugador : '';
+      const apodo = limpiarNombre(q.apodo);
+      const jugador = JUGADOR_RE.test(String(q.jugador || '')) && apodo ? claveJugador(q.jugador, apodo) : '';
       const t = await rpc('clasif_ver', {
         p_juego: q.juego, p_dif: q.dif, p_semana: semanaISO(), p_jugador: jugador, p_orden: cfg.orden,
         p_ip: huellaIp(ip), p_max: CONSULTAS_POR_MINUTO,

@@ -94,6 +94,13 @@ input[type=text]{-webkit-user-select:text;user-select:text;font:800 20px var(--b
 .rank .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rank .nm small{color:var(--mute);font-weight:700}
 .rank .dd{font:400 18px var(--display)}
+/* clasificación mundial (api/clasificacion.js) */
+.mundial{display:grid;gap:6px;margin-top:10px}
+.mTabs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mTabs button{font:400 15px/1.1 var(--display);padding:6px 4px;min-height:40px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.mTabs button[aria-pressed="true"]{background:var(--brass)}
+.pub{display:grid;gap:6px}
+.pub .muted{font-size:14px;line-height:1.35;margin:0}
 h3{margin:0;font:400 20px var(--display)}
 .speaker{display:grid;place-content:center;height:96px;border-radius:14px;background:var(--paper2);font:400 56px var(--display);color:#8c6609}
 .speaker.on{animation:throb .5s ease-in-out infinite alternate}
@@ -171,6 +178,15 @@ h3{margin:0;font:400 20px var(--display)}
           <ol class="rank" id="rankMenu"></ol>
           <p class="muted" id="rankEmpty">Todavía no hay lanzamientos. ¡Sé el primero!</p>
         </div>
+        <div class="mundial" id="mundial" hidden>
+          <h3>Clasificación mundial <span class="rankDif"></span></h3>
+          <div class="mTabs" role="group" aria-label="Periodo">
+            <button type="button" data-p="semana" aria-pressed="true">Esta semana</button>
+            <button type="button" data-p="siempre" aria-pressed="false">De siempre</button>
+          </div>
+          <ol class="rank" id="rankMundial"></ol>
+          <p class="muted" id="mundialYo"></p>
+        </div>
         </div>
         <div class="menuR">
         <label class="field" for="nombre">Tu nombre
@@ -247,6 +263,10 @@ h3{margin:0;font:400 20px var(--display)}
           <h3>Clasificación <span class="rankDif"></span></h3>
           <ol class="rank" id="rankRes"></ol>
         </div>
+        <div class="pub" id="pubWrap" hidden>
+          <button class="btn alt small" id="btnPub" type="button">Publicar en la clasificación mundial</button>
+          <p class="muted" id="pubMsg">Se publican tu apodo y tu marca. Usa un apodo, no tu nombre completo.</p>
+        </div>
         </div>
         <div class="colsR">
         <ul class="brk" id="resBrk"></ul>
@@ -260,7 +280,7 @@ h3{margin:0;font:400 20px var(--display)}
 
   <footer class="foot">
     Cada segundo dentro del pasillo suma metros: 20 m en la carrera, 25 m en el glissando y 30 m en el remate. Con 4 segundos perfectos se lanzan 100 m (el récord del mundo es 98,48 m).
-    La clasificación se guarda solo en este dispositivo.
+    La clasificación local se guarda en este dispositivo; a la mundial solo van los lanzamientos que publicas: tu apodo, tu músico y tu marca (<a class="link" href="/politica-de-privacidad/#juegos" target="_top">más información</a>).
     <button class="link" id="btnClear" type="button">Borrar clasificación</button>
   </footer>
 </div>
@@ -969,7 +989,93 @@ function renderRank(ol, hi) {
   }
   return all.length;
 }
-function refreshRankMenu() { $('#rankEmpty').hidden = renderRank($('#rankMenu')) > 0; }
+function refreshRankMenu() { $('#rankEmpty').hidden = renderRank($('#rankMenu')) > 0; cargarMundial(); }
+
+/* ============================================================
+   CLASIFICACIÓN MUNDIAL (api/clasificacion.js)
+   Sin registro: el jugador es este navegador + el apodo escrito (en una tableta de clase, cada
+   alumno con su apodo tiene su fila). Cada intento pide un permiso al empezar a cantar y ese
+   permiso es el que deja publicar la marca. Si la API no responde, el bloque no se enseña.
+   ============================================================ */
+const API_MUNDIAL = '/api/clasificacion/', JUEGO_MUNDIAL = 'jabalina';
+const MUNDO = { periodo: 'semana', datos: null, pedido: 0 };
+const fmtMundial = x => fmt(x) + ' m';
+function jugadorId() {
+  try {
+    let id = localStorage.getItem('tm-jugador');
+    if (!/^[a-f0-9]{24}$/.test(id || '')) {
+      id = Array.from(crypto.getRandomValues(new Uint8Array(12)), b => b.toString(16).padStart(2, '0')).join('');
+      localStorage.setItem('tm-jugador', id);
+    }
+    return id;
+  } catch (e) { return ''; }
+}
+function cargarMundial() {
+  const dif = rankDif(), n = ++MUNDO.pedido;
+  fetch(API_MUNDIAL + '?juego=' + JUEGO_MUNDIAL + '&dif=' + dif + '&jugador=' + jugadorId() + '&apodo=' + encodeURIComponent($('#nombre').value.trim()))
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(d => { if (n === MUNDO.pedido) { MUNDO.datos = d; pintarMundial(); } })
+    .catch(() => { if (n === MUNDO.pedido) $('#mundial').hidden = true; });
+}
+function pintarMundial() {
+  const t = MUNDO.datos && MUNDO.datos[MUNDO.periodo];
+  if (!t) return;
+  $('#mundial').hidden = false;
+  document.querySelectorAll('.mTabs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p === MUNDO.periodo)));
+  const ol = $('#rankMundial'); ol.replaceChildren();
+  for (const e of t.top) {
+    const li = document.createElement('li');
+    if (e.yo) li.className = 'me';
+    const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = e.n + ' ';
+    const sm = document.createElement('small'); sm.textContent = e.m; nm.appendChild(sm);
+    const dd = document.createElement('span'); dd.className = 'dd'; dd.textContent = fmtMundial(e.marca);
+    li.append(nm, dd); ol.appendChild(li);
+  }
+  const cuando = MUNDO.periodo === 'semana' ? 'esta semana' : 'de siempre';
+  $('#mundialYo').textContent = t.yo
+    ? 'Tú: n.º ' + t.yo.pos + ' de ' + t.total + ' ' + cuando + ', con ' + fmtMundial(t.marca) + '.'
+    : t.total ? 'Publica un lanzamiento para entrar en la clasificación.'
+    : (MUNDO.periodo === 'semana' ? 'Nadie ha publicado todavía esta semana. ¡Sé el primero!' : 'Nadie ha publicado todavía. ¡Sé el primero!');
+}
+document.querySelectorAll('.mTabs button').forEach(b => b.addEventListener('click', () => { MUNDO.periodo = b.dataset.p; pintarMundial(); }));
+$('#nombre').addEventListener('change', cargarMundial);   // otro apodo = otro jugador: su puesto cambia
+function pedirPermiso() {
+  S.wTok = null;
+  const dif = S.dif;
+  fetch(API_MUNDIAL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ accion: 'inicio', juego: JUEGO_MUNDIAL, dif }) })
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(d => { if (d.token && S.dif === dif) S.wTok = d.token; })
+    .catch(() => { });
+}
+function prepararPublicar() {
+  const btn = $('#btnPub'), msg = $('#pubMsg');
+  $('#pubWrap').hidden = S.nulo || !S.wTok;
+  btn.hidden = false; btn.textContent = 'Publicar en la clasificación mundial';
+  msg.textContent = S.nombre ? 'Se publican tu apodo y tu marca. Usa un apodo, no tu nombre completo.'
+    : 'Para publicar, escribe un apodo en el menú (botón «Cambiar de músico»).';
+  btn.disabled = !S.nombre;
+}
+$('#btnPub').addEventListener('click', () => {
+  const btn = $('#btnPub'), msg = $('#pubMsg'), tok = S.wTok;
+  if (!tok || !S.nombre) return;
+  btn.disabled = true; btn.textContent = 'Publicando…';
+  fetch(API_MUNDIAL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ accion: 'enviar', token: tok, jugador: jugadorId(), nombre: S.nombre, musico: MUSICOS[S.musico].n, marca: S.dist }) })
+    .then(r => r.json().then(d => ({ ok: r.ok, d })))
+    .then(({ ok, d }) => {
+      if (!ok) {
+        btn.disabled = false; btn.textContent = 'Publicar en la clasificación mundial';
+        msg.textContent = d.motivo || 'No se ha podido publicar. Prueba con el siguiente lanzamiento.';
+        if (!d.motivo) btn.hidden = true;
+        return;
+      }
+      S.wTok = null; btn.hidden = true; MUNDO.datos = d;
+      const s = d.semana.yo, h = d.siempre.yo;
+      msg.textContent = '¡Publicado! Con tu mejor lanzamiento vas n.º ' + s.pos + ' de ' + s.total + ' esta semana y n.º ' + h.pos + ' de ' + h.total + ' de siempre.';
+      track('mundial_publicar', { dificultad: S.dif, puesto_semana: s.pos });
+    })
+    .catch(() => { btn.disabled = false; btn.textContent = 'Publicar en la clasificación mundial'; msg.textContent = 'Sin conexión: no se ha podido publicar.'; });
+});
 
 /* ============================================================
    FLUJO DEL JUEGO
@@ -1004,6 +1110,7 @@ function setState(s, now = performance.now()) {
     setTimeout(() => { if (S.state === 'listen') hearNote(); }, 450);
   }
   if (s === 'count') {
+    pedirPermiso();
     S.noiseSum = 0; S.noiseN = 0; S.lastCount = '';
     $('#playTitle').textContent = 'Prepárate…';
     $('#hint').dataset.s = ''; $('#hint').textContent = 'Respira hondo y piensa en el pasillo';
@@ -1091,6 +1198,7 @@ function finishRound() {
   ETAPAS.forEach((e, i) => fila(e + (i === 1 ? '' : ' (' + S.chord.n[i === 0 ? 0 : 1] + ')') + ' · ' + fmt1(S.tp[i]) + ' de ' + PH_LEN[i] + ' s', '+' + fmt(S.ds[i]) + ' m'));
   $('#resRank').textContent = 'Puesto n.º ' + pos + ' de ' + nivel.length + (nivel.length === 1 ? ' lanzamiento.' : ' lanzamientos.');
   renderRank($('#rankRes'), id);
+  prepararPublicar();
   if (d >= 60) { const n = reduce ? 30 : 110; for (let i = 0; i < n; i++) spawnConfetti(); jinglePiano([523, 659, 784, 1047], 0.12); }
   else if (S.nulo) jingle([220, 175, 147], 0.18, 'sawtooth');
   else jinglePiano([392, 523], 0.14);
