@@ -94,6 +94,13 @@ input[type=text]{-webkit-user-select:text;user-select:text;font:800 20px var(--b
 .rank .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rank .nm small{color:var(--mute);font-weight:700}
 .rank .dd{font:400 18px var(--display)}
+/* clasificación mundial (api/clasificacion.js) */
+.mundial{display:grid;gap:6px;margin-top:10px}
+.mTabs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mTabs button{font:400 15px/1.1 var(--display);padding:6px 4px;min-height:40px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.mTabs button[aria-pressed="true"]{background:var(--brass)}
+.pub{display:grid;gap:6px;margin-top:8px}
+.pub .muted{font-size:14px;line-height:1.35;margin:0}
 #nombresWrap{display:grid;gap:14px}
 /* En escritorio, los jugadores en columnas (2 por fila) en vez de uno debajo de otro: con
    2 jugadores el menu cabe entero sin scroll. Con 1 solo jugador ocupa todo el ancho. */
@@ -179,6 +186,15 @@ h3{margin:0;font:400 20px var(--display)}
           <ol class="rank" id="rankMenu"></ol>
           <p class="muted" id="rankEmpty">Todavía no hay partidas. ¡Sé el primero!</p>
         </div>
+        <div class="mundial" id="mundial" hidden>
+          <h3>Clasificación mundial <span class="rankDif"></span></h3>
+          <div class="mTabs" role="group" aria-label="Periodo">
+            <button type="button" data-p="semana" aria-pressed="true">Esta semana</button>
+            <button type="button" data-p="siempre" aria-pressed="false">De siempre</button>
+          </div>
+          <ol class="rank" id="rankMundial"></ol>
+          <p class="muted" id="mundialYo"></p>
+        </div>
         </div>
         <div class="menuR">
         <div class="menuTop">
@@ -239,6 +255,10 @@ h3{margin:0;font:400 20px var(--display)}
           <h3>Clasificación <span class="rankDif"></span></h3>
           <ol class="rank" id="rankRes"></ol>
         </div>
+        <div class="pub" id="pubWrap" hidden>
+          <button class="btn alt small" id="btnPub" type="button">Sumar a la clasificación mundial</button>
+          <p class="muted" id="pubMsg">Se publican tu apodo y tus puntos. Usa un apodo, no tu nombre completo.</p>
+        </div>
         </div>
       </section>
     </aside>
@@ -246,7 +266,7 @@ h3{margin:0;font:400 20px var(--display)}
 
   <footer class="foot">
     Acierta rápido para que el dardo caiga en la diana (50 pts), el triple (25), el doble (15) o la zona exterior (5).
-    Si fallas o se acaba el tiempo, el dardo se va fuera (0 pts). La clasificación se guarda solo en este dispositivo.
+    Si fallas o se acaba el tiempo, el dardo se va fuera (0 pts). La clasificación local se guarda en este dispositivo; a la mundial solo van las partidas que sumas: tu apodo, tu músico y tus puntos (<a class="link" href="/politica-de-privacidad/#juegos" target="_top">más información</a>).
     <button class="link" id="btnClear" type="button">Borrar clasificación</button>
   </footer>
 </div>
@@ -959,7 +979,122 @@ function renderRank(ol, hi) {
   }
   return all.length;
 }
-function refreshRankMenu() { $('#rankEmpty').hidden = renderRank($('#rankMenu')) > 0; }
+function refreshRankMenu() { $('#rankEmpty').hidden = renderRank($('#rankMenu')) > 0; cargarMundial(); }
+
+/* ============================================================
+   CLASIFICACIÓN MUNDIAL (api/clasificacion.js)
+   Aquí los puntos SE SUMAN: cada partida publicada se añade a lo que ya llevas (esta semana y de
+   siempre). Sin registro: el jugador es este navegador + el apodo escrito (en una tableta de clase,
+   cada alumno con su apodo tiene su fila). Solo partidas de un jugador. Cada partida pide un
+   permiso al empezar y ese permiso es el que deja publicarla. Si la API no responde, no se enseña.
+   ============================================================ */
+const API_MUNDIAL = '/api/clasificacion/', JUEGO_MUNDIAL = 'dardos';
+const MUNDO = { periodo: 'semana', datos: null, pedido: 0, toks: [] };
+const nivelMundial = () => rankDif();
+const fmtPts = x => Number(x).toLocaleString('es-ES') + ' pts';
+const apodoEscrito = () => ($('#nombre') ? $('#nombre').value.trim() : '');
+function jugadorId() {
+  try {
+    let id = localStorage.getItem('tm-jugador');
+    if (!/^[a-f0-9]{24}$/.test(id || '')) {
+      id = Array.from(crypto.getRandomValues(new Uint8Array(12)), b => b.toString(16).padStart(2, '0')).join('');
+      localStorage.setItem('tm-jugador', id);
+    }
+    return id;
+  } catch (e) { return ''; }
+}
+function cargarMundial() {
+  const n = ++MUNDO.pedido;
+  fetch(API_MUNDIAL + '?juego=' + JUEGO_MUNDIAL + '&dif=' + nivelMundial() + '&jugador=' + jugadorId() + '&apodo=' + encodeURIComponent(apodoEscrito()))
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(d => { if (n === MUNDO.pedido) { MUNDO.datos = d; pintarMundial(); } })
+    .catch(() => { if (n === MUNDO.pedido) $('#mundial').hidden = true; });
+}
+function pintarMundial() {
+  const t = MUNDO.datos && MUNDO.datos[MUNDO.periodo];
+  if (!t) return;
+  $('#mundial').hidden = false;
+  document.querySelectorAll('.mTabs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p === MUNDO.periodo)));
+  const ol = $('#rankMundial'); ol.replaceChildren();
+  for (const e of t.top) {
+    const li = document.createElement('li');
+    if (e.yo) li.className = 'me';
+    const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = e.n + ' ';
+    const sm = document.createElement('small'); sm.textContent = e.m; nm.appendChild(sm);
+    const dd = document.createElement('span'); dd.className = 'dd'; dd.textContent = fmtPts(e.marca);
+    li.append(nm, dd); ol.appendChild(li);
+  }
+  const cuando = MUNDO.periodo === 'semana' ? 'esta semana' : 'de siempre';
+  $('#mundialYo').textContent = t.yo
+    ? 'Tú: n.º ' + t.yo.pos + ' de ' + t.total + ' ' + cuando + ', con ' + fmtPts(t.marca) + '.'
+    : t.total ? 'Suma una partida para entrar en la clasificación.'
+    : (MUNDO.periodo === 'semana' ? 'Nadie ha sumado puntos todavía esta semana. ¡Sé el primero!' : 'Nadie ha sumado puntos todavía. ¡Sé el primero!');
+}
+document.querySelectorAll('.mTabs button').forEach(b => b.addEventListener('click', () => { MUNDO.periodo = b.dataset.p; pintarMundial(); }));
+document.addEventListener('change', e => { if (e.target && e.target.id === 'nombre') cargarMundial(); });   // otro apodo = otro jugador
+/* Apodos tal y como se escribieron (sin el «Músico» / «Jugador 2» que pone el juego si se dejan en blanco):
+   solo quien escribe un apodo puede sumar a la clasificación mundial. */
+function apodosEscritos(n) {
+  if (n <= 1) return [apodoEscrito()];
+  return Array.from({ length: n }, (_, i) => { const el = document.getElementById('nombre' + i); return el ? el.value.trim() : ''; });
+}
+/* Al empezar: un permiso por jugador (en partidas de varios, cada uno suma a su propia fila). */
+function pedirPermiso() {
+  MUNDO.toks = [];
+  const apodos = apodosEscritos(S.numJugadores);
+  S.jugadores.forEach((j, i) => { j.apodo = apodos[i] || ''; });
+  const dif = nivelMundial();
+  S.jugadores.forEach((j, i) => {
+    fetch(API_MUNDIAL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ accion: 'inicio', juego: JUEGO_MUNDIAL, dif }) })
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(d => { if (d.token) MUNDO.toks[i] = d.token; })
+      .catch(() => { });
+  });
+}
+const sumables = () => S.jugadores.map((j, i) => ({ j, tok: MUNDO.toks[i] })).filter(x => x.tok && x.j.apodo && x.j.puntos > 0);
+function prepararPublicar() {
+  const btn = $('#btnPub'), msg = $('#pubMsg'), varios = S.numJugadores > 1;
+  const conPuntos = S.jugadores.filter((j, i) => MUNDO.toks[i] && j.puntos > 0), listos = sumables();
+  $('#pubWrap').hidden = !conPuntos.length;
+  btn.hidden = false; btn.disabled = !listos.length;
+  btn.textContent = varios ? 'Sumar los puntos de todos a la clasificación mundial' : 'Sumar a la clasificación mundial';
+  if (!listos.length) msg.textContent = varios ? 'Para sumar vuestros puntos, escribid un apodo cada uno en el menú (botón «Cambiar de músico»).'
+    : 'Para sumar tus puntos, escribe un apodo en el menú (botón «Cambiar de músico»).';
+  else if (varios && listos.length < conPuntos.length) msg.textContent = 'Solo suman quienes tienen apodo: ' + listos.map(x => x.j.apodo).join(', ') + '. Usad apodos, no nombres completos.';
+  else msg.textContent = varios ? 'Se publican vuestros apodos y puntos. Usad apodos, no nombres completos.'
+    : 'Se publican tu apodo y tus puntos. Usa un apodo, no tu nombre completo.';
+}
+function sumarUno(x) {
+  return fetch(API_MUNDIAL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ accion: 'enviar', token: x.tok, jugador: jugadorId(), nombre: x.j.apodo, musico: MUSICOS[x.j.musico].n, marca: x.j.puntos }) })
+    .then(r => r.json().then(d => ({ x, ok: r.ok, d })))
+    .catch(() => ({ x, ok: false, d: {} }));
+}
+$('#btnPub').addEventListener('click', async () => {
+  const btn = $('#btnPub'), msg = $('#pubMsg'), lista = sumables();
+  if (!lista.length) return;
+  btn.disabled = true; btn.textContent = 'Sumando…';
+  const res = [];
+  for (const x of lista) res.push(await sumarUno(x));   // de uno en uno: cada uno es una fila distinta
+  const bien = res.filter(r => r.ok);
+  bien.forEach(r => { MUNDO.toks[S.jugadores.indexOf(r.x.j)] = null; });
+  if (!bien.length) {
+    btn.disabled = false; btn.textContent = 'Sumar a la clasificación mundial';
+    msg.textContent = (res[0] && res[0].d.motivo) || 'No se han podido sumar estos puntos. Prueba con la siguiente partida.';
+    if (!(res[0] && res[0].d.motivo)) btn.hidden = true;
+    return;
+  }
+  btn.hidden = true;
+  if (S.numJugadores <= 1) {
+    const s = bien[0].d.semana, h = bien[0].d.siempre;
+    MUNDO.datos = bien[0].d;
+    msg.textContent = '¡Sumados! Llevas ' + fmtPts(s.marca) + ' esta semana (n.º ' + s.yo.pos + ' de ' + s.total + ') y ' + fmtPts(h.marca) + ' en total (n.º ' + h.yo.pos + ' de ' + h.total + ').';
+  } else {
+    msg.textContent = '¡Sumados! Esta semana: ' + bien.map(r => r.x.j.apodo + ' ' + fmtPts(r.d.semana.marca) + ' (n.º ' + r.d.semana.yo.pos + ')').join(' · ') + '.'
+      + (bien.length < res.length ? ' No se han podido sumar: ' + res.filter(r => !r.ok).map(r => r.x.j.apodo).join(', ') + '.' : '');
+  }
+  track('mundial_publicar', { dificultad: nivelMundial(), puesto_semana: bien[0].d.semana.yo.pos, jugadores: bien.length });
+});
 
 function track(evento, params) {
   try { if (window.parent && window.parent !== window) window.parent.postMessage({ tmJuego: true, evento: evento, params: Object.assign({ juego: 'dardos' }, params) }, location.origin); } catch (e) {}
@@ -1029,6 +1164,7 @@ async function startGame() {
   $('#hudTimer').hidden = false; $('#hudTurno').hidden = false; $('#hudPts').hidden = false;
   $('#marcador').hidden = S.numJugadores <= 1;
   track('juego_inicio', { dificultad: S.dif.id, jugadores: S.numJugadores });
+  pedirPermiso();
   nextDardo();
 }
 
@@ -1183,9 +1319,11 @@ function finishSolo() {
   $('#resNote').textContent = 'Aciertos: ' + j.aciertos + ' de ' + PERQ + (j.tiempos.length ? ('. Tiempo medio en acertar: ' + avgT.toFixed(1) + ' s.') : '.');
   $('#resRank').textContent = 'Puesto n.º ' + pos + ' de ' + nivel.length + (nivel.length === 1 ? ' partida.' : ' partidas.');
   renderRank($('#rankRes'), id);
+  prepararPublicar();
 }
 function finishMulti() {
   $('#resSoloWrap').hidden = true; $('#resMultiWrap').hidden = false; $('#clasifWrap').hidden = true;
+  prepararPublicar();
   const ordenados = S.jugadores.map((j, i) => ({ nombre: j.nombre, musico: j.musico, puntos: j.puntos, aciertos: j.aciertos, idx: i })).sort((a, b) => b.puntos - a.puntos);
   let puesto = 1;
   const filas = ordenados.map((j, k) => {

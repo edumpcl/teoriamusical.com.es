@@ -71,6 +71,9 @@ const JUEGOS = {
   '400-metros':     { difs: DIFS, min: 21.5, max: 134.5, dec: 1, orden: 'asc', minMs: 23500 },   // 19-24 notas
   'vallas':         { difs: DIFS, min: 12.3, max: 37.9, dec: 1, orden: 'asc', minMs: 14500 },    // 8 vallas de 1,3 s
   'obstaculos':     { difs: DIFS, min: 18.0, max: 48.4, dec: 1, orden: 'asc', minMs: 20000 },    // 8 obstáculos de 2 notas
+  // teoría: los puntos de cada partida se suman. max = una partida perfecta; minMs = 9 lanzamientos con su pausa de 1,1 s.
+  'dardos':         { difs: ['facil', 'medio', 'dificil'], min: 5, max: 450, dec: 0, orden: 'suma', minMs: 9000 },   // 9 dardos × 50 (diana)
+  'baloncesto':     { difs: ['unico'], min: 1, max: 27, dec: 0, orden: 'suma', minMs: 9000 },                      // 9 tiros × 3 (triple); sin niveles de partida
 };
 
 const TOP = 10;
