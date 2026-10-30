@@ -226,6 +226,13 @@ module.exports = async (req, res) => {
   try {
     if (req.method === 'GET') {
       const q = req.query || {};
+      // Latido diario (crons de vercel.json): una consulta real a la base de datos para que el
+      // plan gratuito de Supabase nunca vea una semana sin actividad y no pause el proyecto.
+      if (!q.juego && /vercel-cron/i.test(String(req.headers['user-agent'] || ''))) {
+        await rpc('clasif_tabla', { p_juego: 'salto-longitud', p_dif: 'normal', p_semana: semanaISO(), p_jugador: '', p_orden: 'desc' });
+        res.status(200).json({ ok: true, latido: new Date().toISOString() });
+        return;
+      }
       const cfg = JUEGOS[q.juego];
       if (!cfg || !cfg.difs.includes(q.dif)) { res.status(400).json({ error: 'juego o nivel' }); return; }
       const apodo = limpiarNombre(q.apodo);
