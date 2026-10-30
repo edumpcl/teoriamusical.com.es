@@ -170,7 +170,7 @@ h3{margin:0;font:400 20px var(--display)}
       <div class="hud hud-timer" id="hudTimer" hidden style="--p:100"><span id="hudSecs">8</span><small>seg</small></div>
       <div class="hud hud-turno" id="hudTurno" hidden>Turno 1/3 · Dardo 1/3</div>
       <div class="hud hud-pts" id="hudPts" hidden>0 pts</div>
-      <div class="hud hud-zone" id="hudZone" hidden></div>
+      <div class="hud hud-zone" id="hudZone" role="status" aria-live="polite" hidden></div>
     </section>
 
     <aside class="panel">
@@ -1060,6 +1060,12 @@ const sumables = () => S.jugadores.map((j, i) => ({ j, tok: MUNDO.toks[i] })).fi
 function prepararPublicar() {
   const btn = $('#btnPub'), msg = $('#pubMsg'), varios = S.numJugadores > 1;
   const conPuntos = S.jugadores.filter((j, i) => MUNDO.toks[i] && j.puntos > 0), listos = sumables();
+  // sin permiso (la conexión falló al empezar) pero con la clasificación mundial disponible: se explica
+  if (!conPuntos.length && MUNDO.datos && S.jugadores.some(j => j.puntos > 0)) {
+    $('#pubWrap').hidden = false; btn.hidden = true;
+    msg.textContent = 'No se pudo conectar con la clasificación mundial al empezar la partida, así que esta no se puede sumar. Prueba con la siguiente.';
+    return;
+  }
   $('#pubWrap').hidden = !conPuntos.length;
   btn.hidden = false; btn.disabled = !listos.length;
   btn.textContent = varios ? 'Sumar los puntos de todos a la clasificación mundial' : 'Sumar a la clasificación mundial';

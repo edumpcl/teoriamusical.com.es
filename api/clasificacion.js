@@ -74,6 +74,7 @@ const JUEGOS = {
   // teoría: los puntos de cada partida se suman. max = una partida perfecta; minMs = 9 lanzamientos con su pausa de 1,1 s.
   'dardos':         { difs: ['facil', 'medio', 'dificil'], min: 5, max: 450, dec: 0, orden: 'suma', minMs: 9000 },   // 9 dardos × 50 (diana)
   'baloncesto':     { difs: ['unico'], min: 1, max: 27, dec: 0, orden: 'suma', minMs: 9000 },                      // 9 tiros × 3 (triple); sin niveles de partida
+  'bolos':          { difs: ['facil', 'medio', 'dificil'], min: 5, max: 100, dec: 0, orden: 'suma', minMs: 12000 },  // 5 turnos de pleno + 2 bolas extra; 10 bolas de 1,5 s
 };
 
 const TOP = 10;
