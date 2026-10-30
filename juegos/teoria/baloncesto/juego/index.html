@@ -102,6 +102,9 @@ input[type=text]{-webkit-user-select:text;user-select:text;font:800 20px var(--b
 .rank .nm small{color:var(--mute);font-weight:700}
 .rank .dd{font:400 18px var(--display)}
 #nombresWrap{display:grid;gap:14px}
+/* En escritorio, los jugadores en columnas (2 por fila) en vez de uno debajo de otro: con
+   2 jugadores el menu cabe entero sin scroll. Con 1 solo jugador ocupa todo el ancho. */
+@media (min-width:640px){#nombresWrap{grid-template-columns:repeat(auto-fit,minmax(min(100%,430px),1fr));column-gap:20px}}
 .jugadorBloque{display:grid;gap:4px}
 .miniPicker{display:flex;gap:4px;overflow-x:auto;padding:2px 1px 4px}
 .miniPicker button{flex:none;background:#fff;border:2px solid var(--paper2);border-radius:8px;padding:2px;cursor:pointer;line-height:0}
@@ -640,62 +643,138 @@ function drawHead(c, m, o, t) {
   c.beginPath(); c.ellipse(dir * 13, -99, 17 + dir * 9, 4, 0, 0, 7); paint(c, '#101a33', 2);
   c.beginPath(); c.arc(dx, -113, 4.5, 0, 7); paint(c, '#f4b52e', 1.8);
 }
-/* Instrumento de cada músico (copiado tal cual de juegos/teoria/dardos/juego/index.html,
-   mismas proporciones de torso que el cuerpo de aquí, por eso encaja sin ajustes). */
-function drawInstr(c, m, bw) {
-  const GOLD = '#f2b632', SILVER = '#cfd6df';
-  c.save();
+/* Instrumento de cada músico EN POSICIÓN DE TOCAR (de perfil, mirando a la derecha: boca en
+   (6,-72), hombros en (±18·bw,-58), pies en (0,0)). instrGrip() dice dónde van las manos
+   para que los brazos lo sujeten de verdad: b = mano del brazo trasero, f = la delantera
+   (b null = ese brazo cuelga suelto; top = la mano trasera se ve por delante del instrumento).
+   Se dibuja con un ancho total de x <= ~56 para que quepa en las tarjetas del selector. */
+function instrGrip(m, bw) {
+  const ox = (bw - 1) * 22;   // los anchos (bombo, tuba) llevan el instrumento algo más adelante
   switch (m.instr) {
-    case 'clarinete':
-      c.translate(24 * bw, -40); c.rotate(-0.12);
-      rrect(c, -3, -42, 6, 64, 2); paint(c, '#1c1c24', 2);
-      c.beginPath(); c.moveTo(-3, 20); c.lineTo(-8, 30); c.lineTo(8, 30); c.lineTo(3, 20); c.closePath(); paint(c, '#1c1c24', 2);
-      c.fillStyle = SILVER; for (const y of [-28, -16, -4, 8]) { c.beginPath(); c.arc(0, y, 2, 0, 7); c.fill(); }
-      rrect(c, -3, -47, 6, 7, 2); paint(c, '#555', 1.8);
+    case 'clarinete': return { b: { x: 16, y: -52, top: 1 }, f: { x: 22, y: -36 } };
+    case 'trompeta':  return { b: { x: 32, y: -61, top: 1 }, f: { x: 35, y: -84 } };
+    case 'trombon':   return { b: { x: 17, y: -64, top: 1 }, f: { x: 44, y: -70 } };
+    case 'flauta':    return { b: { x: 22, y: -67, top: 1 }, f: { x: 43, y: -63 } };
+    case 'tuba':      return { b: { x: 13, y: -60, top: 1 }, f: { x: 33, y: -34 } };
+    case 'bombo':     return { b: null, f: { x: 43 + ox, y: -40 } };
+    case 'caja':      return { b: { x: 15, y: -52, top: 1 }, f: { x: 35, y: -55 } };
+    case 'platillos': return { b: { x: 20, y: -52 }, f: { x: 44, y: -50 } };
+  }
+  return null;
+}
+/* Ángulo y largo de un brazo (limb) para que la mano llegue desde el hombro (sx,sy) al punto p */
+function reachArm(sx, sy, p) {
+  const dx = p.x - sx, dy = p.y - sy;
+  return { a: Math.atan2(-dx, dy), l: clamp(Math.hypot(dx, dy) - 1, 12, 46) };
+}
+function drawInstr(c, m, bw) {
+  const GOLD = '#f2b632', GOLD_D = '#c48a16', SILVER = '#cfd6df', WOOD = '#e0b070';
+  const ox = (bw - 1) * 22;
+  // tubo con contorno: trazo grueso de tinta y encima el color
+  const tube = (w, col) => { c.lineWidth = w + 3.4; c.strokeStyle = INK; c.stroke(); c.lineWidth = w; c.strokeStyle = col; c.stroke(); };
+  c.save(); c.lineCap = 'round'; c.lineJoin = 'round';
+  switch (m.instr) {
+    case 'clarinete': {
+      // de la boca hacia abajo y un poco adelante, como se toca
+      c.translate(8, -74); c.rotate(-0.37);
+      rrect(c, -2.2, -2, 4.4, 9, 1.5); paint(c, '#2b2b33', 1.8);          // boquilla
+      rrect(c, -3, 4, 6, 3, 1); paint(c, SILVER, 1.4);                     // abrazadera
+      rrect(c, -3.6, 7, 7.2, 47, 2.5); paint(c, '#1c1c24', 2);             // cuerpo
+      c.fillStyle = SILVER;
+      for (const y of [16, 33]) c.fillRect(-3.6, y, 7.2, 1.8);             // anillas
+      for (const y of [21, 27, 39, 45]) { c.beginPath(); c.arc(0, y, 1.6, 0, 7); c.fill(); }
+      c.beginPath(); c.moveTo(-3.6, 53); c.quadraticCurveTo(-4, 59, -8.5, 63); c.lineTo(8.5, 63); c.quadraticCurveTo(4, 59, 3.6, 53); c.closePath();
+      paint(c, '#1c1c24', 2);                                              // campana
+      c.fillStyle = SILVER; c.fillRect(-8.5, 61.5, 17, 1.6);
       break;
-    case 'trompeta':
-      c.translate(20 * bw, -48);
-      c.beginPath(); c.arc(10, 8, 9, 0, 7); c.lineWidth = 8; c.strokeStyle = INK; c.stroke();
-      c.lineWidth = 4.5; c.strokeStyle = GOLD; c.stroke();
-      rrect(c, -6, -3, 44, 6, 3); paint(c, GOLD, 2);
-      c.beginPath(); c.moveTo(36, -3); c.lineTo(54, -13); c.lineTo(54, 13); c.lineTo(36, 3); c.closePath(); paint(c, GOLD, 2.2);
-      c.fillStyle = SILVER; for (const x of [14, 20, 26]) { rrect(c, x, -10, 4, 7, 1); c.fill(); }
+    }
+    case 'trompeta': {
+      // horizontal a la altura de la boca: boquilla, tudel, bucle de abajo, 3 pistones y campana
+      c.beginPath(); c.moveTo(12, -72); c.lineTo(42, -72); tube(3.6, GOLD);
+      c.beginPath(); c.moveTo(30, -66); c.lineTo(24, -66); c.arc(24, -62, 4, -Math.PI / 2, Math.PI / 2, true); c.lineTo(42, -58);
+      c.arc(42, -62, 4, Math.PI / 2, -Math.PI / 2, true); tube(3.4, GOLD);
+      for (const x of [30, 35, 40]) {
+        rrect(c, x - 2, -78, 4, 18, 1.5); paint(c, GOLD, 1.8);
+        rrect(c, x - 3, -81, 6, 3, 1); paint(c, SILVER, 1.5);
+      }
+      c.beginPath(); c.moveTo(42, -73.8); c.quadraticCurveTo(50, -73.8, 55, -82); c.lineTo(55, -62); c.quadraticCurveTo(50, -70.2, 42, -70.2); c.closePath();
+      paint(c, GOLD, 2);
+      c.beginPath(); c.ellipse(55, -72, 2.6, 10, 0, 0, 7); paint(c, '#f7cc63', 2);
+      rrect(c, 8, -74.5, 5, 5, 1.5); paint(c, SILVER, 1.6);                // boquilla
       break;
-    case 'trombon':
-      c.translate(8 * bw, -54);
-      rrect(c, 0, -3, 70, 4, 2); paint(c, GOLD, 2); rrect(c, 0, 6, 70, 4, 2); paint(c, GOLD, 2); rrect(c, 67, -3, 6, 14, 2); paint(c, GOLD, 2);
-      c.beginPath(); c.arc(2, -15, 12, 0, 7); paint(c, GOLD, 2.2);
-      c.beginPath(); c.ellipse(2, -15, 5, 8, 0, 0, 7); paint(c, '#7a5a10', 1.6);
+    }
+    case 'trombon': {
+      // pabellón por debajo, apuntando adelante; vara doble por encima, hasta la curva final
+      c.beginPath(); c.moveTo(10, -62); c.lineTo(31, -62); tube(3.4, GOLD);
+      c.beginPath(); c.moveTo(31, -64); c.quadraticCurveTo(38, -64, 45, -73); c.lineTo(45, -51); c.quadraticCurveTo(38, -60, 31, -60); c.closePath();
+      paint(c, GOLD, 2);
+      c.beginPath(); c.ellipse(45, -62, 2.6, 11, 0, 0, 7); paint(c, '#f7cc63', 2);
+      c.beginPath(); c.moveTo(12, -72.5); c.lineTo(52, -72.5); c.arc(52, -69.5, 3, -Math.PI / 2, Math.PI / 2); c.lineTo(12, -66.5); tube(2.4, GOLD);
+      rrect(c, 30, -74.5, 20, 4, 2); paint(c, GOLD, 1.6);                  // fundas de la vara (exterior)
+      rrect(c, 30, -68.5, 20, 4, 2); paint(c, GOLD, 1.6);
+      c.beginPath(); c.moveTo(42, -72); c.lineTo(42, -67); c.moveTo(17, -72); c.lineTo(17, -62); tube(2, GOLD);   // travesaños
+      rrect(c, 8, -74.5, 5, 5, 1.5); paint(c, SILVER, 1.6);
       break;
-    case 'flauta':
-      c.translate(18 * bw, -56); c.rotate(-0.1);
-      rrect(c, 0, -2.5, 62, 5, 2.5); paint(c, SILVER, 2);
-      c.fillStyle = INK; for (let x = 12; x < 56; x += 8) { c.beginPath(); c.arc(x, 0, 1.6, 0, 7); c.fill(); }
+    }
+    case 'flauta': {
+      // travesera: desde los labios hacia delante, ligeramente caída
+      c.translate(0, -73); c.rotate(0.125);
+      rrect(c, -5, -2.6, 62, 5.2, 2.6); paint(c, SILVER, 2);
+      c.fillStyle = INK; c.beginPath(); c.ellipse(7, -0.6, 2.4, 1.4, 0, 0, 7); c.fill();   // embocadura
+      c.fillStyle = '#8f99a6'; for (let x = 18; x < 55; x += 6) { c.beginPath(); c.arc(x, 0, 1.7, 0, 7); c.fill(); }
+      c.fillStyle = '#8f99a6'; c.fillRect(13, -2.6, 1.6, 5.2); c.fillRect(52, -2.6, 1.6, 5.2);
       break;
-    case 'bombo':
-      c.translate(10 * bw + 6, -64);
-      rrect(c, 0, 0, 32, 54, 6); paint(c, '#b8402f', 2.4);
-      rrect(c, 0, 3, 32, 5, 1); paint(c, GOLD, 1.8); rrect(c, 0, 46, 32, 5, 1); paint(c, GOLD, 1.8);
-      c.beginPath(); c.ellipse(32, 27, 5, 26, 0, 0, 7); paint(c, '#f4efe3', 2.2);
+    }
+    case 'tuba': {
+      // delante del cuerpo, con la campana hacia arriba junto a la cabeza
+      // (sin desplazar con el ancho: la campana ya llega al borde de las tarjetas)
+      c.beginPath(); c.ellipse(29, -52, 15, 22, 0, 0, 7); tube(5, GOLD);    // vuelta grande del tubo
+      c.beginPath(); c.moveTo(21, -30); c.lineTo(23, -88); c.quadraticCurveTo(22, -104, 12, -114);
+      c.lineTo(56, -114); c.quadraticCurveTo(44, -104, 41, -88); c.lineTo(39, -30);
+      c.arc(30, -30, 9, 0, Math.PI); c.closePath(); paint(c, GOLD, 2.4);
+      c.strokeStyle = GOLD_D; c.lineWidth = 1.4; c.beginPath(); c.moveTo(27, -36); c.lineTo(28.5, -92); c.stroke();
+      c.beginPath(); c.ellipse(34, -114, 22, 5, 0, 0, 7); paint(c, '#f7cc63', 2.2);
+      c.beginPath(); c.ellipse(34, -114, 16, 3, 0, 0, 7); paint(c, '#7a5a10', 1.4);
+      c.beginPath(); c.moveTo(9, -72); c.lineTo(14, -72); c.lineTo(14, -66); tube(3, GOLD);   // tudel hasta la boca
+      for (const y of [-66, -60, -54]) { rrect(c, 9, y, 12, 4.5, 1.5); paint(c, SILVER, 1.5); }   // pistones
       break;
-    case 'caja':
-      c.translate(6 * bw, -40);
-      rrect(c, 0, 0, 34, 20, 3); paint(c, '#9aa6b8', 2.2);
-      c.beginPath(); c.ellipse(17, 0, 17, 4.5, 0, 0, 7); paint(c, '#f4efe3', 2.2);
-      c.lineWidth = 3; c.strokeStyle = INK; c.lineCap = 'round';
-      c.beginPath(); c.moveTo(6, -14); c.lineTo(18, -2); c.moveTo(32, -14); c.lineTo(20, -2); c.stroke();
+    }
+    case 'bombo': {
+      // colgado del pecho con los parches a los lados: de perfil se ve el parche redondo
+      const cx = 25 + ox, cy = -47;
+      rrect(c, cx - 14, cy - 25, 14, 50, 4); paint(c, '#b8402f', 2.4);      // casco (canto que se aleja)
+      c.beginPath(); c.arc(cx, cy, 25, 0, 7); paint(c, '#b8402f', 2.4);     // aro
+      c.beginPath(); c.arc(cx, cy, 20, 0, 7); paint(c, '#f4efe3', 2);       // parche
+      c.fillStyle = GOLD; for (let i = 0; i < 10; i++) { const a = i * Math.PI / 5; c.beginPath(); c.arc(cx + Math.cos(a) * 22.5, cy + Math.sin(a) * 22.5, 1.8, 0, 7); c.fill(); }
+      // maza en la mano delantera, apoyada en el parche
+      c.beginPath(); c.moveTo(cx + 18, cy + 7); c.lineTo(cx + 8, cy - 9); tube(2.4, WOOD);
+      c.beginPath(); c.arc(cx + 7, cy - 11, 6, 0, 7); paint(c, '#fdfcf9', 2);
       break;
-    case 'tuba':
-      c.translate(10 * bw, -50);
-      c.beginPath(); c.arc(0, 0, 22, 0, 7); c.lineWidth = 13; c.strokeStyle = INK; c.stroke(); c.lineWidth = 8.5; c.strokeStyle = GOLD; c.stroke();
-      c.beginPath(); c.moveTo(-8, -22); c.lineTo(-22, -54); c.lineTo(16, -54); c.lineTo(8, -22); c.closePath(); paint(c, GOLD, 2.4);
-      c.beginPath(); c.ellipse(-3, -54, 19, 4, 0, 0, 7); paint(c, '#7a5a10', 1.8);
+    }
+    case 'caja': {
+      // a la altura de la cadera, con las dos baquetas sobre el parche
+      rrect(c, 7, -41, 34, 15, 2); paint(c, '#c9d1dc', 2.2);              // casco
+      c.strokeStyle = '#7d8796'; c.lineWidth = 1.3;
+      c.beginPath(); for (let x = 9; x < 40; x += 6) { c.moveTo(x, -39); c.lineTo(x + 3, -28); } c.stroke();   // tensores
+      rrect(c, 6, -30, 36, 4, 1.5); paint(c, '#9aa6b8', 1.6);              // aro de abajo
+      c.beginPath(); c.ellipse(24, -41, 18, 4.5, 0, 0, 7); paint(c, '#f4efe3', 2.2);   // parche
+      c.beginPath(); c.moveTo(15, -52); c.lineTo(22, -43); tube(2.2, WOOD);
+      c.beginPath(); c.moveTo(35, -55); c.lineTo(28, -43); tube(2.2, WOOD);
       break;
-    case 'platillos':
-      c.translate(26 * bw, -46);
-      c.beginPath(); c.ellipse(-4, 0, 5, 18, 0.2, 0, 7); paint(c, GOLD, 2.2);
-      c.beginPath(); c.ellipse(7, 0, 5, 18, -0.2, 0, 7); paint(c, '#f7cc63', 2.2);
+    }
+    case 'platillos': {
+      // los dos platos frente a frente, a punto de chocar, vistos un poco de lado
+      const plato = (x, y, r) => {
+        c.save(); c.translate(x, y); c.rotate(r);
+        c.beginPath(); c.ellipse(0, 0, 8, 21, 0, 0, 7); paint(c, GOLD, 2.2);
+        c.strokeStyle = GOLD_D; c.lineWidth = 1.1; c.beginPath(); c.ellipse(0, 0, 5.5, 14.5, 0, 0, 7); c.stroke();
+        c.beginPath(); c.ellipse(0, 0, 3, 6, 0, 0, 7); paint(c, '#e2a92a', 1.6);
+        c.strokeStyle = 'rgba(255,255,255,.6)'; c.lineWidth = 1.4; c.beginPath(); c.ellipse(0, 0, 6.5, 18, 0, 3.6, 4.4); c.stroke();
+        c.restore();
+      };
+      plato(23, -52, 0.22); plato(43, -50, -0.22);
       break;
+    }
   }
   c.restore();
 }
@@ -714,17 +793,25 @@ function drawTirador(c, m, x, y, o = {}) {
   const lL = -0.14, lR = 0.2;                         // piernas: postura fija, ligeramente flexionada, de perfil
   const aB = mix(0.95, -2.9, wind);                   // brazo trasero (sostiene el balón): del pecho hacia arriba
   const aF = mix(0.55, -2.55, wind);                  // brazo delantero: acompaña el lanzamiento
+  // al tirar va sin instrumento (o.sinInstr); en el selector lo lleva (sin balon, released)
+  // y los brazos van a sujetarlo donde diga instrGrip
+  const g = o.sinInstr ? null : instrGrip(m, bw);
+  const armB = g && g.b ? reachArm(-18 * bw, -58, g.b) : { a: aB, l: 25 };
+  const armF = g ? reachArm(18 * bw, -58, g.f) : { a: aF, l: 25 };
   hairBack(c, m);
   limb(c, -8, -27, lL, 21, 11, TROUSER, { shoe: 1 });
-  limb(c, -18 * bw, -58, aB, 25, 10, SUIT, { hand: m.piel });
+  limb(c, -18 * bw, -58, armB.a, armB.l, 10, SUIT, { hand: m.piel });
   rrect(c, -22 * bw, -64, 44 * bw, 42, 9); paint(c, SUIT, 2.6);
   rrect(c, -22 * bw, -30, 44 * bw, 6, 2); paint(c, '#f4b52e', 1.8);
   c.fillStyle = '#f4b52e'; for (const by of [-54, -44]) { c.beginPath(); c.arc(0, by, 2.8, 0, 7); c.fill(); }
   limb(c, 8, -27, lR, 21, 11, TROUSER, { shoe: 1 });
   drawHead(c, m, o, t);
-  limb(c, 18 * bw, -58, aF, 25, 10, SUIT, { hand: m.piel });
-  // al tirar va sin instrumento (o.sinInstr); en el selector lo lleva y va sin balon (released)
-  if (!o.sinInstr) drawInstr(c, m, bw);
+  // con instrumento, la manga delantera va DETRAS del instrumento y solo las manos encima
+  limb(c, 18 * bw, -58, armF.a, armF.l, 10, SUIT, g ? {} : { hand: m.piel });
+  if (g) {
+    drawInstr(c, m, bw);
+    for (const p of [g.b && g.b.top ? g.b : null, g.f]) if (p) { c.beginPath(); c.arc(p.x, p.y, 5.5, 0, 7); paint(c, m.piel, 2.2); }
+  }
   /* balón en las manos (se dibuja hasta que se suelta, encima del instrumento) */
   if (!o.released) {
     c.save();
@@ -1333,7 +1420,7 @@ function miniAvatarCanvas(musicoIdx, boxW, boxH) {
   const cx = cv.getContext('2d');
   cx.scale(dpr, dpr);
   const k = boxH / 120;
-  drawTirador(cx, MUSICOS[musicoIdx] || MUSICOS[0], boxW * 0.5, boxH * 0.933, { s: 0.88 * k, dir: 1, t: 0.4, wind: 0.15, released: true });
+  drawTirador(cx, MUSICOS[musicoIdx] || MUSICOS[0], boxW * 0.445, boxH * 0.933, { s: 0.88 * k, dir: 1, t: 0.4, wind: 0.15, released: true });
   return cv;
 }
 function frame(now) {
@@ -1352,7 +1439,7 @@ function buildPicker() {
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'mus'; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(i === S.musico));
     const cv = document.createElement('canvas'); cv.width = 180; cv.height = 240;
-    const cx = cv.getContext('2d'); cx.scale(2, 2); drawTirador(cx, m, 45, 112, { s: 0.88, dir: 1, t: 0.4, wind: 0.15, released: true });
+    const cx = cv.getContext('2d'); cx.scale(2, 2); drawTirador(cx, m, 40, 112, { s: 0.88, dir: 1, t: 0.4, wind: 0.15, released: true });
     const sp = document.createElement('span'); sp.textContent = m.n;
     b.append(cv, sp);
     b.addEventListener('click', () => { S.musico = i; box.querySelectorAll('.mus').forEach((x, j) => x.setAttribute('aria-checked', String(j === i))); try { localStorage.setItem('baloncesto-musico', i); } catch (e) {} });
