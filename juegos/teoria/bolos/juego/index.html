@@ -1152,7 +1152,9 @@ $('#btnPub').addEventListener('click', async () => {
     if (!(res[0] && res[0].d.motivo)) btn.hidden = true;
     return;
   }
-  btn.hidden = true;
+  const faltan = bien.length < res.length;   // alguno no se ha podido publicar: el botón se queda para reintentarlo solo con esos
+  btn.hidden = !faltan; btn.disabled = false;
+  if (faltan) btn.textContent = 'Reintentar con los que faltan';
   if (S.numJugadores <= 1) {
     const s = bien[0].d.semana, h = bien[0].d.siempre;
     MUNDO.datos = bien[0].d;
