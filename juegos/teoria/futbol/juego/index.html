@@ -1,0 +1,1783 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fútbol: construye intervalos</title>
+<style>
+@font-face{font-family:'Lilita One';src:url(/assets/fonts/juegos/lilita.woff2) format('woff2');font-weight:400;font-display:block}
+@font-face{font-family:'Nunito';src:url(/assets/fonts/juegos/nunito600.woff2) format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Nunito';src:url(/assets/fonts/juegos/nunito800.woff2) format('woff2');font-weight:800;font-display:block}
+:root{
+  --navy:#14213d; --ink:#14213d; --paper:#f7fbff; --paper2:#e1eef8;
+  --brass:#f4b52e; --brass-d:#b9810a; --ok:#238a4c; --bad:#c93a2d; --mute:#51627f; --focus:#2f6fe4;
+  --display:'Lilita One','Arial Rounded MT Bold','Trebuchet MS',system-ui,sans-serif;
+  --body:'Nunito','Segoe UI',system-ui,-apple-system,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{
+  -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+  background:var(--navy); color:var(--ink);
+  font:600 18px/1.4 var(--body);
+  padding-block:16px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.app{max-width:1180px;margin:0 auto;display:grid;gap:16px}
+.head{display:flex;align-items:center;gap:14px}
+.seal{flex:none;width:68px;height:68px;border-radius:50%;background:var(--brass);border:4px solid #fff;color:var(--ink);
+  display:grid;place-content:center;text-align:center;line-height:.9;box-shadow:0 4px 0 rgba(0,0,0,.35)}
+.seal b{font:400 28px var(--display)} .seal span{font:800 12px var(--body);text-transform:uppercase;letter-spacing:.08em}
+h1{margin:0;font:400 clamp(26px,4.6vw,42px)/1.05 var(--display);color:#fff;text-wrap:balance}
+.sub{margin:4px 0 0;color:#c4daed;font-size:16px}
+/* Escena SIEMPRE arriba y panel debajo, los dos a todo el ancho (mismo esquema que
+   Baloncesto): en escritorio la escena pasa a panorámica (ver @media 640px y VISTA_ANCHA
+   en el JS) para que la pregunta quepa debajo sin scroll. */
+.game{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.stage{position:relative;border-radius:18px;overflow:hidden;border:4px solid #fff;background:#cfe3d8;box-shadow:0 8px 0 rgba(0,0,0,.35)}
+.stage canvas{display:block;width:100%;height:auto;aspect-ratio:950/380}
+.hud{position:absolute;pointer-events:none}
+.hud-timer{left:12px;top:5%;width:clamp(58px,10vw,86px);aspect-ratio:1;border-radius:50%;
+  background:conic-gradient(var(--brass) calc(var(--p)*1%),#fff 0);display:grid;place-content:center;border:3px solid var(--ink);text-align:center;line-height:1}
+.hud-timer::before{content:"";position:absolute;inset:7px;border-radius:50%;background:#fff;border:2px solid var(--ink)}
+.hud-timer span,.hud-timer small{position:relative}
+.hud-timer span{font:400 clamp(22px,4vw,34px) var(--display)} .hud-timer small{font:800 11px var(--body);margin-top:-2px}
+.hud-turno{left:50%;top:5%;transform:translateX(-50%);background:#fff;border:3px solid var(--ink);border-radius:999px;padding:4px 16px;
+  font:800 clamp(12px,2vw,16px) var(--body);white-space:nowrap;max-width:68%;overflow:hidden;text-overflow:ellipsis}
+.hud-pts{right:12px;top:5%;background:#fff;border:3px solid var(--ink);border-radius:999px;padding:4px 16px;
+  font:800 clamp(12px,2vw,16px) var(--body);white-space:nowrap}
+.hud-zone{inset:0;display:grid;place-content:center;font:400 clamp(44px,10vw,88px) var(--display);color:#fff;
+  -webkit-text-stroke:5px var(--ink);paint-order:stroke fill;text-shadow:0 8px 0 rgba(20,33,61,.35);text-align:center}
+.hud-zone small{display:block;font:800 clamp(14px,2.6vw,20px) var(--body);-webkit-text-stroke:0;color:#fff;text-shadow:0 2px 0 rgba(20,33,61,.5)}
+.hud-zone.pop{animation:pop .4s ease-out}
+@keyframes pop{from{transform:scale(1.5);opacity:.1}to{transform:scale(1);opacity:1}}
+.panel{background:var(--paper);border-radius:18px;border:4px solid #fff;padding:18px;box-shadow:0 8px 0 rgba(0,0,0,.35);min-width:0}
+.view{display:grid;gap:14px}
+h2{margin:0;font:400 28px/1.1 var(--display);text-wrap:balance}
+p{margin:0}
+.muted{color:var(--mute);font-size:16px}
+.btn{font:400 24px var(--display);background:var(--brass);color:var(--ink);border:3px solid var(--ink);border-radius:14px;
+  padding:12px 20px;min-height:58px;cursor:pointer;box-shadow:0 5px 0 var(--ink);transition:transform .06s,box-shadow .06s;width:100%}
+.btn:active,.btn.held{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.btn.alt{background:#fff} .btn[disabled]{opacity:.6;cursor:wait}
+.btn.small{font-size:19px;min-height:48px}
+.link{background:none;border:0;color:var(--mute);font:800 15px var(--body);text-decoration:underline;cursor:pointer;padding:8px;justify-self:start}
+.err{background:#fde5e1;border:3px solid var(--bad);border-radius:12px;padding:10px 12px;font-size:16px}
+:is(button,input,label.pill):focus-visible,.pill:has(input:focus-visible){outline:4px solid var(--focus);outline-offset:3px}
+.picker{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (min-width:640px){.picker{grid-template-columns:repeat(auto-fill,minmax(76px,1fr))}}   /* panel ancho: cada familia (hasta 7) en una fila */
+/* pestañas de familia encima del selector de músico (ver FAMILIAS en el JS) */
+.familias{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:8px}
+.familias button{font:400 15px/1.1 var(--display);padding:8px 4px;min-height:44px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.familias button[aria-pressed="true"]{background:var(--brass)}
+.mus{background:#fff;border:3px solid var(--paper2);border-radius:12px;padding:4px 2px 6px;cursor:pointer;color:var(--ink);font:800 13px var(--body);display:grid;justify-items:center;gap:0}
+.mus canvas{width:100%;max-width:80px;height:auto;aspect-ratio:3/4}
+.mus[aria-checked="true"]{border-color:var(--brass-d);background:#fff1c7}
+/* todas las tarjetas igual de anchas aunque el nombre sea largo (Bombardino, Violonchelo) */
+.mus{min-width:0} .mus span{max-width:100%;line-height:1.15;text-align:center;hyphens:manual;overflow-wrap:anywhere;font-size:12px}
+label.field{display:grid;gap:6px;font:800 16px var(--body)}
+input[type=text]{-webkit-user-select:text;user-select:text;font:800 20px var(--body);padding:10px 12px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);min-height:50px;width:100%}
+.seg{border:0;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg legend{font:800 16px var(--body);padding:0 0 6px}
+.pill{position:relative;display:block}
+.pill input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.pill span{display:block;text-align:center;padding:10px 4px;border:3px solid var(--ink);border-radius:12px;background:#fff;font:400 17px var(--display)}
+.pill input:checked + span{background:var(--brass)}
+.rank{list-style:none;margin:0;padding:0;display:grid;gap:4px;counter-reset:r}
+.rank li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:8px;align-items:baseline;padding:5px 10px;border-radius:10px;background:#fff;font-size:16px}
+.rank li::before{counter-increment:r;content:counter(r);font:400 18px var(--display);color:var(--brass-d)}
+.rank li.me{background:#fff1c7;outline:3px solid var(--brass)}
+.rank .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank .nm small{color:var(--mute);font-weight:700}
+.rank .dd{font:400 18px var(--display)}
+/* clasificación mundial (api/clasificacion.js) */
+.mundial{display:grid;gap:6px;margin-top:10px}
+.mTabs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mTabs button{font:400 15px/1.1 var(--display);padding:6px 4px;min-height:40px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.mTabs button[aria-pressed="true"]{background:var(--brass)}
+.pub{display:grid;gap:6px;margin-top:8px}
+.pub .muted{font-size:14px;line-height:1.35;margin:0}
+#nombresWrap{display:grid;gap:14px}
+/* En escritorio, los jugadores en columnas (2 por fila) en vez de uno debajo de otro: con
+   2 jugadores el menu cabe entero sin scroll. Con 1 solo jugador ocupa todo el ancho. */
+@media (min-width:640px){#nombresWrap{grid-template-columns:repeat(auto-fit,minmax(min(100%,430px),1fr));column-gap:20px}}
+/* número de jugadores y dificultad en la misma fila en escritorio */
+.menuTop{display:grid;gap:14px}
+@media (min-width:640px){.menuTop{grid-template-columns:auto minmax(0,1fr);column-gap:24px;align-items:end}}
+.jugadorBloque{display:grid;gap:4px}
+.miniPicker{display:flex;gap:4px;overflow-x:auto;padding:2px 1px 4px}
+.miniPicker button{flex:none;background:#fff;border:2px solid var(--paper2);border-radius:8px;padding:2px;cursor:pointer;line-height:0}
+.miniPicker button[aria-checked="true"]{border-color:var(--brass-d);background:#fff1c7}
+/* familias del mini selector (2x2, del alto de un músico): con ellas la fila nunca pasa de
+   7 músicos y cabe sin barra de desplazamiento con 2 jugadores lado a lado */
+.miniFam{flex:none;display:grid;grid-template-columns:1fr 1fr;gap:3px;align-content:center}
+.miniPicker .miniFam button{font:800 13px/1.1 var(--body);padding:4px 8px;min-height:26px;border:2px solid var(--ink);border-radius:6px;background:#fff;color:var(--ink);line-height:1.1}
+.miniPicker .miniFam button[aria-pressed="true"]{background:var(--brass);border-color:var(--ink)}
+.marcador{display:flex;flex-wrap:wrap;gap:6px}
+.marcador .j{display:inline-flex;align-items:center;gap:5px;background:#fff;border:3px solid var(--paper2);border-radius:999px;padding:4px 12px 4px 4px;font:800 13px var(--body);color:var(--ink);line-height:1}
+.marcador .j.activo{background:var(--brass);border-color:var(--brass-d)}
+.marcador .j canvas{border-radius:999px;flex:none}
+.ranking{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.ranking li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px 12px;border-radius:10px;background:#fff;font:800 17px var(--body)}
+.ranking li.ganador{background:#fff1c7;outline:3px solid var(--brass)}
+.ranking .nm{display:flex;align-items:center;gap:8px;overflow:hidden}
+.ranking .nm canvas{flex:none}
+.ranking .nm span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ranking .dd{font:400 20px var(--display);white-space:nowrap}
+h3{margin:0;font:400 20px var(--display)}
+.staff-box{background:#fdfcf9;border:3px solid var(--ink);border-radius:12px;min-height:150px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.staff-box{cursor:crosshair;touch-action:none}
+.accs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.acc{font:400 26px/1 'Times New Roman',Georgia,serif;min-width:58px;min-height:52px;padding:6px 10px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.acc[aria-pressed="true"]{background:var(--brass)}
+.hint{text-align:center;min-height:1.4em}
+.hud-pts{max-width:30%;overflow:hidden;text-overflow:ellipsis}
+/* lupa al tocar el pentagrama (el dedo tapa la nota): misma idea que en el ejercicio de construir intervalos */
+.lupa{position:fixed;pointer-events:none;z-index:50;background:#fdfcf9;border:3px solid var(--ink);border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,.35);transform:translate(-50%,calc(-100% - 18px));line-height:0}
+.lupa::after{content:"";position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);border:11px solid transparent;border-top-color:var(--ink);border-bottom:none}
+.kicker{font:800 14px var(--body);text-transform:uppercase;letter-spacing:.1em;color:var(--mute)}
+.distance{display:flex;align-items:baseline;gap:8px;font:400 76px/0.95 var(--display)} .distance small{font-size:30px}
+.foot{color:#9fb6cf;font-size:15px}
+.foot .link{color:#c4daed}
+@media (min-width:640px){.stage canvas{aspect-ratio:4/1}}   /* misma consulta que WIDE_MQ en el JS */
+/* Menú y resultado en 2 columnas en escritorio (como en los juegos de entonación): a la izquierda
+   el selector de músico y la clasificación, a la derecha jugadores, opciones y «¡A jugar!». En móvil
+   las columnas no existen (display:contents) y cada bloque va en su orden de siempre (order). */
+.menuL,.menuR,.colsL,.colsR{display:contents}
+#v-menu .menuTop,#v-menu > .menuR > label.field{order:1} #nombresWrap{order:2} #pickerCompartido{order:3}
+#btnStart{order:4} #notacionErr{order:5} .rankWrap{order:6}
+/* con varios jugadores no hay selector grande ni clasificación (solo guarda partidas de 1 jugador) */
+#v-menu:has(#pickerCompartido[hidden]) .rankWrap{display:none}
+@media (min-width:640px){
+  #v-menu:not(:has(#pickerCompartido[hidden])),#v-result{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);column-gap:24px;align-items:start}
+  #v-menu:not(:has(#pickerCompartido[hidden])) .menuL,#v-menu:not(:has(#pickerCompartido[hidden])) .menuR,.colsL,.colsR{display:grid;gap:12px;align-content:start;min-width:0}
+  .rank{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:8px}   /* clasificación de 8 en 2 columnas de 4 */
+  /* menú en 2 columnas (1 jugador): la columna derecha es estrecha y la dificultad no cabe al lado
+     del número de jugadores (desbordaba en el iframe de ~836px), así que va encima */
+  #v-menu:not(:has(#pickerCompartido[hidden])) .menuTop{grid-template-columns:minmax(0,1fr)}
+  #v-menu:not(:has(#pickerCompartido[hidden])) .menuTop .seg{order:-1}
+}
+@media (prefers-reduced-motion:reduce){.hud-zone.pop{animation:none}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <main class="game">
+    <section class="stage" aria-label="Campo de fútbol">
+      <canvas id="scene" width="1000" height="520" role="img" aria-label="Un equipo de músicos se pasa el balón por un campo cuyas líneas son las de un pentagrama"></canvas>
+      <div class="hud hud-timer" id="hudTimer" hidden style="--p:100"><span id="hudSecs">8</span><small>seg</small></div>
+      <div class="hud hud-turno" id="hudTurno" hidden>Ataque 1/5 · Pase 1/3</div>
+      <div class="hud hud-pts" id="hudPts" hidden>0 goles</div>
+      <div class="hud hud-zone" id="hudZone" role="status" aria-live="polite" hidden></div>
+    </section>
+
+    <aside class="panel">
+      <!-- MENÚ -->
+      <section class="view" id="v-menu">
+        <div class="menuL">
+        <div id="pickerCompartido">
+          <h2>Elige a tu músico</h2>
+          <div class="picker" id="picker" role="radiogroup" aria-label="Músico"></div>
+        </div>
+        <div class="rankWrap">
+          <h3>Clasificación <span class="rankDif"></span></h3>
+          <ol class="rank" id="rankMenu"></ol>
+          <p class="muted" id="rankEmpty">Todavía no hay partidas. ¡Sé el primero!</p>
+        </div>
+        <div class="mundial" id="mundial" hidden>
+          <h3>Clasificación mundial <span class="rankDif"></span></h3>
+          <div class="mTabs" role="group" aria-label="Periodo">
+            <button type="button" data-p="semana" aria-pressed="true">Esta semana</button>
+            <button type="button" data-p="siempre" aria-pressed="false">De siempre</button>
+          </div>
+          <ol class="rank" id="rankMundial"></ol>
+          <p class="muted" id="mundialYo"></p>
+        </div>
+        </div>
+        <div class="menuR">
+        <div class="menuTop">
+        <label class="field" for="numJugadores">Número de jugadores
+          <input type="number" id="numJugadores" min="1" value="1" inputmode="numeric" style="max-width:110px">
+        </label>
+        <fieldset class="seg">
+          <legend>Dificultad</legend>
+          <label class="pill"><input type="radio" name="dif" value="0"><span>Fácil</span></label>
+          <label class="pill"><input type="radio" name="dif" value="1" checked><span>Medio</span></label>
+          <label class="pill"><input type="radio" name="dif" value="2"><span>Difícil</span></label>
+        </fieldset>
+        </div>
+        <div id="nombresWrap"></div>
+        <button class="btn" id="btnStart">¡A jugar!</button>
+        <p class="err" id="notacionErr" hidden></p>
+        </div>
+      </section>
+
+      <!-- CAMBIO DE TURNO (solo multijugador) -->
+      <section class="view" id="v-turno" hidden>
+        <p class="kicker" id="turnoKicker">Cambio de turno</p>
+        <h2 id="turnoNombre"></h2>
+        <p class="muted">Pasad el turno a esta persona y pulsad el botón cuando esté lista.</p>
+        <div class="marcador" id="marcadorTurno"></div>
+        <button class="btn" id="btnLanzar">¡Sacar!</button>
+      </section>
+
+      <!-- JUGAR -->
+      <section class="view" id="v-play" hidden>
+        <div class="marcador" id="marcador" hidden></div>
+        <div>
+          <p class="kicker" id="playKicker">Pase 1 de 3</p>
+          <h2 id="playTitle"></h2>
+        </div>
+        <div class="staff-box" id="staffBox"></div>
+        <div class="accs" id="accs" role="group" aria-label="Alteración"></div>
+        <button class="btn" id="btnChutar" type="button" disabled>Pasar</button>
+        <p class="muted hint" id="hint" aria-live="polite"></p>
+      </section>
+
+      <!-- RESULTADO -->
+      <section class="view" id="v-result" hidden>
+        <div class="colsL">
+        <div id="resSoloWrap">
+          <p class="kicker" id="resWho">Tu partida</p>
+          <div class="distance"><span id="resPts">0</span><small id="resUnit">goles</small></div>
+          <h2 id="resTitle"></h2>
+          <p id="resText"></p>
+          <p id="resNote" class="muted"></p>
+          <p id="resRank"></p>
+        </div>
+        <div id="resMultiWrap" hidden>
+          <p class="kicker">Resultado final</p>
+          <h2 id="resTituloMulti"></h2>
+          <ol class="ranking" id="resRanking"></ol>
+        </div>
+        </div>
+        <div class="colsR">
+        <button class="btn" id="btnAgain">Jugar otra vez</button>
+        <button class="btn alt small" id="btnChange">Cambiar de músico</button>
+        <div id="clasifWrap">
+          <h3>Clasificación <span class="rankDif"></span></h3>
+          <ol class="rank" id="rankRes"></ol>
+        </div>
+        <div class="pub" id="pubWrap" hidden>
+          <button class="btn alt small" id="btnPub" type="button">Sumar a la clasificación mundial</button>
+          <p class="muted" id="pubMsg">Se publican tu apodo y tus goles. Usa un apodo, no tu nombre completo.</p>
+        </div>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="foot">
+    Cada ataque son 3 pases y un tiro. En cada uno te piden un intervalo desde la nota del que tiene el balón y tú escribes la otra nota en el pentagrama: es la del compañero que lo recibe, así que los intervalos se encadenan.
+    Si fallas un pase, el rival roba el balón; si fallas el tiro, para el portero. Solo cuentan los goles: 5 ataques, como mucho 5 goles. Con varios jugadores los ataques se alternan y, si hay empate, se decide en una tanda de penaltis.
+    La clasificación local se guarda en este dispositivo; a la mundial solo van las partidas que sumas: tu apodo, tu músico y tus goles (<a class="link" href="/politica-de-privacidad/#juegos" target="_top">más información</a>).
+    <button class="link" id="btnClear" type="button">Borrar clasificación</button>
+  </footer>
+</div>
+<div class="lupa" id="lupa" hidden><div id="lupaStaff"></div></div>
+
+<script src="/assets/js/tm-mei.js?v=c45ec1b4"></script>
+<script src="/assets/js/tm-notacion.js?v=11d92644"></script>
+<script>
+'use strict';
+
+/* ============================================================
+   INTERVALOS: FUENTE VERIFICADA
+   La tabla (DEFS: [pasos de nota, semitonos, número, especie]) y los niveles salen de
+   assets/js/intervalos-engine.js, el motor del ejercicio «Construir intervalos», con su mismo
+   pentagrama de colocación (La3-Si5, clave de sol). Lo nuevo es que los intervalos se
+   ENCADENAN: la nota que construyes es la de partida del pase siguiente. Por eso las notas se
+   cuentan en pasos diatónicos (d = octava·7 + nota) y solo se piden intervalos cuya nota
+   cae dentro del pentagrama de colocación.
+   ============================================================ */
+const NS = [0, 2, 4, 5, 7, 9, 11];               /* Do Re Mi Fa Sol La Si, en semitonos */
+const VF_NAMES = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
+const NOMBRES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
+/* Los simples del motor (sin unísono ni dobles), más 2.ª y 3.ª aumentadas, 6.ª aumentada y 7.ª
+   disminuida, que el motor no trae. */
+const DEFS = {
+  '2d': [1, 0, '2', 'Disminuida'], '2m': [1, 1, '2', 'menor'], '2M': [1, 2, '2', 'Mayor'], '2A': [1, 3, '2', 'Aumentada'],
+  '3d': [2, 2, '3', 'Disminuida'], '3m': [2, 3, '3', 'menor'], '3M': [2, 4, '3', 'Mayor'], '3A': [2, 5, '3', 'Aumentada'],
+  '4d': [3, 4, '4', 'Disminuida'], '4j': [3, 5, '4', 'Justa'], '4A': [3, 6, '4', 'Aumentada'],
+  '5d': [4, 6, '5', 'Disminuida'], '5j': [4, 7, '5', 'Justa'], '5A': [4, 8, '5', 'Aumentada'],
+  '6d': [5, 7, '6', 'Disminuida'], '6m': [5, 8, '6', 'menor'], '6M': [5, 9, '6', 'Mayor'], '6A': [5, 10, '6', 'Aumentada'],
+  '7d': [6, 9, '7', 'Disminuida'], '7m': [6, 10, '7', 'menor'], '7M': [6, 11, '7', 'Mayor'],
+  '8j': [7, 12, '8', 'Justa']
+};
+/* Niveles (los tres primeros del ejercicio): maxAlt = alteraciones como mucho en la nota que se
+   escribe; time = tiempo por intervalo (solo para que no se eternice: no da puntos). */
+const DIF = [
+  { lbl: 'Fácil',   especies: ['Mayor', 'menor', 'Justa'], maxAlt: 0, time: 25000, id: 'facil' },
+  { lbl: 'Medio',   especies: null,                        maxAlt: 1, time: 20000, id: 'medio' },
+  { lbl: 'Difícil', especies: null,                        maxAlt: 2, time: 15000, id: 'dificil' }
+];
+const D_MIN = 26, D_MAX = 41, D_LINEA_SUP = 38;   // La3, Si5 y Fa5 (la línea superior)
+const pasoDe = d => D_LINEA_SUP - d;               // 0 = línea superior, de media en media línea hacia abajo
+const T = '︎';   // tras ♭ ♯ ♮: que se vean como texto y no como emoji de color (Lilita no los tiene)
+const ACC_TXT = { '-2': '♭' + T + '♭' + T, '-1': '♭' + T, '0': '', '1': '♯' + T, '2': '×' };
+const ACC_NOMBRE = { '-2': 'Doble bemol', '-1': 'Bemol', '0': 'Natural', '1': 'Sostenido', '2': 'Doble sostenido' };
+function accStr(a) { return a === 2 ? '##' : a === 1 ? '#' : a === -1 ? 'b' : a === -2 ? 'bb' : ''; }
+function claveMEI(p) { return VF_NAMES[p.d % 7] + accStr(p.a) + '/' + Math.floor(p.d / 7); }
+const nombreNota = p => NOMBRES[p.d % 7] + ACC_TXT[p.a];
+const alturaDe = p => 12 * Math.floor(p.d / 7) + NS[p.d % 7] + p.a;
+/* Mi#, Si#, Dob y Fab: válidas, pero rarezas enarmónicas. En Fácil y Medio no salen; en Difícil sí. */
+const rara = (n, a) => (a === 1 && (n === 2 || n === 6)) || (a === -1 && (n === 0 || n === 3));
+/* Nota de saque de cada ataque (y de cada penalti): de Do4 a Sol5, natural o con una alteración. */
+function notaInicial(dif) {
+  let p;
+  do p = { d: 28 + Math.floor(Math.random() * 12), a: dif.maxAlt ? [-1, 0, 0, 1][Math.floor(Math.random() * 4)] : 0 };
+  while (rara(p.d % 7, p.a));
+  return p;
+}
+/* Todos los intervalos que se pueden pedir desde la nota p: de las especies del nivel, en las
+   dos direcciones, con la nota de llegada dentro del pentagrama y sin pasar de maxAlt. */
+function opcionesDesde(p, dif) {
+  const out = [];
+  for (const k in DEFS) {
+    const [pasos, semitonos, , especie] = DEFS[k];
+    if (dif.especies && !dif.especies.includes(especie)) continue;
+    for (const dir of [1, -1]) {
+      const d = p.d + dir * pasos;
+      if (d < D_MIN || d > D_MAX) continue;
+      const a = alturaDe(p) + dir * semitonos - alturaDe({ d, a: 0 });
+      if (Math.abs(a) > dif.maxAlt) continue;
+      if (dif.id !== 'dificil' && rara(d % 7, a)) continue;
+      out.push({ k, dir, d, a });
+    }
+  }
+  return out;
+}
+/* Un intervalo al azar desde la nota `desde` (nunca el mismo que el anterior). */
+function genPase(desde, dif, anterior) {
+  let ops = opcionesDesde(desde, dif);
+  const otras = ops.filter(o => !anterior || o.k !== anterior.k || o.dir !== anterior.dir);
+  if (otras.length) ops = otras;
+  const o = ops[Math.floor(Math.random() * ops.length)];
+  return { desde, k: o.k, dir: o.dir, hasta: { d: o.d, a: o.a } };
+}
+const descripcion = q => DEFS[q.k][2] + 'ª ' + DEFS[q.k][3] + (q.dir > 0 ? ' ascendente' : ' descendente') + ' desde ' + nombreNota(q.desde);
+const VERDE = '#238a4c', ROJO = '#c93a2d', AZUL = '#2f6fe4';
+/* Cada nota en su compás (una redonda llena el 4/4), como en el ejercicio: así cada una lleva su
+   propia alteración. Con la línea superior siempre a 62 px, para saber qué fila se toca. */
+function drawStaff(notas) {
+  const el = document.getElementById('staffBox');
+  el.style.height = '200px'; el.style.width = '100%';
+  const compases = notas.map(n => [{ notas: [n.color ? { key: claveMEI(n), color: n.color } : claveMEI(n)], d: 'w' }]);
+  window.tmNotacion.dibujarAlineado(el, { pentagramas: [{ clave: 'sol', compases }] },
+    { escala: 1.5, separacion: 0.3, top: 56, id: 'futbol', alt: 'Pentagrama en clave de sol: ' + notas.map(nombreNota).join(', ') });
+}
+
+/* ============================================================
+   MÚSICOS DE PAPEL RECORTADO (mismo estilo que los juegos de entonación)
+   ============================================================ */
+const F_DISP = "'Lilita One','Arial Rounded MT Bold','Trebuchet MS',sans-serif";
+const F_BODY = "Nunito,'Segoe UI',system-ui,sans-serif";
+const INK = '#14213d';
+const W = 1000, H = 520;
+const MUSICOS = [
+  { n: 'Clarinete', piel: '#f2cba6', pelo: '#4a3426', estilo: 'corto', gafas: true, instr: 'clarinete' },
+  { n: 'Trompeta', piel: '#c98f64', pelo: '#1d1612', estilo: 'corto', bigote: true, instr: 'trompeta' },
+  { n: 'Bombo', piel: '#f2cba6', pelo: '#6b5444', estilo: 'calvo', barba: true, ancho: 1.3, instr: 'bombo' },
+  { n: 'Caja', piel: '#d9a67c', pelo: '#2a1d17', estilo: 'rizado', instr: 'caja' },
+  { n: 'Flauta', piel: '#f6d6b8', pelo: '#e0b04a', estilo: 'largo', instr: 'flauta' },
+  { n: 'Trombón', piel: '#e3b38c', pelo: '#9aa0a8', estilo: 'corto', bigote: true, gafas: true, instr: 'trombon' },
+  { n: 'Tuba', piel: '#8a5a3c', pelo: '#17110d', estilo: 'corto', barba: true, ancho: 1.25, instr: 'tuba' },
+  { n: 'Platillos', piel: '#f2cba6', pelo: '#b5532a', estilo: 'coleta', instr: 'platillos' },
+  { n: 'Saxofón', piel: '#d9a67c', pelo: '#3a2418', estilo: 'coleta', instr: 'saxo' },
+  { n: 'Trompa', piel: '#f6d6b8', pelo: '#c9772e', estilo: 'corto', gafas: true, instr: 'trompa' },
+  { n: 'Violín', piel: '#f2cba6', pelo: '#3b2a20', estilo: 'largo', esmoquin: true, instr: 'violin' },
+  { n: 'Contrabajo', piel: '#a8704a', pelo: '#1d1612', estilo: 'rizado', bigote: true, esmoquin: true, instr: 'contrabajo' },
+  { n: 'Oboe', piel: '#f6d6b8', pelo: '#e0b04a', estilo: 'rizado', instr: 'oboe' },
+  { n: 'Fagot', piel: '#c98f64', pelo: '#6b5444', estilo: 'corto', barba: true, gafas: true, instr: 'fagot' },
+  { n: 'Bombardino', piel: '#e3b38c', pelo: '#2a1d17', estilo: 'corto', bigote: true, instr: 'bombardino' },
+  { n: 'Xilófono', piel: '#f2cba6', pelo: '#b5532a', estilo: 'largo', instr: 'xilofono' },
+  { n: 'Viola', piel: '#d9a67c', pelo: '#17110d', estilo: 'corto', gafas: true, esmoquin: true, instr: 'viola' },
+  { n: 'Violonchelo', piel: '#f6d6b8', pelo: '#c9772e', estilo: 'coleta', esmoquin: true, instr: 'violonchelo' },
+  { n: 'Arpa', piel: '#f2cba6', pelo: '#e0b04a', estilo: 'largo', esmoquin: true, instr: 'arpa' },
+  { n: 'Piano', piel: '#8a5a3c', pelo: '#17110d', estilo: 'rizado', esmoquin: true, instr: 'piano' },
+  { n: 'Guitarra', piel: '#e3b38c', pelo: '#4a3426', estilo: 'corto', barba: true, esmoquin: true, instr: 'guitarra' }
+];
+const $ = s => document.querySelector(s);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const mix = (a, b, k) => a + (b - a) * k;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function paint(c, fill, lw = 2.5) {
+  if (fill) { c.fillStyle = fill; c.fill(); }
+  if (lw) { c.lineWidth = lw; c.strokeStyle = INK; c.lineJoin = 'round'; c.lineCap = 'round'; c.stroke(); }
+}
+function rrect(c, x, y, w, h, r) {
+  c.beginPath();
+  if (c.roundRect) { c.roundRect(x, y, w, h, r); return; }
+  r = Math.min(r, w / 2, h / 2);
+  c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
+  c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath();
+}
+function limb(c, x, y, ang, len, w, col, extra) {
+  c.save(); c.translate(x, y); c.rotate(ang);
+  rrect(c, -w / 2, -2, w, len, w / 2.5); paint(c, col, 2.2);
+  if (extra && extra.hand) { c.beginPath(); c.arc(0, len + 1, 5.5, 0, 7); paint(c, extra.hand, 2.2); }
+  if (extra && extra.shoe) { c.beginPath(); c.ellipse(5, len + 1, 11, 5, 0, 0, 7); paint(c, '#1a1a22', 2.2); }
+  c.restore();
+}
+function hairBack(c, m) {
+  if (m.estilo === 'largo') { rrect(c, -34, -120, 68, 78, 16); paint(c, m.pelo, 2.4); }
+  else if (m.estilo === 'coleta') { c.beginPath(); c.ellipse(-37, -88, 8, 14, 0.4, 0, 7); paint(c, m.pelo, 2.4); }
+  else if (m.estilo === 'rizado') {
+    for (const [x, y] of [[-22, -116], [-31, -102], [-33, -86], [22, -116], [31, -102], [33, -86], [0, -122]]) {
+      c.beginPath(); c.arc(x, y, 9.5, 0, 7); paint(c, m.pelo, 2.2);
+    }
+  }
+}
+function drawHead(c, m, o, t) {
+  const hy = -92, dir = o.dir == null ? 1 : o.dir, dx = 7 * dir;
+  c.beginPath(); c.ellipse(0, hy, 29.5, 28, 0, 0, 7); paint(c, m.piel, 2.6);
+  if (m.estilo === 'corto') {
+    rrect(c, -31, -102, 8, 20, 3); paint(c, m.pelo, 2);
+    rrect(c, 23, -102, 8, 20, 3); paint(c, m.pelo, 2);
+  }
+  if (m.barba) { c.beginPath(); c.ellipse(0, hy, 29.5, 28, 0, 0.25 * Math.PI, 0.75 * Math.PI); c.closePath(); paint(c, m.pelo, 2.6); }
+  const blink = (t % 3.4) < 0.12 ? 0.12 : 1;
+  for (const ex of [-9 + dx, 9 + dx]) {
+    c.beginPath(); c.ellipse(ex, -89, 6.6, 7.4 * blink, 0, 0, 7); paint(c, '#fff', 2);
+    c.fillStyle = INK; c.beginPath(); c.ellipse(ex + 2.4 * dir, -88.5, 2.3, 2.3 * blink, 0, 0, 7); c.fill();
+    if (m.gafas) { c.beginPath(); c.arc(ex, -89, 9, 0, 7); c.lineWidth = 2.4; c.strokeStyle = INK; c.stroke(); }
+  }
+  if (m.bigote) { c.beginPath(); c.ellipse(dx * 0.8, -77, 10, 3.4, 0, 0, 7); paint(c, m.pelo, 1.8); }
+  const mx = dx * 0.8, my = -72, mo = o.mouth || 0;
+  if (o.mood === 'happy') { c.beginPath(); c.arc(mx, my - 3, 8, 0.1 * Math.PI, 0.9 * Math.PI); c.closePath(); paint(c, '#7a1f2a', 2); }
+  else if (o.mood === 'sad') { c.beginPath(); c.arc(mx, my + 6, 7, 1.15 * Math.PI, 1.85 * Math.PI); c.lineWidth = 2.6; c.strokeStyle = INK; c.lineCap = 'round'; c.stroke(); }
+  else if (mo > 0.05) { c.beginPath(); c.ellipse(mx, my, 6 + mo * 1.5, 2 + mo * 8, 0, 0, 7); paint(c, '#7a1f2a', 2.2); }
+  else { c.beginPath(); c.moveTo(mx - 6, my); c.lineTo(mx + 6, my); c.lineWidth = 2.6; c.strokeStyle = INK; c.lineCap = 'round'; c.stroke(); }
+  if (m.esmoquin) {
+    // de esmoquin (orquesta) no hay gorra de banda: se ve el pelo de arriba, con flequillo
+    c.beginPath(); c.moveTo(-30, -96); c.ellipse(0, -98, 30.5, 24, 0, Math.PI, 2 * Math.PI);
+    c.lineTo(30, -94); c.quadraticCurveTo(16, -108, -2, -104); c.quadraticCurveTo(-18, -101, -30, -96); c.closePath();
+    paint(c, m.pelo, 2.4);
+    return;
+  }
+  c.beginPath(); c.ellipse(0, -108, 31, 15, 0, Math.PI, 2 * Math.PI); c.lineTo(31, -100); c.lineTo(-31, -100); c.closePath(); paint(c, '#27458f', 2.6);
+  rrect(c, -31, -106, 62, 8, 2); paint(c, '#f4b52e', 2);
+  c.beginPath(); c.ellipse(dir * 13, -99, 17 + dir * 9, 4, 0, 0, 7); paint(c, '#101a33', 2);
+  c.beginPath(); c.ellipse(0, -108, 31, 15, 0, Math.PI, 2 * Math.PI); c.lineTo(31, -100); c.lineTo(-31, -100); c.closePath(); paint(c, '#27458f', 2.6);
+  rrect(c, -31, -106, 62, 8, 2); paint(c, '#f4b52e', 2);
+  c.beginPath(); c.ellipse(dir * 13, -99, 17 + dir * 9, 4, 0, 0, 7); paint(c, '#101a33', 2);
+  c.beginPath(); c.arc(dx, -113, 4.5, 0, 7); paint(c, '#f4b52e', 1.8);
+}
+/* Torso: uniforme de banda (azul, cinturón y botones dorados) o esmoquin para la cuerda de
+   orquesta (m.esmoquin: chaqueta negra, pechera blanca en pico, solapas y pajarita). */
+function drawTorso(c, m, bw) {
+  rrect(c, -22 * bw, -64, 44 * bw, 42, 9); paint(c, m.esmoquin ? '#1b1b22' : '#27458f', 2.6);
+  if (!m.esmoquin) {
+    rrect(c, -22 * bw, -30, 44 * bw, 6, 2); paint(c, '#f4b52e', 1.8);
+    c.fillStyle = '#f4b52e'; for (const by of [-54, -44]) { c.beginPath(); c.arc(0, by, 2.8, 0, 7); c.fill(); }
+    return;
+  }
+  c.beginPath(); c.moveTo(-9, -63); c.lineTo(9, -63); c.lineTo(1.5, -36); c.lineTo(-1.5, -36); c.closePath(); paint(c, '#fdfcf9', 2);
+  c.beginPath(); c.moveTo(-9, -63); c.lineTo(-14, -55); c.lineTo(-1.5, -36); c.closePath(); paint(c, '#34343f', 1.6);
+  c.beginPath(); c.moveTo(9, -63); c.lineTo(14, -55); c.lineTo(1.5, -36); c.closePath(); paint(c, '#34343f', 1.6);
+  c.beginPath(); c.moveTo(0, -59); c.lineTo(-7.5, -63); c.lineTo(-7.5, -55); c.closePath();
+  c.moveTo(0, -59); c.lineTo(7.5, -63); c.lineTo(7.5, -55); c.closePath(); paint(c, '#14141a', 1.4);
+  c.fillStyle = INK; for (const by of [-49, -43]) { c.beginPath(); c.arc(0, by, 1.5, 0, 7); c.fill(); }
+}
+/* Postura sentada (violonchelo, arpa, piano, guitarra): drawSeat pone la banqueta y luego el
+   cuerpo se dibuja 14 más abajo; drawSeatLegs dibuja las piernas dobladas (muslo hacia delante,
+   espinilla al suelo) DESPUÉS del torso, para que se vean por delante de la chaqueta. */
+function drawSeat(c) {
+  rrect(c, -24, -18, 34, 6, 3); paint(c, '#6b4a2e', 2);
+  c.lineWidth = 3; c.strokeStyle = INK; c.lineCap = 'round';
+  c.beginPath(); c.moveTo(-20, -12); c.lineTo(-22, 0); c.moveTo(6, -12); c.lineTo(8, 0); c.stroke();
+}
+function drawSeatLegs(c, TROUSER) {
+  for (const dx of [0, 5]) {
+    limb(c, 15 + dx, -17, 0, 15, 11, TROUSER, { shoe: 1 });
+    limb(c, -6 + dx, -16, -Math.PI / 2, 21, 11, TROUSER);
+  }
+}
+/* Instrumento de cada músico EN POSICIÓN DE TOCAR (de perfil, mirando a la derecha: boca en
+   (6,-72), hombros en (±18·bw,-58), pies en (0,0)). instrGrip() dice dónde van las manos
+   para que los brazos lo sujeten de verdad: b = mano del brazo trasero, f = la delantera
+   (b null = ese brazo cuelga suelto; top = la mano trasera se ve por delante del instrumento).
+   Se dibuja con un ancho total de x <= ~56 para que quepa en las tarjetas del selector. */
+function instrGrip(m, bw) {
+  const ox = (bw - 1) * 22;   // los anchos (bombo, tuba) llevan el instrumento algo más adelante
+  switch (m.instr) {
+    case 'clarinete': return { b: { x: 16, y: -52, top: 1 }, f: { x: 22, y: -36 } };
+    case 'trompeta':  return { b: { x: 32, y: -61, top: 1 }, f: { x: 35, y: -84 } };
+    case 'trombon':   return { b: { x: 17, y: -64, top: 1 }, f: { x: 44, y: -70 } };
+    case 'flauta':    return { b: { x: 22, y: -67, top: 1 }, f: { x: 43, y: -63 } };
+    case 'tuba':      return { b: { x: 13, y: -60, top: 1 }, f: { x: 33, y: -34 } };
+    case 'bombo':     return { b: null, f: { x: 43 + ox, y: -40 } };
+    case 'caja':      return { b: { x: 15, y: -52, top: 1 }, f: { x: 35, y: -55 } };
+    case 'platillos': return { b: { x: 20, y: -52 }, f: { x: 44, y: -50 } };
+    case 'saxo':      return { b: { x: 22, y: -56, top: 1 }, f: { x: 24, y: -38 } };
+    case 'trompa':    return { b: { x: 24, y: -67, top: 1 }, f: { x: 50, y: -34 } };
+    case 'violin':    return { b: { x: 47, y: -66, top: 1 }, f: { x: 9, y: -43 } };
+    case 'contrabajo':return { b: { x: 27, y: -95, top: 1 }, f: { x: 50, y: -32 } };
+    case 'viola':     return { b: { x: 45, y: -65, top: 1 }, f: { x: 9, y: -43 } };
+    case 'oboe':      return { b: { x: 14, y: -55, top: 1 }, f: { x: 20, y: -36 } };
+    case 'fagot':     return { b: { x: 26, y: -95, top: 1 }, f: { x: 35, y: -46 } };
+    case 'bombardino':return { b: { x: 16, y: -58, top: 1 }, f: { x: 32, y: -30 } };
+    case 'xilofono':  return { b: { x: 20, y: -52, top: 1 }, f: { x: 40, y: -54 } };
+    // sentados (sit): el cuerpo baja 14 y estas coordenadas ya son las del marco bajado
+    case 'violonchelo': return { sit: 1, b: { x: 28, y: -89, top: 1 }, f: { x: 54, y: -40 } };
+    case 'arpa':      return { sit: 1, b: { x: 30, y: -74, top: 1 }, f: { x: 38, y: -60 } };
+    case 'piano':     return { sit: 1, b: { x: 16, y: -58, top: 1 }, f: { x: 29, y: -58 } };
+    case 'guitarra':  return { sit: 1, b: { x: 41, y: -72, top: 1 }, f: { x: 27, y: -32 } };
+  }
+  return null;
+}
+/* Ángulo y largo de un brazo (limb) para que la mano llegue desde el hombro (sx,sy) al punto p */
+function reachArm(sx, sy, p) {
+  const dx = p.x - sx, dy = p.y - sy;
+  return { a: Math.atan2(-dx, dy), l: clamp(Math.hypot(dx, dy) - 1, 12, 70) };
+}
+function drawInstr(c, m, bw) {
+  const GOLD = '#f2b632', GOLD_D = '#c48a16', SILVER = '#cfd6df', WOOD = '#e0b070';
+  const ox = (bw - 1) * 22;
+  // tubo con contorno: trazo grueso de tinta y encima el color
+  const tube = (w, col) => { c.lineWidth = w + 3.4; c.strokeStyle = INK; c.stroke(); c.lineWidth = w; c.strokeStyle = col; c.stroke(); };
+  // arco de cuerda frotada: talón en la mano (x0,y0) y punta (x1,y1); las cerdas van al lado
+  const arco = (x0, y0, x1, y1) => {
+    c.beginPath(); c.moveTo(x0, y0); c.lineTo(x1, y1); tube(1.6, '#5a3418');
+    const L = Math.hypot(x1 - x0, y1 - y0), nx = (y1 - y0) / L * -2.6, ny = (x0 - x1) / L * -2.6;
+    c.strokeStyle = '#f4efe3'; c.lineWidth = 1.2; c.beginPath(); c.moveTo(x0 + nx, y0 + ny); c.lineTo(x1 + nx, y1 + ny); c.stroke();
+  };
+  // violín / viola: al hombro bajo la barbilla, apuntando adelante (ancla x,y; escala k)
+  const hombro = (x, y, k, col, hi) => {
+    c.save(); c.translate(x, y); c.rotate(-0.06); c.scale(k, k);
+    const caja = () => { c.beginPath(); c.ellipse(-1, 0, 10, 8, 0, 0, 7); c.moveTo(19, 0); c.ellipse(13, 0, 7, 6.5, 0, 0, 7); };
+    caja(); c.lineWidth = 4.4; c.strokeStyle = INK; c.stroke();                   // contorno de los dos óvalos unidos
+    caja(); c.fillStyle = col; c.fill();
+    c.fillStyle = hi; c.beginPath(); c.ellipse(-2, -2.5, 5, 2.4, 0, 0, 7); c.fill();   // brillo del barniz
+    rrect(c, -11, -2.5, 6, 5, 2); paint(c, '#1c1c24', 1.4);                       // barbada
+    rrect(c, 4, -2.2, 33, 4.4, 2); paint(c, '#1c1c24', 1.4);                      // diapasón
+    c.beginPath(); c.arc(40, 0, 3.6, 0, 7); paint(c, col, 1.6);                   // voluta
+    c.strokeStyle = '#3a2416'; c.lineWidth = 1.1;
+    c.beginPath(); c.moveTo(1, -4.5); c.quadraticCurveTo(3, -3.5, 1.5, -2.5); c.moveTo(1, 4.5); c.quadraticCurveTo(3, 3.5, 1.5, 2.5); c.stroke();   // efes
+    c.strokeStyle = '#e8e2d0'; c.lineWidth = 0.8; c.beginPath(); c.moveTo(-6, -1); c.lineTo(37, -1); c.moveTo(-6, 1); c.lineTo(37, 1); c.stroke();
+    c.restore();
+    arco(9, -43, 37, -83);                                                         // talón abajo, punta arriba-adelante (no cruza la cara)
+  };
+  // contrabajo / violonchelo: de pie en el suelo (ancla x,y; giro; escala k; pica = largo local de la pica)
+  const pie = (x, y, rot, k, col, hi, pica) => {
+    c.save(); c.translate(x, y); c.rotate(rot); c.scale(k, k);
+    c.beginPath(); c.moveTo(0, 32); c.lineTo(0, pica); c.lineWidth = 2.6; c.strokeStyle = INK; c.stroke();   // pica
+    const caja = () => { c.beginPath(); c.ellipse(0, 14, 17, 19, 0, 0, 7); c.moveTo(13, -14); c.ellipse(0, -14, 13, 15, 0, 0, 7); };
+    caja(); c.lineWidth = 4.6; c.strokeStyle = INK; c.stroke();
+    caja(); c.fillStyle = col; c.fill();
+    c.fillStyle = hi; c.beginPath(); c.ellipse(-5, 8, 7, 11, 0, 0, 7); c.fill();     // brillo
+    rrect(c, -2.8, -80, 5.6, 82, 2.5); paint(c, '#1c1c24', 1.6);                  // mástil y diapasón
+    c.beginPath(); c.arc(0, -83, 4.5, 0, 7); paint(c, col, 1.8);                  // voluta
+    c.fillStyle = '#d9d2bd'; for (const yy of [-76, -70]) { c.fillRect(-6, yy, 3, 2); c.fillRect(3, yy, 3, 2); }   // clavijas
+    rrect(c, -4, 16, 8, 13, 2.5); paint(c, '#1c1c24', 1.4);                       // cordal
+    c.strokeStyle = '#3a2416'; c.lineWidth = 1.4;
+    c.beginPath(); c.moveTo(-9, -2); c.quadraticCurveTo(-6, 6, -9, 14); c.moveTo(9, -2); c.quadraticCurveTo(6, 6, 9, 14); c.stroke();   // efes
+    c.fillStyle = '#e8dcc0'; c.fillRect(-7, 7, 14, 2.2);                          // puente
+    c.strokeStyle = '#e8e2d0'; c.lineWidth = 0.9;
+    c.beginPath(); for (const xx of [-1.5, 1.5]) { c.moveTo(xx, 17); c.lineTo(xx, -78); } c.stroke();
+    c.restore();
+  };
+  c.save(); c.lineCap = 'round'; c.lineJoin = 'round';
+  switch (m.instr) {
+    case 'clarinete': {
+      // de la boca hacia abajo y un poco adelante, como se toca
+      c.translate(8, -74); c.rotate(-0.37);
+      rrect(c, -2.2, -2, 4.4, 9, 1.5); paint(c, '#2b2b33', 1.8);          // boquilla
+      rrect(c, -3, 4, 6, 3, 1); paint(c, SILVER, 1.4);                     // abrazadera
+      rrect(c, -3.6, 7, 7.2, 47, 2.5); paint(c, '#1c1c24', 2);             // cuerpo
+      c.fillStyle = SILVER;
+      for (const y of [16, 33]) c.fillRect(-3.6, y, 7.2, 1.8);             // anillas
+      for (const y of [21, 27, 39, 45]) { c.beginPath(); c.arc(0, y, 1.6, 0, 7); c.fill(); }
+      c.beginPath(); c.moveTo(-3.6, 53); c.quadraticCurveTo(-4, 59, -8.5, 63); c.lineTo(8.5, 63); c.quadraticCurveTo(4, 59, 3.6, 53); c.closePath();
+      paint(c, '#1c1c24', 2);                                              // campana
+      c.fillStyle = SILVER; c.fillRect(-8.5, 61.5, 17, 1.6);
+      break;
+    }
+    case 'trompeta': {
+      // horizontal a la altura de la boca: boquilla, tudel, bucle de abajo, 3 pistones y campana
+      c.beginPath(); c.moveTo(12, -72); c.lineTo(42, -72); tube(3.6, GOLD);
+      c.beginPath(); c.moveTo(30, -66); c.lineTo(24, -66); c.arc(24, -62, 4, -Math.PI / 2, Math.PI / 2, true); c.lineTo(42, -58);
+      c.arc(42, -62, 4, Math.PI / 2, -Math.PI / 2, true); tube(3.4, GOLD);
+      for (const x of [30, 35, 40]) {
+        rrect(c, x - 2, -78, 4, 18, 1.5); paint(c, GOLD, 1.8);
+        rrect(c, x - 3, -81, 6, 3, 1); paint(c, SILVER, 1.5);
+      }
+      c.beginPath(); c.moveTo(42, -73.8); c.quadraticCurveTo(50, -73.8, 55, -82); c.lineTo(55, -62); c.quadraticCurveTo(50, -70.2, 42, -70.2); c.closePath();
+      paint(c, GOLD, 2);
+      c.beginPath(); c.ellipse(55, -72, 2.6, 10, 0, 0, 7); paint(c, '#f7cc63', 2);
+      rrect(c, 8, -74.5, 5, 5, 1.5); paint(c, SILVER, 1.6);                // boquilla
+      break;
+    }
+    case 'trombon': {
+      // pabellón por debajo, apuntando adelante; vara doble por encima, hasta la curva final
+      c.beginPath(); c.moveTo(10, -62); c.lineTo(31, -62); tube(3.4, GOLD);
+      c.beginPath(); c.moveTo(31, -64); c.quadraticCurveTo(38, -64, 45, -73); c.lineTo(45, -51); c.quadraticCurveTo(38, -60, 31, -60); c.closePath();
+      paint(c, GOLD, 2);
+      c.beginPath(); c.ellipse(45, -62, 2.6, 11, 0, 0, 7); paint(c, '#f7cc63', 2);
+      c.beginPath(); c.moveTo(12, -72.5); c.lineTo(52, -72.5); c.arc(52, -69.5, 3, -Math.PI / 2, Math.PI / 2); c.lineTo(12, -66.5); tube(2.4, GOLD);
+      rrect(c, 30, -74.5, 20, 4, 2); paint(c, GOLD, 1.6);                  // fundas de la vara (exterior)
+      rrect(c, 30, -68.5, 20, 4, 2); paint(c, GOLD, 1.6);
+      c.beginPath(); c.moveTo(42, -72); c.lineTo(42, -67); c.moveTo(17, -72); c.lineTo(17, -62); tube(2, GOLD);   // travesaños
+      rrect(c, 8, -74.5, 5, 5, 1.5); paint(c, SILVER, 1.6);
+      break;
+    }
+    case 'flauta': {
+      // travesera: desde los labios hacia delante, ligeramente caída
+      c.translate(0, -73); c.rotate(0.125);
+      rrect(c, -5, -2.6, 62, 5.2, 2.6); paint(c, SILVER, 2);
+      c.fillStyle = INK; c.beginPath(); c.ellipse(7, -0.6, 2.4, 1.4, 0, 0, 7); c.fill();   // embocadura
+      c.fillStyle = '#8f99a6'; for (let x = 18; x < 55; x += 6) { c.beginPath(); c.arc(x, 0, 1.7, 0, 7); c.fill(); }
+      c.fillStyle = '#8f99a6'; c.fillRect(13, -2.6, 1.6, 5.2); c.fillRect(52, -2.6, 1.6, 5.2);
+      break;
+    }
+    case 'tuba': {
+      // delante del cuerpo, con la campana hacia arriba junto a la cabeza
+      // (sin desplazar con el ancho: la campana ya llega al borde de las tarjetas)
+      c.beginPath(); c.ellipse(29, -52, 15, 22, 0, 0, 7); tube(5, GOLD);    // vuelta grande del tubo
+      c.beginPath(); c.moveTo(21, -30); c.lineTo(23, -88); c.quadraticCurveTo(22, -104, 12, -114);
+      c.lineTo(56, -114); c.quadraticCurveTo(44, -104, 41, -88); c.lineTo(39, -30);
+      c.arc(30, -30, 9, 0, Math.PI); c.closePath(); paint(c, GOLD, 2.4);
+      c.strokeStyle = GOLD_D; c.lineWidth = 1.4; c.beginPath(); c.moveTo(27, -36); c.lineTo(28.5, -92); c.stroke();
+      c.beginPath(); c.ellipse(34, -114, 22, 5, 0, 0, 7); paint(c, '#f7cc63', 2.2);
+      c.beginPath(); c.ellipse(34, -114, 16, 3, 0, 0, 7); paint(c, '#7a5a10', 1.4);
+      c.beginPath(); c.moveTo(9, -72); c.lineTo(14, -72); c.lineTo(14, -66); tube(3, GOLD);   // tudel hasta la boca
+      for (const y of [-66, -60, -54]) { rrect(c, 9, y, 12, 4.5, 1.5); paint(c, SILVER, 1.5); }   // pistones
+      break;
+    }
+    case 'bombo': {
+      // colgado del pecho con los parches a los lados: de perfil se ve el parche redondo
+      const cx = 25 + ox, cy = -47;
+      rrect(c, cx - 14, cy - 25, 14, 50, 4); paint(c, '#b8402f', 2.4);      // casco (canto que se aleja)
+      c.beginPath(); c.arc(cx, cy, 25, 0, 7); paint(c, '#b8402f', 2.4);     // aro
+      c.beginPath(); c.arc(cx, cy, 20, 0, 7); paint(c, '#f4efe3', 2);       // parche
+      c.fillStyle = GOLD; for (let i = 0; i < 10; i++) { const a = i * Math.PI / 5; c.beginPath(); c.arc(cx + Math.cos(a) * 22.5, cy + Math.sin(a) * 22.5, 1.8, 0, 7); c.fill(); }
+      // maza en la mano delantera, apoyada en el parche
+      c.beginPath(); c.moveTo(cx + 18, cy + 7); c.lineTo(cx + 8, cy - 9); tube(2.4, WOOD);
+      c.beginPath(); c.arc(cx + 7, cy - 11, 6, 0, 7); paint(c, '#fdfcf9', 2);
+      break;
+    }
+    case 'caja': {
+      // a la altura de la cadera, con las dos baquetas sobre el parche
+      rrect(c, 7, -41, 34, 15, 2); paint(c, '#c9d1dc', 2.2);              // casco
+      c.strokeStyle = '#7d8796'; c.lineWidth = 1.3;
+      c.beginPath(); for (let x = 9; x < 40; x += 6) { c.moveTo(x, -39); c.lineTo(x + 3, -28); } c.stroke();   // tensores
+      rrect(c, 6, -30, 36, 4, 1.5); paint(c, '#9aa6b8', 1.6);              // aro de abajo
+      c.beginPath(); c.ellipse(24, -41, 18, 4.5, 0, 0, 7); paint(c, '#f4efe3', 2.2);   // parche
+      c.beginPath(); c.moveTo(15, -52); c.lineTo(22, -43); tube(2.2, WOOD);
+      c.beginPath(); c.moveTo(35, -55); c.lineTo(28, -43); tube(2.2, WOOD);
+      break;
+    }
+    case 'platillos': {
+      // los dos platos frente a frente, a punto de chocar, vistos un poco de lado
+      const plato = (x, y, r) => {
+        c.save(); c.translate(x, y); c.rotate(r);
+        c.beginPath(); c.ellipse(0, 0, 8, 21, 0, 0, 7); paint(c, GOLD, 2.2);
+        c.strokeStyle = GOLD_D; c.lineWidth = 1.1; c.beginPath(); c.ellipse(0, 0, 5.5, 14.5, 0, 0, 7); c.stroke();
+        c.beginPath(); c.ellipse(0, 0, 3, 6, 0, 0, 7); paint(c, '#e2a92a', 1.6);
+        c.strokeStyle = 'rgba(255,255,255,.6)'; c.lineWidth = 1.4; c.beginPath(); c.ellipse(0, 0, 6.5, 18, 0, 3.6, 4.4); c.stroke();
+        c.restore();
+      };
+      plato(23, -52, 0.22); plato(43, -50, -0.22);
+      break;
+    }
+    case 'saxo': {
+      // alto: tudel desde la boca, cuerpo cónico hacia abajo, vuelta en U y campana arriba
+      c.beginPath(); c.moveTo(10, -73); c.quadraticCurveTo(21, -74, 22, -64); tube(2.8, GOLD);
+      rrect(c, 6, -75.5, 6, 5, 2); paint(c, '#1c1c24', 1.6);                       // boquilla
+      c.beginPath();
+      c.moveTo(19.5, -64); c.lineTo(18.5, -30); c.quadraticCurveTo(19, -16, 31, -16);
+      c.quadraticCurveTo(41, -16, 43, -30); c.lineTo(51, -50); c.lineTo(34, -50); c.lineTo(35, -32);
+      c.quadraticCurveTo(34, -25, 30.5, -25); c.quadraticCurveTo(26.5, -25, 26.5, -32); c.lineTo(25, -64); c.closePath();
+      paint(c, GOLD, 2.2);
+      c.beginPath(); c.ellipse(42.5, -50, 8.5, 2.6, 0, 0, 7); paint(c, '#f7cc63', 2);   // boca de la campana
+      c.strokeStyle = GOLD_D; c.lineWidth = 1.2; c.beginPath(); c.moveTo(27.5, -60); c.lineTo(29, -33); c.stroke();
+      for (const y of [-60, -52, -44, -36]) { c.beginPath(); c.arc(22.2 - (y + 60) * 0.025, y, 2, 0, 7); paint(c, '#fdfcf9', 1); }   // llaves
+      break;
+    }
+    case 'trompa': {
+      // vueltas de tubo redondas delante del pecho; campana abajo a la derecha con la mano dentro
+      c.beginPath(); c.moveTo(10, -73); c.quadraticCurveTo(17, -73, 19, -67); tube(2.4, GOLD);
+      rrect(c, 6, -75, 5, 4, 1.5); paint(c, SILVER, 1.4);
+      c.beginPath(); c.arc(29, -55, 15, 0, 7); tube(4.2, GOLD);                     // vuelta grande
+      c.beginPath(); c.arc(29, -55, 8, 0, 7); tube(2.6, GOLD);                      // vuelta interior
+      c.beginPath(); c.moveTo(39, -45); c.quadraticCurveTo(45, -41, 43, -31);        // campana: se abre hacia abajo-atrás
+      c.lineTo(58, -37); c.quadraticCurveTo(48, -40, 42, -48); c.closePath(); paint(c, GOLD, 2);
+      c.beginPath(); c.ellipse(50.5, -34, 8.5, 3.5, -0.38, 0, 7); paint(c, '#7a5a10', 2);
+      for (const x of [19, 25, 31]) { c.beginPath(); c.arc(x, -70, 3, 0, 7); paint(c, SILVER, 1.5); }   // cilindros
+      break;
+    }
+    case 'violin': hombro(16, -63, 1, '#c0652a', '#e08a45'); break;
+    case 'viola':  hombro(13, -62, 1.08, '#94461b', '#b9662f'); break;
+    case 'contrabajo':
+      // de pie delante del músico, más alto que él, con la pica en el suelo y el arco abajo
+      pie(34, -40, -0.12, 1, '#a0501f', '#c96f34', 40);
+      arco(50, -32, 10, -46);
+      break;
+    case 'violonchelo':
+      // sentado (marco desplazado 14: el suelo queda en y=-14), entre las rodillas
+      pie(34, -50, -0.15, 0.8, '#b0582a', '#d27a3e', 46);
+      arco(54, -40, 14, -52);
+      break;
+    case 'oboe': {
+      // como el clarinete pero más fino, cónico, con caña doble y campana pequeña
+      c.translate(8, -74); c.rotate(-0.3);
+      rrect(c, -1.1, -5, 2.2, 6, 0.8); paint(c, '#d9a35c', 1.1);                   // caña doble
+      rrect(c, -2.6, 0, 5.2, 4, 1); paint(c, SILVER, 1.2);
+      c.beginPath(); c.moveTo(-2.6, 4); c.lineTo(-3.6, 54); c.lineTo(3.6, 54); c.lineTo(2.6, 4); c.closePath(); paint(c, '#1c1c24', 2);
+      c.fillStyle = SILVER; for (const y of [12, 30]) c.fillRect(-3, y, 6, 1.6);
+      for (const y of [8, 14, 19, 24, 36, 41, 46]) { c.beginPath(); c.arc(0, y, 1.3, 0, 7); c.fill(); }
+      c.beginPath(); c.moveTo(-3.6, 53); c.lineTo(-5.5, 60); c.lineTo(5.5, 60); c.lineTo(3.6, 53); c.closePath(); paint(c, '#1c1c24', 2);
+      c.fillStyle = SILVER; c.fillRect(-5.5, 58.5, 11, 1.6);
+      break;
+    }
+    case 'fagot': {
+      // tubo largo de madera en diagonal delante del cuerpo; el tudel plateado llega a la boca
+      c.save(); c.translate(36, -26); c.rotate(-0.14);
+      rrect(c, -5, -96, 10, 94, 3); paint(c, '#9c4a1c', 2.2);                       // tubo largo
+      rrect(c, 4, -58, 7, 60, 3); paint(c, '#8a3f17', 2);                            // tudel corto (ala)
+      rrect(c, -6, -6, 18, 12, 4); paint(c, '#7a3612', 2.2);                         // bota
+      rrect(c, -6, -100, 12, 6, 2); paint(c, '#e8dcc0', 1.6);                        // anillo de la campana
+      c.fillStyle = SILVER; for (const y of [-80, -66, -40, -28]) c.fillRect(-5, y, 10, 1.8);
+      c.restore();
+      c.beginPath(); c.moveTo(10, -72); c.quadraticCurveTo(25, -77, 35, -84); tube(1.8, SILVER);
+      rrect(c, 6, -73.5, 5, 3, 1); paint(c, '#d9a35c', 1.2);                         // caña
+      break;
+    }
+    case 'bombardino': {
+      // como una tuba pequeña y plateada, con la campana hacia arriba y algo adelante
+      const SIL = '#d5dbe3';
+      c.beginPath(); c.ellipse(28, -50, 11, 16, 0, 0, 7); tube(4, SIL);
+      c.save(); c.translate(30, -40); c.rotate(0.22);
+      c.beginPath(); c.moveTo(-7, 8); c.lineTo(-5, -38); c.quadraticCurveTo(-6, -50, -14, -58); c.lineTo(14, -58);
+      c.quadraticCurveTo(6, -50, 5, -38); c.lineTo(7, 8); c.arc(0, 8, 7, 0, Math.PI); c.closePath(); paint(c, SIL, 2.2);
+      c.beginPath(); c.ellipse(0, -58, 14, 3.6, 0, 0, 7); paint(c, '#eef1f5', 2);
+      c.beginPath(); c.ellipse(0, -58, 9.5, 2.2, 0, 0, 7); paint(c, '#6b7480', 1.2);
+      c.restore();
+      c.beginPath(); c.moveTo(9, -72); c.lineTo(15, -72); c.lineTo(15, -64); tube(2.6, SIL);
+      for (const y of [-64, -58, -52]) { rrect(c, 11, y, 10, 4, 1.5); paint(c, SILVER, 1.4); }
+      break;
+    }
+    case 'xilofono': {
+      // láminas de madera sobre su soporte, a la altura de la cintura, con dos baquetas
+      c.strokeStyle = INK; c.lineWidth = 3;
+      c.beginPath(); c.moveTo(14, -32); c.lineTo(10, 0); c.moveTo(51, -34); c.lineTo(54, 0); c.stroke();   // patas
+      rrect(c, 8, -37, 47, 6, 2); paint(c, '#5a3418', 2);                           // bastidor
+      for (let k = 0; k < 9; k++) { const h = 13 - k * 0.7; rrect(c, 10 + k * 4.9, -38 - h / 2, 4.2, h, 1.2); paint(c, '#d9a35c', 1.3); }
+      for (const [x0, y0] of [[20, -52], [40, -54]]) {
+        c.beginPath(); c.moveTo(x0, y0); c.lineTo(x0 + 4, y0 + 10); tube(1.6, WOOD);
+        c.beginPath(); c.arc(x0 + 4.5, y0 + 11, 3, 0, 7); paint(c, '#c93a2d', 1.6);
+      }
+      break;
+    }
+    case 'arpa': {
+      // sentado; el arpa en el suelo delante: caja inclinada hacia el hombro, columna delante
+      const WD = '#c9922e';
+      const cuello = [[20, -104], [30, -128], [40, -116], [46, -110], [52, -127]];   // dos curvas cuadráticas
+      const q = (a, b, k, u) => (1 - u) * (1 - u) * a + 2 * (1 - u) * u * k + u * u * b;
+      const pts = [];
+      for (let u = 0; u <= 1; u += 0.05) {
+        pts.push([q(20, 40, 30, u), q(-104, -116, -128, u)]);
+        pts.push([q(40, 52, 46, u), q(-116, -127, -110, u)]);
+      }
+      const yCuello = x => pts.reduce((b, p) => Math.abs(p[0] - x) < Math.abs(b[0] - x) ? p : b)[1];
+      c.strokeStyle = '#f4efe3'; c.lineWidth = 0.9; c.beginPath();
+      for (let k = 1; k < 12; k++) { const u = k / 12, x = mix(41, 22, u), y = mix(-20, -102, u); c.moveTo(x, y); c.lineTo(x, yCuello(x)); }
+      c.stroke();
+      c.strokeStyle = '#c93a2d'; c.beginPath(); for (const k of [3, 7]) { const u = k / 12, x = mix(41, 22, u); c.moveTo(x, mix(-20, -102, u)); c.lineTo(x, yCuello(x)); } c.stroke();
+      c.beginPath(); c.moveTo(36, -18); c.lineTo(46, -20); c.lineTo(24, -106); c.lineTo(18, -102); c.closePath(); paint(c, WD, 2.2);   // caja
+      rrect(c, 48, -128, 5, 110, 2); paint(c, WD, 2.2);                              // columna
+      c.beginPath(); c.moveTo(cuello[0][0], cuello[0][1]); c.quadraticCurveTo(cuello[1][0], cuello[1][1], cuello[2][0], cuello[2][1]);
+      c.quadraticCurveTo(cuello[3][0], cuello[3][1], cuello[4][0], cuello[4][1]); tube(4, WD);
+      c.beginPath(); c.arc(50.5, -129, 4, 0, 7); paint(c, '#f2b632', 1.8);            // capitel
+      rrect(c, 32, -20, 24, 6, 2); paint(c, '#9a6a1c', 2);                           // base
+      break;
+    }
+    case 'piano': {
+      // sentado al piano vertical, visto de lado: mueble de madera, teclado hacia el músico y partitura
+      rrect(c, 32, -110, 24, 96, 4); paint(c, '#6b3a1e', 2.4);                      // mueble
+      rrect(c, 35, -104, 18, 34, 2); paint(c, '#7f4826', 1.4);                        // paneles
+      rrect(c, 35, -40, 18, 22, 2); paint(c, '#7f4826', 1.4);
+      rrect(c, 10, -54, 26, 8, 1.5); paint(c, '#6b3a1e', 2);                          // caja del teclado
+      rrect(c, 10, -59, 24, 5.5, 1); paint(c, '#fdfcf9', 1.6);                         // teclas blancas
+      c.fillStyle = '#1c1c24'; for (const x of [12, 15.5, 21, 24.5, 28]) c.fillRect(x, -59, 2.2, 3);   // negras
+      rrect(c, 12, -46, 4, 32, 1.5); paint(c, '#6b3a1e', 1.8);                        // pata del teclado
+      c.save(); c.translate(33, -68); c.rotate(-0.25); rrect(c, -2, -13, 4, 15, 1); paint(c, '#fdfcf9', 1.4); c.restore();   // partitura
+      c.fillStyle = '#f2b632'; c.fillRect(25, -17, 5, 2); c.fillRect(32, -17, 5, 2);   // pedales
+      break;
+    }
+    case 'guitarra': {
+      // clásica, apoyada en el muslo, con el mástil hacia arriba y adelante
+      c.save(); c.translate(22, -30); c.rotate(-1.15);
+      const caja = () => { c.beginPath(); c.ellipse(0, 0, 13, 11, 0, 0, 7); c.moveTo(29, 0); c.ellipse(19, 0, 10, 9, 0, 0, 7); };
+      caja(); c.lineWidth = 4.4; c.strokeStyle = INK; c.stroke();
+      caja(); c.fillStyle = '#e0a55a'; c.fill();
+      c.fillStyle = '#1c1c24'; c.beginPath(); c.arc(13, 0, 4, 0, 7); c.fill();       // boca
+      rrect(c, -7, -5, 3, 10, 1); paint(c, '#5a3418', 1.2);                          // puente
+      rrect(c, 28, -2.6, 24, 5.2, 1.5); paint(c, '#5a3418', 1.4);                     // mástil
+      rrect(c, 51, -3.4, 9, 6.8, 1.5); paint(c, '#7a4520', 1.4);                      // pala
+      c.strokeStyle = '#f4efe3'; c.lineWidth = 0.7; c.beginPath();
+      for (const y of [-1.8, -0.6, 0.6, 1.8]) { c.moveTo(-5, y); c.lineTo(51, y); } c.stroke();
+      c.restore();
+      break;
+    }
+  }
+  c.restore();
+}
+/* Músico con su instrumento, para el selector y los marcadores (en el campo va de futbolista: drawFutbolista). */
+function drawMusico(c, m, x, y, o = {}) {
+  const s = o.s || 1, t = o.t || 0, bw = m.ancho || 1;
+  const SUIT = m.esmoquin ? '#1b1b22' : '#27458f', TROUSER = m.esmoquin ? '#15151b' : '#2a3350';
+  c.save(); c.translate(x, y); c.scale(s, s);
+  const bob = Math.sin(t * 2.2) * 1.2;
+  c.translate(0, bob);
+  const wind = o.wind || 0;                         // 0 = brazo atrás (armado), 1 = brazo lanzado hacia delante
+  const lL = -0.18, lR = 0.22;                       // piernas: postura fija, de perfil
+  const aB = mix(1.6, -1.6, wind);                   // brazo trasero suelto: atrás -> adelante
+  const aF = mix(-0.5, -1.7, wind);                  // brazo delantero: equilibrio
+  // sin instrumento (o.sinInstr) los brazos quedan sueltos; con él, van a sujetarlo donde diga instrGrip
+  const g = o.sinInstr ? null : instrGrip(m, bw);
+  const armB = g && g.b ? reachArm(-18 * bw, -58, g.b) : { a: aB, l: 25 };
+  const armF = g ? reachArm(18 * bw, -58, g.f) : { a: aF, l: 25 };
+  const sentado = g && g.sit;   // violonchelo, arpa, piano, guitarra: en banqueta (drawSeat)
+  if (sentado) { drawSeat(c); c.translate(0, 14); }
+  hairBack(c, m);
+  if (!sentado) limb(c, -8, -27, lL, 21, 11, TROUSER, { shoe: 1 });
+  limb(c, -18 * bw, -58, armB.a, armB.l, 10, SUIT, { hand: m.piel });
+  drawTorso(c, m, bw);
+  if (!sentado) limb(c, 8, -27, lR, 21, 11, TROUSER, { shoe: 1 });
+  else { c.save(); c.translate(0, -14); drawSeatLegs(c, TROUSER); c.restore(); }
+  drawHead(c, m, o, t);
+  // con instrumento, la manga delantera va DETRAS del instrumento y solo las manos encima
+  limb(c, 18 * bw, -58, armF.a, armF.l, 10, SUIT, g ? {} : { hand: m.piel });
+  if (g) {
+    drawInstr(c, m, bw);
+    for (const p of [g.b && g.b.top ? g.b : null, g.f]) if (p) { c.beginPath(); c.arc(p.x, p.y, 5.5, 0, 7); paint(c, m.piel, 2.2); }
+  }
+  c.restore();
+  return { handX: x - 18 * bw * Math.cos(0), handY: y };
+}
+/* Balón: blanco con el pentágono negro en medio y medio pentágono en cada lado (gira con rot) */
+function drawBalon(c, x, y, r, rot) {
+  c.save(); c.translate(x, y); c.rotate(rot || 0);
+  c.beginPath(); c.arc(0, 0, r, 0, 7); paint(c, '#fdfcf9', 1.6);
+  const pent = (cx, cy, rr, a0) => { c.beginPath(); for (let k = 0; k < 5; k++) { const a = a0 + k * 2 * Math.PI / 5; c.lineTo(cx + rr * Math.cos(a), cy + rr * Math.sin(a)); } c.closePath(); c.fill(); };
+  c.fillStyle = INK; pent(0, 0, r * 0.38, -Math.PI / 2);
+  c.save(); c.beginPath(); c.arc(0, 0, r, 0, 7); c.clip();
+  for (let k = 0; k < 5; k++) { const a = -Math.PI / 2 + Math.PI / 5 + k * 2 * Math.PI / 5; pent(Math.cos(a) * r * 1.02, Math.sin(a) * r * 1.02, r * 0.34, a); }
+  c.restore(); c.restore();
+}
+/* Músico vestido de futbolista, de perfil mirando a la derecha (pies en 0,0; flip = mira a la
+   izquierda), con el mismo cuerpo de papel que en el selector. o.cam = camiseta; o.kick 0..1 =
+   golpeo (la pierna delantera sube hacia delante); o.portero = brazos arriba y guantes; o.rot =
+   estirada del portero. */
+function drawFutbolista(c, m, x, y, o = {}) {
+  const s = o.s || 1, t = o.t || 0, bw = m.ancho || 1, k = o.kick || 0;
+  const CAM = o.cam || '#27458f', PANT = '#fdfcf9', MANO = o.portero ? '#f4b52e' : m.piel;
+  c.save(); c.translate(x, y); c.scale(o.flip ? -s : s, s);
+  if (o.rot) { c.translate(0, -40); c.rotate(o.rot); c.translate(0, 40); }
+  c.translate(0, Math.sin(t * 2.2 + (o.fase || 0)) * 1.2);
+  const lB = mix(-0.12, 0.4, k), lF = mix(0.22, -1.3, k);
+  const aB = o.portero ? Math.PI - 0.55 : mix(0.45, 0.95, k), aF = o.portero ? Math.PI + 0.55 : mix(-0.45, -0.95, k);
+  hairBack(c, m);
+  limb(c, -8, -27, lB, 21, 11, CAM, { shoe: 1 });                  // medias del color de la camiseta
+  limb(c, -18 * bw, -58, aB, 24, 10, CAM, { hand: MANO });
+  rrect(c, -22 * bw, -64, 44 * bw, 40, 9); paint(c, CAM, 2.6);
+  c.fillStyle = 'rgba(255,255,255,.85)'; c.font = `400 15px ${F_DISP}`; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.fillText(o.portero ? '1' : String(o.dorsal || 10), 2, -45);
+  rrect(c, -21 * bw, -30, 42 * bw, 12, 4); paint(c, PANT, 2.2);  // pantalón
+  limb(c, 8, -24, lF, 19, 11, CAM, { shoe: 1 });
+  drawHead(c, Object.assign({}, m, { esmoquin: true }), o, t);   // sin la gorra de la banda: se ve el pelo
+  limb(c, 18 * bw, -58, aF, 24, 10, CAM, { hand: MANO });
+  c.restore();
+}
+
+/* ============================================================
+   CAMPO: EL PENTAGRAMA ES EL TERRENO DE JUEGO
+   Las cinco líneas del campo son las de un pentagrama en clave de sol y cada jugador pisa la
+   altura de su nota (con su redonda a los pies): los pases dibujan la melodía que construyes.
+   Los poseedores van de izquierda a derecha (XS) y la portería está a la derecha.
+   ============================================================ */
+const CAMPO = { top: 330, sp: 16, x0: 80, x1: 880 };
+const yPaso = p => CAMPO.top + p * CAMPO.sp / 2;
+const yNota = d => yPaso(pasoDe(d));
+const XS = [175, 350, 525, 700], XPEN = 745, ESC = 0.52;
+const PORT = { x: 905, w: 46, y0: yPaso(-4), y1: yPaso(13) };
+const CAMISETAS = ['#27458f', '#c93a2d', '#238a4c', '#e07b22', '#7b3fa0', '#0e8a8a', '#b5532a', '#4a4a58'];
+const PUBLICO = ['#f4b52e', '#fdfcf9', '#c93a2d', '#2f6fe4', '#f2cba6', '#8a5a3c', '#e3b38c', '#238a4c', '#c4daed'];
+function drawEstadio(c, now) {
+  const g = c.createLinearGradient(0, 0, 0, 262); g.addColorStop(0, '#16223f'); g.addColorStop(1, '#2b3c6b');
+  c.fillStyle = g; c.fillRect(V.x, V.y, V.w, Math.max(0, 262 - V.y));
+  // público: salta cuando hay gol
+  const salto = S.anim && S.anim.tipo === 'gol' && now > S.anim.t0 + S.anim.dur ? Math.abs(Math.sin((now - S.anim.t0) / 90)) * 4 : 0;
+  for (let fila = 0; fila < 7; fila++) {
+    const y = 150 + fila * 14;
+    for (let x = (fila % 2) * 8; x < W + 10; x += 16) {
+      const h = (x * 7 + fila * 13) % 9;
+      c.fillStyle = PUBLICO[h]; c.beginPath(); c.arc(x, y - (h % 2 ? salto : salto * 0.5), 5.5, 0, 7); c.fill();
+    }
+  }
+  rrect(c, -5, 244, W + 10, 18, 0); paint(c, '#fdfcf9', 2);        // vallas publicitarias
+  c.fillStyle = '#27458f'; c.font = `400 13px ${F_DISP}`; c.textAlign = 'center'; c.textBaseline = 'middle';
+  for (let x = 90; x < W; x += 220) c.fillText('TEORÍA MUSICAL', x, 253.5);
+  for (let x = 0, k = 0; x < W; x += 62.5, k++) { c.fillStyle = k % 2 ? '#3f9a4a' : '#47a653'; c.fillRect(x, 262, 62.5, H - 262 + 120); }
+}
+function drawCampo(c) {
+  c.strokeStyle = 'rgba(255,255,255,.92)'; c.lineWidth = 2.6; c.lineCap = 'butt';
+  for (let p = 0; p <= 8; p += 2) { c.beginPath(); c.moveTo(CAMPO.x0, yPaso(p)); c.lineTo(CAMPO.x1, yPaso(p)); c.stroke(); }
+  c.beginPath(); c.moveTo(CAMPO.x0, yPaso(0)); c.lineTo(CAMPO.x0, yPaso(8)); c.stroke();   // barra del principio del pentagrama
+  c.fillStyle = 'rgba(255,255,255,.85)'; c.beginPath(); c.arc(XPEN + 18, yPaso(4), 3, 0, 7); c.fill();   // punto de penalti
+  // portería (vista desde arriba: la red queda detrás de la línea de gol)
+  const { x, w, y0, y1 } = PORT;
+  c.fillStyle = 'rgba(255,255,255,.16)'; c.fillRect(x, y0, w, y1 - y0);
+  c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = 1;
+  c.beginPath();
+  for (let xx = x + 8; xx < x + w; xx += 8) { c.moveTo(xx, y0); c.lineTo(xx, y1); }
+  for (let yy = y0 + 8; yy < y1; yy += 8) { c.moveTo(x, yy); c.lineTo(x + w, yy); }
+  c.stroke();
+  c.strokeStyle = '#fdfcf9'; c.lineWidth = 5; c.lineCap = 'round';
+  c.beginPath(); c.moveTo(x + w, y0); c.lineTo(x, y0); c.lineTo(x, y1); c.lineTo(x + w, y1); c.stroke();
+}
+/* Redonda a los pies de cada jugador, con sus líneas adicionales si la nota se sale del pentagrama */
+function drawRedonda(c, x, d, alfa) {
+  const p = pasoDe(d), y = yPaso(p);
+  c.save(); c.globalAlpha = alfa == null ? 1 : alfa;
+  c.strokeStyle = '#fdfcf9'; c.lineWidth = 2.4; c.lineCap = 'butt';
+  for (let q = -2; q >= p; q -= 2) { c.beginPath(); c.moveTo(x - 20, yPaso(q)); c.lineTo(x + 20, yPaso(q)); c.stroke(); }
+  for (let q = 10; q <= p; q += 2) { c.beginPath(); c.moveTo(x - 20, yPaso(q)); c.lineTo(x + 20, yPaso(q)); c.stroke(); }
+  c.translate(x, y); c.rotate(-0.35);
+  c.beginPath(); c.ellipse(0, 0, 11, 7.5, 0, 0, 7); c.fillStyle = INK; c.fill();
+  c.rotate(0.9); c.beginPath(); c.ellipse(0, 0, 5.5, 3, 0, 0, 7); c.fillStyle = '#47a653'; c.fill();
+  c.restore();
+}
+
+/* ============================================================
+   SONIDO (pitidos sencillos, sin ficheros)
+   ============================================================ */
+let AC = null;
+function ensureAudio() { if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } if (AC && AC.state === 'suspended') AC.resume(); }
+function beep(freqs, step = 0.09, type = 'triangle', vol = 0.18) {
+  if (!AC) return;
+  freqs.forEach((f, i) => {
+    const t = AC.currentTime + i * step, o = AC.createOscillator(), g = AC.createGain();
+    o.type = type; o.frequency.value = f;
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.015); g.gain.exponentialRampToValueAtTime(0.0001, t + step * 1.7);
+    o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + step * 1.8);
+  });
+}
+
+/* ============================================================
+   ESTADO Y FLUJO DEL JUEGO
+   ============================================================ */
+/* 5 ataques por jugador. Cada ataque: 3 pases y el tiro, y cada uno es un intervalo que se
+   construye desde la nota del que tiene el balón (la nota construida es la del compañero que lo
+   recibe). Fallar un pase = robo y se acaba el ataque; fallar el tiro = parada. Solo cuentan los
+   goles (j.puntos): como mucho 5 por partido. El tiempo no da puntos. Con varios jugadores los
+   ataques se alternan (tras un gol o un robo, el balón pasa al otro, como en un partido) y, si
+   los primeros empatan, tanda de penaltis a muerte súbita, que no suma goles a la clasificación. */
+const ATAQUES = 5, PASES = 3;
+const jugadorNuevo = (nombre, musico, i) => ({ nombre, musico, cam: CAMISETAS[i % CAMISETAS.length], puntos: 0, pases: 0, pasesInt: 0, tiros: 0, pen: 0, penTiros: 0 });
+const S = {
+  state: 'menu', musico: 0, dif: DIF[1],
+  numJugadores: 1,
+  jugadores: [jugadorNuevo('', 0, 0)],
+  turnoActual: 0, ataque: 0,
+  paso: 0,                   // 0-2 = pases, 3 = tiro
+  cadena: [{ d: 32, a: 0 }], // notas de los que han tenido el balón en este ataque (la última, el que lo tiene)
+  pase: null,                // intervalo pedido: {desde, k, dir, hasta}
+  sel: null, acc: 0,         // nota colocada (d) y alteración elegida
+  defs: [0, 1, 2].map(i => ({ x: (XS[i] + XS[i + 1]) / 2 + 10, y: yPaso(2 + i * 2) })),
+  portY: yPaso(5), recvY: null,
+  anim: null,                // pase, robo, gol o parada en curso: {tipo, t0, dur, from, to, ...}
+  pen: null, penJug: [], ganadorPen: -1,   // tanda de penaltis: {vivos, ronda, i, marcados}
+  qStart: 0, answered: false, timerId: 0,
+  clock: 0
+};
+const golesTxt = n => n + (n === 1 ? ' gol' : ' goles');
+const esTiro = () => !!S.pen || S.paso === PASES;
+
+const RK = 'futbol-clasificacion';
+function loadRank() { try { const a = JSON.parse(localStorage.getItem(RK) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+function saveRank(a) { try { localStorage.setItem(RK, JSON.stringify(a)); } catch (e) {} }
+/* Una clasificación por nivel: cada partida guarda su dificultad (dif) y solo se comparan las del mismo nivel. */
+function rankDif() { const r = document.querySelector('input[name=dif]:checked'); return r ? DIF[+r.value].id : ''; }
+function rankDifLbl() { const r = document.querySelector('input[name=dif]:checked'); return r ? r.nextElementSibling.textContent : ''; }
+function renderRank(ol, hi) {
+  const all = loadRank().filter(e => e.dif === rankDif()).sort((a, b) => b.d - a.d || a.id - b.id).slice(0, 8);
+  ol.replaceChildren();
+  document.querySelectorAll('.rankDif').forEach(x => { x.textContent = '· ' + rankDifLbl(); });
+  for (const e of all) {
+    const li = document.createElement('li');
+    if (e.id === hi) li.className = 'me';
+    const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = e.n + ' ';
+    const sm = document.createElement('small'); sm.textContent = e.m; nm.appendChild(sm);
+    const dd = document.createElement('span'); dd.className = 'dd'; dd.textContent = golesTxt(e.d);
+    li.append(nm, dd); ol.appendChild(li);
+  }
+  return all.length;
+}
+function refreshRankMenu() { $('#rankEmpty').hidden = renderRank($('#rankMenu')) > 0; cargarMundial(); }
+
+/* ============================================================
+   CLASIFICACIÓN MUNDIAL (api/clasificacion.js)
+   Aquí los goles SE SUMAN: cada partido publicado se añade a lo que ya llevas (esta semana y de
+   siempre). Sin registro: el jugador es este navegador + el apodo escrito (en una tableta de clase,
+   cada alumno con su apodo tiene su fila). En partidos de varios, cada uno suma los suyos. Cada partido pide un
+   permiso al empezar y ese permiso es el que deja publicarla. Si la API no responde, no se enseña.
+   ============================================================ */
+const API_MUNDIAL = '/api/clasificacion/', JUEGO_MUNDIAL = 'futbol';
+const MUNDO = { periodo: 'semana', datos: null, pedido: 0, toks: [] };
+const nivelMundial = () => rankDif();
+const fmtGoles = x => golesTxt(Number(x));
+const apodoEscrito = () => ($('#nombre') ? $('#nombre').value.trim() : '');
+function jugadorId() {   // crea el identificador: solo se llama al publicar
+  try {
+    let id = localStorage.getItem('tm-jugador');
+    if (!/^[a-f0-9]{24}$/.test(id || '')) {
+      id = Array.from(crypto.getRandomValues(new Uint8Array(12)), b => b.toString(16).padStart(2, '0')).join('');
+      localStorage.setItem('tm-jugador', id);
+    }
+    return id;
+  } catch (e) { return ''; }
+}
+/* Para CONSULTAR se usa el identificador solo si ya existe: no se guarda nada en el navegador hasta
+   que la persona publica (almacenamiento pedido por el usuario, exento de consentimiento). */
+function jugadorIdGuardado() {
+  try { const id = localStorage.getItem('tm-jugador'); return /^[a-f0-9]{24}$/.test(id || '') ? id : ''; } catch (e) { return ''; }
+}
+function cargarMundial() {
+  const n = ++MUNDO.pedido;
+  fetch(API_MUNDIAL + '?juego=' + JUEGO_MUNDIAL + '&dif=' + nivelMundial() + '&jugador=' + jugadorIdGuardado() + '&apodo=' + encodeURIComponent(apodoEscrito()))
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(d => { if (n === MUNDO.pedido) { MUNDO.datos = d; pintarMundial(); } })
+    .catch(() => { if (n === MUNDO.pedido) $('#mundial').hidden = true; });
+}
+function pintarMundial() {
+  const t = MUNDO.datos && MUNDO.datos[MUNDO.periodo];
+  if (!t) return;
+  $('#mundial').hidden = false;
+  document.querySelectorAll('.mTabs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p === MUNDO.periodo)));
+  const ol = $('#rankMundial'); ol.replaceChildren();
+  for (const e of t.top) {
+    const li = document.createElement('li');
+    if (e.yo) li.className = 'me';
+    const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = e.n + ' ';
+    const sm = document.createElement('small'); sm.textContent = e.m; nm.appendChild(sm);
+    const dd = document.createElement('span'); dd.className = 'dd'; dd.textContent = fmtGoles(e.marca);
+    li.append(nm, dd); ol.appendChild(li);
+  }
+  const cuando = MUNDO.periodo === 'semana' ? 'esta semana' : 'de siempre';
+  $('#mundialYo').textContent = t.yo
+    ? 'Tú: n.º ' + t.yo.pos + ' de ' + t.total + ' ' + cuando + ', con ' + fmtGoles(t.marca) + '.'
+    : t.total ? 'Suma una partida para entrar en la clasificación.'
+    : (MUNDO.periodo === 'semana' ? 'Nadie ha sumado puntos todavía esta semana. ¡Sé el primero!' : 'Nadie ha sumado puntos todavía. ¡Sé el primero!');
+}
+document.querySelectorAll('.mTabs button').forEach(b => b.addEventListener('click', () => { MUNDO.periodo = b.dataset.p; pintarMundial(); }));
+document.addEventListener('change', e => { if (e.target && e.target.id === 'nombre') cargarMundial(); });   // otro apodo = otro jugador
+/* Apodos tal y como se escribieron (sin el «Músico» / «Jugador 2» que pone el juego si se dejan en blanco):
+   solo quien escribe un apodo puede sumar a la clasificación mundial. */
+function apodosEscritos(n) {
+  if (n <= 1) return [apodoEscrito()];
+  return Array.from({ length: n }, (_, i) => { const el = document.getElementById('nombre' + i); return el ? el.value.trim() : ''; });
+}
+/* Al empezar: un permiso por jugador (en partidas de varios, cada uno suma a su propia fila). */
+function pedirPermiso() {
+  const toks = MUNDO.toks = [];   // cada partida su lista: un permiso que llegue tarde no se cuela en la siguiente
+  const apodos = apodosEscritos(S.numJugadores);
+  S.jugadores.forEach((j, i) => { j.apodo = apodos[i] || ''; });
+  const dif = nivelMundial();
+  S.jugadores.forEach((j, i) => {
+    fetch(API_MUNDIAL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ accion: 'inicio', juego: JUEGO_MUNDIAL, dif }) })
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(d => {
+        if (!d.token || toks !== MUNDO.toks) return;
+        toks[i] = d.token;
+        if (!$('#v-result').hidden) prepararPublicar();   // conexión lenta: el permiso llega con la partida ya acabada
+      })
+      .catch(() => { });
+  });
+}
+const sumables = () => S.jugadores.map((j, i) => ({ j, tok: MUNDO.toks[i] })).filter(x => x.tok && x.j.apodo && x.j.puntos > 0);
+function prepararPublicar() {
+  const btn = $('#btnPub'), msg = $('#pubMsg'), varios = S.numJugadores > 1;
+  const conPuntos = S.jugadores.filter((j, i) => MUNDO.toks[i] && j.puntos > 0), listos = sumables();
+  // sin permiso (la conexión falló al empezar) pero con la clasificación mundial disponible: se explica
+  if (!conPuntos.length && MUNDO.datos && S.jugadores.some(j => j.puntos > 0)) {
+    $('#pubWrap').hidden = false; btn.hidden = true;
+    msg.textContent = 'No se pudo conectar con la clasificación mundial al empezar el partido, así que este no se puede sumar. Prueba con el siguiente.';
+    return;
+  }
+  $('#pubWrap').hidden = !conPuntos.length;
+  btn.hidden = false; btn.disabled = !listos.length;
+  btn.textContent = varios ? 'Sumar los goles de todos a la clasificación mundial' : 'Sumar a la clasificación mundial';
+  if (!listos.length) msg.textContent = varios ? 'Para sumar vuestros goles, escribid un apodo cada uno en el menú (botón «Cambiar de músico»).'
+    : 'Para sumar tus goles, escribe un apodo en el menú (botón «Cambiar de músico»).';
+  else if (varios && listos.length < conPuntos.length) msg.textContent = 'Solo suman quienes tienen apodo: ' + listos.map(x => x.j.apodo).join(', ') + '. Usad apodos, no nombres completos.';
+  else msg.textContent = varios ? 'Se publican vuestros apodos y goles. Usad apodos, no nombres completos.'
+    : 'Se publican tu apodo y tus goles. Usa un apodo, no tu nombre completo.';
+}
+function sumarUno(x) {
+  return fetch(API_MUNDIAL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ accion: 'enviar', token: x.tok, jugador: jugadorId(), nombre: x.j.apodo, musico: MUSICOS[x.j.musico].n, marca: x.j.puntos }) })
+    .then(r => r.json().then(d => ({ x, ok: r.ok, d })))
+    .catch(() => ({ x, ok: false, d: {} }));
+}
+$('#btnPub').addEventListener('click', async () => {
+  const btn = $('#btnPub'), msg = $('#pubMsg'), lista = sumables();
+  if (!lista.length) return;
+  btn.disabled = true; btn.textContent = 'Sumando…';
+  const res = [];
+  for (const x of lista) res.push(await sumarUno(x));   // de uno en uno: cada uno es una fila distinta
+  const bien = res.filter(r => r.ok);
+  bien.forEach(r => { MUNDO.toks[S.jugadores.indexOf(r.x.j)] = null; });
+  if (!bien.length) {
+    btn.disabled = false; btn.textContent = 'Sumar a la clasificación mundial';
+    msg.textContent = (res[0] && res[0].d.motivo) || 'No se han podido sumar estos goles. Prueba con el siguiente partido.';
+    if (!(res[0] && res[0].d.motivo)) btn.hidden = true;
+    return;
+  }
+  btn.hidden = true;
+  if (S.numJugadores <= 1) {
+    const s = bien[0].d.semana, h = bien[0].d.siempre;
+    MUNDO.datos = bien[0].d;
+    msg.textContent = '¡Sumados! Llevas ' + fmtGoles(s.marca) + ' esta semana (n.º ' + s.yo.pos + ' de ' + s.total + ') y ' + fmtGoles(h.marca) + ' en total (n.º ' + h.yo.pos + ' de ' + h.total + ').';
+  } else {
+    msg.textContent = '¡Sumados! Esta semana: ' + bien.map(r => r.x.j.apodo + ' ' + fmtGoles(r.d.semana.marca) + ' (n.º ' + r.d.semana.yo.pos + ')').join(' · ') + '.'
+      + (bien.length < res.length ? ' No se han podido sumar: ' + res.filter(r => !r.ok).map(r => r.x.j.apodo).join(', ') + '.' : '');
+  }
+  track('mundial_publicar', { dificultad: nivelMundial(), puesto_semana: bien[0].d.semana.yo.pos, jugadores: bien.length });
+});
+
+function track(evento, params) {
+  try { if (window.parent && window.parent !== window) window.parent.postMessage({ tmJuego: true, evento: evento, params: Object.assign({ juego: 'futbol' }, params) }, location.origin); } catch (e) {}
+}
+
+function showView(n) { document.querySelectorAll('.view').forEach(v => { v.hidden = v.id !== 'v-' + n; }); }
+
+function parsedNumJugadores() {
+  let n = parseInt($('#numJugadores').value, 10);
+  if (!Number.isFinite(n) || n < 1) n = 1;
+  return Math.min(n, 500);   // tope práctico de seguridad (no es un límite que se muestre ni se avise)
+}
+function collectNombres(n) {
+  const out = [];
+  if (n <= 1) {
+    out.push($('#nombre') ? $('#nombre').value.trim() : '');
+  } else {
+    for (let i = 0; i < n; i++) {
+      const el = document.getElementById('nombre' + i);
+      out.push(el ? el.value.trim() : '');
+    }
+  }
+  return out.map((v, i) => v || (n <= 1 ? 'Músico' : ('Jugador ' + (i + 1))));
+}
+/* Músico de cada jugador en multijugador: cada fila de #nombresWrap trae su propio
+   mini-selector (.miniPicker) con el índice elegido en data-musico. Con 1 jugador se
+   usa directamente S.musico (el selector grande de siempre), sin tocar ese camino. */
+function collectMusicosMulti(n) {
+  const pickers = $('#nombresWrap').querySelectorAll('.miniPicker');
+  const out = [];
+  for (let i = 0; i < n; i++) {
+    const el = pickers[i];
+    let idx = el ? parseInt(el.dataset.musico, 10) : NaN;
+    if (!Number.isFinite(idx) || idx < 0 || idx >= MUSICOS.length) idx = i % MUSICOS.length;
+    out.push(idx);
+  }
+  return out;
+}
+
+async function startGame() {
+  S.dif = DIF[parseInt(document.querySelector('input[name=dif]:checked').value, 10)];
+  S.numJugadores = parsedNumJugadores();
+  if (S.numJugadores <= 1) {
+    const raw = $('#nombre') ? $('#nombre').value.trim() : '';
+    try { localStorage.setItem('futbol-nombre', raw); } catch (e) {}
+  }
+  const nombres = collectNombres(S.numJugadores);
+  const musicos = S.numJugadores <= 1 ? [S.musico] : collectMusicosMulti(S.numJugadores);
+  S.jugadores = nombres.map((n, i) => jugadorNuevo(n, musicos[i], i));
+  S.turnoActual = 0; S.ataque = 0; S.pen = null; S.penJug = []; S.ganadorPen = -1; S.pase = null;
+  ensureAudio();
+  const btn = $('#btnStart'), err = $('#notacionErr');
+  err.hidden = true;
+  btn.disabled = true; btn.textContent = 'Cargando…';
+  try {
+    await window.tmNotacion.listo();
+  } catch (e) {
+    btn.disabled = false; btn.textContent = '¡A jugar!';
+    err.hidden = false;
+    err.textContent = 'No se ha podido cargar el motor de notación. Recarga la página e inténtalo de nuevo.';
+    return;
+  }
+  btn.disabled = false; btn.textContent = '¡A jugar!';
+  S.state = 'play';
+  showView('play');
+  $('#hudTimer').hidden = false; $('#hudTurno').hidden = false; $('#hudPts').hidden = false;
+  $('#marcador').hidden = S.numJugadores <= 1;
+  track('juego_inicio', { dificultad: S.dif.id, jugadores: S.numJugadores });
+  pedirPermiso();
+  ataqueNuevo();
+  presentQuestion();
+}
+
+function renderMarcadorEn(el) {
+  if (!el) return;
+  el.replaceChildren();
+  S.jugadores.forEach((j, i) => {
+    const s = document.createElement('span');
+    s.className = 'j' + (i === S.turnoActual ? ' activo' : '');
+    if (Number.isFinite(j.musico)) s.appendChild(miniAvatarCanvas(j.musico, 18, 24));
+    const txt = document.createElement('span');
+    txt.textContent = j.nombre + ': ' + j.puntos + (S.penJug.includes(i) ? ' (' + j.pen + ' pen.)' : '');
+    s.appendChild(txt);
+    el.appendChild(s);
+  });
+}
+function renderMarcadores() {
+  if (S.numJugadores <= 1) return;
+  renderMarcadorEn($('#marcador'));
+  renderMarcadorEn($('#marcadorTurno'));
+}
+/* Arriba: en qué ataque y pase vas y el marcador (con 2 jugadores, «2 – 1» como en la tele) */
+function updateHud() {
+  const j = S.jugadores[S.turnoActual];
+  const fase = S.pen ? 'Penaltis · Ronda ' + S.pen.ronda
+    : 'Ataque ' + (S.ataque + 1) + '/' + ATAQUES + ' · ' + (esTiro() ? 'Tiro' : 'Pase ' + (S.paso + 1) + '/' + PASES);
+  $('#hudTurno').textContent = (S.numJugadores > 1 ? j.nombre + ' · ' : '') + fase;
+  $('#hudPts').textContent = S.numJugadores === 2 ? S.jugadores[0].puntos + ' – ' + S.jugadores[1].puntos : golesTxt(j.puntos);
+}
+/* Saque: nota de partida nueva, defensas recolocados y el portero en el centro */
+function ataqueNuevo() {
+  S.paso = 0; S.cadena = [notaInicial(S.dif)]; S.anim = null; S.sel = null;
+  S.defs = [0, 1, 2].map(i => ({ x: (XS[i] + XS[i + 1]) / 2 + 10, y: yPaso(1 + Math.random() * 7) }));
+  S.portY = yPaso(5);
+}
+/* Tras un gol, un robo o una parada: ataca el siguiente (o se acaba el partido) */
+function avanzarTurno() {
+  S.turnoActual++;
+  if (S.turnoActual >= S.numJugadores) { S.turnoActual = 0; S.ataque++; }
+  if (S.ataque >= ATAQUES) { finPartido(); return; }
+  ataqueNuevo();
+  if (S.numJugadores > 1) { showTurnChange(); return; }
+  presentQuestion();
+}
+function finPartido() {
+  if (S.numJugadores > 1) {
+    const max = Math.max(...S.jugadores.map(j => j.puntos));
+    const empatados = S.jugadores.map((j, i) => j.puntos === max ? i : -1).filter(i => i >= 0);
+    if (empatados.length > 1) { S.penJug = empatados; S.pen = { vivos: empatados, ronda: 1, i: 0, marcados: [] }; penaltiNuevo(); showTurnChange(); return; }
+  }
+  finishGame();
+}
+/* Penaltis: cada empatado tira un intervalo por ronda; si en una ronda unos marcan y otros
+   fallan, siguen solo los que marcaron, hasta que quede uno. */
+function penaltiNuevo() {
+  S.turnoActual = S.pen.vivos[S.pen.i];
+  S.cadena = [notaInicial(S.dif)]; S.anim = null; S.sel = null; S.portY = yPaso(5);
+}
+function avanzarPenalti(ok) {
+  if (ok) S.pen.marcados.push(S.turnoActual);
+  S.pen.i++;
+  if (S.pen.i >= S.pen.vivos.length) {
+    const m = S.pen.marcados;
+    if (m.length && m.length < S.pen.vivos.length) S.pen.vivos = S.pen.vivos.filter(i => m.includes(i));
+    if (S.pen.vivos.length === 1) { S.ganadorPen = S.pen.vivos[0]; finishGame(); return; }
+    S.pen.ronda++; S.pen.i = 0; S.pen.marcados = [];
+  }
+  penaltiNuevo(); showTurnChange();
+}
+function showTurnChange() {
+  S.state = 'turno';
+  showView('turno');
+  $('#hudTimer').hidden = true; $('#hudTurno').hidden = true; $('#hudPts').hidden = true;
+  const nombre = S.jugadores[S.turnoActual].nombre;
+  $('#turnoKicker').textContent = S.pen ? '¡Empate! Tanda de penaltis · Ronda ' + S.pen.ronda : 'Cambio de turno · Ataque ' + (S.ataque + 1) + ' de ' + ATAQUES;
+  $('#turnoNombre').textContent = S.pen ? 'Penalti de ' + nombre : 'Ataca ' + nombre;
+  $('#btnLanzar').textContent = S.pen ? '¡Al punto de penalti!' : '¡Sacar!';
+  renderMarcadores();
+}
+function presentQuestion() {
+  S.answered = false; S.sel = null; S.anim = null; S.acc = 0;
+  S.pase = genPase(S.cadena[S.cadena.length - 1], S.dif, S.pase);
+  updateHud();
+  renderMarcadores();
+  $('#playKicker').textContent = S.pen ? 'Penalti · Ronda ' + S.pen.ronda : esTiro() ? '¡Tiro a puerta!' : 'Pase ' + (S.paso + 1) + ' de ' + PASES;
+  $('#playTitle').textContent = descripcion(S.pase);
+  drawStaff([S.pase.desde]);
+  renderAccs();
+  const b = $('#btnChutar'); b.disabled = true; b.textContent = esTiro() ? '¡Chutar!' : 'Pasar';
+  $('#hint').textContent = 'Toca el pentagrama para colocar la nota' + (S.dif.maxAlt ? ' y elige la alteración.' : '.');
+  S.qStart = performance.now();
+  startTimerBar();
+}
+/* Botones de alteración (en Fácil no hay: todas las notas son naturales) */
+function renderAccs() {
+  const box = $('#accs');
+  box.replaceChildren();
+  box.hidden = !S.dif.maxAlt;
+  for (let a = -S.dif.maxAlt; a <= S.dif.maxAlt; a++) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'acc'; b.dataset.a = a; b.textContent = a === 0 ? '♮' + T : ACC_TXT[a];
+    b.setAttribute('aria-label', ACC_NOMBRE[a]); b.setAttribute('aria-pressed', String(a === S.acc));
+    b.addEventListener('click', () => elegirAcc(a));
+    box.appendChild(b);
+  }
+}
+function elegirAcc(a) {
+  if (S.answered || S.state !== 'play') return;
+  S.acc = a;
+  $('#accs').querySelectorAll('.acc').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.a === a)));
+  if (S.sel !== null) drawStaff([S.pase.desde, { d: S.sel, a: S.acc, color: AZUL }]);
+}
+function colocar(d) {
+  if (S.answered || S.state !== 'play') return;
+  S.sel = clamp(d, D_MIN, D_MAX);
+  drawStaff([S.pase.desde, { d: S.sel, a: S.acc, color: AZUL }]);
+  $('#btnChutar').disabled = false;
+  $('#hint').textContent = 'Pulsa en otra línea o espacio para cambiarla.';
+}
+function startTimerBar() {
+  clearInterval(S.timerId);
+  const dur = S.dif.time, t0 = performance.now();
+  $('#hudTimer').style.setProperty('--p', '100');
+  $('#hudSecs').textContent = Math.ceil(dur / 1000);
+  S.timerId = setInterval(() => {
+    if (S.answered) return;
+    const left = Math.max(0, dur - (performance.now() - t0));
+    $('#hudTimer').style.setProperty('--p', (left / dur * 100).toFixed(1));
+    $('#hudSecs').textContent = Math.ceil(left / 1000);
+    if (left <= 0) { clearInterval(S.timerId); resolver(false, true); }
+  }, 80);
+}
+function confirmar() {
+  if (S.answered || S.sel === null || S.state !== 'play') return;
+  resolver(S.sel === S.pase.hasta.d && S.acc === S.pase.hasta.a, false);
+}
+/* Bien o mal, sin término medio: la nota y la alteración tienen que ser las exactas (una enarmónica no vale) */
+function resolver(ok, timedOut) {
+  if (S.answered) return;
+  S.answered = true;
+  clearInterval(S.timerId);
+  $('#btnChutar').disabled = true;
+  const j = S.jugadores[S.turnoActual], tiro = esTiro(), h = S.pase.hasta;
+  // el pentagrama enseña la nota puesta (verde o roja) y, si no era, la buena en verde
+  const notas = [S.pase.desde];
+  if (S.sel !== null) notas.push({ d: S.sel, a: S.acc, color: ok ? VERDE : ROJO });
+  if (!ok) notas.push({ d: h.d, a: h.a, color: VERDE });
+  drawStaff(notas);
+  $('#hint').textContent = ok ? '¡Correcto!' : (timedOut ? 'Se acabó el tiempo. ' : '') + 'Era ' + nombreNota(h) + '.';
+  if (S.pen) { j.penTiros++; if (ok) j.pen++; }
+  else if (tiro) { j.tiros++; if (ok) j.puntos++; }
+  else { j.pasesInt++; if (ok) j.pases++; }
+  animar(ok, tiro);
+  setTimeout(() => {
+    showZone(ok, tiro, h, j);
+    updateHud(); renderMarcadores();
+    beep(ok ? (tiro ? [523, 659, 784, 1047] : [587, 784]) : [220, 165], 0.1, ok ? 'triangle' : 'sawtooth', ok ? 0.16 : 0.14);
+  }, ok && !tiro ? 450 : 620);
+  setTimeout(() => {
+    hideZone();
+    if (S.pen) { avanzarPenalti(ok); return; }
+    if (ok && !tiro) { S.paso++; presentQuestion(); return; }
+    avanzarTurno();
+  }, ok ? (tiro ? 2000 : 1150) : 2500);
+}
+function showZone(ok, tiro, h, j) {
+  const el = $('#hudZone');
+  el.innerHTML = tiro && ok ? '<span>¡GOOOL!</span><small>' + (S.pen ? 'Penalti marcado' : golesTxt(j.puntos) + ' en el partido') + '</small>'
+    : tiro ? '<span>¡PARADA!</span><small>Era ' + nombreNota(h) + '</small>'
+    : ok ? '<span>¡PASE!</span><small>' + (S.paso + 1) + ' de ' + PASES + '</small>'
+    : '<span>¡ROBO!</span><small>Era ' + nombreNota(h) + '</small>';
+  el.hidden = false; el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+}
+function hideZone() { $('#hudZone').hidden = true; }
+/* Dónde está cada jugador de la cadena (en los penaltis, el que tira está en el punto de penalti) */
+function posJugador(i) { return { x: S.pen ? XPEN : XS[i], y: yNota(S.cadena[i].d) }; }
+const pie = p => ({ x: p.x + 16, y: p.y - 5 });
+/* Pase (el balón vuela al compañero), robo (un defensa corta a medio camino), gol o parada.
+   Si se acabó el tiempo sin colocar nota, el balón sale recto y lo corta el defensa / el portero. */
+function animar(ok, tiro) {
+  const now = performance.now(), de = posJugador(S.cadena.length - 1);
+  const yObj = S.sel !== null ? yNota(S.sel) : de.y;
+  if (tiro) {
+    const to = { x: PORT.x + 20, y: clamp(yObj, PORT.y0 + 8, PORT.y1 - 8) };
+    S.anim = ok ? { tipo: 'gol', t0: now, dur: 650, from: pie(de), to, portDe: S.portY, portA: S.portY + (to.y > S.portY ? -50 : 50) }
+      : { tipo: 'parada', t0: now, dur: 600, from: pie(de), to: { x: PORT.x - 26, y: to.y }, portDe: S.portY, portA: to.y + 4 };
+  } else if (ok) {
+    S.cadena.push(S.pase.hasta);
+    S.anim = { tipo: 'pase', t0: now, dur: 600, from: pie(de), to: pie(posJugador(S.cadena.length - 1)) };
+  } else {
+    const xr = XS[S.paso + 1], d = S.defs[S.paso];
+    const cruce = { x: mix(de.x + 16, xr, 0.55), y: mix(de.y - 5, yObj - 5, 0.55) };
+    S.anim = { tipo: 'robo', t0: now, dur: 650, from: pie(de), to: cruce, def: S.paso, defDe: { x: d.x, y: d.y } };
+  }
+}
+
+function classify(goles) {
+  if (goles >= 5) return { title: '¡Partido perfecto!', text: 'Cinco ataques, cinco goles: construyes los intervalos sin dudar.' };
+  if (goles === 4) return { title: '¡Goleada!', text: 'Casi perfecto: un intervalo más y era el partido redondo.' };
+  if (goles >= 2) return { title: '¡Buen partido!', text: 'Truco: cuenta primero las notas (el número del intervalo) y luego ajusta los semitonos con la alteración.' };
+  if (goles === 1) return { title: 'El gol del honor', text: 'Cada gol pide cuatro intervalos seguidos sin fallo. Prueba en Fácil para coger confianza.' };
+  return { title: 'A entrenar', text: 'Empieza en Fácil: solo notas naturales y más tiempo para pensar.' };
+}
+function finishGame() {
+  S.state = 'result';
+  clearInterval(S.timerId);
+  S.pen = null; S.turnoActual = 0; ataqueNuevo();   // en el menú y el resultado, el equipo vuelve al saque
+  showView('result');
+  $('#hudTimer').hidden = true; $('#hudTurno').hidden = true; $('#hudPts').hidden = true;
+  if (S.numJugadores <= 1) finishSolo(); else finishMulti();
+}
+function finishSolo() {
+  $('#resSoloWrap').hidden = false; $('#resMultiWrap').hidden = true; $('#clasifWrap').hidden = false;
+  const m = MUSICOS[S.musico];
+  const j = S.jugadores[0];
+  const resultado = j.puntos >= 5 ? 'perfecto' : j.puntos >= 3 ? 'bueno' : j.puntos >= 1 ? 'flojo' : 'nulo';
+  track('juego_fin', { dificultad: S.dif.id, resultado: resultado, superadas: j.puntos, jugadores: 1 });
+  const list = loadRank(); const id = Date.now(); S.rankId = id;
+  list.push({ id, dif: rankDif(), n: j.nombre, m: m.n, d: j.puntos }); saveRank(list);
+  const nivel = list.filter(e => e.dif === rankDif());
+  const pos = nivel.slice().sort((a, b) => b.d - a.d || a.id - b.id).findIndex(e => e.id === id) + 1;
+  const cl = classify(j.puntos);
+  $('#resWho').textContent = j.nombre + ' · ' + m.n + ' · ' + S.dif.lbl;
+  $('#resPts').textContent = j.puntos; $('#resUnit').textContent = j.puntos === 1 ? 'gol' : 'goles';
+  $('#resTitle').textContent = cl.title; $('#resText').textContent = cl.text;
+  $('#resNote').textContent = 'Pases completados: ' + j.pases + ' de ' + j.pasesInt + ' · Goles: ' + j.puntos + ' de ' + j.tiros + (j.tiros === 1 ? ' tiro.' : ' tiros.');
+  $('#resRank').textContent = 'Puesto n.º ' + pos + ' de ' + nivel.length + (nivel.length === 1 ? ' partido.' : ' partidos.');
+  renderRank($('#rankRes'), id);
+  prepararPublicar();
+}
+function finishMulti() {
+  $('#resSoloWrap').hidden = true; $('#resMultiWrap').hidden = false; $('#clasifWrap').hidden = true;
+  prepararPublicar();
+  const g = S.ganadorPen;
+  // por goles; entre los empatados, delante el que ganó los penaltis y luego por penaltis marcados
+  const ordenados = S.jugadores.map((j, i) => ({ nombre: j.nombre, musico: j.musico, puntos: j.puntos, pen: j.pen, idx: i }))
+    .sort((a, b) => b.puntos - a.puntos || (b.idx === g) - (a.idx === g) || b.pen - a.pen);
+  let puesto = 1;
+  const filas = ordenados.map((j, k) => {
+    const p = ordenados[k - 1];
+    if (k > 0 && (j.puntos < p.puntos || p.idx === g)) puesto = k + 1;
+    return Object.assign({}, j, { puesto: puesto });
+  });
+  const ganadores = filas.filter(f => f.puesto === 1).map(f => f.nombre);
+  track('juego_fin', { dificultad: S.dif.id, resultado: 'multi', superadas: filas[0].puntos, tiempo: 0, jugadores: S.numJugadores });
+  const listaGanadores = ganadores.length > 2
+    ? ganadores.slice(0, -1).join(', ') + ' y ' + ganadores[ganadores.length - 1]
+    : ganadores.join(' y ');
+  $('#resTituloMulti').textContent = g >= 0 ? '¡Gana ' + S.jugadores[g].nombre + ' en los penaltis!'
+    : ganadores.length > 1 ? '¡Empate entre ' + listaGanadores + '!' : '¡Gana ' + ganadores[0] + '!';
+  const ol = $('#resRanking'); ol.replaceChildren();
+  filas.forEach(f => {
+    const li = document.createElement('li');
+    if (f.puesto === 1) li.className = 'ganador';
+    const nm = document.createElement('span'); nm.className = 'nm';
+    if (Number.isFinite(f.musico)) nm.appendChild(miniAvatarCanvas(f.musico, 26, 34));
+    const txt = document.createElement('span'); txt.textContent = f.puesto + '.º ' + f.nombre;
+    nm.appendChild(txt);
+    const dd = document.createElement('span'); dd.className = 'dd';
+    dd.textContent = golesTxt(f.puntos) + (S.penJug.includes(f.idx) ? ' · ' + f.pen + ' pen.' : '');
+    li.append(nm, dd); ol.appendChild(li);
+  });
+}
+
+/* ============================================================
+   ESCENA Y BUCLE DE DIBUJO
+   ============================================================ */
+const cvs = $('#scene'), ctx = cvs.getContext('2d');
+/* Encuadre de la escena (coordenadas logicas): en movil un 5:2 que corta el cielo (los
+   marcadores quedan sobre la grada); en escritorio un encuadre panoramico 4:1 del campo. */
+const VISTA = { x: 30, y: 150, w: 950, h: 380 };
+const VISTA_ANCHA = { x: 20, y: 212, w: 960, h: 240 };
+const WIDE_MQ = matchMedia('(min-width:640px)');
+let K = 1, V = VISTA;
+function resize() {
+  V = WIDE_MQ.matches ? VISTA_ANCHA : VISTA;
+  const dpr = Math.min(2, window.devicePixelRatio || 1), w = cvs.clientWidth || V.w;
+  cvs.width = Math.round(w * dpr); cvs.height = Math.round(w * dpr * V.h / V.w); K = cvs.width / V.w;
+}
+new ResizeObserver(resize).observe(cvs); resize();
+
+/* Golpeo: la pierna sube rápido y baja despacio */
+const patada = ms => ms < 0 ? 0 : ms < 120 ? ms / 120 : ms < 420 ? 1 - (ms - 120) / 300 : 0;
+function drawScene(now) {
+  const c = ctx; c.setTransform(K, 0, 0, K, -V.x * K, -V.y * K);
+  drawEstadio(c, now);
+  drawCampo(c);
+  const t = now / 1000, A = S.anim, u = A ? clamp((now - A.t0) / A.dur, 0, 1) : 0, ease = 1 - (1 - u) * (1 - u);
+  // equipo que ataca: en multijugador, el del jugador al que le toca; el rival, con la camiseta del siguiente
+  const multi = S.numJugadores > 1 && (S.state === 'play' || S.state === 'turno');
+  const j = S.jugadores[S.turnoActual] || S.jugadores[0];
+  const base = multi ? j.musico : S.musico;
+  const cam = multi ? j.cam : CAMISETAS[0];
+  const rival = multi ? S.jugadores[(S.turnoActual + 1) % S.numJugadores].cam : CAMISETAS[1];
+  const enJuego = S.state === 'play', tiro = enJuego && esTiro();
+  const companero = i => MUSICOS[i === 0 || S.pen ? base : (base + 3 + 5 * i) % MUSICOS.length];
+  const sprites = [];
+  // portero, delante de la portería y mirando al campo
+  let py = S.portY, prot = 0;
+  if (A && (A.tipo === 'gol' || A.tipo === 'parada')) {
+    py = mix(A.portDe, A.portA, ease);
+    if (A.tipo === 'gol') prot = (A.portA > A.portDe ? 1 : -1) * 0.9 * ease;   // se estira hacia el lado equivocado
+  }
+  sprites.push({ y: py, f: () => drawFutbolista(c, MUSICOS[(base + 10) % MUSICOS.length], PORT.x - 10, py, { s: ESC, t, flip: true, cam: '#2a2a33', portero: true, rot: prot, fase: 1 }) });
+  // defensas rivales (en los penaltis no hay)
+  if (!S.pen) S.defs.forEach((d, i) => {
+    let x = d.x, y = d.y;
+    if (A && A.tipo === 'robo' && A.def === i) { const k = clamp(u / 0.8, 0, 1); x = mix(A.defDe.x, A.to.x + 16, k); y = mix(A.defDe.y, A.to.y + 5, k); }
+    sprites.push({ y, f: () => drawFutbolista(c, MUSICOS[(base + 1 + 7 * i) % MUSICOS.length], x, y, { s: ESC, t, flip: true, cam: rival, dorsal: [4, 5, 6][i], fase: i }) });
+  });
+  // la melodía: estela de los pases y la redonda de cada nota a los pies de su jugador
+  const pos = S.cadena.map((p, i) => posJugador(i));
+  c.save(); c.setLineDash([6, 6]); c.strokeStyle = 'rgba(255,255,255,.55)'; c.lineWidth = 2;
+  c.beginPath(); pos.forEach((p, i) => { if (i) c.lineTo(p.x, p.y); else c.moveTo(p.x, p.y); }); c.stroke(); c.restore();
+  S.cadena.forEach((p, i) => drawRedonda(c, pos[i].x, p.d));
+  const quien = S.cadena.length - 1 - (A && A.tipo === 'pase' ? 1 : 0);   // el que golpea el balón
+  S.cadena.forEach((p, i) => {
+    const kick = A && i === quien ? patada(now - A.t0) : 0;
+    const mood = A && u >= 1 ? (A.tipo === 'gol' ? 'happy' : (A.tipo === 'robo' || A.tipo === 'parada') && i === quien ? 'sad' : null) : null;
+    sprites.push({ y: pos[i].y, f: () => drawFutbolista(c, companero(i), pos[i].x, pos[i].y, { s: ESC, t, cam, kick, mood, dorsal: [10, 8, 7, 9][i], fase: i * 0.7 }) });
+  });
+  // el compañero que se desmarca: va a la altura de la nota que colocas (aún no se sabe si es la buena)
+  if (enJuego && !tiro && S.sel !== null && (!S.answered || (A && A.tipo === 'robo'))) {
+    const x = XS[S.paso + 1], yy = yNota(S.sel);
+    S.recvY = S.recvY == null ? yy : mix(S.recvY, yy, 0.3);
+    const ry = S.recvY;
+    drawRedonda(c, x, S.sel, 0.75);
+    sprites.push({ y: ry, f: () => drawFutbolista(c, companero(S.paso + 1), x, ry, { s: ESC, t, cam, dorsal: [10, 8, 7, 9][S.paso + 1], fase: 2 }) });
+  } else S.recvY = null;
+  sprites.sort((a, b) => a.y - b.y).forEach(sp => sp.f());
+  // al tirar, una diana en la portería a la altura de la nota colocada
+  if (tiro && S.sel !== null && !S.answered) {
+    const yy = clamp(yNota(S.sel), PORT.y0 + 8, PORT.y1 - 8);
+    c.save(); c.strokeStyle = '#f4b52e'; c.lineWidth = 3;
+    c.beginPath(); c.arc(PORT.x + 22, yy, 9, 0, 7); c.moveTo(PORT.x + 8, yy); c.lineTo(PORT.x + 36, yy); c.stroke(); c.restore();
+  }
+  // el balón: en los pies del que lo tiene o volando
+  let b;
+  if (A) b = { x: mix(A.from.x, A.to.x, ease), y: mix(A.from.y, A.to.y, ease) - Math.sin(Math.PI * u) * (A.tipo === 'pase' ? 26 : 12), rot: ease * 14 };
+  else { const h = pie(pos[pos.length - 1]); b = { x: h.x, y: h.y, rot: 0 }; }
+  drawBalon(c, b.x, b.y, 6, b.rot);
+}
+/* Canvas en miniatura con un músico, reutilizando drawMusico a escala reducida
+   (misma pose que el selector grande: x=45,y=112,s=0.88 sobre un lienzo lógico 90x120). */
+function miniAvatarCanvas(musicoIdx, boxW, boxH) {
+  const cv = document.createElement('canvas');
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = Math.round(boxW * dpr); cv.height = Math.round(boxH * dpr);
+  cv.style.width = boxW + 'px'; cv.style.height = boxH + 'px';
+  const cx = cv.getContext('2d');
+  cx.scale(dpr, dpr);
+  const k = boxH / 120;
+  drawMusico(cx, MUSICOS[musicoIdx] || MUSICOS[0], boxW * 0.445, boxH * 0.933, { s: 0.88 * k, dir: 1, t: 0.4, wind: 0.15, released: true });
+  return cv;
+}
+function frame(now) {
+  S.clock = now / 1000;
+  drawScene(now);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+/* ============================================================
+   INTERFAZ: selector de músico, botones, atajos de teclado
+   ============================================================ */
+/* Selector por familias: arriba se elige la familia y debajo salen solo sus músicos, así
+   caben todos los instrumentos sin llenar el menú de tarjetas. Orden de la partitura. */
+const FAMILIAS = [
+  { n: 'Viento madera', instr: ['flauta', 'oboe', 'clarinete', 'fagot', 'saxo'] },
+  { n: 'Viento metal', instr: ['trompa', 'trompeta', 'trombon', 'bombardino', 'tuba'] },
+  { n: 'Percusión', instr: ['caja', 'bombo', 'platillos', 'xilofono'] },
+  { n: 'Cuerda', instr: ['violin', 'viola', 'violonchelo', 'contrabajo', 'arpa', 'piano', 'guitarra'] }
+];
+/* Guion discreto (­) en los nombres largos: en las tarjetas estrechas del móvil parten por
+   la sílaba (Violon-chelo) en vez de por cualquier letra. */
+const CORTES = { 'Violonchelo': 'Violon­chelo', 'Contrabajo': 'Contra­bajo', 'Bombardino': 'Bombar­dino', 'Clarinete': 'Clari­nete' };
+function buildPicker() {
+  const box = $('#picker');
+  const famOf = i => FAMILIAS.findIndex(f => f.instr.includes(MUSICOS[i].instr));
+  const tabs = document.createElement('div'); tabs.className = 'familias';
+  tabs.setAttribute('role', 'group'); tabs.setAttribute('aria-label', 'Familia de instrumentos');
+  box.before(tabs);
+  const show = fi => {
+    tabs.querySelectorAll('button').forEach((t, j) => t.setAttribute('aria-pressed', String(j === fi)));
+    box.querySelectorAll('.mus').forEach(b => { b.hidden = famOf(+b.dataset.i) !== fi; });
+  };
+  FAMILIAS.forEach((f, fi) => {
+    const t = document.createElement('button'); t.type = 'button'; t.textContent = f.n;
+    t.addEventListener('click', () => show(fi));
+    tabs.appendChild(t);
+  });
+  FAMILIAS.forEach(f => f.instr.forEach(instr => {
+    const i = MUSICOS.findIndex(x => x.instr === instr), m = MUSICOS[i];
+    if (i < 0) return;
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'mus'; b.dataset.i = i; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(i === S.musico));
+    const cv = document.createElement('canvas'); cv.width = 180; cv.height = 240;
+    const cx = cv.getContext('2d'); cx.scale(2, 2); drawMusico(cx, m, 40, 112, { s: 0.88, dir: 1, t: 0.4, wind: 0.15, released: true });
+    const sp = document.createElement('span'); sp.textContent = CORTES[m.n] || m.n;
+    b.append(cv, sp);
+    b.addEventListener('click', () => { S.musico = i; box.querySelectorAll('.mus').forEach(x => x.setAttribute('aria-checked', String(+x.dataset.i === i))); try { localStorage.setItem('futbol-musico', i); } catch (e) {} });
+    box.appendChild(b);
+  }));
+  show(Math.max(0, famOf(S.musico)));
+}
+/* Mini-selector de músico para una fila de jugador (multijugador): los mismos 8
+   personajes de MUSICOS, en miniatura, con el elegido guardado en data-musico. */
+function buildMiniPicker(playerIdx, selected) {
+  const box = document.createElement('div');
+  box.className = 'miniPicker'; box.setAttribute('role', 'radiogroup');
+  box.setAttribute('aria-label', 'Músico de Jugador ' + (playerIdx + 1));
+  box.dataset.musico = String(selected);
+  // mismas familias que el selector grande (FAMILIAS), en 4 botoncitos al principio de la fila
+  const famOf = i => FAMILIAS.findIndex(f => f.instr.includes(MUSICOS[i].instr));
+  const fam = document.createElement('div'); fam.className = 'miniFam';
+  const show = fi => {
+    fam.querySelectorAll('button').forEach((t, j) => t.setAttribute('aria-pressed', String(j === fi)));
+    box.querySelectorAll('button[data-i]').forEach(b => { b.hidden = famOf(+b.dataset.i) !== fi; });
+  };
+  ['Madera', 'Metal', 'Percusión', 'Cuerda'].forEach((n, fi) => {
+    const t = document.createElement('button'); t.type = 'button'; t.textContent = n; t.title = FAMILIAS[fi].n;
+    t.addEventListener('click', () => show(fi));
+    fam.appendChild(t);
+  });
+  box.appendChild(fam);
+  FAMILIAS.forEach(f => f.instr.forEach(instr => {
+    const i = MUSICOS.findIndex(x => x.instr === instr);
+    if (i < 0) return;
+    const b = document.createElement('button');
+    b.type = 'button'; b.dataset.i = i; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(i === selected));
+    b.title = MUSICOS[i].n;
+    b.appendChild(miniAvatarCanvas(i, 40, 53));
+    b.addEventListener('click', () => {
+      box.dataset.musico = String(i);
+      box.querySelectorAll('button[data-i]').forEach(x => x.setAttribute('aria-checked', String(+x.dataset.i === i)));
+    });
+    box.appendChild(b);
+  }));
+  show(Math.max(0, famOf(selected)));
+  return box;
+}
+function renderNombres(n, preserve) {
+  const wrap = $('#nombresWrap');
+  const prevNombres = preserve ? Array.prototype.map.call(wrap.querySelectorAll('input[type=text]'), i => i.value) : [];
+  const prevMusicos = preserve ? Array.prototype.map.call(wrap.querySelectorAll('.miniPicker'), el => parseInt(el.dataset.musico, 10)) : [];
+  wrap.replaceChildren();
+  if (n <= 1) {
+    const lab = document.createElement('label'); lab.className = 'field'; lab.htmlFor = 'nombre';
+    lab.textContent = 'Tu nombre';
+    const inp = document.createElement('input'); inp.type = 'text'; inp.id = 'nombre'; inp.maxLength = 14;
+    inp.placeholder = 'Escribe tu nombre'; inp.autocomplete = 'off';
+    inp.value = prevNombres[0] || (function () { try { return localStorage.getItem('futbol-nombre') || ''; } catch (e) { return ''; } })();
+    lab.appendChild(inp); wrap.appendChild(lab);
+  } else {
+    for (let i = 0; i < n; i++) {
+      const bloque = document.createElement('div'); bloque.className = 'jugadorBloque';
+      const lab = document.createElement('label'); lab.className = 'field'; lab.htmlFor = 'nombre' + i;
+      lab.textContent = 'Jugador ' + (i + 1);
+      const inp = document.createElement('input'); inp.type = 'text'; inp.id = 'nombre' + i; inp.maxLength = 14;
+      inp.placeholder = 'Nombre del jugador ' + (i + 1); inp.autocomplete = 'off';
+      inp.value = prevNombres[i] || '';
+      lab.appendChild(inp);
+      const prevM = prevMusicos[i];
+      const defaultM = Number.isFinite(prevM) && prevM >= 0 && prevM < MUSICOS.length ? prevM : (i % MUSICOS.length);
+      bloque.append(lab, buildMiniPicker(i, defaultM));
+      wrap.appendChild(bloque);
+    }
+  }
+}
+$('#numJugadores').addEventListener('input', () => {
+  const n = parsedNumJugadores();
+  renderNombres(n, true);
+  $('#pickerCompartido').hidden = n > 1;
+});
+$('#btnStart').addEventListener('click', startGame);
+$('#btnAgain').addEventListener('click', () => { showView('menu'); refreshRankMenu(); startGame(); });
+$('#btnChange').addEventListener('click', () => { S.state = 'menu'; showView('menu'); refreshRankMenu(); });
+$('#btnLanzar').addEventListener('click', () => {
+  S.state = 'play'; showView('play');
+  $('#hudTimer').hidden = false; $('#hudTurno').hidden = false; $('#hudPts').hidden = false;
+  presentQuestion();   // el saque (o el penalti) ya está preparado desde avanzarTurno()
+});
+$('#btnChutar').addEventListener('click', confirmar);
+
+/* Colocar la nota tocando el pentagrama, como en el ejercicio de construir intervalos: la fila
+   se mide sobre el pentagrama dibujado y, mientras se toca, una lupa enseña la nota (el dedo la tapa). */
+const staffBox = $('#staffBox'), lupa = $('#lupa'), lupaStaff = $('#lupaStaff');
+function pasoEn(clientY) {   // 0 = línea superior, de media en media línea; null si aún no hay pentagrama
+  const svg = staffBox.querySelector('svg');
+  if (!svg) return null;
+  const sr = svg.getBoundingClientRect(), g = window.tmNotacion.geometria(svg);
+  if (!g.lineas) return null;
+  const sp = (g.lineas[4] - g.lineas[0]) / 4;
+  return clamp(Math.round((clientY - sr.top - g.lineas[0]) / (sp / 2)), pasoDe(D_MAX), pasoDe(D_MIN));
+}
+let lupaClave = '';
+function verLupa(x, y) {
+  if (S.state !== 'play' || S.answered) return;
+  const p = pasoEn(y);
+  if (p === null) return;
+  const n = { d: D_LINEA_SUP - p, a: S.acc };
+  lupa.style.transform = ''; lupa.style.left = x + 'px'; lupa.style.top = y + 'px'; lupa.hidden = false;
+  const clave = n.d + ':' + n.a;
+  if (clave !== lupaClave) {
+    lupaClave = clave; lupaStaff.style.height = '104px';
+    const compases = [[{ notas: [claveMEI(S.pase.desde)], d: 'w' }], [{ notas: [{ key: claveMEI(n), color: AZUL }], d: 'w' }]];
+    window.tmNotacion.dibujarAlineado(lupaStaff, { pentagramas: [{ clave: 'sol', compases }] }, { escala: 0.95, separacion: 0.25, top: 40, id: 'futbolLupa', alt: '' });
+  }
+  const r = lupa.getBoundingClientRect(), pad = 8;
+  if (r.left < pad) lupa.style.left = (x - r.left + pad) + 'px';
+  else if (r.right > innerWidth - pad) lupa.style.left = (x - (r.right - innerWidth + pad)) + 'px';
+  if (r.top < pad) lupa.style.transform = 'translate(-50%, 18px)';
+}
+function ocultarLupa() { lupa.hidden = true; lupaClave = ''; }
+function colocarEn(clientY) { const p = pasoEn(clientY); if (p !== null) colocar(D_LINEA_SUP - p); }
+staffBox.addEventListener('click', e => colocarEn(e.clientY));
+staffBox.addEventListener('mousemove', e => verLupa(e.clientX, e.clientY));
+staffBox.addEventListener('mouseleave', ocultarLupa);
+staffBox.addEventListener('touchstart', e => { e.preventDefault(); verLupa(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
+staffBox.addEventListener('touchmove', e => { e.preventDefault(); verLupa(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
+staffBox.addEventListener('touchend', e => { e.preventDefault(); ocultarLupa(); colocarEn(e.changedTouches[0].clientY); }, { passive: false });
+let clearArm = 0;
+$('#btnClear').addEventListener('click', e => {
+  const b = e.currentTarget;
+  if (!clearArm) { clearArm = setTimeout(() => { clearArm = 0; b.textContent = 'Borrar clasificación'; }, 4000); b.textContent = 'Pulsa otra vez para borrar este nivel'; return; }
+  clearTimeout(clearArm); clearArm = 0; b.textContent = 'Borrar clasificación'; saveRank(loadRank().filter(e => e.dif && e.dif !== rankDif())); refreshRankMenu();
+});
+/* Teclado: flechas arriba/abajo mueven la nota, izquierda/derecha la alteración, Intro pasa o chuta */
+addEventListener('keydown', e => {
+  if (S.state !== 'play' || S.answered) return;
+  if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    e.preventDefault();
+    colocar((S.sel !== null ? S.sel : S.pase.desde.d) + (e.key === 'ArrowUp' ? 1 : -1));
+  } else if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && S.dif.maxAlt) {
+    e.preventDefault();
+    elegirAcc(clamp(S.acc + (e.key === 'ArrowRight' ? 1 : -1), -S.dif.maxAlt, S.dif.maxAlt));
+  } else if (e.key === 'Enter' && S.sel !== null) {
+    e.preventDefault(); confirmar();
+  }
+});
+addEventListener('contextmenu', e => { if (e.target.tagName !== 'INPUT') e.preventDefault(); });
+
+(function init() {
+  try {
+    const i = parseInt(localStorage.getItem('futbol-musico'), 10);
+    if (i >= 0 && i < MUSICOS.length) S.musico = i;
+  } catch (e) {}
+  renderNombres(1, false);
+  buildPicker(); refreshRankMenu();
+  document.querySelectorAll('input[name=dif]').forEach(r => r.addEventListener('change', refreshRankMenu));
+  if (document.fonts && document.fonts.load) { document.fonts.load("28px 'Lilita One'").catch(() => {}); document.fonts.load('800 14px Nunito').catch(() => {}); }
+  window.tmNotacion.listo().catch(function () {
+    $('#staffBox').innerHTML = '<p class="muted" style="padding:10px">No se ha podido cargar la notación. Recarga la página.</p>';
+  });
+})();
+</script>
+<noscript>Este juego necesita JavaScript.</noscript>
+</body>
+</html>

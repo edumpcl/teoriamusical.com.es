@@ -323,3 +323,5 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Baloncesto: reconoce escalas](https://www.teoriamusical.com.es/juegos/teoria/baloncesto/juego/)
 - [Bolos: juego para reconocer acordes tríada](https://www.teoriamusical.com.es/juegos/teoria/bolos/): Juego gratis sin micrófono: con la primera bola aciertas el estado del acorde tríada (fundamental, 1.ª o 2.ª inversión) y con la segunda su tipo (mayor, menor, aumentado o disminuido). Cada acierto derriba 5 bolos y las dos bien son pleno. Solo o en grupo, por turnos.
 - [Bolos: reconoce acordes](https://www.teoriamusical.com.es/juegos/teoria/bolos/juego/)
+- [Fútbol: juego para construir intervalos](https://www.teoriamusical.com.es/juegos/teoria/futbol/): Juego gratis sin micrófono: cada pase es un intervalo que escribes en el pentagrama desde la nota del que tiene el balón, y esa nota es la del compañero que lo recibe. Tres pases y un tiro por ataque; solo cuentan los goles. Solo o en grupo, con penaltis si hay empate.
+- [Fútbol: construye intervalos](https://www.teoriamusical.com.es/juegos/teoria/futbol/juego/)

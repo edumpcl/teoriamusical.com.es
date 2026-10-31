@@ -75,6 +75,7 @@ const JUEGOS = {
   'dardos':         { difs: ['facil', 'medio', 'dificil'], min: 5, max: 450, dec: 0, orden: 'suma', minMs: 9000 },   // 9 dardos × 50 (diana)
   'baloncesto':     { difs: ['unico'], min: 1, max: 27, dec: 0, orden: 'suma', minMs: 9000 },                      // 9 tiros × 3 (triple); sin niveles de partida
   'bolos':          { difs: ['facil', 'medio', 'dificil'], min: 5, max: 100, dec: 0, orden: 'suma', minMs: 12000 },  // 5 turnos de pleno + 2 bolas extra; 10 bolas de 1,5 s
+  'futbol':         { difs: ['facil', 'medio', 'dificil'], min: 1, max: 5, dec: 0, orden: 'suma', minMs: 15000 },     // 5 ataques = 5 goles; 1 gol: 3 pases de 1,15 s + tiro de 2 s y 4 robos de 2,5 s
 };
 
 const TOP = 10;
