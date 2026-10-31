@@ -325,3 +325,6 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Bolos: reconoce acordes](https://www.teoriamusical.com.es/juegos/teoria/bolos/juego/)
 - [Fútbol: juego para construir intervalos](https://www.teoriamusical.com.es/juegos/teoria/futbol/): Juego gratis sin micrófono: cada pase es un intervalo que escribes en el pentagrama desde la nota del que tiene el balón, y esa nota es la del compañero que lo recibe. Tres pases y un tiro por ataque; solo cuentan los goles. Solo o en grupo, con penaltis si hay empate.
 - [Fútbol: construye intervalos](https://www.teoriamusical.com.es/juegos/teoria/futbol/juego/)
+- [Juegos auditivos](https://www.teoriamusical.com.es/juegos/auditivos/): Juegos gratis para entrenar el oído musical, sin micrófono: escucha series de notas, recuérdalas y repítelas.
+- [Eco: juego de memoria musical](https://www.teoriamusical.com.es/juegos/auditivos/eco/): El tablero toca una serie de notas y la repites en el mismo orden; cada acierto añade una nota. Tres niveles: color y luz, solo luz y solo oído. Solo o en grupo, con la misma serie para todos.
+- [Eco: memoria musical](https://www.teoriamusical.com.es/juegos/auditivos/eco/juego/)
