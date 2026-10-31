@@ -1098,14 +1098,18 @@ function apodosEscritos(n) {
 }
 /* Al empezar: un permiso por jugador (en partidas de varios, cada uno suma a su propia fila). */
 function pedirPermiso() {
-  MUNDO.toks = [];
+  const toks = MUNDO.toks = [];   // cada partida su lista: un permiso que llegue tarde no se cuela en la siguiente
   const apodos = apodosEscritos(S.numJugadores);
   S.jugadores.forEach((j, i) => { j.apodo = apodos[i] || ''; });
   const dif = nivelMundial();
   S.jugadores.forEach((j, i) => {
     fetch(API_MUNDIAL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ accion: 'inicio', juego: JUEGO_MUNDIAL, dif }) })
       .then(r => r.ok ? r.json() : Promise.reject(r.status))
-      .then(d => { if (d.token) MUNDO.toks[i] = d.token; })
+      .then(d => {
+        if (!d.token || toks !== MUNDO.toks) return;
+        toks[i] = d.token;
+        if (!$('#v-result').hidden) prepararPublicar();   // conexión lenta: el permiso llega con la partida ya acabada
+      })
       .catch(() => { });
   });
 }
