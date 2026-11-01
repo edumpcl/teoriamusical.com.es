@@ -75,6 +75,16 @@
   ],
   "redirects": [
     {
+      "source": "/juegos/auditivos/eco/",
+      "destination": "/juegos/auditivos/memoriza/",
+      "permanent": true
+    },
+    {
+      "source": "/juegos/auditivos/eco/juego/",
+      "destination": "/juegos/auditivos/memoriza/juego/",
+      "permanent": true
+    },
+    {
       "source": "/test-tecnico-de-laboratorio/",
       "destination": "/tecnico-especialista-en-laboratorio/",
       "permanent": true

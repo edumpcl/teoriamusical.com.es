@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Eco: memoria musical</title>
+<title>Memoriza: memoria musical</title>
 <style>
 @font-face{font-family:'Lilita One';src:url(/assets/fonts/juegos/lilita.woff2) format('woff2');font-weight:400;font-display:block}
 @font-face{font-family:'Nunito';src:url(/assets/fonts/juegos/nunito600.woff2) format('woff2');font-weight:600;font-display:block}
@@ -71,7 +71,7 @@ p{margin:0}
 @media (min-width:640px){.picker{grid-template-columns:repeat(auto-fill,minmax(76px,1fr))}}   /* panel ancho: cada familia (hasta 7) en una fila */
 /* pestañas de familia encima del selector de músico (ver FAMILIAS en el JS) */
 .familias{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:8px}
-.familias button{font:400 15px/1.1 var(--display);padding:8px 4px;min-height:44px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.familias button{font:400 clamp(12px,4vw,15px)/1.1 var(--display);padding:8px 2px;min-width:0;min-height:44px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
 .familias button[aria-pressed="true"]{background:var(--brass)}
 .mus{background:#fff;border:3px solid var(--paper2);border-radius:12px;padding:4px 2px 6px;cursor:pointer;color:var(--ink);font:800 13px var(--body);display:grid;justify-items:center;gap:0}
 .mus canvas{width:100%;max-width:80px;height:auto;aspect-ratio:3/4}
@@ -169,6 +169,7 @@ h3{margin:0;font:400 20px var(--display)}
 .lam:focus-visible .sec{stroke:#fff;stroke-width:4}
 .hub{fill:#14213d;stroke:#fff;stroke-width:3}
 .hubT{font:400 22px var(--display);fill:#fff;text-anchor:middle;dominant-baseline:central}
+.hubT.chico{font-size:12.5px}
 .hubS{font:800 9px var(--body);fill:#c4daed;text-anchor:middle;dominant-baseline:central;letter-spacing:.08em;text-transform:uppercase}
 @media (min-width:640px){.tablero{width:400px}}
 .progreso{display:flex;flex-wrap:wrap;gap:6px;min-height:22px}
@@ -189,7 +190,7 @@ h3{margin:0;font:400 20px var(--display)}
         <g id="sectores"></g>
         <circle class="hub" r="34"/>
         <text class="hubS" id="hubS" y="-11" display="none">Serie</text>
-        <text class="hubT" id="hubN" y="9">Eco</text>
+        <text class="hubT chico" id="hubN" y="1">Memoriza</text>
       </svg>
       <div class="hud hud-timer" id="hudTimer" hidden style="--p:100"><span id="hudSecs">5</span><small>seg</small></div>
       <div class="hud hud-turno" id="hudTurno" hidden>Serie 1</div>
@@ -917,7 +918,7 @@ function refreshRankMenu() { $('#rankEmpty').hidden = renderRank($('#rankMenu'))
    uno publica la suya. Cada partida pide un permiso al empezar y ese permiso es el que deja
    publicarla. Si la API no responde, no se enseña.
    ============================================================ */
-const API_MUNDIAL = '/api/clasificacion/', JUEGO_MUNDIAL = 'eco';
+const API_MUNDIAL = '/api/clasificacion/', JUEGO_MUNDIAL = 'eco';   // el juego se llamó Eco: se mantiene el identificador para no perder lo ya publicado (y el de GA4 y las claves del navegador)
 const MUNDO = { periodo: 'semana', datos: null, pedido: 0, toks: [] };
 const nivelMundial = () => rankDif();
 const fmtNotas = x => notasTxt(Number(x));
@@ -1131,12 +1132,12 @@ function updateHud() {
   const j = S.jugadores[S.turnoActual];
   $('#hudTurno').textContent = (S.numJugadores > 1 ? j.nombre + ' · ' : '') + 'Serie de ' + notasTxt(S.n);
   $('#hudPts').textContent = 'Marca: ' + j.serie;
-  $('#hubN').textContent = S.n; $('#hubS').removeAttribute('display');
+  const n = $('#hubN'); n.textContent = S.n; n.classList.remove('chico'); n.setAttribute('y', '9'); $('#hubS').removeAttribute('display');
 }
 function hudVisible(v) { $('#hudTurno').hidden = !v; $('#hudPts').hidden = !v; if (!v) $('#hudTimer').hidden = true; }
 function showTurnChange() {
   S.state = 'turno';
-  showView('turno'); hudVisible(false); hideZone(); centroEco();
+  showView('turno'); hudVisible(false); hideZone(); centroTablero();
   $('#turnoNombre').textContent = 'Le toca a ' + S.jugadores[S.turnoActual].nombre;
   renderMarcadores();
 }
@@ -1256,7 +1257,7 @@ function showZone(t, sub) {
   z.hidden = false; z.classList.remove('pop'); void z.offsetWidth; z.classList.add('pop');
 }
 function hideZone() { $('#hudZone').hidden = true; }
-function centroEco() { $('#hubN').textContent = 'Eco'; $('#hubS').setAttribute('display', 'none'); }
+function centroTablero() { const n = $('#hubN'); n.textContent = 'Memoriza'; n.classList.add('chico'); n.setAttribute('y', '1'); $('#hubS').setAttribute('display', 'none'); }
 
 function classify(n) {
   if (n >= 15) return { title: '¡Memoria de solista!', text: 'Quince notas o más seguidas: eso ya es una melodía entera.' };
@@ -1269,7 +1270,7 @@ function finishGame() {
   S.state = 'result'; S.gen++;
   clearInterval(S.timerId);
   $('#marimba').classList.remove('bloq');
-  showView('result'); hudVisible(false); hideZone(); centroEco();
+  showView('result'); hudVisible(false); hideZone(); centroTablero();
   if (S.numJugadores <= 1) finishSolo(); else finishMulti();
 }
 function finishSolo() {
@@ -1373,7 +1374,7 @@ const FAMILIAS = [
 ];
 /* Guion discreto (­) en los nombres largos: en las tarjetas estrechas del móvil parten por
    la sílaba (Violon-chelo) en vez de por cualquier letra. */
-const CORTES = { 'Violonchelo': 'Violon­chelo', 'Contrabajo': 'Contra­bajo', 'Bombardino': 'Bombar­dino', 'Clarinete': 'Clari­nete' };
+const CORTES = { 'Percusión': 'Percu­sión', 'Violonchelo': 'Violon­chelo', 'Contrabajo': 'Contra­bajo', 'Bombardino': 'Bombar­dino', 'Clarinete': 'Clari­nete' };
 function buildPicker() {
   const box = $('#picker');
   const famOf = i => FAMILIAS.findIndex(f => f.instr.includes(MUSICOS[i].instr));
@@ -1385,7 +1386,7 @@ function buildPicker() {
     box.querySelectorAll('.mus').forEach(b => { b.hidden = famOf(+b.dataset.i) !== fi; });
   };
   FAMILIAS.forEach((f, fi) => {
-    const t = document.createElement('button'); t.type = 'button'; t.textContent = f.n;
+    const t = document.createElement('button'); t.type = 'button'; t.textContent = CORTES[f.n] || f.n;
     t.addEventListener('click', () => show(fi));
     tabs.appendChild(t);
   });
