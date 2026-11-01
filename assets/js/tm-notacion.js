@@ -11,7 +11,8 @@
  * el MISMO codigo que ya esta verificado en las imagenes: lo que un ejercicio dibuja sale del mismo camino.
  *
  * Opciones: semilla (fija los ids; solo para pruebas), separacion (spacingLinear), escala (multiplica el tamano), alt (texto
- * alternativo para lectores de pantalla), id (prefijo para ids unicos), color (de las notas dibujadas).
+ * alternativo para lectores de pantalla), id (prefijo para ids unicos), color (de las notas dibujadas), noLineal (spacingNonLinear: mas bajo =
+ * las figuras largas ocupan menos; sin ella, 0,6).
  */
 (function (raiz) {
   'use strict';
@@ -55,7 +56,7 @@
     var tk = toolkit;
     if (!tk) throw new Error('Verovio todavia no esta cargado: espera a tmNotacion.listo()');
     var semilla = op.semilla || hash((op.id || 'tm') + '#' + (++contador));   // ids unicos: varios dibujos conviven en la misma pagina
-    tk.setOptions(Object.assign({}, OPCIONES, { xmlIdSeed: semilla, spacingLinear: op.separacion || 0.25, pageMarginLeft: op.margenIzq || OPCIONES.pageMarginLeft }));
+    tk.setOptions(Object.assign({}, OPCIONES, { xmlIdSeed: semilla, spacingLinear: op.separacion || 0.25, spacingNonLinear: op.noLineal != null ? op.noLineal : OPCIONES.spacingNonLinear, pageMarginLeft: op.margenIzq || OPCIONES.pageMarginLeft }));
     if (!tk.loadData(mei(fila))) throw new Error('Verovio no lee el MEI');
     var s = tk.renderToSVG(1);
     var vb = /viewBox="0 0 ([\d.]+) ([\d.]+)"/.exec(s);
