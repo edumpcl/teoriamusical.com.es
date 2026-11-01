@@ -63,7 +63,7 @@ p{margin:0}
 .picker{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 /* pestañas de familia encima del selector de músico (ver FAMILIAS en el JS) */
 .familias{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:8px}
-.familias button{font:400 15px/1.1 var(--display);padding:8px 4px;min-height:44px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.familias button{font:400 clamp(12px,4vw,15px)/1.1 var(--display);padding:8px 2px;min-width:0;min-height:44px;border:3px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
 .familias button[aria-pressed="true"]{background:var(--brass)}
 .mus{background:#fff;border:3px solid var(--paper2);border-radius:12px;padding:4px 2px 6px;cursor:pointer;color:var(--ink);font:800 13px var(--body);display:grid;justify-items:center;gap:0}
 .mus canvas{width:100%;max-width:80px;height:auto;aspect-ratio:3/4}
@@ -1511,7 +1511,7 @@ const FAMILIAS = [
 ];
 /* Guion discreto (­) en los nombres largos: en las tarjetas estrechas del móvil parten por
    la sílaba (Violon-chelo) en vez de por cualquier letra. */
-const CORTES = { 'Violonchelo': 'Violon­chelo', 'Contrabajo': 'Contra­bajo', 'Bombardino': 'Bombar­dino', 'Clarinete': 'Clari­nete' };
+const CORTES = { 'Percusión': 'Percu­sión', 'Violonchelo': 'Violon­chelo', 'Contrabajo': 'Contra­bajo', 'Bombardino': 'Bombar­dino', 'Clarinete': 'Clari­nete' };
 function buildPicker() {
   const box = $('#picker');
   const famOf = i => FAMILIAS.findIndex(f => f.instr.includes(MUSICOS[i].instr));
@@ -1523,7 +1523,7 @@ function buildPicker() {
     box.querySelectorAll('.mus').forEach(b => { b.hidden = famOf(+b.dataset.i) !== fi; });
   };
   FAMILIAS.forEach((f, fi) => {
-    const t = document.createElement('button'); t.type = 'button'; t.textContent = f.n;
+    const t = document.createElement('button'); t.type = 'button'; t.textContent = CORTES[f.n] || f.n;
     t.addEventListener('click', () => show(fi));
     tabs.appendChild(t);
   });
