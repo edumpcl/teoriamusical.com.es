@@ -152,6 +152,10 @@
       for (var y = p - 3; y <= p + 3; y++) if (n.ac.indexOf(deg(y)) >= 0 && y !== p) opc.push(y);   // nota del acorde
       opc = opc.filter(function (y) { return y >= lo && y <= hi && intervaloOk(modo, p, y) && (sig === null || intervaloOk(modo, y, sig)); });
       if (!opc.length) return fallo('debil');
+      if (n.dur < 1) {   // las semicorcheas, por grado conjunto siempre que se pueda
+        var grado = opc.filter(function (y) { return Math.abs(y - p) === 1; });
+        if (grado.length) opc = grado;
+      }
       n.x = opc[0] === p + (sig > p ? 1 : -1) && Math.random() < 0.7 ? opc[0] : elige(opc);
     }
     // comprobaciones
@@ -171,7 +175,7 @@
       if (!n.silencio) {
         var midi = tono.m + semis(modo, n.x);
         n.midi = midi;
-        ev.push({ midi: midi, when: t, dur: n.dur * spc * 0.96 });
+        ev.push(n.ev = { midi: midi, when: t, dur: n.dur * spc * 0.96 });
       }
       t += n.dur * spc;
     });
@@ -210,7 +214,7 @@
   function filas(mel, porFila) {
     porFila = porFila || 4;
     var c = mel.compas, comps = [[], [], [], [], [], [], [], []];
-    var DUR = { 1: ['8', 0], 2: ['q', 0], 3: ['q', 1], 4: ['h', 0], 6: ['h', 1], 8: ['w', 0], 12: ['w', 1] };
+    var DUR = { 0.5: ['16', 0], 1: ['8', 0], 1.5: ['8', 1], 2: ['q', 0], 3: ['q', 1], 4: ['h', 0], 6: ['h', 1], 8: ['w', 0], 12: ['w', 1] };
     mel.notas.forEach(function (n) { comps[n.c].push(n); });
     var conBarras = comps.map(function (lista) {
       var t = 0, out = [];
@@ -218,7 +222,7 @@
         var d = DUR[n.dur], e = { d: d[0] };
         if (d[1]) e.puntillo = true;
         if (n.silencio) e.silencio = true; else e.key = deletrear(mel.tono, mel.modo, n.x);
-        if (n.dur === 1 || (n.dur === 2 && c.pulso === 3 && false)) e.barra = Math.floor(t / c.pulso);
+        if (n.dur < 2 && !n.silencio) e.barra = Math.floor(t / c.pulso);   // corcheas y semicorcheas, con barra por pulso
         out.push(e); t += n.dur;
       });
       // una corchea sola en su pulso no lleva barra (va con su corchete)
@@ -299,6 +303,7 @@
         '</div></div>';
       $('_go').addEventListener('click', function () {
         n = 0; aciertos = 0; firmas = {};
+        if (window.tmNotacion) window.tmNotacion.listo().catch(function () {});   // la partitura (Verovio) se va cargando mientras se escucha
         orden = ['mayor', 'mayor', 'mayor', 'mayor', 'mayor', 'menor', 'menor', 'menor', 'menor', 'menor'].sort(function () { return Math.random() - 0.5; });
         montar(); siguiente();
       });
@@ -412,5 +417,6 @@
 
   window.tmAudModoEngine = tmAudModoEngine;
   /* para las pruebas (generador y verificación independiente) */
-  window.tmAudModo = { MOTIVOS: MOTIVOS, intentar: intentar, generar: generar, filas: filas, tonalidadPercibida: tonalidadPercibida, deletrear: deletrear, nombreTono: nombreTono, TONOS: TONOS, COMPASES: COMPASES, semis: semis };
+  /* también lo usa el ejercicio de adivinar el compás (auditivo-compas-engine.js): el generador, la partitura y los estilos */
+  window.tmAudModo = { injectCSS: injectCSS, MOTIVOS: MOTIVOS, intentar: intentar, generar: generar, filas: filas, tonalidadPercibida: tonalidadPercibida, deletrear: deletrear, nombreTono: nombreTono, TONOS: TONOS, COMPASES: COMPASES, semis: semis };
 })();

@@ -179,6 +179,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 ### Intervalos
 - [Ejercicios auditivos](https://www.teoriamusical.com.es/ejercicios/auditivos/): Ejercicios para entrenar el oído musical: melodías al piano con el La4 de referencia, como en los dictados de clase.
 - [¿Mayor o menor? Ejercicio auditivo](https://www.teoriamusical.com.es/ejercicios/auditivos/mayor-o-menor/): Suena una melodía de 8 compases al piano (2/4, 3/4, 4/4, 6/8, 9/8 o 12/8) y hay que decir si está en modo mayor o menor. Hasta 3 escuchas; al responder se ve escrita.
+- [Reconocer el compás de oído](https://www.teoriamusical.com.es/ejercicios/auditivos/reconocer-el-compas/): Suena una melodía de 8 compases al piano con el primer tiempo acentuado y hay que decir si está en 2/4, 3/4, 4/4, 6/8, 9/8 o 12/8. Hasta 3 escuchas; al responder se ve escrita.
 - [Ejercicios de intervalos](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/): Portada de todos los ejercicios de intervalos. Identificación y construcción.
 - [Análisis completo de intervalos](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/analisis-completo-de-intervalos/): Ejercicios que combinan todos los tipos de análisis de intervalos.
 - [Intervalos: segundas](https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/segundas/): Identificación de intervalos de segunda mayor y menor.

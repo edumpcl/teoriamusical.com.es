@@ -33,11 +33,11 @@
   function sampOf(m) { var s = ((m % 12) + 12) % 12, oct = Math.floor(m / 12) - 1, map = SAMP[s]; return { file: map[0] + (oct + map[1]), rate: Math.pow(2, map[2] / 12) }; }
   /* Envolvente: la nota sostiene hasta que entra la siguiente y luego hace un
      release corto que solapa con ella (ligado, sin silencios y sin que se amontonen). */
-  function startAt(c, m, when, bmap, hold, isLast) {
+  function startAt(c, m, when, bmap, hold, isLast, vel) {
     var sp = sampOf(m), src = c.createBufferSource();
     src.buffer = bmap[sp.file]; src.playbackRate.value = sp.rate;
     var g = c.createGain();
-    var peak = 0.85, rel = isLast ? 0.6 : 0.07, end = when + (hold || 0.34);
+    var peak = 0.85 * (vel == null ? 1 : vel), rel = isLast ? 0.6 : 0.07, end = when + (hold || 0.34);   // vel: volumen relativo (acentos)
     g.gain.setValueAtTime(0.0001, when);
     g.gain.exponentialRampToValueAtTime(peak, when + 0.012);   // ataque rápido
     g.gain.setValueAtTime(peak, end);                          // sostiene hasta el relevo
@@ -171,7 +171,7 @@
       }).catch(function () {});
   }
 
-  /* Reproduce notas con su momento y su duración exactos: ev = [{midi, when, dur}] (segundos desde ahora). Cada nota sostiene su duración
+  /* Reproduce notas con su momento y su duración exactos: ev = [{midi, when, dur, vel?}] (segundos desde ahora; vel = volumen relativo, 1 por defecto). Cada nota sostiene su duración
      (la última, con su cola), lo que permite acordes que se mantienen sonando mientras entran otras notas (arpegiados) o notas repetidas. */
   function playEvents(ev) {
     var c = ctx(); if (!c) return Promise.resolve(0);
@@ -184,7 +184,7 @@
         if (g0 !== gen) return 0;
         var bmap = {}; arr.forEach(function (o) { bmap[o[0]] = o[1]; });
         var t0 = c.currentTime + 0.06;
-        ev.forEach(function (e) { startAt(c, e.midi, t0 + e.when, bmap, e.dur, e.when + e.dur >= fin - 1e-9); });
+        ev.forEach(function (e) { startAt(c, e.midi, t0 + e.when, bmap, e.dur, e.when + e.dur >= fin - 1e-9, e.vel); });
         return fin + 0.6;
       }).catch(function () { return 0; });
   }
