@@ -333,6 +333,8 @@ Autor: Eduardo Escrig Zomeño. Idioma: español. URL: https://www.teoriamusical.
 - [Fútbol: construye intervalos](https://www.teoriamusical.com.es/juegos/teoria/futbol/juego/)
 - [Tiro al plato: juego para escribir escalas](https://www.teoriamusical.com.es/juegos/teoria/tiro-al-plato/): Juego gratis sin micrófono: cada plato es una escala; primero dibujas su armadura y luego la escala, nota a nota. Si todo está bien, rompes el plato (1 punto). Mayores y menores natural, armónica y melódica. Solo o en grupo.
 - [Tiro al plato: escribe escalas](https://www.teoriamusical.com.es/juegos/teoria/tiro-al-plato/juego/)
+- [Billar: juego para construir acordes tríada](https://www.teoriamusical.com.es/juegos/teoria/billar/): Juego gratis sin micrófono: cada bola lleva un acorde tríada; eliges a cuál tirar y escribes sus notas en el pentagrama. Si está bien, la bola entra (1 punto); si no, se queda para volver a intentarlo. 5 bolas; en fundamental (Fácil), con 1.ª inversión (Medio) y con 2.ª (Difícil). Solo o en grupo.
+- [Billar: construye acordes](https://www.teoriamusical.com.es/juegos/teoria/billar/juego/)
 - [Juegos auditivos](https://www.teoriamusical.com.es/juegos/auditivos/): Juegos gratis para entrenar el oído musical, sin micrófono: escucha series de notas, recuérdalas y repítelas.
 - [Memoriza: juego de memoria musical](https://www.teoriamusical.com.es/juegos/auditivos/memoriza/): El tablero toca una serie de notas y la repites en el mismo orden; cada acierto añade una nota. Tres niveles: color y luz, solo luz y solo oído. Solo o en grupo, con la misma serie para todos.
 - [Memoriza: memoria musical](https://www.teoriamusical.com.es/juegos/auditivos/memoriza/juego/)

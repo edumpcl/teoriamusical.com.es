@@ -76,7 +76,7 @@
     }
     var g = (LETRAS.indexOf('a') - LETRAS.indexOf(t.l) + 7) % 7, n = nota(t, modo, g);
     if (modo === 'menor' && d === 10) return 'El La de referencia es el 7.º grado de ' + nombre + ' natural; en la melodía suena subido, ' + n + ', porque hace de sensible.';
-    return 'El La natural no está en la escala de ' + nombre + ': su ' + ORD[g] + ' es ' + n + ', medio tono ' + (n.indexOf('♯') > 0 ? 'por encima' : 'por debajo') + ' del La.';
+    return 'El La natural no está en la escala de ' + nombre + ': su ' + ORD[g] + ' es ' + n + ', medio tono ' + (/♯|sostenido/.test(n) ? 'por encima' : 'por debajo') + ' del La.';
   }
   /* la relativa (misma armadura) y, en menor, la sensible, que no está en la armadura */
   function extra(t, modo) {

@@ -207,7 +207,7 @@
     if (alt > 2) { oct++; alt -= 12; } else if (alt < -2) { oct--; alt += 12; }
     return letra + (alt > 0 ? '##'.slice(0, alt) : alt < 0 ? 'bb'.slice(0, -alt) : '') + '/' + oct;
   }
-  function nombreNota(key) { var m = /^([a-g])(##|bb|#|b)?\//.exec(key); return NOMBRE_LETRA[m[1]] + ({ '#': '♯', b: '♭', '##': '♯♯', bb: '♭♭' }[m[2]] || ''); }
+  function nombreNota(key) { var m = /^([a-g])(##|bb|#|b)?\//.exec(key); return NOMBRE_LETRA[m[1]] + ({ '#': '♯', b: '♭', '##': ' doble sostenido', bb: '♭♭' }[m[2]] || ''); }
   var firma = function (mel) { return mel.tono.m + mel.modo + mel.compas.num + mel.compas.den + mel.notas.map(function (x) { return x.silencio ? 'r' + x.dur : x.x + ':' + x.dur; }).join(','); };
   function nombreTono(tono, modo) {
     return NOMBRE_LETRA[tono.l] + (tono.a > 0 ? '♯' : tono.a < 0 ? '♭' : '') + (modo === 'mayor' ? ' mayor' : ' menor');
