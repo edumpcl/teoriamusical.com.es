@@ -63,7 +63,7 @@
 {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.teoriamusical.com.es/"}, {"@type": "ListItem", "position": 2, "name": "Ejercicios", "item": "https://www.teoriamusical.com.es/ejercicios/"}, {"@type": "ListItem", "position": 3, "name": "Ejercicios auditivos", "item": "https://www.teoriamusical.com.es/ejercicios/auditivos/"}]}
 </script>
 <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "¿Qué necesito para hacer los ejercicios auditivos?", "acceptedAnswer": {"@type": "Answer", "text": "Solo el navegador y sonido: altavoces o, mejor, auriculares. No hace falta micrófono ni instalar nada."}}, {"@type": "Question", "name": "¿Por qué suena un La antes de cada ejercicio?", "acceptedAnswer": {"@type": "Answer", "text": "Es la costumbre en los dictados de clase: se da el La4 (440 Hz) como referencia antes de empezar."}}, {"@type": "Question", "name": "¿Con qué instrumento suenan?", "acceptedAnswer": {"@type": "Answer", "text": "Con piano, como es habitual en los dictados de lenguaje musical."}}]}
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "¿Qué necesito para hacer los ejercicios auditivos?", "acceptedAnswer": {"@type": "Answer", "text": "Solo el navegador y sonido: altavoces o, mejor, auriculares. No hace falta micrófono ni instalar nada."}}, {"@type": "Question", "name": "¿Por qué suena un La antes de las melodías?", "acceptedAnswer": {"@type": "Answer", "text": "Es la costumbre en los dictados de clase: se da el La4 (440 Hz) como referencia antes de empezar. En los ejercicios de tonalidad, además, es la nota con la que se compara la tónica para ponerle nombre. En el de reconocer el compás no hace falta, porque no se pregunta por la altura de las notas."}}, {"@type": "Question", "name": "¿Con qué instrumento suenan?", "acceptedAnswer": {"@type": "Answer", "text": "Con piano, como es habitual en los dictados de lenguaje musical."}}]}
 </script>
 </head>
 <body class="tm-page">
@@ -187,17 +187,60 @@
 <div class="tm-container tm-article-wrap">
   <article class="tm-article">
 
-<p>Ejercicios para entrenar el <strong>oído musical</strong>: escuchas una melodía al piano y respondes. Antes de cada ejercicio suena el <strong>La4</strong> de referencia, como en los dictados de clase. Se corrigen al momento y, al responder, se ve lo que ha sonado escrito en el pentagrama.</p>
+<p>Ejercicios para entrenar el <strong>oído musical</strong>: escuchas una melodía al piano y respondes. En los de modo y tonalidad, antes de cada melodía suena el <strong>La4</strong> de referencia, como en los dictados de clase. Se corrigen al momento y, al responder, se ve lo que ha sonado escrito en el pentagrama.</p>
 
 <h2>Los ejercicios</h2>
 
-<ol>
-  <li><strong><a href="/ejercicios/auditivos/mayor-o-menor/">¿Mayor o menor?</a></strong>: suena una melodía de 8 compases y hay que decir si está en modo mayor o menor. Hasta tres escuchas por melodía.</li>
-  <li><strong><a href="/ejercicios/auditivos/reconocer-el-compas/">Reconocer el compás</a></strong>: suena una melodía con el primer tiempo acentuado y hay que decir si está en 2/4, 3/4, 4/4, 6/8, 9/8 o 12/8.</li>
-  <li><strong><a href="/ejercicios/auditivos/reconocer-la-tonalidad-mayor/">Reconocer la tonalidad mayor</a></strong>: suena el La4 y una melodía, y hay que decir en qué tonalidad mayor está. Tres niveles, de 2 alteraciones a todas.</li>
-  <li><strong><a href="/ejercicios/auditivos/reconocer-la-tonalidad-menor/">Reconocer la tonalidad menor</a></strong>: lo mismo, con melodías en tonalidades menores.</li>
-  <li><strong><a href="/ejercicios/auditivos/reconocer-la-tonalidad/">Reconocer la tonalidad (mayor y menor)</a></strong>: mayores y menores mezcladas; hay que decir la tónica y el modo.</li>
-</ol>
+<style>
+.ej-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; margin: 20px 0 36px; }
+.ej-card { background: white; border-radius: 15px; padding: 26px; border: 1px solid #e8e0cc; box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; flex-direction: column; }
+.ej-card h3 { margin: 0 0 10px; font-size: 1.2rem; }
+.ej-card p { color: #555; font-size: 0.95rem; margin: 0 0 22px; }
+.ej-card-icon { width: 50px; height: 50px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; color: #fff; font-weight: 800; font-size: 1.3rem; letter-spacing: .02em; }
+.ej-icon-modo { position: relative; background: linear-gradient(135deg, #a5d6a7 50%, #1b5e20 50%); }
+.ej-icon-modo span { position: absolute; line-height: 1; font-size: 1.15rem; }
+.ej-icon-modo span:first-child { top: 6px; left: 8px; color: #1b5e20; }
+.ej-icon-modo span:last-child { bottom: 7px; right: 9px; color: #fff; }
+.ej-btn { display: inline-block; margin-top: auto; align-self: flex-start; padding: 12px 24px; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 0.9rem; }
+@media (max-width: 600px) {
+  .ej-cards { grid-template-columns: 1fr; gap: 16px; }
+  .ej-card { padding: 20px; }
+  .ej-btn { display: block; text-align: center; align-self: stretch; }
+}
+</style>
+
+<section class="ej-cards">
+  <div class="ej-card">
+    <div class="ej-card-icon ej-icon-modo" aria-hidden="true"><span>M</span><span>m</span></div>
+    <h3><a href="/ejercicios/auditivos/mayor-o-menor/" style="color:inherit;text-decoration:none">¿Mayor o menor?</a></h3>
+    <p>Suena una melodía de 8 compases y decides si está en modo mayor o menor. La pista principal es la 3.ª de la tónica.</p>
+    <a href="/ejercicios/auditivos/mayor-o-menor/" class="ej-btn" style="background:#2e7d32">Empezar<span class="sr-only"> ¿Mayor o menor?</span></a>
+  </div>
+  <div class="ej-card">
+    <div class="ej-card-icon" style="background:#5b4ea3" aria-hidden="true">3/4</div>
+    <h3><a href="/ejercicios/auditivos/reconocer-el-compas/" style="color:inherit;text-decoration:none">Reconocer el compás</a></h3>
+    <p>Suena una melodía con el primer tiempo acentuado y eliges su compás: 2/4, 3/4 o 4/4, o 6/8, 9/8 o 12/8. Tres niveles.</p>
+    <a href="/ejercicios/auditivos/reconocer-el-compas/" class="ej-btn" style="background:#5b4ea3">Empezar<span class="sr-only"> Reconocer el compás</span></a>
+  </div>
+  <div class="ej-card">
+    <div class="ej-card-icon" style="background:#8b6914" aria-hidden="true">M</div>
+    <h3><a href="/ejercicios/auditivos/reconocer-la-tonalidad-mayor/" style="color:inherit;text-decoration:none">Reconocer la tonalidad mayor</a></h3>
+    <p>Suena el La4 y una melodía en una tonalidad mayor, y la escribes con el constructor de tonalidad. De 2 alteraciones a todas.</p>
+    <a href="/ejercicios/auditivos/reconocer-la-tonalidad-mayor/" class="ej-btn" style="background:#8b6914">Empezar<span class="sr-only"> Reconocer la tonalidad mayor</span></a>
+  </div>
+  <div class="ej-card">
+    <div class="ej-card-icon" style="background:#1f6f8b" aria-hidden="true">m</div>
+    <h3><a href="/ejercicios/auditivos/reconocer-la-tonalidad-menor/" style="color:inherit;text-decoration:none">Reconocer la tonalidad menor</a></h3>
+    <p>Lo mismo con tonalidades menores, en la escala menor armónica: la sensible subida te ayuda a encontrar la tónica.</p>
+    <a href="/ejercicios/auditivos/reconocer-la-tonalidad-menor/" class="ej-btn" style="background:#1f6f8b">Empezar<span class="sr-only"> Reconocer la tonalidad menor</span></a>
+  </div>
+  <div class="ej-card">
+    <div class="ej-card-icon" style="background:#a5352b;font-size:.82rem" aria-hidden="true">Todas</div>
+    <h3><a href="/ejercicios/auditivos/reconocer-la-tonalidad/" style="color:inherit;text-decoration:none">Reconocer la tonalidad: mayor y menor</a></h3>
+    <p>Mayores y menores mezcladas: tienes que decir la tónica y el modo. Si respondes su relativa, el ejercicio te lo indica.</p>
+    <a href="/ejercicios/auditivos/reconocer-la-tonalidad/" class="ej-btn" style="background:#a5352b">Empezar<span class="sr-only"> Reconocer la tonalidad: mayor y menor</span></a>
+  </div>
+</section>
 
 <p>Antes de empezar, sube el volumen o ponte auriculares: en un sitio con ruido cuesta más oír los detalles. Si quieres repasar la teoría, tienes las <a href="/diccionario-musical/tonalidades/escalas-mayores/">escalas mayores</a> y las <a href="/diccionario-musical/tonalidades/escalas-menores/">escalas menores</a>. Y para entrenar el oído jugando, los <a href="/juegos/auditivos/">juegos auditivos</a>.</p>
 
@@ -208,7 +251,7 @@
 <h2>Preguntas frecuentes</h2>
 <div class="tm-faq-list">
 <div class="tm-faq-item"><div class="tm-faq-q">¿Qué necesito para hacer los ejercicios auditivos?</div><div class="tm-faq-a">Solo el navegador y sonido: altavoces o, mejor, auriculares. No hace falta micrófono ni instalar nada.</div></div>
-<div class="tm-faq-item"><div class="tm-faq-q">¿Por qué suena un La antes de cada ejercicio?</div><div class="tm-faq-a">Es la costumbre en los dictados de clase: se da el La4 (440 Hz) como referencia antes de empezar.</div></div>
+<div class="tm-faq-item"><div class="tm-faq-q">¿Por qué suena un La antes de las melodías?</div><div class="tm-faq-a">Es la costumbre en los dictados de clase: se da el La4 (440 Hz) como referencia antes de empezar. En los ejercicios de tonalidad, además, es la nota con la que se compara la tónica para ponerle nombre. En el de reconocer el compás no hace falta, porque no se pregunta por la altura de las notas.</div></div>
 <div class="tm-faq-item"><div class="tm-faq-q">¿Con qué instrumento suenan?</div><div class="tm-faq-a">Con piano, como es habitual en los dictados de lenguaje musical.</div></div>
 </div>
 
