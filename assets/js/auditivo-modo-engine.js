@@ -140,6 +140,8 @@
       cand.sort(function (a, b) { return coste(a) - coste(b); });
       n.x = cand[0]; prev = n.x;
     });
+    // un tiempo fuerte sin nota del acorde no se rellena luego como nota de paso: se descarta la melodía
+    if (sonoras.some(function (n) { return n.fuerte && n.x === null; })) return fallo('fuerte');
     // tiempos débiles: de paso, bordadura o nota del acorde
     for (var i = 0; i < sonoras.length; i++) {
       var n = sonoras[i];
