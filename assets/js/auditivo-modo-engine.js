@@ -114,7 +114,7 @@
     });
     var sonoras = notas.filter(function (n) { return !n.silencio; });
     var enCompas = function (c) { return sonoras.filter(function (n) { return n.c === c; }); };
-    // compás 1: arpegio de la tónica (con la 3.ª), subiendo
+    // compás 1: motivo sobre el arpegio de la tónica (con la 3.ª)
     var arp = elige([[0, 2, 4, 7, 4, 2], [0, 2, 4, 2, 0, 2], [0, 4, 2, 0, 2, 4], [0, 2, 0, 4, 2, 0], [0, -3, 0, 2, 4, 2]].filter(function (a) {
       return a.every(function (x) { return x >= lo && x <= hi; });
     }));
@@ -304,7 +304,8 @@
       $('_go').addEventListener('click', function () {
         n = 0; aciertos = 0; firmas = {};
         if (window.tmNotacion) window.tmNotacion.listo().catch(function () {});   // la partitura (Verovio) se va cargando mientras se escucha
-        orden = ['mayor', 'mayor', 'mayor', 'mayor', 'mayor', 'menor', 'menor', 'menor', 'menor', 'menor'].sort(function () { return Math.random() - 0.5; });
+        orden = ['mayor', 'mayor', 'mayor', 'mayor', 'mayor', 'menor', 'menor', 'menor', 'menor', 'menor'];
+        for (var i = orden.length - 1; i > 0; i--) { var j = rnd(i + 1), x = orden[i]; orden[i] = orden[j]; orden[j] = x; }   // Fisher-Yates
         montar(); siguiente();
       });
     }
@@ -332,7 +333,7 @@
       parar();
       if (n >= TOTAL) { resultado(); return; }
       n++; escuchas = 0; respondido = false;
-      do { mel = generar(orden[n - 1]); } while (firmas[firma(mel)]);
+      for (var k = 0; k < 50; k++) { mel = generar(orden[n - 1]); if (!firmas[firma(mel)]) break; }   // sin repetir melodía (con tope)
       firmas[firma(mel)] = 1;
       $('_fill').style.width = ((n - 1) / TOTAL * 100) + '%';
       $('_cnt').textContent = 'Melodía ' + n + ' de ' + TOTAL;
@@ -418,5 +419,5 @@
   window.tmAudModoEngine = tmAudModoEngine;
   /* para las pruebas (generador y verificación independiente) */
   /* también lo usa el ejercicio de adivinar el compás (auditivo-compas-engine.js): el generador, la partitura y los estilos */
-  window.tmAudModo = { injectCSS: injectCSS, MOTIVOS: MOTIVOS, intentar: intentar, generar: generar, filas: filas, tonalidadPercibida: tonalidadPercibida, deletrear: deletrear, nombreTono: nombreTono, TONOS: TONOS, COMPASES: COMPASES, semis: semis };
+  window.tmAudModo = { injectCSS: injectCSS, MOTIVOS: MOTIVOS, intentar: intentar, generar: generar, filas: filas, tonalidadPercibida: tonalidadPercibida, deletrear: deletrear, nombreNota: nombreNota, nombreTono: nombreTono, TONOS: TONOS, COMPASES: COMPASES, semis: semis };
 })();
