@@ -244,7 +244,7 @@ h3{margin:0;font:400 20px var(--display)}
       <section class="view" id="v-turno" hidden>
         <p class="kicker">Cambio de turno</p>
         <h2 id="turnoNombre"></h2>
-        <p class="muted">Pasad el turno a esta persona y pulsad «¡Empezar!» cuando esté lista. La serie es la misma para todos.</p>
+        <p class="muted">Pasad el turno a esta persona y pulsad «¡Empezar!» cuando esté lista. Cada uno tiene su propia serie.</p>
         <div class="marcador" id="marcadorTurno"></div>
         <button class="btn" id="btnTurno">¡Empezar!</button>
       </section>
@@ -862,8 +862,8 @@ function drawMusico(c, m, x, y, o = {}) {
    ESTADO Y FLUJO DEL JUEGO
    La marimba toca la serie y el jugador la repite; si la acierta entera, crece una nota. Al
    primer fallo (o 5 s sin pulsar) se acaba su turno: su marca es la serie más larga que ha
-   repetido entera. Con varios jugadores, cada uno juega su turno completo con LA MISMA serie
-   (se genera al empezar la partida) y gana quien llega más lejos.
+   repetido entera. Con varios jugadores, cada uno juega su turno completo con UNA SERIE NUEVA
+   (si fuera la misma, los que juegan después la habrían oído y tendrían ventaja) y gana quien llega más lejos.
    ============================================================ */
 const jugadorNuevo = (nombre, musico) => ({ nombre, musico, serie: 0 });
 const S = {
@@ -871,7 +871,7 @@ const S = {
   numJugadores: 1,
   jugadores: [jugadorNuevo('', 0)],
   turnoActual: 0,
-  seq: [],          // la serie de la partida (la misma para todos los jugadores)
+  seq: [],          // la serie del turno (cada jugador tiene la suya)
   n: 1,             // notas de la serie en esta ronda
   pos: 0,           // la nota que toca pulsar ahora
   gen: 0,           // cambia en cada ronda: los temporizadores de una ronda vieja no hacen nada
@@ -1091,7 +1091,7 @@ async function startGame() {
   const nombres = collectNombres(S.numJugadores);
   const musicos = S.numJugadores <= 1 ? [S.musico] : collectMusicosMulti(S.numJugadores);
   S.jugadores = nombres.map((n, i) => jugadorNuevo(n, musicos[i]));
-  S.turnoActual = 0; S.seq = genSerie();
+  S.turnoActual = 0;
   const btn = $('#btnStart'), err = $('#audioErr');
   err.hidden = true;
   btn.disabled = true; btn.textContent = 'Cargando…';
@@ -1142,7 +1142,7 @@ function showTurnChange() {
   renderMarcadores();
 }
 function empezarTurno() {
-  S.n = 1;
+  S.n = 1; S.seq = genSerie();
   showView('play'); hudVisible(true);
   $('#marcador').hidden = S.numJugadores <= 1;
   ronda();

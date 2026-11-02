@@ -155,7 +155,7 @@ h3{margin:0;font:400 20px var(--display)}
 
   <main class="game">
     <section class="stage" aria-label="Pista de carrera de obstáculos">
-      <canvas id="scene" width="1000" height="520" role="img" aria-label="Un músico de la banda corre una carrera de obstáculos cantando intervalos, saltando vallas y una ría"></canvas>
+      <canvas id="scene" width="1000" height="520" role="img" aria-label="Un músico de la banda corre una carrera de obstáculos cantando intervalos, saltando vallas y rías"></canvas>
       <div class="hud hud-timer" id="hudTimer" hidden style="--p:0"><span id="hudSecs">3</span><small>seg</small></div>
       <div class="hud hud-dist" id="hudDist" hidden>Tiempo <b id="hudTiempo">0,0</b> s</div>
       <div class="hud hud-count" id="hudCount" hidden></div>
@@ -262,10 +262,10 @@ h3{margin:0;font:400 20px var(--display)}
   </main>
 
   <footer class="foot">
-    Superar cada obstáculo rápido y sin dudar baja tu tiempo: con los 8 obstáculos perfectos (7 vallas + 1 ría) se corre en unos 18,0 s.
-    A diferencia del steeplechase real (3000 m con 7 vallas y 1 ría por vuelta, una prueba de resistencia de varios minutos), aquí cada
+    Superar cada obstáculo rápido y sin dudar baja tu tiempo: con los 8 obstáculos perfectos (6 vallas y 2 rías) se corre en unos 18,0 s.
+    A diferencia de los 3000 m obstáculos reales (28 vallas y 7 rías, 4 y 1 en cada vuelta; una prueba de resistencia de varios minutos), aquí cada
     obstáculo dura solo unos segundos cantados: la marca de 19,1 s es una referencia de este juego, no un récord real. Tropezar en un
-    obstáculo añade penalización, y la ría exige un poco más de afinación sostenida.
+    obstáculo añade penalización.
     La clasificación local se guarda en este dispositivo; a la mundial solo van los carreras que publicas: tu apodo, tu músico y tu marca (<a class="link" href="/politica-de-privacidad/#juegos" target="_top">más información</a>).
     <button class="link" id="btnClear" type="button">Borrar clasificación</button>
   </footer>
@@ -316,8 +316,13 @@ const F_DISP = "'Lilita One','Arial Rounded MT Bold','Trebuchet MS',sans-serif";
 const F_BODY = "Nunito,'Segoe UI',system-ui,sans-serif";
 const INK = '#14213d';
 const W = 1000, H = 520, GROUND = 430, START_X = 150, HURDLE_X = 560, FINISH_X = 930;
-const NV = 8;                      // número de obstáculos: 7 vallas + 1 ría, como en el steeplechase real (7 vallas y 1 ría por vuelta)
-const RIA = NV - 1;                // índice del último obstáculo (la ría, un poco más grande)
+/* El corredor corre en su sitio y es la valla la que viene hacia él: sale del borde derecho de la vista y llega
+   a VALLA_CERCA justo cuando se resuelve. Avanza con lo que se lleva afinado o, si va más adelantado, con el tiempo
+   de la ventana: afinando llega antes y se salta; sin afinar llega al agotarse la ventana y se tropieza. */
+const VALLA_CERCA = START_X + 70, VEL_VIEJA = 350;   // la ya resuelta sigue hacia la izquierda, por debajo del salto
+const NV = 8;                      // número de obstáculos: 3 vallas y 1 ría, dos veces (en los 3000 m obstáculos reales cada vuelta tiene 4 vallas y 1 ría)
+const RIAS = [3, 7];               // la 4.ª y la 8.ª son rías
+const esRia = i => RIAS.includes(i);
 const VENTANA = [4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0];  // segundos máximos por obstáculo (hay que cantar dos notas); con el NEC ya igualado (ver abajo) la ría ya no necesita más margen que el resto
 const NEC = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0];       // segundos afinados acumulados por NOTA para superarla (dos notas por obstáculo); con que se atine 1 s ya está bien afinada, también en la ría
 const TROPIEZO = 1.8;               // penalización en segundos al tropezar, además de agotar la ventana
@@ -1112,7 +1117,7 @@ function renderPreview() {
     sp.textContent = String(i + 1);
     const sm = document.createElement('small'); sm.textContent = etiquetaObstaculo(o, S.dif === 'facil');
     sp.appendChild(sm);
-    if (i === RIA) sp.classList.add('ria');
+    if (esRia(i)) sp.classList.add('ria');
     el.appendChild(sp);
   });
 }
@@ -1131,6 +1136,7 @@ function verPista() {
 }
 function setState(s, now = performance.now()) {
   S.state = s; S.t0 = now;
+  if (s === 'race' || s === 'menu') { S.vieja = null; S.hx = null; }
   if (s === 'listen') verPista();
   showView(VIEWS[s]);
   $('#hudTimer').hidden = s !== 'race';
@@ -1150,8 +1156,8 @@ function setState(s, now = performance.now()) {
        para que el jugador los memorice de antemano. Cada obstáculo suena en vivo, durante la carrera, al llegar
        a él (ver hearObstacleStart/hearObstacleJump más abajo). */
     $('#listenTxt').textContent = S.dif === 'maestro'
-      ? 'Al llegar a cada obstáculo oirás solo la nota base: tú sabes el intervalo y el sentido (mira la lista de arriba) y tienes que construir de oído la nota del salto. El último obstáculo, remarcado en azul, es la ría.'
-      : 'Al llegar a cada obstáculo oirás su nota base; en cuanto la cantes afinada, oirás la nota del salto para perseguirla. Cada obstáculo es una valla que no se supera hasta que aciertas las dos notas. El último, remarcado en azul, es la ría.';
+      ? 'Al llegar a cada obstáculo oirás solo la nota base: tú sabes el intervalo y el sentido (mira la lista de arriba) y tienes que construir de oído la nota del salto. Los obstáculos remarcados en azul (el 4.º y el 8.º) son rías.'
+      : 'Al llegar a cada obstáculo oirás su nota base; en cuanto la cantes afinada, oirás la nota del salto para perseguirla. Cada obstáculo es una valla que no se supera hasta que aciertas las dos notas. Los remarcados en azul (el 4.º y el 8.º) son rías, con un foso de agua detrás.';
   }
   if (s === 'count') {
     pedirPermiso();
@@ -1192,12 +1198,12 @@ function renderSteps(idx) {
     sp.textContent = String(i + 1);
     if (i < idx || (idx === NV)) sp.className = 'done ' + (S.cleared[i] ? 'ok' : 'ko');
     else if (i === idx) sp.className = 'on';
-    if (i === RIA) sp.classList.add('ria');
+    if (esRia(i)) sp.classList.add('ria');
     el.appendChild(sp);
   }
 }
 function setRaceTitle() {
-  const o = S.obstaculos[S.vIdx], tipo = S.vIdx === RIA ? 'Ría' : 'Valla';
+  const o = S.obstaculos[S.vIdx], tipo = esRia(S.vIdx) ? 'Ría' : 'Valla';
   const info = S.dif === 'facil' ? ' · ' + S.note.n : ' · ' + o.iv.n + (o.dir > 0 ? ' ↑' : ' ↓');
   $('#playTitle').textContent = tipo + ' ' + (S.vIdx + 1) + ' de ' + NV + ' · ' + ETAPAS[S.phase] + info;
 }
@@ -1227,7 +1233,7 @@ function finishRound() {
   const brk = $('#resBrk'); brk.replaceChildren();
   S.obstaculos.forEach((o, i) => {
     const li = document.createElement('li');
-    const tipo = i === RIA ? 'Ría' : ('Obstáculo ' + (i + 1));
+    const tipo = esRia(i) ? 'Ría' : ('Obstáculo ' + (i + 1));
     const a = document.createElement('span'); a.textContent = tipo + ' · ' + o.iv.n + (o.dir > 0 ? ' ascendente' : ' descendente') + ' (' + o.n[0] + ' → ' + o.n[1] + ') · ' + (S.cleared[i] ? 'superado' : 'tropiezo');
     const b = document.createElement('b'); b.textContent = (S.cleared[i] ? '' : '+') + fmt1(S.extra[i]) + ' s';
     li.append(a, b); brk.appendChild(li);
@@ -1263,12 +1269,13 @@ function hopDelta(u, trip) {
   return { dx: 8 * Math.sin(Math.PI * u), dy: 10 * Math.abs(Math.sin(Math.PI * u)), rot: 0.9 * u * u, mood: 'sad' };
 }
 function resolveHurdle(now, ok) {
+  S.vieja = { t: now, trip: !ok, ria: esRia(S.vIdx) };
   const i = S.vIdx;
   S.cleared[i] = ok;
   S.extra[i] = ok ? Math.round(((now - S.vT0) / 1000) * 10) / 10 : Math.round((VENTANA[i] + TROPIEZO) * 10) / 10;
-  const label = i === RIA ? (ok ? '¡Ría salvada!' : '¡Al agua!') : (ok ? '¡Vamos!' : '¡Tropiezo!');
-  spawnTxt(HURDLE_X, GROUND - 180, label, ok ? '#238a4c' : '#c93a2d');
-  if (ok) { for (let k = 0; k < 6; k++) spawnNote(HURDLE_X + (Math.random() - .5) * 30, GROUND - 160); jingle([880], 0.08); }
+  const label = esRia(i) ? (ok ? '¡Ría salvada!' : '¡Al agua!') : (ok ? '¡Vamos!' : '¡Tropiezo!');
+  spawnTxt(VALLA_CERCA, GROUND - 180, label, ok ? '#238a4c' : '#c93a2d');
+  if (ok) { for (let k = 0; k < 6; k++) spawnNote(VALLA_CERCA + (Math.random() - .5) * 30, GROUND - 160); jingle([880], 0.08); }
   else jingle([260, 190], 0.12, 'sawtooth');
   S.hopUntil = now + HOP_T * 1000; S.hopKind = ok ? 'clear' : 'trip';
   S.vIdx++;
@@ -1348,7 +1355,7 @@ function update(dt, now) {
     }
   } else if (S.state === 'dash') {
     const u = clamp(((now - S.tDash) / 1000) / LLEGADA, 0, 1);
-    R.x = HURDLE_X + 60 + (FINISH_X - (HURDLE_X + 60)) * easeOut(u); target = 1; S.runSpeed = 1;
+    R.x = START_X + (FINISH_X - START_X) * easeOut(u); target = 1; S.runSpeed = 1;
     $('#hudTiempo').textContent = fmt1(S.raceBase + LLEGADA * u);
     if (u >= 1) { R.arms = (!S.nulo && S.total <= UMBRAL_ESPECTACULAR) ? 'up' : 'down'; R.mood = (!S.nulo && S.total <= UMBRAL_ESPECTACULAR) ? 'happy' : 'sad'; R.sit = clamp((((now - S.tDash) / 1000) - LLEGADA) / 0.3, 0, 1); }
     if ((now - S.tDash) / 1000 >= LLEGADA + 0.4) setState('result', now);
@@ -1356,6 +1363,11 @@ function update(dt, now) {
     R.x = FINISH_X; R.sit = 1; R.arms = (!S.nulo && S.total <= UMBRAL_ESPECTACULAR) ? 'up' : 'down'; R.mood = (!S.nulo && S.total <= UMBRAL_ESPECTACULAR) ? 'happy' : 'sad';
   }
 
+  if (S.state === 'race') {   // la pista se desplaza lo mismo que la valla, y las piernas van a su ritmo
+    const hx = vallaX(now), d = S.hx != null && hx < S.hx ? S.hx - hx : 0;
+    S.scroll += d; S.hx = hx;
+    if (dt > 0) target = Math.max(target, clamp(d / dt / ((vallaLejos() - VALLA_CERCA) / (2 * NEC[S.vIdx])), 0, 1));
+  }
   if (S.state !== 'dash') S.runSpeed += (target - S.runSpeed) * Math.min(1, dt * 6);
   if (S.state === 'listen' || S.state === 'menu') {
     S.runSpeed = 0;
@@ -1369,10 +1381,25 @@ function update(dt, now) {
     }
   } else if (S.state === 'dash') { R.run = 1; }
   if (S.state === 'count' || S.state === 'race' || S.state === 'dash') {
-    S.scroll += dt * (20 + 220 * S.runSpeed); S.bg += dt * (6 + 40 * S.runSpeed);
+    if (S.state !== 'race') S.scroll += dt * (20 + 220 * S.runSpeed);
+    S.bg += dt * (6 + 40 * S.runSpeed);
   }
   S.R = R;
   updateParticles(dt);
+}
+
+const vallaLejos = () => V.x + V.w - 70;
+function vallaX(now) {
+  const p = clamp(Math.max((S.tp[0] + S.tp[1]) / (2 * NEC[S.vIdx]), (now - S.vT0) / 1000 / VENTANA[S.vIdx]), 0, 1);
+  return vallaLejos() - (vallaLejos() - VALLA_CERCA) * p;
+}
+/* La valla ya resuelta se aleja por la izquierda (tumbada si se tropezó) mientras llega la siguiente. */
+function dibujaVieja(c, now) {
+  const o = S.vieja; if (!o) return;
+  const u = (now - o.t) / 1000, x = VALLA_CERCA - VEL_VIEJA * (o.ria ? 1.5 : 1) * u;
+  if (x < V.x - 90) { S.vieja = null; return; }
+  const topple = o.trip ? clamp(u / HOP_T, 0, 1) : 0;
+  if (o.ria) drawWaterJump(c, x, topple); else drawHurdle(c, x, topple);
 }
 
 /* ============================================================
@@ -1448,51 +1475,37 @@ function drawScene(c, tm) {
   c.fillStyle = '#c93a2d'; c.font = `800 13px ${F_BODY}`; c.textAlign = 'center'; c.textBaseline = 'middle';
   c.fillText('MARCA ' + fmt1(REC) + ' s', W - 103, 32); c.fillStyle = INK; c.font = `800 12px ${F_BODY}`; c.fillText(NV + ' obstáculos (referencia)', W - 103, 50);
 }
-/* La valla delante del corredor: se tumba cuando se tropieza y vuelve a ponerse de pie con la siguiente. */
+/* Valla de obstáculos (como en los 3000 m obstáculos): fija y pesada, con un listón grueso de rayas blancas y negras
+   y patas con pie; más baja que la de 110 m vallas (91,4 cm frente a 106,7). No se cae: si se tropieza, solo tiembla. */
 function drawHurdle(c, x, topple) {
-  const rot = topple * 1.25;
-  c.save(); c.translate(x, GROUND + 2); c.rotate(rot);
-  c.lineCap = 'round';
-  c.lineWidth = 7; c.strokeStyle = INK; c.beginPath(); c.moveTo(-26, 0); c.lineTo(0, -6); c.lineTo(26, 0); c.stroke();
-  c.lineWidth = 4; c.strokeStyle = '#cfd6df'; c.beginPath(); c.moveTo(-26, 0); c.lineTo(0, -6); c.lineTo(26, 0); c.stroke();
-  for (const px of [-20, 20]) {
-    c.lineWidth = 8; c.strokeStyle = INK; c.beginPath(); c.moveTo(px, -4); c.lineTo(px, -92); c.stroke();
-    c.lineWidth = 4; c.strokeStyle = '#eef2f6'; c.beginPath(); c.moveTo(px, -4); c.lineTo(px, -92); c.stroke();
+  const tiembla = topple > 0 && topple < 1 ? Math.sin(topple * Math.PI * 6) * 3 * (1 - topple) : 0;
+  c.save(); c.translate(x + tiembla, GROUND + 2);
+  const top = -79;
+  c.lineCap = 'butt';
+  for (const px of [-32, 32]) {
+    rrect(c, px - 14, -7, 28, 7, 2); paint(c, '#7a4a2b', 2.4);                 // pie
+    rrect(c, px - 5, top + 6, 10, -top - 10, 2); paint(c, '#f4efe6', 2.6);     // pata
   }
-  const barY = -92;
-  c.lineCap = 'butt'; c.lineWidth = 13; c.strokeStyle = INK; c.beginPath(); c.moveTo(-30, barY); c.lineTo(30, barY); c.stroke();
-  c.save(); c.beginPath(); c.rect(-29, barY - 5, 58, 10); c.clip();
-  c.fillStyle = '#fff'; c.fillRect(-29, barY - 5, 58, 10);
-  c.fillStyle = '#d9483b';
-  for (let sx = -34; sx < 34; sx += 12) { c.beginPath(); c.moveTo(sx, barY - 6); c.lineTo(sx + 7, barY - 6); c.lineTo(sx + 1, barY + 6); c.lineTo(sx - 6, barY + 6); c.closePath(); c.fill(); }
+  rrect(c, -48, top - 8, 96, 16, 3); paint(c, '#ffffff', 3);                    // listón
+  c.save(); rrect(c, -48, top - 8, 96, 16, 3); c.clip(); c.fillStyle = INK;
+  for (let sx = -48; sx < 48; sx += 24) c.fillRect(sx + 12, top - 8, 12, 16);
   c.restore();
+  rrect(c, -48, top - 8, 96, 16, 3); c.lineWidth = 3; c.strokeStyle = INK; c.stroke();
   c.restore();
 }
-/* La ría (último obstáculo): como la valla pero con un foso de agua al otro lado y una valla algo más baja. */
+/* La ría: la misma valla fija y, detrás (al otro lado, donde se cae), el foso de agua, más hondo junto a la valla. */
 function drawWaterJump(c, x, topple) {
+  const x0 = x + 6, x1 = x + 124;
   c.save();
-  const g = c.createLinearGradient(x - 70, GROUND - 6, x - 70, GROUND + 38);
+  const g = c.createLinearGradient(0, GROUND, 0, GROUND + 40);
   g.addColorStop(0, '#8fd0ee'); g.addColorStop(1, '#2f6fe4');
-  c.fillStyle = g; rrect(c, x - 70, GROUND - 6, 140, 44, 10); c.fill();
-  c.lineWidth = 3; c.strokeStyle = INK; rrect(c, x - 70, GROUND - 6, 140, 44, 10); c.stroke();
-  c.strokeStyle = 'rgba(255,255,255,.65)'; c.lineWidth = 2;
-  for (const wy of [GROUND + 8, GROUND + 20, GROUND + 32]) {
-    c.beginPath();
-    for (let wx = x - 62; wx <= x + 62; wx += 8) { const yy = wy + Math.sin((wx + S.clock * 60) * 0.25) * 2; wx === x - 62 ? c.moveTo(wx, yy) : c.lineTo(wx, yy); }
-    c.stroke();
-  }
+  c.beginPath(); c.moveTo(x0, GROUND); c.lineTo(x1, GROUND); c.lineTo(x1 - 34, GROUND + 18); c.lineTo(x0, GROUND + 40); c.closePath();
+  c.fillStyle = g; c.fill(); c.lineWidth = 3; c.strokeStyle = INK; c.stroke();
+  c.strokeStyle = 'rgba(255,255,255,.7)'; c.lineWidth = 2; c.beginPath();
+  for (let wx = x0 + 6; wx <= x1 - 8; wx += 8) { const yy = GROUND + 4 + Math.sin((wx + S.clock * 60) * 0.25) * 2; wx === x0 + 6 ? c.moveTo(wx, yy) : c.lineTo(wx, yy); }
+  c.stroke();
   c.restore();
-  const rot = topple * 1.25;
-  c.save(); c.translate(x, GROUND + 2); c.rotate(rot);
-  c.lineCap = 'round';
-  for (const px of [-20, 20]) {
-    c.lineWidth = 7; c.strokeStyle = INK; c.beginPath(); c.moveTo(px, -2); c.lineTo(px, -58); c.stroke();
-    c.lineWidth = 3.5; c.strokeStyle = '#eef2f6'; c.beginPath(); c.moveTo(px, -2); c.lineTo(px, -58); c.stroke();
-  }
-  const barY = -58;
-  c.lineCap = 'butt'; c.lineWidth = 11; c.strokeStyle = INK; c.beginPath(); c.moveTo(-26, barY); c.lineTo(26, barY); c.stroke();
-  c.lineWidth = 6; c.strokeStyle = '#ffffff'; c.beginPath(); c.moveTo(-26, barY); c.lineTo(26, barY); c.stroke();
-  c.restore();
+  drawHurdle(c, x, topple);
 }
 function drawProgress(c) {
   const n = NV, cw = 30, gap = 8, totalW = n * cw + (n - 1) * gap, x0 = (W - totalW) / 2, y = 14;
@@ -1514,9 +1527,10 @@ function drawCentro(now) {
   const R = S.R, m = MUSICOS[S.musico];
   if (S.state === 'count' || S.state === 'race' || S.state === 'dash' || S.state === 'result') drawProgress(c);
   if (S.state === 'count' || S.state === 'race') {
-    const topple = (S.hopKind === 'trip' && now < S.hopUntil) ? clamp(1 - (S.hopUntil - now) / (HOP_T * 1000), 0, 1) : 0;
-    if (S.vIdx === RIA) drawWaterJump(c, HURDLE_X, topple); else drawHurdle(c, HURDLE_X, topple);
+    const x = S.state === 'race' && S.hx != null ? S.hx : vallaLejos();
+    if (esRia(S.vIdx)) drawWaterJump(c, x, 0); else drawHurdle(c, x, 0);
   }
+  dibujaVieja(c, now);
   if (S.nulo && (S.state === 'dash' || S.state === 'result') && (now - S.tDash) / 1000 > 0.2) {
     c.font = `400 30px ${F_DISP}`; c.textAlign = 'center'; c.lineWidth = 6; c.strokeStyle = INK; c.strokeText('¡DESCALIFICADO!', (HURDLE_X + FINISH_X) / 2, GROUND - 150); c.fillStyle = '#ff6a55'; c.fillText('¡DESCALIFICADO!', (HURDLE_X + FINISH_X) / 2, GROUND - 150);
   }

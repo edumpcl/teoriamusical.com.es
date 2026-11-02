@@ -315,6 +315,10 @@ const F_DISP = "'Lilita One','Arial Rounded MT Bold','Trebuchet MS',sans-serif";
 const F_BODY = "Nunito,'Segoe UI',system-ui,sans-serif";
 const INK = '#14213d';
 const W = 1000, H = 520, GROUND = 430, START_X = 150, HURDLE_X = 560, FINISH_X = 930;
+/* El corredor corre en su sitio y es la valla la que viene hacia él: sale del borde derecho de la vista y llega
+   a VALLA_CERCA justo cuando se resuelve. Avanza con lo que se lleva afinado o, si va más adelantado, con el tiempo
+   de la ventana: afinando llega antes y se salta; sin afinar llega al agotarse la ventana y se tropieza. */
+const VALLA_CERCA = START_X + 70, VEL_VIEJA = 350;   // la ya resuelta sigue hacia la izquierda, por debajo del salto
 const NV = 8;                    // número de vallas = número de notas de la escala (tónica...octava)
 const VENTANA = 3.0;              // segundos máximos para superar cada valla antes de tropezar
 const NEC = 1.3;                  // segundos afinados acumulados (no hace falta que sean seguidos) para superar la valla
@@ -1085,6 +1089,7 @@ function verPista() {
 }
 function setState(s, now = performance.now()) {
   S.state = s; S.t0 = now;
+  if (s === 'race' || s === 'menu') { S.vieja = null; S.hx = null; }
   if (s === 'listen') verPista();
   showView(VIEWS[s]);
   $('#hudTimer').hidden = s !== 'race';
@@ -1212,11 +1217,12 @@ function hopDelta(u, trip) {
   return { dx: 8 * Math.sin(Math.PI * u), dy: 10 * Math.abs(Math.sin(Math.PI * u)), rot: 0.9 * u * u, mood: 'sad' };
 }
 function resolveHurdle(now, ok) {
+  S.vieja = { t: now, trip: !ok };
   const i = S.vIdx;
   S.cleared[i] = ok;
   S.extra[i] = ok ? Math.round(((now - S.vT0) / 1000) * 10) / 10 : Math.round((VENTANA + TROPIEZO) * 10) / 10;
-  spawnTxt(HURDLE_X, GROUND - 180, ok ? '¡Vamos!' : '¡Tropiezo!', ok ? '#238a4c' : '#c93a2d');
-  if (ok) { for (let k = 0; k < 6; k++) spawnNote(HURDLE_X + (Math.random() - .5) * 30, GROUND - 160); jingle([880], 0.08); }
+  spawnTxt(VALLA_CERCA, GROUND - 180, ok ? '¡Vamos!' : '¡Tropiezo!', ok ? '#238a4c' : '#c93a2d');
+  if (ok) { for (let k = 0; k < 6; k++) spawnNote(VALLA_CERCA + (Math.random() - .5) * 30, GROUND - 160); jingle([880], 0.08); }
   else jingle([260, 190], 0.12, 'sawtooth');
   S.hopUntil = now + HOP_T * 1000; S.hopKind = ok ? 'clear' : 'trip';
   S.vIdx++;
@@ -1286,7 +1292,7 @@ function update(dt, now) {
     }
   } else if (S.state === 'dash') {
     const u = clamp(((now - S.tDash) / 1000) / LLEGADA, 0, 1);
-    R.x = HURDLE_X + 60 + (FINISH_X - (HURDLE_X + 60)) * easeOut(u); target = 1; S.runSpeed = 1;
+    R.x = START_X + (FINISH_X - START_X) * easeOut(u); target = 1; S.runSpeed = 1;
     $('#hudTiempo').textContent = fmt1(S.raceBase + LLEGADA * u);
     if (u >= 1) { R.arms = (!S.nulo && S.total <= 18.5) ? 'up' : 'down'; R.mood = (!S.nulo && S.total <= 18.5) ? 'happy' : 'sad'; R.sit = clamp((((now - S.tDash) / 1000) - LLEGADA) / 0.3, 0, 1); }
     if ((now - S.tDash) / 1000 >= LLEGADA + 0.4) setState('result', now);
@@ -1294,6 +1300,11 @@ function update(dt, now) {
     R.x = FINISH_X; R.sit = 1; R.arms = (!S.nulo && S.total <= 18.5) ? 'up' : 'down'; R.mood = (!S.nulo && S.total <= 18.5) ? 'happy' : 'sad';
   }
 
+  if (S.state === 'race') {   // la pista se desplaza lo mismo que la valla, y las piernas van a su ritmo
+    const hx = vallaX(now), d = S.hx != null && hx < S.hx ? S.hx - hx : 0;
+    S.scroll += d; S.hx = hx;
+    if (dt > 0) target = Math.max(target, clamp(d / dt / ((vallaLejos() - VALLA_CERCA) / (NEC)), 0, 1));
+  }
   if (S.state !== 'dash') S.runSpeed += (target - S.runSpeed) * Math.min(1, dt * 6);
   if (S.state === 'listen' || S.state === 'menu') {
     S.runSpeed = 0;
@@ -1307,10 +1318,25 @@ function update(dt, now) {
     }
   } else if (S.state === 'dash') { R.run = 1; }
   if (S.state === 'count' || S.state === 'race' || S.state === 'dash') {
-    S.scroll += dt * (20 + 220 * S.runSpeed); S.bg += dt * (6 + 40 * S.runSpeed);
+    if (S.state !== 'race') S.scroll += dt * (20 + 220 * S.runSpeed);
+    S.bg += dt * (6 + 40 * S.runSpeed);
   }
   S.R = R;
   updateParticles(dt);
+}
+
+const vallaLejos = () => V.x + V.w - 70;
+function vallaX(now) {
+  const p = clamp(Math.max(S.tp[S.vIdx] / NEC, (now - S.vT0) / 1000 / VENTANA), 0, 1);
+  return vallaLejos() - (vallaLejos() - VALLA_CERCA) * p;
+}
+/* La valla ya resuelta se aleja por la izquierda (tumbada si se tropezó) mientras llega la siguiente. */
+function dibujaVieja(c, now) {
+  const o = S.vieja; if (!o) return;
+  const u = (now - o.t) / 1000, x = VALLA_CERCA - VEL_VIEJA * u;
+  if (x < V.x - 90) { S.vieja = null; return; }
+  const topple = o.trip ? clamp(u / HOP_T, 0, 1) : 0;
+  drawHurdle(c, x, topple);
 }
 
 /* ============================================================
@@ -1426,9 +1452,9 @@ function drawCentro(now) {
   const R = S.R, m = MUSICOS[S.musico];
   if (S.state === 'count' || S.state === 'race' || S.state === 'dash' || S.state === 'result') drawProgress(c);
   if (S.state === 'count' || S.state === 'race') {
-    const topple = (S.hopKind === 'trip' && now < S.hopUntil) ? clamp(1 - (S.hopUntil - now) / (HOP_T * 1000), 0, 1) : 0;
-    drawHurdle(c, HURDLE_X, topple);
+    drawHurdle(c, S.state === 'race' && S.hx != null ? S.hx : vallaLejos(), 0);
   }
+  dibujaVieja(c, now);
   if (S.nulo && (S.state === 'dash' || S.state === 'result') && (now - S.tDash) / 1000 > 0.2) {
     c.font = `400 30px ${F_DISP}`; c.textAlign = 'center'; c.lineWidth = 6; c.strokeStyle = INK; c.strokeText('¡DESCALIFICADO!', (HURDLE_X + FINISH_X) / 2, GROUND - 150); c.fillStyle = '#ff6a55'; c.fillText('¡DESCALIFICADO!', (HURDLE_X + FINISH_X) / 2, GROUND - 150);
   }
