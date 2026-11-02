@@ -1129,8 +1129,20 @@ $('#btnPub').addEventListener('click', () => {
 const VIEWS = { menu: 'menu', listen: 'listen', count: 'play', race: 'play', dash: 'flight', result: 'result' };
 function showView(n) { document.querySelectorAll('.view').forEach(v => { v.hidden = v.id !== 'v-' + n; }); }
 
+/* Al empezar (y al repetir), si la pista ha quedado por encima de la pantalla, la página que contiene el juego sube hasta ella. */
+function verPista() {
+  try {
+    const enMarco = window.parent !== window && window.frameElement, pw = enMarco ? window.parent : window;
+    const cab = enMarco ? pw.document.querySelector('.tm-site-header') : null, hh = cab ? cab.getBoundingClientRect().height : 0;
+    const top = (enMarco ? window.frameElement.getBoundingClientRect().top : 0) + $('.stage').getBoundingClientRect().top;
+    if (top >= hh) return;
+    const suave = !(pw.matchMedia && pw.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    pw.scrollTo({ top: Math.max(0, pw.scrollY + top - hh - 8), behavior: suave ? 'smooth' : 'auto' });
+  } catch (e) { }
+}
 function setState(s, now = performance.now()) {
   S.state = s; S.t0 = now;
+  if (s === 'listen') verPista();
   showView(VIEWS[s]);
   $('#hudTimer').hidden = s !== 'race';
   $('#hudDist').hidden = !(s === 'race' || s === 'dash');
