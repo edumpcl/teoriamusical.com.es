@@ -1,5 +1,5 @@
 {
-  "comprobado": "2026-10-26",
+  "comprobado": "2026-11-02",
   "conciertos": [
     {
       "id": "bsmm-2026-11-03",
@@ -9643,6 +9643,23 @@
         {
           "texto": "Temporada sinfónica del ADDA",
           "url": "https://addaalicante.es/temporada-sinfonica-alicante-2026-2027/"
+        }
+      ]
+    },
+    {
+      "id": "la-primitiva-setabense-2026-11-14",
+      "agrupacion": "Sociedad Musical La Primitiva Setabense de Xàtiva",
+      "titulo": "Concierto de Santa Cecilia",
+      "fecha": "2026-11-14",
+      "hora": "20:00",
+      "lugar": "Gran Teatro de Xàtiva",
+      "ciudad": "Xàtiva",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda/concierto-santa-cecilia-sociedad-musical-la-primitiva-setabense-de-xativa/?occurrence=2026-11-14"
         }
       ]
     }

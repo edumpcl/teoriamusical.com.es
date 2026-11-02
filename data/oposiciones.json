@@ -1,5 +1,5 @@
 {
-  "comprobado": "2026-10-26",
+  "comprobado": "2026-11-02",
   "convocatorias": [
     {
       "id": "real-filharmonia-2026",
@@ -476,6 +476,94 @@
         }
       ],
       "nota_plazo": "Las bases fijan 20 días hábiles desde el día siguiente a la última publicación del anuncio (DOGC o BOP de Lleida). Fecha sin contrastar con el boletín (procede del radar de empleo)."
+    },
+    {
+      "id": "orquesta-valencia-12-plazas-2026",
+      "entidad": "OAM Palau de la Música, Congresos y Orquesta de València",
+      "titulo": "Profesorado de orquesta: viola, violonchelo, contrabajo, fagot y trombón bajo",
+      "tipo": "orquesta",
+      "instrumentos": [
+        "viola",
+        "violonchelo",
+        "contrabajo",
+        "fagot",
+        "trombón"
+      ],
+      "comunidad": "Comunitat Valenciana",
+      "plazas": "12 plazas de personal laboral fijo (A1): viola 4 (una reservada a discapacidad), violonchelo 3, contrabajo 3, fagot 1 y trombón bajo 1",
+      "acceso": "Oposición, turno libre",
+      "inicio": "2026-10-29",
+      "fin": "2026-11-25",
+      "requisitos": "Grado en Enseñanzas Artísticas Superiores de Música en la especialidad del instrumento, o equivalente.",
+      "tasa": "46,87 €",
+      "fuentes": [
+        {
+          "texto": "BOP de València nº 207, 28/10/2026 (viola)",
+          "url": "https://bop.dival.es/bop/downloads?anuncioNumReg=2026/13040&lang=es"
+        },
+        {
+          "texto": "BOP de València nº 207, 28/10/2026 (violonchelo)",
+          "url": "https://bop.dival.es/bop/downloads?anuncioNumReg=2026/13039&lang=es"
+        },
+        {
+          "texto": "BOP de València nº 207, 28/10/2026 (contrabajo)",
+          "url": "https://bop.dival.es/bop/downloads?anuncioNumReg=2026/13038&lang=es"
+        },
+        {
+          "texto": "BOP de València nº 207, 28/10/2026 (fagot)",
+          "url": "https://bop.dival.es/bop/downloads?anuncioNumReg=2026/13037&lang=es"
+        },
+        {
+          "texto": "BOP de València nº 207, 28/10/2026 (trombón bajo)",
+          "url": "https://bop.dival.es/bop/downloads?anuncioNumReg=2026/13036&lang=es"
+        }
+      ],
+      "nota_plazo": "20 días hábiles desde el día siguiente a la publicación en el BOP de València (28/10/2026). Contrastado con el boletín."
+    },
+    {
+      "id": "ocv-violonchelo-solista-2026",
+      "entidad": "Palau de Les Arts Reina Sofía (Orquestra de la Comunitat Valenciana)",
+      "titulo": "Solista de violonchelo",
+      "tipo": "orquesta",
+      "instrumentos": [
+        "violonchelo"
+      ],
+      "comunidad": "Comunitat Valenciana",
+      "plazas": "1 plaza de personal laboral fijo (solista, grupo profesional M2)",
+      "acceso": "Oposición, turno libre",
+      "inicio": "2026-10-27",
+      "fin": "2026-11-23",
+      "requisitos": "Título Superior de Música en la especialidad de violonchelo, o equivalente.",
+      "tasa": "25 €",
+      "fuentes": [
+        {
+          "texto": "DOGV nº 10479, 26/10/2026 (convocatoria 08/2026)",
+          "url": "https://dogv.gva.es/datos/2026/10/26/pdf/2026_32763_es.pdf"
+        }
+      ],
+      "nota_plazo": "20 días hábiles desde el día siguiente a la publicación en el DOGV (26/10/2026). Contrastado con el boletín."
+    },
+    {
+      "id": "villafranca-barros-saxofon-2026",
+      "entidad": "Ayuntamiento de Villafranca de los Barros (Badajoz)",
+      "titulo": "Profesor/a de saxofón, Escuela Municipal de Música",
+      "tipo": "docencia",
+      "instrumentos": [
+        "saxofón"
+      ],
+      "comunidad": "Extremadura",
+      "plazas": "1 puesto de provisión temporal y bolsa de trabajo",
+      "acceso": "Concurso-oposición",
+      "inicio": "2026-10-29",
+      "fin": "2026-11-04",
+      "requisitos": "Título Profesional de saxofón o titulación del Plan de 1966 (Decreto 2618/1966).",
+      "fuentes": [
+        {
+          "texto": "BOP de Badajoz nº 207, 28/10/2026 (anuncio 4278/2026, bases)",
+          "url": "https://www.dip-badajoz.es/ficheros/bop/bopedictos/2026-10-28000000_4278.pdf"
+        }
+      ],
+      "nota_plazo": "5 días hábiles desde el día siguiente a la publicación en el BOP de Badajoz (28/10/2026). Contrastado con el boletín."
     }
   ],
   "anunciadas": [
@@ -500,7 +588,7 @@
         "guitarra"
       ],
       "comunidad": "Comunitat Valenciana",
-      "estado": "Ya convocadas, con el plazo cerrado: trompeta, trompa y violín (4 plazas). El resto de plazas de la Orquesta (viola, violonchelo, contrabajo, maderas, trombones, timbal y percusión) todavía no se han convocado. Los procesos de fagot y de trompeta-fliscorno de la Banda Sinfónica Municipal están en fase de ejercicios, y las oposiciones del Conservatorio Municipal José Iturbi (piano, música de cámara, clarinete, oboe, violín, violonchelo y guitarra) están anunciadas sin fecha de solicitud.",
+      "estado": "Convocadas y con el plazo ya cerrado: trompeta, trompa y violín (4 plazas). El 28 de octubre se publicaron las bases de 12 plazas más (viola, violonchelo, contrabajo, fagot y trombón bajo): ver «Profesorado de orquesta» entre las convocatorias abiertas. El resto de plazas de la oferta extraordinaria todavía no se ha convocado. Los procesos de fagot y de trompeta-fliscorno de la Banda Sinfónica Municipal están en fase de ejercicios, y las oposiciones del Conservatorio Municipal José Iturbi (piano, música de cámara, clarinete, oboe, violín, violonchelo y guitarra) están anunciadas sin fecha de solicitud.",
       "fuentes": [
         {
           "texto": "Noticia del Ayuntamiento de València",
