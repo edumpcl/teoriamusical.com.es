@@ -7577,10 +7577,10 @@
       ]
     },
     {
-      "id": "banda-insular-federacion-tinerfena-2026-10-31",
+      "id": "banda-insular-federacion-tinerfena-2026-11-07",
       "agrupacion": "Banda Insular de la Federación Tinerfeña de Bandas de Música",
       "titulo": "Concierto conmemorativo del 25 aniversario de la Banda Insular",
-      "fecha": "2026-10-31",
+      "fecha": "2026-11-07",
       "hora": "20:00",
       "lugar": "Auditorio Infanta Leonor, Los Cristianos",
       "ciudad": "Arona",
@@ -9660,6 +9660,114 @@
         {
           "texto": "Agenda de la FSMCV",
           "url": "https://fsmcv.org/agenda/concierto-santa-cecilia-sociedad-musical-la-primitiva-setabense-de-xativa/?occurrence=2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "umbages-2026-11-08",
+      "agrupacion": "Unió Musical del Bages",
+      "titulo": "Concert de tardor a Sant Fruitós",
+      "fecha": "2026-11-08",
+      "hora": "12:00",
+      "lugar": "Cobert de la Màquina de Batre",
+      "ciudad": "Sant Fruitós de Bages",
+      "comunidad": "Cataluña",
+      "tipo": "sociedad",
+      "entrada": "Gratuït",
+      "nota": "La web de la banda lo marca como «nova data»: confirma el día antes de ir.",
+      "fuentes": [
+        {
+          "texto": "Unió Musical del Bages: concerts",
+          "url": "https://www.umbages.cat/concerts"
+        }
+      ]
+    },
+    {
+      "id": "la-artistica-manisense-manzanares-2026-11-14",
+      "agrupacion": "Banda Simfònica de la Societat Musical L'Artística Manisense",
+      "titulo": "Concert a Manzanares (Encuentro Nacional de Bandas)",
+      "fecha": "2026-11-14",
+      "hora": "20:00",
+      "lugar": "Gran Teatro de Manzanares",
+      "ciudad": "Manzanares",
+      "comunidad": "Castilla-La Mancha",
+      "tipo": "sociedad",
+      "nota": "Invitada al Encuentro Nacional de Bandas que organiza la Banda de Manzanares.",
+      "fuentes": [
+        {
+          "texto": "L'Artística Manisense: programació",
+          "url": "https://artisticamanisense.org/event/concert-a-manzanares-banda-simfonica/"
+        }
+      ]
+    },
+    {
+      "id": "banda-sinfonica-de-san-fernando-2026-11-21",
+      "agrupacion": "Banda Sinfónica de San Fernando (Sociedad Filarmónica de San Fernando)",
+      "titulo": "Concierto de Santa Cecilia",
+      "fecha": "2026-11-21",
+      "hora": "20:00",
+      "lugar": "Salón de Actos del colegio Compañía de María",
+      "ciudad": "San Fernando",
+      "comunidad": "Andalucía",
+      "tipo": "sociedad",
+      "nota": "La fuente no indica programa ni precio.",
+      "fuentes": [
+        {
+          "texto": "Banda Sinfónica de San Fernando: próximos eventos",
+          "url": "https://sfmsf.es/bandasinfonicadesanfernando/"
+        }
+      ]
+    },
+    {
+      "id": "agrupacion-musical-san-indalecio-2026-12-21",
+      "agrupacion": "Banda Sinfónica de la Agrupación Musical San Indalecio",
+      "titulo": "Concierto especial de Navidad «RAÍZ»",
+      "fecha": "2026-12-21",
+      "hora": "20:30",
+      "lugar": "Auditorio Municipal Maestro Padilla",
+      "ciudad": "Almería",
+      "comunidad": "Andalucía",
+      "tipo": "sociedad",
+      "programa": "Dirige Manuel Antonio Horcas Cerezo. Música sinfónica, flamenco y danza en homenaje a Manuel de Falla en el 150.º aniversario de su nacimiento, con obras de Óscar Navarro, Ernesto Lecuona, A. Ruda, P. Piqueras y Manuel de Falla.",
+      "entrada": "Entrada general 10 €; socios de la AMSI 7 €",
+      "fuentes": [
+        {
+          "texto": "Agrupación Musical San Indalecio: concierto de Navidad",
+          "url": "https://sanindalecio.com/concierto-especial-de-navidad-un-homenaje-a-nuestras-raices-y-a-manuel-de-falla/"
+        }
+      ]
+    },
+    {
+      "id": "unio-musical-alaquas-2026-11-21",
+      "agrupacion": "Banda Simfònica de la Unió Musical d'Alaquàs",
+      "titulo": "Concert de Santa Cecília 2026",
+      "fecha": "2026-11-21",
+      "hora": "19:00",
+      "lugar": "Auditori Nou",
+      "ciudad": "Alaquàs",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "programa": "Dirige Mikael Celda. Obras de Saül Gómez, Sara Galiana y Philip Sparke. Incluye la presentación de los nuevos músicos de la banda.",
+      "entrada": "Libre hasta completar aforo",
+      "fuentes": [
+        {
+          "texto": "Cartel oficial de la banda, enviado a sus músicos (aún no publicado en su web)"
+        }
+      ]
+    },
+    {
+      "id": "banda-circulo-catolico-torrent-2026-11-14",
+      "agrupacion": "Banda Sinfónica Círculo Católico de Torrent",
+      "titulo": "Concierto en honor a Santa Cecilia",
+      "fecha": "2026-11-14",
+      "ciudad": "",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "nota": "El calendario de noviembre de la banda solo indica la fecha: hora y lugar sin publicar. Confírmalo con la banda.",
+      "fuentes": [
+        {
+          "texto": "Publicación oficial de la banda en Instagram (calendario de noviembre)",
+          "url": "https://www.instagram.com/p/DfN0PeJOrMx/"
         }
       ]
     }

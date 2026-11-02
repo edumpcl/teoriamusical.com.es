@@ -128,7 +128,9 @@ const urlAgrupacion = c => { const o = ents[entidadDe(c).slug]; return o && o.pa
 function fila(k, v) { return v ? `<dt>${k}</dt><dd>${esc(v)}</dd>` : ''; }
 
 function tarjeta(c, op = {}) {
-  const fuentes = (c.fuentes || []).map(f => `<a href="${esc(f.url)}" rel="noopener">${esc(f.texto)}</a>`).join(' · ');
+  // Una fuente puede no tener enlace (cartel oficial recibido por un canal privado): sale como texto, con su aviso
+  const sinEnlace = (c.fuentes || []).some(f => !f.url);
+  const fuentes = (c.fuentes || []).map(f => f.url ? `<a href="${esc(f.url)}" rel="noopener">${esc(f.texto)}</a>` : esc(f.texto)).join(' · ');
   const donde = [c.lugar, c.ciudad].filter(Boolean).join(', ');
   const eu = op.sinEnlace ? null : urlAgrupacion(c);
   const ag = eu ? `<a href="${eu}">${esc(c.agrupacion)}</a>` : esc(c.agrupacion);
@@ -140,7 +142,7 @@ function tarjeta(c, op = {}) {
   <p class="tm-op-plazo"><strong>${fechaLarga(c.fecha)}${c.hora ? ` · ${c.hora} h` : ''}</strong></p>
   <dl class="tm-op-datos">${fila('Dónde', donde)}${fila('Programa', c.programa)}${fila('Entrada', c.entrada)}</dl>
   ${c.nota ? `<p class="tm-op-nota">${esc(c.nota)}</p>` : ''}
-  <p class="tm-op-fuentes">Fuente: ${fuentes}.${op.pasado ? '' : ' <span class="tm-op-nota">Confirma fecha y hora en la fuente enlazada.</span>'}</p>
+  <p class="tm-op-fuentes">Fuente: ${fuentes}.${op.pasado ? '' : ' <span class="tm-op-nota">' + (sinEnlace ? 'Sin enlace público todavía: confirma fecha y hora con la agrupación.' : 'Confirma fecha y hora en la fuente enlazada.') + '</span>'}</p>
 </div>`;
 }
 
@@ -163,7 +165,7 @@ function ofertas(c, url) {
 function evento(c) {
   if (!c.ciudad) return null;
   const inicio = c.hora ? `${c.fecha}T${c.hora}:00${offset(c.fecha)}` : c.fecha;
-  const url = (c.fuentes && c.fuentes[0] && c.fuentes[0].url) || undefined;
+  const url = ((c.fuentes || []).find(f => f.url) || {}).url || undefined;
   const e = {
     '@type': 'Event',
     name: `${c.titulo} — ${c.agrupacion}`,
@@ -268,7 +270,7 @@ function bloqueEntidad(o) {
   const nl = limpio(o.nombre);
   const ccaas = o.todasCcaa.map(n => conPagina.includes(n) ? `<a href="${urlDe(n)}">${esc(n)}</a>` : esc(n)).join(', ');
   const vistas = new Set(); const fuentes = [];
-  for (const c of o.conciertos) for (const f of (c.fuentes || [])) if (!vistas.has(f.url)) { vistas.add(f.url); fuentes.push(f); }
+  for (const c of o.conciertos) for (const f of (c.fuentes || [])) if (f.url && !vistas.has(f.url)) { vistas.add(f.url); fuentes.push(f); }
   const distintos = [...new Set(o.nombres)];
   const incluye = distintos.length > 1 && mapaAlias[norm(o.nombres[0])]
     ? `<p class="tm-op-nota">Reúne los conciertos de: ${distintos.map(esc).join('; ')}.</p>` : '';
@@ -594,7 +596,7 @@ fs.writeFileSync(path.join(ROOT, BASE, 'conciertos.json'), JSON.stringify({
     f: c.fecha, h: c.hora || '', t: c.titulo, a: c.agrupacion, au: urlAgrupacion(c) || '',
     c: c.comunidad, cu: conPagina.includes(c.comunidad) ? urlDe(c.comunidad) : '', ty: c.tipo,
     l: [c.lugar, c.ciudad].filter(Boolean).join(', '), p: c.programa || '', e: c.entrada || '', n: c.nota || '',
-    s: (c.fuentes || []).map(x => [x.texto, x.url]),
+    s: (c.fuentes || []).map(x => [x.texto, x.url || '']),
   })),
 }));
 const PAG_ENVIO = path.join(ROOT, ENVIAR, 'index.html');

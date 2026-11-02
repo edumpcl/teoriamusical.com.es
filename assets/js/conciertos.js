@@ -80,7 +80,8 @@
   function fila(k, v) { return v ? '<dt>' + k + '</dt><dd>' + esc(v) + '</dd>' : ''; }
   // Misma ficha que pinta tools/gen-conciertos.js (tarjeta)
   function tarjetaHTML(c) {
-    var fuentes = c.s.map(function (x) { return '<a href="' + esc(x[1]) + '" rel="noopener">' + esc(x[0]) + '</a>'; }).join(' · ');
+    var sinEnlace = c.s.some(function (x) { return !x[1]; });
+    var fuentes = c.s.map(function (x) { return x[1] ? '<a href="' + esc(x[1]) + '" rel="noopener">' + esc(x[0]) + '</a>' : esc(x[0]); }).join(' · ');
     var ag = c.au ? '<a href="' + esc(c.au) + '">' + esc(c.a) + '</a>' : esc(c.a);
     var cc = c.cu ? '<a href="' + esc(c.cu) + '">' + esc(c.c) + '</a>' : esc(c.c);
     return '<div class="tm-op tm-co" data-tipo="' + esc(c.ty) + '" data-ccaa="' + esc(c.c) + '" data-fecha="' + c.f + '">' +
@@ -90,7 +91,7 @@
       '<p class="tm-op-plazo"><strong>' + fechaLarga(c.f) + (c.h ? ' · ' + esc(c.h) + ' h' : '') + '</strong></p>' +
       '<dl class="tm-op-datos">' + fila('Dónde', c.l) + fila('Programa', c.p) + fila('Entrada', c.e) + '</dl>' +
       (c.n ? '<p class="tm-op-nota">' + esc(c.n) + '</p>' : '') +
-      '<p class="tm-op-fuentes">Fuente: ' + fuentes + '. <span class="tm-op-nota">Confirma fecha y hora en la fuente enlazada.</span></p>' +
+      '<p class="tm-op-fuentes">Fuente: ' + fuentes + '. <span class="tm-op-nota">' + (sinEnlace ? 'Sin enlace público todavía: confirma fecha y hora con la agrupación.' : 'Confirma fecha y hora en la fuente enlazada.') + '</span></p>' +
       '</div>';
   }
   function cargar() {
