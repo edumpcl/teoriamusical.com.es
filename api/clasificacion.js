@@ -76,7 +76,7 @@ const JUEGOS = {
   'baloncesto':     { difs: ['unico'], min: 1, max: 27, dec: 0, orden: 'suma', minMs: 9000 },                      // 9 tiros × 3 (triple); sin niveles de partida
   'bolos':          { difs: ['facil', 'medio', 'dificil'], min: 5, max: 100, dec: 0, orden: 'suma', minMs: 12000 },  // 5 turnos de pleno + 2 bolas extra; 10 bolas de 1,5 s
   'futbol':         { difs: ['facil', 'medio', 'dificil'], min: 1, max: 5, dec: 0, orden: 'suma', minMs: 15000 },     // 5 ataques = 5 goles; 1 gol: 3 pases de 1,15 s + tiro de 2 s y 4 robos de 2,5 s
-  'eco':            { difs: ['facil', 'medio', 'dificil'], min: 1, max: 100, dec: 0, orden: 'desc', minMs: 2500 },    // mejor serie; serie de 1: 0,9 s de entrada + la nota + pulsarla
+  'memoriza':       { difs: ['facil', 'medio', 'dificil'], min: 1, max: 100, dec: 0, orden: 'desc', minMs: 2500 },    // mejor serie; serie de 1: 0,9 s de entrada + la nota + pulsarla
   'tiro-plato':     { difs: ['facil', 'medio', 'dificil'], min: 1, max: 3, dec: 0, orden: 'suma', minMs: 8000 },      // 3 platos = 3 escalas; 1 plato: armadura + 8 notas tocadas + 1,7 s de vuelo
   'billar':         { difs: ['facil', 'medio', 'dificil'], min: 1, max: 5, dec: 0, orden: 'suma', minMs: 5000 },      // 5 bolas = 5 acordes; 1 bola: elegirla + 2 notas tocadas + 1,8 s de tiro
   // auditivos por tiempo: menos es mejor
@@ -87,6 +87,10 @@ const TOP = 10;
 const PERMISO_MAX_MS = 15 * 60 * 1000;
 const ENVIOS_POR_MINUTO = 20;
 const CONSULTAS_POR_MINUTO = 120;
+/* Nombres antiguos: Memoriza se llamó Eco hasta el 03-11-2026. Se acepta 'eco' por si queda alguna pestaña
+   abierta con el juego viejo (o un permiso firmado con ese nombre); se puede quitar pasadas unas semanas. */
+const ALIAS = { 'eco': 'memoriza' };
+const juegoDe = (j) => ALIAS[j] || j;
 
 /* Músicos que se pueden publicar: los mismos nombres que MUSICOS en los juegos. Lista
    cerrada para que ese campo no pueda llevar texto libre a la clasificación. */
@@ -190,6 +194,7 @@ function leerPermiso(token) {
 async function enviar(b, ip) {
   const p = leerPermiso(b.token);
   if (!p) return [400, { error: 'permiso no válido' }];
+  p.j = juegoDe(p.j);
   const cfg = JUEGOS[p.j];
   if (!cfg) return [400, { error: 'juego' }];
   const edad = Date.now() - p.t;
@@ -214,6 +219,7 @@ async function enviar(b, ip) {
 async function borrar(b, req) {
   const clave = process.env.PANEL_PASS;
   if (!clave || !igual(req.headers['x-panel-pass'] || '', clave)) return [403, { error: 'no autorizado' }];
+  b.juego = juegoDe(b.juego);
   const cfg = JUEGOS[b.juego];
   if (!cfg || !JUGADOR_RE.test(String(b.jugador || ''))) return [400, { error: 'datos' }];
   const filas = await rpc('clasif_borrar', { p_juego: b.juego, p_jugador: b.jugador });
@@ -240,6 +246,7 @@ module.exports = async (req, res) => {
         res.status(200).json({ ok: true, latido: new Date().toISOString() });
         return;
       }
+      q.juego = juegoDe(q.juego);
       const cfg = JUEGOS[q.juego];
       if (!cfg || !cfg.difs.includes(q.dif)) { res.status(400).json({ error: 'juego o nivel' }); return; }
       const apodo = limpiarNombre(q.apodo);
@@ -255,6 +262,7 @@ module.exports = async (req, res) => {
     if (req.method !== 'POST') { res.status(405).json({ error: 'método' }); return; }
     const b = leerCuerpo(req);
     if (b.accion === 'inicio') {
+      b.juego = juegoDe(b.juego);
       const cfg = JUEGOS[b.juego];
       if (!cfg || !cfg.difs.includes(b.dif)) { res.status(400).json({ error: 'juego o nivel' }); return; }
       res.status(200).json({ token: darPermiso(b.juego, b.dif) });

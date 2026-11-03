@@ -888,7 +888,9 @@ function genSerie() {
   return s;
 }
 
-const RK = 'eco-clasificacion';
+/* Memoriza se llamó Eco: lo guardado con las claves viejas (clasificación local, apodo, músico) pasa a las nuevas. */
+try { ['clasificacion', 'nombre', 'musico'].forEach(function (k) { const v = localStorage.getItem('eco-' + k); if (v !== null) { if (localStorage.getItem('memoriza-' + k) === null) localStorage.setItem('memoriza-' + k, v); localStorage.removeItem('eco-' + k); } }); } catch (e) {}
+const RK = 'memoriza-clasificacion';
 function loadRank() { try { const a = JSON.parse(localStorage.getItem(RK) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
 function saveRank(a) { try { localStorage.setItem(RK, JSON.stringify(a)); } catch (e) {} }
 /* Una clasificación por nivel: cada partida guarda su dificultad (dif) y solo se comparan las del mismo nivel. */
@@ -918,7 +920,7 @@ function refreshRankMenu() { $('#rankEmpty').hidden = renderRank($('#rankMenu'))
    uno publica la suya. Cada partida pide un permiso al empezar y ese permiso es el que deja
    publicarla. Si la API no responde, no se enseña.
    ============================================================ */
-const API_MUNDIAL = '/api/clasificacion/', JUEGO_MUNDIAL = 'eco';   // el juego se llamó Eco: se mantiene el identificador para no perder lo ya publicado (y el de GA4 y las claves del navegador)
+const API_MUNDIAL = '/api/clasificacion/', JUEGO_MUNDIAL = 'memoriza';
 const MUNDO = { periodo: 'semana', datos: null, pedido: 0, toks: [] };
 const nivelMundial = () => rankDif();
 const fmtNotas = x => notasTxt(Number(x));
@@ -1043,6 +1045,7 @@ $('#btnPub').addEventListener('click', async () => {
   track('mundial_publicar', { dificultad: nivelMundial(), puesto_semana: bien[0].d.semana.yo.pos, jugadores: bien.length });
 });
 
+// en GA4 sigue como 'eco' (el nombre de antes) para no partir la estadística en dos
 function track(evento, params) {
   try { if (window.parent && window.parent !== window) window.parent.postMessage({ tmJuego: true, evento: evento, params: Object.assign({ juego: 'eco' }, params) }, location.origin); } catch (e) {}
 }
@@ -1086,7 +1089,7 @@ async function startGame() {
   S.numJugadores = parsedNumJugadores();
   if (S.numJugadores <= 1) {
     const raw = $('#nombre') ? $('#nombre').value.trim() : '';
-    try { localStorage.setItem('eco-nombre', raw); } catch (e) {}
+    try { localStorage.setItem('memoriza-nombre', raw); } catch (e) {}
   }
   const nombres = collectNombres(S.numJugadores);
   const musicos = S.numJugadores <= 1 ? [S.musico] : collectMusicosMulti(S.numJugadores);
@@ -1399,7 +1402,7 @@ function buildPicker() {
     const cx = cv.getContext('2d'); cx.scale(2, 2); drawMusico(cx, m, 40, 112, { s: 0.88, dir: 1, t: 0.4, wind: 0.15, released: true });
     const sp = document.createElement('span'); sp.textContent = CORTES[m.n] || m.n;
     b.append(cv, sp);
-    b.addEventListener('click', () => { S.musico = i; box.querySelectorAll('.mus').forEach(x => x.setAttribute('aria-checked', String(+x.dataset.i === i))); try { localStorage.setItem('eco-musico', i); } catch (e) {} });
+    b.addEventListener('click', () => { S.musico = i; box.querySelectorAll('.mus').forEach(x => x.setAttribute('aria-checked', String(+x.dataset.i === i))); try { localStorage.setItem('memoriza-musico', i); } catch (e) {} });
     box.appendChild(b);
   }));
   show(Math.max(0, famOf(S.musico)));
@@ -1450,7 +1453,7 @@ function renderNombres(n, preserve) {
     lab.textContent = 'Tu nombre';
     const inp = document.createElement('input'); inp.type = 'text'; inp.id = 'nombre'; inp.maxLength = 14;
     inp.placeholder = 'Escribe tu nombre'; inp.autocomplete = 'off';
-    inp.value = prevNombres[0] || (function () { try { return localStorage.getItem('eco-nombre') || ''; } catch (e) { return ''; } })();
+    inp.value = prevNombres[0] || (function () { try { return localStorage.getItem('memoriza-nombre') || ''; } catch (e) { return ''; } })();
     lab.appendChild(inp); wrap.appendChild(lab);
   } else {
     for (let i = 0; i < n; i++) {
@@ -1496,7 +1499,7 @@ addEventListener('contextmenu', e => { if (e.target.tagName !== 'INPUT') e.preve
 
 (function init() {
   try {
-    const i = parseInt(localStorage.getItem('eco-musico'), 10);
+    const i = parseInt(localStorage.getItem('memoriza-musico'), 10);
     if (i >= 0 && i < MUSICOS.length) S.musico = i;
   } catch (e) {}
   construirMarimba();
