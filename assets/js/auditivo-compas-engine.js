@@ -83,12 +83,14 @@
     }
     return true;
   }
-  function generar(compas) {
+  /* modo y tono son opcionales: el ejercicio de compás y tonalidad (auditivo-tonalidad-engine.js, opción
+     compas) los fija; si no, al azar. */
+  function generar(compas, modoFijo, tonoFijo) {
     var M = window.tmAudModo;
     for (var k = 0; k < 600; k++) {
       var c = Object.assign({}, compas, { bpm: compas.tempo[0] + rnd(compas.tempo[1] - compas.tempo[0] + 1) });
-      var modo = Math.random() < 0.5 ? 'mayor' : 'menor', tonos = M.TONOS[modo];
-      var mel = M.intentar(modo, tonos[rnd(tonos.length)], c);
+      var modo = modoFijo || (Math.random() < 0.5 ? 'mayor' : 'menor'), tonos = M.TONOS[modo];
+      var mel = M.intentar(modo, tonoFijo || tonos[rnd(tonos.length)], c);
       if (!mel || subdivisiones(mel) < 3 || !pulsoClaro(mel)) continue;
       // el compás 1 también enseña la subdivisión
       var c1 = mel.notas.filter(function (x) { return x.c === 0; });

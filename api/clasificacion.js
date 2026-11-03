@@ -79,6 +79,8 @@ const JUEGOS = {
   'eco':            { difs: ['facil', 'medio', 'dificil'], min: 1, max: 100, dec: 0, orden: 'desc', minMs: 2500 },    // mejor serie; serie de 1: 0,9 s de entrada + la nota + pulsarla
   'tiro-plato':     { difs: ['facil', 'medio', 'dificil'], min: 1, max: 3, dec: 0, orden: 'suma', minMs: 8000 },      // 3 platos = 3 escalas; 1 plato: armadura + 8 notas tocadas + 1,7 s de vuelo
   'billar':         { difs: ['facil', 'medio', 'dificil'], min: 1, max: 5, dec: 0, orden: 'suma', minMs: 5000 },      // 5 bolas = 5 acordes; 1 bola: elegirla + 2 notas tocadas + 1,8 s de tiro
+  // auditivos por tiempo: menos es mejor
+  'ciclismo':       { difs: ['unico'], min: 5.0, max: 900, dec: 2, orden: 'asc', minMs: 11000 },    // 4 vueltas; min = 4 primeros compases de 2/4 (1,3 s); minMs = 4 × (La4 + pausa 1,6 s + 1 compás)
 };
 
 const TOP = 10;
