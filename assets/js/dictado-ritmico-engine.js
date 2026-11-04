@@ -1,18 +1,19 @@
 /* Dictado rítmico — /ejercicios/auditivos/dictado-ritmico/ (índice) y sus páginas, por grupos de figuras.
 
-   Uso: <div id="x"></div><script>tmDictadoRitmico('x', { modo: 'oir' | 'leer' | 'escribir', grupo: 'negras' | 'blancas' | 'puntillo' | 'redondas' });</script>
+   Uso: <div id="x"></div><script>tmDictadoRitmico('x', { modo: 'oir' | 'leer' | 'escribir', grupo: 'negras' | 'blancas' | 'puntillo' | 'redondas' | 'negras-c' | 'blancas-c' | 'puntillo-c' | 'redondas-c' });</script>
 
    Decisiones de Eduardo (04-11-2026):
    - Dos compases de 2/4, 3/4 o 4/4, todo en Sol4 (piano). Sin niveles. Un grupo de figuras por serie de ejercicios:
      negras y silencios de negra; blancas, negras y sus silencios; blancas con puntillo, blancas, negras y sus silencios
      (solo 3/4 y 4/4: en 2/4 no cabe la blanca con puntillo); redondas, blancas con puntillo, blancas, negras y sus
-     silencios (solo 4/4).
+     silencios (solo 4/4). Y los mismos cuatro con grupos de dos corcheas (los «-c»): las corcheas solo van de dos en dos,
+     ocupando un tiempo (Eduardo: nunca una ni tres); al escribir, la tarjeta es de una corchea.
    - oir: suena el dictado y se elige entre 4 ritmos escritos. leer: se ve el ritmo y se elige entre 4 audios.
      escribir: suena el dictado y se escribe con tarjetas (las figuras del grupo, la barra de compás y la doble barra final),
      como en completar compás. Las barras las pone el alumno y un compás se puede llenar de más: se corrige al final.
-   - Sin compás de entrada, pero el dictado nunca empieza con silencio. Para que el pulso se pueda deducir sin metrónomo,
-     hay al menos dos negras seguidas (en cualquiera de los dos compases: si tuvieran que estar en el 1.º, en 2/4 no
-     quedarían ritmos para 4 opciones), no hay más de dos tiempos de silencio seguidos ni un compás entero en silencio.
+   - Antes de cada audio, un compás de entrada con el clic del metrónomo al tempo del dictado, el 1.º acentuado (Eduardo,
+     04-11-2026). Con él, el dictado puede empezar con silencio. Se mantienen: no hay más de dos tiempos de silencio seguidos
+     (o los del silencio largo del grupo) ni un compás entero en silencio (salvo el 2.º, con el silencio largo del grupo).
    - Los ritmos que no son el bueno se diferencian de él en uno o dos tiempos (y cumplen las mismas reglas).
    10 dictados por test, hasta 3 escuchas (en leer, 3 por audio). Estilos de auditivo-modo-engine.js, tarjetas de
    completar-compas-engine.js y partitura con Verovio (tm-notacion.js). */
@@ -38,27 +39,33 @@
     bp: { d: 3, s: 0, cc: 'bP', vf: 'h', p: 1, nombre: 'blanca con puntillo' },
     sbp: { d: 3, s: 1, cc: 'bP', vf: 'h', p: 1, nombre: 'silencio de blanca con puntillo' },
     r: { d: 4, s: 0, cc: 'r', vf: 'w', nombre: 'redonda' },
-    sr: { d: 4, s: 1, cc: 'r', vf: 'w', nombre: 'silencio de redonda' }
+    sr: { d: 4, s: 1, cc: 'r', vf: 'w', nombre: 'silencio de redonda' },
+    cc: { d: 1, s: 0, dos: true, cc: 'c', vf: '8', nombre: 'dos corcheas' },   // un tiempo con dos notas, unidas con barra
+    c: { d: 0.5, s: 0, cc: 'c', vf: '8', nombre: 'corchea' }                  // solo al escribir: la tarjeta es de una corchea
   };
   var SILENCIO_DE = { 1: 'sn', 2: 'sb', 3: 'sbp', 4: 'sr' };   // el silencio de cada duración
   /* Un grupo por cada serie de dictados. reparto: cuántos dictados de cada compás en un test de 10 (y de ahí, los compases).
      requiere: las figuras nuevas del grupo; alguna tiene que salir en el dictado. maxSilencio: tiempos de silencio seguidos
      que se permiten (2 si no se dice). vacio: el 2.º compás puede ser entero ese silencio (el 1.º no: empieza con nota).
-     prefiere: una figura que saldría poco; sale en casi la mitad de los dictados (ver generar). */
+     prefiere: una figura que saldría poco; sale en alrededor de la mitad de los dictados (ver generar). */
   var GRUPOS = {
-    // 2/4 solo tiene 3 dictados posibles (empieza con negra, algún silencio y dos negras seguidas): sale 2 veces
-    negras: { figs: ['n', 'sn'], texto: 'negras y silencios de negra', reparto: [2, 2, 3, 3, 3, 3, 4, 4, 4, 4] },
-    // con blancas, el 2/4 tiene 2 dictados (n n | b y b | n n): sale 2 veces
-    blancas: { figs: ['n', 'sn', 'b', 'sb'], texto: 'blancas, negras y sus silencios', requiere: ['b'], reparto: [2, 2, 3, 3, 3, 3, 4, 4, 4, 4] },
+    // 2/4 tiene pocos dictados (8 con negras, 7 con blancas): sale 3 veces
+    negras: { figs: ['n', 'sn'], texto: 'negras y silencios de negra', reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
+    blancas: { figs: ['n', 'sn', 'b', 'sb'], texto: 'blancas, negras y sus silencios', requiere: ['b'], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
     puntillo: { figs: ['n', 'sn', 'b', 'sb', 'bp', 'sbp'], texto: 'blancas con puntillo, blancas, negras y sus silencios', requiere: ['bp', 'sbp'], maxSilencio: 3, vacio: ['sbp'], prefiere: 'sbp', reparto: [3, 3, 3, 3, 3, 4, 4, 4, 4, 4] },
     // la redonda solo cabe en 4/4
-    redondas: { figs: ['n', 'sn', 'b', 'sb', 'bp', 'sbp', 'r', 'sr'], texto: 'redondas, blancas con puntillo, blancas, negras y sus silencios', requiere: ['r', 'sr'], maxSilencio: 4, vacio: ['sr'], prefiere: 'sr', reparto: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] }
+    redondas: { figs: ['n', 'sn', 'b', 'sb', 'bp', 'sbp', 'r', 'sr'], texto: 'redondas, blancas con puntillo, blancas, negras y sus silencios', requiere: ['r', 'sr'], maxSilencio: 4, vacio: ['sr'], prefiere: 'sr', reparto: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] },
+    // con corcheas: los mismos grupos con el de dos corcheas; el dictado lleva corcheas y la figura nueva (requiere: todas las listas)
+    'negras-c': { figs: ['n', 'sn', 'cc'], texto: 'negras, grupos de dos corcheas y silencios de negra', requiere: [['cc'], ['sn']], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
+    'blancas-c': { figs: ['n', 'sn', 'cc', 'b', 'sb'], texto: 'blancas, negras, grupos de dos corcheas y sus silencios', requiere: [['cc'], ['b', 'sb']], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
+    'puntillo-c': { figs: ['n', 'sn', 'cc', 'b', 'sb', 'bp', 'sbp'], texto: 'blancas con puntillo, blancas, negras, grupos de dos corcheas y sus silencios', requiere: [['cc'], ['bp', 'sbp']], maxSilencio: 3, vacio: ['sbp'], prefiere: 'sbp', reparto: [3, 3, 3, 3, 3, 4, 4, 4, 4, 4] },
+    'redondas-c': { figs: ['n', 'sn', 'cc', 'b', 'sb', 'bp', 'sbp', 'r', 'sr'], texto: 'redondas, blancas con puntillo, blancas, negras, grupos de dos corcheas y sus silencios', requiere: [['cc'], ['r', 'sr']], maxSilencio: 4, vacio: ['sr'], prefiere: 'sr', reparto: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] }
   };
   var compasesDelGrupo = function (g) { return g.reparto.filter(function (x, i, a) { return a.indexOf(x) === i; }); };
   /* Dónde puede empezar una figura de dos tiempos (b = tiempo del compás, desde 0): en 2/4, en el 1.º; en 3/4, la blanca
      en el 1.º o el 2.º y el silencio de blanca solo en el 1.º (en los tiempos 2-3 se escriben dos silencios de negra);
      en 4/4, en el 1.º o el 3.º, para que se vea la mitad del compás. Las de tres tiempos (Eduardo): en 3/4, el compás
-     entero; en 4/4, en el 1.º o el 2.º (el silencio no puede ir en el 1.º del compás 1 porque el dictado empieza con nota).
+     entero; en 4/4, en el 1.º o el 2.º.
      La redonda y su silencio, el compás de 4/4 entero. */
   function puede(f, b, t) {
     if (FIG[f].d === 1) return true;
@@ -76,20 +83,28 @@
     })(0, []);
     return out;
   }
-  /* Un ritmo es { t, c: [[figuras del compás 1], [del compás 2]] }. mapa: por tiempo, 'A' (empieza una nota), 'C' (sigue
-     sonando una blanca) o 'S' (silencio). */
-  function mapa(r) {
+  /* Un ritmo es { t, c: [[figuras del compás 1], [del compás 2]] }. mapa8: por corchea, 'A' (empieza una nota), 'C' (sigue
+     sonando) o 'S' (silencio). mapa: por tiempo, 'A' (empieza una nota), 'D' (dos notas: dos corcheas), 'C' o 'S'. */
+  function mapa8(r) {
     var m = [];
-    r.c.forEach(function (c) { c.forEach(function (f) { for (var k = 0; k < FIG[f].d; k++) m.push(FIG[f].s ? 'S' : k ? 'C' : 'A'); }); });
+    r.c.forEach(function (c) { c.forEach(function (f) {
+      if (FIG[f].dos) { m.push('A', 'A'); return; }
+      for (var k = 0; k < FIG[f].d * 2; k++) m.push(FIG[f].s ? 'S' : k ? 'C' : 'A');
+    }); });
+    return m;
+  }
+  function mapa(r) {
+    var m8 = mapa8(r), m = [];
+    for (var i = 0; i + 1 < m8.length; i += 2) m.push(m8[i] === 'A' && m8[i + 1] === 'A' ? 'D' : m8[i]);
     return m;
   }
   var clave = function (r) { return r.c.map(function (c) { return c.join(' '); }).join(' | '); };
   function valido(r, g) {
     var m = mapa(r), t = r.t, s = m.join('');
-    if (m[0] !== 'A') return false;                       // nunca empieza con silencio
-    if (s.indexOf('AA') < 0) return false;                 // dos negras seguidas: de ahí sale el pulso (sin ellas, el pulso es ambiguo)
-    if (s.slice(0, t).indexOf('A') < 0) return false;     // ningún compás en silencio (el 2.º sí, si el grupo lo permite: vacio)
-    if (s.slice(t).indexOf('A') < 0 && !(g.vacio && g.vacio.indexOf(r.c[1].join()) >= 0)) return false;
+    // (Hasta que hubo compás de entrada, también: no empezar con silencio y dos tiempos seguidos con nota para sacar el pulso.
+    // Con el metrónomo delante, Eduardo los quitó para que haya más variedad.)
+    if (!/[AD]/.test(s.slice(0, t))) return false;        // ningún compás en silencio (el 2.º sí, si el grupo lo permite: vacio)
+    if (!/[AD]/.test(s.slice(t)) && !(g.vacio && g.vacio.indexOf(r.c[1].join()) >= 0)) return false;
     if (s.indexOf(new Array((g.maxSilencio || 2) + 2).join('S')) >= 0) return false;   // como mucho, maxSilencio tiempos de silencio seguidos
     // Los ritmos que se MUESTRAN llevan agrupados los silencios seguidos que caben en uno solo (del grupo, y donde se puede
     // escribir): así cada sonido se escribe de una sola forma y dos opciones nunca suenan igual. Al escribir el alumno, en
@@ -118,12 +133,14 @@
      negra seguida de silencio; exigir también silencio dejaría el 2/4 sin dictados). Las respuestas que no son el bueno no
      necesitan cumplirlo. */
   function esDictado(r, g) {
-    if (g.requiere) return r.c.some(function (c) { return c.some(function (f) { return g.requiere.indexOf(f) >= 0; }); });
+    var lleva = function (lista) { return r.c.some(function (c) { return c.some(function (f) { return lista.indexOf(f) >= 0; }); }); };
+    if (g.requiere) return Array.isArray(g.requiere[0]) ? g.requiere.every(lleva) : lleva(g.requiere);   // varias listas: todas
     return mapa(r).indexOf('S') >= 0;
   }
   function dictados(g, t) { return todos(g, t).filter(function (r) { return esDictado(r, g); }); }
   /* prefiere: una figura que saldría poco (un silencio largo cabe en pocos ritmos). Un tercio de las veces se elige entre los
-     dictados que la llevan; el resto, entre todos (que también la pueden llevar): en total, casi la mitad (~45 %). */
+     dictados que la llevan; el resto, entre todos (que también la pueden llevar): en total, alrededor de la mitad (entre el
+     50 y el 56 %, según cuántos dictados del grupo la lleven). */
   function generar(g, t) {
     var c = dictados(g, t);
     if (g.prefiere && Math.random() < 1 / 3) {
@@ -157,8 +174,22 @@
 
   /* Audio: Sol4 en cada nota; suena casi toda su duración, para que el silencio que la sigue se oiga como hueco (y la
      blanca se distinga de la negra seguida de silencio). */
-  function eventos(r, spb) {
-    return lineal(r).filter(function (x) { return !FIG[x.f].s; }).map(function (x) { return { midi: SOL4, when: x.b * spb, dur: (FIG[x.f].d - 0.1) * spb }; });
+  /* El compás de entrada (Eduardo): un clic de metrónomo en cada tiempo, al tempo del dictado, con el 1.º acentuado */
+  function entrada(t, spb) {
+    var ev = [];
+    for (var k = 0; k < t; k++) ev.push({ click: true, acento: k === 0, when: k * spb, vel: 0.7 });
+    return ev;
+  }
+  /* desde: segundos de retraso (lo que dura el compás de entrada) */
+  function eventos(r, spb, desde) {
+    var ev = [], d0 = desde || 0;
+    lineal(r).forEach(function (x) {
+      var F = FIG[x.f];
+      if (F.s) return;
+      if (F.dos) ev.push({ midi: SOL4, when: d0 + x.b * spb, dur: 0.45 * spb }, { midi: SOL4, when: d0 + (x.b + 0.5) * spb, dur: 0.45 * spb });
+      else ev.push({ midi: SOL4, when: d0 + x.b * spb, dur: (F.d - (F.d < 1 ? 0.05 : 0.1)) * spb });
+    });
+    return ev;
   }
 
   /* Partitura. op.rojo[tiempo]: la figura que ocupa ese tiempo, en rojo. op.hasta: lo que falta desde ese tiempo, huecos invisibles. */
@@ -167,9 +198,9 @@
     var cs = [[], []], t = r.t;
     lineal(r).forEach(function (x) {
       if (op.hasta != null && x.b >= op.hasta) return;
-      var e = figura(x.f);
-      for (var k = 0; k < FIG[x.f].d; k++) if (op.rojo && op.rojo[x.b + k]) e.color = ROJO;
-      cs[x.c].push(e);
+      var rojo = false;
+      for (var k = 0; k < FIG[x.f].d; k++) if (op.rojo && op.rojo[x.b + k]) rojo = true;
+      eventosDe(x.f).forEach(function (e) { if (rojo) e.color = ROJO; cs[x.c].push(e); });
     });
     centrarSilencio(cs, t);
     if (op.hasta != null) for (var b = op.hasta; b < 2 * t; b++) cs[Math.floor(b / t)].push({ key: 'b/4', d: 'q', espacio: true });
@@ -185,6 +216,14 @@
     if (F.p) e.puntillo = 1;
     return e;
   }
+  var nBarra = 0;
+  /* Lo que se dibuja de una figura: el grupo de dos corcheas son dos corcheas unidas con barra */
+  function eventosDe(f) {
+    if (!FIG[f].dos) return [figura(f)];
+    var b = ++nBarra, a = figura(f), z = figura(f);
+    a.barra = b; z.barra = b;
+    return [a, z];
+  }
   /* Lo que escribe el alumno: figuras y barras ('|' barra de compás, '||' doble barra final), tal cual, aunque un compás
      tenga de más o de menos. rojo[i]: el elemento i, en rojo. Mientras no hay doble barra, el último compás queda abierto
      (sin barra) y, si tiene menos de un compás, se rellena con huecos invisibles para que no se vea encogido. */
@@ -193,11 +232,18 @@
     tokens.forEach(function (tk, i) {
       if (tk === '|') { cs.push([]); lleva = 0; return; }
       if (tk === '||') { fin = true; return; }
-      var e = figura(tk);
+      var e = figura(tk), c = cs[cs.length - 1], ant = c[c.length - 1];
       if (rojo && rojo[i]) e.color = ROJO;
-      cs[cs.length - 1].push(e); lleva += FIG[tk].d;
+      // la 2.ª corchea de un tiempo: con barra a la 1.ª, si esa empezaba en el tiempo
+      if (tk === 'c' && ant && ant.d === '8' && !ant.silencio && ant.barra === undefined && ant.abre) { var b2 = ++nBarra; ant.barra = b2; e.barra = b2; }
+      else if (tk === 'c' && lleva % 1 === 0) e.abre = true;
+      c.push(e); lleva += FIG[tk].d;
     });
-    if (!fin) for (var b = lleva; b < t; b++) cs[cs.length - 1].push({ key: 'b/4', d: 'q', espacio: true });
+    cs.forEach(function (c) { c.forEach(function (e) { delete e.abre; }); });
+    if (!fin) {
+      if (lleva % 1) { cs[cs.length - 1].push({ key: 'b/4', d: '8', espacio: true }); lleva += 0.5; }
+      for (var b = lleva; b < t; b++) cs[cs.length - 1].push({ key: 'b/4', d: 'q', espacio: true });
+    }
     centrarSilencio(cs, t);
     var f = { clave: 'sol', num: t, den: 4, compases: cs };
     if (fin) f.barraFinal = 'end'; else f.sinBarraFinal = true;
@@ -206,6 +252,7 @@
   function describir(r) {
     return 'Compás de ' + r.t + '/4: ' + r.c.map(function (c) { return c.map(function (f) { return FIG[f].nombre; }).join(', '); }).join(' | ');
   }
+  var numero = function (x) { return String(x).replace('.', ','); };   // 3,5 tiempos
   function dibujar(div, r, ancho, op) {
     return window.tmNotacion.dibujarAAncho(div, fila(r, op), ancho, { escala: (op && op.escala) || 0.9, id: 'dr', alt: (op && op.alt) || describir(r) });
   }
@@ -219,8 +266,12 @@
     porCompas.forEach(function (l, c) { if (l.length) partes.push(y(l) + (partes.length ? '' : ' tiempo') + ' del compás ' + (c + 1)); });
     return y(partes);
   }
-  /* Tiempos en los que dos ritmos suenan distinto (mapa) */
-  function difSonido(a, b) { var x = mapa(a), y2 = mapa(b), out = []; x.forEach(function (v, i) { if (v !== y2[i]) out.push(i); }); return out; }
+  /* Tiempos en los que dos ritmos suenan distinto: se compara corchea a corchea */
+  function difSonido(a, b) {
+    var x = mapa8(a), y2 = mapa8(b), out = [];
+    x.forEach(function (v, i) { if (v !== y2[i] && out.indexOf(Math.floor(i / 2)) < 0) out.push(Math.floor(i / 2)); });
+    return out;
+  }
 
   var CSS = [
     '.tm-aud-wrap .tm-dr-cifra{text-align:center;font-size:.9rem;color:#555;margin:-6px 0 12px}',
@@ -289,14 +340,16 @@
     function inicio() {
       wrap.innerHTML = '<div class="tm-card"><div class="tm-aud-ini">' +
         '<h2 class="tm-aud-tit">' + TEXTOS[modo].tit + ' — ' + TOTAL + ' dictados</h2>' +
-        '<p class="tm-aud-sub">' + TEXTOS[modo].sub + ' Compases de ' + compasesDelGrupo(grupo).map(function (x) { return x + '/4'; }).join(', ').replace(/, ([^,]*)$/, ' y $1') + '. Sube el volumen o usa auriculares.</p>' +
+        '<p class="tm-aud-sub">' + TEXTOS[modo].sub + ' Antes de cada audio suena un compás de metrónomo al mismo tempo, para que sepas la velocidad. Compases de ' + compasesDelGrupo(grupo).map(function (x) { return x + '/4'; }).join(', ').replace(/, ([^,]*)$/, ' y $1') + '. Sube el volumen o usa auriculares.</p>' +
         '<button class="tm-aud-btnplay" id="' + uid + '_go" type="button">Empezar</button></div></div>';
       $('_go').addEventListener('click', function () {
         $('_go').disabled = true; $('_go').textContent = 'Cargando…';
         window.tmNotacion.listo().then(function () {
           n = 0; aciertos = 0; vistos = {};
           var base = grupo.reparto;   // sin el mismo compás tres veces seguidas
-          for (var g = 0; g < 50; g++) { orden = barajar(base); if (!orden.some(function (x, i) { return i >= 2 && x === orden[i - 1] && x === orden[i - 2]; })) break; }
+          orden = barajar(base);
+          if (compasesDelGrupo(grupo).length > 1)   // con un solo compás (redondas: todo 4/4) no hay nada que evitar
+            for (var g = 0; g < 50; g++) { orden = barajar(base); if (!orden.some(function (x, i) { return i >= 2 && x === orden[i - 1] && x === orden[i - 2]; })) break; }
           montar(); siguiente();
         }, function () { $('_go').textContent = 'No se ha podido cargar. Recarga la página.'; });
       });
@@ -317,7 +370,7 @@
       if (modo === 'oir') medio = reproductor + '<p class="tm-dr-cifra" id="' + uid + '_cifra"></p><div class="tm-dr-opts" id="' + uid + '_opts" role="group" aria-label="Ritmos"></div>';
       else if (modo === 'leer') medio = '<div class="tm-dr-ritmo" id="' + uid + '_ritmo"></div><p class="tm-aud-estado" id="' + uid + '_estado" aria-live="polite"></p><div class="tm-dr-audios" id="' + uid + '_opts" role="group" aria-label="Audios"></div>';
       else medio = reproductor + '<p class="tm-dr-cifra" id="' + uid + '_cifra"></p><div class="tm-dr-esc" id="' + uid + '_esc"></div>' +
-        '<div class="tm-dr-pal" role="group" aria-label="Tarjetas">' + grupo.figs.concat(['|', '||']).map(function (f) {
+        '<div class="tm-dr-pal" role="group" aria-label="Tarjetas">' + grupo.figs.map(function (f) { return f === 'cc' ? 'c' : f; }).concat(['|', '||']).map(function (f) {
           return '<button type="button" class="tm-cc-carta" data-f="' + f + '"><span class="tm-dr-mini"></span><small>' + (FIG[f] ? FIG[f].nombre : f === '|' ? 'barra de compás' : 'doble barra final') + '</small></button>';
         }).join('') + '</div>' +
         '<div class="tm-dr-herr"><button type="button" id="' + uid + '_des">↶ Deshacer</button><button type="button" id="' + uid + '_bor">Borrar todo</button></div>' +
@@ -481,13 +534,13 @@
       else if (cs.length > 2) problemas.push('has puesto ' + (cs.length - 1) + ' barras de compás, y el dictado tiene dos compases: una barra en medio y la doble barra al final');
       cs.forEach(function (c, k) {
         var n = tiempos(c);
-        if (n !== t && cs.length > 1) problemas.push('el compás ' + (k + 1) + ' tiene ' + n + (n === 1 ? ' tiempo' : ' tiempos') + ', y en ' + t + '/4 caben ' + t);
+        if (n !== t && cs.length > 1) problemas.push('el compás ' + (k + 1) + ' tiene ' + numero(n) + (n === 1 ? ' tiempo' : ' tiempos') + ', y en ' + t + '/4 caben ' + t);
       });
       if (total === 2 * t) {   // cuenta lo que suena: los silencios se pueden escribir juntos o por separado
         var sonido = difSonido(bueno, plano);
-        sonido.forEach(function (x) { pos.forEach(function (q) { if (x >= q.b && x < q.b + q.d) rojo[q.i] = 1; }); });
+        sonido.forEach(function (x) { pos.forEach(function (q) { if (q.b < x + 1 && q.b + q.d > x) rojo[q.i] = 1; }); });   // la figura toca ese tiempo
         if (sonido.length) problemas.push((sonido.length === 1 ? 'el ritmo falla en ' : 'el ritmo falla en ' + sonido.length + ' tiempos: ') + dondeFalla(sonido, t) + ' (en rojo)');
-      } else problemas.push('en total has escrito ' + total + (total === 1 ? ' tiempo' : ' tiempos') + ', y el dictado dura ' + (2 * t) + ' (dos compases de ' + t + '/4)');
+      } else problemas.push('en total has escrito ' + numero(total) + (total === 1 ? ' tiempo' : ' tiempos') + ', y el dictado dura ' + (2 * t) + ' (dos compases de ' + t + '/4)');
       var ok = !problemas.length;
       if (ok) aciertos++;
       $('_badge').textContent = '✓ ' + aciertos;
@@ -550,8 +603,8 @@
       parar();
       var g = gen;
       sonando = cual; actualizarPlay();
-      if (!respondido && modo !== 'leer') $('_estado').textContent = 'Suena el dictado…';
-      window.tmPiano.playEvents(eventos(p, it.spb)).then(function (d) {
+      if (!respondido && modo !== 'leer') $('_estado').textContent = 'Compás de entrada…';
+      window.tmPiano.playEvents(entrada(it.t, it.spb).concat(eventos(p, it.spb, it.t * it.spb))).then(function (d) {
         if (g !== gen) return;
         if (!d) {   // sin sonido: no gasta la escucha
           sonando = -1;
@@ -560,12 +613,13 @@
           $('_estado').textContent = 'No se ha podido reproducir el sonido. Comprueba la conexión y vuelve a pulsar.';
           return;
         }
+        if (!respondido && modo !== 'leer') timers.push(setTimeout(function () { if (g === gen && !respondido) $('_estado').textContent = 'Suena el dictado…'; }, it.t * it.spb * 1000));
         timers.push(setTimeout(function () {
           if (g !== gen) return;
           sonando = -1;
           if (!respondido && modo !== 'leer') $('_estado').textContent = escuchas < MAX_ESCUCHAS ? (modo === 'oir' ? '¿Qué ritmo es?' : 'Escribe el ritmo con las tarjetas.') : 'Ya no quedan escuchas.';
           actualizarPlay();
-        }, (duracion(p) * it.spb + 0.5) * 1000));
+        }, ((duracion(p) + it.t) * it.spb + 0.5) * 1000));
       });
     }
     function resultado() {
@@ -578,5 +632,5 @@
   }
 
   window.tmDictadoRitmico = tmDictadoRitmico;
-  window.tmDictadoRitmicoDatos = { GRUPOS: GRUPOS, FIG: FIG, todos: todos, dictados: dictados, generar: generar, valido: valido, distractores: distractores, mapa: mapa, clave: clave, puede: puede, filaEscrita: filaEscrita, distancia: distancia, eventos: eventos, fila: fila, difSonido: difSonido };   // para las pruebas
+  window.tmDictadoRitmicoDatos = { GRUPOS: GRUPOS, FIG: FIG, todos: todos, dictados: dictados, generar: generar, valido: valido, distractores: distractores, mapa: mapa, mapa8: mapa8, clave: clave, puede: puede, filaEscrita: filaEscrita, distancia: distancia, eventos: eventos, fila: fila, difSonido: difSonido };   // para las pruebas
 })();

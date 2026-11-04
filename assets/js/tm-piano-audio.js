@@ -171,20 +171,40 @@
       }).catch(function () {});
   }
 
+  /* El clic del metrónomo (el sonido «clásico» de /herramientas/metronomo/, sintetizado igual): un golpe de ruido muy corto y un
+     tono que cae; más agudo en el tiempo fuerte (acento). */
+  var ruido = null;
+  function clickAt(c, when, acento, vel) {
+    if (!ruido) { ruido = c.createBuffer(1, Math.round(c.sampleRate * 0.01), c.sampleRate); var d = ruido.getChannelData(0); for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
+    var v = vel == null ? 1 : vel, f = acento ? 3000 : 2200, s = acento ? 0.042 : 0.028;
+    var n = c.createBufferSource(); n.buffer = ruido;
+    var hp = c.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.setValueAtTime(4000, when);
+    var gn = c.createGain(); gn.gain.setValueAtTime(0.9 * v, when); gn.gain.exponentialRampToValueAtTime(0.001, when + 0.004);
+    n.connect(hp).connect(gn).connect(salida(c)); n.start(when); n.stop(when + 0.006);
+    var o = c.createOscillator(); o.type = 'sine';
+    o.frequency.setValueAtTime(f, when); o.frequency.exponentialRampToValueAtTime(0.45 * f, when + s);
+    var go = c.createGain(); go.gain.setValueAtTime(1.1 * v, when); go.gain.exponentialRampToValueAtTime(0.001, when + s);
+    o.connect(go).connect(salida(c)); o.start(when); o.stop(when + s + 0.01);
+  }
   /* Reproduce notas con su momento y su duración exactos: ev = [{midi, when, dur, vel?}] (segundos desde ahora; vel = volumen relativo, 1 por defecto). Cada nota sostiene su duración
-     (la última, con su cola), lo que permite acordes que se mantienen sonando mientras entran otras notas (arpegiados) o notas repetidas. */
+     (la última, con su cola), lo que permite acordes que se mantienen sonando mientras entran otras notas (arpegiados) o notas repetidas.
+     Un evento { click: true, acento?, when, vel? } es un clic de metrónomo (el compás de entrada de los dictados rítmicos). */
   function playEvents(ev) {
     var c = ctx(); if (!c) return Promise.resolve(0);
     if (c.state === 'suspended') c.resume();
     if (!ev || !ev.length) return Promise.resolve(0);
-    var files = {}, fin = 0; ev.forEach(function (e) { files[sampOf(e.midi).file] = 1; fin = Math.max(fin, e.when + e.dur); });
+    var files = {}, fin = 0, notas = ev.filter(function (e) { return !e.click; });
+    notas.forEach(function (e) { files[sampOf(e.midi).file] = 1; fin = Math.max(fin, e.when + e.dur); });
     var g0 = gen;   // si se llama a stopAll() mientras cargan las muestras, no arranca
     return Promise.all(Object.keys(files).map(function (f) { return loadBuf(f).then(function (b) { return [f, b]; }); }))
       .then(function (arr) {
         if (g0 !== gen) return 0;
         var bmap = {}; arr.forEach(function (o) { bmap[o[0]] = o[1]; });
         var t0 = c.currentTime + 0.06;
-        ev.forEach(function (e) { startAt(c, e.midi, t0 + e.when, bmap, e.dur, e.when + e.dur >= fin - 1e-9, e.vel); });
+        ev.forEach(function (e) {
+          if (e.click) clickAt(c, t0 + e.when, e.acento, e.vel);
+          else startAt(c, e.midi, t0 + e.when, bmap, e.dur, e.when + e.dur >= fin - 1e-9, e.vel);
+        });
         return fin + 0.6;
       }).catch(function () { return 0; });
   }

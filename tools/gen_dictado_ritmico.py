@@ -26,13 +26,15 @@ FAQ_CORRIGE = ('¿Cómo se corrige?', 'Cuenta como acierto solo si está todo bi
 
 ESCUCHAS_LEER = ('<li><strong>Usa las escuchas por partes.</strong> Cada vez que pones un audio suenan los dos compases enteros, y tienes hasta tres escuchas de cada uno. '
                  'Puedes fijarte primero en el pulso y el primer compás, después en el segundo y, en otra escucha, comprobar el ritmo entero; o descartar enseguida los audios que no encajan con la partitura.</li>')
+FAQ_ENTRADA = ('¿Para qué es el compás de metrónomo del principio?', 'Para que sepas a qué velocidad va el dictado y dónde empieza el compás: antes de cada audio suena un clic de metrónomo en cada tiempo, más fuerte en el primero, al mismo tempo que el dictado. Cuenta con él y sigue contando por dentro mientras suena el ritmo, también en los silencios.')
+PASO_PULSO = ('<strong>Cuenta con el metrónomo.</strong> Antes del dictado suena un compás de metrónomo al mismo tempo, con el primer tiempo más fuerte: cuenta con él («1, 2…») y sigue contando por dentro durante todo el dictado, también cuando no suena nada.</li>')
 REGLAS = ('<p>Cada dictado se inventa al momento: <strong>dos compases de 2/4, 3/4 o 4/4</strong>, solo con <a href="/diccionario-musical/figuras-musicales/">negras y silencios de negra</a>, todo en la nota Sol al piano y a un tempo de entre 72 y 90 negras por minuto. '
-          'No suena ningún compás de entrada, así que el pulso se saca del propio ritmo. Para que se pueda, el dictado <strong>siempre empieza con una negra en el primer tiempo</strong>, tiene al menos <strong>dos negras seguidas</strong> (la distancia entre sus comienzos es la duración del pulso) y nunca lleva más de dos silencios seguidos ni un compás entero en silencio. '
-          'Cada test tiene 10 dictados: 2 en 2/4, 4 en 3/4 y 4 en 4/4, sin repetir ninguno.</p>')
+          'Antes del dictado suena un <strong>compás de metrónomo</strong> al mismo tempo, con el primer tiempo más fuerte, para que sepas la velocidad y dónde empieza el compás. Con él, el dictado puede empezar con silencio. Nunca lleva más de dos silencios seguidos ni un compás entero en silencio. '
+          'Cada test tiene 10 dictados: 3 en 2/4, 4 en 3/4 y 3 en 4/4, sin repetir ninguno.</p>')
 
 COMO = ('<h2>Cómo hacer un dictado rítmico</h2>\n\n<ol>\n'
-        '  <li><strong>Busca el pulso.</strong> Siempre hay al menos dos negras seguidas: la distancia entre sus comienzos es un tiempo. A partir de ahí, cuéntalo por dentro durante todo el dictado, también cuando no suena nada.</li>\n'
-        '  <li><strong>Cuenta los tiempos de cada compás.</strong> El primer tiempo siempre suena (el dictado empieza con negra): cuenta «1, 2» en 2/4, «1, 2, 3» en 3/4 o «1, 2, 3, 4» en 4/4, y vuelve a empezar en el compás siguiente.</li>\n'
+        '  <li>' + PASO_PULSO + '\n'
+        '  <li><strong>Cuenta los tiempos de cada compás.</strong> «1, 2» en 2/4, «1, 2, 3» en 3/4 o «1, 2, 3, 4» en 4/4, y vuelve a empezar en el compás siguiente. Sigue contando aunque el primer tiempo no suene: el dictado puede empezar con silencio.</li>\n'
         '  <li><strong>En cada tiempo, ¿suena o no suena?</strong> Si suena, es una negra; si no suena nada, es un silencio de negra. Un silencio no se oye: se cuenta. Por eso el pulso interior es lo más importante.</li>\n'
         '  <li><strong>Usa las escuchas por partes.</strong> En cada escucha suenan los dos compases, pero no hace falta atenderlo todo a la vez: en la primera, el pulso y el primer compás; en la segunda, el segundo; en la tercera, comprueba el dictado entero.</li>\n'
         '</ol>\n\n'
@@ -48,7 +50,7 @@ PAGS = [
        intro='<p>Escucha un ritmo de <strong>dos compases</strong> tocado en la nota Sol y elige cuál de los <strong>cuatro ritmos escritos</strong> es el que suena. Solo hay <strong>negras y silencios de negra</strong>, en compases de <strong>2/4, 3/4 o 4/4</strong>: es el primer paso del <strong>dictado rítmico</strong>, antes de escribirlo tú solo.</p>',
        uso='<p><strong>Cómo usar el ejercicio:</strong> pulsa <em>Empezar</em> y después <em>Escuchar</em>. Mientras suena ya puedes elegir el ritmo (A, B, C o D). Al responder se marca el bueno en verde y, si has fallado, en qué tiempos se diferencia el que elegiste. Los cuatro ritmos están en el mismo compás y se parecen mucho: el que no es se diferencia del bueno en uno o dos tiempos. Puedes escuchar el dictado hasta tres veces.</p>',
        faq=[('¿Qué es un dictado rítmico?', 'Es escuchar un ritmo y escribirlo, o reconocer su escritura: las figuras y los silencios, en su compás. Se practica en lenguaje musical desde los primeros cursos. En este ejercicio el dictado es de negras y silencios de negra, y se elige entre cuatro ritmos escritos.'),
-            ('¿Por qué no suena un compás de entrada?', 'Porque el pulso se saca del propio dictado: empieza directamente con una negra en el primer tiempo y tiene al menos dos negras seguidas, y la distancia entre sus comienzos es un tiempo. Desde ahí se cuenta por dentro hasta el final, también cuando no suena nada. Así se entrena el pulso interior, que es lo que hace falta para contar los silencios.'),
+            FAQ_ENTRADA,
             ('¿Cómo se oye un silencio de negra?', 'No se oye: se cuenta. Es un tiempo en el que no suena nada. Si cuentas el pulso por dentro, notarás que en ese tiempo no llega ninguna nota.'),
             ('¿Cuántas veces puedo escuchar el dictado?', 'Hasta tres veces, y puedes responder mientras suena. Después de responder puedes volver a escucharlo las veces que quieras para compararlo con lo escrito.')],
        siguiente='<p>Cuando aciertes casi siempre, da el paso siguiente: <a href="/ejercicios/auditivos/dictado-ritmico/negras-y-silencios/">escribir el dictado rítmico</a> con tarjetas, sin opciones. Y para el camino contrario, de la partitura al sonido, prueba <a href="/ejercicios/auditivos/dictado-ritmico/negras-y-silencios-que-audio-es/">¿qué audio es?</a></p>'),
@@ -62,7 +64,7 @@ PAGS = [
        uso='<p><strong>Cómo usar el ejercicio:</strong> pulsa <em>Empezar</em>, lee el ritmo y escucha los audios A, B, C y D (cada uno hasta tres veces, en el orden que quieras). Cuando sepas cuál es, pulsa <em>Es este</em> debajo de ese audio. Solo puedes elegir un audio que hayas escuchado. Al responder se marca el bueno y, si has fallado, ves escrito lo que sonaba en el que elegiste, con los tiempos distintos en rojo, y puedes volver a escuchar los cuatro para compararlos.</p>',
        faq=[('¿Qué es la lectura rítmica?', 'Leer un ritmo escrito y saber cómo suena: cuántos tiempos dura cada figura y dónde hay silencio. Es la otra cara del dictado rítmico: en el dictado se va del sonido a la partitura, y en la lectura, de la partitura al sonido.'),
             ('¿En qué se diferencian los audios?', 'Los cuatro están en el mismo compás y al mismo tempo, y se parecen mucho: los que no son se diferencian del bueno en uno o dos tiempos, en los que suena una negra donde hay silencio o al revés.'),
-            ('¿Por qué no hay compás de entrada?', 'Porque el pulso se saca del propio ritmo: todos los audios empiezan con una negra en el primer tiempo y tienen al menos dos negras seguidas, y la distancia entre sus comienzos es un tiempo.'),
+            FAQ_ENTRADA,
             ('¿Cuántas veces puedo escuchar cada audio?', 'Hasta tres veces cada uno antes de responder. Después de responder puedes escucharlos las veces que quieras.')],
        siguiente='<p>Para el camino del sonido a la partitura tienes <a href="/ejercicios/auditivos/dictado-ritmico/negras-y-silencios-que-ritmo-suena/">¿qué ritmo suena?</a>, con cuatro ritmos para elegir, y <a href="/ejercicios/auditivos/dictado-ritmico/negras-y-silencios/">el dictado rítmico</a> completo, en el que lo escribes tú.</p>'),
   dict(slug='dictado-ritmico/negras-y-silencios', modo='escribir', grupo='negras', miga='Negras y silencios', corto='Dictado rítmico',
@@ -71,23 +73,23 @@ PAGS = [
        desc='Dictado rítmico online gratis: suena un ritmo de dos compases (2/4, 3/4 o 4/4) en la nota Sol y lo escribes con tarjetas de negra y silencio de negra. Corrección tiempo a tiempo.',
        ld='Dictado rítmico online gratis: suena un ritmo de dos compases con negras y silencios de negra y se escribe con tarjetas, tiempo a tiempo. Corrección con los tiempos fallados en rojo.',
        teaches='Escribir al dictado un ritmo de negras y silencios de negra en 2/4, 3/4 y 4/4',
-       intro='<p>Escucha un ritmo de <strong>dos compases</strong> en la nota Sol y <strong>escríbelo</strong> con las tarjetas de <strong>negra</strong> y <strong>silencio de negra</strong>, y pon tú la <strong>barra de compás</strong> y la <strong>doble barra final</strong>. Es el <strong>dictado rítmico</strong> propiamente dicho, sin opciones entre las que elegir, en compases de <strong>2/4, 3/4 y 4/4</strong>. Al corregir se te dice si a algún compás le sobran o le faltan tiempos o si falta alguna barra; y si la duración total es la correcta, lo que suena distinto sale en rojo.</p>',
+       intro='<p>Escucha un ritmo de <strong>dos compases</strong> en la nota Sol y <strong>escríbelo</strong> con las tarjetas de <strong>negra</strong> y <strong>silencio de negra</strong>, y pon tú la <strong>barra de compás</strong> y la <strong>doble barra final</strong>. Es el <strong>dictado rítmico</strong> propiamente dicho, sin opciones entre las que elegir, en compases de <strong>2/4, 3/4 y 4/4</strong>.</p>',
        uso=USO_ESCRIBIR,
-       faq=[('¿Cómo se hace un dictado rítmico?', 'Primero se busca el pulso, que en este ejercicio sale de la distancia entre dos negras seguidas (siempre hay al menos una pareja). Después se cuentan los tiempos de cada compás y, en cada tiempo, se decide si suena (negra) o no suena (silencio de negra). Las escuchas se reparten: el primer compás, el segundo y una para comprobar.'),
+       faq=[('¿Cómo se hace un dictado rítmico?', 'Primero se coge el pulso con el compás de metrónomo que suena antes del dictado, y se sigue contando por dentro. Después se cuentan los tiempos de cada compás y, en cada tiempo, se decide si suena (negra) o no suena (silencio de negra). Las escuchas se reparten: el primer compás, el segundo y una para comprobar.'),
             ('¿Por qué solo negras y silencios de negra?', 'Porque es el primer dictado rítmico: un tiempo, una figura. Así se entrena lo esencial, que es llevar el pulso por dentro y contar los silencios, sin tener que pensar en duraciones distintas.'),
-            ('¿Por qué no suena un compás de entrada?', 'Porque el pulso se saca del propio dictado: empieza directamente con una negra en el primer tiempo y tiene al menos dos negras seguidas. El compás sí se dice antes de escuchar, para que sepas cuántos tiempos tiene cada compás.'),
+            FAQ_ENTRADA,
             FAQ_CORRIGE, FAQ_BARRAS],
        siguiente='<p>Si te cuesta, empieza por <a href="/ejercicios/auditivos/dictado-ritmico/negras-y-silencios-que-ritmo-suena/">¿qué ritmo suena?</a>, en el que eliges entre cuatro ritmos escritos, o por <a href="/ejercicios/auditivos/dictado-ritmico/negras-y-silencios-que-audio-es/">¿qué audio es?</a>, que va de la partitura al sonido. Las tarjetas son las mismas que en <a href="/ejercicios/compases/completar-compas/">completar compases</a>, donde se practica la escritura del ritmo con todas las figuras.</p>'),
 ]
 
 REGLAS_B = ('<p>Cada dictado se inventa al momento: <strong>dos compases de 2/4, 3/4 o 4/4</strong> con <a href="/diccionario-musical/figuras-musicales/">blancas, negras, silencios de blanca y silencios de negra</a>, todo en la nota Sol al piano y a un tempo de entre 72 y 90 negras por minuto. '
-            'Siempre hay <strong>al menos una blanca</strong>, que es lo nuevo de este grupo. No suena ningún compás de entrada: el dictado <strong>empieza con una nota en el primer tiempo</strong> (negra o blanca) y tiene al menos <strong>dos negras seguidas</strong>, cuyos comienzos marcan la duración del pulso. Nunca hay más de dos tiempos de silencio seguidos ni un compás entero en silencio. '
+            'Siempre hay <strong>al menos una blanca</strong>, que es lo nuevo de este grupo. Antes del dictado suena un <strong>compás de metrónomo</strong> al mismo tempo, con el primer tiempo más fuerte, para que sepas la velocidad y dónde empieza el compás. El dictado puede empezar con silencio. Nunca hay más de dos tiempos de silencio seguidos ni un compás entero en silencio. '
             'Las notas se mantienen sonando casi hasta el final de su duración: así se distingue una blanca, que continúa durante dos tiempos, de una negra, cuyo sonido se corta después del primero.</p>\n\n'
-            '<p>En los ritmos escritos del ejercicio, las figuras y los silencios de dos tiempos respetan la agrupación habitual de cada compás: en 4/4, la blanca y el silencio de blanca empiezan en el 1.er o el 3.er tiempo; en 3/4, la blanca puede empezar en el 1.º o el 2.º, y el silencio de blanca, en el 1.º (dos tiempos de silencio en el 2.º y el 3.º aparecen como dos silencios de negra); en 2/4, ocupan el compás entero. Al escribir el dictado, un silencio de blanca o dos de negra valen igual: suenan lo mismo. '
-            'Cada test tiene 10 dictados: 2 en 2/4 (con dos compases de 2/4 y estas reglas solo caben dos ritmos), 4 en 3/4 y 4 en 4/4, sin repetir ninguno.</p>')
+            '<p>En los ritmos escritos del ejercicio, las figuras y los silencios de dos tiempos respetan la agrupación habitual de cada compás: en 4/4, la blanca y el silencio de blanca empiezan en el 1.er o el 3.er tiempo; en 3/4, la blanca puede empezar en el 1.º o el 2.º, y el silencio de blanca, en el 1.º (dos tiempos de silencio en el 2.º y el 3.º aparecen como dos silencios de negra); en 2/4, la blanca ocupa el compás entero (su silencio no sale en 2/4, porque sería un compás entero en silencio). Al escribir el dictado, un silencio de blanca o dos de negra valen igual: suenan lo mismo. '
+            'Cada test tiene 10 dictados: 3 en 2/4, 4 en 3/4 y 3 en 4/4, sin repetir ninguno.</p>')
 COMO_B = ('<h2>Cómo hacer un dictado rítmico con blancas</h2>\n\n<ol>\n'
-          '  <li><strong>Busca el pulso.</strong> Siempre hay al menos dos negras seguidas: la distancia entre sus comienzos es un tiempo. Cuéntalo por dentro durante todo el dictado.</li>\n'
-          '  <li><strong>Identifica el compás y cuenta sus tiempos.</strong> El compás se dice antes de escuchar, y el primer tiempo siempre suena: desde ahí, cuenta «1, 2», «1, 2, 3» o «1, 2, 3, 4» y vuelve a empezar en cada compás.</li>\n'
+          '  <li>' + PASO_PULSO + '\n'
+          '  <li><strong>Identifica el compás y cuenta sus tiempos.</strong> El compás se dice antes de escuchar: cuenta «1, 2», «1, 2, 3» o «1, 2, 3, 4» desde el compás de metrónomo y vuelve a empezar en cada compás, aunque el primer tiempo no suene.</li>\n'
           '  <li><strong>Escucha qué sucede en cada tiempo.</strong> Si empieza una nota y continúa sonando durante el tiempo siguiente, es una blanca. Si suena durante un tiempo y se corta al comenzar el siguiente, es una negra seguida de un silencio. Si no suena nada durante dos tiempos, es un silencio de dos tiempos: un silencio de blanca o dos de negra, que suenan igual.</li>\n'
           '  <li><strong>Usa las escuchas por partes.</strong> En cada escucha suenan los dos compases, pero no hace falta atenderlo todo a la vez: en la primera, el pulso y el primer compás; en la segunda, el segundo; en la tercera, comprueba el dictado entero.</li>\n'
           '</ol>\n\n'
@@ -103,7 +105,7 @@ PAGS += [
        intro='<p>Escucha un ritmo de <strong>dos compases</strong> tocado en la nota Sol y elige cuál de los <strong>cuatro ritmos escritos</strong> es el que suena. Ahora hay <strong>blancas, negras, silencios de blanca y silencios de negra</strong>, en compases de <strong>2/4, 3/4 o 4/4</strong>. La clave es oír cuánto dura cada nota: la blanca sigue sonando en el segundo tiempo y la negra no.</p>',
        uso='<p><strong>Cómo usar el ejercicio:</strong> pulsa <em>Empezar</em> y después <em>Escuchar</em>. Mientras suena ya puedes elegir el ritmo (A, B, C o D). Al responder se marca el bueno en verde y, si has fallado, en qué tiempos se diferencia el que elegiste. Los cuatro ritmos se parecen mucho: el que no es cambia uno o dos tiempos, a menudo una blanca por una negra y un silencio. Puedes escuchar el dictado hasta tres veces.</p>',
        faq=[('¿Cómo distingo una blanca de una negra seguida de silencio?', 'Por cuándo se corta el sonido. Las dos empiezan en el mismo tiempo y ocupan dos tiempos, pero la blanca sigue sonando en el segundo y la negra se corta al acabar el primero, y el segundo tiempo queda en silencio.'),
-            ('¿Por qué no hay compás de entrada?', 'Porque el pulso se saca del propio dictado: empieza directamente con una nota en el primer tiempo y tiene al menos dos negras seguidas, y la distancia entre sus comienzos es un tiempo. Desde ahí se cuenta por dentro hasta el final.'),
+            FAQ_ENTRADA,
             ('¿Es lo mismo un silencio de blanca que dos de negra?', 'Sí: duran lo mismo y suenan igual, dos tiempos sin sonido. En los ritmos escritos del ejercicio, dos tiempos de silencio que empiezan en el 1.er tiempo del compás (o en el 3.º en 4/4) aparecen como silencio de blanca, y en el resto de sitios, como dos de negra.'),
             ('¿Cuántas veces puedo escuchar el dictado?', 'Hasta tres veces, y puedes responder mientras suena. Después de responder puedes volver a escucharlo las veces que quieras.')],
        siguiente='<p>Cuando aciertes casi siempre, prueba a <a href="' + D + 'blancas-negras-y-silencios/">escribir el dictado con blancas</a> con tarjetas. Si todavía te cuesta el pulso, vuelve al grupo de <a href="' + D + 'negras-y-silencios-que-ritmo-suena/">negras y silencios de negra</a>.</p>'),
@@ -118,7 +120,7 @@ PAGS += [
        uso='<p><strong>Cómo usar el ejercicio:</strong> pulsa <em>Empezar</em>, lee el ritmo y escucha los audios A, B, C y D (cada uno hasta tres veces, en el orden que quieras). Cuando sepas cuál es, pulsa <em>Es este</em> debajo de ese audio. Solo puedes elegir un audio que hayas escuchado. Al responder se marca el bueno y, si has fallado, ves escrito lo que sonaba en el que elegiste, con los tiempos distintos en rojo.</p>',
        faq=[('¿En qué se diferencian los audios?', 'Los cuatro audios tienen el mismo compás y el mismo tempo. Los incorrectos cambian uno o dos tiempos respecto a la partitura; a menudo, una blanca por una negra seguida de silencio, o al revés. Por eso hay que escuchar cuánto dura cada nota.'),
             ('¿Cómo suena una blanca?', 'Dura dos tiempos: empieza en un tiempo y sigue sonando durante el siguiente. Una negra dura uno: si detrás hay un silencio, el sonido se corta y queda un tiempo sin nada.'),
-            ('¿Por qué no hay compás de entrada?', 'Porque el pulso se saca del propio ritmo: todos los audios empiezan con una nota en el primer tiempo y tienen al menos dos negras seguidas, y la distancia entre sus comienzos es un tiempo.'),
+            FAQ_ENTRADA,
             ('¿Cuántas veces puedo escuchar cada audio?', 'Hasta tres veces cada uno antes de responder. Después de responder puedes escucharlos las veces que quieras.')],
        siguiente='<p>Para el camino del sonido a la partitura tienes <a href="' + D + 'blancas-negras-y-silencios-que-ritmo-suena/">¿qué ritmo suena?</a> y <a href="' + D + 'blancas-negras-y-silencios/">el dictado con blancas</a>, en el que lo escribes tú. Y si quieres repasar, el mismo ejercicio con <a href="' + D + 'negras-y-silencios-que-audio-es/">negras y silencios de negra</a>.</p>'),
   dict(slug='dictado-ritmico/blancas-negras-y-silencios', modo='escribir', grupo='blancas', corto='Blancas y negras', miga='Blancas, negras y silencios',
@@ -128,21 +130,21 @@ PAGS += [
        desc='Dictado rítmico online gratis: suena un ritmo de dos compases (2/4, 3/4 o 4/4) y lo escribes con tarjetas de blanca, negra, silencio de blanca y silencio de negra. Corrección al momento.',
        ld='Dictado rítmico online gratis: suena un ritmo de dos compases con blancas, negras y sus silencios y se escribe con tarjetas. Corrección con los tiempos fallados en rojo.',
        teaches='Escribir al dictado un ritmo de blancas, negras y sus silencios en 2/4, 3/4 y 4/4, con sus barras de compás',
-       intro='<p>Escucha un ritmo de <strong>dos compases</strong> en la nota Sol y <strong>escríbelo</strong> con las tarjetas de <strong>blanca, negra, silencio de blanca y silencio de negra</strong>, y pon tú la barra de compás y la doble barra final, en compases de <strong>2/4, 3/4 y 4/4</strong>. Al corregir se te dice si a algún compás le sobran o le faltan tiempos o si falta alguna barra; y si la duración total es la correcta, lo que suena distinto sale en rojo.</p>',
+       intro='<p>Escucha un ritmo de <strong>dos compases</strong> en la nota Sol y <strong>escríbelo</strong> con las tarjetas de <strong>blanca, negra, silencio de blanca y silencio de negra</strong>, y pon tú la barra de compás y la doble barra final, en compases de <strong>2/4, 3/4 y 4/4</strong>.</p>',
        uso=USO_ESCRIBIR,
-       faq=[FAQ_CORRIGE, FAQ_BARRAS,
+       faq=[FAQ_CORRIGE, FAQ_BARRAS, FAQ_ENTRADA,
             ('¿Y si escribo dos silencios de negra donde va uno de blanca?', 'Está bien: duran lo mismo y suenan igual. Al corregir cuenta lo que suena, así que puedes escribir dos tiempos de silencio con un silencio de blanca o con dos de negra.'),
             ('¿Cómo distingo una blanca de una negra seguida de silencio?', 'Por cuándo se corta el sonido: la blanca sigue sonando en el segundo tiempo y la negra se corta al acabar el primero.')],
        siguiente='<p>Si te cuesta, empieza por <a href="' + D + 'blancas-negras-y-silencios-que-ritmo-suena/">¿qué ritmo suena?</a>, en el que eliges entre cuatro ritmos escritos, o por <a href="' + D + 'blancas-negras-y-silencios-que-audio-es/">¿qué audio es?</a>. El grupo anterior es el de <a href="' + D + 'negras-y-silencios/">negras y silencios de negra</a>, y el siguiente, el de <a href="' + D + 'blancas-con-puntillo/">blancas con puntillo</a>; todos los grupos están en el <a href="' + D + '">índice de dictados rítmicos</a>.</p>'),
 ]
 
 REGLAS_P = ('<p>Cada dictado se inventa al momento: <strong>dos compases de 3/4 o 4/4</strong> (la blanca con puntillo dura tres tiempos y no cabe en un compás de 2/4) con <a href="/diccionario-musical/figuras-musicales/">blancas con puntillo, blancas, negras y sus silencios</a>, todo en la nota Sol al piano y a un tempo de entre 72 y 90 negras por minuto. '
-            'Siempre hay <strong>una figura de tres tiempos</strong>: la blanca con puntillo o su silencio. No suena ningún compás de entrada: el dictado <strong>empieza con una nota en el primer tiempo</strong> y tiene al menos <strong>dos negras seguidas</strong>, cuyos comienzos marcan la duración del pulso. Puede haber hasta tres tiempos de silencio seguidos, los del silencio de blanca con puntillo.</p>\n\n'
-            '<p>Dónde va cada figura de tres tiempos: en 3/4 ocupa el compás entero (por eso el silencio de blanca con puntillo solo puede ser el 2.º compás); en 4/4 empieza en el 1.º o en el 2.º tiempo (el silencio, desde el 2.º tiempo del primer compás, porque el dictado empieza con nota). '
+            'Siempre hay <strong>una figura de tres tiempos</strong>: la blanca con puntillo o su silencio. Antes del dictado suena un <strong>compás de metrónomo</strong> al mismo tempo, con el primer tiempo más fuerte, para que sepas la velocidad y dónde empieza el compás. El dictado puede empezar con silencio. Puede haber hasta tres tiempos de silencio seguidos, los del silencio de blanca con puntillo.</p>\n\n'
+            '<p>Dónde va cada figura de tres tiempos: en 3/4 ocupa el compás entero (el silencio de blanca con puntillo solo puede ser el 2.º compás, porque el primero nunca va entero en silencio); en 4/4 empieza en el 1.º o en el 2.º tiempo. '
             'En los ritmos escritos del ejercicio, cuando la posición en el compás lo permite, los silencios seguidos que caben en uno solo aparecen juntos: dos tiempos en el 1.º (o en el 3.º en 4/4), como silencio de blanca, y tres tiempos, como silencio de blanca con puntillo. Al escribir el dictado vale cualquier forma que sume lo mismo, porque suena igual. '
             'Cada test tiene 10 dictados: 5 en 3/4 y 5 en 4/4, sin repetir ninguno.</p>')
 COMO_P = ('<h2>Cómo hacer un dictado rítmico con blancas con puntillo</h2>\n\n<ol>\n'
-          '  <li><strong>Busca el pulso.</strong> Siempre hay al menos dos negras seguidas: la distancia entre sus comienzos es un tiempo. Cuéntalo por dentro durante todo el dictado.</li>\n'
+          '  <li>' + PASO_PULSO + '\n'
           '  <li><strong>Cuenta los tiempos de cada compás.</strong> El compás se dice antes de escuchar: «1, 2, 3» en 3/4 o «1, 2, 3, 4» en 4/4, y vuelves a empezar en cada compás.</li>\n'
           '  <li><strong>Cuenta cuánto dura cada nota.</strong> Una negra, un tiempo; una blanca, dos; una blanca con puntillo, tres. La blanca con puntillo se distingue de la blanca en que sigue sonando un tiempo más: en 3/4 llena el compás.</li>\n'
           '  <li><strong>Usa las escuchas por partes.</strong> En cada escucha suenan los dos compases, pero no hace falta atenderlo todo a la vez: en la primera, el pulso y el primer compás; en la segunda, el segundo; en la tercera, comprueba el dictado entero.</li>\n'
@@ -160,7 +162,7 @@ PAGS += [
        uso='<p><strong>Cómo usar el ejercicio:</strong> pulsa <em>Empezar</em> y después <em>Escuchar</em>. Mientras suena ya puedes elegir el ritmo (A, B, C o D). Al responder se marca el bueno en verde y, si has fallado, en qué tiempos se diferencia el que elegiste. Los cuatro ritmos se parecen mucho: el que no es cambia uno o dos tiempos, por ejemplo una blanca con puntillo por una blanca y un silencio. Puedes escuchar el dictado hasta tres veces.</p>',
        faq=[('¿Cómo distingo una blanca con puntillo de una blanca?', 'Por cuánto dura: la blanca con puntillo suena tres tiempos y la blanca, dos. Si después de una blanca sigue sonando la nota en el tiempo siguiente, es una blanca con puntillo; si se corta, es una blanca seguida de silencio o de otra nota.'),
             ('¿Por qué no hay dictados en 2/4?', 'Porque la blanca con puntillo dura tres tiempos y no cabe dentro de un compás de dos. Se podría repartir entre dos compases con una ligadura, pero en estos dictados no hay ligaduras.'),
-            ('¿Por qué no hay compás de entrada?', 'Porque el pulso se saca del propio dictado: empieza directamente con una nota en el primer tiempo y tiene al menos dos negras seguidas, y la distancia entre sus comienzos es un tiempo.'),
+            FAQ_ENTRADA,
             ('¿Cuántas veces puedo escuchar el dictado?', 'Hasta tres veces, y puedes responder mientras suena. Después de responder puedes volver a escucharlo las veces que quieras.')],
        siguiente='<p>Cuando aciertes casi siempre, prueba a <a href="' + D + 'blancas-con-puntillo/">escribir el dictado con blancas con puntillo</a>. Si te cuesta distinguir las duraciones, vuelve al grupo de <a href="' + D + 'blancas-negras-y-silencios-que-ritmo-suena/">blancas, negras y sus silencios</a>.</p>'),
   dict(slug='dictado-ritmico/blancas-con-puntillo-que-audio-es', modo='leer', grupo='puntillo', corto='Con puntillo: ¿qué audio es?',
@@ -174,7 +176,7 @@ PAGS += [
        uso='<p><strong>Cómo usar el ejercicio:</strong> pulsa <em>Empezar</em>, lee el ritmo y escucha los audios A, B, C y D (cada uno hasta tres veces, en el orden que quieras). Cuando sepas cuál es, pulsa <em>Es este</em> debajo de ese audio. Solo puedes elegir un audio que hayas escuchado. Al responder se marca el bueno y, si has fallado, ves escrito lo que sonaba en el que elegiste, con los tiempos distintos en rojo.</p>',
        faq=[('¿En qué se diferencian los audios?', 'Los cuatro están en el mismo compás y al mismo tempo; los que no son cambian uno o dos tiempos. Muchas veces la diferencia está en la duración: una blanca con puntillo por una blanca y un silencio, o al revés.'),
             ('¿Cuánto dura una blanca con puntillo?', 'Tres tiempos en 3/4 y 4/4: los dos de la blanca y uno más del puntillo, que alarga la figura la mitad de su valor.'),
-            ('¿Por qué no hay compás de entrada?', 'Porque el pulso se saca del propio ritmo: todos los audios empiezan con una nota en el primer tiempo y tienen al menos dos negras seguidas, y la distancia entre sus comienzos es un tiempo.'),
+            FAQ_ENTRADA,
             ('¿Cuántas veces puedo escuchar cada audio?', 'Hasta tres veces cada uno antes de responder. Después de responder puedes escucharlos las veces que quieras.')],
        siguiente='<p>Para el camino del sonido a la partitura tienes <a href="' + D + 'blancas-con-puntillo-que-ritmo-suena/">¿qué ritmo suena?</a> y <a href="' + D + 'blancas-con-puntillo/">el dictado con blancas con puntillo</a>. Y para repasar, el mismo ejercicio con <a href="' + D + 'blancas-negras-y-silencios-que-audio-es/">blancas, negras y sus silencios</a>.</p>'),
   dict(slug='dictado-ritmico/blancas-con-puntillo', modo='escribir', grupo='puntillo', corto='Blancas con puntillo', miga='Blancas con puntillo',
@@ -184,21 +186,21 @@ PAGS += [
        desc='Dictado rítmico online gratis: suena un ritmo de dos compases (3/4 o 4/4) y lo escribes con tarjetas de blanca con puntillo, blanca, negra y sus silencios, con las barras de compás. Corrección al momento.',
        ld='Dictado rítmico online gratis: suena un ritmo de dos compases con blancas con puntillo, blancas, negras y sus silencios y se escribe con tarjetas, con las barras de compás.',
        teaches='Escribir al dictado un ritmo con blancas con puntillo, blancas, negras y sus silencios en 3/4 y 4/4, con las barras de compás',
-       intro='<p>Escucha un ritmo de <strong>dos compases</strong> en la nota Sol y <strong>escríbelo</strong> con las tarjetas de <strong>blanca con puntillo, blanca, negra y sus silencios</strong>, en compases de <strong>3/4 y 4/4</strong>. Las barras las pones tú: la barra de compás y la doble barra final. Al corregir se te dice si a algún compás le sobran o le faltan tiempos o si falta alguna barra; y si la duración total es la correcta, lo que suena distinto sale en rojo.</p>',
+       intro='<p>Escucha un ritmo de <strong>dos compases</strong> en la nota Sol y <strong>escríbelo</strong> con las tarjetas de <strong>blanca con puntillo, blanca, negra y sus silencios</strong>, en compases de <strong>3/4 y 4/4</strong>. Las barras las pones tú: la barra de compás y la doble barra final.</p>',
        uso=USO_ESCRIBIR,
-       faq=[FAQ_CORRIGE, FAQ_BARRAS,
+       faq=[FAQ_CORRIGE, FAQ_BARRAS, FAQ_ENTRADA,
             ('¿Puedo escribir tres tiempos de silencio con silencios más pequeños?', 'Sí: un silencio de blanca con puntillo, un silencio de blanca y uno de negra o tres de negra duran lo mismo y suenan igual, así que al corregir valen todos. En los ritmos escritos del ejercicio, tres tiempos de silencio aparecen como silencio de blanca con puntillo: en 3/4, el compás entero; en 4/4, empezando en el 1.º o en el 2.º tiempo.'),
             ('¿Por qué no hay dictados en 2/4?', 'Porque la blanca con puntillo dura tres tiempos y no cabe dentro de un compás de dos. Se podría repartir entre dos compases con una ligadura, pero en estos dictados no hay ligaduras.')],
        siguiente='<p>Si te cuesta, empieza por <a href="' + D + 'blancas-con-puntillo-que-ritmo-suena/">¿qué ritmo suena?</a> o por <a href="' + D + 'blancas-con-puntillo-que-audio-es/">¿qué audio es?</a>. El grupo anterior es el de <a href="' + D + 'blancas-negras-y-silencios/">blancas, negras y sus silencios</a>, y el siguiente, el de <a href="' + D + 'redondas/">redondas</a>; todos los grupos están en el <a href="' + D + '">índice de dictados rítmicos</a>.</p>'),
 ]
 
 REGLAS_R = ('<p>Cada dictado se inventa al momento: <strong>dos compases de 4/4</strong> (la redonda dura cuatro tiempos y no cabe en 2/4 ni en 3/4) con <a href="/diccionario-musical/figuras-musicales/">redondas, blancas con puntillo, blancas, negras y sus silencios</a>, todo en la nota Sol al piano y a un tempo de entre 72 y 90 negras por minuto. '
-            'Siempre hay <strong>una redonda o un silencio de redonda</strong>, que ocupan un compás entero. No suena ningún compás de entrada: el dictado <strong>empieza con una nota en el primer tiempo</strong> y tiene al menos <strong>dos negras seguidas</strong>, cuyos comienzos marcan la duración del pulso; como la redonda llena un compás, las dos negras están en el otro.</p>\n\n'
-            '<p>El silencio de redonda solo puede ser el 2.º compás, porque el dictado empieza con nota. Puede haber hasta cuatro tiempos de silencio seguidos, los de ese silencio. '
+            'Siempre hay <strong>una redonda o un silencio de redonda</strong>, que ocupan un compás entero. Antes del dictado suena un <strong>compás de metrónomo</strong> al mismo tempo, con el primer tiempo más fuerte, para que sepas la velocidad y dónde empieza el compás. El dictado puede empezar con silencio.</p>\n\n'
+            '<p>El silencio de redonda solo puede ser el 2.º compás, porque el primero nunca va entero en silencio. Puede haber hasta cuatro tiempos de silencio seguidos, los de ese silencio. '
             'En los ritmos escritos del ejercicio, cuando la posición en el compás lo permite, los silencios seguidos que caben en uno solo aparecen juntos; al escribir el dictado vale cualquier forma que sume lo mismo, porque suena igual. '
             'Cada test tiene 10 dictados en 4/4, sin repetir ninguno.</p>')
 COMO_R = ('<h2>Cómo hacer un dictado rítmico con redondas</h2>\n\n<ol>\n'
-          '  <li><strong>Busca el pulso.</strong> Siempre hay al menos dos negras seguidas: la distancia entre sus comienzos es un tiempo. Cuéntalo por dentro durante todo el dictado.</li>\n'
+          '  <li>' + PASO_PULSO + '\n'
           '  <li><strong>Cuenta los cuatro tiempos de cada compás.</strong> «1, 2, 3, 4» y vuelves a empezar: la redonda empieza en el «1» y sigue sonando hasta el «4».</li>\n'
           '  <li><strong>Cuenta cuánto dura cada nota.</strong> Una negra, un tiempo; una blanca, dos; una blanca con puntillo, tres; una redonda, cuatro. La redonda se distingue de la blanca con puntillo en que sigue sonando en el 4.º tiempo.</li>\n'
           '  <li><strong>Usa las escuchas por partes.</strong> En cada escucha suenan los dos compases, pero no hace falta atenderlo todo a la vez: en la primera, el pulso y el primer compás; en la segunda, el segundo; en la tercera, comprueba el dictado entero.</li>\n'
@@ -216,7 +218,7 @@ PAGS += [
        uso='<p><strong>Cómo usar el ejercicio:</strong> pulsa <em>Empezar</em> y después <em>Escuchar</em>. Mientras suena ya puedes elegir el ritmo (A, B, C o D). Al responder se marca el bueno en verde y, si has fallado, en qué tiempos se diferencia el que elegiste. Los cuatro ritmos se parecen mucho: el que no es cambia uno o dos tiempos, por ejemplo una redonda por una blanca con puntillo y un silencio. Puedes escuchar el dictado hasta tres veces.</p>',
        faq=[('¿Cómo distingo una redonda de una blanca con puntillo?', 'Por cuánto dura: la redonda suena los cuatro tiempos del compás y la blanca con puntillo, tres. Si la nota se corta antes del 4.º tiempo, no es una redonda.'),
             ('¿Por qué solo hay dictados en 4/4?', 'Porque la redonda dura cuatro tiempos y no cabe dentro de un compás de 2/4 o 3/4. Se podría repartir entre dos compases con una ligadura, pero en estos dictados no hay ligaduras.'),
-            ('¿Por qué no hay compás de entrada?', 'Porque el pulso se saca del propio dictado: empieza directamente con una nota en el primer tiempo y tiene al menos dos negras seguidas, y la distancia entre sus comienzos es un tiempo.'),
+            FAQ_ENTRADA,
             ('¿Cuántas veces puedo escuchar el dictado?', 'Hasta tres veces, y puedes responder mientras suena. Después de responder puedes volver a escucharlo las veces que quieras.')],
        siguiente='<p>Cuando aciertes casi siempre, prueba a <a href="' + D + 'redondas/">escribir el dictado con redondas</a>. Si te cuesta contar las duraciones largas, vuelve al grupo de <a href="' + D + 'blancas-con-puntillo-que-ritmo-suena/">blancas con puntillo</a>.</p>'),
   dict(slug='dictado-ritmico/redondas-que-audio-es', modo='leer', grupo='redondas', corto='Con redondas: ¿qué audio es?',
@@ -230,7 +232,7 @@ PAGS += [
        uso='<p><strong>Cómo usar el ejercicio:</strong> pulsa <em>Empezar</em>, lee el ritmo y escucha los audios A, B, C y D (cada uno hasta tres veces, en el orden que quieras). Cuando sepas cuál es, pulsa <em>Es este</em> debajo de ese audio. Solo puedes elegir un audio que hayas escuchado. Al responder se marca el bueno y, si has fallado, ves escrito lo que sonaba en el que elegiste, con los tiempos distintos en rojo.</p>',
        faq=[('¿En qué se diferencian los audios?', 'Los cuatro audios tienen el mismo compás y el mismo tempo. Los incorrectos cambian uno o dos tiempos respecto a la partitura; a menudo, la duración de la nota larga: una redonda por una blanca con puntillo y un silencio, o al revés.'),
             ('¿Cuánto dura una redonda?', 'Cuatro tiempos en 4/4: el compás entero. Es la figura más larga de las que se usan normalmente.'),
-            ('¿Por qué no hay compás de entrada?', 'Porque el pulso se saca del propio ritmo: todos los audios empiezan con una nota en el primer tiempo y tienen al menos dos negras seguidas, y la distancia entre sus comienzos es un tiempo.'),
+            FAQ_ENTRADA,
             ('¿Cuántas veces puedo escuchar cada audio?', 'Hasta tres veces cada uno antes de responder. Después de responder puedes escucharlos las veces que quieras.')],
        siguiente='<p>Para el camino del sonido a la partitura tienes <a href="' + D + 'redondas-que-ritmo-suena/">¿qué ritmo suena?</a> y <a href="' + D + 'redondas/">el dictado con redondas</a>. Y para repasar, el mismo ejercicio con <a href="' + D + 'blancas-con-puntillo-que-audio-es/">blancas con puntillo</a>.</p>'),
   dict(slug='dictado-ritmico/redondas', modo='escribir', grupo='redondas', corto='Redondas', miga='Redondas',
@@ -240,13 +242,95 @@ PAGS += [
        desc='Dictado rítmico online gratis: suena un ritmo de dos compases de 4/4 y lo escribes con tarjetas de redonda, blanca con puntillo, blanca, negra y sus silencios, con las barras de compás. Corrección al momento.',
        ld='Dictado rítmico online gratis: suena un ritmo de dos compases de 4/4 con redondas, blancas con puntillo, blancas, negras y sus silencios y se escribe con tarjetas, con las barras de compás.',
        teaches='Escribir al dictado un ritmo con redondas, blancas con puntillo, blancas, negras y sus silencios en 4/4, con las barras de compás',
-       intro='<p>Escucha un ritmo de <strong>dos compases de 4/4</strong> en la nota Sol y <strong>escríbelo</strong> con las tarjetas de <strong>redonda, blanca con puntillo, blanca, negra y sus silencios</strong>. Las barras las pones tú: la barra de compás y la doble barra final. Al corregir se te dice si a algún compás le sobran o le faltan tiempos o si falta alguna barra; y si la duración total es la correcta, lo que suena distinto sale en rojo.</p>',
+       intro='<p>Escucha un ritmo de <strong>dos compases de 4/4</strong> en la nota Sol y <strong>escríbelo</strong> con las tarjetas de <strong>redonda, blanca con puntillo, blanca, negra y sus silencios</strong>. Las barras las pones tú: la barra de compás y la doble barra final.</p>',
        uso=USO_ESCRIBIR,
-       faq=[FAQ_CORRIGE, FAQ_BARRAS,
+       faq=[FAQ_CORRIGE, FAQ_BARRAS, FAQ_ENTRADA,
             ('¿Puedo escribir un compás de silencio con silencios más pequeños?', 'Sí: un silencio de redonda, dos de blanca o cualquier combinación que sume cuatro tiempos duran lo mismo y suenan igual, así que al corregir valen todos. En los ritmos escritos del ejercicio, un compás entero de silencio aparece como silencio de redonda.'),
             ('¿Por qué solo hay dictados en 4/4?', 'Porque la redonda dura cuatro tiempos y no cabe dentro de un compás de 2/4 o 3/4. Se podría repartir entre dos compases con una ligadura, pero en estos dictados no hay ligaduras.')],
        siguiente='<p>Si te cuesta, empieza por <a href="' + D + 'redondas-que-ritmo-suena/">¿qué ritmo suena?</a> o por <a href="' + D + 'redondas-que-audio-es/">¿qué audio es?</a>. El grupo anterior es el de <a href="' + D + 'blancas-con-puntillo/">blancas con puntillo</a>, y todos los grupos están en el <a href="' + D + '">índice de dictados rítmicos</a>.</p>'),
 ]
+
+
+# ---------- Con grupos de dos corcheas (Eduardo, 04-11-2026): los mismos cuatro grupos con corcheas, que solo van de dos en
+# dos ocupando un tiempo; al escribir, la tarjeta es de una corchea. El dictado lleva corcheas y la figura nueva del grupo.
+def paginas_corcheas(base, grupo, corto, figs, compases, nueva, reparto, extra_reglas, faq_extra, anterior, siguiente_g):
+    """Las 3 páginas de un grupo con corcheas. figs: «negras, grupos de dos corcheas y silencios de negra»; compases:
+    «2/4, 3/4 o 4/4»; nueva: lo que lleva siempre además de las corcheas; anterior/siguiente_g: (slug base, texto)."""
+    reglas = ('<p>Cada dictado se inventa al momento: <strong>dos compases de ' + compases + '</strong> con <a href="/diccionario-musical/figuras-musicales/">' + figs + '</a>, todo en la nota Sol al piano y a un tempo de entre 72 y 90 negras por minuto. '
+              'Las <strong>corcheas van siempre de dos en dos</strong>, unidas con barra y ocupando un tiempo: nunca hay una sola ni tres. Siempre hay al menos <strong>un grupo de dos corcheas</strong> y ' + nueva + '. '
+              'Antes del dictado suena un <strong>compás de metrónomo</strong> al mismo tempo, con el primer tiempo más fuerte, para que sepas la velocidad y dónde empieza el compás. El dictado puede empezar con silencio.' + extra_reglas + '</p>\n\n'
+              '<p>Cada nota suena casi toda su duración, así que dos corcheas se oyen como dos notas cortas que reparten el tiempo en dos mitades iguales. '
+              'Cada test tiene 10 dictados: ' + reparto + ', sin repetir ninguno.</p>')
+    como = ('<h2>Cómo hacer un dictado rítmico con corcheas</h2>\n\n<ol>\n'
+            '  <li>' + PASO_PULSO + '\n'
+            '  <li><strong>Identifica el compás y cuenta sus tiempos.</strong> El compás se dice antes de escuchar: cuenta sus tiempos desde el compás de metrónomo y vuelve a empezar en cada compás, aunque el primer tiempo no suene.</li>\n'
+            '  <li><strong>Escucha qué pasa dentro de cada tiempo.</strong> Una nota que dura todo el tiempo es una negra; dos notas que lo reparten en dos mitades, dos corcheas. Si la nota sigue sonando en los tiempos siguientes, es una figura más larga, y si no suena nada, un silencio.</li>\n'
+            '  <li><strong>Usa las escuchas por partes.</strong> En cada escucha suenan los dos compases, pero no hace falta atenderlo todo a la vez: en la primera, el pulso y el primer compás; en la segunda, el segundo; en la tercera, comprueba el dictado entero.</li>\n'
+            '</ol>\n\n'
+            '<p>Lo que más se falla con las corcheas es <strong>acelerar el pulso</strong>: dos corcheas seguidas de una negra pueden hacer que la negra parezca más corta. Las dos corcheas duran exactamente lo mismo que una negra; si dices «ti-ti» en las corcheas y «ta» en la negra, llevando el pulso con el pie, se ve enseguida.</p>')
+    nombre = corto.lower()
+    return [
+      dict(slug='dictado-ritmico/' + base + '-que-ritmo-suena', modo='oir', grupo=grupo, corto=corto + ': ¿qué ritmo suena?',
+           rel=corto + ': ¿qué ritmo suena?', reglas=reglas, como=como,
+           title='Dictado rítmico ' + nombre + ': ¿qué ritmo suena?',
+           h1='Dictado rítmico ' + nombre + ': ¿qué ritmo suena?',
+           desc='Dictado rítmico gratis con ' + figs + ': suena un ritmo de dos compases (' + compases + ') en la nota Sol y eliges cuál de los cuatro ritmos escritos es.',
+           ld='Ejercicio de dictado rítmico gratis: suena un ritmo de dos compases con ' + figs + ' y se elige entre cuatro ritmos escritos.',
+           teaches='Reconocer de oído un ritmo con ' + figs + ' en ' + compases.replace(' o ', ' y '),
+           intro='<p>Escucha un ritmo de <strong>dos compases</strong> tocado en la nota Sol y elige cuál de los <strong>cuatro ritmos escritos</strong> es el que suena. Ahora el tiempo se divide: hay <strong>grupos de dos corcheas</strong>, que reparten un tiempo en dos mitades, con ' + figs.split(', grupos de dos corcheas')[0].split(' y grupos')[0] + ' y sus silencios, en compases de <strong>' + compases + '</strong>.</p>',
+           uso='<p><strong>Cómo usar el ejercicio:</strong> pulsa <em>Empezar</em> y después <em>Escuchar</em>. Mientras suena ya puedes elegir el ritmo (A, B, C o D). Al responder se marca el bueno en verde y, si has fallado, en qué tiempos se diferencia el que elegiste. Los cuatro ritmos se parecen mucho: el que no es cambia uno o dos tiempos, muchas veces una negra por dos corcheas o al revés. Puedes escuchar el dictado hasta tres veces.</p>',
+           faq=[('¿Cómo distingo dos corcheas de una negra?', 'Por el número de notas en el tiempo: la negra es una sola nota que dura todo el tiempo, y las dos corcheas son dos notas que lo reparten en dos mitades iguales. Las dos ocupan exactamente un tiempo.'),
+                ('¿Puede haber una corchea sola?', 'En estos dictados, no: las corcheas van siempre de dos en dos, unidas con barra, ocupando un tiempo. Nunca hay una sola ni tres.'),
+                FAQ_ENTRADA,
+                ('¿Cuántas veces puedo escuchar el dictado?', 'Hasta tres veces, y puedes responder mientras suena. Después de responder puedes volver a escucharlo las veces que quieras.')] + faq_extra,
+           siguiente='<p>Cuando aciertes casi siempre, prueba a <a href="' + D + base + '/">escribir el dictado</a>. Si te cuesta, vuelve al grupo sin corcheas de <a href="' + D + anterior[0] + '-que-ritmo-suena/">' + anterior[1] + '</a>.</p>'),
+      dict(slug='dictado-ritmico/' + base + '-que-audio-es', modo='leer', grupo=grupo, corto=corto + ': ¿qué audio es?',
+           rel='Lectura rítmica ' + nombre + ': ¿qué audio es?', reglas=reglas, como=como,
+           title='Lectura rítmica ' + nombre + ': ¿qué audio es?',
+           h1='Lectura rítmica ' + nombre + ': ¿qué audio es?',
+           desc='Ejercicio de lectura rítmica gratis con ' + figs + ': ves un ritmo de dos compases (' + compases + ') y eliges cuál de los cuatro audios suena como está escrito.',
+           ld='Ejercicio de lectura rítmica gratis: se ve un ritmo de dos compases con ' + figs + ' y se elige entre cuatro audios el que suena como está escrito.',
+           teaches='Leer un ritmo con ' + figs + ' en ' + compases.replace(' o ', ' y ') + ' y reconocer cómo suena',
+           intro='<p>Lee un ritmo de <strong>dos compases</strong> con <strong>' + figs + '</strong> y escucha los <strong>cuatro audios</strong>: solo uno suena como está escrito. Fíjate en cada grupo de corcheas de la partitura: en el audio correcto, ese tiempo tiene dos notas.</p>',
+           uso='<p><strong>Cómo usar el ejercicio:</strong> pulsa <em>Empezar</em>, lee el ritmo y escucha los audios A, B, C y D (cada uno hasta tres veces, en el orden que quieras). Cuando sepas cuál es, pulsa <em>Es este</em> debajo de ese audio. Solo puedes elegir un audio que hayas escuchado. Al responder se marca el bueno y, si has fallado, ves escrito lo que sonaba en el que elegiste, con los tiempos distintos en rojo.</p>',
+           faq=[('¿En qué se diferencian los audios?', 'Los cuatro audios tienen el mismo compás y el mismo tempo. Los incorrectos cambian uno o dos tiempos respecto a la partitura; a menudo, dos corcheas por una negra o al revés: cuenta cuántas notas hay en cada tiempo.'),
+                ('¿Cuánto dura una corchea?', 'Medio tiempo en 2/4, 3/4 y 4/4: dos corcheas duran lo mismo que una negra. Por eso en estos dictados van siempre de dos en dos, ocupando un tiempo.'),
+                FAQ_ENTRADA,
+                ('¿Cuántas veces puedo escuchar cada audio?', 'Hasta tres veces cada uno antes de responder. Después de responder puedes escucharlos las veces que quieras.')],
+           siguiente='<p>Para el camino del sonido a la partitura tienes <a href="' + D + base + '-que-ritmo-suena/">¿qué ritmo suena?</a> y <a href="' + D + base + '/">el dictado</a>, en el que lo escribes tú. Y el mismo ejercicio sin corcheas, en <a href="' + D + anterior[0] + '-que-audio-es/">' + anterior[1] + '</a>.</p>'),
+      dict(slug='dictado-ritmico/' + base, modo='escribir', grupo=grupo, corto=corto, miga=corto,
+           rel='Dictado rítmico ' + nombre, reglas=reglas, como=como,
+           title='Dictado rítmico ' + nombre,
+           h1='Dictado rítmico ' + nombre,
+           desc='Dictado rítmico online gratis: suena un ritmo de dos compases (' + compases + ') y lo escribes con tarjetas de ' + figs + ', con las barras de compás. Corrección al momento.',
+           ld='Dictado rítmico online gratis: suena un ritmo de dos compases con ' + figs + ' y se escribe con tarjetas, con las barras de compás.',
+           teaches='Escribir al dictado un ritmo con ' + figs + ' en ' + compases.replace(' o ', ' y ') + ', con las barras de compás',
+           intro='<p>Escucha un ritmo de <strong>dos compases</strong> en la nota Sol y <strong>escríbelo</strong> con las tarjetas: ' + figs + ', en compases de <strong>' + compases + '</strong>. La tarjeta de corchea es de <strong>una sola corchea</strong>: para un grupo, pon dos seguidas y se unen con barra. Las barras de compás y la doble barra final las pones tú.</p>',
+           uso=USO_ESCRIBIR,
+           faq=[FAQ_CORRIGE, FAQ_BARRAS, FAQ_ENTRADA,
+                ('¿Por qué la tarjeta es de una sola corchea?', 'Para que construyas tú el grupo: dos corcheas seguidas que empiezan en un tiempo se unen con barra y ocupan ese tiempo. Si pones una sola, se ve con su corchete y, al corregir, ese tiempo no sonará como el dictado, porque aquí las corcheas siempre van de dos en dos.')] + faq_extra,
+           siguiente='<p>Si te cuesta, empieza por <a href="' + D + base + '-que-ritmo-suena/">¿qué ritmo suena?</a> o por <a href="' + D + base + '-que-audio-es/">¿qué audio es?</a>. ' +
+                     ('El grupo siguiente es el de <a href="' + D + siguiente_g[0] + '/">' + siguiente_g[1] + '</a>; todos' if siguiente_g else 'Todos') +
+                     ' los grupos están en el <a href="' + D + '">índice de dictados rítmicos</a>.</p>'),
+    ]
+
+PAGS += paginas_corcheas('negras-y-corcheas', 'negras-c', 'Con corcheas', 'negras, grupos de dos corcheas y silencios de negra', '2/4, 3/4 o 4/4',
+                         'algún silencio de negra', '3 en 2/4, 4 en 3/4 y 3 en 4/4', ' Nunca hay más de dos tiempos de silencio seguidos ni un compás entero en silencio.', [],
+                         ('negras-y-silencios', 'negras y silencios de negra'), ('blancas-y-corcheas', 'blancas con corcheas'))
+PAGS += paginas_corcheas('blancas-y-corcheas', 'blancas-c', 'Con blancas y corcheas', 'blancas, negras, grupos de dos corcheas y sus silencios', '2/4, 3/4 o 4/4',
+                         'una blanca o un silencio de blanca', '3 en 2/4, 4 en 3/4 y 3 en 4/4',
+                         ' Nunca hay más de dos tiempos de silencio seguidos ni un compás entero en silencio. La blanca y su silencio van donde se escriben normalmente: en 4/4 empiezan en el 1.er o el 3.er tiempo; en 3/4, la blanca en el 1.º o el 2.º y el silencio en el 1.º; en 2/4, la blanca ocupa el compás (y su silencio no sale, porque sería un compás entero en silencio).', [],
+                         ('blancas-negras-y-silencios', 'blancas, negras y sus silencios'), ('blancas-con-puntillo-y-corcheas', 'blancas con puntillo y corcheas'))
+PAGS += paginas_corcheas('blancas-con-puntillo-y-corcheas', 'puntillo-c', 'Con puntillo y corcheas', 'blancas con puntillo, blancas, negras, grupos de dos corcheas y sus silencios', '3/4 o 4/4',
+                         'una blanca con puntillo o su silencio', '5 en 3/4 y 5 en 4/4',
+                         ' Puede haber hasta tres tiempos de silencio seguidos, los del silencio de blanca con puntillo. La blanca con puntillo dura tres tiempos y no cabe en un compás de 2/4: por eso no hay dictados en 2/4.',
+                         [('¿Por qué no hay dictados en 2/4?', 'Porque la blanca con puntillo dura tres tiempos y no cabe dentro de un compás de dos. Se podría repartir entre dos compases con una ligadura, pero en estos dictados no hay ligaduras.')],
+                         ('blancas-con-puntillo', 'blancas con puntillo'), ('redondas-y-corcheas', 'redondas y corcheas'))
+PAGS += paginas_corcheas('redondas-y-corcheas', 'redondas-c', 'Con redondas y corcheas', 'redondas, blancas con puntillo, blancas, negras, grupos de dos corcheas y sus silencios', '4/4',
+                         'una redonda o un silencio de redonda', '10 en 4/4',
+                         ' La redonda y su silencio llenan un compás de 4/4 (el silencio, solo como 2.º compás), y puede haber hasta cuatro tiempos de silencio seguidos.',
+                         [('¿Por qué solo hay dictados en 4/4?', 'Porque la redonda dura cuatro tiempos y no cabe dentro de un compás de 2/4 o 3/4. Se podría repartir entre dos compases con una ligadura, pero en estos dictados no hay ligaduras.')],
+                         ('redondas', 'redondas'), None)
 
 # El índice: un bloque por grupo, en orden de dificultad: (título, texto, slug base, nombre para lectores de pantalla)
 GRUPOS_INDICE = [
@@ -254,6 +338,10 @@ GRUPOS_INDICE = [
     ('Blancas, negras y sus silencios', 'Aparecen las figuras de dos tiempos: la blanca y el silencio de blanca. Lo nuevo es oír cuánto dura cada nota, para distinguir la blanca de una negra seguida de silencio.', 'blancas-negras-y-silencios', 'blancas, negras y silencios'),
     ('Blancas con puntillo, blancas, negras y sus silencios', 'Las figuras de tres tiempos: la blanca con puntillo y su silencio, en compases de 3/4 y 4/4 (en 2/4 no caben). Hay que contar bien cuánto dura cada nota y llevar el pulso durante tres tiempos de silencio.', 'blancas-con-puntillo', 'blancas con puntillo'),
     ('Redondas, blancas con puntillo, blancas, negras y sus silencios', 'La figura más larga: la redonda y su silencio, que llenan un compás de 4/4 (en 2/4 y 3/4 no caben). Hay que mantener el pulso durante cuatro tiempos de nota o de silencio.', 'redondas', 'redondas'),
+    ('Negras, corcheas y silencios de negra', 'Llega la división del tiempo: grupos de dos corcheas, que reparten un tiempo en dos mitades, con negras y silencios de negra. Las corcheas van siempre de dos en dos.', 'negras-y-corcheas', 'negras y corcheas'),
+    ('Blancas, negras, corcheas y sus silencios', 'Los grupos de dos corcheas con blancas, negras y sus silencios: notas largas y tiempos divididos en el mismo dictado.', 'blancas-y-corcheas', 'blancas y corcheas'),
+    ('Blancas con puntillo, blancas, negras, corcheas y sus silencios', 'Los grupos de dos corcheas con las figuras de tres tiempos, en 3/4 y 4/4.', 'blancas-con-puntillo-y-corcheas', 'blancas con puntillo y corcheas'),
+    ('Redondas, blancas con puntillo, blancas, negras, corcheas y sus silencios', 'Todas las figuras, de la redonda a la corchea, en 4/4: el pulso se mantiene igual en las notas más largas y en los tiempos divididos.', 'redondas-y-corcheas', 'redondas y corcheas'),
 ]
 
 AD1 = '<div class="tm-ad">\n<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>\n</div>'
@@ -303,6 +391,10 @@ def pagina(P, src):
     rel = [(D, 'Todos los dictados rítmicos')] + [('/ejercicios/auditivos/%s/' % Q['slug'], Q.get('rel', {'oir': 'Dictado rítmico: ¿qué ritmo suena?', 'leer': 'Lectura rítmica: ¿qué audio es?', 'escribir': 'Dictado rítmico: negras y silencios'}[Q['modo']])) for Q in PAGS if Q is not P and Q['grupo'] == P['grupo']] + [
         ('/diccionario-musical/figuras-musicales/', 'Las figuras musicales'), ('/diccionario-musical/compases/', 'Los compases musicales'),
         ('/ejercicios/compases/completar-compas/', 'Completar compases'), ('/ejercicios/auditivos/reconocer-el-compas/', 'Reconocer el compás de oído')]
+    # según las figuras del grupo
+    if P['grupo'].startswith('puntillo') or P['grupo'].startswith('redondas'): rel.append(('/diccionario-musical/puntillo/', 'El puntillo'))
+    if P['grupo'].endswith('-c'): rel.append(('/ejercicios/figuras/equivalencias-de-figuras/', 'Equivalencias de figuras'))
+    rel.append(('/herramientas/metronomo/', 'Metrónomo online'))
     cuerpo = '''<main id="main" class="tm-main">
 
   <nav class="tm-breadcrumb" aria-label="Migas">
@@ -365,7 +457,7 @@ def indice(src, publicado=PUBLICADO, modificado=PUBLICADO):
     H1 = 'Dictado rítmico'
     DESC = 'Ejercicios de dictado rítmico online gratis, ordenados por figuras: reconoce el ritmo que suena, el audio de un ritmo escrito y escribe el dictado con tarjetas. Corrección al momento.'
     FAQ = [
-        ('¿Qué es un dictado rítmico?', 'Es escuchar un ritmo y escribirlo: qué figuras y qué silencios suenan, en su compás. Se practica en lenguaje musical desde los primeros cursos, primero con negras y silencios de negra, después con blancas, con blancas con puntillo, con redondas y, poco a poco, con más figuras.'),
+        ('¿Qué es un dictado rítmico?', 'Es escuchar un ritmo y escribirlo: qué figuras y qué silencios suenan, en su compás. Se practica en lenguaje musical desde los primeros cursos, primero con negras y silencios de negra, después con blancas, con blancas con puntillo y con redondas, y luego, con todas ellas, los grupos de dos corcheas.'),
         ('¿En qué orden se hacen los ejercicios?', 'En cada grupo de figuras hay tres. Primero, ¿qué ritmo suena?: oyes el dictado y lo reconoces entre cuatro ritmos escritos. Después, ¿qué audio es?: lees un ritmo y lo reconoces entre cuatro audios. Por último, el dictado: lo escribes tú con tarjetas, sin opciones.'),
         ('¿Necesito algo para hacerlos?', 'Solo el navegador y sonido: altavoces o, mejor, auriculares. No hace falta micrófono ni instalar nada.'),
     ]
@@ -422,7 +514,7 @@ def indice(src, publicado=PUBLICADO, modificado=PUBLICADO):
 <h2>Cómo se hace un dictado rítmico</h2>
 
 <ol>
-  <li><strong>Busca el pulso.</strong> Es lo primero y lo más importante: el tiempo que se repite igual de principio a fin. Cuéntalo por dentro durante todo el dictado, también cuando no suena nada.</li>
+  <li><strong>Cuenta con el metrónomo.</strong> Antes de cada dictado suena un compás de metrónomo al mismo tempo, con el primer tiempo más fuerte. Cuenta con él y sigue contando por dentro durante todo el dictado, también cuando no suena nada: el pulso es lo primero y lo más importante.</li>
   <li><strong>Identifica el compás y cuenta sus tiempos.</strong> El compás se dice antes de escuchar (por ahora, 2/4, 3/4 o 4/4). Al escribir, tú pones la barra de compás cuando se acaba cada uno. El primer tiempo marca el comienzo de cada compás: ahí vuelves a empezar a contar.</li>
   <li><strong>Mira qué pasa en cada tiempo.</strong> Si empieza una nota, cuánto dura: hasta dónde sigue sonando. Si no suena nada, es un silencio. Un silencio no se oye: se cuenta.</li>
   <li><strong>Reparte las escuchas.</strong> En cada escucha suenan los dos compases, pero no hace falta atenderlo todo a la vez: en la primera, el pulso y el primer compás; en la segunda, el segundo; en la tercera, comprueba el dictado entero.</li>
@@ -450,6 +542,8 @@ def indice(src, publicado=PUBLICADO, modificado=PUBLICADO):
     <li><a href="/diccionario-musical/compases/">Los compases musicales</a></li>
     <li><a href="/ejercicios/compases/completar-compas/">Completar compases</a></li>
     <li><a href="/ejercicios/figuras/">Ejercicios de figuras</a></li>
+    <li><a href="/diccionario-musical/puntillo/">El puntillo</a></li>
+    <li><a href="/herramientas/metronomo/">Metrónomo online</a></li>
   </ul>
 </aside>
 </div>
