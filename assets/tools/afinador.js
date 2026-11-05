@@ -1,5 +1,9 @@
 /* teoriamusical-herramientas — afinador.js */
 (function() {
+  // Idioma: la página inglesa (<html lang="en">) muestra letras (C D E…) y textos en inglés;
+  // la española no cambia nada. T(es, en) devuelve el texto según el idioma.
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
   // ── ESTADO ──────────────────────────────────────────────────────────────────
   let audioCtx = null;
   let analyser = null;
@@ -7,7 +11,7 @@
   let rafId = null;
   let isActive = false;
   let wakeLock = null;
-  let a4Ref = 442;
+  let a4Ref = EN ? 440 : 442;
   let smoothFreq = 0;
   let lastNoteData = null;
   let lastSignalTime = 0;
@@ -38,12 +42,22 @@
   }
 
   // Notas en español
-  const NOTE_NAMES = ['Do','Do#','Re','Re#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'];
-  const NOTE_NAMES_DISPLAY = ['Do','Do♯','Re','Re♯','Mi','Fa','Fa♯','Sol','Sol♯','La','La♯','Si'];
+  const NOTE_NAMES = EN ? ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B']
+                        : ['Do','Do#','Re','Re#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'];
+  const NOTE_NAMES_DISPLAY = EN ? ['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B']
+                                : ['Do','Do♯','Re','Re♯','Mi','Fa','Fa♯','Sol','Sol♯','La','La♯','Si'];
 
   // Instrumentos transpositores: nombre, semitonos que sube la nota escrita respecto a la real
   // Si un Sib suena Do cuando lee Re → escrita = real + 2
-  const INSTRUMENTS = [
+  const INSTRUMENTS = EN ? [
+    { name: 'C (concert)', st: 0 },
+    { name: 'B♭ (Bb)',     st: 2 },
+    { name: 'A',           st: 3 },
+    { name: 'E♭ (Eb)',     st: -3 },
+    { name: 'F',           st: -5 },
+    { name: 'G',           st: -7 },
+    { name: 'D',           st: -2 },
+  ] : [
     { name: 'C (Concert)', st: 0 },
     { name: 'Sib (Bb)',    st: 2 },
     { name: 'La (A)',      st: 3 },
@@ -54,12 +68,9 @@
   ];
 
   // Notas de referencia: Do4–Si4 + Do5–Sol5 (12 notas)
-  const REF_NOTES = [
-    {name:'Do', oct:4}, {name:'Re', oct:4}, {name:'Mi', oct:4},
-    {name:'Fa', oct:4}, {name:'Sol', oct:4}, {name:'La', oct:4},
-    {name:'Si', oct:4}, {name:'Do', oct:5}, {name:'Re', oct:5},
-    {name:'Mi', oct:5}, {name:'Fa', oct:5}, {name:'Sol', oct:5},
-  ];
+  const REF_NOTES = (EN ? ['C','D','E','F','G','A','B','C','D','E','F','G']
+                        : ['Do','Re','Mi','Fa','Sol','La','Si','Do','Re','Mi','Fa','Sol'])
+    .map((name, i) => ({ name, oct: i < 7 ? 4 : 5 }));
 
   // ── DOM ──────────────────────────────────────────────────────────────────────
   const domNoteName    = document.getElementById('note-name');
@@ -303,9 +314,9 @@
       if (domConfVal) {
         let txt, col;
         if (!valid || amplitude < 0.01) { txt = '—'; col = 'var(--muted)'; }
-        else if (clr > 0.66) { txt = 'Alta'; col = 'var(--green)'; }
-        else if (clr > 0.33) { txt = 'Media'; col = 'var(--rust)'; }
-        else { txt = 'Baja (ruido)'; col = 'var(--red)'; }
+        else if (clr > 0.66) { txt = T('Alta','High'); col = 'var(--green)'; }
+        else if (clr > 0.33) { txt = T('Media','Medium'); col = 'var(--rust)'; }
+        else { txt = T('Baja (ruido)','Low (noise)'); col = 'var(--red)'; }
         domConfVal.textContent = txt; domConfVal.style.color = col;
       }
     }
@@ -358,7 +369,8 @@
     histCtx.stroke();
   }
 
-  const ENHARM = { 'Do♯': 'Re♭', 'Re♯': 'Mi♭', 'Fa♯': 'Sol♭', 'Sol♯': 'La♭', 'La♯': 'Si♭' };
+  const ENHARM = EN ? { 'C♯': 'D♭', 'D♯': 'E♭', 'F♯': 'G♭', 'G♯': 'A♭', 'A♯': 'B♭' }
+                    : { 'Do♯': 'Re♭', 'Re♯': 'Mi♭', 'Fa♯': 'Sol♭', 'Sol♯': 'La♭', 'La♯': 'Si♭' };
   function updateConserv(noteData) {
     if (!domConserv || domConserv.hidden) return;
     if (!noteData || !noteData.name) { lastConservKey = ''; domConservEmpty.hidden = false; domConservBody.hidden = true; return; }
@@ -368,16 +380,18 @@
     if (key !== lastConservKey) { // solo reconstruye al cambiar de nota
       lastConservKey = key;
       const isSharp = name.indexOf('♯') >= 0;
-      const altLine = isSharp ? `${name} = ${ENHARM[name]} (enarmónicas, mismo sonido)` : `${name} natural`;
+      const altLine = isSharp ? `${name} = ${ENHARM[name]} ${T('(enarmónicas, mismo sonido)', '(enharmonic: same pitch)')}` : `${name} natural`;
       const fbOct = octave - 1;
       domConservBody.innerHTML =
         `<div class="acv-note">${name}<sub>${octave}</sub></div>` +
         '<dl>' +
-        `<dt>Frecuencia</dt><dd id="acv-freq">—</dd>` +
-        `<dt>Alteración</dt><dd>${altLine}</dd>` +
-        `<dt>Índice acústico</dt><dd>${name}${octave} (internacional) · ${name}${fbOct} (<a href="/diccionario-musical/indice-acustico/">franco-belga</a>)</dd>` +
-        '</dl>' +
-        '<p style="margin:.4rem 0 0;font-size:13px;color:var(--muted)">Más en <a href="/diccionario-musical/claves-musicales/">claves</a> y <a href="/diccionario-musical/nombres-de-las-notas-musicales/">notas musicales</a>.</p>';
+        `<dt>${T('Frecuencia', 'Frequency')}</dt><dd id="acv-freq">—</dd>` +
+        `<dt>${T('Alteración', 'Accidental')}</dt><dd>${altLine}</dd>` +
+        (EN
+          ? `<dt>Octave number</dt><dd>${name}${octave} (scientific pitch notation) · ${name}${fbOct} (French-Belgian system)</dd></dl>`
+          : `<dt>Índice acústico</dt><dd>${name}${octave} (internacional) · ${name}${fbOct} (<a href="/diccionario-musical/indice-acustico/">franco-belga</a>)</dd>` +
+            '</dl>' +
+            '<p style="margin:.4rem 0 0;font-size:13px;color:var(--muted)">Más en <a href="/diccionario-musical/claves-musicales/">claves</a> y <a href="/diccionario-musical/nombres-de-las-notas-musicales/">notas musicales</a>.</p>');
     }
     const fq = document.getElementById('acv-freq');
     if (fq) fq.textContent = freq.toFixed(1) + ' Hz';
@@ -479,7 +493,7 @@
       domBtnMic.style.background = '';
       domBtnMic.style.borderColor = '';
       domBtnMic.style.color = '';
-      domMicLabel.textContent = 'Activo';
+      domMicLabel.textContent = T('Activo', 'Listening');
       if (domConf) domConf.hidden = false;
 
       rafId = requestAnimationFrame(analyse);
@@ -488,13 +502,13 @@
       domBtnMic.style.background = '';
       domBtnMic.style.borderColor = '';
       domBtnMic.style.color = '';
-      domMicLabel.textContent = 'Activar';
+      domMicLabel.textContent = T('Activar', 'Start');
       if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
-        showMicError('Permiso de micrófono denegado. Haz clic en el icono del candado en la barra de direcciones y permite el acceso al micrófono.');
+        showMicError(T('Permiso de micrófono denegado. Haz clic en el icono del candado en la barra de direcciones y permite el acceso al micrófono.', 'Microphone permission denied. Click the lock icon in the address bar and allow microphone access.'));
       } else if (err.name === 'NotFoundError') {
-        showMicError('No se detectó ningún micrófono. Conecta un micrófono e inténtalo de nuevo.');
+        showMicError(T('No se detectó ningún micrófono. Conecta un micrófono e inténtalo de nuevo.', 'No microphone found. Connect a microphone and try again.'));
       } else {
-        showMicError('No se pudo acceder al micrófono (' + err.name + '). Comprueba que ninguna otra aplicación lo esté usando.');
+        showMicError(T('No se pudo acceder al micrófono (' + err.name + '). Comprueba que ninguna otra aplicación lo esté usando.', 'Could not access the microphone (' + err.name + '). Check that no other app is using it.'));
       }
       stopMic();
     }
@@ -530,7 +544,7 @@
     domBtnMic.style.background = '';
     domBtnMic.style.borderColor = '';
     domBtnMic.style.color = '';
-    domMicLabel.textContent = 'Activar';
+    domMicLabel.textContent = T('Activar', 'Start');
     if (domConf) domConf.hidden = true;
     resetExtras();
     setDisplay(null);
@@ -739,7 +753,7 @@
     panel.id = 'afin-strings-panel';
     const lbl = document.createElement('div');
     lbl.className = 'box-label';
-    lbl.textContent = 'Cuerdas';
+    lbl.textContent = T('Cuerdas', 'Strings');
     const grid = document.createElement('div');
     grid.className = 'afin-strings';
     AFIN_STRINGS.forEach(s => {
@@ -803,8 +817,8 @@
     afinWrap.classList.toggle('is-fullscreen', on);
     document.body.classList.toggle('has-fullscreen', on);
     if (fsIcon)  fsIcon.innerHTML = on ? FS_EXIT : FS_ENTER;
-    if (fsLabel) fsLabel.textContent = on ? 'Salir' : 'Pantalla completa';
-    if (fsBtn)   fsBtn.title = on ? 'Salir de pantalla completa' : 'Pantalla completa';
+    if (fsLabel) fsLabel.textContent = on ? T('Salir', 'Exit') : T('Pantalla completa', 'Fullscreen');
+    if (fsBtn)   fsBtn.title = on ? T('Salir de pantalla completa', 'Exit fullscreen') : T('Pantalla completa', 'Fullscreen');
   }
 
   if (fsBtn) fsBtn.addEventListener('click', () => setAfinFullscreen(!_isFullscreen));

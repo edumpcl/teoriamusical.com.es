@@ -47,6 +47,13 @@
  *   w()  = pintar los grupos del compás libre en pantalla
  * ─────────────────────────────────────────────────────────────────────────────
  */
+/* Idioma: la página inglesa (<html lang="en">) usa los textos de TM_EN; la española no cambia nada.
+   tmT(es, en) devuelve el texto según el idioma. Los nombres internos (patrones, acentos) siguen en
+   español porque son claves; solo cambia lo que se pinta. */
+var TM_IS_EN=document.documentElement.lang==="en";
+function tmT(es,en){return TM_IS_EN?en:es}
+var TM_PATTERN_EN={"Básico":"Basic","Marcha":"March","Vals":"Waltz","Mazurca":"Mazurka","Balada":"Ballad"};
+function tmPatName(n){return TM_IS_EN&&TM_PATTERN_EN[n]||n}
 !function(){
   let e,
   t,
@@ -91,7 +98,7 @@
     pb=document.querySelector(".pendulum-box"),
     on=h&&gpOn;
     pb&&pb.classList.toggle("is-silent",on&&!!sil),
-    s&&(s.textContent=on?sil?"🔇 Silencio":"🔊 Sonando":"—")
+    s&&(s.textContent=on?sil?tmT("🔇 Silencio","🔇 Muted"):tmT("🔊 Sonando","🔊 Playing"):"—")
   }async function S(){
     if("wakeLock"in navigator)try{
       T=await navigator.wakeLock.request("screen"),
@@ -537,10 +544,10 @@
   }let fe=[];
   const ge=["strong","medium","weak","muted"],
   ye={
-    strong:"Fuerte",
-    medium:"Medio",
-    weak:"Débil",
-    muted:"Silencio"
+    strong:tmT("Fuerte","Strong"),
+    medium:tmT("Medio","Medium"),
+    weak:tmT("Débil","Weak"),
+    muted:tmT("Silencio","Muted")
   };
   function ve(){
     const e=a;
@@ -617,7 +624,7 @@
     e.appendChild(t),
     z.forEach((t,n)=>{
       const a=document.createElement("span");
-      a.className="pill"+($===n?" active":""),a.textContent=t.name,a.addEventListener("click",()=>Be(n)),e.appendChild(a)
+      a.className="pill"+($===n?" active":""),a.textContent=tmPatName(t.name),a.addEventListener("click",()=>Be(n)),e.appendChild(a)
     });
     const n=document.createElement("span"),
     a=z.length;
@@ -645,7 +652,7 @@
         }),c.appendChild(a)
       }a.appendChild(c);
       const s=document.createElement("input");
-      s.type="range",s.className="dr-vol-slider",s.min=0,s.max=100,s.value=Math.round(100*F[n]),s.setAttribute("aria-label","Volumen "+t),s.addEventListener("input",()=>{
+      s.type="range",s.className="dr-vol-slider",s.min=0,s.max=100,s.value=Math.round(100*F[n]),s.setAttribute("aria-label",tmT("Volumen ","Volume ")+t),s.addEventListener("input",()=>{
         F[n]=s.value/100
       }),a.appendChild(s),e.appendChild(a)
     }))
@@ -778,7 +785,7 @@
     let f=[];
     const B=document.getElementById("free-groups-display");
     function w(){
-      if(0===f.length)return void(B.innerHTML="<span style=\"font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);\">Sin grupos</span>");
+      if(0===f.length)return void(B.innerHTML="<span style=\"font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);\">"+tmT("Sin grupos","No groups")+"</span>");
       const e=f.reduce((e,t)=>e+t,0);
       B.innerHTML=f.map((e,t)=>`<span style="\n          padding:4px 10px;\n          border-radius:6px;\n          background:var(--bg3);\n          border:1px solid ${1===e?"var(--muted)":2===e?"var(--blue)":"var(--orange)"};\n          font-family:'DM Mono',monospace;\n          font-size:13px;\n          color:${1===e?"var(--muted)":2===e?"var(--blue)":"var(--orange)"};\n        ">${e}</span>${t<f.length-1?'<span style="color:var(--muted);font-family:DM Mono,monospace;font-size:12px;">+</span>':""}`).join("")+`<span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-left:8px;">(${e}/8)</span>`
     }document.getElementById("free-add1").addEventListener("click",()=>{
@@ -838,7 +845,7 @@
     document.getElementById("btn-prac").addEventListener("click",()=>{
       L=!L;
       const e=document.getElementById("btn-prac");
-      if(e.classList.toggle("active",L),e.textContent=L?"DETENER ENSAYO":"INICIAR ENSAYO",L){
+      if(e.classList.toggle("active",L),e.textContent=L?tmT("DETENER ENSAYO","STOP TRAINER"):tmT("INICIAR ENSAYO","START TRAINER"),L){
         oe(parseInt(document.getElementById("prac-bpm-start").value)||60),A=0,r&&(r.style.width="0%"),g=0,h||se()
       }
     }),
@@ -847,9 +854,9 @@
       try{
         await navigator.clipboard.writeText(e)
       }catch(t){
-        return void prompt("Copia este enlace:",e)
-      }t.classList.add("copied"),n&&(n.textContent="¡Copiado!"),setTimeout(()=>{
-        t.classList.remove("copied"),n&&(n.textContent="Compartir")
+        return void prompt(tmT("Copia este enlace:","Copy this link:"),e)
+      }t.classList.add("copied"),n&&(n.textContent=tmT("¡Copiado!","Copied!")),setTimeout(()=>{
+        t.classList.remove("copied"),n&&(n.textContent=tmT("Compartir","Share"))
       },2e3)
     });
     const V=document.querySelector(".tm-metronomo-wrap");
@@ -862,8 +869,8 @@
       V.classList.toggle("is-fullscreen",e),
       document.body.classList.toggle("has-fullscreen",e),
       P.innerHTML=e?'<polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/>':'<polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>',
-      O&&(O.textContent=e?"Salir":"Pantalla completa"),
-      K.title=e?"Salir de pantalla completa":"Pantalla completa",
+      O&&(O.textContent=e?tmT("Salir","Exit"):tmT("Pantalla completa","Fullscreen")),
+      K.title=e?tmT("Salir de pantalla completa","Exit fullscreen"):tmT("Pantalla completa","Fullscreen"),
       e&&(V.scrollTop=0)
     }K.addEventListener("click",()=>F(!D)),
     document.addEventListener("keydown",e=>{

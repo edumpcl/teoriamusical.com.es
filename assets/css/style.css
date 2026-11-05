@@ -457,6 +457,8 @@ figure.tm-staff img { display: inline-block; }
   text-decoration: none;
 }
 .tm-btn:hover { text-decoration: none; transform: translateY(-1px); }
+/* .tm-btn fija display y anularía el atributo hidden (p. ej. «Guardar preferencias» del aviso de cookies) */
+.tm-btn[hidden] { display: none; }
 .tm-btn-dorado { background: var(--gold); color: #14110d; }
 .tm-btn-dorado:hover { background: #e0bf4a; color: #14110d; }
 .tm-btn-outline { background: transparent; color: var(--text); border-color: var(--border-strong); }
