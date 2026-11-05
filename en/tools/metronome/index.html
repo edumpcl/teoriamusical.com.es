@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Online Metronome — Drum Machine &amp; Speed Trainer</title>
+<meta name="description" content="Free online metronome with simple, compound and custom time signatures (5/8, 7/8, 6/8…), a drum machine, tap tempo and a speed trainer. No install, works on your phone.">
+<link rel="canonical" href="https://www.teoriamusical.com.es/en/tools/metronome/">
+<link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/metronome/">
+<link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/metronomo/">
+<link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/metronomo/">
+<meta property="og:title" content="Free Online Metronome — Drum Machine &amp; Speed Trainer">
+<meta property="og:description" content="Free online metronome with simple, compound and custom time signatures (5/8, 7/8, 6/8…), a drum machine, tap tempo and a speed trainer. No install, works on your phone.">
+<meta property="og:image" content="https://www.teoriamusical.com.es/assets/img/og-pages/og-en-metronome.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.teoriamusical.com.es/en/tools/metronome/">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Music Theory">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Online Metronome — Drum Machine &amp; Speed Trainer">
+<meta name="twitter:description" content="Free online metronome with simple, compound and custom time signatures (5/8, 7/8, 6/8…), a drum machine, tap tempo and a speed trainer. No install, works on your phone.">
+<meta name="twitter:image" content="https://www.teoriamusical.com.es/assets/img/og-pages/og-en-metronome.png">
+<link rel="icon" href="/assets/img/favicon.png" type="image/png">
+
+<!-- Google Search Console verification -->
+<meta name="google-site-verification" content="-bWygyA80PPsmSsmf6FQ_oZs6YeGjN95HzprqD07fos">
+
+<!-- Google Consent Mode v2 — defaults denied until user consents -->
+<script>
+  window['googlefc'] = window['googlefc'] || {};
+  window['googlefc'].controlledMessagingFunction = function(m){ m.proceed(false); };
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage':            'denied',
+    'ad_user_data':          'denied',
+    'ad_personalization':    'denied',
+    'analytics_storage':     'denied',
+    'functionality_storage': 'granted',
+    'security_storage':      'granted',
+    'wait_for_update':       500
+  });
+  try {
+    var m = document.cookie.match('(?:^|; )tm_cookie_consent=([^;]*)');
+    if (m) {
+      var p = JSON.parse(decodeURIComponent(m[1]));
+      gtag('consent', 'update', {
+        analytics_storage:  p.analytics   ? 'granted' : 'denied',
+        ad_storage:         p.advertising ? 'granted' : 'denied',
+        ad_user_data:       p.advertising ? 'granted' : 'denied',
+        ad_personalization: p.advertising ? 'granted' : 'denied'
+      });
+    }
+  } catch (e) {}
+</script>
+
+<link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/style.css?v=1757c21e">
+<link rel="stylesheet" href="/assets/tools/tools.css?v=7a9eae5f">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Online Metronome","description":"Free online metronome with simple and compound time signatures, custom meters, tap tempo, a visual pendulum and tempo control from 15 to 300 BPM. No installation.","url":"https://www.teoriamusical.com.es/en/tools/metronome/","applicationCategory":"MusicApplication","operatingSystem":"Web","inLanguage":"en","isAccessibleForFree":true,"datePublished":"2026-11-05","dateModified":"2026-11-05","featureList":["Simple meters: 1/4, 2/4, 3/4, 4/4, 5/4","Compound meters: 3/8, 6/8, 9/8, 12/8, 15/8","Custom meters with asymmetric groupings","Tap tempo","Animated visual pendulum","Subdivisions: quarter, eighth, triplet, sixteenth, quintuplet, sextuplet, septuplet, ×8","Built-in drum machine with preset patterns","Speed Trainer with an automatic tempo ramp","Per-beat accent control","Sounds: temple block, claves, cowbell, classic, electronic, digital","Keyboard shortcuts"],"author":{"@type":"Person","name":"Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.teoriamusical.com.es/en/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://www.teoriamusical.com.es/en/tools/"},{"@type":"ListItem","position":3,"name":"Online Metronome","item":"https://www.teoriamusical.com.es/en/tools/metronome/"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What BPM should I use to start practicing a piece?","acceptedAnswer":{"@type":"Answer","text":"Start at 50–60% of the final tempo. If the piece goes at 120 BPM, practice at 60–72 BPM until you can play it three times in a row without mistakes. Only then raise it by 5 BPM. The right practice speed is the slowest one that lets you play without mistakes and with good posture."}},{"@type":"Question","name":"What is tap tempo and how does it work?","acceptedAnswer":{"@type":"Answer","text":"Tap tempo finds the BPM of a song: press the TAP button (or the T key) several times in time with the music. The metronome averages the intervals between your taps and sets the tempo. Three to five taps give an accurate reading."}},{"@type":"Question","name":"What is the Speed Trainer for?","acceptedAnswer":{"@type":"Answer","text":"The Speed Trainer raises the tempo gradually and automatically, from a start BPM to an end BPM, over the number of measures you set. It is the most effective way to get past a difficult passage: you set the tempo where the mistakes begin and your target, and the metronome climbs by itself with no manual changes."}},{"@type":"Question","name":"How do I practice odd meters like 7/8 or 5/8?","acceptedAnswer":{"@type":"Answer","text":"Use the Custom time signature: add groups of eighth notes with the +1, +2 and +3 buttons to build the grouping you want. For example, 7/8 grouped 2+2+3 is built by pressing “+2, +2, +3” and then Apply. The metronome accents the first beat of each group, which helps you feel the asymmetry of the meter."}},{"@type":"Question","name":"What is the difference between simple and compound meter?","acceptedAnswer":{"@type":"Answer","text":"In a simple meter (2/4, 3/4, 4/4…) each beat divides into two equal parts. In a compound meter (6/8, 9/8, 12/8…) each beat divides into three, which gives a smoother, swaying feel. The metronome handles this for you: in compound meters, each beat lasts a dotted quarter note."}},{"@type":"Question","name":"How does the drum machine work?","acceptedAnswer":{"@type":"Answer","text":"The drum machine adds drum patterns (kick, snare, hi-hat) in sync with the metronome. Pick a pattern for the current time signature — Rock, Pop, Funk, Bossa, Reggae, Shuffle, Waltz, Jig… — or make your own by switching steps on and off. Each instrument has its own volume control."}},{"@type":"Question","name":"Should I use a metronome the whole time I practice?","acceptedAnswer":{"@type":"Answer","text":"Not necessarily. It is essential for technical warm-ups and for setting difficult passages. It is also worth practicing without it, in free tempo (rubato), to develop expression and musicality. A common balance is 70% with the metronome and 30% without."}}]}
+</script>
+</head>
+<body class="tm-page">
+<a class="tm-skip" href="#main">Skip to content</a>
+<!-- Cookie consent (GDPR). Same cookie as the Spanish site: the choice carries over. -->
+<div id="tm-cookie-overlay" role="dialog" aria-modal="true" aria-labelledby="tm-cookie-title">
+  <div id="tm-cookie-modal">
+    <div id="tm-cookie-icon" aria-hidden="true">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="18.5" stroke="#b8860b" stroke-width="1.5" fill="#faf8f4"/>
+        <circle cx="14" cy="15" r="2.2" fill="#b8860b"/>
+        <circle cx="24" cy="13" r="1.7" fill="#b8860b"/>
+        <circle cx="27" cy="24" r="2.2" fill="#b8860b"/>
+        <circle cx="16" cy="26" r="1.7" fill="#b8860b"/>
+        <circle cx="21" cy="20" r="1.1" fill="#b8860b"/>
+      </svg>
+    </div>
+    <h2 id="tm-cookie-title">We use cookies</h2>
+    <p id="tm-cookie-desc">
+      We use our own cookies, which the site needs to work, and third-party cookies
+      for traffic analysis and advertising. You can accept them, reject the optional
+      ones, or choose which to allow.
+      <a href="/en/cookie-policy/" id="tm-privacy-link" rel="noopener noreferrer">Cookie policy</a>.
+    </p>
+    <div id="tm-cookie-panel" hidden>
+      <div class="tm-toggle-row">
+        <div class="tm-toggle-info">
+          <strong>Necessary</strong>
+          <span>Required for the site to work. They cannot be turned off.</span>
+        </div>
+        <div class="tm-toggle-wrap tm-toggle-forced">
+          <input type="checkbox" id="tm-chk-necessary" checked disabled>
+          <label for="tm-chk-necessary" class="tm-switch-label"></label>
+        </div>
+      </div>
+      <div class="tm-toggle-row">
+        <div class="tm-toggle-info">
+          <strong>Analytics</strong>
+          <span>Measure traffic and browsing behavior (Google Analytics 4).</span>
+        </div>
+        <div class="tm-toggle-wrap">
+          <input type="checkbox" id="tm-chk-analytics">
+          <label for="tm-chk-analytics" class="tm-switch-label"></label>
+        </div>
+      </div>
+      <div class="tm-toggle-row">
+        <div class="tm-toggle-info">
+          <strong>Advertising</strong>
+          <span>Show ads relevant to your interests (Google AdSense).</span>
+        </div>
+        <div class="tm-toggle-wrap">
+          <input type="checkbox" id="tm-chk-advertising">
+          <label for="tm-chk-advertising" class="tm-switch-label"></label>
+        </div>
+      </div>
+    </div>
+    <div id="tm-cookie-actions">
+      <button id="tm-btn-accept"    class="tm-btn tm-btn-primary">Accept all</button>
+      <button id="tm-btn-necessary" class="tm-btn tm-btn-secondary">Necessary only</button>
+      <button id="tm-btn-configure" class="tm-btn tm-btn-link">Customize</button>
+      <button id="tm-btn-save"      class="tm-btn tm-btn-primary" hidden>Save preferences</button>
+    </div>
+  </div>
+</div>
+<button id="tm-cookie-trigger" aria-label="Manage cookies" title="Manage cookies" hidden>
+  <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="20" cy="20" r="18.5" stroke="currentColor" stroke-width="2" fill="none"/>
+    <circle cx="14" cy="15" r="2.2" fill="currentColor"/>
+    <circle cx="24" cy="13" r="1.7" fill="currentColor"/>
+    <circle cx="27" cy="24" r="2.2" fill="currentColor"/>
+    <circle cx="16" cy="26" r="1.7" fill="currentColor"/>
+    <circle cx="21" cy="20" r="1.1" fill="currentColor"/>
+  </svg>
+</button>
+<script src="/assets/js/consent.js?v=bf8ddf19" defer></script>
+
+<header class="tm-site-header">
+  <div class="tm-container tm-header-inner">
+    <a class="tm-brand" href="/en/">
+      <span class="tm-brand-mark"><img src="/assets/img/favicon-32.png" width="32" height="32" alt=""></span>
+      <span class="tm-brand-text">Music Theory</span>
+    </a>
+    <button class="tm-nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="tm-nav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="tm-nav" class="tm-nav" aria-label="Main">
+      <ul class="tm-nav-list">
+        <li><a href="/en/">Home</a></li>
+        <li class="tm-has-sub"><a href="/en/tools/">Tools</a>
+        <ul class="tm-subnav">
+          <li><a href="/en/tools/metronome/">Metronome</a></li>
+          <li><a href="/en/tools/tuner/">Tuner</a></li>
+        </ul>
+      </li>
+        <li class="tm-lang"><a href="/herramientas/metronomo/" hreflang="es" lang="es" title="Ver esta página en español">Español</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="tm-main">
+
+  <nav class="tm-breadcrumb" aria-label="Breadcrumb">
+    <div class="tm-container">
+      <a href="/en/">Home</a><span class="tm-crumb-sep">›</span><a href="/en/tools/">Tools</a><span class="tm-crumb-sep">›</span><span aria-current="page">Online Metronome</span>
+    </div>
+  </nav>
+
+<header class="tm-page-header"><div class="tm-container"><h1>Free Online Metronome</h1><p class="tm-page-header-sub">Custom and odd meters, drum machine, tap tempo and a speed trainer</p></div></header>
+<div class="tm-container tm-article-wrap">
+  <article class="tm-article">
+
+<p class="tm-tool-intro">Set the tempo with the slider, choose a time signature and press <strong>Play</strong> — or the space bar. The <strong>online metronome</strong> runs right in your browser, with nothing to install.</p>
+
+<div class="tm-metronomo-wrap">
+
+  <!-- HEADER -->
+  <div class="met-header">
+    <div class="met-logo"></div>
+    <div>
+      <div class="met-title">Metronome</div>
+      <div class="met-subtitle">teoriamusical.com.es</div>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="met-toolbar">
+    <button id="btn-share" class="met-hdr-btn" title="Share this setup" aria-label="Share setup">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      <span class="share-label">Share</span>
+    </button>
+    <button id="btn-fullscreen" class="met-hdr-btn" title="Fullscreen" aria-label="Fullscreen">
+      <svg id="fs-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+      <span class="fs-label">Fullscreen</span>
+    </button>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="met-grid">
+
+    <!-- BPM + SLIDER -->
+    <div class="ctrl-box full accent-box">
+      <div class="box-label">Tempo</div>
+      <div class="bpm-display">
+        <button class="bpm-btn" id="btn-minus" aria-label="Slower (−1 BPM)">−</button>
+        <div class="bpm-num" id="bpm-num">120</div>
+        <button class="bpm-btn" id="btn-plus" aria-label="Faster (+1 BPM)">+</button>
+      </div>
+      <div class="tempo-name" id="tempo-name">Moderato</div>
+      <input type="range" class="bpm-slider" id="bpm-slider" min="15" max="300" value="120" aria-label="Tempo (BPM)">
+      <div class="bpm-range-labels"><span>15</span><span>300</span></div>
+    </div>
+
+    <!-- PLAY + TAP -->
+    <div class="ctrl-box" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+      <div class="box-label" style="text-align:center;">Controls</div>
+      <div class="play-row">
+        <button class="btn-play" id="btn-play" aria-label="Play/Stop">
+          <svg id="play-icon" width="26" height="26" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>
+        </button>
+      </div>
+      <button class="btn-tap" id="btn-tap">TAP (T)</button>
+      <button class="btn-reset" id="btn-reset">RESET</button>
+    </div>
+
+    <!-- PENDULUM + BEAT DOTS + PLAY -->
+    <div class="ctrl-box pendulum-box">
+      <div class="box-label">Pendulum</div>
+      <div class="pendulum-svg-wrap">
+        <svg id="pendulum-svg" viewBox="-50 0 200 135" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="pendulum-g" style="transform-origin: 50px 10px;">
+            <line id="pend-rod" x1="50" y1="10" x2="50" y2="95" class="pend-rod"/>
+            <circle id="pend-ball" cx="50" cy="98" r="12" class="pend-ball"/>
+          </g>
+          <circle cx="50" cy="10" r="5" class="pend-pivot"/>
+        </svg>
+      </div>
+      <div class="beat-dots" id="beat-dots"></div>
+      <div class="countin-overlay" id="countin-overlay" hidden></div>
+    </div>
+
+    <!-- SONIDO -->
+    <div class="ctrl-box full" id="box-sonido">
+      <div class="box-label">Sound</div>
+      <div class="pill-group">
+        <span class="pill sound-pill active" data-sound="templeblock">Temple block</span>
+        <span class="pill sound-pill" data-sound="claves">Claves</span>
+        <span class="pill sound-pill" data-sound="cencerro">Cowbell</span>
+        <span class="pill sound-pill" data-sound="clasico">Classic</span>
+        <span class="pill sound-pill" data-sound="electronico">Electronic</span>
+        <span class="pill sound-pill" data-sound="digital">Digital</span>
+      </div>
+    </div>
+
+    <!-- COMPÁS -->
+    <div class="ctrl-box full" id="box-compas">
+      <div class="box-label">Time signature</div>
+      <div style="margin-bottom:8px;">
+        <div style="font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1.5px;">Simple</div>
+        <div class="pill-group" id="simple-meters">
+          <span class="pill meter-pill" data-meter="1/4">1/4</span>
+          <span class="pill meter-pill active" data-meter="2/4">2/4</span>
+          <span class="pill meter-pill" data-meter="3/4">3/4</span>
+          <span class="pill meter-pill" data-meter="4/4">4/4</span>
+          <span class="pill meter-pill" data-meter="5/4">5/4</span>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;">
+        <div style="font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1.5px;">Compound</div>
+        <div class="pill-group" id="compound-meters">
+          <span class="pill meter-pill" data-meter="3/8">3/8</span>
+          <span class="pill meter-pill" data-meter="6/8">6/8</span>
+          <span class="pill meter-pill" data-meter="9/8">9/8</span>
+          <span class="pill meter-pill" data-meter="12/8">12/8</span>
+          <span class="pill meter-pill" data-meter="15/8">15/8</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:1.5px;">Custom</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+          <button class="bpm-btn" id="free-add1" style="width:40px;height:36px;font-size:12px;">+1</button>
+          <button class="bpm-btn" id="free-add2" style="width:40px;height:36px;font-size:12px;">+2</button>
+          <button class="bpm-btn" id="free-add3" style="width:40px;height:36px;font-size:12px;">+3</button>
+          <button class="bpm-btn" id="free-undo" style="width:40px;height:36px;font-size:16px;" title="Undo last group">←</button>
+          <button class="btn-tap" id="free-apply" style="padding:8px 16px;">APPLY</button>
+          <button class="btn-reset" id="free-clear" style="padding:8px 12px;">CLEAR</button>
+        </div>
+        <div id="free-groups-display" style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;min-height:32px;">
+          <span style="font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted);">No groups</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBDIVISIÓN -->
+    <div class="ctrl-box full" id="box-subdivision">
+      <div class="box-label">Subdivision</div>
+      <div class="subdiv-grid" id="subdiv-grid">
+        <button class="subdiv-btn active" data-div="1"><span class="subdiv-icon">♩</span><span class="subdiv-label">Quarter</span></button>
+        <button class="subdiv-btn" data-div="2"><span class="subdiv-icon">♪♪</span><span class="subdiv-label">Eighth</span></button>
+        <button class="subdiv-btn" data-div="3"><span class="subdiv-icon">♪♪♪</span><span class="subdiv-label">Triplet</span></button>
+        <button class="subdiv-btn" data-div="4"><span class="subdiv-icon">𝅘𝅥𝅯</span><span class="subdiv-label">16th</span></button>
+        <button class="subdiv-btn" data-div="5"><span class="subdiv-icon">5</span><span class="subdiv-label">Quintuplet</span></button>
+        <button class="subdiv-btn" data-div="6"><span class="subdiv-icon">6</span><span class="subdiv-label">Sextuplet</span></button>
+        <button class="subdiv-btn" data-div="7"><span class="subdiv-icon">7</span><span class="subdiv-label">Septuplet</span></button>
+        <button class="subdiv-btn" data-div="8"><span class="subdiv-icon">×8</span><span class="subdiv-label">×8</span></button>
+      </div>
+    </div>
+
+    <!-- VOLÚMENES -->
+    <div class="ctrl-box" id="box-volumenes">
+      <div class="box-label">Volume</div>
+      <div class="vol-row">
+        <span class="vol-label">Click</span>
+        <input type="range" class="vol-slider" id="vol-click" min="0" max="100" value="80" aria-label="Click volume">
+        <span class="vol-num" id="vol-click-num">80</span>
+      </div>
+      <div class="vol-row" style="margin-bottom:14px;">
+        <span class="vol-label">Accent</span>
+        <input type="range" class="vol-slider" id="vol-accent" min="0" max="100" value="100" aria-label="Accent volume">
+        <span class="vol-num" id="vol-accent-num">100</span>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="ctrl-box" id="box-stats">
+      <div class="box-label">Stats</div>
+      <div class="stats-grid">
+        <div class="stat-item"><span class="stat-val" id="st-beat">—</span><span class="stat-lbl">Beat</span></div>
+        <div class="stat-item"><span class="stat-val" id="st-measure">—</span><span class="stat-lbl">Measure</span></div>
+        <div class="stat-item"><span class="stat-val" id="st-ms">—</span><span class="stat-lbl">ms/beat</span></div>
+        <div class="stat-item"><span class="stat-val" id="st-total">0</span><span class="stat-lbl">Total</span></div>
+      </div>
+    </div>
+
+    <!-- PRÁCTICA (tiempo de estudio) -->
+    <div class="ctrl-box full" id="box-practica">
+      <div class="box-label">Practice time</div>
+      <div class="prac-stats-grid">
+        <div class="stat-item"><span class="stat-val" id="prac-today">0 min</span><span class="stat-lbl">Today</span></div>
+        <div class="stat-item"><span class="stat-val" id="prac-week">0 min</span><span class="stat-lbl">This week</span></div>
+      </div>
+      <button class="prac-reset" id="prac-stats-reset" type="button" title="Clear the practice time log">Reset</button>
+    </div>
+
+    <!-- MODO ENSAYO -->
+    <div class="ctrl-box full" id="box-ensayo">
+      <div class="box-label">Speed Trainer</div>
+      <div class="practice-row">
+        <div class="prac-field">
+          <label for="prac-measures">Measures</label>
+          <input type="number" id="prac-measures" value="8" min="1" max="999">
+        </div>
+        <div class="prac-field">
+          <label for="prac-bpm-start">Start BPM</label>
+          <input type="number" id="prac-bpm-start" value="60" min="20" max="300">
+        </div>
+        <div class="prac-field">
+          <label for="prac-bpm-end">End BPM</label>
+          <input type="number" id="prac-bpm-end" value="120" min="20" max="300">
+        </div>
+      </div>
+      <div class="prac-progress-wrap"><div class="prac-progress-bar" id="prac-bar"></div></div>
+      <button class="btn-prac-start" id="btn-prac">START TRAINER</button>
+    </div>
+
+    <!-- PRÁCTICA: cuenta atrás + modo silencio -->
+    <div class="ctrl-box full" id="box-practica">
+      <div class="box-label">Practice</div>
+      <div class="pill-group" style="margin-bottom:12px;align-items:center">
+        <span class="pill" id="pill-countin" role="button" tabindex="0">Count-in</span>
+        <span class="pill" id="pill-gap" role="button" tabindex="0">Mute mode</span>
+        <span id="gap-status" class="gap-status">—</span>
+      </div>
+      <div class="practice-row" id="gap-fields" hidden>
+        <div class="prac-field">
+          <label for="gap-play">Play (measures)</label>
+          <input type="number" id="gap-play" value="2" min="1" max="16">
+        </div>
+        <div class="prac-field">
+          <label for="gap-mute">Mute (measures)</label>
+          <input type="number" id="gap-mute" value="2" min="1" max="16">
+        </div>
+        <div class="prac-field"></div>
+      </div>
+    </div>
+
+    <!-- CAJA DE RITMOS -->
+    <div class="ctrl-box full" id="box-cajaritmos">
+      <div class="box-label">Drum Machine</div>
+      <div class="dr-patterns" id="dr-patterns"></div>
+      <div class="dr-instruments" id="dr-instruments"></div>
+    </div>
+
+    <!-- ATAJOS -->
+    <div class="ctrl-box full" id="box-atajos">
+      <div class="box-label">Keyboard shortcuts</div>
+      <div class="shortcuts-grid">
+        <div class="shortcut-item"><span class="key-badge">Space</span><span>Play / Stop</span></div>
+        <div class="shortcut-item"><span class="key-badge">T</span><span>Tap tempo</span></div>
+        <div class="shortcut-item"><span class="key-badge">↑</span> / <span class="key-badge">↓</span><span>±1 BPM</span></div>
+        <div class="shortcut-item"><span class="key-badge">⇧↑</span> / <span class="key-badge">⇧↓</span><span>±5 BPM</span></div>
+        <div class="shortcut-item"><span class="key-badge">Ctrl ⇧↑</span> <span style="color:var(--muted);font-size:10px;">Win</span> / <span class="key-badge">⌘⇧↑</span> <span style="color:var(--muted);font-size:10px;">Mac</span><span>+10 BPM</span></div>
+        <div class="shortcut-item"><span class="key-badge">Ctrl ⇧↓</span> <span style="color:var(--muted);font-size:10px;">Win</span> / <span class="key-badge">⌘⇧↓</span> <span style="color:var(--muted);font-size:10px;">Mac</span><span>−10 BPM</span></div>
+      </div>
+    </div>
+
+  </div><!-- /met-grid -->
+</div><!-- /wrap -->
+<script src="/assets/tools/metronomo.js?v=1d462e49" defer></script>
+<script>
+/* Subdivision labels change with the time signature (compound meters divide the beat in three). Same logic as the Spanish page. */
+(function () {
+  var grid = document.getElementById('subdiv-grid');
+  if (!grid) return;
+  // Compás COMPUESTO (6, 9, 12, 15): el tiempo es negra con puntillo (÷3); cambian 1,2,3,4,6.
+  var COMP = {
+    1: { i: '♩.', l: 'Dotted qtr' }, 2: { i: '2', l: 'Duplet' }, 3: { i: '♪♪♪', l: 'Eighth' },
+    4: { i: '4', l: 'Quadruplet' }, 6: { i: '𝅘𝅥𝅯', l: '16th' }
+  };
+  // Compás LIBRE/asimétrico: tiempo irregular; solo divisiones binarias de la corchea.
+  var FREE = {
+    1: { i: '♩', l: 'Beat' }, 2: { i: '♪', l: 'Eighth' },
+    4: { i: '𝅘𝅥𝅯', l: '16th' }, 8: { i: '𝅘𝅥𝅰', l: '32nd' }
+  };
+  var FREE_VIS = { 1: 1, 2: 1, 4: 1, 8: 1 };   // botones visibles en modo libre
+  var btns = [].slice.call(grid.querySelectorAll('.subdiv-btn'));
+  btns.forEach(function (b) {           // guarda los originales (compás simple)
+    b.dataset.icoS = b.querySelector('.subdiv-icon').textContent;
+    b.dataset.lblS = b.querySelector('.subdiv-label').textContent;
+  });
+  function isCompound(meter) {
+    var m = /^(\d+)\/(\d+)$/.exec(meter || '');
+    return !!m && (+m[1]) % 3 === 0 && (+m[1]) >= 6;   // 6,9,12,15 = compuesto (3/8 es simple)
+  }
+  function mode() {
+    var a = document.querySelector('.meter-pill.active');
+    if (a) return isCompound(a.dataset.meter) ? 'comp' : 'simple';
+    var fg = document.getElementById('free-groups-display');
+    var hasGroups = fg && !/no groups/i.test(fg.textContent || '');
+    return hasGroups ? 'free' : 'simple';   // sin pill activa + grupos aplicados = libre
+  }
+  function setBtn(b, ico, lbl) {
+    b.querySelector('.subdiv-icon').textContent = ico;
+    b.querySelector('.subdiv-label').textContent = lbl;
+  }
+  function refresh() {
+    var m = mode();
+    btns.forEach(function (b) {
+      var d = +b.dataset.div;
+      if (m === 'free') {
+        if (FREE_VIS[d]) { b.style.display = ''; setBtn(b, FREE[d].i, FREE[d].l); }
+        else { b.style.display = 'none'; }
+      } else {
+        b.style.display = '';
+        if (m === 'comp' && COMP[d]) setBtn(b, COMP[d].i, COMP[d].l);
+        else setBtn(b, b.dataset.icoS, b.dataset.lblS);
+      }
+    });
+    if (m === 'free') {   // si hay un tresillo/quintillo… activo, resetea a Corchea
+      var act = grid.querySelector('.subdiv-btn.active');
+      if (act && !FREE_VIS[+act.dataset.div]) {
+        var c = grid.querySelector('.subdiv-btn[data-div="2"]');
+        if (c) c.click();
+      }
+    }
+  }
+  var obs = new MutationObserver(refresh);
+  ['simple-meters', 'compound-meters'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) obs.observe(el, { attributes: true, subtree: true, attributeFilter: ['class'] });
+  });
+  ['free-apply', 'free-clear'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('click', function () { setTimeout(refresh, 60); });
+  });
+  setTimeout(refresh, 150);   // estado inicial (incluye carga con ?meter= o ?groups=)
+})();
+</script>
+
+<p>Few skills separate an amateur from a professional as much as the ability to hold a firm, steady <em>tempo</em>. Whether you are practicing scales on the piano, strumming patterns on the guitar or long passages on the violin, an <strong>online metronome</strong> is the reference tool for any instrumental practice, straight from your browser with nothing to install.</p>
+
+<p>This guide explains what a metronome is, why you should use one, and how this tool can help you build your sense of rhythm.</p>
+
+<h2 id="what-is-a-metronome">What is a metronome, and why does it matter?</h2>
+
+<p>A metronome is a device (here, a web tool) that produces a visual and audible signal at perfectly regular intervals. The speed is measured in <strong>BPM</strong>, or <em>beats per minute</em>.</p>
+
+<p>At 60 BPM you hear exactly one beat per second, like the second hand of a clock. At 120 BPM the pulse is twice as fast: two beats per second.</p>
+
+<p>Practicing with a metronome gives you three key benefits:</p>
+
+<ol>
+<li><strong>Relentless rhythmic accuracy:</strong> it removes the natural tendency to rush the easy parts of a score and slow down in the hard measures. (<em>Measure</em> is the US word; in the UK it is a <em>bar</em>.)</li>
+<li><strong>Measurable progress:</strong> you can check exactly whether you are getting faster on a difficult technical passage.</li>
+<li><strong>A sense of <em>groove</em>:</strong> especially in contemporary styles, playing “in the pocket” (exactly on the beat) makes the music sound professional.</li>
+</ol>
+
+<div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+
+<h2 id="how-to-use">How to use the metronome (step by step)</h2>
+
+<p>The Teoría Musical metronome is very simple to use:</p>
+
+<ol>
+<li><strong>Set the tempo (BPM):</strong> use the slider or the “+” and “−” buttons to find the speed you want. For a first session with a new piece, start between 60 and 70 BPM.</li>
+<li><strong>Choose a subdivision (optional):</strong> you can hear only the main beat (quarter notes) or turn on subdivisions (eighth notes, sixteenth notes or triplets).</li>
+<li><strong>Set the time signature:</strong> if the score is in 4/4 (quadruple meter), choose 4/4. The metronome plays a different sound (often higher, or a “bell”) on the first beat of every measure, which makes it easier to follow your place in the measure.</li>
+<li><strong>Press Play.</strong></li>
+</ol>
+
+<h2>Features of the online metronome</h2>
+
+<p>This metronome goes beyond the basic click. These are the features that make it especially useful for studying music:</p>
+
+<ul>
+<li><strong>Simple and compound meters:</strong> choose from 1/4, 2/4, 3/4, 4/4, 5/4 (simple) and 3/8, 6/8, 9/8, 12/8, 15/8 (compound). The first beat of each measure is accented automatically.</li>
+<li><strong>Custom meters:</strong> build the asymmetric meters of contemporary music, flamenco or modern jazz — such as 5/8, 7/8 or 11/8 — by grouping eighth notes freely (groups of 1, 2 or 3).</li>
+<li><strong>Subdivisions:</strong> switch on quarter, eighth, triplet, sixteenth, quintuplet, sextuplet, septuplet or ×8 to practice any rhythmic figure.</li>
+<li><strong>Built-in drum machine:</strong> accompany the click with drum patterns (kick, snare, open and closed hi-hat), with presets for each time signature: Rock, Pop, Funk, Bossa, Reggae, Shuffle, Waltz, Jig…</li>
+<li><strong>Speed Trainer:</strong> set a BPM range (start → end) and a number of measures. The metronome raises the tempo gradually and automatically, which is ideal for getting through difficult passages.</li>
+<li><strong>Tap tempo:</strong> hit the <kbd>T</kbd> key or the TAP button in time with a song to find its BPM.</li>
+<li><strong>Per-beat accents:</strong> click any beat of the measure to cycle through Strong, Medium, Weak and Muted — useful for working on polyrhythms and off-beats.</li>
+<li><strong>Click sounds:</strong> temple block, claves, cowbell, classic (a bright digital click), electronic (sine plus transient) or digital (a pure beep). The click and accent volumes are adjusted separately.</li>
+</ul>
+
+<p>Note names in the panel use US terms. If you learned the British names: quarter note = <em>crotchet</em>, eighth note = <em>quaver</em>, sixteenth note = <em>semiquaver</em>, thirty-second note = <em>demisemiquaver</em>, measure = <em>bar</em>.</p>
+
+<h2>How accurate is it? Why it does not drift</h2>
+
+<p>A steady tempo is the most important thing in a metronome. Many simple web metronomes produce each click with JavaScript timers (<code>setInterval</code> or <code>setTimeout</code>), which can add small timing variations — <em>jitter</em> — because the browser does not guarantee that the code runs at exactly the intended moment.</p>
+
+<p>This metronome uses the <strong>Web Audio API</strong> together with <strong>lookahead scheduling</strong>. A JavaScript process works out the next clicks ahead of time, but each sound is <strong>scheduled directly on the audio engine’s own clock</strong>, which is <strong>sample-accurate</strong>.</p>
+
+<p>Thanks to this, normal browser variations do not affect the moment each click actually plays. The result is an <strong>extremely steady pulse with no audible drift</strong>, even in long practice sessions. It is the same timing principle used by many professional browser-based audio applications.</p>
+
+<h2>How to use the Speed Trainer to raise the tempo step by step</h2>
+
+<p>The <strong>Speed Trainer</strong> automates the most effective technique in instrumental practice: start slow and speed up gradually. Instead of changing the BPM by hand every few minutes, you set a start tempo, an end tempo and the number of measures at each level. The metronome does the rest.</p>
+
+<p>A typical routine for getting past a difficult passage:</p>
+
+<ol>
+<li><strong>Find the point of failure:</strong> play the passage and note the BPM where the mistakes begin (say, 88 BPM).</li>
+<li><strong>Set up the trainer:</strong> start BPM = 70, end BPM = 100, measures = 8. The tempo then rises 1–2 BPM every 8 measures, automatically.</li>
+<li><strong>No interruptions:</strong> the metronome raises the tempo for you, so you can focus entirely on playing it correctly without touching anything.</li>
+<li><strong>Repeat the session</strong> the next day from the same starting point. In 3–5 sessions the passage will be solid.</li>
+</ol>
+
+<p>The key is not to force it: if mistakes appear at some level, stop the metronome, drop 5–10 BPM and repeat. Steady progress is always faster than forced progress.</p>
+
+<h2>Metronome with a drum machine: practice with a real backing</h2>
+
+<p>The built-in <strong>drum machine</strong> adds real drum patterns — kick, snare and open and closed hi-hat — in exact sync with your tempo. Working with a full pattern instead of a bare click makes it easier to absorb the <em>groove</em> of each style and lets you play “in the pocket” from your first run-through.</p>
+
+<p>To use it, pick a time signature and click any pattern in the <strong>Drum Machine</strong> box. You can set the volume of each instrument separately, or edit any step by switching the grid cells on and off.</p>
+
+<h3>Patterns available for each time signature</h3>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead>
+    <tr><th>Time signature</th><th>Pattern</th><th>Character and use</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>4/4</strong></td><td>Rock</td><td>Kick on 1 and 3, snare on 2 and 4. The reference pattern for electric guitar, bass and rock drumming.</td></tr>
+    <tr><td><strong>4/4</strong></td><td>Pop</td><td>Steady sixteenth-note hi-hat. Good for piano, acoustic guitar and ukulele.</td></tr>
+    <tr><td><strong>4/4</strong></td><td>Funk</td><td>Accented syncopation over 16 steps. For electric bass, rhythm guitar and keyboards that stress the off-beats.</td></tr>
+    <tr><td><strong>4/4</strong></td><td>Bossa</td><td>Displaced kick, open hi-hat on the off-beat. A reference for classical guitar and Brazilian jazz piano.</td></tr>
+    <tr><td><strong>4/4</strong></td><td>Reggae</td><td>Accent on 2 and 4, hi-hat on the off-beats. Perfect for practicing the guitar “skank”.</td></tr>
+    <tr><td><strong>4/4</strong></td><td>Shuffle</td><td>Hi-hat in a triplet swing pattern. Essential for blues, country and swing jazz.</td></tr>
+    <tr><td><strong>3/4</strong></td><td>Waltz</td><td>Kick on 1, snare on 2 and 3. The classic triple-meter pattern for piano and accordion.</td></tr>
+    <tr><td><strong>3/4</strong></td><td>Bolero</td><td>Latin pattern with a melancholy character. Common in classical guitar and romantic piano.</td></tr>
+    <tr><td><strong>3/4</strong></td><td>Mazurka</td><td>Polish dance with the accent moved to the 2nd or 3rd beat. Found in Chopin and in Slavic folk music.</td></tr>
+    <tr><td><strong>2/4</strong></td><td>March</td><td>A strong duple pulse. For band, ensemble percussion and pieces with a martial character.</td></tr>
+    <tr><td><strong>2/4</strong></td><td>Polka</td><td>A lively Central European dance with constant sixteenth-note hi-hat.</td></tr>
+    <tr><td><strong>6/8</strong></td><td>Jig</td><td>Celtic dance with a kick on every compound beat. Essential for fiddle, Irish flute and Celtic guitar.</td></tr>
+    <tr><td><strong>6/8</strong></td><td>Siciliana</td><td>A Baroque pattern with a pastoral character, common in Bach, Handel and Scarlatti.</td></tr>
+    <tr><td><strong>6/8</strong></td><td>Ballad</td><td>Slow, expressive compound time. For piano, acoustic guitar and voice.</td></tr>
+    <tr><td><strong>9/8</strong></td><td>Basic</td><td>Three compound beats of three eighth notes. For Spanish repertoire and some Greek dances.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The 5/4 and 7/4 meters use the 4/4 patterns as a base; 3/8, 12/8 and 15/8 use the 6/8 patterns. With a <strong>Custom</strong> meter the drum machine switches off automatically, because an irregular grouping needs practice without a fixed accompaniment until you have absorbed it.</p>
+
+<h2>Metronome for odd meters: 5/8, 7/8 and polyrhythms</h2>
+
+<p><strong>Asymmetric meters</strong> — also called irregular or odd meters, or <em>aksak</em> in the Balkan tradition — are those in which the beats are not all the same length. You find them in flamenco, modern jazz, Balkan music, some 20th-century works (Bartók, Stravinsky) and contemporary genres such as math rock and prog.</p>
+
+<p>With the <strong>Custom</strong> time signature you can build any grouping:</p>
+
+<ul>
+<li><strong>5/8 (2+3):</strong> press “+2, +3” and apply. You get two eighth notes plus three eighth notes, with the accents on beats 1 and 3.</li>
+<li><strong>7/8 (2+2+3):</strong> press “+2, +2, +3”. This is the grouping of the Bulgarian <em>ruchenitsa</em> dance, and it is very common in Bulgarian folk music.</li>
+<li><strong>11/8 (3+3+2+3):</strong> press “+3, +3, +2, +3”. Found in some Balkan and Turkish dances (<em>aksak</em>).</li>
+</ul>
+
+<p>To learn an odd meter, start at 50–60 BPM until the grouping is instant — until you feel the accents without counting them — before you raise the tempo. The eighth-note subdivision (2) helps keep the individual beats even while you absorb the asymmetry of the whole.</p>
+
+<h2>3 rhythm exercises to start with</h2>
+
+<p>These three exercises are an effective starting point. For a complete routine with exercises on the staff, see the Spanish-language guide <a href="/blog/como-usar-el-metronomo/" hreflang="es" lang="es">cómo usar el metrónomo para estudiar</a>.</p>
+
+<h3>1. The 50% rule</h3>
+
+<p>Find the fastest speed at which you can play a piece without mistakes (say, 100 BPM). Then set the metronome to exactly half (50 BPM) and play the whole piece three times in a row with no mistakes. This builds solid muscle memory.</p>
+
+<h3>2. The vanishing beat game</h3>
+
+<p>Set the metronome to a comfortable speed (for example, 80 BPM) and play a scale or a warm-up exercise for 4 measures. The real test is to mentally mute it, or turn its volume down, for the next two measures while you try to keep the exact rhythm. When you listen again, check whether you rushed or dragged. (The <strong>Mute mode</strong> in the Practice box does this automatically.)</p>
+
+<h3>3. Measure accents</h3>
+
+<p>Set the tool to 4/4 at 60 BPM and tap or play a note on each click. Then deliberately move the accent (the strongest note) to beats 2 and 4, the way traditional jazz and reggae do.</p>
+
+<h2>Metronome for every instrument</h2>
+
+<h3>Metronome for guitar</h3>
+<p>The guitar is the instrument where a lack of tempo shows most. The most effective approach is to start strumming or fingerpicking at 60–70% of your target speed. The <strong>eighth-note</strong> subdivision suits eight-beat patterns, and the <strong>triplet</strong> suits shuffle or blues styles. The drum machine with the Rock or Reggae pattern gives you real musical context while you practice.</p>
+
+<h3>Metronome for piano and keyboard</h3>
+<p>On the piano, the metronome is essential for keeping both hands even. Practice each hand separately at a slow tempo first, then put them together. For scales and arpeggios, the <strong>sixteenth-note subdivision</strong> is recommended; for pieces with polyrhythms (3 against 2, 4 against 3), the <strong>Custom meter</strong> lets you program each grouping. The <strong>Speed Trainer</strong> is ideal for raising the tempo of a hard passage in a controlled way.</p>
+
+<h3>Metronome for drums</h3>
+<p>The built-in drum machine lets you play over real kick, snare and hi-hat patterns while the metronome marks the beats. 4/4 with the Rock pattern lets you work on the basic rudiment, and 6/8 with Jig or Siciliana covers compound meters. The <strong>sixteenth-note</strong> subdivision is the best one for working on the precision of rolls.</p>
+
+<h3>Metronome for strings and winds</h3>
+<p>Violin, viola, cello, flute, clarinet and trumpet all benefit from practicing at a <strong>very slow tempo</strong> (40–60 BPM) with the eighth-note subdivision, paying attention to the quality of the sound. Raise the tempo by 5 BPM each time you string together 3 repetitions without mistakes. The compound meters 6/8 and 9/8 are especially common in the classical repertoire for these instruments.</p>
+
+<p>Before any practice session, make sure your instrument is in tune: playing out of tune with a metronome builds bad listening habits that are hard to undo later.</p>
+
+<h2>Table of musical tempos (BPM)</h2>
+
+<p>Tempo markings in Italian are a universal standard in musical notation. This table shows the BPM range for each term and its expressive character. Click a name to set the metronome to that speed.</p>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead>
+    <tr><th>Marking</th><th>BPM</th><th>Character</th></tr>
+  </thead>
+  <tbody>
+    <tr><td style="cursor:pointer;color:var(--accent,#2a7a6e)" onclick="metronomoSetBpm(30)" title="Set 30 BPM"><strong>Grave</strong></td><td>15–39</td><td>Very slow and solemn</td></tr>
+    <tr><td style="cursor:pointer;color:var(--accent,#2a7a6e)" onclick="metronomoSetBpm(50)" title="Set 50 BPM"><strong>Largo</strong></td><td>40–59</td><td>Broad and sustained</td></tr>
+    <tr><td style="cursor:pointer;color:var(--accent,#2a7a6e)" onclick="metronomoSetBpm(63)" title="Set 63 BPM"><strong>Larghetto</strong></td><td>60–65</td><td>A little less slow than Largo</td></tr>
+    <tr><td style="cursor:pointer;color:var(--accent,#2a7a6e)" onclick="metronomoSetBpm(70)" title="Set 70 BPM"><strong>Adagio</strong></td><td>66–75</td><td>Slow and expressive</td></tr>
+    <tr><td style="cursor:pointer;color:var(--accent,#2a7a6e)" onclick="metronomoSetBpm(80)" title="Set 80 BPM"><strong>Andante</strong></td><td>76–89</td><td>At a walking pace, calm</td></tr>
+    <tr><td style="cursor:pointer;color:var(--accent,#2a7a6e)" onclick="metronomoSetBpm(96)" title="Set 96 BPM"><strong>Moderato</strong></td><td>90–104</td><td>Moderate, balanced</td></tr>
+    <tr><td style="cursor:pointer;color:var(--accent,#2a7a6e)" onclick="metronomoSetBpm(108)" title="Set 108 BPM"><strong>Allegretto</strong></td><td>105–114</td><td>Moderately fast, light</td></tr>
+    <tr><td style="cursor:pointer;color:var(--accent,#2a7a6e)" onclick="metronomoSetBpm(120)" title="Set 120 BPM"><strong>Allegro</strong></td><td>115–129</td><td>Fast and cheerful</td></tr>
+    <tr><td style="cursor:pointer;color:var(--accent,#2a7a6e)" onclick="metronomoSetBpm(144)" title="Set 144 BPM"><strong>Vivace</strong></td><td>130–167</td><td>Lively and energetic</td></tr>
+    <tr><td style="cursor:pointer;color:var(--accent,#2a7a6e)" onclick="metronomoSetBpm(176)" title="Set 176 BPM"><strong>Presto</strong></td><td>168–199</td><td>Very fast</td></tr>
+    <tr><td style="cursor:pointer;color:var(--accent,#2a7a6e)" onclick="metronomoSetBpm(208)" title="Set 208 BPM"><strong>Prestissimo</strong></td><td>200–300</td><td>Extremely fast</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The label above the slider shows the Italian name for the BPM you have selected, in real time.</p>
+
+<h2>Frequently asked questions about the metronome</h2>
+
+<div class="tm-faq-list">
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">What BPM should I use to start practicing a piece?</div>
+    <div class="tm-faq-a">Start at 50–60% of the final tempo. If the piece goes at 120 BPM, practice at 60–72 BPM until you can play it three times in a row without mistakes. Only then raise it by 5 BPM. The right practice speed is the slowest one that lets you play without mistakes and with good posture.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">What is tap tempo and how does it work?</div>
+    <div class="tm-faq-a">Tap tempo finds the BPM of a song: press the TAP button (or the <kbd>T</kbd> key) several times in time with the music. The metronome averages the intervals between your taps and sets the tempo. Three to five taps give an accurate reading.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">What is the Speed Trainer for?</div>
+    <div class="tm-faq-a">The Speed Trainer raises the tempo gradually and automatically, from a start BPM to an end BPM, over the number of measures you set. It is the most effective way to get past a difficult passage: you set the tempo where the mistakes begin and your target, and the metronome climbs by itself with no manual changes.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">How do I practice odd meters like 7/8 or 5/8?</div>
+    <div class="tm-faq-a">Use the <strong>Custom</strong> time signature: add groups of eighth notes with the +1, +2 and +3 buttons to build the grouping you want. For example, 7/8 grouped 2+2+3 is built by pressing “+2, +2, +3” and then Apply. The metronome accents the first beat of each group, which helps you feel the asymmetry of the meter.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">What is the difference between simple and compound meter?</div>
+    <div class="tm-faq-a">In a simple meter (2/4, 3/4, 4/4…) each beat divides into two equal parts. In a compound meter (6/8, 9/8, 12/8…) each beat divides into three, which gives a smoother, swaying feel. The metronome handles this for you: in compound meters, each beat lasts a dotted quarter note.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">How does the drum machine work?</div>
+    <div class="tm-faq-a">The drum machine adds drum patterns (kick, snare, hi-hat) in sync with the metronome. Pick a pattern for the current time signature — Rock, Pop, Funk, Bossa, Reggae, Shuffle, Waltz, Jig… — or make your own by switching steps on and off. Each instrument has its own volume control.</div>
+  </div>
+  <div class="tm-faq-item">
+    <div class="tm-faq-q">Should I use a metronome the whole time I practice?</div>
+    <div class="tm-faq-a">Not necessarily. It is essential for technical warm-ups and for setting difficult passages. It is also worth practicing without it, in free tempo (<em>rubato</em>), to develop expression and musicality. A common balance is 70% with the metronome and 30% without.</div>
+  </div>
+</div>
+
+  <div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+
+</article>
+</div>
+</main>
+
+<footer class="tm-site-footer">
+  <div class="tm-container tm-footer-inner">
+    <div class="tm-footer-col">
+      <h3>Music Theory</h3>
+      <p>Music from the ground up: a dictionary, interactive exercises and free tools.</p>
+    </div>
+    <div class="tm-footer-col">
+      <h3>Sections</h3>
+      <ul>
+        <li class="tm-has-sub"><a href="/en/tools/">Tools</a>
+        <ul class="tm-subnav">
+          <li><a href="/en/tools/metronome/">Metronome</a></li>
+          <li><a href="/en/tools/tuner/">Tuner</a></li>
+        </ul>
+      </li>
+      </ul>
+    </div>
+    <div class="tm-footer-col">
+      <h3>Information</h3>
+      <ul>
+        <li><a href="/sobre-mi/">About (in Spanish)</a></li><li><a href="/contacto/">Contact (in Spanish)</a></li>
+        <li><a href="/en/legal-notice/">Legal notice</a></li>
+        <li><a href="/en/privacy-policy/">Privacy policy</a></li>
+        <li><a href="/en/cookie-policy/">Cookie policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="tm-footer-bottom">
+    <p>© <span id="tm-year"></span> Music Theory — Eduardo Escrig Zomeño. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js?v=12303d86" defer></script>
+</body>
+</html>

@@ -72,6 +72,10 @@ EXCLUDE_RELPATHS = {
     os.path.normpath("aviso-legal/index.html"),
     os.path.normpath("politica-de-cookies/index.html"),
     os.path.normpath("politica-de-privacidad/index.html"),
+    # Versiones inglesas de las tres paginas legales
+    os.path.normpath("en/legal-notice/index.html"),
+    os.path.normpath("en/cookie-policy/index.html"),
+    os.path.normpath("en/privacy-policy/index.html"),
 }
 
 # Paginas que usan marcadores de rejilla (tm-grid/tm-card...) pero SON contenido

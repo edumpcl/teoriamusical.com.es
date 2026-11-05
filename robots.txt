@@ -41,3 +41,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.teoriamusical.com.es/sitemap.xml
+Sitemap: https://www.teoriamusical.com.es/sitemap-en.xml

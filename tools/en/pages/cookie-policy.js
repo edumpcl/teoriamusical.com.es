@@ -1,0 +1,155 @@
+const legalPage = require('../legal');
+
+const OWNER = `<p>The controller of the personal data is Eduardo José Escrig Zomeño, tax ID (C.I.F.) 48581727T, Plaza de la Torrentina 7-8, 46900, Torrent (Spain), who is also the lawful owner of the Website and of all the subdomains and directories it includes (together, the “Website”).</p>
+
+<p>You can contact Eduardo José Escrig Zomeño about anything related to this policy at the email address <a href="mailto:info@teoriamusical.com.es">info@teoriamusical.com.es</a>.</p>`;
+
+module.exports = legalPage({
+  path: '/en/cookie-policy/',
+  esPath: '/politica-de-cookies/',
+  title: 'Cookie Policy | Music Theory',
+  description: 'Cookie policy of Music Theory: the types of cookies used, what they are for, and how to manage or turn them off in your browser.',
+  h1: 'Cookie Policy',
+  crumb: 'Cookie Policy',
+  body: `
+<h2>1. Information about the controller of the personal data</h2>
+
+${OWNER}
+
+<h2>2. What are cookies?</h2>
+
+<p>A cookie is a small file that the server of this Website sends to the browser of the device you connect from (computer, smartphone, tablet, etc.) in order to store information about your browsing from that device, which can later be retrieved.</p>
+
+<p>The cookie guide published by the Spanish Data Protection Agency (AEPD) is available here (in Spanish):</p>
+
+<p><a href="http://www.agpd.es/portalwebAGPD/canaldocumentacion/publicaciones/common/Guias/Guia_Cookies.pdf" hreflang="es">http://www.agpd.es/portalwebAGPD/canaldocumentacion/publicaciones/common/Guias/Guia_Cookies.pdf</a></p>
+
+<h3>2.1. What types of cookies are there?</h3>
+
+<p>There are several categories of cookies, and one cookie can belong to more than one category:</p>
+
+<h4>2.1.1. Types of cookies by the entity that manages them</h4>
+
+<p>Depending on who manages the device or domain the cookies are sent from, and who processes the data obtained, we can distinguish:</p>
+
+<p><strong>• First-party cookies:</strong> Cookies sent to the user’s device from a device or domain managed by the owner or publisher of the Website, and from which the service requested by the user is provided.</p>
+
+<p><strong>• Third-party cookies:</strong> Cookies sent to the user’s device from a device or domain that is not managed by the owner or publisher of the Website, but by another entity that processes the data obtained through the cookies.</p>
+
+<p>If cookies are installed from a device or domain managed by the owner or publisher of the Website itself, but the information they collect is managed by a third party, they cannot be considered first-party cookies.</p>
+
+<h4>2.1.2. Types of cookies by how long they stay active</h4>
+
+<p><strong>• Session cookies:</strong> Cookies designed to collect and store data while the user visits a web page. They are usually used to store information that only needs to be kept to provide the service the user requested on one occasion.</p>
+
+<p><strong>• Persistent cookies:</strong> Cookies whose data stays stored on the device and can be accessed and processed for a period set by the party responsible for the cookie, which can range from a few minutes to several years.</p>
+
+<h4>2.1.3. Types of cookies by purpose</h4>
+
+<p>Depending on the purpose for which the data obtained through cookies is processed, we can distinguish:</p>
+
+<p><strong>• Technical cookies:</strong> Cookies that let the user browse a web page, platform or application and use the different options or services on it, for example controlling traffic and data communication, identifying the session, accessing restricted areas, remembering the items in an order, completing a purchase, registering for or taking part in an event, using security features while browsing, storing content for streaming video or sound, or sharing content on social networks.</p>
+
+<p><strong>• Personalization cookies:</strong> Cookies that let the user access the service with some predefined general characteristics based on criteria in the user’s device, such as the language, the type of browser used to access the service, the regional setting from which the service is accessed, etc.</p>
+
+<p><strong>• Analytics cookies:</strong> Cookies that let the party responsible for them track and analyze the behavior of the users of the websites they are linked to. The information collected through these cookies is used to measure the activity of the websites, applications or platforms and to build browsing profiles of their users, in order to make improvements based on the analysis of how users use the service.</p>
+
+<p><strong>• Advertising cookies:</strong> Cookies that let the publisher manage, as efficiently as possible, the ad spaces it may have included in a web page, application or platform from which it provides the requested service, based on criteria such as the content published or how often the ads are shown.</p>
+
+<p><strong>• Behavioral advertising cookies:</strong> Cookies that let the publisher manage, as efficiently as possible, the ad spaces it may have included in a web page, application or platform from which it provides the requested service. These cookies store information about user behavior obtained through continued observation of their browsing habits, which makes it possible to build a specific profile in order to show advertising based on it.</p>
+
+<h2>3. What cookies do we use on the Website?</h2>
+
+<p><strong>teoriamusical.com.es</strong> uses the following types of cookies:</p>
+
+<h4>First-party cookies</h4>
+
+<ul>
+<li>Local storage cookies: to keep sessions open and to remember your cookie consent.</li>
+
+<li id="games">Local storage for the games: the games store in your browser your local leaderboard, the nickname you type and the musician you choose, so that you do not have to enter them again. Only if you publish a score on the world leaderboard is a random identifier also stored. It contains no personal data and is used so that your scores always go to your own row. None of this leaves your device, except what you decide to publish (see the world leaderboard section of the <a href="/en/privacy-policy/#games">privacy policy</a>). You can delete it at any time from the game itself (“Clear leaderboard”) or by clearing the site data in your browser.</li>
+</ul>
+
+<h4>Third-party cookies</h4>
+
+<p><strong>Analytics cookies:</strong> These are collected only by third parties. They let us count the number of users and so carry out the measurement and statistical analysis of how users use the service. To do this, your browsing on our website is analyzed in order to improve the products or services we offer you.</p>
+
+<ul>
+<li>Google Analytics</li>
+</ul>
+
+<p><strong>Advertising cookies:</strong> We use Google AdSense, a service that, by analyzing this type of cookie, lets us manage as efficiently as possible the ad spaces on the website, matching the content of the ad to the content of the service requested or to how you use our website. To do this we may analyze your internet browsing habits and show you advertising related to your browsing profile.</p>
+
+<p>This Website uses <strong>Google Tag Manager</strong>. Google Tag Manager is a tag management system that makes it easy and fast to update the tags and code snippets of a website or its mobile applications, such as those used for traffic analysis and for optimizing marketing campaigns. It can add and update custom, third-party or AdWords, Google Analytics, Firebase Analytics and Floodlight tags from the Tag Manager user interface instead of changing the website code.</p>
+
+<h2>4. How to turn off or block cookies</h2>
+
+<p>When you visit the Website, cookies are installed only if you keep browsing. Reading our cookie policy does not install any cookies. If you click “Customize” in the cookie banner, you can turn off all the optional cookies by clicking “Necessary only”.</p>
+
+<p>In addition, you can manage the use of cookies at any time through the browser installed on your device. The links below give information on which cookies you have installed in your browser, and on how to allow, block or delete them:</p>
+
+<p>Chrome: <a href="https://support.google.com/chrome/answer/95647?hl=en" target="_blank" rel="noreferrer noopener">https://support.google.com/chrome/answer/95647</a></p>
+
+<p>Edge: <a href="https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noreferrer noopener">https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge</a></p>
+
+<p>Firefox: <a href="https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences" target="_blank" rel="noreferrer noopener">https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences</a></p>
+
+<p>Safari: <a href="https://support.apple.com/guide/safari/manage-cookies-and-website-data-sfri11471/mac" target="_blank" rel="noreferrer noopener">https://support.apple.com/guide/safari/manage-cookies-and-website-data-sfri11471/mac</a></p>
+
+<p>Opera: <a href="https://help.opera.com/en/latest/web-preferences/" target="_blank" rel="noreferrer noopener">https://help.opera.com/en/latest/web-preferences/</a></p>
+
+<p>There are third-party tools, available online, that let users detect the cookies on each website they visit and manage how to turn them off, such as Ghostery (<a href="https://www.ghostery.com/" target="_blank" rel="noreferrer noopener">https://www.ghostery.com/</a>).</p>
+
+<p>Web browsers are the tools that store cookies, and from there the user can exercise the right to delete or turn them off. Neither this website nor its legal representatives can guarantee that the browsers handle cookies correctly or incorrectly.</p>
+
+<p>In some cases it is necessary to install cookies so that the browser does not forget the user’s decision not to accept them.</p>
+
+<h2>5. Purpose of the processing of personal data</h2>
+
+<p>We refer to the information in the table of cookies installed by the Website.</p>
+
+<h2>6. Retention period</h2>
+
+<p>The information obtained through the installation of cookies is kept for a period of two years.</p>
+
+<h2>7. Legal basis</h2>
+
+<p>Your data is processed on the legal basis of consent.</p>
+
+<h2>8. Recipients</h2>
+
+<p>The data obtained through the installation of cookies is not passed on to any third party outside Eduardo José Escrig Zomeño, unless there is a legal obligation or your consent is expressly requested.</p>
+
+<p>However, because third-party plugins and add-ons are used on the website, data may be communicated to the third parties named in the table of cookies installed by the Website.</p>
+
+<h2>9. Rights</h2>
+
+<p>As a data subject, you are entitled to exercise the following rights:</p>
+
+<ul>
+<li>The right to withdraw the consent given at any time.</li>
+
+<li>The right of ACCESS to your personal data.</li>
+
+<li>The right to request the RECTIFICATION of inaccurate data.</li>
+
+<li>The right to request the ERASURE of your data when, among other reasons, the data is no longer needed for the purposes for which it was collected.</li>
+
+<li>In certain circumstances, you can request the RESTRICTION OF PROCESSING of your data, in which case we will keep it only to establish, exercise or defend claims.</li>
+
+<li>In certain circumstances and for reasons relating to your particular situation, you can exercise your right to OBJECT to the processing of your data. We will stop processing the data, except for compelling legitimate grounds or to establish, exercise or defend possible claims.</li>
+
+<li>In certain circumstances and for reasons relating to your particular situation, you can request your right to DATA PORTABILITY. This is a right that complements the right of access, since it lets you obtain the data you have provided to Eduardo José Escrig Zomeño in a structured, commonly used and machine-readable format, and have it transmitted directly to another entity at the data subject’s request.</li>
+</ul>
+
+<p>You can exercise these rights by any means that leaves a record of its sending and receipt, stating your wish clearly and enclosing a copy of your national ID card (DNI) and/or any other document proving your identity, by writing to the email address <a href="mailto:info@teoriamusical.com.es">info@teoriamusical.com.es</a>, or to the postal address given above.</p>
+
+<p>In addition, if you consider that any of your rights as a data subject has been infringed, you are entitled to lodge a complaint with the Spanish Data Protection Agency (AEPD), at C/ Jorge Juan, 6, 28001 Madrid, <a href="https://www.aepd.es/en" target="_blank" rel="noreferrer noopener">https://www.aepd.es/en</a>, or through the AEPD electronic office: <a href="https://sedeagpd.gob.es/sede-electronica-web/" target="_blank" rel="noreferrer noopener">https://sedeagpd.gob.es/sede-electronica-web/</a>.</p>
+
+<h2>Rejecting cookies</h2>
+
+<p>If you want to reject cookies, use the button below.</p>
+
+<p><button type="button" class="tm-btn tm-btn-dorado" onclick="if(window.tmConsent)window.tmConsent.revoke();else alert('Cookie manager not available.')">Change or withdraw my consent</button></p>
+`,
+});
