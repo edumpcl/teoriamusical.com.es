@@ -29,8 +29,8 @@ module.exports = {
       <p class="tm-hero-bajada">Interactive exercises, games and step-by-step guides, all on a real staff. Free, with no sign-up.</p>
       <div class="tm-hero-btn-row">
         <a href="/en/tools/metronome/" class="tm-btn tm-btn-dorado">Try the metronome</a>
-        <a href="/en/tools/tuner/" class="tm-btn tm-btn-outline">Tune your instrument</a>
-        <a href="/en/tools/" class="tm-btn tm-btn-outline">All tools</a>
+        <a href="/en/tools/tuner/" class="tm-btn tm-btn-outline-claro">Tune your instrument</a>
+        <a href="/en/tools/" class="tm-btn tm-btn-outline-claro">All tools</a>
       </div>
     </div>
     <div class="tm-hero-derecha">
