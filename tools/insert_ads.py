@@ -46,9 +46,33 @@ SLOT_END   = "2439863051"   # TM - Fin de articulo
 SLOT_INTRO_SECCION = [
     ("herramientas/metronomo", "3447571789", "TM - Tras intro - metronomo"),
     ("herramientas/afinador",  "4070388314", "TM - Tras intro - afinador"),
+    # Version inglesa (/en/): sus propias unidades para saber que llega de EE. UU. y que de Espana.
+    # Rellenar los dos slots cuando se creen en AdSense (nombres exactos entre comillas). Mientras
+    # esten vacios se usan las unidades genericas y el script avisa.
+    ("en/", "9764000798", "TM - Tras intro - EN"),
+]
+
+# Unidad 2 (fin de articulo) por seccion; si no hay coincidencia se usa SLOT_END.
+SLOT_END_SECCION = [
+    ("en/", "6104169415", "TM - Fin de articulo - EN"),
 ]
 
 _avisados = set()
+
+
+def slot_end(rel):
+    """Slot de la unidad 2 segun la seccion; SLOT_END si la seccion no tiene unidad propia."""
+    ruta = rel.replace(os.sep, "/")
+    for prefijo, slot, nombre in SLOT_END_SECCION:
+        if ruta.startswith(prefijo):
+            if slot:
+                return slot
+            if nombre not in _avisados:
+                _avisados.add(nombre)
+                print("AVISO: falta el data-ad-slot de '%s' en "
+                      "SLOT_END_SECCION; se usa la unidad generica." % nombre)
+            return SLOT_END
+    return SLOT_END
 
 
 def slot_intro(rel):
@@ -224,7 +248,7 @@ def anclaje_ad2(region, pos_ad1):
 GRID_RE = re.compile(r'ej-cards|tm-grid|tm-hero|tm-card')
 
 
-def process(html, permitir_rejilla=False, slot1=SLOT_INTRO):
+def process(html, permitir_rejilla=False, slot1=SLOT_INTRO, slot2=SLOT_END):
     """Reconcilia y auto-corrige: SIEMPRE limpia primero y reinserta donde toca,
     asi se arreglan colocaciones viejas mal hechas. Devuelve (nuevo_html, estado).
 
@@ -270,10 +294,10 @@ def process(html, permitir_rejilla=False, slot1=SLOT_INTRO):
     ancla2 = anclaje_ad2(region, pos1)
     if ancla2:
         pos2, ad2 = ancla2
-        inserts.append((art_start + pos2, ad_block(SLOT_END)))
+        inserts.append((art_start + pos2, ad_block(slot2)))
     else:
         ad2 = "fin"
-        inserts.append((art_end, ad_block(SLOT_END)))
+        inserts.append((art_end, ad_block(slot2)))
 
     for pos, text in sorted(inserts, key=lambda x: x[0], reverse=True):
         html = html[:pos] + text + html[pos:]
@@ -311,7 +335,7 @@ def main():
         with open(path, "r", encoding="utf-8") as f:
             html = f.read()
         new, status = process(html, permitir_rejilla=rel in INCLUDE_RELPATHS,
-                              slot1=slot_intro(rel))
+                              slot1=slot_intro(rel), slot2=slot_end(rel))
         counts[status.split("(")[0]] = counts.get(status.split("(")[0], 0) + 1
         if new != html:
             print("%-14s %s" % (status, rel))
