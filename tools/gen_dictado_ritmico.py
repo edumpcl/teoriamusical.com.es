@@ -330,7 +330,180 @@ PAGS += paginas_corcheas('redondas-y-corcheas', 'redondas-c', 'Con redondas y co
                          'una redonda o un silencio de redonda', '10 en 4/4',
                          ' La redonda y su silencio llenan un compás de 4/4 (el silencio, solo como 2.º compás), y puede haber hasta cuatro tiempos de silencio seguidos.',
                          [('¿Por qué solo hay dictados en 4/4?', 'Porque la redonda dura cuatro tiempos y no cabe dentro de un compás de 2/4 o 3/4. Se podría repartir entre dos compases con una ligadura, pero en estos dictados no hay ligaduras.')],
-                         ('redondas', 'redondas'), None)
+                         ('redondas', 'redondas'), ('negras-y-semicorcheas', 'negras y semicorcheas'))
+
+
+# ---------- Con grupos de cuatro semicorcheas (Eduardo, 05-11-2026): los mismos cuatro grupos, con semicorcheas (de cuatro en
+# cuatro, ocupando un tiempo) y también grupos de dos corcheas; al escribir, la tarjeta es de una semicorchea.
+def paginas_semicorcheas(base, grupo, corto, figs, compases, nueva, reparto, extra_reglas, faq_extra, anterior, siguiente_g):
+    """Las 3 páginas de un grupo con semicorcheas (los mismos parámetros que paginas_corcheas)."""
+    reglas = ('<p>Cada dictado se inventa al momento: <strong>dos compases de ' + compases + '</strong> con <a href="/diccionario-musical/figuras-musicales/">' + figs + '</a>, todo en la nota Sol al piano y a un tempo de entre 60 y 72 negras por minuto, algo más despacio que sin semicorcheas. '
+              'Las <strong>semicorcheas van siempre de cuatro en cuatro</strong>, unidas con doble barra y ocupando un tiempo, y las <strong>corcheas, de dos en dos</strong>: nunca hay una suelta. Siempre hay al menos <strong>un grupo de cuatro semicorcheas</strong> y ' + nueva + '. '
+              'Antes del dictado suena un <strong>compás de metrónomo</strong> al mismo tempo, con el primer tiempo más fuerte, para que sepas la velocidad y dónde empieza el compás. El dictado puede empezar con silencio.' + extra_reglas + '</p>\n\n'
+              '<p>Cada nota suena casi toda su duración, así que cuatro semicorcheas se oyen como cuatro notas muy cortas que reparten el tiempo en cuatro partes iguales, el doble de rápidas que las corcheas. '
+              'Cada test tiene 10 dictados: ' + reparto + ', sin repetir ninguno.</p>')
+    como = ('<h2>Cómo hacer un dictado rítmico con semicorcheas</h2>\n\n<ol>\n'
+            '  <li>' + PASO_PULSO + '\n'
+            '  <li><strong>Identifica el compás y cuenta sus tiempos.</strong> El compás se dice antes de escuchar: cuenta sus tiempos desde el compás de metrónomo y vuelve a empezar en cada compás, aunque el primer tiempo no suene.</li>\n'
+            '  <li><strong>Cuenta las notas de cada tiempo.</strong> Una nota que dura todo el tiempo es una negra; dos notas, dos corcheas; cuatro notas, cuatro semicorcheas. Si la nota sigue sonando en los tiempos siguientes, es una figura más larga, y si no suena nada, un silencio.</li>\n'
+            '  <li><strong>Usa las escuchas por partes.</strong> En cada escucha suenan los dos compases, pero no hace falta atenderlo todo a la vez: en la primera, el pulso y el primer compás; en la segunda, el segundo; en la tercera, comprueba el dictado entero.</li>\n'
+            '</ol>\n\n'
+            '<p>Lo que más se falla es <strong>confundir las corcheas con las semicorcheas</strong>, o correr en las semicorcheas y llegar antes al tiempo siguiente. Las cuatro semicorcheas duran lo mismo que dos corcheas o que una negra: si dices «ti-ri-ti-ri» en las semicorcheas, «ti-ti» en las corcheas y «ta» en la negra, llevando el pulso con el pie, cada sílaba cae en su sitio.</p>')
+    nombre = corto.lower()
+    return [
+      dict(slug='dictado-ritmico/' + base + '-que-ritmo-suena', modo='oir', grupo=grupo, corto=corto + ': ¿qué ritmo suena?',
+           rel=corto + ': ¿qué ritmo suena?', reglas=reglas, como=como,
+           title='Dictado rítmico ' + nombre + ': ¿qué ritmo suena?',
+           h1='Dictado rítmico ' + nombre + ': ¿qué ritmo suena?',
+           desc='Dictado rítmico gratis con ' + figs + ': suena un ritmo de dos compases (' + compases + ') en la nota Sol y eliges cuál de los cuatro ritmos escritos es.',
+           ld='Ejercicio de dictado rítmico gratis: suena un ritmo de dos compases con ' + figs + ' y se elige entre cuatro ritmos escritos.',
+           teaches='Reconocer de oído un ritmo con ' + figs + ' en ' + compases.replace(' o ', ' y '),
+           intro='<p>Escucha un ritmo de <strong>dos compases</strong> tocado en la nota Sol y elige cuál de los <strong>cuatro ritmos escritos</strong> es el que suena. Ahora el tiempo se divide en cuatro: hay <strong>grupos de cuatro semicorcheas</strong>, además de los de dos corcheas, en compases de <strong>' + compases + '</strong>.</p>',
+           uso='<p><strong>Cómo usar el ejercicio:</strong> pulsa <em>Empezar</em> y después <em>Escuchar</em>. Mientras suena ya puedes elegir el ritmo (A, B, C o D). Al responder se marca el bueno en verde y, si has fallado, en qué tiempos se diferencia el que elegiste. Los cuatro ritmos se parecen mucho: el que no es cambia uno o dos tiempos, muchas veces cuatro semicorcheas por dos corcheas o al revés. Puedes escuchar el dictado hasta tres veces.</p>',
+           faq=[('¿Cómo distingo las semicorcheas de las corcheas?', 'Por el número de notas en el tiempo: dos corcheas son dos notas que reparten el tiempo en dos mitades, y cuatro semicorcheas, cuatro notas el doble de rápidas. Los dos grupos ocupan exactamente un tiempo, igual que una negra.'),
+                ('¿Puede haber semicorcheas sueltas?', 'En estos dictados, no: las semicorcheas van siempre de cuatro en cuatro, unidas con doble barra, ocupando un tiempo, y las corcheas, de dos en dos.'),
+                FAQ_ENTRADA,
+                ('¿Cuántas veces puedo escuchar el dictado?', 'Hasta tres veces, y puedes responder mientras suena. Después de responder puedes volver a escucharlo las veces que quieras.')] + faq_extra,
+           siguiente='<p>Cuando aciertes casi siempre, prueba a <a href="' + D + base + '/">escribir el dictado</a>. Si te cuesta, vuelve al grupo sin semicorcheas de <a href="' + D + anterior[0] + '-que-ritmo-suena/">' + anterior[1] + '</a>.</p>'),
+      dict(slug='dictado-ritmico/' + base + '-que-audio-es', modo='leer', grupo=grupo, corto=corto + ': ¿qué audio es?',
+           rel='Lectura rítmica ' + nombre + ': ¿qué audio es?', reglas=reglas, como=como,
+           title='Lectura rítmica ' + nombre + ': ¿qué audio es?',
+           h1='Lectura rítmica ' + nombre + ': ¿qué audio es?',
+           desc='Ejercicio de lectura rítmica gratis con ' + figs + ': ves un ritmo de dos compases (' + compases + ') y eliges cuál de los cuatro audios suena como está escrito.',
+           ld='Ejercicio de lectura rítmica gratis: se ve un ritmo de dos compases con ' + figs + ' y se elige entre cuatro audios el que suena como está escrito.',
+           teaches='Leer un ritmo con ' + figs + ' en ' + compases.replace(' o ', ' y ') + ' y reconocer cómo suena',
+           intro='<p>Lee un ritmo de <strong>dos compases</strong> con <strong>' + figs + '</strong> y escucha los <strong>cuatro audios</strong>: solo uno suena como está escrito. Fíjate en cada grupo de semicorcheas de la partitura: en el audio correcto, ese tiempo tiene cuatro notas, y el de corcheas, dos.</p>',
+           uso='<p><strong>Cómo usar el ejercicio:</strong> pulsa <em>Empezar</em>, lee el ritmo y escucha los audios A, B, C y D (cada uno hasta tres veces, en el orden que quieras). Cuando sepas cuál es, pulsa <em>Es este</em> debajo de ese audio. Solo puedes elegir un audio que hayas escuchado. Al responder se marca el bueno y, si has fallado, ves escrito lo que sonaba en el que elegiste, con los tiempos distintos en rojo.</p>',
+           faq=[('¿En qué se diferencian los audios?', 'Los cuatro audios tienen el mismo compás y el mismo tempo. Los incorrectos cambian uno o dos tiempos respecto a la partitura; a menudo, cuatro semicorcheas por dos corcheas o por una negra: cuenta cuántas notas hay en cada tiempo.'),
+                ('¿Cuánto dura una semicorchea?', 'Un cuarto de tiempo en 2/4, 3/4 y 4/4: cuatro semicorcheas duran lo mismo que dos corcheas o que una negra. Por eso en estos dictados van siempre de cuatro en cuatro, ocupando un tiempo.'),
+                FAQ_ENTRADA,
+                ('¿Cuántas veces puedo escuchar cada audio?', 'Hasta tres veces cada uno antes de responder. Después de responder puedes escucharlos las veces que quieras.')],
+           siguiente='<p>Para el camino del sonido a la partitura tienes <a href="' + D + base + '-que-ritmo-suena/">¿qué ritmo suena?</a> y <a href="' + D + base + '/">el dictado</a>, en el que lo escribes tú. Y el mismo ejercicio sin semicorcheas, en <a href="' + D + anterior[0] + '-que-audio-es/">' + anterior[1] + '</a>.</p>'),
+      dict(slug='dictado-ritmico/' + base, modo='escribir', grupo=grupo, corto=corto, miga=corto,
+           rel='Dictado rítmico ' + nombre, reglas=reglas, como=como,
+           title='Dictado rítmico ' + nombre,
+           h1='Dictado rítmico ' + nombre,
+           desc='Dictado rítmico online gratis: suena un ritmo de dos compases (' + compases + ') y lo escribes con tarjetas de ' + figs + ', con las barras de compás. Corrección al momento.',
+           ld='Dictado rítmico online gratis: suena un ritmo de dos compases con ' + figs + ' y se escribe con tarjetas, con las barras de compás.',
+           teaches='Escribir al dictado un ritmo con ' + figs + ' en ' + compases.replace(' o ', ' y ') + ', con las barras de compás',
+           intro='<p>Escucha un ritmo de <strong>dos compases</strong> en la nota Sol y <strong>escríbelo</strong> con las tarjetas: ' + figs + ', en compases de <strong>' + compases + '</strong>. Las tarjetas de corchea y de semicorchea son de <strong>una sola figura</strong>: para un grupo, ponlas seguidas y se unen con barra. Las barras de compás y la doble barra final las pones tú.</p>',
+           uso=USO_ESCRIBIR,
+           faq=[FAQ_CORRIGE, FAQ_BARRAS, FAQ_ENTRADA,
+                ('¿Por qué la tarjeta es de una sola semicorchea?', 'Para que construyas tú el grupo: cuatro semicorcheas seguidas que empiezan en un tiempo se unen con doble barra y ocupan ese tiempo (y dos corcheas, con barra). Si pones menos, se ven sueltas y, al corregir, ese tiempo no sonará como el dictado, porque aquí las semicorcheas siempre van de cuatro en cuatro.')] + faq_extra,
+           siguiente='<p>Si te cuesta, empieza por <a href="' + D + base + '-que-ritmo-suena/">¿qué ritmo suena?</a> o por <a href="' + D + base + '-que-audio-es/">¿qué audio es?</a>. ' +
+                     ('El grupo siguiente es el de <a href="' + D + siguiente_g[0] + '/">' + siguiente_g[1] + '</a>; todos' if siguiente_g else 'Todos') +
+                     ' los grupos están en el <a href="' + D + '">índice de dictados rítmicos</a>.</p>'),
+    ]
+
+PAGS += paginas_semicorcheas('negras-y-semicorcheas', 'negras-s', 'Con semicorcheas', 'negras, grupos de corcheas y de semicorcheas y silencios de negra', '2/4, 3/4 o 4/4',
+                             'algún silencio de negra', '3 en 2/4, 4 en 3/4 y 3 en 4/4', ' Nunca hay más de dos tiempos de silencio seguidos ni un compás entero en silencio.', [],
+                             ('negras-y-corcheas', 'negras y corcheas'), ('blancas-y-semicorcheas', 'blancas con semicorcheas'))
+PAGS += paginas_semicorcheas('blancas-y-semicorcheas', 'blancas-s', 'Con blancas y semicorcheas', 'blancas, negras, grupos de corcheas y de semicorcheas y sus silencios', '2/4, 3/4 o 4/4',
+                             'una blanca o un silencio de blanca', '3 en 2/4, 4 en 3/4 y 3 en 4/4',
+                             ' Nunca hay más de dos tiempos de silencio seguidos ni un compás entero en silencio. La blanca y su silencio van donde se escriben normalmente: en 4/4 empiezan en el 1.er o el 3.er tiempo; en 3/4, la blanca en el 1.º o el 2.º y el silencio en el 1.º; en 2/4, la blanca ocupa el compás (y su silencio no sale, porque sería un compás entero en silencio).', [],
+                             ('blancas-y-corcheas', 'blancas y corcheas'), ('blancas-con-puntillo-y-semicorcheas', 'blancas con puntillo y semicorcheas'))
+PAGS += paginas_semicorcheas('blancas-con-puntillo-y-semicorcheas', 'puntillo-s', 'Con puntillo y semicorcheas', 'blancas con puntillo, blancas, negras, grupos de corcheas y de semicorcheas y sus silencios', '3/4 o 4/4',
+                             'una blanca con puntillo o su silencio', '5 en 3/4 y 5 en 4/4',
+                             ' Puede haber hasta tres tiempos de silencio seguidos, los del silencio de blanca con puntillo. La blanca con puntillo dura tres tiempos y no cabe en un compás de 2/4: por eso no hay dictados en 2/4.',
+                             [('¿Por qué no hay dictados en 2/4?', 'Porque la blanca con puntillo dura tres tiempos y no cabe dentro de un compás de dos. Se podría repartir entre dos compases con una ligadura, pero en estos dictados no hay ligaduras.')],
+                             ('blancas-con-puntillo-y-corcheas', 'blancas con puntillo y corcheas'), ('redondas-y-semicorcheas', 'redondas y semicorcheas'))
+PAGS += paginas_semicorcheas('redondas-y-semicorcheas', 'redondas-s', 'Con redondas y semicorcheas', 'redondas, blancas con puntillo, blancas, negras, grupos de corcheas y de semicorcheas y sus silencios', '4/4',
+                             'una redonda o un silencio de redonda', '10 en 4/4',
+                             ' La redonda y su silencio llenan un compás de 4/4 (el silencio, solo como 2.º compás), y puede haber hasta cuatro tiempos de silencio seguidos.',
+                             [('¿Por qué solo hay dictados en 4/4?', 'Porque la redonda dura cuatro tiempos y no cabe dentro de un compás de 2/4 o 3/4. Se podría repartir entre dos compases con una ligadura, pero en estos dictados no hay ligaduras.')],
+                             ('redondas-y-corcheas', 'redondas y corcheas'), ('negras-y-silencio-de-corchea', 'negras, corcheas y silencio de corchea'))
+
+
+# ---------- Con silencio de corchea y corchea (Eduardo, 05-11-2026): primero con negras y corcheas y luego con el resto, como
+# los de corcheas. La célula ocupa un tiempo (la nota a contratiempo); al escribir, tarjetas de silencio de corchea y de corchea.
+# El 2.º grupo añade las semicorcheas y desde ahí siguen en todos (Eduardo): semi=True.
+def paginas_silencio_corchea(base, grupo, corto, tcorto, figs, compases, nueva, reparto, extra_reglas, faq_extra, anterior, siguiente_g, semi=False, tit=None):
+    """Las 3 páginas de un grupo con silencio de corchea y corchea (como paginas_corcheas; tcorto: lo que va en el <title>,
+    que con «silencio de corchea» no cabe el nombre largo; nueva: lo que lleva siempre además, o None; semi: con
+    semicorcheas; tit: los tres <title> (oír, leer, escribir), si con tcorto no caben)."""
+    tempo = 'entre 60 y 72 negras por minuto, algo más despacio por las semicorcheas' if semi else 'entre 72 y 90 negras por minuto'
+    reglas = ('<p>Cada dictado se inventa al momento: <strong>dos compases de ' + compases + '</strong> con <a href="/diccionario-musical/figuras-musicales/">' + figs + '</a>, todo en la nota Sol al piano y a un tempo de ' + tempo + '. '
+              'El <strong>silencio de corchea y corchea</strong> ocupa siempre un tiempo: el tiempo empieza en silencio y la nota entra en su segunda mitad, a contratiempo. ' +
+              ('Las demás corcheas van de dos en dos y las <strong>semicorcheas, de cuatro en cuatro</strong>, ocupando un tiempo. ' if semi else 'Las demás corcheas van de dos en dos, unidas con barra. ') + 'Siempre hay al menos <strong>un silencio de corchea y corchea</strong>' + (' y ' + nueva if nueva else '') + '. '
+              'Antes del dictado suena un <strong>compás de metrónomo</strong> al mismo tempo, con el primer tiempo más fuerte, para que sepas la velocidad y dónde empieza el compás. El dictado puede empezar con silencio.' + extra_reglas + '</p>\n\n'
+              '<p>Cada nota suena casi toda su duración, así que la corchea que va detrás de su silencio se oye como una nota corta que llega a mitad del tiempo, entre dos pulsos. '
+              'Cada test tiene 10 dictados: ' + reparto + ', sin repetir ninguno.</p>')
+    como = ('<h2>Cómo hacer un dictado rítmico con silencio de corchea</h2>\n\n<ol>\n'
+            '  <li>' + PASO_PULSO + '\n'
+            '  <li><strong>Identifica el compás y cuenta sus tiempos.</strong> El compás se dice antes de escuchar: cuenta sus tiempos desde el compás de metrónomo y vuelve a empezar en cada compás, aunque el primer tiempo no suene.</li>\n'
+            '  <li><strong>Escucha dónde cae cada nota dentro del tiempo.</strong> Una nota que empieza con el pulso y dura todo el tiempo es una negra; dos notas que lo reparten en dos mitades, dos corcheas; ' + ('cuatro notas, cuatro semicorcheas; ' if semi else '') + 'y una sola nota que llega a mitad del tiempo, entre dos pulsos, un silencio de corchea y corchea. Si la nota sigue sonando en los tiempos siguientes, es una figura más larga, y si no suena nada, un silencio.</li>\n'
+            '  <li><strong>Usa las escuchas por partes.</strong> En cada escucha suenan los dos compases, pero no hace falta atenderlo todo a la vez: en la primera, el pulso y el primer compás; en la segunda, el segundo; en la tercera, comprueba el dictado entero.</li>\n'
+            '</ol>\n\n'
+            '<p>Lo que más se falla es <strong>oír la corchea a contratiempo como si cayera en el pulso</strong>: sin el pulso por dentro, una nota sola en el tiempo parece una negra. Lleva el pulso con el pie y di «(u)-ti» en el silencio de corchea y corchea, «ti-ti» en las corcheas y «ta» en la negra: si la nota cae con el pie, es negra; si cae cuando el pie sube, es la corchea detrás de su silencio.</p>')
+    nombre = corto.lower()
+    tit = tit or ('¿Qué ritmo suena? Dictado con ' + tcorto, '¿Qué audio es? Lectura rítmica: ' + tcorto, 'Dictado rítmico con ' + tcorto)
+    return [
+      dict(slug='dictado-ritmico/' + base + '-que-ritmo-suena', modo='oir', grupo=grupo, corto=corto + ': ¿qué ritmo suena?',
+           rel=corto + ': ¿qué ritmo suena?', reglas=reglas, como=como,
+           title=tit[0],
+           h1='Dictado rítmico ' + nombre + ': ¿qué ritmo suena?',
+           desc='Dictado rítmico gratis con ' + figs + ': suena un ritmo de dos compases (' + compases + ') en la nota Sol y eliges cuál de los cuatro ritmos escritos es.',
+           ld='Ejercicio de dictado rítmico gratis: suena un ritmo de dos compases con ' + figs + ' y se elige entre cuatro ritmos escritos.',
+           teaches='Reconocer de oído un ritmo con ' + figs + ' en ' + compases.replace(' o ', ' y '),
+           intro='<p>Escucha un ritmo de <strong>dos compases</strong> tocado en la nota Sol y elige cuál de los <strong>cuatro ritmos escritos</strong> es el que suena. Ahora llega el <strong>contratiempo</strong>: el <strong>silencio de corchea seguido de corchea</strong>, una nota que entra a mitad del tiempo, junto a los grupos de dos corcheas' + (' y de cuatro semicorcheas' if semi else '') + ', en compases de <strong>' + compases + '</strong>.</p>',
+           uso='<p><strong>Cómo usar el ejercicio:</strong> pulsa <em>Empezar</em> y después <em>Escuchar</em>. Mientras suena ya puedes elegir el ritmo (A, B, C o D). Al responder se marca el bueno en verde y, si has fallado, en qué tiempos se diferencia el que elegiste. Los cuatro ritmos se parecen mucho: el que no es cambia uno o dos tiempos, muchas veces el silencio de corchea y corchea por dos corcheas o por una negra. Puedes escuchar el dictado hasta tres veces.</p>',
+           faq=[('¿Cómo distingo el silencio de corchea y corchea de una negra?', 'Las dos son una sola nota en el tiempo, pero no caen en el mismo sitio: la negra empieza con el pulso y la corchea llega a mitad del tiempo, entre dos pulsos. Si llevas el pulso con el pie, la negra cae cuando el pie baja y la corchea, cuando sube.'),
+                ('¿Qué es el contratiempo?', 'Una nota que entra en la parte débil del tiempo, su segunda mitad, mientras la parte fuerte queda en silencio. El silencio de corchea seguido de corchea es el contratiempo más sencillo.'),
+                FAQ_ENTRADA,
+                ('¿Cuántas veces puedo escuchar el dictado?', 'Hasta tres veces, y puedes responder mientras suena. Después de responder puedes volver a escucharlo las veces que quieras.')] + faq_extra,
+           siguiente='<p>Cuando aciertes casi siempre, prueba a <a href="' + D + base + '/">escribir el dictado</a>. Si te cuesta, vuelve al grupo sin silencio de corchea de <a href="' + D + anterior[0] + '-que-ritmo-suena/">' + anterior[1] + '</a>.</p>'),
+      dict(slug='dictado-ritmico/' + base + '-que-audio-es', modo='leer', grupo=grupo, corto=corto + ': ¿qué audio es?',
+           rel='Lectura rítmica ' + nombre + ': ¿qué audio es?', reglas=reglas, como=como,
+           title=tit[1],
+           h1='Lectura rítmica ' + nombre + ': ¿qué audio es?',
+           desc='Ejercicio de lectura rítmica gratis con ' + figs + ': ves un ritmo de dos compases (' + compases + ') y eliges cuál de los cuatro audios suena como está escrito.',
+           ld='Ejercicio de lectura rítmica gratis: se ve un ritmo de dos compases con ' + figs + ' y se elige entre cuatro audios el que suena como está escrito.',
+           teaches='Leer un ritmo con ' + figs + ' en ' + compases.replace(' o ', ' y ') + ' y reconocer cómo suena',
+           intro='<p>Lee un ritmo de <strong>dos compases</strong> con <strong>' + figs + '</strong> y escucha los <strong>cuatro audios</strong>: solo uno suena como está escrito. Fíjate en cada silencio de corchea de la partitura: en el audio correcto, ese tiempo empieza callado y la nota llega a mitad del tiempo.</p>',
+           uso='<p><strong>Cómo usar el ejercicio:</strong> pulsa <em>Empezar</em>, lee el ritmo y escucha los audios A, B, C y D (cada uno hasta tres veces, en el orden que quieras). Cuando sepas cuál es, pulsa <em>Es este</em> debajo de ese audio. Solo puedes elegir un audio que hayas escuchado. Al responder se marca el bueno y, si has fallado, ves escrito lo que sonaba en el que elegiste, con los tiempos distintos en rojo.</p>',
+           faq=[('¿En qué se diferencian los audios?', 'Los cuatro audios tienen el mismo compás y el mismo tempo. Los incorrectos cambian uno o dos tiempos respecto a la partitura; a menudo, el silencio de corchea y corchea por dos corcheas o por una negra: fíjate en si la nota cae con el pulso o entre dos pulsos.'),
+                ('¿Cuánto dura el silencio de corchea?', 'Medio tiempo en 2/4, 3/4 y 4/4, lo mismo que la corchea: el silencio de corchea y la corchea juntos ocupan un tiempo, igual que una negra o que dos corcheas.'),
+                FAQ_ENTRADA,
+                ('¿Cuántas veces puedo escuchar cada audio?', 'Hasta tres veces cada uno antes de responder. Después de responder puedes escucharlos las veces que quieras.')],
+           siguiente='<p>Para el camino del sonido a la partitura tienes <a href="' + D + base + '-que-ritmo-suena/">¿qué ritmo suena?</a> y <a href="' + D + base + '/">el dictado</a>, en el que lo escribes tú. Y el mismo ejercicio sin silencio de corchea, en <a href="' + D + anterior[0] + '-que-audio-es/">' + anterior[1] + '</a>.</p>'),
+      dict(slug='dictado-ritmico/' + base, modo='escribir', grupo=grupo, corto=corto, miga=corto,
+           rel='Dictado rítmico ' + nombre, reglas=reglas, como=como,
+           title=tit[2],
+           h1='Dictado rítmico ' + nombre,
+           desc='Dictado rítmico online gratis: suena un ritmo de dos compases (' + compases + ') y lo escribes con tarjetas de ' + figs + ', con las barras de compás. Corrección al momento.',
+           ld='Dictado rítmico online gratis: suena un ritmo de dos compases con ' + figs + ' y se escribe con tarjetas, con las barras de compás.',
+           teaches='Escribir al dictado un ritmo con ' + figs + ' en ' + compases.replace(' o ', ' y ') + ', con las barras de compás',
+           intro='<p>Escucha un ritmo de <strong>dos compases</strong> en la nota Sol y <strong>escríbelo</strong> con las tarjetas: ' + figs + ', en compases de <strong>' + compases + '</strong>. Hay tarjeta de <strong>silencio de corchea</strong> y de <strong>una sola corchea</strong>' + (' y <strong>una sola semicorchea</strong>' if semi else '') + ': para el contratiempo, pon el silencio y después la corchea; para un grupo, dos corcheas' + (' o cuatro semicorcheas' if semi else '') + ' seguidas, que se unen con barra. Las barras de compás y la doble barra final las pones tú.</p>',
+           uso=USO_ESCRIBIR,
+           faq=[FAQ_CORRIGE, FAQ_BARRAS, FAQ_ENTRADA,
+                ('¿Cómo escribo el silencio de corchea y corchea?', 'Con dos tarjetas, al empezar el tiempo: primero la de silencio de corchea y después la de corchea. La corchea queda suelta, con su corchete, porque un silencio no se une con barra. Si los pones al revés, corchea y silencio, la nota sonaría con el pulso y, al corregir, ese tiempo no coincidirá con el dictado.')] + faq_extra,
+           siguiente='<p>Si te cuesta, empieza por <a href="' + D + base + '-que-ritmo-suena/">¿qué ritmo suena?</a> o por <a href="' + D + base + '-que-audio-es/">¿qué audio es?</a>. ' +
+                     ('El grupo siguiente es el de <a href="' + D + siguiente_g[0] + '/">' + siguiente_g[1] + '</a>; todos' if siguiente_g else 'Todos') +
+                     ' los grupos están en el <a href="' + D + '">índice de dictados rítmicos</a>.</p>'),
+    ]
+
+PAGS += paginas_silencio_corchea('negras-y-silencio-de-corchea', 'negras-sc', 'Con silencio de corchea', 'silencio de corchea', 'negras, grupos de dos corcheas, silencio de corchea y corchea y silencios de negra', '2/4, 3/4 o 4/4',
+                                 None, '3 en 2/4, 4 en 3/4 y 3 en 4/4', ' Nunca hay más de dos tiempos de silencio seguidos ni un compás entero en silencio.', [],
+                                 ('negras-y-corcheas', 'negras y corcheas'), ('semicorcheas-y-silencio-de-corchea', 'semicorcheas y silencio de corchea'))
+PAGS += paginas_silencio_corchea('semicorcheas-y-silencio-de-corchea', 'semicorcheas-sc', 'Con semicorcheas y silencio de corchea', 'semicorcheas y silencio de corchea', 'negras, corcheas, semicorcheas, silencio de corchea y corchea y silencios de negra', '2/4, 3/4 o 4/4',
+                                 'algún grupo de cuatro semicorcheas', '3 en 2/4, 4 en 3/4 y 3 en 4/4', ' Nunca hay más de dos tiempos de silencio seguidos ni un compás entero en silencio.', [],
+                                 ('negras-y-semicorcheas', 'negras y semicorcheas'), ('blancas-y-silencio-de-corchea', 'blancas con silencio de corchea'), semi=True,
+                                 tit=('¿Qué ritmo suena? Semicorcheas y silencio de corchea', '¿Qué audio es? Semicorcheas y silencio de corchea', 'Dictado rítmico con semicorcheas y silencio de corchea'))
+PAGS += paginas_silencio_corchea('blancas-y-silencio-de-corchea', 'blancas-sc', 'Con blancas y silencio de corchea', 'blancas y silencio de corchea', 'blancas, negras, corcheas, semicorcheas, silencio de corchea y corchea y sus silencios', '2/4, 3/4 o 4/4',
+                                 'una blanca o un silencio de blanca', '3 en 2/4, 4 en 3/4 y 3 en 4/4',
+                                 ' Nunca hay más de dos tiempos de silencio seguidos ni un compás entero en silencio. La blanca y su silencio van donde se escriben normalmente: en 4/4 empiezan en el 1.er o el 3.er tiempo; en 3/4, la blanca en el 1.º o el 2.º y el silencio en el 1.º; en 2/4, la blanca ocupa el compás (y su silencio no sale, porque sería un compás entero en silencio).', [],
+                                 ('blancas-y-semicorcheas', 'blancas y semicorcheas'), ('blancas-con-puntillo-y-silencio-de-corchea', 'blancas con puntillo y silencio de corchea'), semi=True)
+PAGS += paginas_silencio_corchea('blancas-con-puntillo-y-silencio-de-corchea', 'puntillo-sc', 'Con puntillo y silencio de corchea', 'puntillo y silencio de corchea', 'blancas con puntillo, blancas, negras, corcheas, semicorcheas, silencio de corchea y corchea y sus silencios', '3/4 o 4/4',
+                                 'una blanca con puntillo o su silencio', '5 en 3/4 y 5 en 4/4',
+                                 ' Puede haber hasta tres tiempos de silencio seguidos, los del silencio de blanca con puntillo. La blanca con puntillo dura tres tiempos y no cabe en un compás de 2/4: por eso no hay dictados en 2/4.',
+                                 [('¿Por qué no hay dictados en 2/4?', 'Porque la blanca con puntillo dura tres tiempos y no cabe dentro de un compás de dos. Se podría repartir entre dos compases con una ligadura, pero en estos dictados no hay ligaduras.')],
+                                 ('blancas-con-puntillo-y-semicorcheas', 'blancas con puntillo y semicorcheas'), ('redondas-y-silencio-de-corchea', 'redondas y silencio de corchea'), semi=True)
+PAGS += paginas_silencio_corchea('redondas-y-silencio-de-corchea', 'redondas-sc', 'Con redondas y silencio de corchea', 'redondas y silencio de corchea', 'redondas, blancas con puntillo, blancas, negras, corcheas, semicorcheas, silencio de corchea y corchea y sus silencios', '4/4',
+                                 'una redonda o un silencio de redonda', '10 en 4/4',
+                                 ' La redonda y su silencio llenan un compás de 4/4 (el silencio, solo como 2.º compás), y puede haber hasta cuatro tiempos de silencio seguidos.',
+                                 [('¿Por qué solo hay dictados en 4/4?', 'Porque la redonda dura cuatro tiempos y no cabe dentro de un compás de 2/4 o 3/4. Se podría repartir entre dos compases con una ligadura, pero en estos dictados no hay ligaduras.')],
+                                 ('redondas-y-semicorcheas', 'redondas y semicorcheas'), None, semi=True)
+for P in PAGS: assert len(P['title']) <= 62, (len(P['title']), P['title'])
 
 # El índice: un bloque por grupo, en orden de dificultad: (título, texto, slug base, nombre para lectores de pantalla)
 GRUPOS_INDICE = [
@@ -342,6 +515,15 @@ GRUPOS_INDICE = [
     ('Blancas, negras, corcheas y sus silencios', 'Los grupos de dos corcheas con blancas, negras y sus silencios: notas largas y tiempos divididos en el mismo dictado.', 'blancas-y-corcheas', 'blancas y corcheas'),
     ('Blancas con puntillo, blancas, negras, corcheas y sus silencios', 'Los grupos de dos corcheas con las figuras de tres tiempos, en 3/4 y 4/4.', 'blancas-con-puntillo-y-corcheas', 'blancas con puntillo y corcheas'),
     ('Redondas, blancas con puntillo, blancas, negras, corcheas y sus silencios', 'Todas las figuras, de la redonda a la corchea, en 4/4: el pulso se mantiene igual en las notas más largas y en los tiempos divididos.', 'redondas-y-corcheas', 'redondas y corcheas'),
+    ('Negras, corcheas, semicorcheas y silencios de negra', 'El tiempo dividido en cuatro: grupos de cuatro semicorcheas, junto a los de dos corcheas, con negras y silencios de negra. Hay que contar cuántas notas caben en cada tiempo.', 'negras-y-semicorcheas', 'negras y semicorcheas'),
+    ('Blancas, negras, corcheas, semicorcheas y sus silencios', 'Las semicorcheas con blancas, negras, corcheas y sus silencios.', 'blancas-y-semicorcheas', 'blancas y semicorcheas'),
+    ('Blancas con puntillo, blancas, negras, corcheas, semicorcheas y sus silencios', 'Las semicorcheas con las figuras de tres tiempos, en 3/4 y 4/4.', 'blancas-con-puntillo-y-semicorcheas', 'blancas con puntillo y semicorcheas'),
+    ('Redondas, blancas con puntillo, blancas, negras, corcheas, semicorcheas y sus silencios', 'Todas las figuras, de la redonda a la semicorchea, en 4/4.', 'redondas-y-semicorcheas', 'redondas y semicorcheas'),
+    ('Negras, corcheas y silencio de corchea', 'El contratiempo: el silencio de corchea seguido de corchea, una nota que entra a mitad del tiempo, con negras, grupos de dos corcheas y silencios de negra. Hay que oír si cada nota cae con el pulso o entre dos pulsos.', 'negras-y-silencio-de-corchea', 'negras y silencio de corchea'),
+    ('Negras, corcheas, semicorcheas y silencio de corchea', 'El contratiempo junto a las semicorcheas: silencio de corchea y corchea, grupos de dos corcheas y de cuatro semicorcheas, negras y silencios de negra. Desde aquí, las semicorcheas siguen en todos los grupos.', 'semicorcheas-y-silencio-de-corchea', 'semicorcheas y silencio de corchea'),
+    ('Blancas, negras, corcheas, semicorcheas, silencio de corchea y sus silencios', 'El silencio de corchea y corchea con blancas, negras, corcheas, semicorcheas y sus silencios.', 'blancas-y-silencio-de-corchea', 'blancas y silencio de corchea'),
+    ('Blancas con puntillo, blancas, negras, corcheas, semicorcheas, silencio de corchea y sus silencios', 'El silencio de corchea y corchea con las figuras de tres tiempos y las semicorcheas, en 3/4 y 4/4.', 'blancas-con-puntillo-y-silencio-de-corchea', 'blancas con puntillo y silencio de corchea'),
+    ('Redondas, blancas con puntillo, blancas, negras, corcheas, semicorcheas, silencio de corchea y sus silencios', 'El silencio de corchea y corchea con todas las figuras, de la redonda a la semicorchea, en 4/4.', 'redondas-y-silencio-de-corchea', 'redondas y silencio de corchea'),
 ]
 
 AD1 = '<div class="tm-ad">\n<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>\n</div>'
@@ -393,7 +575,8 @@ def pagina(P, src):
         ('/ejercicios/compases/completar-compas/', 'Completar compases'), ('/ejercicios/auditivos/reconocer-el-compas/', 'Reconocer el compás de oído')]
     # según las figuras del grupo
     if P['grupo'].startswith('puntillo') or P['grupo'].startswith('redondas'): rel.append(('/diccionario-musical/puntillo/', 'El puntillo'))
-    if P['grupo'].endswith('-c'): rel.append(('/ejercicios/figuras/equivalencias-de-figuras/', 'Equivalencias de figuras'))
+    if P['grupo'].endswith(('-c', '-s', '-sc')): rel.append(('/ejercicios/figuras/equivalencias-de-figuras/', 'Equivalencias de figuras'))
+    if P['grupo'].endswith('-sc'): rel += [('/diccionario-musical/compases/notas-a-contratiempo/', 'Notas a contratiempo'), ('/ejercicios/compases/contratiempo/', 'Ejercicio: encuentra el contratiempo')]
     rel.append(('/herramientas/metronomo/', 'Metrónomo online'))
     cuerpo = '''<main id="main" class="tm-main">
 
@@ -457,7 +640,7 @@ def indice(src, publicado=PUBLICADO, modificado=PUBLICADO):
     H1 = 'Dictado rítmico'
     DESC = 'Ejercicios de dictado rítmico online gratis, ordenados por figuras: reconoce el ritmo que suena, el audio de un ritmo escrito y escribe el dictado con tarjetas. Corrección al momento.'
     FAQ = [
-        ('¿Qué es un dictado rítmico?', 'Es escuchar un ritmo y escribirlo: qué figuras y qué silencios suenan, en su compás. Se practica en lenguaje musical desde los primeros cursos, primero con negras y silencios de negra, después con blancas, con blancas con puntillo y con redondas, y luego, con todas ellas, los grupos de dos corcheas.'),
+        ('¿Qué es un dictado rítmico?', 'Es escuchar un ritmo y escribirlo: qué figuras y qué silencios suenan, en su compás. Se practica en lenguaje musical desde los primeros cursos, primero con negras y silencios de negra, después con blancas, con blancas con puntillo y con redondas, y luego, con todas ellas, los grupos de dos corcheas, los de cuatro semicorcheas y el silencio de corchea seguido de corchea.'),
         ('¿En qué orden se hacen los ejercicios?', 'En cada grupo de figuras hay tres. Primero, ¿qué ritmo suena?: oyes el dictado y lo reconoces entre cuatro ritmos escritos. Después, ¿qué audio es?: lees un ritmo y lo reconoces entre cuatro audios. Por último, el dictado: lo escribes tú con tarjetas, sin opciones.'),
         ('¿Necesito algo para hacerlos?', 'Solo el navegador y sonido: altavoces o, mejor, auriculares. No hace falta micrófono ni instalar nada.'),
     ]
