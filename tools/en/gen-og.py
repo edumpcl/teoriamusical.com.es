@@ -23,6 +23,10 @@ PAGES = {
     'og-en-home': ('Music Theory', 'Learn music from the ground up. Free, no sign-up.', ['Metronome', 'Tuner', 'Free tools']),
     'og-en-tools': ('Free Online Music Tools', 'They run in your browser. No install, no sign-up.', ['Metronome', 'Tuner']),
     'og-en-metronome': ('Online Metronome', 'Free · No install · BPM 15–300', ['Tap tempo', 'Odd meters', 'Drum machine', 'Speed trainer', 'Subdivisions']),
+    'og-en-tuner-guitar': ('Online Guitar Tuner', 'Free · Uses your microphone · E A D G B E', ['Standard tuning', 'Drop D', 'Open G', 'Cents meter']),
+    'og-en-tuner-ukulele': ('Online Ukulele Tuner', 'Free · Uses your microphone · G C E A', ['Soprano', 'Concert', 'Tenor', 'Baritone']),
+    'og-en-tuner-violin': ('Online Violin Tuner', 'Free · Uses your microphone · G D A E', ['Tuning in fifths', 'Adjustable A4', '440 / 442 / 415 Hz']),
+    'og-en-tuner-bass': ('Online Bass Guitar Tuner', 'Free · Uses your microphone · E A D G', ['4 strings', '5 strings', 'Drop D', 'Harmonics']),
     'og-en-tuner': ('Online Tuner', 'Free chromatic tuner · Uses your microphone', ['Cents meter', 'Transposing', 'A4 reference', 'Strobe mode', 'Reference notes']),
 }
 

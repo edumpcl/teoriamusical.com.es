@@ -25,6 +25,26 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/metronomo/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/metronomo/"/>
   </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/bass/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/bass/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/bajo/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/bajo/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/guitar/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/guitar/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/guitarra/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/guitarra/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/ukulele/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/ukulele/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/ukelele/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/ukelele/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/violin/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/violin/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/violin/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/violin/"/>
+  </url>
   <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/</loc><lastmod>2026-11-05</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/"/>

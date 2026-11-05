@@ -306,6 +306,14 @@ ${faqHtml}
   </div>
 </section>
 
+<h2>Tuners by instrument</h2>
+<ul>
+  <li><a href="/en/tools/tuner/guitar/">Guitar tuner</a> — E-A-D-G-B-E, Drop D, Open G</li>
+  <li><a href="/en/tools/tuner/bass/">Bass guitar tuner</a> — E-A-D-G, with tips for 5 strings</li>
+  <li><a href="/en/tools/tuner/violin/">Violin tuner</a> — G-D-A-E in fifths</li>
+  <li><a href="/en/tools/tuner/ukulele/">Ukulele tuner</a> — G-C-E-A re-entrant</li>
+</ul>
+
 <p>Once your instrument is in tune, practice with a steady tempo using the <a href="/en/tools/metronome/">online metronome</a>. Good tuning and a firm tempo are the basis of any serious musical practice.</p>
 
 </article>
