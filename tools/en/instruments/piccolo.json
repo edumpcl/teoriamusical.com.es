@@ -1,0 +1,10 @@
+{
+ "slug": "piccolo",
+ "name": "Piccolo",
+ "label": "Piccolo tuner",
+ "desc": "Sounds an octave above written",
+ "family": "woodwind",
+ "order": 2,
+ "sub": "Free · Uses your microphone · Sounds an octave up",
+ "chips": ["Octave transposing", "Written note", "Cents meter"]
+}

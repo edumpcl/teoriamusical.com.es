@@ -1,3 +1,4 @@
+const INSTRUMENTS = require('../instruments');
 // /en/tools/ — hub. Lists only tools that have an English page.
 module.exports = {
   path: '/en/tools/',
@@ -41,7 +42,8 @@ module.exports = {
 
 <h2>Tuners by instrument</h2>
 <div class="tm-grid-diccionario">
-  <a href="/en/tools/tuner/guitar/" class="tm-card-dic"><div class="tm-card-dic-titulo">Guitar tuner</div><div class="tm-card-dic-desc">E-A-D-G-B-E and alternate tunings.</div></a>
+${INSTRUMENTS.map(i => `  <a href="/en/tools/tuner/${i.slug}/" class="tm-card-dic"><div class="tm-card-dic-titulo">${i.label}</div><div class="tm-card-dic-desc">${i.desc}.</div></a>`).join('\n')}
+</div><div class="tm-card-dic-desc">E-A-D-G-B-E and alternate tunings.</div></a>
   <a href="/en/tools/tuner/ukulele/" class="tm-card-dic"><div class="tm-card-dic-titulo">Ukulele tuner</div><div class="tm-card-dic-desc">G-C-E-A for soprano, concert and tenor; D-G-B-E for baritone.</div></a>
   <a href="/en/tools/tuner/violin/" class="tm-card-dic"><div class="tm-card-dic-titulo">Violin tuner</div><div class="tm-card-dic-desc">G-D-A-E with an adjustable A4.</div></a>
   <a href="/en/tools/tuner/bass/" class="tm-card-dic"><div class="tm-card-dic-titulo">Bass guitar tuner</div><div class="tm-card-dic-desc">E-A-D-G for 4-string bass, with tips for 5 strings.</div></a>

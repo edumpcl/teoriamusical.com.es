@@ -1,0 +1,10 @@
+{
+ "slug": "trumpet",
+ "name": "Trumpet",
+ "label": "Trumpet tuner",
+ "desc": "B♭ transposing, written and sounding note",
+ "family": "brass",
+ "order": 1,
+ "sub": "Free · Uses your microphone · B♭ trumpet",
+ "chips": ["B♭ transposing", "Written note", "Cents meter"]
+}

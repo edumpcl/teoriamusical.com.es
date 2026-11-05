@@ -1,0 +1,10 @@
+{
+ "slug": "french-horn",
+ "name": "French Horn",
+ "label": "French horn tuner",
+ "desc": "Horn in F, written and sounding note",
+ "family": "brass",
+ "order": 3,
+ "sub": "Free · Uses your microphone · Horn in F",
+ "chips": ["Horn in F", "Double horn", "Written note", "Cents meter"]
+}

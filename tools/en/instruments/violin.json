@@ -1,0 +1,14 @@
+{
+ "slug": "violin",
+ "name": "Violin",
+ "label": "Violin tuner",
+ "desc": "G-D-A-E in fifths",
+ "family": "strings",
+ "order": 3,
+ "sub": "Free · Uses your microphone · G D A E",
+ "chips": [
+  "Tuning in fifths",
+  "Adjustable A4",
+  "440 / 442 / 415 Hz"
+ ]
+}

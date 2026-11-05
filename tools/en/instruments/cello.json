@@ -1,0 +1,10 @@
+{
+ "slug": "cello",
+ "name": "Cello",
+ "label": "Cello tuner",
+ "desc": "C-G-D-A, an octave below the viola",
+ "family": "strings",
+ "order": 5,
+ "sub": "Free · Uses your microphone · C G D A",
+ "chips": ["Tuning in fifths", "Adjustable A4", "C2 = 65.4 Hz"]
+}

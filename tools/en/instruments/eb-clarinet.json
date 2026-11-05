@@ -1,0 +1,10 @@
+{
+ "slug": "eb-clarinet",
+ "name": "E♭ Clarinet",
+ "label": "E♭ clarinet tuner",
+ "desc": "E♭ transposing, sounds a minor third higher",
+ "family": "woodwind",
+ "order": 12,
+ "sub": "Free · Uses your microphone · E♭ clarinet",
+ "chips": ["E♭ transposing", "Written note", "Cents meter"]
+}

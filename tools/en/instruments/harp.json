@@ -1,0 +1,10 @@
+{
+ "slug": "harp",
+ "name": "Harp",
+ "label": "Harp tuner",
+ "desc": "Pedal and lever harps, concert pitch",
+ "family": "strings",
+ "order": 10,
+ "sub": "Free · Uses your microphone · Concert pitch",
+ "chips": ["Pedal and lever harps", "Pedals in natural", "Concert pitch"]
+}

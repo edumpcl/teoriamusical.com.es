@@ -1,0 +1,14 @@
+{
+ "slug": "soprano-saxophone",
+ "name": "Soprano Saxophone",
+ "label": "Soprano Saxophone tuner",
+ "desc": "B♭ transposing, written and sounding note",
+ "family": "woodwind",
+ "order": 21,
+ "sub": "Free · Uses your microphone · B♭ soprano sax",
+ "chips": [
+  "B♭ transposing",
+  "Written note",
+  "Cents meter"
+ ]
+}

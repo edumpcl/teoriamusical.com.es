@@ -2,6 +2,7 @@
 // The tool panel comes from the Spanish page at build time and is translated with PANEL.
 // afinador.js switches to letter names (C D E…) and English texts when <html lang="en">.
 const fs = require('fs');
+const INSTRUMENTS = require('../instruments');
 const path = require('path');
 
 const ES = fs.readFileSync(path.resolve(__dirname, '..', '..', '..', 'herramientas', 'afinador', 'index.html'), 'utf8');
@@ -308,10 +309,7 @@ ${faqHtml}
 
 <h2>Tuners by instrument</h2>
 <ul>
-  <li><a href="/en/tools/tuner/guitar/">Guitar tuner</a> — E-A-D-G-B-E, Drop D, Open G</li>
-  <li><a href="/en/tools/tuner/bass/">Bass guitar tuner</a> — E-A-D-G, with tips for 5 strings</li>
-  <li><a href="/en/tools/tuner/violin/">Violin tuner</a> — G-D-A-E in fifths</li>
-  <li><a href="/en/tools/tuner/ukulele/">Ukulele tuner</a> — G-C-E-A re-entrant</li>
+${INSTRUMENTS.map(i => `  <li><a href="/en/tools/tuner/${i.slug}/">${i.label}</a> — ${i.desc}</li>`).join('\n')}
 </ul>
 
 <p>Once your instrument is in tune, practice with a steady tempo using the <a href="/en/tools/metronome/">online metronome</a>. Good tuning and a firm tempo are the basis of any serious musical practice.</p>

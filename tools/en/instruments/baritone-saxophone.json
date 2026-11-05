@@ -1,0 +1,15 @@
+{
+ "slug": "baritone-saxophone",
+ "name": "Baritone Saxophone",
+ "label": "Baritone Saxophone tuner",
+ "desc": "E♭ transposing, low notes from about 65 Hz",
+ "family": "woodwind",
+ "order": 24,
+ "sub": "Free · Uses your microphone · E♭ baritone sax",
+ "chips": [
+  "E♭ transposing",
+  "Written note",
+  "Low notes",
+  "Cents meter"
+ ]
+}

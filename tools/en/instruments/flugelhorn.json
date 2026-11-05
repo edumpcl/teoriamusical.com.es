@@ -1,0 +1,10 @@
+{
+ "slug": "flugelhorn",
+ "name": "Flugelhorn",
+ "label": "Flugelhorn tuner",
+ "desc": "B♭ transposing, warm conical tone",
+ "family": "brass",
+ "order": 2,
+ "sub": "Free · Uses your microphone · B♭ flugelhorn",
+ "chips": ["B♭ transposing", "Written note", "Cents meter"]
+}

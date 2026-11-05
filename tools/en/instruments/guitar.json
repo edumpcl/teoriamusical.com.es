@@ -1,0 +1,15 @@
+{
+ "slug": "guitar",
+ "name": "Guitar",
+ "label": "Guitar tuner",
+ "desc": "E-A-D-G-B-E, Drop D, Open G",
+ "family": "strings",
+ "order": 1,
+ "sub": "Free · Uses your microphone · E A D G B E",
+ "chips": [
+  "Standard tuning",
+  "Drop D",
+  "Open G",
+  "Cents meter"
+ ]
+}

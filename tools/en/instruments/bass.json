@@ -1,0 +1,15 @@
+{
+ "slug": "bass",
+ "name": "Bass Guitar",
+ "label": "Bass guitar tuner",
+ "desc": "E-A-D-G, with tips for 5 strings",
+ "family": "strings",
+ "order": 2,
+ "sub": "Free · Uses your microphone · E A D G",
+ "chips": [
+  "4 strings",
+  "5 strings",
+  "Drop D",
+  "Harmonics"
+ ]
+}

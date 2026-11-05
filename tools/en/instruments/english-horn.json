@@ -1,0 +1,10 @@
+{
+ "slug": "english-horn",
+ "name": "English Horn",
+ "label": "English horn tuner",
+ "desc": "F transposing, written and sounding note",
+ "family": "woodwind",
+ "order": 4,
+ "sub": "Free · Uses your microphone · English horn in F",
+ "chips": ["F transposing", "Written note", "Cents meter"]
+}

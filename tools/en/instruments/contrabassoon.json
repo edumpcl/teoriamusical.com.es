@@ -1,0 +1,10 @@
+{
+ "slug": "contrabassoon",
+ "name": "Contrabassoon",
+ "label": "Contrabassoon tuner",
+ "desc": "Sounds an octave below written",
+ "family": "woodwind",
+ "order": 7,
+ "sub": "Free · Uses your microphone · Octave transposing",
+ "chips": ["Octave transposing", "Written note", "Tuner range tips"]
+}

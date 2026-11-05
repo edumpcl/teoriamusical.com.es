@@ -1,0 +1,10 @@
+{
+ "slug": "bass-clarinet",
+ "name": "Bass Clarinet",
+ "label": "Bass clarinet tuner",
+ "desc": "B♭ transposing, a ninth below written",
+ "family": "woodwind",
+ "order": 11,
+ "sub": "Free · Uses your microphone · B♭ bass clarinet",
+ "chips": ["B♭ transposing", "Written note", "Low register"]
+}

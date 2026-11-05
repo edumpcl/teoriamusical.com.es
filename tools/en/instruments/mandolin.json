@@ -1,0 +1,10 @@
+{
+ "slug": "mandolin",
+ "name": "Mandolin",
+ "label": "Mandolin tuner",
+ "desc": "G-D-A-E in paired strings",
+ "family": "strings",
+ "order": 8,
+ "sub": "Free · Uses your microphone · G D A E",
+ "chips": ["8 strings in 4 pairs", "Tune by fifths", "Mandola and mandocello"]
+}

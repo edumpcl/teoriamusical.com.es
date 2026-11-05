@@ -1,18 +1,12 @@
-// Builder for the per-instrument tuner pages in English (/en/tools/tuner/<instrument>/).
-// The tuner panel is taken from the Spanish guitar page (identical on every instrument page) and
-// translated; afinador.js shows letters and English text because <html lang="en">.
-// Each page supplies only its own data (strings, tuning table, tips, FAQ).
+// Builder for the per-instrument tuner pages in English (/en/tools/tuner/<slug>/).
+// The tuner panel is taken from that instrument's own Spanish page (the winds start with the
+// transposition box on, the others without) and translated; afinador.js shows letters and English
+// text because <html lang="en">. Each page supplies only its own data. See TUNER-PAGES.md.
 const fs = require('fs');
 const path = require('path');
+const INSTRUMENTS = require('./instruments');
 
-const ES_GUITAR = fs.readFileSync(path.resolve(__dirname, '..', '..', 'herramientas', 'afinador', 'guitarra', 'index.html'), 'utf8');
-const AFIN_V = ES_GUITAR.match(/afinador\.js\?v=([0-9a-f]+)/)[1];
-
-let PANEL = (() => {
-  const i = ES_GUITAR.indexOf('<div class="tm-afinador-wrap">'), j = ES_GUITAR.indexOf('</div><!-- /tm-afinador-wrap -->', i);
-  if (i < 0 || j < 0) throw new Error('tuner-instrument: panel markers not found');
-  return ES_GUITAR.slice(i, j) + '</div><!-- /tm-afinador-wrap -->';
-})();
+const ROOT = path.resolve(__dirname, '..', '..');
 const MAP = [
   ['<div class="afin-title">Afinador</div>', '<div class="afin-title">Tuner</div>'],
   ['title="Pantalla completa" aria-label="Pantalla completa"', 'title="Fullscreen" aria-label="Fullscreen"'],
@@ -29,35 +23,50 @@ const MAP = [
   ['<div class="box-label">Información</div>', '<div class="box-label">Info</div>'],
   ['<span class="stat-lbl">Nota</span>', '<span class="stat-lbl">Note</span>'],
 ];
-for (const [a, b] of MAP) {
-  if (!PANEL.includes(a)) throw new Error('tuner-instrument panel: not found: ' + a);
-  PANEL = PANEL.split(a).join(b);
+
+const cache = {};
+function esPage(esSlug) {
+  if (!cache[esSlug]) cache[esSlug] = fs.readFileSync(path.join(ROOT, 'herramientas', 'afinador', esSlug, 'index.html'), 'utf8');
+  return cache[esSlug];
 }
-const left = PANEL.replace(/<[^>]+>/g, ' ').match(/\S*[áéíóúñ¿¡]\S*/gi);
-if (left) throw new Error('tuner-instrument panel: Spanish text left: ' + left.join(', '));
-const attrs = [...PANEL.matchAll(/(?:title|aria-label)="([^"]*)"/g)].map(m => m[1]).filter(t => /[áéíóúñ¿¡]|\b(de|del|la|el|los|las|para)\b/i.test(t));
-if (attrs.length) throw new Error('tuner-instrument panel: Spanish attribute: ' + attrs.join(' | '));
+
+function panelFor(esSlug) {
+  const es = esPage(esSlug);
+  const i = es.indexOf('<div class="tm-afinador-wrap">');
+  let j = es.indexOf('</div><!-- /tm-afinador-wrap -->', i);
+  if (i < 0 || j < 0) throw new Error(`tuner-instrument(${esSlug}): panel markers not found`);
+  // some Spanish pages write accents as numeric entities (Afinaci&#243;n): decode them before matching
+  let panel = (es.slice(i, j) + '</div><!-- /tm-afinador-wrap -->').replace(/&#(\d+);/g, (m, n) => String.fromCharCode(+n));
+  for (const [a, b] of MAP) {
+    if (!panel.includes(a)) throw new Error(`tuner-instrument(${esSlug}): panel text not found: ${a}`);
+    panel = panel.split(a).join(b);
+  }
+  const left = panel.replace(/<[^>]+>/g, ' ').match(/\S*[áéíóúñ¿¡]\S*/gi);
+  if (left) throw new Error(`tuner-instrument(${esSlug}): Spanish text left in panel: ${left.join(', ')}`);
+  const attrs = [...panel.matchAll(/(?:title|aria-label)="([^"]*)"/g)].map(m => m[1]).filter(t => /[áéíóúñ¿¡]|\b(de|del|la|el|los|las|para)\b/i.test(t));
+  if (attrs.length) throw new Error(`tuner-instrument(${esSlug}): Spanish attribute in panel: ${attrs.join(' | ')}`);
+  return panel;
+}
 
 const stripTags = s => s.replace(/<[^>]+>/g, '');
 
-// Sibling pages listed at the bottom of every instrument page (added to as more exist)
-const SIBLINGS = [
-  ['/en/tools/tuner/', 'Online tuner (all instruments)'],
-  ['/en/tools/tuner/guitar/', 'Guitar tuner'],
-  ['/en/tools/tuner/bass/', 'Bass guitar tuner'],
-  ['/en/tools/tuner/violin/', 'Violin tuner'],
-  ['/en/tools/tuner/ukulele/', 'Ukulele tuner'],
-];
+// Sibling pages listed at the bottom of every instrument page (from instruments/*.json)
+const SIBLINGS = [['/en/tools/tuner/', 'Online tuner (all instruments)'], ...INSTRUMENTS.map(i => [`/en/tools/tuner/${i.slug}/`, i.label])];
 
 /**
- * inst = { slug, esSlug, name ('Guitar'), title, description, h1, intro:[html], strings:[{name,oct,midi}],
- *          sections:[{h2, html}], adAfter:1, faq:[[q,a]], faqH2, closing: html, swDescription, howName }
- * `sections` are rendered in order; insert_ads adds the two ad blocks afterwards, like on the Spanish pages.
+ * inst = { slug, esSlug, name ('Guitar'), title, description, swDescription, h1, intro:[html],
+ *          strings?:[{name,oct,midi}]  (letters; omit for instruments with no string panel),
+ *          transp?: number            (semitones, as in the Spanish page's window.AFIN_TRANSP),
+ *          sections:[{h2, html}], faqH2, faq:[[q,a]], closing: html }
+ * insert_ads.py adds the ad blocks afterwards, like on the Spanish pages.
  */
 module.exports = function tunerInstrument(inst) {
   const url = `/en/tools/tuner/${inst.slug}/`;
   const abs = 'https://www.teoriamusical.com.es' + url;
-  const strings = '[' + inst.strings.map(s => `{name:"${s.name}",oct:${s.oct},midi:${s.midi}}`).join(',') + ']';
+  const es = esPage(inst.esSlug);
+  const afinV = es.match(/afinador\.js\?v=([0-9a-f]+)/)[1];
+  const strings = inst.strings ? '[' + inst.strings.map(s => `{name:"${s.name}",oct:${s.oct},midi:${s.midi}}`).join(',') + ']' : null;
+  const pre = (strings ? `<script>window.AFIN_STRINGS=${strings};</script>\n` : '') + (inst.transp != null ? `<script>window.AFIN_TRANSP=${inst.transp};</script>\n` : '');
   const sections = inst.sections.map(s => `<h2>${s.h2}</h2>\n${s.html}`).join('\n\n');
   const faq = inst.faq.map(([q, a]) => `  <div class="tm-faq-item">
     <div class="tm-faq-q">${q}</div>
@@ -107,9 +116,8 @@ module.exports = function tunerInstrument(inst) {
 
 ${inst.intro.map(p => `<p>${p}</p>`).join('\n')}
 
-${PANEL}
-<script>window.AFIN_STRINGS=${strings};</script>
-<script src="/assets/tools/afinador.js?v=${AFIN_V}" defer></script>
+${panelFor(inst.esSlug)}
+${pre}<script src="/assets/tools/afinador.js?v=${afinV}" defer></script>
 
 ${sections}
 

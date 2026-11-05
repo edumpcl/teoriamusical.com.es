@@ -1,0 +1,10 @@
+{
+ "slug": "double-bass",
+ "name": "Double Bass",
+ "label": "Double bass tuner",
+ "desc": "E-A-D-G in fourths, low-note tips",
+ "family": "strings",
+ "order": 6,
+ "sub": "Free · Uses your microphone · E A D G",
+ "chips": ["Tuning in fourths", "E1 = 41.2 Hz", "Harmonics for low C"]
+}

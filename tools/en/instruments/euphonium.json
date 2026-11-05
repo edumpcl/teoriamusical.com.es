@@ -1,0 +1,10 @@
+{
+ "slug": "euphonium",
+ "name": "Euphonium",
+ "label": "Euphonium tuner",
+ "desc": "B♭ euphonium, bass clef or treble clef",
+ "family": "brass",
+ "order": 5,
+ "sub": "Free · Uses your microphone · B♭ euphonium",
+ "chips": ["B♭ instrument", "Bass or treble clef", "Cents meter"]
+}

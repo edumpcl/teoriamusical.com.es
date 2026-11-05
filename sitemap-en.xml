@@ -25,20 +25,155 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/metronomo/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/metronomo/"/>
   </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/alto-saxophone/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/alto-saxophone/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/saxofon-alto/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/saxofon-alto/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/banjo/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/banjo/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/banjo/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/banjo/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/baritone-saxophone/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/baritone-saxophone/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/saxofon-baritono/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/saxofon-baritono/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/bass-clarinet/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/bass-clarinet/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/clarinete-bajo/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/clarinete-bajo/"/>
+  </url>
   <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/bass/</loc><lastmod>2026-11-05</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/bass/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/bajo/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/bajo/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/bassoon/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/bassoon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/fagot/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/fagot/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/cello/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/cello/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/violonchelo/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/violonchelo/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/clarinet/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/clarinet/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/clarinete/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/clarinete/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/contrabassoon/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/contrabassoon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/contrafagot/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/contrafagot/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/double-bass/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/double-bass/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/contrabajo/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/contrabajo/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/eb-clarinet/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/eb-clarinet/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/requinto/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/requinto/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/english-horn/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/english-horn/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/corno-ingles/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/corno-ingles/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/euphonium/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/euphonium/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/bombardino/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/bombardino/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/flugelhorn/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/flugelhorn/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/fliscorno/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/fliscorno/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/flute/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/flute/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/flauta/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/flauta/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/french-horn/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/french-horn/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/trompa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/trompa/"/>
   </url>
   <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/guitar/</loc><lastmod>2026-11-05</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/guitar/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/guitarra/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/guitarra/"/>
   </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/harp/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/harp/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/arpa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/arpa/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/mandolin/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/mandolin/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/mandolina/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/mandolina/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/oboe/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/oboe/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/oboe/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/oboe/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/piccolo/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/piccolo/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/flautin/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/flautin/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/saxophone/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/saxophone/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/saxofon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/saxofon/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/soprano-saxophone/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/soprano-saxophone/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/saxofon-soprano/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/saxofon-soprano/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/tenor-saxophone/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/tenor-saxophone/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/saxofon-tenor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/saxofon-tenor/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/timpani/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/timpani/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/timbales/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/timbales/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/trombone/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/trombone/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/trombon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/trombon/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/trumpet/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/trumpet/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/trompeta/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/trompeta/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/tuba/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/tuba/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/tuba/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/tuba/"/>
+  </url>
   <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/ukulele/</loc><lastmod>2026-11-05</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/ukulele/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/ukelele/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/ukelele/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/viola/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/viola/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/herramientas/afinador/viola/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/herramientas/afinador/viola/"/>
   </url>
   <url><loc>https://www.teoriamusical.com.es/en/tools/tuner/violin/</loc><lastmod>2026-11-05</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/tools/tuner/violin/"/>

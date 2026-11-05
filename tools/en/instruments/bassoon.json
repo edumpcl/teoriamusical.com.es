@@ -1,0 +1,10 @@
+{
+ "slug": "bassoon",
+ "name": "Bassoon",
+ "label": "Bassoon tuner",
+ "desc": "Concert pitch, from B♭1 up",
+ "family": "woodwind",
+ "order": 6,
+ "sub": "Free · Uses your microphone · Concert pitch",
+ "chips": ["Concert pitch", "Adjustable A4", "Cents meter"]
+}

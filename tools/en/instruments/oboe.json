@@ -1,0 +1,10 @@
+{
+ "slug": "oboe",
+ "name": "Oboe",
+ "label": "Oboe tuner",
+ "desc": "Concert pitch, the orchestra’s A",
+ "family": "woodwind",
+ "order": 3,
+ "sub": "Free · Uses your microphone · The orchestra’s A",
+ "chips": ["Concert pitch", "Orchestra A4", "Cents meter"]
+}

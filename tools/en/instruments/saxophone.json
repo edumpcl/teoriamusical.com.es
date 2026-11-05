@@ -1,0 +1,10 @@
+{
+ "slug": "saxophone",
+ "name": "Saxophone",
+ "label": "Saxophone tuner",
+ "desc": "Soprano, alto, tenor and baritone transpositions",
+ "family": "woodwind",
+ "order": 20,
+ "sub": "Free · Uses your microphone · All saxophones",
+ "chips": ["B♭ and E♭", "Written note", "Cents meter"]
+}

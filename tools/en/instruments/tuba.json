@@ -1,0 +1,10 @@
+{
+ "slug": "tuba",
+ "name": "Tuba",
+ "label": "Tuba tuner",
+ "desc": "BB♭, CC, E♭ and F tubas, low-note tips",
+ "family": "brass",
+ "order": 6,
+ "sub": "Free · Uses your microphone · BB♭ CC E♭ F",
+ "chips": ["BB♭ · CC · E♭ · F", "Concert pitch", "Low notes", "Cents meter"]
+}

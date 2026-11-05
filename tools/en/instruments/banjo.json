@@ -1,0 +1,10 @@
+{
+ "slug": "banjo",
+ "name": "Banjo",
+ "label": "Banjo tuner",
+ "desc": "Open G and 4- and 6-string tunings",
+ "family": "strings",
+ "order": 9,
+ "sub": "Free · Uses your microphone · Open G (gDGBD)",
+ "chips": ["Open G tuning", "5th-string drone", "4- and 6-string banjos"]
+}

@@ -1,0 +1,15 @@
+{
+ "slug": "ukulele",
+ "name": "Ukulele",
+ "label": "Ukulele tuner",
+ "desc": "G-C-E-A re-entrant; baritone D-G-B-E",
+ "family": "strings",
+ "order": 7,
+ "sub": "Free · Uses your microphone · G C E A",
+ "chips": [
+  "Soprano",
+  "Concert",
+  "Tenor",
+  "Baritone"
+ ]
+}

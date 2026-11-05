@@ -1,0 +1,10 @@
+{
+ "slug": "trombone",
+ "name": "Trombone",
+ "label": "Trombone tuner",
+ "desc": "Tenor and bass trombone, slide positions",
+ "family": "brass",
+ "order": 4,
+ "sub": "Free · Uses your microphone · Tenor and bass",
+ "chips": ["Concert pitch", "Slide positions", "Tuning slide", "Cents meter"]
+}

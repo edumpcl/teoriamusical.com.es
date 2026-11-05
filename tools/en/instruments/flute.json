@@ -1,0 +1,10 @@
+{
+ "slug": "flute",
+ "name": "Flute",
+ "label": "Flute tuner",
+ "desc": "Concert pitch, adjustable A4",
+ "family": "woodwind",
+ "order": 1,
+ "sub": "Free · Uses your microphone · Concert flute in C",
+ "chips": ["Concert pitch", "Adjustable A4", "Cents meter"]
+}

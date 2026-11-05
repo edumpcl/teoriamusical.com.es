@@ -1,0 +1,10 @@
+{
+ "slug": "clarinet",
+ "name": "Clarinet",
+ "label": "Clarinet tuner",
+ "desc": "B♭ transposing, written and sounding note",
+ "family": "woodwind",
+ "order": 10,
+ "sub": "Free · Uses your microphone · B♭ clarinet",
+ "chips": ["B♭ transposing", "Written note", "Cents meter"]
+}

@@ -1,0 +1,10 @@
+{
+ "slug": "viola",
+ "name": "Viola",
+ "label": "Viola tuner",
+ "desc": "C-G-D-A, a fifth below the violin",
+ "family": "strings",
+ "order": 4,
+ "sub": "Free · Uses your microphone · C G D A",
+ "chips": ["Tuning in fifths", "Adjustable A4", "C3 = 130.8 Hz"]
+}

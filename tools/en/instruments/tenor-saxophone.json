@@ -1,0 +1,14 @@
+{
+ "slug": "tenor-saxophone",
+ "name": "Tenor Saxophone",
+ "label": "Tenor Saxophone tuner",
+ "desc": "B♭ transposing, written and sounding note",
+ "family": "woodwind",
+ "order": 23,
+ "sub": "Free · Uses your microphone · B♭ tenor sax",
+ "chips": [
+  "B♭ transposing",
+  "Written note",
+  "Cents meter"
+ ]
+}

@@ -1,0 +1,15 @@
+{
+ "slug": "timpani",
+ "name": "Timpani",
+ "label": "Timpani tuner",
+ "desc": "Orchestral pedal timpani, ranges of 23-32 inch drums",
+ "family": "percussion",
+ "order": 1,
+ "sub": "Free · Uses your microphone · Pedal timpani",
+ "chips": [
+  "Pedal timpani",
+  "4 drum sizes",
+  "Pitch ranges",
+  "Cents meter"
+ ]
+}
