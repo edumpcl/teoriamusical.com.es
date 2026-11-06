@@ -2,7 +2,7 @@
    La nota se elige combinando las válvulas (que alargan el tubo) sobre el armónico
    que ajusta el intérprete con los labios, igual que la trompeta pero en Do y con
    una 4ª válvula que baja una 4ª justa (arregla el grave). La tuba en Do NO transpone:
-   se lee a sonido real en clave de fa. Rango Mi1–Si3.
+   se lee a sonido real en clave de fa. Rango Mi1–Fa4.
    Existen también tubas en Si♭ y en Fa (cambian las digitaciones), y modelos de
    pistones y de cilindros; aquí se muestran las digitaciones de la tuba en Do.
    Digitaciones estándar del sistema de válvulas (a revisar por especialista).
@@ -29,18 +29,20 @@
     'Fa2':['V1'], 'Fa#2':['V2'], 'Sol2':[], 'Sol#2':['V2','V3'], 'La2':['V1','V2'],
     'La#2':['V1'], 'Si2':['V2'], 'Do3':[], 'Do#3':['V1','V2'], 'Re3':['V1'], 'Re#3':['V2'],
     'Mi3':[], 'Fa3':['V1'], 'Fa#3':['V2'], 'Sol3':[], 'Sol#3':['V1'], 'La3':['V2'],
-    'La#3':[], 'Si3':['V2']
+    'La#3':[], 'Si3':['V2'],
+    'Do4':[], 'Do#4':['V2'], 'Re4':[], 'Re#4':['V2'], 'Mi4':[], 'Fa4':['V1']
   };
   var ORDEN = [
     'Mi1','Fa1','Fa#1','Sol1','Sol#1','La1','La#1','Si1',
     'Do2','Do#2','Re2','Re#2','Mi2','Fa2','Fa#2','Sol2','Sol#2','La2','La#2','Si2',
-    'Do3','Do#3','Re3','Re#3','Mi3','Fa3','Fa#3','Sol3','Sol#3','La3','La#3','Si3'
+    'Do3','Do#3','Re3','Re#3','Mi3','Fa3','Fa#3','Sol3','Sol#3','La3','La#3','Si3',
+    'Do4','Do#4','Re4','Re#4','Mi4','Fa4'
   ];
-  var SUB = { '1':'₁','2':'₂','3':'₃' };
+  var SUB = { '1':'₁','2':'₂','3':'₃','4':'₄' };
   var FLAT = {
     'Fa#1':'Sol♭₁','Sol#1':'La♭₁','La#1':'Si♭₁','Do#2':'Re♭₂','Re#2':'Mi♭₂',
     'Fa#2':'Sol♭₂','Sol#2':'La♭₂','La#2':'Si♭₂','Do#3':'Re♭₃','Re#3':'Mi♭₃',
-    'Fa#3':'Sol♭₃','Sol#3':'La♭₃','La#3':'Si♭₃'
+    'Fa#3':'Sol♭₃','Sol#3':'La♭₃','La#3':'Si♭₃','Do#4':'Re♭₄','Re#4':'Mi♭₄'
   };
   function label(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
@@ -58,7 +60,7 @@
   }
   var LETTER = { Do:'C', Re:'D', Mi:'E', Fa:'F', Sol:'G', La:'A', Si:'B' };
   var AUDIO_BASE = '/assets/audio/tuba/';
-  var AUDIO_V = '2'; // v2: agudos (Fa#3+) regenerados con samples sostenidos (no staccato)
+  var AUDIO_V = '3'; // v3: añadidas Do4–Fa4 (v2: agudos Fa#3+ regenerados con samples sostenidos)
   function sampleFile(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
     return m ? LETTER[m[1]] + (m[2] ? 's' : '') + m[3] : null;

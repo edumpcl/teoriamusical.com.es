@@ -425,7 +425,7 @@ function html(inst, rellenar) {
     ? 'Escribe qué pistones hay que pulsar en cada nota: primero dibujándolos (● pulsado, ○ suelto) y luego con su número. La columna «Suena» te la damos como pista, porque es la que más cuesta.'
     : `Las ${filas.length} notas del registro habitual con su digitación. ● es pistón pulsado y ○ suelto, en el orden en que los tienes bajo los dedos.`;
 
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}${filas.length > 34 ? '.hoja table th, .hoja table td { padding-top: .7mm; padding-bottom: .7mm; } .hoja table td.pent { padding-top: 0; padding-bottom: 0; }' : ''}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
