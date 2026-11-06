@@ -11,10 +11,17 @@
 (function () {
   'use strict';
 
+  var EN = document.documentElement.lang === 'en';
+  function T(es, en) { return EN ? en : es; }
+
   function D() { return window.tmCompletarCompasData; }
   function Q() { return window.tmQueCompasEsTest; }
 
-  var TIT = { 1: '1. Fácil (un tiempo con grupo)', 2: '2. Medio (dos tiempos con grupo)', 3: '3. Difícil (todo el compás con grupos)' };
+  var TIT = {
+    1: T('1. Fácil (un tiempo con grupo)', '1. Easy (one beat with a group)'),
+    2: T('2. Medio (dos tiempos con grupo)', '2. Medium (two beats with a group)'),
+    3: T('3. Difícil (todo el compás con grupos)', '3. Hard (the whole measure made of groups)')
+  };
   var LOTES = [[1, 6], [2, 6], [3, 6]];
 
   var CSS = [
@@ -69,15 +76,15 @@
 
     cont.innerHTML = '<div class="tm-fq">'
       + '<div class="tm-fq-acciones">'
-      + '<button type="button" class="tm-fq-btn tm-fq-btn-1" data-a="generar">Generar otra ficha</button>'
-      + '<button type="button" class="tm-fq-btn tm-fq-btn-2" data-a="soluciones">Ver soluciones</button>'
-      + '<button type="button" class="tm-fq-btn tm-fq-btn-2" data-a="imprimir">Imprimir</button>'
+      + '<button type="button" class="tm-fq-btn tm-fq-btn-1" data-a="generar">' + T('Generar otra ficha', 'Generate another worksheet') + '</button>'
+      + '<button type="button" class="tm-fq-btn tm-fq-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show answers') + '</button>'
+      + '<button type="button" class="tm-fq-btn tm-fq-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<p class="tm-fq-enlace"></p>'
       + '</div>'
-      + '<div class="tm-fq-hoja"><div class="tm-fq-cab"><p class="tm-fq-tit">¿Qué compás es?</p><span class="tm-fq-ref"></span></div>'
-      + '<div class="tm-fq-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
-      + '<p class="tm-fq-instr">Cada compás está escrito sin su cifra y lleno de grupos de valoración especial. Simplifica cada grupo a la figura que equivale y escribe en la casilla el compás que le corresponde. Un 4/4 siempre se puede escribir también como 2/2, y un 2/4 como 4/8: en los dos casos, ambas cifras son correctas.</p>'
+      + '<div class="tm-fq-hoja"><div class="tm-fq-cab"><p class="tm-fq-tit">' + T('¿Qué compás es?', 'What time signature is it?') + '</p><span class="tm-fq-ref"></span></div>'
+      + '<div class="tm-fq-datos"><span>' + T('Nombre:', 'Name:') + '</span><span>' + T('Curso:', 'Class:') + '</span><span>' + T('Fecha:', 'Date:') + '</span></div>'
+      + '<p class="tm-fq-instr">' + T('Cada compás está escrito sin su cifra y lleno de grupos de valoración especial. Simplifica cada grupo a la figura que equivale y escribe en la casilla el compás que le corresponde. Un 4/4 siempre se puede escribir también como 2/2, y un 2/4 como 4/8: en los dos casos, ambas cifras son correctas.', 'Each measure is written without its time signature and is full of tuplets. Simplify each group to the note value it equals and write in the box the time signature that belongs to it. A 4/4 can always also be written as 2/2 (cut time), and a 2/4 as 4/8: in both cases, either time signature is correct.') + '</p>'
       + '<div class="tm-fq-cuerpo"></div></div>';
 
     var elRef = cont.querySelector('.tm-fq-ref');
@@ -112,7 +119,7 @@
         var K = Math.min(1, interior / Math.max.apply(null, anchos));
         svgs.forEach(function (s, i) { s.style.width = (anchos[i] * K) + 'px'; s.style.maxWidth = 'none'; });
       });
-      elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
+      elRef.textContent = T('teoriamusical.com.es · hoja n.º ' + semilla, 'teoriamusical.com.es · worksheet no. ' + semilla);
     }
 
     function generar(semillaFija) {
@@ -121,11 +128,11 @@
       else { do { nueva = Math.floor(Math.random() * 90000 + 10000); } while (nueva === semilla); }
       semilla = nueva;
       solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show answers');
       pintar();
       var a = cont.querySelector('.tm-fq-enlace');
       var params = '?hoja=' + semilla;
-      a.innerHTML = 'Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.';
+      a.innerHTML = T('Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.', 'Each worksheet comes from a number: with <a href="' + window.location.pathname + params + '#generador">this link</a> (worksheet no. ' + semilla + ') you get the same one again.');
     }
 
     cont.addEventListener('click', function (ev) {
@@ -135,7 +142,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         solucion = !solucion;
-        btn.textContent = solucion ? 'Ocultar soluciones' : 'Ver soluciones';
+        btn.textContent = solucion ? T('Ocultar soluciones', 'Hide answers') : T('Ver soluciones', 'Show answers');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

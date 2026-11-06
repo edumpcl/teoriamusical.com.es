@@ -20,16 +20,19 @@
 (function () {
   'use strict';
 
+  var EN = document.documentElement.lang === 'en';
+  function T(es, en) { return EN ? en : es; }
+
   var FIG = {
-    r: { u: 64, vf: 'w', nombre: 'redonda' },
-    rP: { u: 96, vf: 'wd', nombre: 'redonda con puntillo' },
-    b: { u: 32, vf: 'h', nombre: 'blanca' },
-    bP: { u: 48, vf: 'hd', nombre: 'blanca con puntillo' },
-    n: { u: 16, vf: 'q', nombre: 'negra' },
-    nP: { u: 24, vf: 'qd', nombre: 'negra con puntillo' },
-    c: { u: 8, vf: '8', nombre: 'corchea' },
-    cP: { u: 12, vf: '8d', nombre: 'corchea con puntillo' },
-    sc: { u: 4, vf: '16', nombre: 'semicorchea' }
+    r: { u: 64, vf: 'w', nombre: T('redonda', 'whole note') },
+    rP: { u: 96, vf: 'wd', nombre: T('redonda con puntillo', 'dotted whole note') },
+    b: { u: 32, vf: 'h', nombre: T('blanca', 'half note') },
+    bP: { u: 48, vf: 'hd', nombre: T('blanca con puntillo', 'dotted half note') },
+    n: { u: 16, vf: 'q', nombre: T('negra', 'quarter note') },
+    nP: { u: 24, vf: 'qd', nombre: T('negra con puntillo', 'dotted quarter note') },
+    c: { u: 8, vf: '8', nombre: T('corchea', 'eighth note') },
+    cP: { u: 12, vf: '8d', nombre: T('corchea con puntillo', 'dotted eighth note') },
+    sc: { u: 4, vf: '16', nombre: T('semicorchea', 'sixteenth note') }
   };
   /* Paleta de respuesta: figuras, y los silencios que se usan. */
   var CARTAS_FIG = ['sc', 'c', 'cP', 'n', 'nP', 'b', 'bP', 'r', 'rP'];
@@ -180,25 +183,34 @@
   function enTiempos(u, c) {
     // Caso borde: en el nivel 3 el hueco puede ocupar el compás entero, y
     // entonces "lo escrito" es 0 (no hay mcd útil con 0 — salía en blanco).
-    if (!u) return '0 tiempos';
+    if (!u) return T('0 tiempos', '0 beats');
     var t = COMPASES[c].tiempo, g = mcd(u, t), n = u / g, d = t / g;
     var ent = Math.floor(n / d), resto = n % d;
     var G = { '1/2': '½', '1/4': '¼', '3/4': '¾', '1/3': '⅓', '2/3': '⅔', '1/6': '⅙', '5/6': '⅚' };
     var parte = resto ? (G[resto + '/' + d] || resto + '/' + d) : '';
-    if (!ent) return parte + (resto * 2 === d ? ' tiempo' : ' de tiempo');
-    var e = ent + (ent === 1 ? ' tiempo' : ' tiempos');
+    if (!ent) return parte + (resto * 2 === d ? T(' tiempo', ' beat') : T(' de tiempo', ' of a beat'));
+    var e = ent + (ent === 1 ? T(' tiempo', ' beat') : T(' tiempos', ' beats'));
     if (!resto) return e;
+    if (EN) return resto * 2 === d ? ent + '½ beats' : ent + ' and ' + parte + ' beats';
     if (resto * 2 === d) return e + ' y medio';
     return e + ' y ' + parte + ' de tiempo';
   }
-  function nombre(e) { return (e.s ? 'silencio de ' : '') + FIG[e.f].nombre; }
+  function nombre(e) {
+    if (EN) return e.s ? FIG[e.f].nombre.replace(/ note$/, ' rest') : FIG[e.f].nombre;
+    return (e.s ? 'silencio de ' : '') + FIG[e.f].nombre;
+  }
   function lista(elems) {
     var n = elems.map(nombre);
-    return n.length > 1 ? n.slice(0, -1).join(', ') + ' y ' + n[n.length - 1] : n[0];
+    return n.length > 1 ? n.slice(0, -1).join(', ') + T(' y ', ' and ') + n[n.length - 1] : n[0];
   }
   function explicar(it) {
     var d = COMPASES[it.compas];
     var escrito = d.tiempo * d.tiempos - it.valor;
+    if (EN) {
+      return 'The ' + it.compas + ' time signature has ' + d.tiempos + ' ' + (d.tiempo === 24 ? 'dotted-quarter-note' : 'quarter-note')
+        + ' beats. What is written adds up to ' + enTiempos(escrito, it.compas) + ', so what is missing is '
+        + enTiempos(it.valor, it.compas) + ': ' + lista(it.faltan) + '.';
+    }
     return 'El compás de ' + it.compas + ' tiene ' + d.tiempos + ' tiempos de ' + (d.tiempo === 24 ? 'negra con puntillo' : 'negra')
       + '. Lo escrito suma ' + enTiempos(escrito, it.compas) + ', así que falta' + (it.faltan.length > 1 ? 'n ' : ' ')
       + enTiempos(it.valor, it.compas) + ': ' + lista(it.faltan) + '.';
@@ -272,7 +284,7 @@
   function pintarCompasV(div, sig, items, opts) {
     opts = opts || {};
     var r = window.tmNotacion.dibujarSync(div, filaDeCompas(sig, items, opts), {
-      escala: 1.3, separacion: opts.separacion || (opts.compacto ? 0.15 : 0.5), id: 'cc', alt: opts.alt || ('Compás de ' + sig)
+      escala: 1.3, separacion: opts.separacion || (opts.compacto ? 0.15 : 0.5), id: 'cc', alt: opts.alt || T('Compás de ' + sig, 'Measure in ' + sig)
     });
     r.elemento.style.maxWidth = Math.round((opts.w || 420) * 1.2) + 'px';
     return r.elemento;
@@ -333,7 +345,7 @@
         t += FIG[x.f].u;
       });
     });
-    var svg = pintarCompasV(div, it.compas, items, { w: opts.w || 420, compacto: opts.compacto, separacion: opts.separacion, alt: 'Compás de ' + it.compas + ' con un hueco marcado con una línea roja' });
+    var svg = pintarCompasV(div, it.compas, items, { w: opts.w || 420, compacto: opts.compacto, separacion: opts.separacion, alt: T('Compás de ' + it.compas + ' con un hueco marcado con una línea roja', 'Measure in ' + it.compas + ' with a gap marked by a red line') });
     // El hueco: una línea debajo y un interrogante. Mientras se está respondiendo (parcial) se mantiene siempre, aunque ya se
     // haya rellenado del todo o de más: solo desaparece al corregir (Eduardo).
     var fantasmas = [], enHuecoIdx = [];
@@ -354,7 +366,7 @@
     if (v.p) e.puntillo = 1;
     if (silencio) e.silencio = true; else e.plica = 'up';
     var r = window.tmNotacion.dibujarSync(div, { clave: 'sol', sinClave: true, sinBarraFinal: true, compases: [[e]] }, {
-      escala: 1.0, separacion: 0.3, id: 'ccc', alt: (silencio ? 'Silencio de ' : '') + FIG[f].nombre
+      escala: 1.0, separacion: 0.3, id: 'ccc', alt: (silencio ? T('Silencio de ', '') : '') + (silencio && EN ? FIG[f].nombre.replace(/ note$/, ' rest') : FIG[f].nombre)
     });
     /* Todas las cartas con la MISMA ventana (ancho y alto), centrada en la figura: Verovio recorta el SVG al contenido, y
        una redonda ocupa más que una semicorchea. Las líneas del pentagrama llegan de borde a borde. Verovio mete un <svg>
@@ -382,7 +394,7 @@
     div.innerHTML = '';
     var items = [], t = 0;
     elems.forEach(function (e) { items.push({ f: e.f, s: !!e.s, t0: t, u: FIG[e.f].u }); t += FIG[e.f].u; });
-    pintarCompasV(div, sig, items, { w: opts.w || 420, sinCifra: opts.sinCifra, compacto: opts.compacto, separacion: opts.separacion, alt: opts.sinCifra ? 'Compás sin indicación de compás' : 'Compás de ' + sig });
+    pintarCompasV(div, sig, items, { w: opts.w || 420, sinCifra: opts.sinCifra, compacto: opts.compacto, separacion: opts.separacion, alt: opts.sinCifra ? T('Compás sin indicación de compás', 'Measure without a time signature') : T('Compás de ' + sig, 'Measure in ' + sig) });
     var barras = barrasPorTiempos(items, COMPASES[sig]), porGrupo = {}, grupos = [];
     items.forEach(function (x, k) { if (barras[k]) (porGrupo[barras[k]] = porGrupo[barras[k]] || []).push(x.t0); });
     Object.keys(porGrupo).forEach(function (g) { grupos.push(porGrupo[g]); });
@@ -447,17 +459,17 @@
   ].join('');
 
   var NIVELES = [
-    { nivel: 1, t: 'Falta una figura', d: 'Elige la figura que completa el compás' },
-    { nivel: 2, t: 'Falta una figura o un silencio', d: 'Puede faltar un silencio: fíjate en lo que hay alrededor' },
-    { nivel: 3, t: 'Faltan varias figuras', d: 'Ve tocando figuras hasta llenar el hueco; vale cualquier combinación que sume' }
+    { nivel: 1, t: T('Falta una figura', 'One note is missing'), d: T('Elige la figura que completa el compás', 'Choose the note that completes the measure') },
+    { nivel: 2, t: T('Falta una figura o un silencio', 'A note or a rest is missing'), d: T('Puede faltar un silencio: fíjate en lo que hay alrededor', 'A rest may be missing: look at what is around the gap') },
+    { nivel: 3, t: T('Faltan varias figuras', 'Several notes are missing'), d: T('Ve tocando figuras hasta llenar el hueco; vale cualquier combinación que sume', 'Tap notes until the gap is filled; any combination that adds up is correct') }
   ];
   var PREGUNTAS = 8;
 
   window.tmCompletarCompas = function (id) {
     var cont = document.getElementById(id);
     if (cont && window.tmNotacion && !conVerovio()) {
-      cont.innerHTML = '<div class="tm-cc-card"><div class="tm-cc-sub">Cargando el ejercicio…</div></div>';
-      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<div class="tm-cc-card"><div class="tm-cc-sub">No se ha podido cargar el ejercicio. Recarga la página.</div></div>'; });
+      cont.innerHTML = '<div class="tm-cc-card"><div class="tm-cc-sub">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</div></div>';
+      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<div class="tm-cc-card"><div class="tm-cc-sub">' + T('No se ha podido cargar el ejercicio. Recarga la página.', 'The exercise could not be loaded. Reload the page.') + '</div></div>'; });
       return;
     }
     arrancar(id);
@@ -476,10 +488,10 @@
     var cola = [], pos = 0, aciertos = 0, nivel = 1, grupo = 'mezcla';
 
     function inicio() {
-      cont.innerHTML = '<div class="tm-cc-card"><div class="tm-cc-tit">Completar el compás</div>'
-        + '<div class="tm-cc-sub">A cada compás le falta algo en el sitio marcado con la línea roja. Elige qué falta.</div>'
+      cont.innerHTML = '<div class="tm-cc-card"><div class="tm-cc-tit">' + T('Completar el compás', 'Complete the measure') + '</div>'
+        + '<div class="tm-cc-sub">' + T('A cada compás le falta algo en el sitio marcado con la línea roja. Elige qué falta.', 'Each measure is missing something where the red line is. Choose what is missing.') + '</div>'
         + '<div class="tm-cc-grupo" data-g="grupo">'
-        + [['simples', '2/4, 3/4 y 4/4'], ['compuestos', '6/8, 9/8 y 12/8'], ['mezcla', 'Todos']].map(function (g) {
+        + [['simples', '2/4, 3/4 y 4/4'], ['compuestos', '6/8, 9/8 y 12/8'], ['mezcla', T('Todos', 'All')]].map(function (g) {
           return '<button type="button" data-v="' + g[0] + '" aria-pressed="' + (grupo === g[0]) + '">' + g[1] + '</button>';
         }).join('') + '</div>'
         + '<div class="tm-cc-modos">' + NIVELES.map(function (m) {
@@ -507,18 +519,18 @@
       var cartas = CARTAS_FIG.map(function (f) { return { f: f, s: false }; })
         .concat(nivel === 2 ? CARTAS_SIL.map(function (f) { return { f: f, s: true }; }) : []);
       cont.innerHTML = '<div class="tm-cc-card">'
-        + '<div class="tm-cc-prog">Pregunta ' + (pos + 1) + ' de ' + cola.length + '</div>'
+        + '<div class="tm-cc-prog">' + T('Pregunta ' + (pos + 1) + ' de ' + cola.length, 'Question ' + (pos + 1) + ' of ' + cola.length) + '</div>'
         + '<div class="tm-cc-barra"><div style="width:' + (pos / cola.length * 100) + '%"></div></div>'
-        + '<div class="tm-cc-preg">' + (nivel === 3 ? '¿Qué figuras faltan en el hueco?' : nivel === 2 ? '¿Qué falta en el hueco: qué figura o qué silencio?' : '¿Qué figura falta en el hueco?') + '</div>'
+        + '<div class="tm-cc-preg">' + (nivel === 3 ? T('¿Qué figuras faltan en el hueco?', 'Which notes are missing from the gap?') : nivel === 2 ? T('¿Qué falta en el hueco: qué figura o qué silencio?', 'What is missing from the gap: which note or which rest?') : T('¿Qué figura falta en el hueco?', 'Which note is missing from the gap?')) + '</div>'
         + '<div class="tm-cc-dibujo"><div></div></div>'
-        + '<div class="tm-cc-q">' + (nivel === 3 ? 'Toca las figuras en orden' : nivel === 2 ? 'Figuras y silencios' : 'Figuras') + '</div>'
+        + '<div class="tm-cc-q">' + (nivel === 3 ? T('Toca las figuras en orden', 'Tap the notes in order') : nivel === 2 ? T('Figuras y silencios', 'Notes and rests') : T('Figuras', 'Notes')) + '</div>'
         + '<div class="tm-cc-paleta">' + cartas.map(function (x, i) {
           return '<button type="button" class="tm-cc-carta" data-i="' + i + '"><span class="tm-cc-mini"></span><small>' + nombre(x) + '</small></button>';
         }).join('') + '</div>'
         + '<div class="tm-cc-cesta" hidden><span class="tm-cc-lista"></span><span class="tm-cc-suma"></span></div>'
-        + '<button type="button" class="tm-cc-deshacer" hidden>Deshacer</button>'
+        + '<button type="button" class="tm-cc-deshacer" hidden>' + T('Deshacer', 'Undo') + '</button>'
         + '<div class="tm-cc-fb" hidden></div>'
-        + '<button type="button" class="tm-cc-btn">Comprobar</button></div>';
+        + '<button type="button" class="tm-cc-btn">' + T('Comprobar', 'Check') + '</button></div>';
 
       var dib = cont.querySelector('.tm-cc-dibujo > div');
       dibujar(dib, it, { w: 460 });
@@ -529,7 +541,7 @@
       function suma() { return puestos.reduce(function (a, x) { return a + FIG[x.f].u; }, 0); }
       function pintarCesta() {
         cesta.hidden = false;
-        cesta.querySelector('.tm-cc-lista').innerHTML = puestos.length ? puestos.map(nombre).join(' + ') : 'Todavía no has puesto nada';
+        cesta.querySelector('.tm-cc-lista').innerHTML = puestos.length ? puestos.map(nombre).join(' + ') : T('Todavía no has puesto nada', 'You have not placed anything yet');
         cesta.querySelector('.tm-cc-suma').textContent = puestos.length ? enTiempos(suma(), it.compas) : '';
         deshacer.hidden = !puestos.length || corregida;
         btn.classList.toggle('tm-listo', puestos.length > 0);
@@ -593,10 +605,10 @@
           fb.hidden = false;
           fb.className = 'tm-cc-fb ' + (ok ? 'tm-ok' : 'tm-ko');
           var texto = ok
-            ? (igual ? '¡Correcto!' : '¡Correcto! Tu combinación (' + lista(respuesta) + ') suma lo mismo; en la partitura estaba escrito así: ' + lista(it.faltan) + '.')
-            : 'No es correcto.';
+            ? (igual ? T('¡Correcto!', 'Correct!') : T('¡Correcto! Tu combinación (' + lista(respuesta) + ') suma lo mismo; en la partitura estaba escrito así: ' + lista(it.faltan) + '.', 'Correct! Your combination (' + lista(respuesta) + ') adds up to the same value; in the score it was written as: ' + lista(it.faltan) + '.'))
+            : T('No es correcto.', 'Not correct.');
           fb.innerHTML = '<strong>' + texto + '</strong> ' + explicar(it);
-          btn.textContent = pos + 1 < cola.length ? 'Siguiente' : 'Ver resultado';
+          btn.textContent = pos + 1 < cola.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See result');
           btn.classList.add('tm-listo');
         } else {
           pos++;
@@ -607,11 +619,11 @@
 
     function resultado() {
       var nota = aciertos / cola.length;
-      var msg = nota === 1 ? '¡Perfecto! Lo dominas.' : nota >= 0.8 ? 'Muy bien: casi todo correcto.' : nota >= 0.5 ? 'Vas bien. Repasa las explicaciones y vuelve a intentarlo.' : 'Conviene repasar el valor de las figuras en cada compás antes de volver a intentarlo.';
-      cont.innerHTML = '<div class="tm-cc-card tm-cc-res"><div class="tm-cc-nota">' + aciertos + '</div><div class="tm-cc-de">aciertos de ' + cola.length + '</div>'
+      var msg = nota === 1 ? T('¡Perfecto! Lo dominas.', 'Perfect! You have mastered it.') : nota >= 0.8 ? T('Muy bien: casi todo correcto.', 'Very good: almost everything correct.') : nota >= 0.5 ? T('Vas bien. Repasa las explicaciones y vuelve a intentarlo.', 'You are doing well. Review the explanations and try again.') : T('Conviene repasar el valor de las figuras en cada compás antes de volver a intentarlo.', 'Review the value of the notes in each time signature before trying again.');
+      cont.innerHTML = '<div class="tm-cc-card tm-cc-res"><div class="tm-cc-nota">' + aciertos + '</div><div class="tm-cc-de">' + T('aciertos de ' + cola.length, 'correct out of ' + cola.length) + '</div>'
         + '<div class="tm-cc-msg">' + msg + '</div>'
-        + '<button type="button" class="tm-cc-otra" data-a="otra">Otra ronda</button>'
-        + '<button type="button" class="tm-cc-otra tm-2" data-a="modo">Cambiar de nivel</button></div>';
+        + '<button type="button" class="tm-cc-otra" data-a="otra">' + T('Otra ronda', 'Another round') + '</button>'
+        + '<button type="button" class="tm-cc-otra tm-2" data-a="modo">' + T('Cambiar de nivel', 'Change level') + '</button></div>';
       cont.querySelector('[data-a="otra"]').addEventListener('click', empezar);
       cont.querySelector('[data-a="modo"]').addEventListener('click', inicio);
     }

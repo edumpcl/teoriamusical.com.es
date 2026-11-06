@@ -11,10 +11,12 @@
    La teoría se audita con: node tools/verificar-fichas-acordes.js --web */
 (function () {
   'use strict';
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
 
   var LETRAS = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
   var SEMI = [0, 2, 4, 5, 7, 9, 11];
-  var ES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
+  var ES = T(['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'], ['C', 'D', 'E', 'F', 'G', 'A', 'B']);
   var ACC_TXT = { '-2': '♭♭', '-1': '♭', '0': '', '1': '♯', '2': '♯♯' };
   var ACC_VF = { '-2': 'bb', '-1': 'b', '0': '', '1': '#', '2': '##' };
 
@@ -24,8 +26,15 @@
     { id: 'dis', t3: 3, t5: 6, nombre: '5ª Disminuida', corto: '5dis' },
     { id: 'aum', t3: 4, t5: 8, nombre: '5ª Aumentada', corto: '5Aum' }
   ];
-  var INV_NOMBRE = ['Fundamental', '1ª inversión', '2ª inversión'];
-  var INV_CORTO = ['fund.', '1ª inv.', '2ª inv.'];
+  if (EN) {
+    var TIPOS_EN = { mayor: 'major', menor: 'minor', dis: 'diminished', aum: 'augmented' };
+    TIPOS.forEach(function (t) {
+      t.nombre = TIPOS_EN[t.id].charAt(0).toUpperCase() + TIPOS_EN[t.id].slice(1) + ' triad';
+      t.corto = TIPOS_EN[t.id] + ' triad';
+    });
+  }
+  var INV_NOMBRE = [T('Fundamental', 'Root position'), T('1ª inversión', '1st inversion'), T('2ª inversión', '2nd inversion')];
+  var INV_CORTO = [T('fund.', 'root'), T('1ª inv.', '1st inv.'), T('2ª inv.', '2nd inv.')];
   var MAX_EJERCICIOS = 60;
 
   function mulberry32(a) {
@@ -284,31 +293,31 @@
     function fila(lbl, html) { return '<div class="tm-fa-fila"><span class="tm-fa-lbl">' + lbl + '</span>' + html + '</div>'; }
 
     cont.innerHTML = '<div class="tm-fa">'
-      + fila('Qué tríadas', botones('tipos', TIPOS.map(function (t) { return { v: t.id, t: t.nombre }; }),
+      + fila(T('Qué tríadas', 'Which triads'), botones('tipos', TIPOS.map(function (t) { return { v: t.id, t: t.nombre }; }),
         function (v) { return estado.tipos.indexOf(v) >= 0; }))
-      + fila('En qué posición', botones('invs', [0, 1, 2].map(function (i) { return { v: i, t: INV_NOMBRE[i] }; }),
+      + fila(T('En qué posición', 'Which position'), botones('invs', [0, 1, 2].map(function (i) { return { v: i, t: INV_NOMBRE[i] }; }),
         function (v) { return estado.invs.indexOf(Number(v)) >= 0; }))
-      + fila('Qué hay que hacer', botones('modo', [{ v: 'analizar', t: 'Analizar el acorde' }, { v: 'escribir', t: 'Escribir el acorde' }],
+      + fila(T('Qué hay que hacer', 'What to do'), botones('modo', [{ v: 'analizar', t: T('Analizar el acorde', 'Analyze the chord') }, { v: 'escribir', t: T('Escribir el acorde', 'Write the chord') }],
         function (v) { return estado.modo === v; }))
-      + fila('Clave', botones('clave', [{ v: 'sol', t: 'Sol' }, { v: 'fa', t: 'Fa' }, { v: 'ambas', t: 'Sol y fa' }],
+      + fila(T('Clave', 'Clef'), botones('clave', [{ v: 'sol', t: T('Sol', 'Treble') }, { v: 'fa', t: T('Fa', 'Bass') }, { v: 'ambas', t: T('Sol y fa', 'Treble and bass') }],
         function (v) { return estado.clave === v; }))
-      + fila('Dificultad', botones('dificultad', [{ v: 'naturales', t: 'Sin alteraciones' }, { v: 'progresiva', t: 'Progresiva' }, { v: 'alteradas', t: 'Con alteraciones' }],
+      + fila(T('Dificultad', 'Difficulty'), botones('dificultad', [{ v: 'naturales', t: T('Sin alteraciones', 'No accidentals') }, { v: 'progresiva', t: T('Progresiva', 'Progressive') }, { v: 'alteradas', t: T('Con alteraciones', 'With accidentals') }],
         function (v) { return estado.dificultad === v; }))
-      + fila('Cuántos acordes', botones('total', [{ v: 12, t: '12' }, { v: 21, t: '21 (hoja llena)' }, { v: 30, t: '30' }],
+      + fila(T('Cuántos acordes', 'How many chords'), botones('total', [{ v: 12, t: '12' }, { v: 21, t: T('21 (hoja llena)', '21 (full sheet)') }, { v: 30, t: '30' }],
         function (v) { return estado.total === Number(v); })
         // Cantidad libre: en clase se piden cosas como «uno por alumno».
-        .replace(/<\/div>$/, '<label class="tm-fa-otro">otro: <input type="number" class="tm-fa-num" min="1" max="'
-          + MAX_EJERCICIOS + '" step="1" value="' + estado.total + '" aria-label="Número de acordes"></label></div>'))
+        .replace(/<\/div>$/, '<label class="tm-fa-otro">' + T('otro', 'other') + ': <input type="number" class="tm-fa-num" min="1" max="'
+          + MAX_EJERCICIOS + '" step="1" value="' + estado.total + '" aria-label="' + T('Número de acordes', 'Number of chords') + '"></label></div>'))
       + '<div class="tm-fa-acciones">'
-      + '<button type="button" class="tm-fa-btn tm-fa-btn-1" data-a="generar">Generar ficha nueva</button>'
-      + '<button type="button" class="tm-fa-btn tm-fa-btn-2" data-a="soluciones">Ver soluciones</button>'
-      + '<button type="button" class="tm-fa-btn tm-fa-btn-2" data-a="imprimir">Imprimir</button>'
+      + '<button type="button" class="tm-fa-btn tm-fa-btn-1" data-a="generar">' + T('Generar ficha nueva', 'Generate new sheet') + '</button>'
+      + '<button type="button" class="tm-fa-btn tm-fa-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show solutions') + '</button>'
+      + '<button type="button" class="tm-fa-btn tm-fa-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<div class="tm-fa-aviso" hidden></div>'
-      + '<p class="tm-fa-enlace" hidden>Para volver a sacar esta misma hoja: <a href="#"></a></p>'
+      + '<p class="tm-fa-enlace" hidden>' + T('Para volver a sacar esta misma hoja', 'To get this same sheet again') + ': <a href="#"></a></p>'
       + '</div>'
       + '<div class="tm-fa-hoja"><div class="tm-fa-cab"><p class="tm-fa-tit"></p><span class="tm-fa-ref"></span></div>'
-      + '<div class="tm-fa-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
+      + '<div class="tm-fa-datos"><span>' + T('Nombre:', 'Name:') + '</span><span>' + T('Curso:', 'Class:') + '</span><span>' + T('Fecha:', 'Date:') + '</span></div>'
       + '<p class="tm-fa-instr"></p><div class="tm-fa-rejilla"></div></div>';
 
     var elAviso = cont.querySelector('.tm-fa-aviso');
@@ -322,29 +331,30 @@
 
     function enQuePosicion() {
       var inv = estado.invs.slice().sort();
-      if (inv.length === 3) return 'en las tres posiciones';
-      if (inv.length === 1) return inv[0] === 0 ? 'en posición fundamental' : 'en ' + INV_NOMBRE[inv[0]];
-      if (inv[0] === 0) return 'en fundamental y ' + INV_NOMBRE[inv[1]];
-      return 'en 1ª y 2ª inversión';
+      if (inv.length === 3) return T('en las tres posiciones', 'in all three positions');
+      if (inv.length === 1) return inv[0] === 0 ? T('en posición fundamental', 'in root position') : T('en ', 'in ') + INV_NOMBRE[inv[0]];
+      if (inv[0] === 0) return T('en fundamental y ', 'in root position and ') + INV_NOMBRE[inv[1]];
+      return T('en 1ª y 2ª inversión', 'in 1st and 2nd inversion');
     }
 
     function textos() {
       var tipos = TIPOS.filter(function (t) { return estado.tipos.indexOf(t.id) >= 0; })
         .map(function (t) { return t.nombre + ' (' + t.corto + ')'; });
-      var lista = tipos.length > 1 ? tipos.slice(0, -1).join(', ') + ' o ' + tipos[tipos.length - 1] : tipos[0];
+      var lista = tipos.length > 1 ? tipos.slice(0, -1).join(', ') + T(' o ', ' or ') + tipos[tipos.length - 1] : tipos[0];
       var varias = estado.invs.length > 1;
       if (estado.modo === 'analizar') {
         return {
-          tit: 'Analizar tríadas ' + enQuePosicion(),
-          instr: 'Escribe debajo de cada acorde su tipo: ' + lista + (varias ? '; y su posición: fundamental, 1ª o 2ª inversión.' : '.')
-            + (estado.clave === 'ambas' ? ' Fíjate primero en la clave.' : '')
+          tit: T('Analizar tríadas ', 'Analyze triads ') + enQuePosicion(),
+          instr: T('Escribe debajo de cada acorde su tipo: ', 'Write below each chord its type: ') + lista + (varias ? T('; y su posición: fundamental, 1ª o 2ª inversión.', '; and its position: root position, 1st or 2nd inversion.') : '.')
+            + (estado.clave === 'ambas' ? T(' Fíjate primero en la clave.', ' Look at the clef first.') : '')
         };
       }
-      var dada = ['la nota dada es la fundamental: añade la 3ª y la 5ª', 'la nota dada es la 3ª: añade la 5ª y la fundamental', 'la nota dada es la 5ª: añade la fundamental y la 3ª'];
+      var dada = T(['la nota dada es la fundamental: añade la 3ª y la 5ª', 'la nota dada es la 3ª: añade la 5ª y la fundamental', 'la nota dada es la 5ª: añade la fundamental y la 3ª'],
+        ['the given note is the root: add the 3rd and the 5th', 'the given note is the 3rd: add the 5th and the root', 'the given note is the 5th: add the root and the 3rd']);
       return {
-        tit: 'Escribir tríadas ' + enQuePosicion(),
-        instr: 'Cada pentagrama trae la nota más grave del acorde. Añade las otras dos por encima para formar la tríada indicada'
-          + (varias ? ' en la posición que se pide (en fundamental la nota dada es la fundamental, en 1ª inversión la 3ª y en 2ª inversión la 5ª).'
+        tit: T('Escribir tríadas ', 'Write triads ') + enQuePosicion(),
+        instr: T('Cada pentagrama trae la nota más grave del acorde. Añade las otras dos por encima para formar la tríada indicada', 'Each staff gives the lowest note of the chord. Add the other two above it to form the triad named')
+          + (varias ? T(' en la posición que se pide (en fundamental la nota dada es la fundamental, en 1ª inversión la 3ª y en 2ª inversión la 5ª).', ' in the position asked (in root position the given note is the root, in 1st inversion the 3rd and in 2nd inversion the 5th).')
             : ': ' + dada[estado.invs[0]] + '.')
       };
     }
@@ -363,8 +373,8 @@
         }
         html += '<div class="tm-fa-svg"></div>';
         if (estado.modo === 'analizar') {
-          html += '<p class="tm-fa-linea"><b>Tipo:</b>' + hueco(e.tipo.nombre) + '</p>';
-          if (varias) html += '<p class="tm-fa-linea"><b>Posición:</b>' + hueco(INV_NOMBRE[e.inv]) + '</p>';
+          html += '<p class="tm-fa-linea"><b>' + T('Tipo:', 'Type:') + '</b>' + hueco(e.tipo.nombre) + '</p>';
+          if (varias) html += '<p class="tm-fa-linea"><b>' + T('Posición:', 'Position:') + '</b>' + hueco(INV_NOMBRE[e.inv]) + '</p>';
         }
         return html + '</div>';
       }).join('');
@@ -383,20 +393,20 @@
 
     function generar(semilla) {
       if (!estado.tipos.length || !estado.invs.length) {
-        avisar(!estado.tipos.length ? 'Elige al menos un tipo de tríada.' : 'Elige al menos una posición.');
+        avisar(!estado.tipos.length ? T('Elige al menos un tipo de tríada.', 'Choose at least one type of triad.') : T('Elige al menos una posición.', 'Choose at least one position.'));
         return;
       }
       estado.semilla = semilla || Math.floor(Math.random() * 90000 + 10000);
       estado.solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show solutions');
 
       ejercicios = generarHoja(estado);
       if (!ejercicios.length) {
         avisar(estado.tipos.length === 1 && estado.tipos[0] === 'aum' && estado.dificultad === 'naturales'
-          ? 'No existe ninguna tríada aumentada solo con notas naturales: elige otra dificultad o añade otro tipo.'
-          : 'Con estas opciones no hay ningún acorde: amplía la selección.');
+          ? T('No existe ninguna tríada aumentada solo con notas naturales: elige otra dificultad o añade otro tipo.', 'There is no augmented triad with only natural notes: choose another difficulty or add another type.')
+          : T('Con estas opciones no hay ningún acorde: amplía la selección.', 'With these options there is no chord: widen the selection.'));
       } else if (ejercicios.length < estado.total) {
-        avisar('Con estas opciones solo hay ' + ejercicios.length + ' acordes distintos, así que la ficha lleva esos.');
+        avisar(T('Con estas opciones solo hay ' + ejercicios.length + ' acordes distintos, así que la ficha lleva esos.', 'With these options there are only ' + ejercicios.length + ' different chords, so the sheet uses those.'));
       } else {
         avisar('');
       }
@@ -404,13 +414,13 @@
       var t = textos();
       elTit.textContent = t.tit;
       elInstr.textContent = t.instr;
-      elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + estado.semilla;
+      elRef.textContent = T('teoriamusical.com.es · hoja n.º ', 'teoriamusical.com.es · sheet no. ') + estado.semilla;
 
       var params = '?hoja=' + estado.semilla + '&t=' + estado.tipos.join(',') + '&p=' + estado.invs.join(',')
         + '&m=' + estado.modo + '&c=' + estado.clave + '&d=' + estado.dificultad + '&n=' + estado.total;
       var a = elEnlace.querySelector('a');
       a.href = window.location.pathname + params + '#generador';
-      a.textContent = 'hoja n.º ' + estado.semilla;
+      a.textContent = T('hoja n.º ', 'sheet no. ') + estado.semilla;
       elEnlace.hidden = !ejercicios.length;
 
       pintar();
@@ -460,7 +470,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         estado.solucion = !estado.solucion;
-        btn.textContent = estado.solucion ? 'Ocultar soluciones' : 'Ver soluciones';
+        btn.textContent = estado.solucion ? T('Ocultar soluciones', 'Hide solutions') : T('Ver soluciones', 'Show solutions');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

@@ -14,6 +14,7 @@
 (function () {
   'use strict';
 
+  var EN = document.documentElement.lang === 'en';
   var ADELANTO = 0.15;   // segundos de clics programados por adelantado
   var REVISION = 25;     // cada cuánto se revisa (ms)
   var MAXIMO = 30;       // se para solo a los 30 s: es una muestra, no un metrónomo
@@ -79,7 +80,7 @@
     activo = btn;
     btn.setAttribute('aria-pressed', 'true');
     btn.classList.add('tm-tempo-sonando');
-    btn.querySelector('.tm-tempo-txt').textContent = 'Parar';
+    btn.querySelector('.tm-tempo-txt').textContent = EN ? 'Stop' : 'Parar';
     planificar();
     temporizador = setInterval(planificar, REVISION);
   }
@@ -89,8 +90,8 @@
     var nombre = btn.dataset.nombre || '';
     btn.type = 'button';
     btn.setAttribute('aria-pressed', 'false');
-    btn.setAttribute('aria-label', 'Escuchar el pulso de ' + nombre + ' a ' + bpm + ' pulsaciones por minuto');
-    btn.dataset.txt = btn.dataset.txt || (btn.textContent || '').trim() || 'Escuchar';
+    btn.setAttribute('aria-label', EN ? 'Listen to the pulse of ' + nombre + ' at ' + bpm + ' beats per minute' : 'Escuchar el pulso de ' + nombre + ' a ' + bpm + ' pulsaciones por minuto');
+    btn.dataset.txt = btn.dataset.txt || (btn.textContent || '').trim() || (EN ? 'Listen' : 'Escuchar');
     btn.innerHTML = '<span class="tm-tempo-ico" aria-hidden="true"></span><span class="tm-tempo-txt">' + btn.dataset.txt + '</span>';
     // El botón nace oculto en el HTML: sin JavaScript no sonaría nada y sería un
     // botón mudo, así que solo aparece cuando el motor está vivo. El enlace al

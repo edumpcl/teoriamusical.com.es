@@ -55,7 +55,7 @@
 <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/style.css?v=1757c21e">
-<script src="/assets/js/tm-piano-audio.js?v=cf0da84c" defer></script>
+<script src="/assets/js/tm-piano-audio.js?v=5d4cdd02" defer></script>
 
 
 <script type="application/ld+json">
@@ -108,8 +108,8 @@
     },
     {
       "@type": "Question",
-      "name": "¿Para qué sirve la enharmonía?",
-      "acceptedAnswer": {"@type": "Answer", "text": "La enharmonía permite reescribir una nota de forma más adecuada al contexto tonal. Un Do sostenido en Re mayor puede reescribirse como Re bemol en La bemol mayor para facilitar la lectura y el análisis armónico."}
+      "name": "¿Para qué sirve la enarmonía?",
+      "acceptedAnswer": {"@type": "Answer", "text": "La enarmonía permite escribir una misma altura con el nombre que mejor encaja en el contexto tonal. Por ejemplo, la misma tecla negra se escribe Do sostenido como sensible de Re mayor y Re bemol como cuarto grado de La bemol mayor: suena igual, pero cada grafía facilita la lectura y el análisis armónico de su tonalidad."}
     },
     {
       "@type": "Question",
@@ -119,7 +119,7 @@
     {
       "@type": "Question",
       "name": "¿Por qué las notas enarmónicas tienen nombres distintos si suenan igual?",
-      "acceptedAnswer": {"@type": "Answer", "text": "Porque en armonía tonal el nombre implica función: Do♯ es la sensible de Re mayor y tiende a subir, mientras que Re♭ es la subdominante rebajada de La♭ mayor y tiende a bajar. El nombre establece la dirección armónica, no solo la altura sonora."}
+      "acceptedAnswer": {"@type": "Answer", "text": "Porque en armonía tonal el nombre implica función: Do♯ es la sensible de Re mayor y tiende a subir, mientras que Re♭ es la subdominante de La♭ mayor y tiende a bajar. El nombre establece la dirección armónica, no solo la altura sonora."}
     }
   ]
 }
@@ -302,17 +302,17 @@
     <tr><td>Do♯</td><td>Re♭</td><td>Do♯ en tonalidades con ♯; Re♭ en tonalidades con ♭</td></tr>
     <tr><td>Re♯</td><td>Mi♭</td><td>Re♯ infrecuente; Mi♭ habitual en Si♭, Mi♭, La♭ mayor</td></tr>
     <tr><td>Mi</td><td>Fa♭</td><td>Fa♭ solo en tonalidades con 7 ♭ (Do♭ mayor, La♭ menor)</td></tr>
-    <tr><td>Fa</td><td>Mi♯</td><td>Mi♯ solo en tonalidades con 7 ♯ (Do♯ mayor, La♯ menor)</td></tr>
+    <tr><td>Fa</td><td>Mi♯</td><td>Mi♯ solo en tonalidades con 6 o 7 ♯ (Fa♯ mayor, Re♯ menor, Do♯ mayor, La♯ menor)</td></tr>
     <tr><td>Fa♯</td><td>Sol♭</td><td>Fa♯ en tonalidades con ♯; Sol♭ en tonalidades con ♭</td></tr>
     <tr><td>Sol♯</td><td>La♭</td><td>Sol♯ en tonalidades con ♯; La♭ en tonalidades con ♭</td></tr>
     <tr><td>La♯</td><td>Si♭</td><td>La♯ infrecuente; Si♭ habitual en Fa, Si♭, Mi♭… mayor</td></tr>
-    <tr><td>Si</td><td>Do♭</td><td>Do♭ solo en tonalidades con 7 ♭</td></tr>
+    <tr><td>Si</td><td>Do♭</td><td>Do♭ solo en tonalidades con 6 o 7 ♭ (Sol♭ mayor, Mi♭ menor, Do♭ mayor, La♭ menor)</td></tr>
     <tr><td>Do</td><td>Si♯</td><td>Si♯ solo en tonalidades con 7 ♯</td></tr>
   </tbody>
 </table>
 </div>
 
-<p>Los cinco pares más frecuentes son: <strong>Do♯=Re♭, Re♯=Mi♭, Fa♯=Sol♭, Sol♯=La♭</strong> y <strong>La♯=Si♭</strong>. Los pares con Mi♯/Fa♭ y Si♯/Do♭ solo aparecen en las tonalidades con 7 alteraciones.</p>
+<p>Los cinco pares más frecuentes son: <strong>Do♯=Re♭, Re♯=Mi♭, Fa♯=Sol♭, Sol♯=La♭</strong> y <strong>La♯=Si♭</strong>. Los pares con Fa♭ y Si♯ solo aparecen en las tonalidades con 7 alteraciones; Mi♯ y Do♭ ya aparecen en las de 6.</p>
 
 <h2 id="h-tonalidades-enarm">Tonalidades enarmónicas</h2>
 
@@ -338,7 +338,7 @@
 <p>En la armonía tonal, el nombre de una nota no es solo una etiqueta: indica su <strong>función y tendencia de movimiento</strong>:</p>
 <ul>
   <li><strong>Do♯</strong> en Re mayor actúa como <em>sensible</em>: tiende a subir hacia Re.</li>
-  <li><strong>Re♭</strong> en La♭ mayor actúa como <em>cuarto grado rebajado</em>: puede descender hacia Do.</li>
+  <li><strong>Re♭</strong> en La♭ mayor actúa como <em>subdominante</em> (cuarto grado): tiende a descender hacia Do.</li>
 </ul>
 <p>Aunque suenan igual al piano, un buen músico los escucha con expectativas distintas. La enarmonía es además la puerta a las <strong>modulaciones enarmónicas</strong>: una nota pivot se reinterpreta como otra para saltar entre tonalidades lejanas, un recurso muy utilizado en la música del Romanticismo.</p>
 
@@ -364,8 +364,8 @@
     <div class="tm-faq-a">Las notas enarmónicas son aquellas que suenan igual pero reciben nombres distintos. Por ejemplo, Do sostenido y Re bemol son la misma altura sonora escritas de dos formas distintas.</div>
   </div>
   <div class="tm-faq-item">
-    <div class="tm-faq-q">¿Para qué sirve la enharmonía?</div>
-    <div class="tm-faq-a">La enharmonía permite reescribir una nota de forma más adecuada al contexto tonal. Un Do sostenido en Re mayor puede reescribirse como Re bemol en La bemol mayor para facilitar la lectura y el análisis armónico.</div>
+    <div class="tm-faq-q">¿Para qué sirve la enarmonía?</div>
+    <div class="tm-faq-a">La enarmonía permite escribir una misma altura con el nombre que mejor encaja en el contexto tonal. Por ejemplo, la misma tecla negra se escribe Do sostenido como sensible de Re mayor y Re bemol como cuarto grado de La bemol mayor: suena igual, pero cada grafía facilita la lectura y el análisis armónico de su tonalidad.</div>
   </div>
   <div class="tm-faq-item">
     <div class="tm-faq-q">¿Cuántas parejas de notas enarmónicas existen?</div>
@@ -373,7 +373,7 @@
   </div>
   <div class="tm-faq-item">
     <div class="tm-faq-q">¿Por qué las notas enarmónicas tienen nombres distintos si suenan igual?</div>
-    <div class="tm-faq-a">Porque en armonía tonal el nombre implica función: Do♯ es la sensible de Re mayor y tiende a subir, mientras que Re♭ es la subdominante rebajada de La♭ mayor y tiende a bajar. El nombre establece la dirección armónica, no solo la altura sonora.</div>
+    <div class="tm-faq-a">Porque en armonía tonal el nombre implica función: Do♯ es la sensible de Re mayor y tiende a subir, mientras que Re♭ es la subdominante de La♭ mayor y tiende a bajar. El nombre establece la dirección armónica, no solo la altura sonora.</div>
   </div>
 </div>
 </div>
@@ -434,7 +434,7 @@
   </div>
 </footer>
 
-<script src="/assets/js/main.js?v=12303d86" defer></script>
+<script src="/assets/js/main.js?v=f956c6dc" defer></script>
 </body>
 </html>
 

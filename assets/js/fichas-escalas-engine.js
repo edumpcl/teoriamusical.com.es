@@ -13,6 +13,10 @@
 (function () {
   'use strict';
 
+  var EN = document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+
+  var ALT_ESCALA = T('Pentagrama con una escala', 'Staff with a scale');
   var LETRAS = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
   var NAT = [0, 2, 4, 5, 7, 9, 11];
   var ES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
@@ -42,6 +46,26 @@
     { id: 'menor-melodica', familia: 'menor', nombre: 'menor melódica', boton: 'Melódica', titulo: 'escalas menores melódicas', melodica: true },
     { id: 'menor-dorica', familia: 'menor', nombre: 'dórica', boton: 'Dórica', titulo: 'escalas dóricas', offsets: [0, 2, 3, 5, 7, 9, 10, 12] }
   ];
+  var TIPOS_EN = {
+    'mayor': { nombre: 'major', boton: 'Natural major', titulo: 'natural major scales' },
+    'mixta-principal': { nombre: 'harmonic major', boton: 'Harmonic major', titulo: 'harmonic major scales' },
+    'mixta-secundaria': { nombre: 'melodic major', boton: 'Melodic major', titulo: 'melodic major scales' },
+    'mixolidia': { nombre: 'Mixolydian', boton: 'Mixolydian', titulo: 'Mixolydian scales' },
+    'menor-natural': { nombre: 'natural minor', boton: 'Natural', titulo: 'natural minor scales' },
+    'menor-armonica': { nombre: 'harmonic minor', boton: 'Harmonic', titulo: 'harmonic minor scales' },
+    'menor-melodica': { nombre: 'melodic minor', boton: 'Melodic', titulo: 'melodic minor scales' },
+    'menor-dorica': { nombre: 'Dorian', boton: 'Dorian', titulo: 'Dorian scales' }
+  };
+  var NOTA_EN = { 'do': 'C', 're': 'D', 'mi': 'E', 'fa': 'F', 'sol': 'G', 'la': 'A', 'si': 'B' };
+  /* Nombre que se muestra: 'do♯ menor armónica' -> 'C♯ harmonic minor' (en inglés la tónica va siempre en mayúscula) */
+  function mostrarNombre(e) {
+    if (!EN) return e.nombre;
+    var m = /^(do|re|mi|fa|sol|la|si)([♯♭]?)/i.exec(e.nombre);
+    return m ? NOTA_EN[m[1].toLowerCase()] + m[2] + ' ' + TIPOS_EN[e.tipo.id].nombre : e.nombre;
+  }
+  function nombreTipo(t) { return EN ? TIPOS_EN[t.id].nombre : t.nombre; }
+  function tituloTipo(t) { return EN ? TIPOS_EN[t.id].titulo : t.titulo; }
+  function botonTipo(t) { return EN ? TIPOS_EN[t.id].boton : t.boton; }
   var IDS = TIPOS.map(function (t) { return t.id; });
   var MAYORES = IDS.slice(0, 4), MENORES = IDS.slice(4);
   var MODOS = ['identificar', 'escribir', 'escribir-con-armadura'];
@@ -214,7 +238,7 @@
       return { key: q[0] + (n.a > 0 ? '##'.slice(0, n.a) : n.a < 0 ? 'bb'.slice(0, -n.a) : '') + '/' + q[1], d: 'w', mostrar: !!n.glyph };
     }) : [];
     var fila = { clave: ej.clave === 'sol' ? 'sol' : 'fa', armadura: opts.firma && ej.arm.n > 0 ? (ej.arm.acc === '#' ? ej.arm.n : -ej.arm.n) : 0, compases: [notas] };
-    var res = T.dibujarAAncho(div, fila, opts.w - 10, { escala: 1.0, llenar: true, id: 'fes', alt: 'Pentagrama con una escala' });
+    var res = T.dibujarAAncho(div, fila, opts.w - 10, { escala: 1.0, llenar: true, id: 'fes', alt: ALT_ESCALA });
     var svg = res.elemento;
     svg.style.display = 'block'; svg.style.height = 'auto';
     svg.style.width = '100%';
@@ -340,40 +364,40 @@
     }
     function botonesTipos(ids) {
       return botones('tipos', TIPOS.filter(function (t) { return ids.indexOf(t.id) >= 0; })
-        .map(function (t) { return { v: t.id, t: t.boton }; }), function (v) { return estado.tipos.indexOf(v) >= 0; });
+        .map(function (t) { return { v: t.id, t: botonTipo(t) }; }), function (v) { return estado.tipos.indexOf(v) >= 0; });
     }
     var ATAJOS = { mayores: MAYORES, menores: MENORES, todas: IDS };
 
     cont.innerHTML = '<div class="tm-fe">'
-      + fila('Qué escalas',
-        '<span class="tm-fe-sub">Mayores</span>' + botonesTipos(MAYORES)
-        + '<span class="tm-fe-sub">Menores</span>' + botonesTipos(MENORES)
-        + '<span class="tm-fe-sub">De golpe</span>'
-        + botones('atajo', [{ v: 'mayores', t: 'Todas las mayores' }, { v: 'menores', t: 'Todas las menores' }, { v: 'todas', t: 'Mayores y menores' }],
+      + fila(T('Qué escalas', 'Which scales'),
+        '<span class="tm-fe-sub">' + T('Mayores', 'Major') + '</span>' + botonesTipos(MAYORES)
+        + '<span class="tm-fe-sub">' + T('Menores', 'Minor') + '</span>' + botonesTipos(MENORES)
+        + '<span class="tm-fe-sub">' + T('De golpe', 'All at once') + '</span>'
+        + botones('atajo', [{ v: 'mayores', t: T('Todas las mayores', 'All major') }, { v: 'menores', t: T('Todas las menores', 'All minor') }, { v: 'todas', t: T('Mayores y menores', 'Major and minor') }],
           function () { return false; }, 'tm-fe-atajo'))
-      + fila('Qué hay que hacer', botones('modo', [{ v: 'identificar', t: 'Identificar la escala' }, { v: 'escribir', t: 'Escribirla con alteraciones' }, { v: 'escribir-con-armadura', t: 'Escribirla con armadura' }],
+      + fila(T('Qué hay que hacer', 'What to do'), botones('modo', [{ v: 'identificar', t: T('Identificar la escala', 'Identify the scale') }, { v: 'escribir', t: T('Escribirla con alteraciones', 'Write it with accidentals') }, { v: 'escribir-con-armadura', t: T('Escribirla con armadura', 'Write it with a key signature') }],
         function (v) { return estado.modo === v; }))
-      + fila('Cómo se presentan', botones('presentacion', [{ v: 'mezcla', t: 'Mitad con armadura' }, { v: 'armadura', t: 'Todas con armadura' }, { v: 'alteraciones', t: 'Todas sin armadura' }],
+      + fila(T('Cómo se presentan', 'How they are shown'), botones('presentacion', [{ v: 'mezcla', t: T('Mitad con armadura', 'Half with key signature') }, { v: 'armadura', t: T('Todas con armadura', 'All with key signature') }, { v: 'alteraciones', t: T('Todas sin armadura', 'All without key signature') }],
         function (v) { return estado.presentacion === v; }), 'tm-fe-solo-identificar')
-      + fila('Clave', botones('clave', [{ v: 'sol', t: 'Sol' }, { v: 'fa', t: 'Fa' }, { v: 'ambas', t: 'Sol y fa' }],
+      + fila(T('Clave', 'Clef'), botones('clave', [{ v: 'sol', t: T('Sol', 'Treble') }, { v: 'fa', t: T('Fa', 'Bass') }, { v: 'ambas', t: T('Sol y fa', 'Treble and bass') }],
         function (v) { return estado.clave === v; }))
-      + fila('Alteraciones de la armadura', botones('dificultad', [{ v: 'pocas', t: 'Hasta 2' }, { v: 'progresiva', t: 'Progresiva' }, { v: 'muchas', t: 'De 3 a 7' }],
+      + fila(T('Alteraciones de la armadura', 'Accidentals in the key signature'), botones('dificultad', [{ v: 'pocas', t: T('Hasta 2', 'Up to 2') }, { v: 'progresiva', t: T('Progresiva', 'Progressive') }, { v: 'muchas', t: T('De 3 a 7', '3 to 7') }],
         function (v) { return estado.dificultad === v; }))
-      + fila('Cuántas escalas', botones('total', [{ v: 4, t: '4' }, { v: 8, t: '8 (hoja llena)' }, { v: 16, t: '16 (dos hojas)' }],
+      + fila(T('Cuántas escalas', 'How many scales'), botones('total', [{ v: 4, t: '4' }, { v: 8, t: T('8 (hoja llena)', '8 (full sheet)') }, { v: 16, t: T('16 (dos hojas)', '16 (two sheets)') }],
         function (v) { return estado.total === Number(v); })
-        .replace(/<\/div>$/, '<label class="tm-fe-otro">otro: <input type="number" class="tm-fe-num" min="1" max="'
-          + MAX_EJERCICIOS + '" step="1" value="' + estado.total + '" aria-label="Número de escalas"></label></div>'))
+        .replace(/<\/div>$/, '<label class="tm-fe-otro">' + T('otro: ', 'other: ') + '<input type="number" class="tm-fe-num" min="1" max="'
+          + MAX_EJERCICIOS + '" step="1" value="' + estado.total + '" aria-label="' + T('Número de escalas', 'Number of scales') + '"></label></div>'))
       + '<div class="tm-fe-acciones">'
-      + '<button type="button" class="tm-fe-btn tm-fe-btn-1" data-a="generar">Generar ficha nueva</button>'
-      + '<button type="button" class="tm-fe-btn tm-fe-btn-2" data-a="soluciones">Ver soluciones</button>'
-      + '<button type="button" class="tm-fe-btn tm-fe-btn-2" data-a="imprimir">Imprimir</button>'
+      + '<button type="button" class="tm-fe-btn tm-fe-btn-1" data-a="generar">' + T('Generar ficha nueva', 'Generate new sheet') + '</button>'
+      + '<button type="button" class="tm-fe-btn tm-fe-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show answers') + '</button>'
+      + '<button type="button" class="tm-fe-btn tm-fe-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<div class="tm-fe-aviso" hidden></div>'
-      + '<p class="tm-fe-enlace" hidden>Para volver a sacar esta misma hoja: <a href="#"></a></p>'
+      + '<p class="tm-fe-enlace" hidden>' + T('Para volver a sacar esta misma hoja: ', 'To get this same sheet again: ') + '<a href="#"></a></p>'
       + '</div>'
       + '<div class="tm-fe-hoja"><div class="tm-fe-cab"><p class="tm-fe-tit"></p><span class="tm-fe-ref"></span></div>'
       + '<p class="tm-fe-instr"></p><p class="tm-fe-ley"></p>'
-      + '<div class="tm-fe-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
+      + '<div class="tm-fe-datos"><span>' + T('Nombre:', 'Name:') + '</span><span>' + T('Curso:', 'Class:') + '</span><span>' + T('Fecha:', 'Date:') + '</span></div>'
       + '<div class="tm-fe-rejilla"></div></div>';
 
     var elAviso = cont.querySelector('.tm-fe-aviso');
@@ -390,40 +414,56 @@
     function textos() {
       var tipos = TIPOS.filter(function (t) { return estado.tipos.indexOf(t.id) >= 0; });
       var ids = tipos.map(function (t) { return t.id; }).join();
-      var cuales = tipos.length === 1 ? tipos[0].titulo
-        : ids === IDS.join() ? 'escalas mayores y menores'
-          : ids === MAYORES.join() ? 'escalas mayores'
-            : ids === MENORES.join() ? 'escalas menores' : 'escalas';
-      var nombres = tipos.map(function (t) { return t.nombre; });
-      var lista = nombres.length > 1 ? nombres.slice(0, -1).join(', ') + ' y ' + nombres[nombres.length - 1] : nombres[0];
-      var melodica = tipos.some(function (t) { return t.melodica; }) ? ' La menor melódica se escribe subiendo y bajando: 15 notas.' : '';
-      var clave = estado.clave === 'ambas' ? ' Fíjate primero en la clave.' : '';
-      var tit = (estado.modo === 'identificar' ? 'Identificar ' : 'Escribir ') + cuales
-        + (estado.modo === 'escribir-con-armadura' ? ' con armadura' : '');
+      var cuales = EN
+        ? (tipos.length === 1 ? tituloTipo(tipos[0])
+          : ids === IDS.join() ? 'major and minor scales'
+            : ids === MAYORES.join() ? 'major scales'
+              : ids === MENORES.join() ? 'minor scales' : 'scales')
+        : (tipos.length === 1 ? tipos[0].titulo
+          : ids === IDS.join() ? 'escalas mayores y menores'
+            : ids === MAYORES.join() ? 'escalas mayores'
+              : ids === MENORES.join() ? 'escalas menores' : 'escalas');
+      var nombres = tipos.map(nombreTipo);
+      var lista = nombres.length > 1 ? nombres.slice(0, -1).join(', ') + T(' y ', ' and ') + nombres[nombres.length - 1] : nombres[0];
+      var melodica = tipos.some(function (t) { return t.melodica; }) ? T(' La menor melódica se escribe subiendo y bajando: 15 notas.', ' The melodic minor is written ascending and descending: 15 notes.') : '';
+      var clave = estado.clave === 'ambas' ? T(' Fíjate primero en la clave.', ' Look at the clef first.') : '';
+      var tit = EN
+        ? (estado.modo === 'identificar' ? 'Identify ' : 'Write ') + cuales + (estado.modo === 'escribir-con-armadura' ? ' with a key signature' : '')
+        : (estado.modo === 'identificar' ? 'Identificar ' : 'Escribir ') + cuales
+          + (estado.modo === 'escribir-con-armadura' ? ' con armadura' : '');
       var instr;
       if (estado.modo === 'identificar') {
+        var pres = EN
+          ? { mezcla: ' Some have a key signature and others have the accidentals written before each note.', armadura: ' All have the key signature.', alteraciones: ' None has a key signature: the accidentals go before each note.' }
+          : { mezcla: ' Unas llevan armadura y otras las alteraciones delante de cada nota.', armadura: ' Todas llevan la armadura.', alteraciones: ' Ninguna lleva armadura: las alteraciones van delante de cada nota.' };
         instr = (tipos.length === 1
-          ? 'Todas son ' + tipos[0].titulo + ': escribe debajo de cada una su nombre, con la tónica.'
-          : 'Escribe debajo de cada escala su nombre: la tónica y el tipo (' + lista + ').')
-          + { mezcla: ' Unas llevan armadura y otras las alteraciones delante de cada nota.', armadura: ' Todas llevan la armadura.', alteraciones: ' Ninguna lleva armadura: las alteraciones van delante de cada nota.' }[estado.presentacion]
+          ? T('Todas son ' + tituloTipo(tipos[0]) + ': escribe debajo de cada una su nombre, con la tónica.', 'All are ' + tituloTipo(tipos[0]) + ': write each one\u2019s name below it, with the tonic.')
+          : T('Escribe debajo de cada escala su nombre: la tónica y el tipo (' + lista + ').', 'Write each scale\u2019s name below it: the tonic and the type (' + lista + ').'))
+          + pres[estado.presentacion]
           + clave;
       } else if (estado.modo === 'escribir') {
-        instr = 'Escribe en cada pentagrama la escala indicada, subiendo desde la tónica, sin armadura: cada alteración delante de su nota.' + melodica + clave;
+        instr = T('Escribe en cada pentagrama la escala indicada, subiendo desde la tónica, sin armadura: cada alteración delante de su nota.',
+          'On each staff, write the scale indicated, ascending from the tonic, without a key signature: each accidental before its note.') + melodica + clave;
       } else {
         var familias = {};
         tipos.forEach(function (t) { familias[t.familia] = true; });
         var regla = familias.mayor && familias.menor
-          ? 'Las mayores, las mixtas y la mixolidia llevan la armadura de su tonalidad mayor; las menores y la dórica, la de su tonalidad menor.'
-          : familias.menor ? 'Todas llevan la armadura de su tonalidad menor.' : 'Todas llevan la armadura de su tonalidad mayor.';
-        instr = 'Escribe primero la armadura y después la escala, subiendo desde la tónica. Escribe solo las alteraciones que no estén en la armadura. ' + regla + melodica + clave;
+          ? T('Las mayores, las mixtas y la mixolidia llevan la armadura de su tonalidad mayor; las menores y la dórica, la de su tonalidad menor.',
+            'The major, harmonic major, melodic major and Mixolydian scales use the key signature of their major key; the minor and Dorian scales, that of their minor key.')
+          : familias.menor ? T('Todas llevan la armadura de su tonalidad menor.', 'All use the key signature of their minor key.')
+            : T('Todas llevan la armadura de su tonalidad mayor.', 'All use the key signature of their major key.');
+        instr = T('Escribe primero la armadura y después la escala, subiendo desde la tónica. Escribe solo las alteraciones que no estén en la armadura. ',
+          'First write the key signature, then the scale, ascending from the tonic. Write only the accidentals that are not in the key signature. ') + regla + melodica + clave;
       }
-      var enClave = estado.clave === 'sol' ? ', en clave de sol' : estado.clave === 'fa' ? ', en clave de fa' : ', en clave de sol y de fa';
+      var enClave = estado.clave === 'sol' ? T(', en clave de sol', ', in treble clef') : estado.clave === 'fa' ? T(', en clave de fa', ', in bass clef') : T(', en clave de sol y de fa', ', in treble and bass clef');
       var ley = {
-        pocas: 'Tonalidades de hasta dos alteraciones en la armadura' + enClave + '.',
-        muchas: 'Tonalidades de tres a siete alteraciones en la armadura' + enClave + '.',
+        pocas: T('Tonalidades de hasta dos alteraciones en la armadura' + enClave + '.', 'Keys with up to two accidentals in the key signature' + enClave + '.'),
+        muchas: T('Tonalidades de tres a siete alteraciones en la armadura' + enClave + '.', 'Keys with three to seven accidentals in the key signature' + enClave + '.'),
         progresiva: estado.clave === 'ambas'
-          ? 'De menos a más: armaduras con pocas alteraciones en clave de sol, y después más alteraciones y la clave de fa.'
-          : 'De menos a más: primero armaduras con pocas alteraciones y después con más' + enClave + '.'
+          ? T('De menos a más: armaduras con pocas alteraciones en clave de sol, y después más alteraciones y la clave de fa.',
+            'From easier to harder: key signatures with few accidentals in treble clef, then more accidentals and the bass clef.')
+          : T('De menos a más: primero armaduras con pocas alteraciones y después con más' + enClave + '.',
+            'From easier to harder: first key signatures with few accidentals, then with more' + enClave + '.')
       }[estado.dificultad];
       return { tit: tit, instr: instr, ley: ley };
     }
@@ -436,11 +476,11 @@
       var escribir = estado.modo !== 'identificar';
       elRej.innerHTML = ejercicios.map(function (e, i) {
         var html = '<div class="tm-fe-fila"><span class="tm-fe-n">' + (i + 1) + '</span>';
-        if (escribir) html += '<p class="tm-fe-pide"><b>' + e.nombre + '</b></p>';
+        if (escribir) html += '<p class="tm-fe-pide"><b>' + mostrarNombre(e) + '</b></p>';
         html += '<div class="tm-fe-svg"></div>';
         if (!escribir) {
-          html += '<p class="tm-fe-linea"><b>Escala:</b>'
-            + (estado.solucion ? '<span class="tm-fe-val">' + e.nombre + '</span>' : '<span></span>') + '</p>';
+          html += '<p class="tm-fe-linea"><b>' + T('Escala:', 'Scale:') + '</b>'
+            + (estado.solucion ? '<span class="tm-fe-val">' + mostrarNombre(e) + '</span>' : '<span></span>') + '</p>';
         }
         return html + '</div>';
       }).join('');
@@ -471,22 +511,22 @@
     function generar(semilla) {
       marcarAtajos();
       if (!estado.tipos.length) {
-        avisar('Elige al menos un tipo de escala.');
+        avisar(T('Elige al menos un tipo de escala.', 'Choose at least one type of scale.'));
         return;
       }
       estado.semilla = semilla || Math.floor(Math.random() * 90000 + 10000);
       estado.solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show answers');
 
       ejercicios = generarHoja(estado);
       avisar(ejercicios.length < estado.total
-        ? 'Con estas opciones solo hay ' + ejercicios.length + ' escalas distintas, así que la ficha lleva esas.' : '');
+        ? T('Con estas opciones solo hay ' + ejercicios.length + ' escalas distintas, así que la ficha lleva esas.', 'With these options there are only ' + ejercicios.length + ' different scales, so the sheet has those.') : '');
 
       var t = textos();
       elTit.textContent = t.tit;
       elInstr.textContent = t.instr;
       elLey.textContent = t.ley;
-      elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + estado.semilla;
+      elRef.textContent = 'teoriamusical.com.es · ' + T('hoja n.º ', 'sheet no. ') + estado.semilla;
 
       // Orden fijo de los tipos en el enlace: el mismo enlace para la misma hoja.
       var tiposURL = IDS.filter(function (x) { return estado.tipos.indexOf(x) >= 0; });
@@ -495,7 +535,7 @@
         + '&c=' + estado.clave + '&d=' + estado.dificultad + '&n=' + estado.total;
       var a = elEnlace.querySelector('a');
       a.href = window.location.pathname + params + '#fichas';
-      a.textContent = 'hoja n.º ' + estado.semilla;
+      a.textContent = T('hoja n.º ', 'sheet no. ') + estado.semilla;
       elEnlace.hidden = !ejercicios.length;
 
       pintar();
@@ -545,7 +585,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         estado.solucion = !estado.solucion;
-        btn.textContent = estado.solucion ? 'Ocultar soluciones' : 'Ver soluciones';
+        btn.textContent = estado.solucion ? T('Ocultar soluciones', 'Hide answers') : T('Ver soluciones', 'Show answers');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

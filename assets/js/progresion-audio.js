@@ -5,6 +5,7 @@
 (function () {
   'use strict';
 
+  var EN = document.documentElement.lang === 'en';
   var PC = { c: 0, d: 2, e: 4, f: 5, g: 7, a: 9, b: 11 };
   function midi(k) {
     var m = /^([a-g])([#b]?)\/(\d)$/.exec(k);
@@ -31,7 +32,7 @@
     var secs = parseFloat(fig.getAttribute('data-tm-prog-secs')) || 1.6;
     var btn = document.createElement('button');
     btn.className = 'tm-play-scale tm-play-scale--fig'; btn.type = 'button';
-    btn.setAttribute('aria-label', 'Escuchar la progresión'); btn.textContent = '▶';
+    btn.setAttribute('aria-label', EN ? 'Listen to the progression' : 'Escuchar la progresión'); btn.textContent = '▶';
     btn.addEventListener('click', function () {
       var piano = window.tmPiano;
       if (!piano || !piano.playEvents) return;

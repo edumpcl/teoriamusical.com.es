@@ -158,6 +158,12 @@
     if (!c || !m) return null;
     return c + '-' + m[1] + (m[2] === '#' ? 's' : m[2] === 'b' ? 'f' : '') + m[3];
   }
+  /* Texto alternativo en las páginas inglesas (<html lang="en">): «A♯₃ in treble clef». */
+  var CLAVE_EN = { sol: 'treble clef', fa: 'bass clef', do3: 'alto clef', do4: 'tenor clef' };
+  function altEN(f) {
+    var m = /^(sol|fa|do3|do4)-([a-g])([sf]?)([0-9])$/.exec(f);
+    return m[2].toUpperCase() + (m[3] === 's' ? '♯' : m[3] === 'f' ? '♭' : '') + String.fromCharCode(0x2080 + Number(m[4])) + ' in ' + CLAVE_EN[m[1]];
+  }
   window.tmPentNota = function (el, clave, nota) {
     el.innerHTML = '';
     var f = fichero(clave, nota), t = f && T[f];
@@ -166,7 +172,7 @@
     img.src = BASE + f + '.svg';
     img.width = Math.round(t[0] * ESCALA);
     img.height = Math.round(t[1] * ESCALA);
-    img.alt = t[2];
+    img.alt = document.documentElement.lang === 'en' ? altEN(f) : t[2];
     img.decoding = 'async';
     img.style.cssText = 'display:block;margin:0 auto;max-width:100%;height:auto';
     el.appendChild(img);

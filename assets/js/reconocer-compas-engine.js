@@ -42,6 +42,9 @@
 (function () {
   'use strict';
 
+  var EN = document.documentElement.lang === 'en';
+  function T(es, en) { return EN ? en : es; }
+
   function D() { return window.tmCompletarCompasData; }
 
   function mulberry32(a) {
@@ -176,17 +179,21 @@
      cuando las hay. */
   function unidadDe(sig) {
     var d = compasDe(sig);
-    if (d.tiempo === 32) return 'blanca';
-    if (d.tiempo === 8) return 'corchea';
-    return d.tiempo === 24 ? 'negra con puntillo' : 'negra';
+    if (d.tiempo === 32) return T('blanca', 'half-note');
+    if (d.tiempo === 8) return T('corchea', 'eighth-note');
+    return d.tiempo === 24 ? T('negra con puntillo', 'dotted-quarter-note') : T('negra', 'quarter-note');
   }
   function explicar(it) {
     var partes = it.validos.map(function (sig) {
       var d = compasDe(sig);
-      return sig + ' (' + d.tiempos + ' tiempos de ' + unidadDe(sig) + ')';
+      return EN ? sig + ' (' + d.tiempos + ' ' + unidadDe(sig) + ' beats)' : sig + ' (' + d.tiempos + ' tiempos de ' + unidadDe(sig) + ')';
     });
-    if (it.validos.length === 1) return 'Es un compás de ' + partes[0] + '.';
-    var lista = partes.slice(0, -1).join(', ') + ' y ' + partes[partes.length - 1];
+    if (it.validos.length === 1) return T('Es un compás de ' + partes[0] + '.', 'It is a time signature of ' + partes[0] + '.');
+    var lista = partes.slice(0, -1).join(', ') + T(' y ', ' and ') + partes[partes.length - 1];
+    if (EN) {
+      return 'This notation does not let you tell the time signature: what is written lasts the same in ' + lista
+        + ' and reads equally well in either. Both time signatures are correct.';
+    }
     return 'Esta escritura no permite distinguir el compás: lo escrito dura lo mismo en ' + lista
       + ' y se lee igual de bien en cualquiera de los dos. Las dos cifras son correctas.';
   }
@@ -255,8 +262,8 @@
   window.tmReconocerCompas = function (id) {
     var cont = document.getElementById(id);
     if (cont && D() && window.tmNotacion && !window.tmNotacion.cargado()) {
-      cont.innerHTML = '<p class="tm-rc-sub">Cargando el ejercicio…</p>';
-      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<p class="tm-rc-sub">No se ha podido cargar el ejercicio. Recarga la página.</p>'; });
+      cont.innerHTML = '<p class="tm-rc-sub">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</p>';
+      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<p class="tm-rc-sub">' + T('No se ha podido cargar el ejercicio. Recarga la página.', 'The exercise could not be loaded. Reload the page.') + '</p>'; });
       return;
     }
     arrancar(id);
@@ -271,13 +278,13 @@
     window.tmReconocerCompasDebug = function () { return cola[pos] || null; };   // para tools/verificar-reconocer-compas.js
 
     function inicio() {
-      cont.innerHTML = '<div class="tm-rc-card"><div class="tm-rc-tit">¿Qué compás es?</div>'
-        + '<div class="tm-rc-sub">Se ve un compás escrito, pero sin su cifra. Toca el numerador y el denominador que le corresponden.</div>'
+      cont.innerHTML = '<div class="tm-rc-card"><div class="tm-rc-tit">' + T('¿Qué compás es?', 'What time signature is it?') + '</div>'
+        + '<div class="tm-rc-sub">' + T('Se ve un compás escrito, pero sin su cifra. Toca el numerador y el denominador que le corresponden.', 'You see a measure written out, but without its time signature. Tap the numerator and the denominator that belong to it.') + '</div>'
         + '<div class="tm-rc-grupo" data-g="grupo">'
-        + [['simples', '2/4, 3/4 y 4/4'], ['compuestos', '6/8, 9/8 y 12/8'], ['mezcla', 'Todos']].map(function (g) {
+        + [['simples', '2/4, 3/4 y 4/4'], ['compuestos', '6/8, 9/8 y 12/8'], ['mezcla', T('Todos', 'All')]].map(function (g) {
           return '<button type="button" data-v="' + g[0] + '" aria-pressed="' + (grupo === g[0]) + '">' + g[1] + '</button>';
         }).join('') + '</div>'
-        + '<button type="button" class="tm-rc-empezar">Empezar</button></div>';
+        + '<button type="button" class="tm-rc-empezar">' + T('Empezar', 'Start') + '</button></div>';
       Array.prototype.forEach.call(cont.querySelectorAll('.tm-rc-grupo button'), function (b) {
         b.addEventListener('click', function () {
           grupo = b.getAttribute('data-v');
@@ -296,21 +303,21 @@
     function pregunta() {
       var it = cola[pos];
       cont.innerHTML = '<div class="tm-rc-card">'
-        + '<div class="tm-rc-prog">Pregunta ' + (pos + 1) + ' de ' + cola.length + '</div>'
+        + '<div class="tm-rc-prog">' + T('Pregunta ' + (pos + 1) + ' de ' + cola.length, 'Question ' + (pos + 1) + ' of ' + cola.length) + '</div>'
         + '<div class="tm-rc-barra"><div style="width:' + (pos / cola.length * 100) + '%"></div></div>'
-        + '<div class="tm-rc-preg">¿Qué compás es?</div>'
+        + '<div class="tm-rc-preg">' + T('¿Qué compás es?', 'What time signature is it?') + '</div>'
         + '<div class="tm-rc-dibujo"><div></div></div>'
-        + '<div class="tm-rc-q">Numerador</div>'
+        + '<div class="tm-rc-q">' + T('Numerador', 'Numerator') + '</div>'
         + '<div class="tm-rc-fichas" data-g="num">' + NUMERADORES.map(function (n) {
           return '<button type="button" class="tm-rc-cifra" data-v="' + n + '">' + n + '</button>';
         }).join('') + '</div>'
-        + '<div class="tm-rc-q">Denominador</div>'
+        + '<div class="tm-rc-q">' + T('Denominador', 'Denominator') + '</div>'
         + '<div class="tm-rc-fichas" data-g="den">' + DENOMINADORES.map(function (n) {
           return '<button type="button" class="tm-rc-cifra" data-v="' + n + '">' + n + '</button>';
         }).join('') + '</div>'
-        + '<div class="tm-rc-previa"><span class="tm-rc-vacia">Elige numerador y denominador…</span></div>'
+        + '<div class="tm-rc-previa"><span class="tm-rc-vacia">' + T('Elige numerador y denominador…', 'Choose a numerator and a denominator…') + '</span></div>'
         + '<div class="tm-rc-fb" hidden></div>'
-        + '<button type="button" class="tm-rc-btn">Comprobar</button></div>';
+        + '<button type="button" class="tm-rc-btn">' + T('Comprobar', 'Check') + '</button></div>';
 
       D().dibujarMedida(cont.querySelector('.tm-rc-dibujo > div'), it.compasBase, it.elems, { w: 460, sinCifra: true });
 
@@ -319,7 +326,7 @@
       function pintarPrevia() {
         previa.innerHTML = (num && den)
           ? '<span class="tm-rc-num"><span>' + num + '</span><span>' + den + '</span></span>'
-          : '<span class="tm-rc-vacia">Elige numerador y denominador…</span>';
+          : '<span class="tm-rc-vacia">' + T('Elige numerador y denominador…', 'Choose a numerator and a denominator…') + '</span>';
         btn.classList.toggle('tm-listo', !!(num && den));
       }
       Array.prototype.forEach.call(cont.querySelectorAll('.tm-rc-fichas'), function (fila) {
@@ -347,10 +354,10 @@
           fb.hidden = false;
           fb.className = 'tm-rc-fb ' + (ok ? 'tm-ok' : 'tm-ko');
           var extra = ok && it.validos.length > 1
-            ? ' También sería correcto ' + it.validos.filter(function (v) { return v !== elegida; }).join(' o ') + '.'
+            ? T(' También sería correcto ' + it.validos.filter(function (v) { return v !== elegida; }).join(' o ') + '.', ' ' + it.validos.filter(function (v) { return v !== elegida; }).join(' or ') + ' would also be correct.')
             : '';
-          fb.innerHTML = '<strong>' + (ok ? '¡Correcto!' : 'No es correcto.') + '</strong>' + extra + ' ' + explicar(it);
-          btn.textContent = pos + 1 < cola.length ? 'Siguiente' : 'Ver resultado';
+          fb.innerHTML = '<strong>' + (ok ? T('¡Correcto!', 'Correct!') : T('No es correcto.', 'Not correct.')) + '</strong>' + extra + ' ' + explicar(it);
+          btn.textContent = pos + 1 < cola.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See result');
           btn.classList.add('tm-listo');
         } else {
           pos++;
@@ -362,11 +369,11 @@
 
     function resultado() {
       var nota = aciertos / cola.length;
-      var msg = nota === 1 ? '¡Perfecto! Lo dominas.' : nota >= 0.8 ? 'Muy bien: casi todo correcto.' : nota >= 0.5 ? 'Vas bien. Repasa las explicaciones y vuelve a intentarlo.' : 'Conviene repasar cuántos tiempos tiene cada compás antes de volver a intentarlo.';
-      cont.innerHTML = '<div class="tm-rc-card tm-rc-res"><div class="tm-rc-nota">' + aciertos + '</div><div class="tm-rc-de">aciertos de ' + cola.length + '</div>'
+      var msg = nota === 1 ? T('¡Perfecto! Lo dominas.', 'Perfect! You have mastered it.') : nota >= 0.8 ? T('Muy bien: casi todo correcto.', 'Very good: almost everything correct.') : nota >= 0.5 ? T('Vas bien. Repasa las explicaciones y vuelve a intentarlo.', 'You are doing well. Review the explanations and try again.') : T('Conviene repasar cuántos tiempos tiene cada compás antes de volver a intentarlo.', 'Review how many beats each time signature has before trying again.');
+      cont.innerHTML = '<div class="tm-rc-card tm-rc-res"><div class="tm-rc-nota">' + aciertos + '</div><div class="tm-rc-de">' + T('aciertos de ' + cola.length, 'correct out of ' + cola.length) + '</div>'
         + '<div class="tm-rc-msg">' + msg + '</div>'
-        + '<button type="button" class="tm-rc-otra" data-a="otra">Otra ronda</button>'
-        + '<button type="button" class="tm-rc-otra tm-2" data-a="modo">Cambiar de grupo</button></div>';
+        + '<button type="button" class="tm-rc-otra" data-a="otra">' + T('Otra ronda', 'Another round') + '</button>'
+        + '<button type="button" class="tm-rc-otra tm-2" data-a="modo">' + T('Cambiar de grupo', 'Change group') + '</button></div>';
       cont.querySelector('[data-a="otra"]').addEventListener('click', empezar);
       cont.querySelector('[data-a="modo"]').addEventListener('click', inicio);
     }

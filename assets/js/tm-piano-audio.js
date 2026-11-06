@@ -10,6 +10,16 @@
   // Por cada clase cromática: [muestra, desplazamiento de octava, semitonos a afinar]
   var SAMP = { 0: ['C', 0, 0], 1: ['C', 0, 1], 2: ['Ds', 0, -1], 3: ['Ds', 0, 0], 4: ['Ds', 0, 1], 5: ['Fs', 0, -1], 6: ['Fs', 0, 0], 7: ['Fs', 0, 1], 8: ['A', 0, -1], 9: ['A', 0, 0], 10: ['A', 0, 1], 11: ['C', 1, -1] };
   var BASE = { Do: 0, Re: 2, Mi: 4, Fa: 5, Sol: 7, La: 9, Si: 11 };
+  /* Idioma: en <html lang="en"> se leen también letras (C D E F G A B), palabras «sharp/flat» e intervalos y escalas en inglés, y los textos
+     visibles salen en inglés. Las páginas en castellano no cambian: todo lo inglés está detrás de EN. */
+  var EN = document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+  var EN_BASE = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
+  var EN_NOTE = /^([A-G])(♯♯|♭♭|##|bb|𝄪|𝄫|♯|♭|#|b)?(?![A-Za-z])/;                       // «C», «F♯», «Bb», «B♭♭»; no «Dorian» ni «Be»
+  var ES_ENTERO = /^(Do|Re|Mi|Fa|Sol|La|Si)([♯♭#b]?)(?![A-Za-zá-úñ])/;                   // nombre español ENTERO (en inglés no valen prefijos: «Minor» no es Mi)
+  var EN_ACC = { '♯': 1, '#': 1, '♯♯': 2, '##': 2, '𝄪': 2, '♭': -1, b: -1, '♭♭': -2, bb: -2, '𝄫': -2 };
+  /* Expresión que en español es `es` y en inglés `es|en` (los textos ingleses solo se buscan en las páginas inglesas). */
+  function rx(es, en) { return EN ? new RegExp(es.source + '|' + en.source) : es; }
 
   var actx = null, cache = {}, bus = null, gen = 0;
   function ctx() { if (!actx) { var AC = window.AudioContext || window.webkitAudioContext; if (AC) actx = new AC(); } return actx; }
@@ -47,7 +57,12 @@
   }
 
   function nameToPc(n) {
-    var m = /^(Do|Re|Mi|Fa|Sol|La|Si)([♯♭#b]?)/.exec((n || '').trim());
+    var m;
+    if (EN) {
+      var t = (n || '').trim(), e = EN_NOTE.exec(t);
+      if (e) return (((EN_BASE[e[1]] + (e[2] ? EN_ACC[e[2]] : 0)) % 12) + 12) % 12;
+      m = ES_ENTERO.exec(t);
+    } else m = /^(Do|Re|Mi|Fa|Sol|La|Si)([♯♭#b]?)/.exec((n || '').trim());
     if (!m) return null;
     var pc = BASE[m[1]];
     if (m[2] === '♯' || m[2] === '#') pc += 1;
@@ -212,6 +227,7 @@
   /* Extrae los nombres de nota de un texto libre, con alteraciones por símbolo o palabra
      ("Fa sostenido" -> Fa♯, "Re bemol" -> Re♭). No confunde notas dentro de otras palabras. */
   function extractNotes(str) {
+    if (EN) return extractNotesEN(str);
     var re = /(Do|Re|Mi|Fa|Sol|La|Si)(?![a-záéíóúñ])(\s+doble\s+sostenido|\s+doble\s+bemol|\s+sostenido|\s+bemol|[♯♭#b])?/g;
     var m, out = [];
     while ((m = re.exec(str || ''))) {
@@ -224,8 +240,55 @@
     }
     return out;
   }
+  /* Versión inglesa: letras mayúsculas sueltas con «♯ ♭ # b» o «sharp / flat / double sharp / double flat». Una «A» sola seguida de
+     una palabra en minúscula es el artículo ("A major third…") y no cuenta; «A4» es el intervalo (cuarta aumentada), no la nota. */
+  function extractNotesEN(str) {
+    var re = /(^|[^A-Za-z0-9])([A-G])(\s+double\s+sharp|\s+double\s+flat|\s+sharp|\s+flat|♯♯|♭♭|##|bb|𝄪|𝄫|♯|♭|#|b(?![A-Za-z]))?(?![A-Za-z])/g;
+    var s = str || '', m, out = [];
+    while ((m = re.exec(s))) {
+      var L = m[2], a = (m[3] || '').trim();
+      if (L === 'A') {
+        var rest = s.slice(m.index + m[0].length), prev = s.slice(0, m.index + m[1].length).replace(/\s+$/, ''), sig = /^\s+([a-z]+)/.exec(rest);
+        // artículo: abre la frase y le sigue una palabra en minúscula que no sea «to / and / on…» («from C to A on the staff» sí es la nota)
+        if (!a && sig && (!prev || /[.!?:;("“]$/.test(prev)) && !/^(to|and|or|on|in|at|up|down)$/.test(sig[1])) continue;
+        if (/^\d/.test(rest)) continue;
+      }
+      if (/sharp/.test(a)) L += /double/.test(a) ? '♯♯' : '♯';
+      else if (/flat/.test(a)) L += /double/.test(a) ? '♭♭' : '♭';
+      else if (a) L += a;
+      out.push(L);
+    }
+    return out;
+  }
+  /* Intervalo en inglés, calidad primero: "Major 3rd", "minor 3rd", "Perfect 5th", "Augmented 4th", "Diminished 5th", "Perfect unison",
+     "Perfect octave"; también "3rd Major" y las abreviaturas M3 m3 P5 A4 d5. Devuelve los semitonos o null. */
+  var ORD = /(\d+)(?:st|nd|rd|th)|(unison)|(octave)/.source, CAL = /(major|minor|perfect|augmented|diminished)/.source;
+  function intervalSemitonesEN(text) {
+    var s = text || '', hits = [], mm;
+    var q1 = new RegExp('\\b' + CAL + '\\s+(?:' + ORD + ')', 'gi');
+    var q2 = new RegExp('(?:' + ORD + ')\\s+' + CAL + '\\b', 'gi');
+    var q3 = /(?:^|[^A-Za-z0-9])([MmPAd])(\d{1,2})(?![0-9A-Za-z])/g;
+    var Q = { M: 'major', m: 'minor', P: 'perfect', A: 'augmented', d: 'diminished' };
+    function num(a, uni, oct) { return a ? parseInt(a, 10) : uni ? 1 : oct ? 8 : null; }
+    while ((mm = q1.exec(s))) hits.push({ i: mm.index, q: mm[1].toLowerCase(), n: num(mm[2], mm[3], mm[4]) });
+    while ((mm = q2.exec(s))) hits.push({ i: mm.index, q: mm[4].toLowerCase(), n: num(mm[1], mm[2], mm[3]) });
+    while ((mm = q3.exec(s))) hits.push({ i: mm.index, q: Q[mm[1]], n: parseInt(mm[2], 10) });
+    if (!hits.length) return null;
+    hits.sort(function (a, b) { return a.i - b.i; });
+    var h = /reduc|result/i.test(s) ? hits[hits.length - 1] : hits[0], num2 = h.n, octaves = 0;   // en una reducción, el resultado es el último
+    if (!num2) return null;
+    while (num2 > 8) { num2 -= 7; octaves++; }
+    var base = [null, 0, 2, 4, 5, 7, 9, 11, 12][num2];
+    if (base == null) return null;
+    var perfectable = (num2 === 1 || num2 === 4 || num2 === 5 || num2 === 8);
+    if (h.q === 'augmented') base += 1;
+    else if (h.q === 'diminished') base += perfectable ? -1 : -2;
+    else if (h.q === 'minor') base += perfectable ? 0 : -1;
+    return base + octaves * 12;
+  }
   /* Semitonos de un intervalo a partir de su nombre ("2ª Aumentada", "5ª Justa", "3ª menor"). */
   function intervalSemitones(text) {
+    if (EN) return intervalSemitonesEN(text);
     var s = (text || '').toLowerCase(), num = null;
     // Debe nombrar una calidad: descarta movimientos como "subir una 15ª" o "una octava".
     if (!/aumentad|mayor|menor|just|disminuid/.test(s)) return null;
@@ -267,7 +330,7 @@
   function makeBtnFromPlay(starter, label, extraClass) {
     var btn = document.createElement('button');
     btn.className = 'tm-play-scale' + (extraClass ? ' ' + extraClass : ''); btn.type = 'button';
-    btn.setAttribute('aria-label', label || 'Escuchar'); btn.textContent = '▶';
+    btn.setAttribute('aria-label', label || T('Escuchar', 'Listen')); btn.textContent = '▶';
     btn.addEventListener('click', function () {
       if (btn.classList.contains('tm-loading') || btn.classList.contains('tm-playing')) return;   // ignora reclics mientras carga/suena
       btn.classList.add('tm-loading'); btn.textContent = '⏳';   // feedback durante la 1ª descarga del sample
@@ -284,6 +347,7 @@
   /* Notas (MIDI) de una escala a partir de su nombre completo: "Do Mayor Mixolidia", "La menor melódica"…
      Solo se usa en las páginas de comparar (acotado con [data-scale-compare]). */
   function comparativeMidis(alt) {
+    if (EN) return comparativeMidisEN(alt);
     var root = normRoot(alt), pc = root == null ? null : nameToPc(root);
     if (pc == null) return null;
     var s = alt.toLowerCase(), iv = null, seq = null;
@@ -307,6 +371,7 @@
 
   /* racha inicial de tokens que son notas válidas */
   function leadingNotes(str) {
+    if (EN) str = (str || '').replace(/\b([A-G])\s+double\s+sharp\b/g, '$1♯♯').replace(/\b([A-G])\s+double\s+flat\b/g, '$1♭♭').replace(/\b([A-G])\s+sharp\b/g, '$1♯').replace(/\b([A-G])\s+flat\b/g, '$1♭');   // "F sharp" -> F♯
     var raw = (str || '').trim().split(/[\s,·]+/);
     var out = [];
     for (var i = 0; i < raw.length; i++) {
@@ -320,6 +385,7 @@
      ya sea con símbolos ("Fa♯ menor") o con palabras ("Escala de Fa sostenido menor"). */
   function normRoot(str) {
     if (!str) return null;
+    if (EN) return normRootEN(str);
     var s = String(str)
       .replace(/(Do|Re|Mi|Fa|Sol|La|Si)\s+sostenido/gi, '$1♯')
       .replace(/(Do|Re|Mi|Fa|Sol|La|Si)\s+bemol/gi, '$1♭')
@@ -327,6 +393,48 @@
       .replace(/(Do|Re|Mi|Fa|Sol|La|Si)b/g, '$1♭');
     var m = /(Do|Re|Mi|Fa|Sol|La|Si)([♯♭]?)/.exec(s);
     return m ? m[1] + m[2] : null;
+  }
+
+  /* Tónica en inglés: «C♯ minor», «F sharp minor», «Bb major»… Una «A» sola es la nota si la sigue un nombre de escala o de modo
+     ("A major", "A harmonic minor", "A blues") y es el artículo si no ("A staff showing C major"). */
+  var ESCALA_EN = /^\s+(?:major|minor|natural|harmonic|melodic|dorian|phrygian|lydian|mixolydian|locrian|ionian|aeolian|pentatonic|whole|chromatic|blues|mixed|scale)\b/i;
+  function normRootEN(str) {
+    var re = /(^|[^A-Za-z0-9])([A-G])(\s+sharp|\s+flat|♯|♭|#|b(?![A-Za-z]))?(?![A-Za-z])/g, s = String(str), m;
+    while ((m = re.exec(s))) {
+      var rest = s.slice(m.index + m[0].length);
+      if (m[2] === 'A' && !m[3] && !ESCALA_EN.test(rest)) continue;
+      if (/^\d/.test(rest)) continue;
+      var a = (m[3] || '').trim();
+      return m[2] + (/sharp|♯|#/.test(a) ? '♯' : /flat|♭|b/.test(a) ? '♭' : '');
+    }
+    return null;
+  }
+  /* Notas (MIDI) de una escala a partir de su nombre en inglés: "C major", "A natural minor", "A harmonic minor", "A melodic minor",
+     "D Dorian", "G Mixolydian", "C pentatonic", "C whole-tone", "C chromatic", "A blues"… */
+  function comparativeMidisEN(alt) {
+    var root = normRootEN(alt), pc = root == null ? null : nameToPc(root);
+    if (pc == null) return null;
+    var s = alt.toLowerCase(), iv = null, seq = null;
+    if (/melodic minor/.test(s)) seq = [0, 2, 3, 5, 7, 9, 11, 12, 10, 8, 7, 5, 3, 2, 0];
+    else if (/harmonic minor/.test(s)) iv = [0, 2, 3, 5, 7, 8, 11];
+    else if (/harmonic major|mixed.*(?:main|principal|primary)/.test(s)) iv = [0, 2, 4, 5, 7, 8, 11];
+    else if (/melodic major|mixed.*secondary|mixolydian\s*(?:♭|b)6/.test(s)) iv = [0, 2, 4, 5, 7, 8, 10];
+    else if (/mixolydian/.test(s)) iv = [0, 2, 4, 5, 7, 9, 10];
+    else if (/dorian/.test(s)) iv = [0, 2, 3, 5, 7, 9, 10];
+    else if (/phrygian/.test(s)) iv = [0, 1, 3, 5, 7, 8, 10];
+    else if (/lydian/.test(s)) iv = [0, 2, 4, 6, 7, 9, 11];
+    else if (/locrian/.test(s)) iv = [0, 1, 3, 5, 6, 8, 10];
+    else if (/aeolian|natural minor/.test(s)) iv = [0, 2, 3, 5, 7, 8, 10];
+    else if (/pentatonic/.test(s)) iv = /minor/.test(s) ? [0, 3, 5, 7, 10] : [0, 2, 4, 7, 9];
+    else if (/whole[- ]?tone/.test(s)) iv = [0, 2, 4, 6, 8, 10];
+    else if (/chromatic/.test(s)) iv = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    else if (/blues/.test(s)) iv = [0, 3, 5, 6, 7, 10];
+    else if (/ionian|major/.test(s) && !/minor/.test(s)) iv = [0, 2, 4, 5, 7, 9, 11];
+    if (!iv && !seq) return null;
+    var base = 60 + pc;
+    if (seq) return seq.map(function (o) { return base + o; });
+    var midis = iv.map(function (o) { return base + o; }); midis.push(base + 12);
+    return midis;
   }
 
   /* Rejillas de pentagramas por tónica: el contenedor lleva data-scale-grid="<tipo>"
@@ -337,7 +445,7 @@
     'tonos-enteros': [0, 2, 4, 6, 8, 10],
     blues: [0, 3, 5, 6, 7, 10]
   };
-  var PCNAME = ['Do', 'Do♯', 'Re', 'Mi♭', 'Mi', 'Fa', 'Fa♯', 'Sol', 'La♭', 'La', 'Si♭', 'Si'];
+  var PCNAME = EN ? ['C', 'C♯', 'D', 'E♭', 'E', 'F', 'F♯', 'G', 'A♭', 'A', 'B♭', 'B'] : ['Do', 'Do♯', 'Re', 'Mi♭', 'Mi', 'Fa', 'Fa♯', 'Sol', 'La♭', 'La', 'Si♭', 'Si'];
   var CLEF_OCT = { sol2: 4, sol: 4, do1: 4, do2: 4, do3: 4, do4: 3, fa3: 3, fa4: 3 };
   function notesFromRoot(rootPc, intervals) { return intervals.map(function (iv) { return PCNAME[(rootPc + iv) % 12]; }); }
 
@@ -369,7 +477,7 @@
         }
         if (names.length < 2) return;
         target.appendChild(document.createTextNode(' '));
-        target.appendChild(makeBtn(names, 'Escuchar la escala'));
+        target.appendChild(makeBtn(names, T('Escuchar la escala', 'Listen to the scale')));
       });
     });
     /* Elementos con data-tm-scale="Do Re Mi…" */
@@ -377,7 +485,7 @@
       if (el.querySelector && el.querySelector('.tm-play-scale')) return;
       var names = leadingNotes(el.getAttribute('data-tm-scale'));
       if (names.length < 2) return;
-      el.appendChild(makeBtn(names, 'Escuchar la escala'));
+      el.appendChild(makeBtn(names, T('Escuchar la escala', 'Listen to the scale')));
     });
     /* Pentagramas emparejados con una tabla .tm-scales[data-figures]:
        se construye un mapa tónica->notas desde la tabla y se cablea un ▶ sobre cada <figure>
@@ -413,7 +521,7 @@
         var root = normRoot(alt);
         if (!root || !map[root]) return;
         fig.classList.add('tm-has-play');
-        fig.appendChild(makeBtn(map[root], 'Escuchar la escala', 'tm-play-scale--fig'));
+        fig.appendChild(makeBtn(map[root], T('Escuchar la escala', 'Listen to the scale'), 'tm-play-scale--fig'));
       });
     });
     /* Acordes/cadencias con notas explícitas: data-tm-chord-notes="Sol Si Re Fa | Do Mi Sol".
@@ -428,7 +536,7 @@
       if (isFig) el.classList.add('tm-has-play');
       el.appendChild(makeBtnFromPlay(function () {
         return single ? playMidis(chords[0], { chord: true }) : playChords(chords);
-      }, single ? 'Escuchar el acorde' : 'Escuchar la cadencia', isFig ? 'tm-play-scale--fig' : ''));
+      }, single ? T('Escuchar el acorde', 'Listen to the chord') : T('Escuchar la cadencia', 'Listen to the cadence'), isFig ? 'tm-play-scale--fig' : ''));
     });
     /* Páginas de acordes ([data-tm-chords]): ▶ en cada pentagrama cuyo alt liste las notas tras los ':'
        ("…: Do, Mi y Sol", "…: Do Mi Sol Si bemol"). Suenan a la vez (acorde), apiladas de grave a agudo. */
@@ -444,7 +552,7 @@
       if (!midis.length) return;
       var isFig = host.tagName === 'FIGURE';
       if (isFig) host.classList.add('tm-has-play');
-      host.appendChild(makeBtnFromPlay(function () { return playMidis(midis, { chord: true }); }, 'Escuchar el acorde', isFig ? 'tm-play-scale--fig' : ''));
+      host.appendChild(makeBtnFromPlay(function () { return playMidis(midis, { chord: true }); }, T('Escuchar el acorde', 'Listen to the chord'), isFig ? 'tm-play-scale--fig' : ''));
     });
     /* Páginas de intervalos ([data-tm-intervals]): ▶ en cada pentagrama de intervalo, sea <figure> o
        celda de tabla. Lee las notas y el tipo del alt; armónico (a la vez) si dice "armónico/simultáneo",
@@ -452,16 +560,16 @@
     document.querySelectorAll('[data-tm-intervals] img').forEach(function (img) {
       var alt = img.getAttribute('alt') || '', s = alt.toLowerCase();
       if (img.closest && img.closest('[data-tm-noplay]')) return;   // exclusión explícita (tablas resumen, pósters…)
-      if (/teclado/.test(s) || /melod[ií]a/.test(s)) return;   // teclado no es pentagrama; melodías = contorno desconocido
+      if (rx(/teclado/, /keyboard/).test(s) || rx(/melod[ií]a/, /melody/).test(s)) return;   // teclado no es pentagrama; melodías = contorno desconocido
       var host = (img.closest && (img.closest('figure') || img.closest('td'))) || img.parentElement;
       if (!host || host.querySelector('.tm-play-scale')) return;
-      var unison = /un[ií]sono/.test(s), enh = /enarm[oó]nic/.test(s);
+      var unison = rx(/un[ií]sono/, /unison/).test(s), enh = rx(/enarm[oó]nic/, /enharmonic/).test(s);
       var names = extractNotes(alt), midis, chord;
-      if (names.length >= 2 || unison || enh) {           // el alt nombra las notas
-        chord = !enh && /\barm[oó]nic|simult/.test(s);   // "enarmónicas" NO es acorde
+      if (names.length >= 2 || ((unison || enh) && (!EN || names.length))) {           // el alt nombra las notas (en inglés, «Perfect unison» sin notas va por el nombre del intervalo)
+        chord = !enh && rx(/\barm[oó]nic|simult/, /\bharmonic|simultaneous/).test(s);   // "enarmónicas" NO es acorde
         var dir = (unison || enh) ? 0 : (/descend/.test(s) ? -1 : 1);   // unísono y enarmónicos suenan a la misma altura
         midis = dirMidis(names, 4, dir);
-        if (/compuest|novena|d[eé]cima|oncena|docena|trecena|una octava m[aá]s/.test(s) && midis.length >= 2) {
+        if (rx(/compuest|novena|d[eé]cima|oncena|docena|trecena|una octava m[aá]s/, /compound|ninth|tenth|eleventh|twelfth|thirteenth|an octave (?:higher|more)/).test(s) && midis.length >= 2) {
           midis[midis.length - 1] += 12;   // intervalos compuestos: la última nota una octava más
         }
       } else {                                            // solo el nombre del intervalo (figuras por especie)
@@ -473,7 +581,7 @@
       if (!midis || !midis.length) return;
       var isFig = host.tagName === 'FIGURE';
       if (isFig) host.classList.add('tm-has-play');
-      host.appendChild(makeBtnFromPlay(function () { return playMidis(midis, { chord: chord }); }, 'Escuchar el intervalo', isFig ? 'tm-play-scale--fig' : ''));
+      host.appendChild(makeBtnFromPlay(function () { return playMidis(midis, { chord: chord }); }, T('Escuchar el intervalo', 'Listen to the interval'), isFig ? 'tm-play-scale--fig' : ''));
     });
     /* Elementos con data-tm-notes="Mi Fa Sol…": reproduce exactamente esas notas ascendentes
        desde data-tm-baseoct (octava de la 1ª nota; por defecto 4). Útil para claves e intervalos melódicos. */
@@ -492,7 +600,7 @@
       if (!midis.length) return;
       var isFig = el.tagName === 'FIGURE';
       if (isFig) el.classList.add('tm-has-play');
-      el.appendChild(makeBtnMidis(midis, 'Escuchar', isFig ? 'tm-play-scale--fig' : ''));
+      el.appendChild(makeBtnMidis(midis, T('Escuchar', 'Listen'), isFig ? 'tm-play-scale--fig' : ''));
     });
     /* Melodías con ritmo (figure[data-tm-melody]="g/4:8 a/4:8 … | c/4:q."): ▶ que reproduce
        la secuencia exacta con su ritmo, al tempo de data-tm-bpm (negra; por defecto 96). */
@@ -502,7 +610,7 @@
       if (!seq.length) return;
       var bpm = parseInt(fig.getAttribute('data-tm-bpm'), 10) || 96;
       fig.classList.add('tm-has-play');
-      fig.appendChild(makeBtnFromPlay(function () { return playMelody(seq, bpm); }, 'Escuchar la melodía', 'tm-play-scale--fig'));
+      fig.appendChild(makeBtnFromPlay(function () { return playMelody(seq, bpm); }, T('Escuchar la melodía', 'Listen to the melody'), 'tm-play-scale--fig'));
     });
     /* Pentagramas de claves (figure[data-tm-clef]): reproducen Do Re Mi Fa Sol La Si Do
        en el registro propio de la clave (Sol/soprano/mezzo/alto en 4ª octava; tenor/barítono/Fa en 3ª). */
@@ -511,8 +619,8 @@
       var oct = CLEF_OCT[fig.getAttribute('data-tm-clef')] || 4;
       fig.classList.add('tm-has-play');
       fig.appendChild(makeBtnFromPlay(function () {
-        return playScale(['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'], { baseOct: oct });
-      }, 'Escuchar las notas', 'tm-play-scale--fig'));
+        return playScale(EN ? ['C', 'D', 'E', 'F', 'G', 'A', 'B'] : ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'], { baseOct: oct });
+      }, T('Escuchar las notas', 'Listen to the notes'), 'tm-play-scale--fig'));
     });
     /* Páginas de comparar: ▶ sobre cada pentagrama, notas calculadas desde el nombre completo del alt. */
     document.querySelectorAll('[data-scale-compare]').forEach(function (box) {
@@ -523,7 +631,7 @@
         var midis = comparativeMidis(img.getAttribute('alt') || '');
         if (!midis) return;
         fig.classList.add('tm-has-play');
-        fig.appendChild(makeBtnMidis(midis, 'Escuchar la escala', 'tm-play-scale--fig'));
+        fig.appendChild(makeBtnMidis(midis, T('Escuchar la escala', 'Listen to the scale'), 'tm-play-scale--fig'));
       });
     });
     /* Rejillas data-scale-grid: ▶ sobre cada pentagrama, notas calculadas desde la tónica del figcaption. */
@@ -536,7 +644,7 @@
         var rootPc = cap ? nameToPc(cap.textContent) : null;
         if (rootPc == null) return;
         fig.classList.add('tm-has-play');
-        fig.appendChild(makeBtn(notesFromRoot(rootPc, ivs), 'Escuchar la escala', 'tm-play-scale--fig'));
+        fig.appendChild(makeBtn(notesFromRoot(rootPc, ivs), T('Escuchar la escala', 'Listen to the scale'), 'tm-play-scale--fig'));
       });
     });
     /* Pentagramas con figcaption "…: Do Re Mi…" -> ▶ si tras los : empieza una lista de notas */
@@ -548,7 +656,7 @@
       var tokens = leadingNotes(txt.slice(idx + 1));
       if (tokens.length < 3) return;
       cap.appendChild(document.createTextNode(' '));
-      cap.appendChild(makeBtn(tokens, 'Escuchar la escala'));
+      cap.appendChild(makeBtn(tokens, T('Escuchar la escala', 'Listen to the scale')));
     });
     creditoPiano();
   }
@@ -564,7 +672,8 @@
     var p = document.createElement('p');
     p.className = 'tm-credito-piano';
     p.style.cssText = 'font-size:.8rem;color:#686868;margin-top:1.5rem';
-    p.innerHTML = 'Audio de piano: muestras <em>Salamander Grand Piano</em>, de Alexander Holm, bajo licencia <a href="https://creativecommons.org/licenses/by/3.0/" rel="nofollow noopener">CC BY 3.0</a>.';
+    p.innerHTML = T('Audio de piano: muestras <em>Salamander Grand Piano</em>, de Alexander Holm, bajo licencia <a href="https://creativecommons.org/licenses/by/3.0/" rel="nofollow noopener">CC BY 3.0</a>.',
+      'Piano audio: <em>Salamander Grand Piano</em> samples by Alexander Holm, licensed under <a href="https://creativecommons.org/licenses/by/3.0/" rel="nofollow noopener">CC BY 3.0</a>.');
     art.appendChild(p);
   }
 

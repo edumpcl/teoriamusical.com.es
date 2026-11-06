@@ -2,7 +2,7 @@
    A diferencia del resto del metal, la corneta NO tiene pistones que rellenen los huecos
    entre armónicos: solo puede dar los sonidos de la serie armónica de su tubo. La palometa
    (llave) desvía el aire: en posición de do suenan los armónicos de Do; girada (horizontal),
-   el aire pasa por la bomba de arriba y suenan los de Re♭. Juntando ambas series salen las
+   el aire se salta la bomba (tubo más corto) y suenan los de Re♭. Juntando ambas series salen las
    notas de fa menor / La♭ M / Do m / Mi♭ M — de ahí el color de las marchas de Semana Santa.
    Ámbito Sol₄–Fa₆ (armónicos 3.º al 10.º de cada serie). Se lee en clave de sol.
    Datos: Fernández Martínez, C. (2022), Revista InstrumentUM n.º 2, ISSN 2792-5560.
@@ -147,7 +147,7 @@
 
       var girada = (o.s === 'reb');
       pal.classList.toggle('girada', girada);
-      bomba.classList.toggle('on', girada);
+      bomba.classList.toggle('on', !girada);   // en Do el aire recorre la bomba (más tubo = nota más grave); girada se la salta
       var tag = pal.querySelector('.p-tag');
       if (tag) tag.textContent = girada ? 'girada' : 'en do';
 

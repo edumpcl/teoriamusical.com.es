@@ -2,6 +2,26 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  /* Los nombres de escala siguen siendo internos en castellano (claves de la lógica);
+     solo se traducen al mostrarlos (dispName) */
+  const NOTE_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  const REST_EN = {
+    'mayor': 'major', 'mayor mixta principal': 'harmonic major', 'mayor mixta secundaria': 'melodic major',
+    'mixolidia': 'Mixolydian', 'menor natural': 'natural minor', 'menor armónica': 'harmonic minor',
+    'menor melódica': 'melodic minor', 'menor dórica': 'Dorian',
+    'cromática (ascendente)': 'chromatic (ascending)', 'cromática (descendente)': 'chromatic (descending)'
+  };
+  function dispNote(n) { return EN && NOTE_EN[n] ? NOTE_EN[n] : n; }
+  function dispName(name) {
+    if (!EN) return name;
+    const m = /^(Do|Re|Mi|Fa|Sol|La|Si)([#b\u266f\u266d]?)\s+(.+)$/.exec(name);
+    if (!m) return name;
+    const rest = REST_EN[m[3].toLowerCase()] || m[3];
+    return NOTE_EN[m[1]] + (m[2] === '#' || m[2] === '\u266f' ? '\u266f' : m[2] ? '\u266d' : '') + ' ' + rest;
+  }
+
   var SCALES_MAY_NAT = [
     { name: 'Do Mayor',   vex: 'C',  notes: ['c/4','d/4','e/4','f/4','g/4','a/4','b/4','c/5'], acc: {},                                                                                                                     accOnKey: {} },
     { name: 'Sol Mayor',  vex: 'G',  notes: ['g/4','a/4','b/4','c/5','d/5','e/5','f/5','g/5'], acc: {'f/5':'#'},                                                                                                            accOnKey: {} },
@@ -137,18 +157,18 @@
   var NOTE_NAMES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
   var ACC_OPTS = [
     { label: '♭', val: 'b' },
-    { label: 'sin alt.', val: '' },
+    { label: T('sin alt.', 'natural'), val: '' },
     { label: '♯', val: '#' }
   ];
   var TYPES_MAYOR = [
-    { label: 'Natural',         val: 'natural' },
-    { label: 'Mixta Principal', val: 'principal' },
-    { label: 'Mixta Secundaria',val: 'secundaria' }
+    { label: T('Natural', 'Natural'), val: 'natural' },
+    { label: T('Mixta Principal', 'Harmonic major'), val: 'principal' },
+    { label: T('Mixta Secundaria', 'Melodic major'), val: 'secundaria' }
   ];
   var TYPES_MENOR = [
-    { label: 'Menor Natural', val: 'natural' },
-    { label: 'Armónica',      val: 'armónica' },
-    { label: 'Melódica',      val: 'melódica' }
+    { label: T('Menor Natural', 'Natural minor'), val: 'natural' },
+    { label: T('Armónica', 'Harmonic minor'), val: 'armónica' },
+    { label: T('Melódica', 'Melodic minor'), val: 'melódica' }
   ];
 
   function parseScaleParts(name) {
@@ -267,25 +287,25 @@
 
     wrap.innerHTML = [
       '<div class="tm-controls">',
-        '<span class="tm-lbl">Dificultad:</span>',
-        '<button class="tm-btn tm-on" id="' + uid + '_easy">Fácil</button>',
-        '<button class="tm-btn" id="' + uid + '_hard">Difícil</button>',
+        '<span class="tm-lbl">' + T('Dificultad:', 'Difficulty:') + '</span>',
+        '<button class="tm-btn tm-on" id="' + uid + '_easy">' + T('Fácil', 'Easy') + '</button>',
+        '<button class="tm-btn" id="' + uid + '_hard">' + T('Difícil', 'Hard') + '</button>',
       '</div>',
       '<div class="tm-stats">',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_tot">0</div><div class="tm-sl">Preguntas</div></div>',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_cor">0</div><div class="tm-sl">Correctas</div></div>',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_pct">—</div><div class="tm-sl">Acierto</div></div>',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_str">0</div><div class="tm-sl">Racha</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_tot">0</div><div class="tm-sl">' + T('Preguntas', 'Questions') + '</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_cor">0</div><div class="tm-sl">' + T('Correctas', 'Correct') + '</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_pct">—</div><div class="tm-sl">' + T('Acierto', 'Accuracy') + '</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_str">0</div><div class="tm-sl">' + T('Racha', 'Streak') + '</div></div>',
       '</div>',
       '<div class="tm-pbar-wrap"><div class="tm-pbar" id="' + uid + '_pbar"></div></div>',
       '<div class="tm-card" id="' + uid + '_card">',
-        '<div class="tm-qlbl">Pregunta <span class="tm-qnum" id="' + uid + '_qnum">1</span></div>',
-        '<div class="tm-qtxt">¿Qué escala es esta?</div>',
+        '<div class="tm-qlbl">' + T('Pregunta', 'Question') + ' <span class="tm-qnum" id="' + uid + '_qnum">1</span></div>',
+        '<div class="tm-qtxt">' + T('¿Qué escala es esta?', 'Which scale is this?') + '</div>',
         '<div class="tm-mode-tag" id="' + uid + '_modetag"></div>',
         '<div class="tm-staff-wrap"><div id="' + uid + '_staff"></div></div>',
         '<div id="' + uid + '_opts"></div>',
         '<div class="tm-fb" id="' + uid + '_fb"></div>',
-        '<button class="tm-nxt" id="' + uid + '_nxt">Siguiente →</button>',
+        '<button class="tm-nxt" id="' + uid + '_nxt">' + T('Siguiente →', 'Next →') + '</button>',
       '</div>'
     ].join('');
 
@@ -350,7 +370,7 @@
 
     function renderStaff(q) {
       elStaff.innerHTML = '';
-      elModeTag.textContent = q.useArm ? 'Con armadura' : 'Con alteraciones';
+      elModeTag.textContent = q.useArm ? T('Con armadura', 'With key signature') : T('Con alteraciones', 'With accidentals');
       var larga = q.scale.notes.length > 8;
       window.tmNotacion.dibujarEscala(elStaff, { notas: q.scale.notes, acc: q.useArm ? (q.scale.accOnKeyArr || q.scale.accOnKey) : (q.scale.accArr || q.scale.acc), vex: q.scale.vex, conArmadura: q.useArm },
         { ancho: larga ? 900 : 520, id: 'escalas-todas' });
@@ -369,7 +389,7 @@
         cQ.opts.forEach(function (s) {
           var b = document.createElement('button');
           b.className = 'tm-opt';
-          b.textContent = s.name;
+          b.textContent = dispName(s.name);
           b.addEventListener('click', function () { answerEasy(s.name, b); });
           div.appendChild(b);
         });
@@ -390,7 +410,7 @@
       /* ── Hint text ───────────────────────────────────────────────── */
       var hint = document.createElement('div');
       hint.className = 'tm-acc-hint';
-      hint.textContent = 'Elige la nota raíz';
+      hint.textContent = T('Elige la nota raíz', 'Choose the root note');
 
       /* ── Row 2: accidental buttons (disabled until note selected) ── */
       var accsRow = document.createElement('div');
@@ -409,7 +429,7 @@
       mayGrp.className = 'tm-hard-type-group';
       var mayLbl = document.createElement('div');
       mayLbl.className = 'tm-type-group-lbl';
-      mayLbl.textContent = 'Mayor';
+      mayLbl.textContent = T('Mayor', 'Major');
       var mayBtns = document.createElement('div');
       mayBtns.className = 'tm-type-btns';
 
@@ -418,7 +438,7 @@
       menGrp.className = 'tm-hard-type-group';
       var menLbl = document.createElement('div');
       menLbl.className = 'tm-type-group-lbl';
-      menLbl.textContent = 'menor';
+      menLbl.textContent = T('menor', 'minor');
       var menBtns = document.createElement('div');
       menBtns.className = 'tm-type-btns';
 
@@ -426,7 +446,7 @@
       NOTE_NAMES.forEach(function (n) {
         var b = document.createElement('button');
         b.className = 'tm-hn';
-        b.textContent = n;
+        b.textContent = dispNote(n);
         b.dataset.note = n;
         b.addEventListener('click', function () {
           if (st.answered) return;
@@ -435,7 +455,7 @@
             x.classList.toggle('tm-sel', x.dataset.note === n);
           });
           accsRow.querySelectorAll('.tm-ha').forEach(function (x) { x.disabled = false; });
-          hint.textContent = 'Ahora elige la alteración';
+          hint.textContent = T('Ahora elige la alteración', 'Now choose the accidental');
         });
         notesRow.appendChild(b);
       });
@@ -454,7 +474,7 @@
             x.classList.toggle('tm-sel', x.dataset.acc === a.val);
           });
           modeRow.querySelectorAll('.tm-ha').forEach(function (x) { x.disabled = false; });
-          hint.textContent = '¿Mayor o Menor?';
+          hint.textContent = T('¿Mayor o Menor?', 'Major or minor?');
         });
         accsRow.appendChild(b);
       });
@@ -463,7 +483,7 @@
       ['Mayor', 'Menor'].forEach(function (m) {
         var b = document.createElement('button');
         b.className = 'tm-ha';
-        b.textContent = m;
+        b.textContent = T(m, m === 'Mayor' ? 'Major' : 'Minor');
         b.dataset.mode = m;
         b.disabled = true;
         b.addEventListener('click', function () {
@@ -475,7 +495,7 @@
           typesWrap.querySelectorAll('.tm-ha').forEach(function (x) {
             x.disabled = (x.dataset.grp !== m);
           });
-          hint.textContent = 'Selecciona el tipo de escala';
+          hint.textContent = T('Selecciona el tipo de escala', 'Choose the type of scale');
         });
         modeRow.appendChild(b);
       });
@@ -552,7 +572,7 @@
         });
 
         elFb.className = 'tm-fb tm-ok tm-show';
-        elFb.innerHTML = '<strong>✓ ¡Correcto!</strong> — Es <strong>' + correct + '</strong>.';
+        elFb.innerHTML = T('<strong>✓ ¡Correcto!</strong> — Es <strong>' + correct + '</strong>.', '<strong>✓ Correct!</strong> — It is <strong>' + dispName(correct) + '</strong>.');
       } else {
         st.streak = 0;
 
@@ -580,7 +600,7 @@
         });
 
         elFb.className = 'tm-fb tm-ko tm-show';
-        elFb.innerHTML = '<strong>✗ Incorrecto</strong> — La respuesta era: <strong>' + correct + '</strong>.';
+        elFb.innerHTML = T('<strong>✗ Incorrecto</strong> — La respuesta era: <strong>' + correct + '</strong>.', '<strong>✗ Incorrect</strong> — The answer was: <strong>' + dispName(correct) + '</strong>.');
         elCard.classList.add('tm-shake');
         setTimeout(function () { elCard.classList.remove('tm-shake'); }, 400);
       }
@@ -599,16 +619,16 @@
         st.correct++; st.streak++;
         btn.classList.add('tm-ok');
         elFb.className = 'tm-fb tm-ok tm-show';
-        elFb.innerHTML = '<strong>✓ ¡Correcto!</strong> — Es <strong>' + correct + '</strong>.';
+        elFb.innerHTML = T('<strong>✓ ¡Correcto!</strong> — Es <strong>' + correct + '</strong>.', '<strong>✓ Correct!</strong> — It is <strong>' + dispName(correct) + '</strong>.');
       } else {
         st.streak = 0;
         btn.classList.add('tm-ko');
         elOpts.querySelectorAll('.tm-opt').forEach(function (x) {
-          if (x.textContent === correct) x.classList.add('tm-ok');
+          if (x.textContent === dispName(correct)) x.classList.add('tm-ok');
           x.disabled = true;
         });
         elFb.className = 'tm-fb tm-ko tm-show';
-        elFb.innerHTML = '<strong>✗ Incorrecto</strong> — La respuesta era: <strong>' + correct + '</strong>.';
+        elFb.innerHTML = T('<strong>✗ Incorrecto</strong> — La respuesta era: <strong>' + correct + '</strong>.', '<strong>✗ Incorrect</strong> — The answer was: <strong>' + dispName(correct) + '</strong>.');
         elCard.classList.add('tm-shake');
         setTimeout(function () { elCard.classList.remove('tm-shake'); }, 400);
       }

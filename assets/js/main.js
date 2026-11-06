@@ -4,6 +4,9 @@
 (function () {
   'use strict';
 
+  // Idioma: <html lang="en"> = páginas inglesas
+  var EN = document.documentElement.lang === 'en';
+
   // Current year in footer
   var yearEl = document.getElementById('tm-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -36,7 +39,7 @@
         toc.className = 'tm-toc';
         toc.open = true;
         var summary = document.createElement('summary');
-        summary.textContent = 'Tabla de contenidos';
+        summary.textContent = EN ? 'Table of contents' : 'Tabla de contenidos';
         toc.appendChild(summary);
         var ul = document.createElement('ul');
         headings.forEach(function (h) {
@@ -75,9 +78,9 @@
     overlay.id = 'tm-lightbox';
     overlay.setAttribute('role', 'dialog');
     overlay.setAttribute('aria-modal', 'true');
-    overlay.setAttribute('aria-label', 'Imagen ampliada');
+    overlay.setAttribute('aria-label', EN ? 'Enlarged image' : 'Imagen ampliada');
     overlay.innerHTML =
-      '<button class="tm-lb-close" aria-label="Cerrar">&times;</button>' +
+      '<button class="tm-lb-close" aria-label="' + (EN ? 'Close' : 'Cerrar') + '">&times;</button>' +
       '<img class="tm-lb-img" src="" alt="">' +
       '<p class="tm-lb-caption"></p>';
     document.body.appendChild(overlay);

@@ -11,9 +11,16 @@
 (function () {
   'use strict';
 
-  function T() { return window.tmCompletarCompasData; }
+  var EN = document.documentElement.lang === 'en';
+  function T(es, en) { return EN ? en : es; }
 
-  var TIT = { 1: '1. Falta una figura', 2: '2. Falta una figura o un silencio', 3: '3. Faltan varias figuras' };
+  function DD() { return window.tmCompletarCompasData; }
+
+  var TIT = {
+    1: T('1. Falta una figura', '1. One note is missing'),
+    2: T('2. Falta una figura o un silencio', '2. A note or a rest is missing'),
+    3: T('3. Faltan varias figuras', '3. Several notes are missing')
+  };
   var LOTES = [[1, 'mezcla', 6], [2, 'mezcla', 6], [3, 'mezcla', 6]];
 
   var CSS = [
@@ -54,7 +61,7 @@
 
   window.tmFichaCompletarCompas = function (id) {
     var cont = document.getElementById(id);
-    if (!cont || !T()) return;
+    if (!cont || !DD()) return;
     if (!document.getElementById('tm-fc-css')) {
       var st = document.createElement('style');
       st.id = 'tm-fc-css';
@@ -66,15 +73,15 @@
 
     cont.innerHTML = '<div class="tm-fc">'
       + '<div class="tm-fc-acciones">'
-      + '<button type="button" class="tm-fc-btn tm-fc-btn-1" data-a="generar">Generar otra ficha</button>'
-      + '<button type="button" class="tm-fc-btn tm-fc-btn-2" data-a="soluciones">Ver soluciones</button>'
-      + '<button type="button" class="tm-fc-btn tm-fc-btn-2" data-a="imprimir">Imprimir</button>'
+      + '<button type="button" class="tm-fc-btn tm-fc-btn-1" data-a="generar">' + T('Generar otra ficha', 'Generate another worksheet') + '</button>'
+      + '<button type="button" class="tm-fc-btn tm-fc-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show answers') + '</button>'
+      + '<button type="button" class="tm-fc-btn tm-fc-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<p class="tm-fc-enlace"></p>'
       + '</div>'
-      + '<div class="tm-fc-hoja"><div class="tm-fc-cab"><p class="tm-fc-tit">Completar compases</p><span class="tm-fc-ref"></span></div>'
-      + '<div class="tm-fc-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
-      + '<p class="tm-fc-instr">A cada compás le falta algo en el sitio marcado con la línea roja. Escribe encima de la línea lo que falta. En la primera parte falta una figura; en la segunda, una figura o un silencio; en la tercera faltan varias figuras (vale cualquier combinación que sume lo que falta).</p>'
+      + '<div class="tm-fc-hoja"><div class="tm-fc-cab"><p class="tm-fc-tit">' + T('Completar compases', 'Complete the measures') + '</p><span class="tm-fc-ref"></span></div>'
+      + '<div class="tm-fc-datos"><span>' + T('Nombre:', 'Name:') + '</span><span>' + T('Curso:', 'Class:') + '</span><span>' + T('Fecha:', 'Date:') + '</span></div>'
+      + '<p class="tm-fc-instr">' + T('A cada compás le falta algo en el sitio marcado con la línea roja. Escribe encima de la línea lo que falta. En la primera parte falta una figura; en la segunda, una figura o un silencio; en la tercera faltan varias figuras (vale cualquier combinación que sume lo que falta).', 'Each measure is missing something where the red line is. Write above the line what is missing. In the first part one note is missing; in the second, a note or a rest; in the third, several notes are missing (any combination that adds up to what is missing is valid).') + '</p>'
       + '<div class="tm-fc-cuerpo"></div></div>';
 
     var elRef = cont.querySelector('.tm-fc-ref');
@@ -82,7 +89,7 @@
     var anchoForzado = null;
 
     function pintar() {
-      var Tt = T();
+      var Tt = DD();
       elCuerpo.innerHTML = '';
       LOTES.forEach(function (lote, li) {
         var nivel = lote[0], grupo = lote[1], cuantos = lote[2];
@@ -108,7 +115,7 @@
         var K = Math.min(1, interior / Math.max.apply(null, anchos));
         svgs.forEach(function (s, i) { s.style.width = (anchos[i] * K) + 'px'; s.style.maxWidth = 'none'; });
       });
-      elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
+      elRef.textContent = T('teoriamusical.com.es · hoja n.º ' + semilla, 'teoriamusical.com.es · worksheet no. ' + semilla);
     }
 
     function generar(semillaFija) {
@@ -117,11 +124,11 @@
       else { do { nueva = Math.floor(Math.random() * 90000 + 10000); } while (nueva === semilla); }
       semilla = nueva;
       solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show answers');
       pintar();
       var a = cont.querySelector('.tm-fc-enlace');
       var params = '?hoja=' + semilla;
-      a.innerHTML = 'Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.';
+      a.innerHTML = T('Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.', 'Each worksheet comes from a number: with <a href="' + window.location.pathname + params + '#generador">this link</a> (worksheet no. ' + semilla + ') you get the same one again.');
     }
 
     cont.addEventListener('click', function (ev) {
@@ -131,7 +138,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         solucion = !solucion;
-        btn.textContent = solucion ? 'Ocultar soluciones' : 'Ver soluciones';
+        btn.textContent = solucion ? T('Ocultar soluciones', 'Hide answers') : T('Ver soluciones', 'Show answers');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

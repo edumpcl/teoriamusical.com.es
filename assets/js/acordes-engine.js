@@ -1,35 +1,45 @@
 /* Motor de ejercicios de acordes tríada — v3 construir inversiones (se dibuja con Verovio: tm-mei.js + tm-notacion.js) */
 (function () {
   'use strict';
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
 
   var NS = [0, 2, 4, 5, 7, 9, 11]; /* C D E F G A B */
   var VF_NAMES = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
 
+  /* label/short en castellano tal cual (tools/verificar-fichas-acordes.js los lee de aquí); en inglés se sustituyen justo debajo. */
   var TRIADS = [
     { id: 'mayor', third: 4, fifth: 7, label: 'Perfecta Mayor', short: 'PM'   },
     { id: 'menor', third: 3, fifth: 7, label: 'Perfecta menor', short: 'Pm'   },
     { id: 'dis',   third: 3, fifth: 6, label: '5\xaa Disminuida', short: '5dis' },
     { id: 'aum',   third: 4, fifth: 8, label: '5\xaa Aumentada',  short: '5Aum' }
   ];
+  if (EN) {
+    var TRIADS_EN = { mayor: 'major', menor: 'minor', dis: 'diminished', aum: 'augmented' };
+    TRIADS.forEach(function (t) {
+      t.label = TRIADS_EN[t.id].charAt(0).toUpperCase() + TRIADS_EN[t.id].slice(1) + ' triad';
+      t.short = TRIADS_EN[t.id] + ' triad';
+    });
+  }
 
   var DIFICULTADES = [
-    { lbl: 'F\xe1cil',    maxAlt: 0, id: 'easy'   },
-    { lbl: 'Medio',       maxAlt: 1, id: 'medium' },
-    { lbl: 'Dif\xedcil', maxAlt: 2, id: 'hard'   }
+    { lbl: T('F\xe1cil', 'Easy'),    maxAlt: 0, id: 'easy'   },
+    { lbl: T('Medio', 'Medium'),     maxAlt: 1, id: 'medium' },
+    { lbl: T('Dif\xedcil', 'Hard'), maxAlt: 2, id: 'hard'   }
   ];
 
-  var INV_LABEL = ['Fundamental', '1\xaa inversi\xf3n', '2\xaa inversi\xf3n'];
+  var INV_LABEL = [T('Fundamental', 'Root position'), T('1\xaa inversi\xf3n', '1st inversion'), T('2\xaa inversi\xf3n', '2nd inversion')];
 
   var INV_TITLES = {
-    'fundamental': 'Tr\xedadas en Fundamental',
-    '1a':          'Tr\xedadas en 1\xaa Inversi\xf3n',
-    '2a':          'Tr\xedadas en 2\xaa Inversi\xf3n',
-    'todas':       'Tr\xedadas — Las tres posiciones'
+    'fundamental': T('Tr\xedadas en Fundamental', 'Triads in Root Position'),
+    '1a':          T('Tr\xedadas en 1\xaa Inversi\xf3n', 'Triads in 1st Inversion'),
+    '2a':          T('Tr\xedadas en 2\xaa Inversi\xf3n', 'Triads in 2nd Inversion'),
+    'todas':       T('Tr\xedadas — Las tres posiciones', 'Triads — All Three Positions')
   };
 
   var PREGUNTAS_POR_TEST = 10;
   var ICONOS = ['☀️', '⚡', '🔥'];
-  var DESCS  = ['Solo acordes con notas naturales', 'Con sostenidos y bemoles', 'Con dobles alteraciones'];
+  var DESCS  = [T('Solo acordes con notas naturales', 'Only chords with natural notes'), T('Con sostenidos y bemoles', 'With sharps and flats'), T('Con dobles alteraciones', 'With double accidentals')];
 
   var CSS = [
     '.tm-iv-wrap .tm-card{background:#fff;border:1px solid #d8d0b8;border-radius:12px;padding:24px;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.05);}',
@@ -104,9 +114,9 @@
   }
   /* Verovio se carga bajo demanda: el motor arranca cuando ya está. */
   function cargarVerovio(wrap, init) {
-    wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">Cargando el ejercicio…</p></div>';
+    wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</p></div>';
     window.tmNotacion.listo().then(init).catch(function () {
-      wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">No se ha podido cargar el ejercicio. Recarga la página.</p></div>';
+      wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">' + T('No se ha podido cargar el ejercicio. Recarga la página.', 'The exercise could not be loaded. Reload the page.') + '</p></div>';
     });
   }
 
@@ -143,8 +153,8 @@
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-iv-mode-screen">',
-            '<h2 class="tm-iv-title">Test &mdash; ' + (INV_TITLES[invType] || 'Tr\xedadas') + '</h2>',
-            '<p class="tm-iv-subtitle">Elige el nivel de dificultad &mdash; ' + totalQ + ' preguntas</p>',
+            '<h2 class="tm-iv-title">Test &mdash; ' + (INV_TITLES[invType] || T('Tr\xedadas', 'Triads')) + '</h2>',
+            '<p class="tm-iv-subtitle">' + T('Elige el nivel de dificultad &mdash; ' + totalQ + ' preguntas', 'Choose the difficulty level &mdash; ' + totalQ + ' questions') + '</p>',
             '<div class="tm-iv-modes">' + btns + '</div>',
           '</div>',
         '</div>'
@@ -174,9 +184,9 @@
           '</div>',
           '<div class="tm-staff"><div id="' + uid + '_not"></div></div>',
           '<div class="tm-grid" id="' + uid + '_opts"></div>',
-          '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>',
+          '<button class="tm-submit" id="' + uid + '_btn">' + T('Comprobar', 'Check') + '</button>',
           '<div id="' + uid + '_fb" class="tm-fb"></div>',
-          '<button id="' + uid + '_nxt" class="tm-nxt">Siguiente →</button>',
+          '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente →', 'Next →') + '</button>',
         '</div>'
       ].join('');
 
@@ -244,7 +254,7 @@
       var toct = (tn > mn) ? moct : moct + 1;
 
       tmNotacion.dibujarAlineado(elNot, filaAcorde([claveMEI(VF_NAMES[bn], ba, boct), claveMEI(VF_NAMES[mn], ma, moct), claveMEI(VF_NAMES[tn], ta, toct)]), {
-        escala: 1.4, separacion: 0.5, top: 62, id: uid, alt: 'Acorde de tres notas en clave de sol'
+        escala: 1.4, separacion: 0.5, top: 62, id: uid, alt: T('Acorde de tres notas en clave de sol', 'Three-note chord in treble clef')
       });
     }
 
@@ -286,11 +296,11 @@
       elFb.className = 'tm-fb tm-show ' + (correct ? 'tm-ok' : 'tm-ko');
 
       if (correct) {
-        elFb.textContent = '¡Correcto!';
+        elFb.textContent = T('¡Correcto!', 'Correct!');
       } else {
         /* En el ejercicio combinado, también se indica la inversión */
         var extra = invType === 'todas' ? ' (' + INV_LABEL[cQ.inv] + ')' : '';
-        elFb.textContent = 'Incorrecto. La respuesta es: ' + cQ.triad.label + extra + '.';
+        elFb.textContent = T('Incorrecto. La respuesta es: ', 'Incorrect. The answer is: ') + cQ.triad.label + extra + '.';
       }
 
       document.getElementById(uid + '_badge').textContent = '✓ ' + score;
@@ -328,7 +338,7 @@
             '<div class="tm-iv-score-num">' + score + '/' + totalQ + '</div>',
             '<div class="tm-iv-score-pct">' + pct + '%</div>',
           '</div>',
-          '<button class="tm-submit tm-ready" id="' + uid + '_restart">Hacer otro test</button>',
+          '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Hacer otro test', 'Take another test') + '</button>',
         '</div>'
       ].join('');
       document.getElementById(uid + '_restart').addEventListener('click', function () {
@@ -351,7 +361,7 @@
     wrap.className = 'tm-iv-wrap';
     var uid = containerId;
 
-    var NOTE_NAMES = ['Do','Re','Mi','Fa','Sol','La','Si'];
+    var NOTE_NAMES = T(['Do','Re','Mi','Fa','Sol','La','Si'], ['C','D','E','F','G','A','B']);
     var ACC_SYM = {'-2':'♭♭','-1':'♭','0':'','1':'♯','2':'♯♯'};
 
 
@@ -380,8 +390,8 @@
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-iv-mode-screen">',
-            '<h2 class="tm-iv-title">Test — Construir ' + (INV_TITLES[invType] || 'Tr\xedadas') + '</h2>',
-            '<p class="tm-iv-subtitle">Elige el nivel de dificultad — ' + totalQ + ' preguntas</p>',
+            '<h2 class="tm-iv-title">Test — ' + T('Construir ', 'Build ') + (INV_TITLES[invType] || T('Tr\xedadas', 'Triads')) + '</h2>',
+            '<p class="tm-iv-subtitle">' + T('Elige el nivel de dificultad — ' + totalQ + ' preguntas', 'Choose the difficulty level — ' + totalQ + ' questions') + '</p>',
             '<div class="tm-iv-modes">',
               DIFICULTADES.map(function(d,i){
                 return '<button class="tm-iv-mode-btn" data-i="'+i+'"><span class="tm-iv-mode-icon">'+ICONOS[i]+'</span><span class="tm-iv-mode-lbl">'+d.lbl+'</span><span class="tm-iv-mode-desc">'+DESCS[i]+'</span></button>';
@@ -425,13 +435,13 @@
           '<div class="tm-tools-row">',
             '<div class="tm-tools-acc">'+tools+'</div>',
             '<div class="tm-tools-edit">',
-              '<button class="tm-tool-edit" id="'+uid+'_undo">↩ Deshacer</button>',
-              '<button class="tm-tool-edit" id="'+uid+'_clear">× Limpiar</button>',
+              '<button class="tm-tool-edit" id="'+uid+'_undo">↩ '+T('Deshacer', 'Undo')+'</button>',
+              '<button class="tm-tool-edit" id="'+uid+'_clear">× '+T('Limpiar', 'Clear')+'</button>',
             '</div>',
           '</div>',
-          '<button class="tm-submit" id="'+uid+'_btn">Comprobar</button>',
+          '<button class="tm-submit" id="'+uid+'_btn">'+T('Comprobar', 'Check')+'</button>',
           '<div class="tm-fb" id="'+uid+'_fb"></div>',
-          '<button class="tm-nxt" id="'+uid+'_nxt">Siguiente →</button>',
+          '<button class="tm-nxt" id="'+uid+'_nxt">'+T('Siguiente →', 'Next →')+'</button>',
         '</div>',
         '<div class="tm-iv-loupe" id="'+uid+'_loupe">',
           '<div class="tm-iv-loupe-staff" id="'+uid+'_lstaff"></div>',
@@ -514,7 +524,7 @@
         return (a.oct*12+NS[VF_NAMES.indexOf(a.vfn)])-(b.oct*12+NS[VF_NAMES.indexOf(b.vfn)]);
       });
       var r = tmNotacion.dibujarAlineado(elNot, filaAcorde(allNotes.map(function(n){ return claveMEI(n.vfn, n.acc, n.oct); })), {
-        escala: 1.5, separacion: 0.5, top: 62, id: uid, alt: 'Pentagrama en clave de sol con la nota dada y las que has colocado'
+        escala: 1.5, separacion: 0.5, top: 62, id: uid, alt: T('Pentagrama en clave de sol con la nota dada y las que has colocado', 'Treble clef staff with the given note and the ones you placed')
       });
       currentSvg = r.elemento;
     }
@@ -618,9 +628,9 @@
 
     /* ---- Role labels per inversion ---- */
     function invRoles(inv) {
-      if (inv === 'fundamental') return ['3\xaa','5\xaa'];
-      if (inv === '1a')         return ['5\xaa','fund.'];
-      return ['fund.','3\xaa'];
+      if (inv === 'fundamental') return [T('3\xaa','3rd'),T('5\xaa','5th')];
+      if (inv === '1a')         return [T('5\xaa','5th'),T('fund.','root')];
+      return [T('fund.','root'),T('3\xaa','3rd')];
     }
 
     /* ---- Check answer ---- */
@@ -643,12 +653,12 @@
       if (ok) {
         score++;
         elFb.className = 'tm-fb tm-ok tm-show';
-        elFb.innerHTML = '<strong>✓ \xa1Correcto!</strong> — '+roles[0]+': '+lbl1+', '+roles[1]+': '+lbl2+'.';
+        elFb.innerHTML = '<strong>✓ '+T('\xa1Correcto!', 'Correct!')+'</strong> — '+roles[0]+': '+lbl1+', '+roles[1]+': '+lbl2+'.';
       } else {
         placedNotes = [{vfn:exp1.vfn,oct:exp1.oct,acc:exp1.a},{vfn:exp2.vfn,oct:exp2.oct,acc:exp2.a}];
         drawStaff();
         elFb.className = 'tm-fb tm-ko tm-show';
-        elFb.innerHTML = '<strong>✗ Incorrecto.</strong> La soluci\xf3n: '+roles[0]+' '+lbl1+', '+roles[1]+' '+lbl2+'.';
+        elFb.innerHTML = '<strong>✗ '+T('Incorrecto.', 'Incorrect.')+'</strong> '+T('La soluci\xf3n:', 'The solution:')+' '+roles[0]+' '+lbl1+', '+roles[1]+' '+lbl2+'.';
       }
       document.getElementById(uid+'_badge').textContent = '✓ '+score;
       document.getElementById(uid+'_wrap').classList.add('tm-answered');
@@ -668,9 +678,9 @@
       genQ();
       var rootLbl = NOTE_NAMES[cQ.n1]+ACC_SYM[String(cQ.a1)];
       var roles = invRoles(cQ.inv);
-      var invSuffix = cQ.inv === 'fundamental' ? '' : (cQ.inv === '1a' ? ' (1\xaa inv.)' : ' (2\xaa inv.)');
+      var invSuffix = cQ.inv === 'fundamental' ? '' : (cQ.inv === '1a' ? T(' (1\xaa inv.)', ' (1st inv.)') : T(' (2\xaa inv.)', ' (2nd inv.)'));
       document.getElementById(uid+'_q').innerHTML =
-        'Dibuja la '+roles[0]+' y la '+roles[1]+' del acorde'+invSuffix+': <strong>'+rootLbl+' — '+cQ.triad.short+'</strong>';
+        T('Dibuja la '+roles[0]+' y la '+roles[1]+' del acorde'+invSuffix+': ', 'Draw the '+roles[0]+' and the '+roles[1]+' of the chord'+invSuffix+': ')+'<strong>'+rootLbl+' — '+cQ.triad.short+'</strong>';
       drawStaff();
     }
 
@@ -685,7 +695,7 @@
             '<div class="tm-iv-score-num">'+score+'/'+totalQ+'</div>',
             '<div class="tm-iv-score-pct">'+pct+'%</div>',
           '</div>',
-          '<button class="tm-submit tm-ready" id="'+uid+'_restart">Hacer otro test</button>',
+          '<button class="tm-submit tm-ready" id="'+uid+'_restart">'+T('Hacer otro test', 'Take another test')+'</button>',
         '</div>'
       ].join('');
       document.getElementById(uid+'_restart').addEventListener('click',function(){

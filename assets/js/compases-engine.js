@@ -2,6 +2,9 @@
 (function () {
   'use strict';
 
+  var EN = document.documentElement.lang === 'en';
+  function T(es, en) { return EN ? en : es; }
+
   var CSS = [
     '.tm-cp-wrap{font-family:"Inter",system-ui,-apple-system,sans-serif;color:#333;}',
     '.tm-cp-card{background:#fff;border:1px solid #e8e0cc;border-radius:12px;padding:22px;margin:8px 0;box-shadow:0 2px 8px rgba(0,0,0,.05);}',
@@ -124,13 +127,13 @@
   window.tmNotaSVG = function (id) { return SV[id] || ''; };
 
   var PAIRS = [
-    { base: { id:'sf',  lbl:'Semifusa'     }, dot: { id:'sfP', lbl:'Semifusa c/p.'  } },
-    { base: { id:'f',   lbl:'Fusa'         }, dot: { id:'fP',  lbl:'Fusa c/p.'      } },
-    { base: { id:'sc',  lbl:'Semicorchea'  }, dot: { id:'scP', lbl:'Semico. c/p.'   } },
-    { base: { id:'c',   lbl:'Corchea'      }, dot: { id:'cP',  lbl:'Corchea c/p.'   } },
-    { base: { id:'n',   lbl:'Negra'        }, dot: { id:'nP',  lbl:'Negra c/p.'     } },
-    { base: { id:'b',   lbl:'Blanca'       }, dot: { id:'bP',  lbl:'Blanca c/p.'    } },
-    { base: { id:'r',   lbl:'Redonda'      }, dot: { id:'rP',  lbl:'Redonda c/p.'   } },
+    { base: { id:'sf',  lbl:T('Semifusa', '64th')     }, dot: { id:'sfP', lbl:T('Semifusa c/p.', 'Dotted 64th')  } },
+    { base: { id:'f',   lbl:T('Fusa', '32nd')         }, dot: { id:'fP',  lbl:T('Fusa c/p.', 'Dotted 32nd')      } },
+    { base: { id:'sc',  lbl:T('Semicorchea', '16th')  }, dot: { id:'scP', lbl:T('Semico. c/p.', 'Dotted 16th')   } },
+    { base: { id:'c',   lbl:T('Corchea', '8th')      }, dot: { id:'cP',  lbl:T('Corchea c/p.', 'Dotted 8th')   } },
+    { base: { id:'n',   lbl:T('Negra', 'Quarter')        }, dot: { id:'nP',  lbl:T('Negra c/p.', 'Dotted quarter')     } },
+    { base: { id:'b',   lbl:T('Blanca', 'Half')       }, dot: { id:'bP',  lbl:T('Blanca c/p.', 'Dotted half')    } },
+    { base: { id:'r',   lbl:T('Redonda', 'Whole')      }, dot: { id:'rP',  lbl:T('Redonda c/p.', 'Dotted whole')   } },
   ];
 
   /* uC uses {n1, n2} — n2 null for non-ligated.
@@ -214,12 +217,12 @@
 
     function showModeScreen() {
       wrap.innerHTML = '<div class="tm-cp-card">'
-        + '<div class="tm-cp-mode-title">Análisis de compases</div>'
-        + '<div class="tm-cp-mode-sub">Identifica el tipo de compás, el número de tiempos, la subdivisión y las unidades de tiempo, subdivisión y compás.</div>'
+        + '<div class="tm-cp-mode-title">' + T('Análisis de compases', 'Time signature analysis') + '</div>'
+        + '<div class="tm-cp-mode-sub">' + T('Identifica el tipo de compás, el número de tiempos, la subdivisión y las unidades de tiempo, subdivisión y compás.', 'Identify the type of meter, the number of beats, the subdivision, and the beat unit, subdivision unit and measure unit.') + '</div>'
         + '<div class="tm-cp-mode-btns">'
-        + '<button class="tm-cp-mode-btn" data-modo="s"><strong>Simples</strong><span>Denominadores 1, 2, 4, 8, 16 y 32 — subdivisión binaria</span></button>'
-        + '<button class="tm-cp-mode-btn" data-modo="c"><strong>Compuestos</strong><span>Denominadores 2, 4, 8, 16 y 32 — subdivisión ternaria</span></button>'
-        + '<button class="tm-cp-mode-btn" data-modo="all"><strong>Todos</strong><span>Simples y compuestos mezclados</span></button>'
+        + '<button class="tm-cp-mode-btn" data-modo="s"><strong>' + T('Simples', 'Simple') + '</strong><span>' + T('Denominadores 1, 2, 4, 8, 16 y 32 — subdivisión binaria', 'Denominators 1, 2, 4, 8, 16 and 32 — binary subdivision') + '</span></button>'
+        + '<button class="tm-cp-mode-btn" data-modo="c"><strong>' + T('Compuestos', 'Compound') + '</strong><span>' + T('Denominadores 2, 4, 8, 16 y 32 — subdivisión ternaria', 'Denominators 2, 4, 8, 16 and 32 — ternary subdivision') + '</span></button>'
+        + '<button class="tm-cp-mode-btn" data-modo="all"><strong>' + T('Todos', 'All') + '</strong><span>' + T('Simples y compuestos mezclados', 'Simple and compound mixed') + '</span></button>'
         + '</div></div>';
 
       wrap.querySelectorAll('.tm-cp-mode-btn').forEach(function (btn) {
@@ -249,37 +252,37 @@
       var selUC = { n1: null, n2: null, liga: false };
 
       wrap.innerHTML = '<div class="tm-cp-card">'
-        + '<div class="tm-cp-prog-label">Pregunta ' + (current + 1) + ' de ' + TOTAL + '</div>'
+        + '<div class="tm-cp-prog-label">' + T('Pregunta ' + (current + 1) + ' de ' + TOTAL, 'Question ' + (current + 1) + ' of ' + TOTAL) + '</div>'
         + '<div class="tm-cp-prog-bar"><div class="tm-cp-prog-fill" style="width:' + pct + '%"></div></div>'
         + '<div class="tm-cp-sig-wrap"><div class="tm-cp-sig"><span class="tm-cp-sig-n">' + sp[0] + '</span><span class="tm-cp-sig-d">' + sp[1] + '</span></div></div>'
         /* Q1 */
-        + '<div class="tm-cp-section" id="sec-tipo"><div class="tm-cp-qlabel">Tipo de compás</div>'
-        + '<div class="tm-cp-pills"><div class="tm-cp-pill" data-q="tipo" data-val="s">Simple</div><div class="tm-cp-pill" data-q="tipo" data-val="c">Compuesto</div></div></div>'
+        + '<div class="tm-cp-section" id="sec-tipo"><div class="tm-cp-qlabel">' + T('Tipo de compás', 'Type of meter') + '</div>'
+        + '<div class="tm-cp-pills"><div class="tm-cp-pill" data-q="tipo" data-val="s">' + T('Simple', 'Simple') + '</div><div class="tm-cp-pill" data-q="tipo" data-val="c">' + T('Compuesto', 'Compound') + '</div></div></div>'
         /* Q2 */
-        + '<div class="tm-cp-section" id="sec-tiempos"><div class="tm-cp-qlabel">Número de tiempos</div>'
+        + '<div class="tm-cp-section" id="sec-tiempos"><div class="tm-cp-qlabel">' + T('Número de tiempos', 'Number of beats') + '</div>'
         + '<div class="tm-cp-pills"><div class="tm-cp-pill" data-q="tiempos" data-val="2">2</div><div class="tm-cp-pill" data-q="tiempos" data-val="3">3</div><div class="tm-cp-pill" data-q="tiempos" data-val="4">4</div></div></div>'
         /* Q3 */
-        + '<div class="tm-cp-section" id="sec-subdiv"><div class="tm-cp-qlabel">Tipo de subdivisión</div>'
-        + '<div class="tm-cp-pills"><div class="tm-cp-pill" data-q="subdiv" data-val="b">Binaria</div><div class="tm-cp-pill" data-q="subdiv" data-val="t">Ternaria</div></div></div>'
+        + '<div class="tm-cp-section" id="sec-subdiv"><div class="tm-cp-qlabel">' + T('Tipo de subdivisión', 'Type of subdivision') + '</div>'
+        + '<div class="tm-cp-pills"><div class="tm-cp-pill" data-q="subdiv" data-val="b">' + T('Binaria', 'Binary') + '</div><div class="tm-cp-pill" data-q="subdiv" data-val="t">' + T('Ternaria', 'Ternary') + '</div></div></div>'
         /* Q4 uT */
-        + '<div class="tm-cp-section" id="sec-uT"><div class="tm-cp-qlabel">Unidad de tiempo</div>'
+        + '<div class="tm-cp-section" id="sec-uT"><div class="tm-cp-qlabel">' + T('Unidad de tiempo', 'Beat unit') + '</div>'
         + pairsGrid('grid-uT') + '</div>'
         /* Q5 uS */
-        + '<div class="tm-cp-section" id="sec-uS"><div class="tm-cp-qlabel">Unidad de subdivisión</div>'
+        + '<div class="tm-cp-section" id="sec-uS"><div class="tm-cp-qlabel">' + T('Unidad de subdivisión', 'Subdivision unit') + '</div>'
         + pairsGrid('grid-uS') + '</div>'
         /* Q6 uC */
-        + '<div class="tm-cp-section" id="sec-uC"><div class="tm-cp-qlabel">Unidad de compás</div>'
+        + '<div class="tm-cp-section" id="sec-uC"><div class="tm-cp-qlabel">' + T('Unidad de compás', 'Measure unit') + '</div>'
         + pairsGrid('grid-uC-1')
-        + '<label class="tm-cp-liga-row"><input type="checkbox" id="chk-liga"><span>Con ligadura (dos figuras ligadas)</span></label>'
+        + '<label class="tm-cp-liga-row"><input type="checkbox" id="chk-liga"><span>' + T('Con ligadura (dos figuras ligadas)', 'With a tie (two tied notes)') + '</span></label>'
         + '<div class="tm-cp-grid2" id="grid-uC-2-wrap" style="display:none">'
-        + '<div class="tm-cp-grid2-lbl">Segunda figura (ligada a la anterior)</div>'
+        + '<div class="tm-cp-grid2-lbl">' + T('Segunda figura (ligada a la anterior)', 'Second note (tied to the previous one)') + '</div>'
         + pairsGrid('grid-uC-2')
         + '</div></div>'
         /* feedback + buttons */
         + '<div class="tm-cp-fb" id="tm-cp-fb"></div>'
-        + '<button class="tm-cp-submit" id="tm-cp-submit">Comprobar</button>'
+        + '<button class="tm-cp-submit" id="tm-cp-submit">' + T('Comprobar', 'Check') + '</button>'
         + '<button id="tm-cp-next" style="display:none;width:100%;padding:14px;margin-top:10px;border:none;border-radius:8px;font-size:1rem;font-weight:700;background:#8b6914;color:#fff;cursor:pointer;">'
-        + (current + 1 < TOTAL ? 'Siguiente →' : 'Ver resultados')
+        + (current + 1 < TOTAL ? T('Siguiente →', 'Next →') : T('Ver resultados', 'See results'))
         + '</button>'
         + '</div>';
 
@@ -450,26 +453,26 @@
       fb.classList.add('tm-show');
       if (correct === 6) {
         fb.classList.add('tm-ok');
-        fb.textContent = '✓ ¡Correcto! Las 6 respuestas son correctas.';
+        fb.textContent = T('✓ ¡Correcto! Las 6 respuestas son correctas.', '✓ Correct! All 6 answers are correct.');
       } else {
         fb.classList.add('tm-ko');
-        fb.textContent = '✗ ' + correct + ' de 6 correctas. Las respuestas correctas están marcadas en verde.';
+        fb.textContent = T('✗ ' + correct + ' de 6 correctas. Las respuestas correctas están marcadas en verde.', '✗ ' + correct + ' of 6 correct. The correct answers are marked in green.');
       }
     }
 
     function showResults() {
       var pct = Math.round((score / TOTAL) * 100);
-      var msg = pct === 100 ? '¡Perfecto! Dominas el análisis de compases.'
-              : pct >= 80  ? 'Muy bien. Casi lo tienes dominado.'
-              : pct >= 60  ? 'Vas por buen camino. Repasa los compases compuestos.'
-              : pct >= 40  ? 'Necesitas repasar. Presta atención a las unidades.'
-              :              '¡Sigue practicando! Empieza por el nivel Fácil.';
+      var msg = pct === 100 ? T('¡Perfecto! Dominas el análisis de compases.', 'Perfect! You have mastered time signature analysis.')
+              : pct >= 80  ? T('Muy bien. Casi lo tienes dominado.', 'Very good. You almost have it.')
+              : pct >= 60  ? T('Vas por buen camino. Repasa los compases compuestos.', 'You are on the right track. Review compound meters.')
+              : pct >= 40  ? T('Necesitas repasar. Presta atención a las unidades.', 'You need to review. Pay attention to the units.')
+              :              T('¡Sigue practicando! Empieza por el nivel Fácil.', 'Keep practicing! Start with the simple meters.');
 
       wrap.innerHTML = '<div class="tm-cp-card tm-cp-results">'
         + '<div class="tm-cp-res-score">' + score + '/' + TOTAL + '</div>'
-        + '<div class="tm-cp-res-total">' + pct + '% de compases completamente correctos</div>'
+        + '<div class="tm-cp-res-total">' + T(pct + '% de compases completamente correctos', pct + '% of time signatures completely correct') + '</div>'
         + '<div class="tm-cp-res-msg">' + msg + '</div>'
-        + '<button class="tm-cp-retry" id="tm-cp-retry">Intentar de nuevo</button>'
+        + '<button class="tm-cp-retry" id="tm-cp-retry">' + T('Intentar de nuevo', 'Try again') + '</button>'
         + '</div>';
 
       document.getElementById('tm-cp-retry').addEventListener('click', showModeScreen);

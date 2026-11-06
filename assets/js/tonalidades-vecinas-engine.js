@@ -2,6 +2,21 @@
 (function () {
   'use strict';
 
+  var EN = document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+  var NOTE_EN = { 'Do': 'C', 'Re': 'D', 'Mi': 'E', 'Fa': 'F', 'Sol': 'G', 'La': 'A', 'Si': 'B' };
+  /* Los datos (KEYS) siguen en castellano; en inglés el nombre se traduce al mostrarlo: 'Fa# menor' -> 'F♯ minor', 'Sib Mayor' -> 'B♭ major' */
+  function lbl(s) {
+    if (!EN) return s;
+    var m = /^(Do|Re|Mi|Fa|Sol|La|Si)([#b]?) (Mayor|menor)$/.exec(s);
+    if (!m) return s;
+    return NOTE_EN[m[1]] + (m[2] === '#' ? '♯' : m[2] === 'b' ? '♭' : '') + ' ' + (m[3] === 'Mayor' ? 'major' : 'minor');
+  }
+  /* Etiqueta del constructor (letra + '#'/'b' ASCII + modo) -> con ♯/♭ al mostrarla en inglés */
+  function pretty(s) {
+    return EN ? s.replace(/^([A-G])([#b])/, function (_, n, a) { return n + (a === '#' ? '♯' : '♭'); }) : s;
+  }
+
   var KEYS = [
     { pos: -7, maj: "Dob Mayor",  min: "Lab menor"  },
     { pos: -6, maj: "Solb Mayor", min: "Mib menor"  },
@@ -24,8 +39,8 @@
   var ALL = [];
   KEYS.forEach(function (k) {
     if (k.pos >= -6 && k.pos <= 6) {
-      ALL.push({ key: k, mode: 'maj', label: k.maj });
-      ALL.push({ key: k, mode: 'min', label: k.min });
+      ALL.push({ key: k, mode: 'maj', label: lbl(k.maj) });
+      ALL.push({ key: k, mode: 'min', label: lbl(k.min) });
     }
   });
 
@@ -39,7 +54,7 @@
   function getTon(pos, mode) {
     var k = findKey(pos);
     if (!k) return null;
-    return { key: k, mode: mode, label: mode === 'maj' ? k.maj : k.min };
+    return { key: k, mode: mode, label: lbl(mode === 'maj' ? k.maj : k.min) };
   }
 
   /*
@@ -91,9 +106,10 @@
 
   function explainRelation(a, b) {
     var diff = Math.abs(a.key.pos - b.key.pos);
-    if (diff === 0) return 'son <strong>relativas</strong>: comparten exactamente la misma armadura.';
-    if (diff === 1) return 'sus armaduras solo difieren en <strong>1 alteración</strong>.';
-    return 'sus armaduras difieren en <strong>' + diff + ' alteraciones</strong> — están demasiado lejos en el círculo de quintas.';
+    if (diff === 0) return T('son <strong>relativas</strong>: comparten exactamente la misma armadura.', 'are <strong>relative</strong> keys: they share exactly the same key signature.');
+    if (diff === 1) return T('sus armaduras solo difieren en <strong>1 alteración</strong>.', 'their key signatures differ by only <strong>1 accidental</strong>.');
+    return T('sus armaduras difieren en <strong>' + diff + ' alteraciones</strong> — están demasiado lejos en el círculo de quintas.',
+      'their key signatures differ by <strong>' + diff + ' accidentals</strong> — they are too far apart on the circle of fifths.');
   }
 
   function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
@@ -216,51 +232,51 @@
     wrap.className = 'tmtab-wrap';
     var uid = containerId;
 
-    var NOTES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
+    var NOTES = EN ? ['C', 'D', 'E', 'F', 'G', 'A', 'B'] : ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
     var ALTS  = [{ sym: '♭', val: 'b' }, { sym: '—', val: '' }, { sym: '♯', val: '#' }];
-    var MODES = ['Mayor', 'menor'];
+    var MODES = EN ? ['major', 'minor'] : ['Mayor', 'menor'];
 
     wrap.innerHTML = [
       '<div class="tm-controls">',
-        '<div class="tm-lbl">Dificultad:</div>',
-        '<button class="tm-btn tm-on" id="' + uid + '_d_easy">Fácil</button>',
-        '<button class="tm-btn" id="' + uid + '_d_med">Medio</button>',
-        '<button class="tm-btn" id="' + uid + '_d_hard">Difícil</button>',
+        '<div class="tm-lbl">' + T('Dificultad:', 'Difficulty:') + '</div>',
+        '<button class="tm-btn tm-on" id="' + uid + '_d_easy">' + T('Fácil', 'Easy') + '</button>',
+        '<button class="tm-btn" id="' + uid + '_d_med">' + T('Medio', 'Medium') + '</button>',
+        '<button class="tm-btn" id="' + uid + '_d_hard">' + T('Difícil', 'Hard') + '</button>',
       '</div>',
       '<div class="tm-stats">',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_tot">0</div><div class="tm-sl">Tablas</div></div>',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_perf">0</div><div class="tm-sl">Perfectas</div></div>',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_pts">—</div><div class="tm-sl">Aciertos</div></div>',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_str">0</div><div class="tm-sl">Racha</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_tot">0</div><div class="tm-sl">' + T('Tablas', 'Tables') + '</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_perf">0</div><div class="tm-sl">' + T('Perfectas', 'Perfect') + '</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_pts">—</div><div class="tm-sl">' + T('Aciertos', 'Correct') + '</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_str">0</div><div class="tm-sl">' + T('Racha', 'Streak') + '</div></div>',
       '</div>',
       '<div class="tm-pbar-wrap"><div class="tm-pbar" id="' + uid + '_pbar"></div></div>',
       '<div class="tm-card" id="' + uid + '_card">',
-        '<div class="tm-qlbl">Tabla <span class="tm-qnum" id="' + uid + '_qnum">1</span></div>',
-        '<div class="tm-qtxt">Toca cada celda para escribir las 5 tonalidades vecinas:</div>',
+        '<div class="tm-qlbl">' + T('Tabla', 'Table') + ' <span class="tm-qnum" id="' + uid + '_qnum">1</span></div>',
+        '<div class="tm-qtxt">' + T('Toca cada celda para escribir las 5 tonalidades vecinas:', 'Tap each cell to write the 5 closely related keys:') + '</div>',
         '<div id="' + uid + '_grid"></div>',
-        '<button class="tm-submit" id="' + uid + '_submit">Comprobar →</button>',
+        '<button class="tm-submit" id="' + uid + '_submit">' + T('Comprobar →', 'Check →') + '</button>',
         '<div class="tm-fb" id="' + uid + '_fb"></div>',
-        '<button class="tm-nxt" id="' + uid + '_nxt">Siguiente tabla →</button>',
+        '<button class="tm-nxt" id="' + uid + '_nxt">' + T('Siguiente tabla →', 'Next table →') + '</button>',
       '</div>',
       /* Overlay */
       '<div class="tmtab-overlay" id="' + uid + '_ov"></div>',
       /* Builder */
       '<div class="tmtab-bld" id="' + uid + '_bld">',
-        '<div class="tmtab-bld-head">Constructor de tonalidad</div>',
+        '<div class="tmtab-bld-head">' + T('Constructor de tonalidad', 'Key builder') + '</div>',
         '<div class="tmtab-bld-preview" id="' + uid + '_bld_prev">…</div>',
         '<div class="tmtab-bld-step">',
-          '<div class="tmtab-bld-slbl">1 · Nota</div>',
+          '<div class="tmtab-bld-slbl">' + T('1 · Nota', '1 · Note') + '</div>',
           '<div class="tmtab-bld-row" id="' + uid + '_bld_notes"></div>',
         '</div>',
         '<div class="tmtab-bld-step">',
-          '<div class="tmtab-bld-slbl">2 · Alteración</div>',
+          '<div class="tmtab-bld-slbl">' + T('2 · Alteración', '2 · Accidental') + '</div>',
           '<div class="tmtab-bld-row" id="' + uid + '_bld_alts"></div>',
         '</div>',
         '<div class="tmtab-bld-step">',
-          '<div class="tmtab-bld-slbl">3 · Modo</div>',
+          '<div class="tmtab-bld-slbl">' + T('3 · Modo', '3 · Mode') + '</div>',
           '<div class="tmtab-bld-row" id="' + uid + '_bld_modes"></div>',
         '</div>',
-        '<button class="tmtab-bld-cancel" id="' + uid + '_bld_cancel">Cancelar</button>',
+        '<button class="tmtab-bld-cancel" id="' + uid + '_bld_cancel">' + T('Cancelar', 'Cancel') + '</button>',
       '</div>'
     ].join('');
 
@@ -294,7 +310,7 @@
       if (!bldNote) return '…';
       var alt = bldAlt === null ? '' : bldAlt;
       var mode = bldMode || '';
-      return (bldNote + alt + (mode ? ' ' + mode : '')).trim() || '…';
+      return pretty((bldNote + alt + (mode ? ' ' + mode : '')).trim()) || '…';
     }
 
     function refreshBuilderUI() {
@@ -359,7 +375,7 @@
         /* Intenta recuperar nota/alt/modo del valor guardado */
         var parts = prev.split(' ');
         var modeStr = parts[parts.length - 1];
-        if (modeStr === 'Mayor' || modeStr === 'menor') {
+        if (modeStr === MODES[0] || modeStr === MODES[1]) {
           bldMode = modeStr;
           var notePart = parts.slice(0, parts.length - 1).join(' ');
           ALTS.forEach(function (a) {
@@ -386,7 +402,7 @@
       cellValues[activeCellIdx] = label;
       var valEl = document.getElementById(uid + '_val_' + activeCellIdx);
       if (valEl) {
-        valEl.textContent = label;
+        valEl.textContent = pretty(label);
         valEl.classList.remove('tm-empty');
       }
       closeBuilder();
@@ -443,7 +459,7 @@
         } else {
           html += '<div class="tmtab-cell">';
           html += '<div class="tmtab-cell-lbl">' + cell.rel + '</div>';
-          html += '<div class="tmtab-cell-val tm-empty" id="' + uid + '_val_' + inpIdx + '" data-idx="' + inpIdx + '">toca</div>';
+          html += '<div class="tmtab-cell-val tm-empty" id="' + uid + '_val_' + inpIdx + '" data-idx="' + inpIdx + '">' + T('toca', 'tap') + '</div>';
           html += '<div class="tm-hint" id="' + uid + '_hint_' + inpIdx + '" style="display:none"></div>';
           html += '</div>';
           inputDefs.push({ inpIdx: inpIdx, cell: cell });
@@ -495,8 +511,8 @@
       var cls = isPerfect ? 'tm-ok' : correct >= 3 ? 'tm-partial' : 'tm-ko';
       elFb.className = 'tm-fb ' + cls + ' tm-show';
       elFb.innerHTML = isPerfect
-        ? '<strong>✓ ¡Tabla perfecta!</strong> Las 5 tonalidades vecinas son correctas.'
-        : '<strong>' + correct + ' de 5 correctas.</strong> Las marcadas en rojo muestran la respuesta correcta debajo.';
+        ? T('<strong>✓ ¡Tabla perfecta!</strong> Las 5 tonalidades vecinas son correctas.', '<strong>✓ Perfect table!</strong> All 5 closely related keys are correct.')
+        : T('<strong>' + correct + ' de 5 correctas.</strong> Las marcadas en rojo muestran la respuesta correcta debajo.', '<strong>' + correct + ' of 5 correct.</strong> The cells marked in red show the correct answer below.');
       if (!isPerfect) {
         elCard.classList.add('tm-shake');
         setTimeout(function () { elCard.classList.remove('tm-shake'); }, 400);
@@ -531,22 +547,22 @@
 
     wrap.innerHTML = [
       '<div class="tm-stats">',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_tot">0</div><div class="tm-sl">Preguntas</div></div>',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_cor">0</div><div class="tm-sl">Correctas</div></div>',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_pct">—</div><div class="tm-sl">Acierto</div></div>',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_str">0</div><div class="tm-sl">Racha</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_tot">0</div><div class="tm-sl">' + T('Preguntas', 'Questions') + '</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_cor">0</div><div class="tm-sl">' + T('Correctas', 'Correct') + '</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_pct">—</div><div class="tm-sl">' + T('Acierto', 'Accuracy') + '</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_str">0</div><div class="tm-sl">' + T('Racha', 'Streak') + '</div></div>',
       '</div>',
       '<div class="tm-pbar-wrap"><div class="tm-pbar" id="' + uid + '_pbar"></div></div>',
       '<div class="tm-card" id="' + uid + '_card">',
-        '<div class="tm-qlbl">Pregunta <span class="tm-qnum" id="' + uid + '_qnum">1</span></div>',
-        '<div class="tm-qtxt">¿Son estas dos tonalidades <strong>vecinas</strong>?</div>',
+        '<div class="tm-qlbl">' + T('Pregunta', 'Question') + ' <span class="tm-qnum" id="' + uid + '_qnum">1</span></div>',
+        '<div class="tm-qtxt">' + T('¿Son estas dos tonalidades <strong>vecinas</strong>?', 'Are these two keys <strong>closely related</strong>?') + '</div>',
         '<div class="tm-pair" id="' + uid + '_pair"></div>',
         '<div class="tm-yn">',
-          '<button class="tm-yn-btn" id="' + uid + '_yes">✓&nbsp;&nbsp;Sí, son vecinas</button>',
-          '<button class="tm-yn-btn" id="' + uid + '_no">✗&nbsp;&nbsp;No, son lejanas</button>',
+          '<button class="tm-yn-btn" id="' + uid + '_yes">✓&nbsp;&nbsp;' + T('Sí, son vecinas', 'Yes, closely related') + '</button>',
+          '<button class="tm-yn-btn" id="' + uid + '_no">✗&nbsp;&nbsp;' + T('No, son lejanas', 'No, distant keys') + '</button>',
         '</div>',
         '<div class="tm-fb" id="' + uid + '_fb"></div>',
-        '<button class="tm-nxt" id="' + uid + '_nxt">Siguiente →</button>',
+        '<button class="tm-nxt" id="' + uid + '_nxt">' + T('Siguiente →', 'Next →') + '</button>',
       '</div>'
     ].join('');
 
@@ -568,8 +584,8 @@
 
     var ALL_SV = [];
     KEYS.forEach(function (k) {
-      ALL_SV.push({ key: k, mode: 'maj', label: k.maj });
-      ALL_SV.push({ key: k, mode: 'min', label: k.min });
+      ALL_SV.push({ key: k, mode: 'maj', label: lbl(k.maj) });
+      ALL_SV.push({ key: k, mode: 'min', label: lbl(k.min) });
     });
 
     elYes.addEventListener('click', function () { answer(true); });
@@ -609,18 +625,18 @@
         (userSaysYes ? elYes : elNo).classList.add('tm-ok');
         elFb.className = 'tm-fb tm-ok tm-show';
         elFb.innerHTML = (cQ.areNeighbors
-          ? '<strong>✓ ¡Correcto! Sí son vecinas.</strong>'
-          : '<strong>✓ ¡Correcto! No son vecinas.</strong>')
-          + ' — <strong>' + cQ.a.label + '</strong> y <strong>' + cQ.b.label + '</strong> ' + rel;
+          ? T('<strong>✓ ¡Correcto! Sí son vecinas.</strong>', '<strong>✓ Correct! They are closely related.</strong>')
+          : T('<strong>✓ ¡Correcto! No son vecinas.</strong>', '<strong>✓ Correct! They are not closely related.</strong>'))
+          + ' — <strong>' + cQ.a.label + '</strong>' + T(' y ', ' and ') + '<strong>' + cQ.b.label + '</strong> ' + rel;
       } else {
         st.streak = 0;
         (userSaysYes ? elYes : elNo).classList.add('tm-ko');
         (userSaysYes ? elNo : elYes).classList.add('tm-ok');
         elFb.className = 'tm-fb tm-ko tm-show';
         elFb.innerHTML = (cQ.areNeighbors
-          ? '<strong>✗ Incorrecto. Sí son vecinas.</strong>'
-          : '<strong>✗ Incorrecto. No son vecinas.</strong>')
-          + ' — <strong>' + cQ.a.label + '</strong> y <strong>' + cQ.b.label + '</strong> ' + rel;
+          ? T('<strong>✗ Incorrecto. Sí son vecinas.</strong>', '<strong>✗ Incorrect. They are closely related.</strong>')
+          : T('<strong>✗ Incorrecto. No son vecinas.</strong>', '<strong>✗ Incorrect. They are not closely related.</strong>'))
+          + ' — <strong>' + cQ.a.label + '</strong>' + T(' y ', ' and ') + '<strong>' + cQ.b.label + '</strong> ' + rel;
         elCard.classList.add('tm-shake');
         setTimeout(function () { elCard.classList.remove('tm-shake'); }, 400);
       }

@@ -2,6 +2,17 @@
 (function () {
   'use strict';
 
+  var EN = document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+  var NOTE_EN = { 'Do': 'C', 'Re': 'D', 'Mi': 'E', 'Fa': 'F', 'Sol': 'G', 'La': 'A', 'Si': 'B' };
+  /* Los datos (KEYS) siguen en castellano; en inglés el nombre se traduce al mostrarlo: 'Fa# menor' -> 'F♯ minor', 'Sib Mayor' -> 'B♭ major' */
+  function lbl(s) {
+    if (!EN) return s;
+    var m = /^(Do|Re|Mi|Fa|Sol|La|Si)([#b]?) (Mayor|menor)$/.exec(s);
+    if (!m) return s;
+    return NOTE_EN[m[1]] + (m[2] === '#' ? '♯' : m[2] === 'b' ? '♭' : '') + ' ' + (m[3] === 'Mayor' ? 'major' : 'minor');
+  }
+
   var KEYS = [
     { vex: "C",  maj: "Do Mayor",   min: "La menor",   seq: [] },
     { vex: "G",  maj: "Sol Mayor",  min: "Mi menor",   seq: ["f/5/#"] },
@@ -148,25 +159,25 @@
 
     wrap.innerHTML = [
       '<div class="tm-controls">',
-        '<div class="tm-lbl">Dificultad:</div>',
-        '<button class="tm-btn tm-on" id="' + uid + '_d_easy">Fácil</button>',
-        '<button class="tm-btn" id="' + uid + '_d_med">Medio</button>',
-        '<button class="tm-btn" id="' + uid + '_d_hard">Difícil</button>',
+        '<div class="tm-lbl">' + T('Dificultad:', 'Difficulty:') + '</div>',
+        '<button class="tm-btn tm-on" id="' + uid + '_d_easy">' + T('Fácil', 'Easy') + '</button>',
+        '<button class="tm-btn" id="' + uid + '_d_med">' + T('Medio', 'Medium') + '</button>',
+        '<button class="tm-btn" id="' + uid + '_d_hard">' + T('Difícil', 'Hard') + '</button>',
       '</div>',
       '<div class="tm-stats">',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_tot">0</div><div class="tm-sl">Preguntas</div></div>',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_cor">0</div><div class="tm-sl">Correctas</div></div>',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_pct">—</div><div class="tm-sl">Acierto</div></div>',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_str">0</div><div class="tm-sl">Racha</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_tot">0</div><div class="tm-sl">' + T('Preguntas', 'Questions') + '</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_cor">0</div><div class="tm-sl">' + T('Correctas', 'Correct') + '</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_pct">—</div><div class="tm-sl">' + T('Acierto', 'Accuracy') + '</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_str">0</div><div class="tm-sl">' + T('Racha', 'Streak') + '</div></div>',
       '</div>',
       '<div class="tm-pbar-wrap"><div class="tm-pbar" id="' + uid + '_pbar"></div></div>',
       '<div class="tm-card" id="' + uid + '_card">',
-        '<div class="tm-qlbl">Pregunta <span class="tm-qnum" id="' + uid + '_qnum">1</span></div>',
-        '<div class="tm-qtxt" id="' + uid + '_quest">¿Cuál es la Tonalidad MAYOR?</div>',
+        '<div class="tm-qlbl">' + T('Pregunta', 'Question') + ' <span class="tm-qnum" id="' + uid + '_qnum">1</span></div>',
+        '<div class="tm-qtxt" id="' + uid + '_quest">' + T('¿Cuál es la Tonalidad MAYOR?', 'Which is the MAJOR key?') + '</div>',
         '<div class="tm-staff-wrap"><div id="' + uid + '_staff"></div></div>',
         '<div class="tm-opts-grid" id="' + uid + '_opts"></div>',
         '<div class="tm-fb" id="' + uid + '_fb"></div>',
-        '<button class="tm-nxt" id="' + uid + '_nxt">Siguiente →</button>',
+        '<button class="tm-nxt" id="' + uid + '_nxt">' + T('Siguiente →', 'Next →') + '</button>',
       '</div>'
     ].join('');
 
@@ -212,11 +223,11 @@
     function genQ() {
       var base = KEYS[Math.floor(Math.random() * KEYS.length)];
       var askMinor = st.diff !== 'easy' && Math.random() > 0.5;
-      var correctLabel = askMinor ? base.min : base.maj;
+      var correctLabel = lbl(askMinor ? base.min : base.maj);
       var wrongPool = KEYS.filter(function (k) { return k.vex !== base.vex; });
       var wrongs = wrongPool.sort(function () { return Math.random() - 0.5; }).slice(0, 3);
       var opts = [{ label: correctLabel, ok: true }].concat(wrongs.map(function (k) {
-        return { label: askMinor ? k.min : k.maj, ok: false };
+        return { label: lbl(askMinor ? k.min : k.maj), ok: false };
       })).sort(function () { return Math.random() - 0.5; });
       return { keyDef: base, askMinor: askMinor, opts: opts };
     }
@@ -228,7 +239,7 @@
       }
       elStaff.style.height = '130px';
       window.tmNotacion.dibujarAlineado(elStaff, { clave: clef, armadura: nAlteraciones(q.keyDef), compases: [[]] },
-        { escala: 1.25, separacion: 0.25, top: 46, id: 'ari', alt: 'Pentagrama con una armadura' });
+        { escala: 1.25, separacion: 0.25, top: 46, id: 'ari', alt: T('Pentagrama con una armadura', 'Staff with a key signature') });
     }
 
     function nextQ() {
@@ -236,7 +247,7 @@
       st.qnum++;
       cQ = genQ();
       elQnum.textContent = st.qnum;
-      elQuest.textContent = cQ.askMinor ? '¿Cuál es la Tonalidad MENOR?' : '¿Cuál es la Tonalidad MAYOR?';
+      elQuest.textContent = cQ.askMinor ? T('¿Cuál es la Tonalidad MENOR?', 'Which is the MINOR key?') : T('¿Cuál es la Tonalidad MAYOR?', 'Which is the MAJOR key?');
       elFb.className = 'tm-fb';
       elNxt.className = 'tm-nxt';
       renderStaff(cQ);
@@ -252,16 +263,16 @@
             st.correct++; st.streak++;
             b.classList.add('tm-ok');
             elFb.className = 'tm-fb tm-ok tm-show';
-            elFb.innerHTML = '<strong>✓ ¡Correcto!</strong> — Exacto, es <strong>' + o.label + '</strong>.';
+            elFb.innerHTML = '<strong>' + T('✓ ¡Correcto!', '✓ Correct!') + '</strong> — ' + T('Exacto, es', 'Exactly, it is') + ' <strong>' + o.label + '</strong>.';
           } else {
             st.streak = 0;
             b.classList.add('tm-ko');
-            var realAns = cQ.askMinor ? cQ.keyDef.min : cQ.keyDef.maj;
+            var realAns = lbl(cQ.askMinor ? cQ.keyDef.min : cQ.keyDef.maj);
             elOpts.querySelectorAll('.tm-opt').forEach(function (x) {
               if (x.textContent === realAns) x.classList.add('tm-ok');
             });
             elFb.className = 'tm-fb tm-ko tm-show';
-            elFb.innerHTML = '<strong>✗ Incorrecto</strong> — La respuesta correcta era: <strong>' + realAns + '</strong>.';
+            elFb.innerHTML = '<strong>' + T('✗ Incorrecto', '✗ Incorrect') + '</strong> — ' + T('La respuesta correcta era:', 'The correct answer was:') + ' <strong>' + realAns + '</strong>.';
             elCard.classList.add('tm-shake');
             setTimeout(function () { elCard.classList.remove('tm-shake'); }, 400);
           }
@@ -289,17 +300,18 @@
     wrap.innerHTML = [
       '<div class="tm-stats">',
         '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_tot">0</div><div class="tm-sl">Total</div></div>',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_cor">0</div><div class="tm-sl">Correctas</div></div>',
-        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_str">0</div><div class="tm-sl">Racha</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_cor">0</div><div class="tm-sl">' + T('Correctas', 'Correct') + '</div></div>',
+        '<div class="tm-stat"><div class="tm-sv" id="' + uid + '_str">0</div><div class="tm-sl">' + T('Racha', 'Streak') + '</div></div>',
       '</div>',
       '<div class="tm-pbar-wrap"><div class="tm-pbar" id="' + uid + '_pbar"></div></div>',
       '<div class="tm-card" id="' + uid + '_card">',
-        '<div class="tm-qlbl">Ejercicio <span class="tm-qnum" id="' + uid + '_qnum">1</span></div>',
-        '<div class="tm-qtxt" id="' + uid + '_quest">Dibuja la armadura de: --</div>',
-        '<div class="tm-qsub"><strong>Instrucciones:</strong> Elige qué añadir (sostenido o bemol) y luego <strong>toca la línea o espacio del pentagrama</strong> para colocarlo. ¡Recuerda seguir el orden horizontal estricto!</div>',
+        '<div class="tm-qlbl">' + T('Ejercicio', 'Exercise') + ' <span class="tm-qnum" id="' + uid + '_qnum">1</span></div>',
+        '<div class="tm-qtxt" id="' + uid + '_quest">' + T('Dibuja la armadura de: --', 'Write the key signature of: --') + '</div>',
+        '<div class="tm-qsub">' + T('<strong>Instrucciones:</strong> Elige qué añadir (sostenido o bemol) y luego <strong>toca la línea o espacio del pentagrama</strong> para colocarlo. ¡Recuerda seguir el orden horizontal estricto!',
+          '<strong>Instructions:</strong> Choose what to add (sharp or flat), then <strong>tap the line or space of the staff</strong> to place it. Remember to follow the strict left-to-right order!') + '</div>',
         '<div class="tm-tools">',
-          '<button class="tm-tool tm-active" id="' + uid + '_tool_sharp">Sostenidos ( # )</button>',
-          '<button class="tm-tool" id="' + uid + '_tool_flat">Bemoles ( b )</button>',
+          '<button class="tm-tool tm-active" id="' + uid + '_tool_sharp">' + T('Sostenidos ( # )', 'Sharps ( # )') + '</button>',
+          '<button class="tm-tool" id="' + uid + '_tool_flat">' + T('Bemoles ( b )', 'Flats ( b )') + '</button>',
         '</div>',
         '<div class="tm-staff-wrap" id="' + uid + '_staffwrap">',
           '<div class="tm-notacion" id="' + uid + '_notacion"></div>',
@@ -307,12 +319,12 @@
           '<div id="' + uid + '_highlight" class="tm-highlight" style="display:none"></div>',
         '</div>',
         '<div class="tm-actions">',
-          '<button class="tm-btn-undo" id="' + uid + '_undo">↶ Deshacer</button>',
-          '<button class="tm-btn-undo" id="' + uid + '_clear">🧹 Borrar todo</button>',
+          '<button class="tm-btn-undo" id="' + uid + '_undo">' + T('↶ Deshacer', '↶ Undo') + '</button>',
+          '<button class="tm-btn-undo" id="' + uid + '_clear">' + T('🧹 Borrar todo', '🧹 Clear all') + '</button>',
         '</div>',
-        '<button class="tm-submit" id="' + uid + '_submit">Comprobar Dibujo</button>',
+        '<button class="tm-submit" id="' + uid + '_submit">' + T('Comprobar Dibujo', 'Check drawing') + '</button>',
         '<div class="tm-fb" id="' + uid + '_fb"></div>',
-        '<button class="tm-nxt" id="' + uid + '_nxt">Siguiente Tonalidad →</button>',
+        '<button class="tm-nxt" id="' + uid + '_nxt">' + T('Siguiente Tonalidad →', 'Next key →') + '</button>',
       '</div>',
       '<div class="tm-loupe" id="' + uid + '_loupe">',
         '<div class="tm-loupe-staff" id="' + uid + '_lstaff"></div>',
@@ -402,7 +414,7 @@
       var totalW = Math.min(Math.max(containerW, 200), 500);
       /* el pentagrama llena el ancho: las alteraciones se dibujan una tras otra, en el orden en que se colocaron */
       window.tmNotacion.dibujarAAncho(elNotac, { clave: 'sol', armaduraLibre: userDrawing.map(function (s) { return aLibre(s); }), compases: [[]] },
-        totalW - 20, { escala: 1.25, id: 'ard', alt: 'Pentagrama donde se dibuja la armadura' });
+        totalW - 20, { escala: 1.25, id: 'ard', alt: T('Pentagrama donde se dibuja la armadura', 'Staff where the key signature is drawn') });
       var svg = elNotac.querySelector('svg');
       svg.style.marginTop = Math.round(46 - window.tmNotacion.geometria(svg).lineas[0]) + 'px';
       currentStave = true;
@@ -513,20 +525,23 @@
       if (isOk) {
         st.correct++; st.streak++;
         elFb.className = 'tm-fb tm-ok tm-show';
-        elFb.innerHTML = '<strong>✓ ¡Dibujo Perfecto!</strong> — Has colocado cada alteración en su sitio exacto y orden correcto.';
+        elFb.innerHTML = T('<strong>✓ ¡Dibujo Perfecto!</strong> — Has colocado cada alteración en su sitio exacto y orden correcto.',
+          '<strong>✓ Perfect drawing!</strong> — You placed every accidental in its exact position and in the correct order.');
       } else {
         st.streak = 0;
         elFb.className = 'tm-fb tm-ko tm-show';
         if (currentQ.seq.length === 0) {
-          elFb.innerHTML = '<strong>✗ Te has equivocado</strong> — ' + currentQ.maj + ' no tiene NINGUNA alteración.';
+          elFb.innerHTML = T('<strong>✗ Te has equivocado</strong> — ' + currentQ.maj + ' no tiene NINGUNA alteración.',
+            '<strong>✗ Not quite</strong> — ' + lbl(currentQ.maj) + ' has NO accidentals.');
         } else {
           var NOTE_ES = { c:'Do', d:'Re', e:'Mi', f:'Fa', g:'Sol', a:'La', b:'Si' };
           var sol = currentQ.seq.map(function (s) {
             var p = s.split('/');
             var nombre = NOTE_ES[p[0].toLowerCase()] || p[0].toUpperCase();
-            return nombre + (p[2] === '#' ? '#' : 'b');
+            return EN ? p[0].toUpperCase() + (p[2] === '#' ? '♯' : '♭') : nombre + (p[2] === '#' ? '#' : 'b');
           }).join(', ');
-          elFb.innerHTML = '<strong>✗ Dibujo Incorrecto</strong> — En solfeo el orden importa.<br><br>👉 La solución era: <strong>' + sol + '</strong>.';
+          elFb.innerHTML = T('<strong>✗ Dibujo Incorrecto</strong> — En solfeo el orden importa.<br><br>👉 La solución era: <strong>' + sol + '</strong>.',
+            '<strong>✗ Incorrect drawing</strong> — The order matters.<br><br>👉 The solution was: <strong>' + sol + '</strong>.');
         }
         elCard.classList.add('tm-shake');
         setTimeout(function () { elCard.classList.remove('tm-shake'); }, 400);
@@ -542,7 +557,7 @@
       st.answered = false; st.qnum++;
       userDrawing = [];
       elQnum.textContent = st.qnum;
-      elQuest.innerHTML = 'Dibuja la armadura de: <strong>' + currentQ.maj + '</strong>';
+      elQuest.innerHTML = T('Dibuja la armadura de: ', 'Write the key signature of: ') + '<strong>' + lbl(currentQ.maj) + '</strong>';
       elFb.className = 'tm-fb';
       elNxt.className = 'tm-nxt';
       elSubmit.style.display = 'block';

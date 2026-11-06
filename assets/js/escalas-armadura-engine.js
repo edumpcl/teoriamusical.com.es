@@ -6,6 +6,39 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  /* Los nombres de escala siguen siendo internos en castellano (claves de la lógica);
+     solo se traducen al mostrarlos (dispName) */
+  const NOTE_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  const REST_EN = {
+    'mayor': 'major', 'mayor mixta principal': 'harmonic major', 'mayor mixta secundaria': 'melodic major',
+    'mixolidia': 'Mixolydian', 'menor natural': 'natural minor', 'menor armónica': 'harmonic minor',
+    'menor melódica': 'melodic minor', 'menor dórica': 'Dorian',
+    'cromática (ascendente)': 'chromatic (ascending)', 'cromática (descendente)': 'chromatic (descending)'
+  };
+  function dispNote(n) { return EN && NOTE_EN[n] ? NOTE_EN[n] : n; }
+  function dispName(name) {
+    if (!EN) return name;
+    const m = /^(Do|Re|Mi|Fa|Sol|La|Si)([#b\u266f\u266d]?)\s+(.+)$/.exec(name);
+    if (!m) return name;
+    const rest = REST_EN[m[3].toLowerCase()] || m[3];
+    return NOTE_EN[m[1]] + (m[2] === '#' || m[2] === '\u266f' ? '\u266f' : m[2] ? '\u266d' : '') + ' ' + rest;
+  }
+
+  const TITULO_EN = {
+    'Escala mayor': 'Major scale', 'Escala mayor mixta principal': 'Harmonic major scale',
+    'Escala mayor mixta secundaria': 'Melodic major scale', 'Escala menor natural': 'Natural minor scale',
+    'Escala menor armónica': 'Harmonic minor scale', 'Escala menor melódica': 'Melodic minor scale',
+    'Escala dórica': 'Dorian scale', 'Escala mixolidia': 'Mixolydian scale'
+  };
+  /* armadura en texto: '3 sharps (F♯ C♯ G♯)' */
+  function armTxt(arm) {
+    if (arm.n === 0) return 'no sharps or flats';
+    return arm.n + (arm.acc === '#' ? (arm.n === 1 ? ' sharp' : ' sharps') : (arm.n === 1 ? ' flat' : ' flats')) +
+      ' (' + arm.pitches.map(function (p) { return p.vfn.toUpperCase() + (arm.acc === '#' ? '\u266f' : '\u266d'); }).join(' ') + ')';
+  }
+
   var NS         = [0, 2, 4, 5, 7, 9, 11];
   var VF_NAMES   = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
   var NOTE_NAMES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
@@ -117,7 +150,7 @@
   ];
 
   /* dificultad por armadura (igual criterio que el ejercicio sin armadura) */
-  var DIFF_LBL = ['F\xe1cil', 'Medio', 'Dif\xedcil'];
+  var DIFF_LBL = [T('F\xe1cil', 'Easy'), T('Medio', 'Medium'), T('Dif\xedcil', 'Hard')];
   var DIFF_BASE = [1, 4, 99];
   var ICONOS = ['☀️', '⚡', '🔥'];
   function buildDifficulties(scales) {
@@ -125,7 +158,7 @@
     return DIFF_BASE.map(function (b, i) {
       var last = i === DIFF_BASE.length - 1;
       var maxA = last ? b : Math.max(b, minA);
-      var desc = last ? 'Todas las tonalidades' : maxA <= 1 ? 'Sin alteraciones o con 1' : 'Hasta ' + maxA + ' alteraciones';
+      var desc = last ? T('Todas las tonalidades', 'All keys') : maxA <= 1 ? T('Sin alteraciones o con 1', 'No sharps or flats, or 1') : T('Hasta ' + maxA + ' alteraciones', 'Up to ' + maxA + ' sharps or flats');
       return { lbl: DIFF_LBL[i], desc: desc, maxAlts: maxA };
     });
   }
@@ -211,8 +244,8 @@
     function showModeScreen() {
       wrap.innerHTML = [
         '<div class="tm-card"><div class="tm-iv-mode-screen">',
-          '<h2 class="tm-iv-title">Test — Armadura + ' + (config.titulo || 'Escala') + '</h2>',
-          '<p class="tm-iv-subtitle">Primero la armadura, luego la escala — ' + totalQ + ' preguntas</p>',
+          '<h2 class="tm-iv-title">' + T('Test — Armadura + ' + (config.titulo || 'Escala'), 'Quiz — Key signature + ' + (TITULO_EN[config.titulo] || 'Scale')) + '</h2>',
+          '<p class="tm-iv-subtitle">' + T('Primero la armadura, luego la escala — ' + totalQ + ' preguntas', 'First the key signature, then the scale — ' + totalQ + ' questions') + '</p>',
           '<div class="tm-iv-modes">',
             DIFICULTADES.map(function (d, i) {
               return '<button class="tm-iv-mode-btn" data-i="' + i + '"><span class="tm-iv-mode-icon">' + ICONOS[i] + '</span><span class="tm-iv-mode-lbl">' + d.lbl + '</span><span class="tm-iv-mode-desc">' + d.desc + '</span></button>';
@@ -248,13 +281,13 @@
           '<div class="tm-tools-row">',
             '<div class="tm-tools-acc" id="' + uid + '_tools"></div>',
             '<div class="tm-tools-edit">',
-              '<button class="tm-tool-edit" id="' + uid + '_undo">↩ Deshacer</button>',
-              '<button class="tm-tool-edit" id="' + uid + '_clear">\xd7 Limpiar</button>',
+              '<button class="tm-tool-edit" id="' + uid + '_undo">' + T('↩ Deshacer', '↩ Undo') + '</button>',
+              '<button class="tm-tool-edit" id="' + uid + '_clear">' + T('\xd7 Limpiar', '\xd7 Clear') + '</button>',
             '</div>',
           '</div>',
           '<button class="tm-submit" id="' + uid + '_btn"></button>',
           '<div class="tm-fb" id="' + uid + '_fb"></div>',
-          '<button class="tm-nxt" id="' + uid + '_nxt">Siguiente →</button>',
+          '<button class="tm-nxt" id="' + uid + '_nxt">' + T('Siguiente →', 'Next →') + '</button>',
         '</div>',
         '<div class="tm-iv-loupe" id="' + uid + '_loupe"><div class="tm-iv-loupe-staff" id="' + uid + '_lstaff"></div></div>'
       ].join('');
@@ -283,11 +316,11 @@
     }
     function renderTools() {
       var defs = phase === 'arm'
-        ? [['#', '♯ Sostenido'], ['b', '♭ Bemol']]
+        ? [['#', T('♯ Sostenido', '♯ Sharp')], ['b', T('♭ Bemol', '♭ Flat')]]
         : [[-1, '♭'], [0, '♮'], [1, '♯']];
       var elT = document.getElementById(uid + '_tools');
       var hint = phase === 'esc'
-        ? '<span class="tm-tool-hint">Coloca la nota; pulsa ♭ ♮ ♯ solo si la necesitas</span>'
+        ? '<span class="tm-tool-hint">' + T('Coloca la nota; pulsa ♭ ♮ ♯ solo si la necesitas', 'Place the note; press ♭ ♮ ♯ only if you need it') + '</span>'
         : '';
       elT.innerHTML = defs.map(function (t) {
         return '<button class="tm-tool" data-tool="' + t[0] + '">' + t[1] + '</button>';
@@ -355,7 +388,7 @@
         /* en secuencia (melódica) se respeta el orden de colocación; si no, por altura */
         notas = eventos(seqMode() ? placedNotes.slice() : sortedByPitch(placedNotes));
       }
-      var res = window.tmNotacion.dibujarAAncho(elNot, filaDe(acc, notas), vW - 40, { escala: 1.0, id: uid, alt: 'Pentagrama donde se escribe la armadura y la escala' });
+      var res = window.tmNotacion.dibujarAAncho(elNot, filaDe(acc, notas), vW - 40, { escala: 1.0, id: uid, alt: T('Pentagrama donde se escribe la armadura y la escala', 'Staff where the key signature and the scale are written') });
       var svg = res.elemento;
       svg.style.display = 'block'; svg.style.margin = Math.round(TOPE - window.tmNotacion.geometria(svg).lineas[0]) + 'px auto 0';
       currentSvg = svg;
@@ -466,21 +499,21 @@
       var nc = document.getElementById(uid + '_nc');
       if (phase === 'arm') {
         b.classList.add('tm-ready');   // la armadura se puede comprobar siempre
-        b.textContent = 'Comprobar armadura';
-        nc.textContent = 'Alteraciones colocadas: ' + placedAcc.length;
+        b.textContent = T('Comprobar armadura', 'Check key signature');
+        nc.textContent = T('Alteraciones colocadas: ', 'Accidentals placed: ') + placedAcc.length;
       } else {
         b.classList.toggle('tm-ready', placedNotes.length === target());
-        b.textContent = 'Comprobar escala';
-        nc.textContent = 'Notas colocadas: ' + placedNotes.length + ' / ' + target();
+        b.textContent = T('Comprobar escala', 'Check scale');
+        nc.textContent = T('Notas colocadas: ', 'Notes placed: ') + placedNotes.length + ' / ' + target();
       }
     }
 
     function setPhase(p) {
       phase = p;
-      document.getElementById(uid + '_step').textContent = p === 'arm' ? 'Paso 1 de 2 — Armadura' : 'Paso 2 de 2 — Escala';
+      document.getElementById(uid + '_step').textContent = p === 'arm' ? T('Paso 1 de 2 — Armadura', 'Step 1 of 2 — Key signature') : T('Paso 2 de 2 — Escala', 'Step 2 of 2 — Scale');
       document.getElementById(uid + '_q').innerHTML = p === 'arm'
-        ? 'Escribe la <strong>armadura</strong> de: <strong>' + cQ.name + '</strong>'
-        : 'Ahora escribe la <strong>escala</strong>: <strong>' + cQ.name + '</strong>';
+        ? T('Escribe la <strong>armadura</strong> de: <strong>' + cQ.name + '</strong>', 'Write the <strong>key signature</strong> of: <strong>' + dispName(cQ.name) + '</strong>')
+        : T('Ahora escribe la <strong>escala</strong>: <strong>' + cQ.name + '</strong>', 'Now write the <strong>scale</strong>: <strong>' + dispName(cQ.name) + '</strong>');
       renderTools(); draw(); updateBtn();
     }
 
@@ -498,7 +531,7 @@
         var fb = document.getElementById(uid + '_fb');
         if (!armOk) {
           fb.className = 'tm-fb tm-ko tm-show';
-          fb.innerHTML = '<strong>✗ Armadura incorrecta.</strong> La correcta es ' + (arm.n === 0 ? 'sin alteraciones' : arm.n + (arm.acc === '#' ? ' ♯' : ' ♭')) + '. Continúa con la escala.';
+          fb.innerHTML = T('<strong>✗ Armadura incorrecta.</strong> La correcta es ' + (arm.n === 0 ? 'sin alteraciones' : arm.n + (arm.acc === '#' ? ' ♯' : ' ♭')) + '. Continúa con la escala.', '<strong>✗ Incorrect key signature.</strong> The correct one is ' + armTxt(arm) + '. Continue with the scale.');
         } else {
           fb.className = 'tm-fb'; fb.innerHTML = '';
         }
@@ -518,7 +551,7 @@
           var e = expNotes[i], pl = ordered[i];
           if (pl.vfn !== e.vfn || (seqMode() && pl.oct !== e.oct) || ev[i].alt !== e.alt) { scaleOk = false; break; }
           if (ev[i].redundant) {
-            var lab = NOTE_NAMES[VF_NAMES.indexOf(e.vfn)] + ACC_SYM[String(e.alt)];
+            var lab = dispNote(NOTE_NAMES[VF_NAMES.indexOf(e.vfn)]) + ACC_SYM[String(e.alt)];
             if (redundant.indexOf(lab) < 0) redundant.push(lab);
           }
         }
@@ -526,20 +559,20 @@
       var ok = armOk && scaleOk;
       document.getElementById(uid + '_btn').style.display = 'none';
       document.getElementById(uid + '_nxt').className = 'tm-nxt tm-show';
-      var lbl = expNotes.map(function (e) { return NOTE_NAMES[VF_NAMES.indexOf(e.vfn)] + ACC_SYM[String(e.alt)]; }).join(' — ');
+      var lbl = expNotes.map(function (e) { return dispNote(NOTE_NAMES[VF_NAMES.indexOf(e.vfn)]) + ACC_SYM[String(e.alt)]; }).join(' — ');
       var fb = document.getElementById(uid + '_fb');
       if (ok) {
         score++;
         fb.className = 'tm-fb tm-ok tm-show';
         var tip = redundant.length
-          ? '<br><span style="font-weight:400">No hacía falta escribir la alteración de ' + redundant.join(', ') + ': ya queda definida por la armadura.</span>'
+          ? T('<br><span style="font-weight:400">No hacía falta escribir la alteración de ' + redundant.join(', ') + ': ya queda definida por la armadura.</span>', '<br><span style="font-weight:400">There was no need to write the accidental on ' + redundant.join(', ') + ': the key signature already defines it.</span>')
           : '';
-        fb.innerHTML = '<strong>✓ ¡Correcto!</strong> ' + lbl + '.' + tip;
+        fb.innerHTML = T('<strong>✓ ¡Correcto!</strong> ', '<strong>✓ Correct!</strong> ') + lbl + '.' + tip;
       } else {
         placedNotes = expNotes.map(function (e) { return { vfn: e.vfn, oct: e.oct, glyph: e.glyph }; });
         draw();
         fb.className = 'tm-fb tm-ko tm-show';
-        fb.innerHTML = '<strong>✗ Incorrecto.</strong> ' + (armOk ? '' : 'La armadura estaba mal. ') + 'La escala correcta: ' + lbl + '.';
+        fb.innerHTML = T('<strong>✗ Incorrecto.</strong> ' + (armOk ? '' : 'La armadura estaba mal. ') + 'La escala correcta: ' + lbl + '.', '<strong>✗ Incorrect.</strong> ' + (armOk ? '' : 'The key signature was wrong. ') + 'The correct scale: ' + lbl + '.');
       }
       document.getElementById(uid + '_badge').textContent = '✓ ' + score;
       document.getElementById(uid + '_wrap').classList.add('tm-answered');
@@ -569,7 +602,7 @@
           '<div class="tm-iv-score-num">' + score + '/' + totalQ + '</div>',
           '<div class="tm-iv-score-pct">' + pct + '%</div>',
         '</div>',
-        '<button class="tm-nxt tm-show" id="' + uid + '_restart">Volver a empezar</button></div>'
+        '<button class="tm-nxt tm-show" id="' + uid + '_restart">' + T('Volver a empezar', 'Start over') + '</button></div>'
       ].join('');
       document.getElementById(uid + '_restart').addEventListener('click', showModeScreen);
     }

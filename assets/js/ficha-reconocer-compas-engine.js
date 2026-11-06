@@ -13,10 +13,17 @@
 (function () {
   'use strict';
 
+  var EN = document.documentElement.lang === 'en';
+  function T(es, en) { return EN ? en : es; }
+
   function D() { return window.tmCompletarCompasData; }
   function R() { return window.tmReconocerCompasTest; }
 
-  var TIT = { simples: '1. Compases simples (2/4, 3/4, 4/4)', compuestos: '2. Compases compuestos (6/8, 9/8, 12/8)', mezcla: '3. Mezclados' };
+  var TIT = {
+    simples: T('1. Compases simples (2/4, 3/4, 4/4)', '1. Simple time signatures (2/4, 3/4, 4/4)'),
+    compuestos: T('2. Compases compuestos (6/8, 9/8, 12/8)', '2. Compound time signatures (6/8, 9/8, 12/8)'),
+    mezcla: T('3. Mezclados', '3. Mixed')
+  };
   var LOTES = [['simples', 6], ['compuestos', 6], ['mezcla', 6]];
 
   var CSS = [
@@ -71,15 +78,15 @@
 
     cont.innerHTML = '<div class="tm-fr">'
       + '<div class="tm-fr-acciones">'
-      + '<button type="button" class="tm-fr-btn tm-fr-btn-1" data-a="generar">Generar otra ficha</button>'
-      + '<button type="button" class="tm-fr-btn tm-fr-btn-2" data-a="soluciones">Ver soluciones</button>'
-      + '<button type="button" class="tm-fr-btn tm-fr-btn-2" data-a="imprimir">Imprimir</button>'
+      + '<button type="button" class="tm-fr-btn tm-fr-btn-1" data-a="generar">' + T('Generar otra ficha', 'Generate another worksheet') + '</button>'
+      + '<button type="button" class="tm-fr-btn tm-fr-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show answers') + '</button>'
+      + '<button type="button" class="tm-fr-btn tm-fr-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<p class="tm-fr-enlace"></p>'
       + '</div>'
-      + '<div class="tm-fr-hoja"><div class="tm-fr-cab"><p class="tm-fr-tit">Reconocer compás</p><span class="tm-fr-ref"></span></div>'
-      + '<div class="tm-fr-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
-      + '<p class="tm-fr-instr">Cada compás está escrito sin su cifra. Escribe en la casilla el compás que le corresponde (numerador sobre denominador). Algunos se pueden escribir de más de una forma: en ese caso, cualquiera de las dos es correcta.</p>'
+      + '<div class="tm-fr-hoja"><div class="tm-fr-cab"><p class="tm-fr-tit">' + T('Reconocer compás', 'Identify the time signature') + '</p><span class="tm-fr-ref"></span></div>'
+      + '<div class="tm-fr-datos"><span>' + T('Nombre:', 'Name:') + '</span><span>' + T('Curso:', 'Class:') + '</span><span>' + T('Fecha:', 'Date:') + '</span></div>'
+      + '<p class="tm-fr-instr">' + T('Cada compás está escrito sin su cifra. Escribe en la casilla el compás que le corresponde (numerador sobre denominador). Algunos se pueden escribir de más de una forma: en ese caso, cualquiera de las dos es correcta.', 'Each measure is written without its time signature. Write in the box the time signature that belongs to it (numerator over denominator). Some can be written in more than one way: in that case, either one is correct.') + '</p>'
       + '<div class="tm-fr-cuerpo"></div></div>';
 
     var elRef = cont.querySelector('.tm-fr-ref');
@@ -114,7 +121,7 @@
         var K = Math.min(1, interior / Math.max.apply(null, anchos));
         svgs.forEach(function (s, i) { s.style.width = (anchos[i] * K) + 'px'; s.style.maxWidth = 'none'; });
       });
-      elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
+      elRef.textContent = T('teoriamusical.com.es · hoja n.º ' + semilla, 'teoriamusical.com.es · worksheet no. ' + semilla);
     }
 
     function generar(semillaFija) {
@@ -123,11 +130,11 @@
       else { do { nueva = Math.floor(Math.random() * 90000 + 10000); } while (nueva === semilla); }
       semilla = nueva;
       solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show answers');
       pintar();
       var a = cont.querySelector('.tm-fr-enlace');
       var params = '?hoja=' + semilla;
-      a.innerHTML = 'Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.';
+      a.innerHTML = T('Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.', 'Each worksheet comes from a number: with <a href="' + window.location.pathname + params + '#generador">this link</a> (worksheet no. ' + semilla + ') you get the same one again.');
     }
 
     cont.addEventListener('click', function (ev) {
@@ -137,7 +144,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         solucion = !solucion;
-        btn.textContent = solucion ? 'Ocultar soluciones' : 'Ver soluciones';
+        btn.textContent = solucion ? T('Ocultar soluciones', 'Hide answers') : T('Ver soluciones', 'Show answers');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

@@ -14,12 +14,14 @@
    septimas-engine.js) para no duplicar la teoría. */
 (function () {
   'use strict';
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
 
   function T7() { return window.tmSe7Chords; }
 
   var LETRAS = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
   var SEMI = [0, 2, 4, 5, 7, 9, 11];
-  var ES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
+  var ES = T(['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'], ['C', 'D', 'E', 'F', 'G', 'A', 'B']);
   var ACC_TXT = { '-2': '♭♭', '-1': '♭', '0': '', '1': '♯', '2': '♯♯' };
   var ACC_VF = { '-2': 'bb', '-1': 'b', '0': '', '1': '#', '2': '##' };
   var CLAVES = { sol: 'sol', fa: 'fa' };   // las claves de tm-mei.js
@@ -28,8 +30,8 @@
      séptima es del todo natural (ver ese script). */
   var FASES = [{ nivel: 1, fa: 0 }, { nivel: 1, fa: 0.35 }, { nivel: 2, fa: 0.5 }];
   var TOTAL = 21;
-  var INV_NOMBRE = ['Fundamental', '1ª inversión', '2ª inversión', '3ª inversión'];
-  var INV_CORTO = ['fund.', '1ª inv.', '2ª inv.', '3ª inv.'];
+  var INV_NOMBRE = [T('Fundamental', 'Root position'), T('1ª inversión', '1st inversion'), T('2ª inversión', '2nd inversion'), T('3ª inversión', '3rd inversion')];
+  var INV_CORTO = [T('fund.', 'root'), T('1ª inv.', '1st inv.'), T('2ª inv.', '2nd inv.'), T('3ª inv.', '3rd inv.')];
 
   function mulberry32(a) {
     return function () {
@@ -125,20 +127,23 @@
     var tiposIds = config.tiposIds, invs = config.invs;
     var mixtaTipo = tiposIds.length > 1;
     var mixtaInv = invs.length > 1;
-    var tiposTxt = 'Séptima de Dominante (7), Séptima de Sensible (ø7) o Séptima Disminuida (°7)';
+    var tiposTxt = T('Séptima de Dominante (7), Séptima de Sensible (ø7) o Séptima Disminuida (°7)', 'dominant seventh (7), leading-tone seventh (ø7) or diminished seventh (°7)');
     if (config.modo === 'analizar') {
-      var posTxt = mixtaInv ? 'en las cuatro posiciones' : ('en ' + INV_NOMBRE[invs[0]].toLowerCase());
+      var posTxt = mixtaInv ? T('en las cuatro posiciones', 'in all four positions') : (T('en ', 'in ') + INV_NOMBRE[invs[0]].toLowerCase());
       return {
-        titulo: 'Analizar acordes de séptima ' + posTxt,
+        titulo: T('Analizar acordes de séptima ', 'Analyze seventh chords ') + posTxt,
         instrucciones: mixtaInv
-          ? ('Escribe debajo de cada acorde su <b>tipo</b> —' + tiposTxt + '— y su <b>posición</b>: fundamental, 1ª, 2ª o 3ª inversión.')
-          : ('Todos los acordes están en ' + INV_NOMBRE[invs[0]].toLowerCase() + '. Escribe debajo de cada uno su <b>tipo</b>: ' + tiposTxt + '.')
+          ? T('Escribe debajo de cada acorde su <b>tipo</b> —' + tiposTxt + '— y su <b>posición</b>: fundamental, 1ª, 2ª o 3ª inversión.',
+              'Write below each chord its <b>type</b> — ' + tiposTxt + ' — and its <b>position</b>: root position, 1st, 2nd or 3rd inversion.')
+          : T('Todos los acordes están en ' + INV_NOMBRE[invs[0]].toLowerCase() + '. Escribe debajo de cada uno su <b>tipo</b>: ' + tiposTxt + '.',
+              'All the chords are in ' + INV_NOMBRE[invs[0]].toLowerCase() + '. Write below each one its <b>type</b>: ' + tiposTxt + '.')
       };
     }
-    var tipoTxt = mixtaTipo ? 'acordes de séptima mezclados' : ('de la ' + T7().filter(function (t) { return t.id === tiposIds[0]; })[0].label.toLowerCase());
+    var tipoTxt = mixtaTipo ? T('acordes de séptima mezclados', 'mixed seventh chords') : (T('de la ', '') + T7().filter(function (t) { return t.id === tiposIds[0]; })[0].label.toLowerCase());
     return {
-      titulo: 'Escribir ' + (mixtaTipo ? tipoTxt : 'acordes ' + tipoTxt),
-      instrucciones: 'Cada pentagrama trae la <b>nota más grave</b> del acorde. Añade las otras tres para formar el acorde indicado en la posición que se pide (fundamental: 3ª+5ª+7ª; 1ª inv.: 5ª+7ª+fund.; 2ª inv.: 7ª+fund.+3ª; 3ª inv.: fund.+3ª+5ª).' + (mixtaTipo ? ' El tipo cambia en cada ejercicio: se indica junto a la nota.' : '')
+      titulo: T('Escribir ', 'Write ') + (mixtaTipo ? tipoTxt : T('acordes ' + tipoTxt, tipoTxt + ' chords')),
+      instrucciones: T('Cada pentagrama trae la <b>nota más grave</b> del acorde. Añade las otras tres para formar el acorde indicado en la posición que se pide (fundamental: 3ª+5ª+7ª; 1ª inv.: 5ª+7ª+fund.; 2ª inv.: 7ª+fund.+3ª; 3ª inv.: fund.+3ª+5ª).' + (mixtaTipo ? ' El tipo cambia en cada ejercicio: se indica junto a la nota.' : ''),
+        'Each staff gives the <b>lowest note</b> of the chord. Add the other three to build the chord named, in the position asked (root position: 3rd+5th+7th; 1st inv.: 5th+7th+root; 2nd inv.: 7th+root+3rd; 3rd inv.: root+3rd+5th).' + (mixtaTipo ? ' The chord type changes in each exercise: it is shown next to the note.' : ''))
     };
   }
 
@@ -175,14 +180,14 @@
 
     cont.innerHTML = '<div class="tm-fs">'
       + '<div class="tm-fs-acciones">'
-      + '<button type="button" class="tm-fs-btn tm-fs-btn-1" data-a="generar">Generar otra ficha</button>'
-      + '<button type="button" class="tm-fs-btn tm-fs-btn-2" data-a="soluciones">Ver soluciones</button>'
-      + '<button type="button" class="tm-fs-btn tm-fs-btn-2" data-a="imprimir">Imprimir</button>'
+      + '<button type="button" class="tm-fs-btn tm-fs-btn-1" data-a="generar">' + T('Generar otra ficha', 'Generate another sheet') + '</button>'
+      + '<button type="button" class="tm-fs-btn tm-fs-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show solutions') + '</button>'
+      + '<button type="button" class="tm-fs-btn tm-fs-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<p class="tm-fs-enlace"></p>'
       + '</div>'
       + '<div class="tm-fs-hoja"><div class="tm-fs-cab"><p class="tm-fs-tit">' + txt.titulo + '</p><span class="tm-fs-ref"></span></div>'
-      + '<div class="tm-fs-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
+      + '<div class="tm-fs-datos"><span>' + T('Nombre:', 'Name:') + '</span><span>' + T('Curso:', 'Class:') + '</span><span>' + T('Fecha:', 'Date:') + '</span></div>'
       + '<p class="tm-fs-instr">' + txt.instrucciones + '</p>'
       + '<div class="tm-fs-cuerpo tm-fs-rejilla"></div></div>';
 
@@ -248,7 +253,7 @@
       });
       div.style.height = opts.h + 'px';
       tmNotacion.dibujarAlineado(div, { pentagramas: [{ clave: opts.clef, compases: [[{ notas: claves, d: 'w' }]] }] }, {
-        escala: 1.1, separacion: 1.0, top: opts.y, id: 'fs', alt: 'Acorde de ' + notas.length + (notas.length === 1 ? ' nota' : ' notas') + ' en clave de ' + (opts.clef === 'sol' ? 'sol' : 'fa')
+        escala: 1.1, separacion: 1.0, top: opts.y, id: 'fs', alt: T('Acorde de ' + notas.length + (notas.length === 1 ? ' nota' : ' notas') + ' en clave de ' + (opts.clef === 'sol' ? 'sol' : 'fa'), notas.length + '-note chord in ' + (opts.clef === 'sol' ? 'treble' : 'bass') + ' clef')
       });
     }
 
@@ -260,8 +265,8 @@
           var tipoHueco = solucion ? ('<span class="tm-sol">' + it.tipo.label + '</span>') : '<span></span>';
           var invHueco = invs.length > 1 ? (solucion ? ('<span class="tm-sol">' + INV_NOMBRE[it.inv] + '</span>') : '<span></span>') : '';
           c.innerHTML = '<span class="tm-fs-n"></span><div class="tm-fs-svg"></div>'
-            + '<p class="tm-fs-linea"><b>Tipo:</b>' + tipoHueco + '</p>'
-            + (invs.length > 1 ? ('<p class="tm-fs-linea"><b>Posición:</b>' + invHueco + '</p>') : '');
+            + '<p class="tm-fs-linea"><b>' + T('Tipo:', 'Type:') + '</b>' + tipoHueco + '</p>'
+            + (invs.length > 1 ? ('<p class="tm-fs-linea"><b>' + T('Posición:', 'Position:') + '</b>' + invHueco + '</p>') : '');
         } else {
           var mezclada = tiposIds.length > 1;
           c.innerHTML = '<span class="tm-fs-n"></span>'
@@ -283,7 +288,7 @@
       var anchoMax = Math.max.apply(null, svgs.map(function (s) { return Number(s.getAttribute('width')); }));
       var K = Math.min(1.25, interior / anchoMax);
       svgs.forEach(function (s) { s.style.width = (Number(s.getAttribute('width')) * K) + 'px'; s.style.maxWidth = 'none'; s.style.height = 'auto'; });
-      elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
+      elRef.textContent = T('teoriamusical.com.es · hoja n.º ', 'teoriamusical.com.es · sheet no. ') + semilla;
     }
 
     function generar(semillaFija) {
@@ -292,12 +297,12 @@
       else { do { nueva = Math.floor(Math.random() * 90000 + 10000); } while (nueva === semilla); }
       semilla = nueva;
       solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show solutions');
       itemsActuales = elegirItems(semilla);
       pintar();
       var a = cont.querySelector('.tm-fs-enlace');
       var params = '?hoja=' + semilla;
-      a.innerHTML = 'Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.';
+      a.innerHTML = T('Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.', 'Every sheet comes from a number: with <a href="' + window.location.pathname + params + '#generador">this link</a> (sheet no. ' + semilla + ') you get the same one again.');
     }
 
     cont.addEventListener('click', function (ev) {
@@ -307,7 +312,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         solucion = !solucion;
-        btn.textContent = solucion ? 'Ocultar soluciones' : 'Ver soluciones';
+        btn.textContent = solucion ? T('Ocultar soluciones', 'Hide solutions') : T('Ver soluciones', 'Show solutions');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

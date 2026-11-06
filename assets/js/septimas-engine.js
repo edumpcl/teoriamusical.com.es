@@ -9,44 +9,46 @@
    es el objetivo del ejercicio, igual que en tríadas. */
 (function () {
   'use strict';
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
 
   var NS = [0, 2, 4, 5, 7, 9, 11]; /* C D E F G A B */
   var VF_NAMES = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
 
   var CHORDS7 = [
-    { id: 'dominante',  third: 4, fifth: 7, seventh: 10, label: 'S\xe9ptima de Dominante',              short: '7'  },
-    { id: 'sensible',   third: 3, fifth: 6, seventh: 10, label: 'S\xe9ptima de Sensible (semidis.)',    short: '\xf87' },
-    { id: 'disminuida', third: 3, fifth: 6, seventh: 9,  label: 'S\xe9ptima Disminuida',                short: '\xb07' }
+    { id: 'dominante',  third: 4, fifth: 7, seventh: 10, label: T('S\xe9ptima de Dominante', 'Dominant seventh'),              short: '7'  },
+    { id: 'sensible',   third: 3, fifth: 6, seventh: 10, label: T('S\xe9ptima de Sensible (semidis.)', 'Leading-tone (half-diminished) seventh'),    short: '\xf87' },
+    { id: 'disminuida', third: 3, fifth: 6, seventh: 9,  label: T('S\xe9ptima Disminuida', 'Diminished seventh'),                short: '\xb07' }
   ];
 
   var DIFICULTADES = [
-    { lbl: 'F\xe1cil',    maxAlt: 0, id: 'easy'   },
-    { lbl: 'Medio',       maxAlt: 1, id: 'medium' },
-    { lbl: 'Dif\xedcil', maxAlt: 2, id: 'hard'   }
+    { lbl: T('F\xe1cil', 'Easy'),    maxAlt: 0, id: 'easy'   },
+    { lbl: T('Medio', 'Medium'),     maxAlt: 1, id: 'medium' },
+    { lbl: T('Dif\xedcil', 'Hard'), maxAlt: 2, id: 'hard'   }
   ];
 
   /* Etiquetas de grado en orden fundamental; para cada inversión, el bajo es
      ROLES_ALL[inv] y lo que se dibuja/pregunta son los otros 3, en el mismo
      orden en que se apilan por encima del bajo. */
-  var ROLES_ALL = ['fund.', '3\xaa', '5\xaa', '7\xaa'];
+  var ROLES_ALL = [T('fund.', 'root'), T('3\xaa', '3rd'), T('5\xaa', '5th'), T('7\xaa', '7th')];
   function rolesFor(inv) {
     return [ROLES_ALL[(inv + 1) % 4], ROLES_ALL[(inv + 2) % 4], ROLES_ALL[(inv + 3) % 4]];
   }
 
-  var INV_LABEL = ['Fundamental', '1\xaa inversi\xf3n', '2\xaa inversi\xf3n', '3\xaa inversi\xf3n'];
+  var INV_LABEL = [T('Fundamental', 'Root position'), T('1\xaa inversi\xf3n', '1st inversion'), T('2\xaa inversi\xf3n', '2nd inversion'), T('3\xaa inversi\xf3n', '3rd inversion')];
   var INV_KEYS  = ['fundamental', '1a', '2a', '3a'];
 
   function invTitleReconocer(invType, tipoLbl) {
-    if (invType === 'fundamental') return tipoLbl + ' en Fundamental';
-    if (invType === '1a')          return tipoLbl + ' en 1\xaa Inversi\xf3n';
-    if (invType === '2a')          return tipoLbl + ' en 2\xaa Inversi\xf3n';
-    if (invType === '3a')          return tipoLbl + ' en 3\xaa Inversi\xf3n';
-    return tipoLbl + ' — Las cuatro posiciones';
+    if (invType === 'fundamental') return tipoLbl + T(' en Fundamental', ' in Root Position');
+    if (invType === '1a')          return tipoLbl + T(' en 1\xaa Inversi\xf3n', ' in 1st Inversion');
+    if (invType === '2a')          return tipoLbl + T(' en 2\xaa Inversi\xf3n', ' in 2nd Inversion');
+    if (invType === '3a')          return tipoLbl + T(' en 3\xaa Inversi\xf3n', ' in 3rd Inversion');
+    return tipoLbl + T(' — Las cuatro posiciones', ' — All Four Positions');
   }
 
   var PREGUNTAS_POR_TEST = 10;
   var ICONOS = ['☀️', '⚡', '🔥'];
-  var DESCS  = ['Solo acordes con notas naturales', 'Con sostenidos y bemoles', 'Con dobles alteraciones'];
+  var DESCS  = [T('Solo acordes con notas naturales', 'Only chords with natural notes'), T('Con sostenidos y bemoles', 'With sharps and flats'), T('Con dobles alteraciones', 'With double accidentals')];
 
   /* Mismas clases CSS que acordes-engine.js (tríadas): comparten look & feel. */
   var CSS = [
@@ -121,9 +123,9 @@
   }
   /* Verovio se carga bajo demanda: el motor arranca cuando ya está. */
   function cargarVerovio(wrap, init) {
-    wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">Cargando el ejercicio…</p></div>';
+    wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</p></div>';
     window.tmNotacion.listo().then(init).catch(function () {
-      wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">No se ha podido cargar el ejercicio. Recarga la página.</p></div>';
+      wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">' + T('No se ha podido cargar el ejercicio. Recarga la página.', 'The exercise could not be loaded. Reload the page.') + '</p></div>';
     });
   }
 
@@ -229,8 +231,8 @@
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-iv-mode-screen">',
-            '<h2 class="tm-iv-title">Test &mdash; ' + invTitleReconocer(invType, 'Acordes de S\xe9ptima') + '</h2>',
-            '<p class="tm-iv-subtitle">Elige el nivel de dificultad &mdash; ' + totalQ + ' preguntas</p>',
+            '<h2 class="tm-iv-title">Test &mdash; ' + invTitleReconocer(invType, T('Acordes de S\xe9ptima', 'Seventh Chords')) + '</h2>',
+            '<p class="tm-iv-subtitle">' + T('Elige el nivel de dificultad &mdash; ' + totalQ + ' preguntas', 'Choose the difficulty level &mdash; ' + totalQ + ' questions') + '</p>',
             '<div class="tm-iv-modes">' + btns + '</div>',
           '</div>',
         '</div>'
@@ -256,9 +258,9 @@
           '</div>',
           '<div class="tm-staff"><div id="' + uid + '_not"></div></div>',
           '<div class="tm-grid" id="' + uid + '_opts"></div>',
-          '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>',
+          '<button class="tm-submit" id="' + uid + '_btn">' + T('Comprobar', 'Check') + '</button>',
           '<div id="' + uid + '_fb" class="tm-fb"></div>',
-          '<button id="' + uid + '_nxt" class="tm-nxt">Siguiente →</button>',
+          '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente →', 'Next →') + '</button>',
         '</div>'
       ].join('');
       document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
@@ -279,7 +281,7 @@
       elNot.style.width = '100%'; elNot.style.height = '170px';
       var stack = stackOrder(cQ.a, cQ.inv);
       tmNotacion.dibujarAlineado(elNot, filaAcorde(stack.map(function (n) { return claveMEI(n.vfn, n.a, n.oct); })), {
-        escala: 1.4, separacion: 0.5, top: 62, id: uid, alt: 'Acorde de cuatro notas en clave de sol'
+        escala: 1.4, separacion: 0.5, top: 62, id: uid, alt: T('Acorde de cuatro notas en clave de sol', 'Four-note chord in treble clef')
       });
     }
 
@@ -317,10 +319,10 @@
       var elFb = document.getElementById(uid + '_fb');
       elFb.className = 'tm-fb tm-show ' + (correct ? 'tm-ok' : 'tm-ko');
       if (correct) {
-        elFb.textContent = '¡Correcto!';
+        elFb.textContent = T('¡Correcto!', 'Correct!');
       } else {
         var extra = invType === 'todas' ? ' (' + INV_LABEL[cQ.inv] + ')' : '';
-        elFb.textContent = 'Incorrecto. La respuesta es: ' + cQ.chord.label + extra + '.';
+        elFb.textContent = T('Incorrecto. La respuesta es: ', 'Incorrect. The answer is: ') + cQ.chord.label + extra + '.';
       }
       document.getElementById(uid + '_badge').textContent = '✓ ' + score;
       document.getElementById(uid + '_opts').querySelectorAll('.tm-opt').forEach(function (b) {
@@ -350,7 +352,7 @@
             '<div class="tm-iv-score-num">' + score + '/' + totalQ + '</div>',
             '<div class="tm-iv-score-pct">' + pct + '%</div>',
           '</div>',
-          '<button class="tm-submit tm-ready" id="' + uid + '_restart">Hacer otro test</button>',
+          '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Hacer otro test', 'Take another test') + '</button>',
         '</div>'
       ].join('');
       document.getElementById(uid + '_restart').addEventListener('click', function () {
@@ -373,7 +375,7 @@
     wrap.className = 'tm-iv-wrap';
     var uid = containerId;
 
-    var NOTE_NAMES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
+    var NOTE_NAMES = T(['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'], ['C', 'D', 'E', 'F', 'G', 'A', 'B']);
     var ACC_SYM = { '-2': '♭♭', '-1': '♭', '0': '', '1': '♯', '2': '♯♯' };
 
     /* Igual rango que tríadas (G5→B3): el bajo siempre va en oct 4 y, con 4
@@ -407,20 +409,20 @@
     var currentQ, score, maxAlt, cQ, answered, placedNotes, activeTool, lastLoupeKey, currentSvg;
 
     function tituloConstruir() {
-      var tipoLbl = (config.tipo && config.tipo !== 'todas') ? ('la ' + chordById(config.tipo).label) : 'Acordes de S\xe9ptima Mezclados';
-      if (invType === 'fundamental') return tipoLbl + ' en Fundamental';
-      if (invType === '1a') return tipoLbl + ' en 1\xaa Inversi\xf3n';
-      if (invType === '2a') return tipoLbl + ' en 2\xaa Inversi\xf3n';
-      if (invType === '3a') return tipoLbl + ' en 3\xaa Inversi\xf3n';
-      return tipoLbl + ' — Todas las Posiciones';
+      var tipoLbl = (config.tipo && config.tipo !== 'todas') ? (T('la ', 'the ') + chordById(config.tipo).label) : T('Acordes de S\xe9ptima Mezclados', 'Mixed Seventh Chords');
+      if (invType === 'fundamental') return tipoLbl + T(' en Fundamental', ' in Root Position');
+      if (invType === '1a') return tipoLbl + T(' en 1\xaa Inversi\xf3n', ' in 1st Inversion');
+      if (invType === '2a') return tipoLbl + T(' en 2\xaa Inversi\xf3n', ' in 2nd Inversion');
+      if (invType === '3a') return tipoLbl + T(' en 3\xaa Inversi\xf3n', ' in 3rd Inversion');
+      return tipoLbl + T(' — Todas las Posiciones', ' — All Positions');
     }
 
     function showModeScreen() {
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-iv-mode-screen">',
-            '<h2 class="tm-iv-title">Test — Construir ' + tituloConstruir() + '</h2>',
-            '<p class="tm-iv-subtitle">Elige el nivel de dificultad — ' + totalQ + ' preguntas</p>',
+            '<h2 class="tm-iv-title">Test — ' + T('Construir ', 'Build ') + tituloConstruir() + '</h2>',
+            '<p class="tm-iv-subtitle">' + T('Elige el nivel de dificultad — ' + totalQ + ' preguntas', 'Choose the difficulty level — ' + totalQ + ' questions') + '</p>',
             '<div class="tm-iv-modes">',
               DIFICULTADES.map(function (d, i) {
                 return '<button class="tm-iv-mode-btn" data-i="' + i + '"><span class="tm-iv-mode-icon">' + ICONOS[i] + '</span><span class="tm-iv-mode-lbl">' + d.lbl + '</span><span class="tm-iv-mode-desc">' + DESCS[i] + '</span></button>';
@@ -458,17 +460,17 @@
             '<div id="' + uid + '_not"></div>',
             '<div class="tm-high" id="' + uid + '_high"></div>',
           '</div>',
-          '<p class="tm-note-count" id="' + uid + '_nc">Notas colocadas: 0 / 3</p>',
+          '<p class="tm-note-count" id="' + uid + '_nc">' + T('Notas colocadas: 0 / 3', 'Notes placed: 0 / 3') + '</p>',
           '<div class="tm-tools-row">',
             '<div class="tm-tools-acc">' + tools + '</div>',
             '<div class="tm-tools-edit">',
-              '<button class="tm-tool-edit" id="' + uid + '_undo">↩ Deshacer</button>',
-              '<button class="tm-tool-edit" id="' + uid + '_clear">× Limpiar</button>',
+              '<button class="tm-tool-edit" id="' + uid + '_undo">↩ ' + T('Deshacer', 'Undo') + '</button>',
+              '<button class="tm-tool-edit" id="' + uid + '_clear">× ' + T('Limpiar', 'Clear') + '</button>',
             '</div>',
           '</div>',
-          '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>',
+          '<button class="tm-submit" id="' + uid + '_btn">' + T('Comprobar', 'Check') + '</button>',
           '<div class="tm-fb" id="' + uid + '_fb"></div>',
-          '<button class="tm-nxt" id="' + uid + '_nxt">Siguiente →</button>',
+          '<button class="tm-nxt" id="' + uid + '_nxt">' + T('Siguiente →', 'Next →') + '</button>',
         '</div>',
         '<div class="tm-iv-loupe" id="' + uid + '_loupe">',
           '<div class="tm-iv-loupe-staff" id="' + uid + '_lstaff"></div>',
@@ -522,7 +524,7 @@
       placedNotes.forEach(function (p) { allNotes.push({ vfn: p.vfn, oct: p.oct, acc: p.acc }); });
       allNotes.sort(function (a, b) { return (a.oct * 12 + NS[VF_NAMES.indexOf(a.vfn)]) - (b.oct * 12 + NS[VF_NAMES.indexOf(b.vfn)]); });
       var r = tmNotacion.dibujarAlineado(elNot, filaAcorde(allNotes.map(function (n) { return claveMEI(n.vfn, n.acc, n.oct); })), {
-        escala: 1.5, separacion: 0.5, top: 56, id: uid, alt: 'Pentagrama en clave de sol con la nota dada y las que has colocado'
+        escala: 1.5, separacion: 0.5, top: 56, id: uid, alt: T('Pentagrama en clave de sol con la nota dada y las que has colocado', 'Treble clef staff with the given note and the ones you placed')
       });
       currentSvg = r.elemento;
     }
@@ -614,7 +616,7 @@
       var b = document.getElementById(uid + '_btn');
       var nc = document.getElementById(uid + '_nc');
       if (b) b.classList.toggle('tm-ready', placedNotes.length === 3);
-      if (nc) nc.textContent = 'Notas colocadas: ' + placedNotes.length + ' / 3';
+      if (nc) nc.textContent = T('Notas colocadas: ', 'Notes placed: ') + placedNotes.length + ' / 3';
     }
 
     function checkAnswer() {
@@ -642,12 +644,12 @@
       if (ok) {
         score++;
         elFb.className = 'tm-fb tm-ok tm-show';
-        elFb.innerHTML = '<strong>✓ \xa1Correcto!</strong> — ' + roles[0] + ': ' + lbls[0] + ', ' + roles[1] + ': ' + lbls[1] + ', ' + roles[2] + ': ' + lbls[2] + '.';
+        elFb.innerHTML = '<strong>✓ ' + T('\xa1Correcto!', 'Correct!') + '</strong> — ' + roles[0] + ': ' + lbls[0] + ', ' + roles[1] + ': ' + lbls[1] + ', ' + roles[2] + ': ' + lbls[2] + '.';
       } else {
         placedNotes = expected.map(function (e) { return { vfn: e.vfn, oct: e.oct, acc: e.a }; });
         drawStaff();
         elFb.className = 'tm-fb tm-ko tm-show';
-        elFb.innerHTML = '<strong>✗ Incorrecto.</strong> La soluci\xf3n: ' + roles[0] + ' ' + lbls[0] + ', ' + roles[1] + ' ' + lbls[1] + ', ' + roles[2] + ' ' + lbls[2] + '.';
+        elFb.innerHTML = '<strong>✗ ' + T('Incorrecto.', 'Incorrect.') + '</strong> ' + T('La soluci\xf3n:', 'The solution:') + ' ' + roles[0] + ' ' + lbls[0] + ', ' + roles[1] + ' ' + lbls[1] + ', ' + roles[2] + ' ' + lbls[2] + '.';
       }
       document.getElementById(uid + '_badge').textContent = '✓ ' + score;
       document.getElementById(uid + '_wrap').classList.add('tm-answered');
@@ -664,13 +666,13 @@
       document.getElementById(uid + '_nxt').className = 'tm-nxt';
       document.getElementById(uid + '_wrap').classList.remove('tm-answered');
       genQ();
-      document.getElementById(uid + '_nc').textContent = 'Notas colocadas: 0 / 3';
+      document.getElementById(uid + '_nc').textContent = T('Notas colocadas: 0 / 3', 'Notes placed: 0 / 3');
       var rootLbl = NOTE_NAMES[cQ.a.n1] + ACC_SYM[String(cQ.a.a1)];
       var roles = rolesFor(cQ.invIdx);
-      var invSuffix = cQ.inv === 'fundamental' ? '' : ' (' + INV_LABEL[cQ.invIdx].replace('inversión', 'inv.') + ')';
+      var invSuffix = cQ.inv === 'fundamental' ? '' : ' (' + INV_LABEL[cQ.invIdx].replace('inversión', 'inv.').replace('inversion', 'inv.') + ')';
       var tipoLbl = config.tipo && config.tipo !== 'todas' ? '' : (' — ' + cQ.chord.label);
       document.getElementById(uid + '_q').innerHTML =
-        'Dibuja la ' + roles[0] + ', la ' + roles[1] + ' y la ' + roles[2] + ' del acorde' + invSuffix + ': <strong>' + rootLbl + ' — ' + cQ.chord.short + tipoLbl + '</strong>';
+        T('Dibuja la ' + roles[0] + ', la ' + roles[1] + ' y la ' + roles[2] + ' del acorde' + invSuffix + ': ', 'Draw the ' + roles[0] + ', the ' + roles[1] + ' and the ' + roles[2] + ' of the chord' + invSuffix + ': ') + '<strong>' + rootLbl + ' — ' + cQ.chord.short + tipoLbl + '</strong>';
       drawStaff();
     }
 
@@ -684,7 +686,7 @@
             '<div class="tm-iv-score-num">' + score + '/' + totalQ + '</div>',
             '<div class="tm-iv-score-pct">' + pct + '%</div>',
           '</div>',
-          '<button class="tm-submit tm-ready" id="' + uid + '_restart">Hacer otro test</button>',
+          '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Hacer otro test', 'Take another test') + '</button>',
         '</div>'
       ].join('');
       document.getElementById(uid + '_restart').addEventListener('click', function () {

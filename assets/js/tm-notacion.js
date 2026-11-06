@@ -16,6 +16,7 @@
  */
 (function (raiz) {
   'use strict';
+  var EN = typeof document !== 'undefined' && document.documentElement.lang === 'en';   // páginas inglesas: textos alternativos en inglés
   var VERSION = '6.3.0';
   var BASE = '/assets/vendor/verovio/';
   var PX_POR_UNIDAD = 11 / 7.2;   // ~11 px entre lineas (igual que las imagenes del diccionario)
@@ -183,7 +184,7 @@
     });
     contenedor.style.height = (op.alto || 135) + 'px';
     var fila = { clave: 'sol', armadura: n, compases: [teclas] };
-    var r = dibujarAAncho(contenedor, fila, op.ancho || 520, { escala: op.escala || 0.95, id: op.id || 'esc', alt: op.alt || 'Escala en clave de sol' });
+    var r = dibujarAAncho(contenedor, fila, op.ancho || 520, { escala: op.escala || 0.95, id: op.id || 'esc', alt: op.alt || (EN ? 'Scale in treble clef' : 'Escala en clave de sol') });
     var g = geometria(r.elemento);
     r.elemento.style.display = 'block'; r.elemento.style.margin = Math.round((op.top || 42) - g.lineas[0]) + 'px auto 0';
     return r;
