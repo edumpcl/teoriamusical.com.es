@@ -53,6 +53,15 @@ module.exports = dictionaryPage({
     </div>
 
     <div class="ej-card">
+      <div class="ej-card-icon" aria-hidden="true" style="background:#9a5a14">
+        <svg fill="white" width="30" height="30" viewBox="0 0 24 24"><ellipse cx="7" cy="17" rx="3.6" ry="2.6" transform="rotate(-20 7 17)"/><rect x="9.6" y="4" width="1.8" height="13"/><ellipse cx="17" cy="19" rx="3.6" ry="2.6" transform="rotate(-20 17 19)"/><rect x="19.6" y="6" width="1.8" height="13"/><rect x="9.6" y="4" width="11.8" height="2.2"/></svg>
+      </div>
+      <h2>Rhythm</h2>
+      <p>Note values and rests, ties and dots, syncopation, off-beat notes, tuplets, how a phrase starts and ends, and rhythm dictation, from whole notes to sixteenth notes.</p>
+      <a href="/en/exercises/rhythm/" class="ej-btn" style="background: #9a5a14;">Go to Rhythm Exercises</a>
+    </div>
+
+    <div class="ej-card">
       <div class="ej-card-icon" aria-hidden="true" style="background:#5b4ea3">
         <svg fill="white" width="30" height="30" viewBox="0 0 24 24"><path d="M12 3a8 8 0 0 0-8 8v6a2 2 0 0 0 2 2h1a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H6a6 6 0 0 1 12 0h-1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h1a2 2 0 0 0 2-2v-6a8 8 0 0 0-8-8z"/></svg>
       </div>
@@ -107,11 +116,20 @@ module.exports = dictionaryPage({
     </div>
 
     <div class="ej-card">
+      <div class="ej-card-icon" aria-hidden="true" style="background:#8b6914">
+        <svg fill="white" width="30" height="30" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      </div>
+      <h2>Intervals</h2>
+      <p>The foundation of harmony. Interval number, harmonic and melodic intervals, ascending and descending, steps and leaps, consonance and dissonance, half steps and enharmonics; practice from 2nds to octaves, a custom quiz, a complete analysis and printable worksheets.</p>
+      <a href="/ejercicios/ejercicios-de-intervalos-musicales/" class="ej-btn" style="background: #8b6914;">Go to Interval Exercises</a>
+    </div>
+
+    <div class="ej-card">
       <div class="ej-card-icon" aria-hidden="true" style="background:#1a6b8a">
         <svg fill="white" width="30" height="30" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
       </div>
       <h2>Scales</h2>
-      <p>Identify and build major, harmonic, melodic, Mixolydian, minor and Dorian scales on the staff, with a key signature or with written accidentals.</p>
+      <p>Identify and build scales on the staff, with a key signature or with written accidentals: major (natural and mixed), Mixolydian, minor (natural, harmonic and melodic), Dorian and chromatic. With a full quiz and custom worksheets.</p>
       <a href="/ejercicios/escalas/" class="ej-btn" style="background: #1a6b8a;">Go to Scale Exercises</a>
     </div>
 
@@ -121,7 +139,7 @@ module.exports = dictionaryPage({
       </div>
       <h2>Keys and Key Signatures</h2>
       <p>Identify any key from its key signature and write key signatures correctly on the staff.</p>
-      <a href="/ejercicios/tonalidades/" class="ej-btn" style="background: #8b6914;">Go to Key Signature Exercises</a>
+      <a href="/ejercicios/tonalidades/" class="ej-btn" style="background: #2a7a6e;">Go to Key Signature Exercises</a>
     </div>
 
     <div class="ej-card">
@@ -164,7 +182,7 @@ module.exports = dictionaryPage({
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">How many exercises are there?</div>
-      <div class="tm-faq-a">There are interactive quizzes in many sections: notes, note names, time signatures, ear training, tempo, dynamics, articulation, cadences, tonal functions, scales, keys and chords. Several include printable worksheets with answers. All are free and run in the browser, with nothing to install.</div>
+      <div class="tm-faq-a">There are interactive quizzes in many sections: notes, note names, time signatures, ear training, tempo, dynamics, articulation, cadences, tonal functions, intervals, scales, keys and chords. Several include printable worksheets with answers. All are free and run in the browser, with nothing to install.</div>
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">In what order should I do the exercises?</div>

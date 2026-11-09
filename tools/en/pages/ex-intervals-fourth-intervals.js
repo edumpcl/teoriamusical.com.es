@@ -92,7 +92,7 @@ module.exports = dictionaryPage({
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">What is the tritone?</div>
-      <div class="tm-faq-a">The tritone is the augmented 4th (or diminished 5th): 6 half steps, exactly half of an octave. In C major it occurs between F and B (an augmented 4th). It is a very tense interval and asks for resolution.</div>
+      <div class="tm-faq-a">The tritone is the augmented 4th (or diminished 5th): 6 half steps, exactly half of an octave. In C major it occurs between F and B (an augmented 4th). On this site it is classed as a semi-consonance: a very unstable interval that, in the tonal style, usually asks to resolve.</div>
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">Is a fourth consonant or dissonant?</div>

@@ -51,11 +51,11 @@ module.exports = dictionaryPage({
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">What is dissonance in music?</div>
-      <div class="tm-faq-a">A dissonant interval creates tension and asks to resolve to a consonant interval. The dissonant intervals are the major and minor 2nd, the major and minor 7th, and the tritone (augmented 4th or diminished 5th). Dissonance is not bad: it is the engine of tonal harmony.</div>
+      <div class="tm-faq-a">A dissonant interval creates tension and asks to resolve to a consonant interval. The dissonant intervals are the major and minor 2nd and the major and minor 7th. The tritone (augmented 4th or diminished 5th) is classified separately, as a semi-consonance: an unstable interval that, in the tonal style, usually asks to resolve. Dissonance is not bad: it is the engine of tonal harmony.</div>
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">Which interval is the most dissonant?</div>
-      <div class="tm-faq-a">The answer depends on the criteria. The tritone (augmented 4th or diminished 5th, 6 half steps) is the most unstable interval in tonal harmony and it has long been nicknamed "diabolus in musica" (the devil in music). The minor 2nd and the major 7th are the harshest when sounded together. The tritone splits the octave exactly in half, and its resolution to a 3rd or a 6th is one of the most powerful moves in tonal music.</div>
+      <div class="tm-faq-a">The answer depends on the criteria. The tritone (augmented 4th or diminished 5th, 6 half steps) is the tensest and most unstable interval of the diatonic scale, which is why this quiz classifies it separately, as a semi-consonance. It is often associated with the phrase "diabolus in musica" (the devil in music), of uncertain origin and date. The minor 2nd and the major 7th are the harshest when sounded together. The tritone splits the octave exactly in half, and its resolution to a 3rd or a 6th is one of the most powerful moves in tonal music.</div>
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">Why do consonance and dissonance matter?</div>
