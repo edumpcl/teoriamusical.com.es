@@ -84,7 +84,7 @@ module.exports = tunerInstrument({
       html: `<ul>
 <li><strong>Tune the 5th string on its own:</strong> its tuning peg is on the side of the neck, at the 5th fret. Tune it separately from the other four strings.</li>
 <li><strong>Tune string by string, then check again:</strong> adjusting one string can slightly change the pitch of the others, so go around the banjo a second time.</li>
-<li><strong>Tune with the capo on if you will use it:</strong> a capo can raise the pitch of the strings slightly as it presses them. Tune with it in place.</li>
+<li><strong>Use the capo with care:</strong> if a capo clamps too hard it can raise the pitch of the strings slightly. Put it on and check the tuning again.</li>
 </ul>`,
     },
   ],

@@ -1,0 +1,253 @@
+const dictionaryPage = require('../dictionary-page');
+
+// Fretboard table (4 strings x 12 frets), generated so every note is computed, not typed.
+const NAMES = [['C'], ['C♯', 'D♭'], ['D'], ['D♯', 'E♭'], ['E'], ['F'], ['F♯', 'G♭'], ['G'], ['G♯', 'A♭'], ['A'], ['A♯', 'B♭'], ['B']];
+const name = (midi, withAlt) => {
+  const [a, b] = NAMES[midi % 12];
+  const oct = Math.floor(midi / 12) - 1;
+  return a + oct + (withAlt && b ? `<small>${b}${oct}</small>` : '');
+};
+const STRINGS = [['4th', 28], ['3rd', 33], ['2nd', 38], ['1st', 43]];
+const MARKED = [3, 5, 7, 9, 12];
+const head = ['<th scope="col">String</th><th scope="col">Open</th>']
+  .concat(Array.from({ length: 12 }, (_, i) => {
+    const f = i + 1;
+    return `<th scope="col"${f === 12 ? ' class="tm-trastes-oct"' : ''}>${f}${MARKED.includes(f) ? ' ·' : ''}</th>`;
+  })).join('\n');
+const rows = STRINGS.map(([s, open]) => {
+  const cells = Array.from({ length: 13 }, (_, f) => `<td${f === 12 ? ' class="tm-trastes-oct"' : ''}>${name(open + f, f > 0)}</td>`).join('\n');
+  return `<tr><th scope="row">${s} <span class="tm-trastes-aire">(${name(open)})</span></th>\n${cells}\n</tr>`;
+}).join('\n');
+const TABLE = `<div class="tm-table-wrap">
+<table class="tm-table tm-trastes">
+<caption style="caption-side:top;text-align:left;font-weight:600;padding:0 0 8px">Every note on the bass: 4 strings × 12 frets (sounding pitch)</caption>
+<thead><tr>${head}</tr></thead><tbody>
+${rows}
+</tbody></table></div>`;
+
+const STR4 = [['4th', 'E1', 7], ['3rd', 'A1', 5.2], ['2nd', 'D2', 3.6], ['1st', 'G2', 2.2]]
+  .map(([n, nt, w], i) => { const y = 32 + 46 * i; return `<text x="16" y="${y + 5}" font-family="Arial" font-size="15" font-weight="bold" fill="#8b6914">${n}</text><text x="62" y="${y + 5}" font-family="Arial" font-size="15" fill="#1a1a1a">${nt}</text><line x1="104" y1="${y}" x2="456" y2="${y}" stroke="#6b5010" stroke-width="${w}" stroke-linecap="round"/>`; })
+  .join('\n');
+
+module.exports = dictionaryPage({
+  path: '/en/music-dictionary/instruments/bass-guitar-notes/',
+  esPath: '/diccionario-musical/notas-del-bajo-electrico/',
+  title: 'Bass Guitar Notes: Open Strings and Fretboard Chart',
+  description: 'Bass guitar notes: the four open strings (E1 A1 D2 G2), a 4-string by 12-fret chart, how frets work, tab, 5-string bass and why it sounds an octave lower.',
+  h1: 'Bass Guitar Notes',
+  crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
+  body: `
+<p>The <strong>electric bass</strong> holds up almost all modern music: it is the bridge between <strong>rhythm</strong> and <strong>harmony</strong>. And it gives you a head start when you learn its notes, because, like the <a href="/diccionario-musical/notas-de-la-guitarra/">guitar</a>, it <strong>has frets</strong>: each note sits in a definite place. Here are its <strong>four strings</strong>, how frets work, why the same note appears in several places, and how <strong>tablature</strong> works. It helps whether you read standard notation or not.</p>
+
+<figure style="margin:18px auto;max-width:440px;text-align:center;">
+<picture><source type="image/webp" srcset="/assets/img/bajo/instrumento.webp"><img src="/assets/img/bajo/instrumento.jpg" width="3532" height="1017" loading="lazy" alt="A four-string electric bass lying horizontally: the headstock on the left, the fretted neck, and the body with the pickups on the right" style="max-width:100%;height:auto;border:1px solid #e8e0cc;border-radius:8px;background:#fff;padding:8px"></picture>
+<figcaption style="font-size:.85rem;color:#686868;margin-top:6px">A four-string electric bass. Photo by <a href="https://commons.wikimedia.org/wiki/File:Gitara_basowa_PBG2T_sygn._Paul_Grey_firmy_Ibanez.jpg" rel="nofollow">muzyczny.pl</a>, CC BY-SA 4.0, via Wikimedia Commons.</figcaption>
+</figure>
+
+<div class="tm-table-wrap"><table class="tm-table">
+<caption style="caption-side:top;text-align:left;font-weight:600;padding:0 0 8px">The electric bass at a glance</caption>
+<tbody>
+<tr><th scope="row">Family</th><td>Plucked string (with the fingers or a pick)</td></tr>
+<tr><th scope="row">Open strings</th><td>E1 · A1 · D2 · G2 (sounding pitch, 4th to 1st)</td></tr>
+<tr><th scope="row">Tuning</th><td>In <strong>perfect 4ths</strong> (all of them, no exception)</td></tr>
+<tr><th scope="row">Transposition</th><td>Sounds an <strong>octave lower</strong> than written</td></tr>
+<tr><th scope="row">Range (sounding)</th><td>E1 to G3 with 12 frets (E♭4 with 20 frets, G4 with 24 frets); a 5-string bass adds B0</td></tr>
+<tr><th scope="row">Mechanism</th><td><strong>Frets</strong>: each fret raises the pitch by a half step (UK: semitone); fretless basses also exist</td></tr>
+<tr><th scope="row">Clef</th><td>Bass, with an 8 below (octave bass clef)</td></tr>
+</tbody>
+</table></div>
+
+<h2>The four strings: E, A, D, G</h2>
+
+<p>A standard bass has <strong>four strings</strong>, and these four "open" notes (with no fret pressed) are the basis of everything else. As on the guitar, they are numbered <strong>the opposite way from what you might expect</strong>: the <strong>1st</strong> string is the thinnest and highest (the one nearest the floor as you play), and the <strong>4th</strong> is the thickest and lowest (nearest your face).</p>
+
+<p class="tm-nota-tabla">Pitches on this page are <strong>sounding pitches</strong> in scientific pitch notation (C4 is middle C). The Spanish-speaking world calls these notes <em>Mi, La, Re, Sol</em> (the fixed-do solfège names): E, A, D, G.</p>
+
+<div class="tm-table-wrap"><table class="tm-table">
+<thead><tr><th>String</th><th>Note</th><th>Frequency</th><th>Sound</th></tr></thead>
+<tbody>
+<tr><td>4th (thickest)</td><td><strong>E1</strong></td><td>41.2 Hz</td><td>Very low, deep</td></tr>
+<tr><td>3rd</td><td><strong>A1</strong></td><td>55 Hz</td><td>Low, full-bodied</td></tr>
+<tr><td>2nd</td><td><strong>D2</strong></td><td>73.4 Hz</td><td>Medium-low</td></tr>
+<tr><td>1st (thinnest)</td><td><strong>G2</strong></td><td>98 Hz</td><td>The most "singing" string of the bass</td></tr>
+</tbody>
+</table></div>
+
+<figure style="margin:16px auto;max-width:470px;text-align:center;">
+<svg viewBox="0 0 470 200" role="img" aria-label="The four open strings of the bass, from the 4th (low E, top) to the 1st (G, bottom). The thicker the string, the lower the note." style="width:100%;height:auto;border:1px solid #e8e0cc;border-radius:8px;background:#fdfcf9">
+${STR4}
+</svg>
+<figcaption style="font-size:.85rem;color:#686868;margin-top:6px">The four open strings as you see them when playing: the 4th (low E, the thickest) at the top and the 1st (G, the thinnest) at the bottom. The thicker the string, the lower it sounds.</figcaption>
+</figure>
+
+<p>Between one string and the next there is always a <strong>perfect 4th</strong>: from E to A, from A to D, from D to G. There are <strong>no exceptions</strong> here, which is a clear difference from the guitar, whose tuning has a major 3rd between two of its strings. This regular pattern of 4ths means that scales and arpeggios always "fall" the same way under the hand, wherever you start.</p>
+
+<p>Does it sound familiar? These are exactly the <strong>four lowest strings of the guitar</strong> (E, A, D, G), but <strong>an octave lower</strong>. That is why it feels so natural for a guitarist to pick up a bass. To <strong>tune</strong> it, the easiest way is a <a href="/herramientas/afinador/bajo/">bass tuner</a> that gives you each string. Keep in mind that the lowest string, E1 (41.2&nbsp;Hz), is very close to the lowest pitch the online tuner can follow (about 40&nbsp;Hz), so bring the microphone close and pluck firmly. By ear, pressing the <strong>5th fret</strong> of a string should sound the same as the next string open (on all four, because they are all tuned in 4ths).</p>
+
+<h2>How frets work: one half step each</h2>
+
+<p>The neck of the bass is divided by <strong>frets</strong> (the metal bars). When you press a string just behind a fret, you shorten the part that vibrates and the note goes <strong>up</strong>. It goes up in a very orderly way: <strong>each fret is one half step</strong> (UK: semitone).</p>
+
+<p>That turns the neck into a kind of ruler of notes. If the open 4th string is E1:</p>
+
+<ul>
+  <li>Fret 1 → F1 (one half step higher)</li>
+  <li>Fret 2 → F♯1</li>
+  <li>Fret 3 → G1</li>
+  <li>… and so on, one half step per fret.</li>
+</ul>
+
+<p>Since an <strong>octave</strong> is twelve half steps, at <strong>fret 12</strong> you hear the same note as the open string, an octave higher. That is why fret 12 usually has a double marker: it is the point where the neck "repeats".</p>
+
+${TABLE}
+<p class="tm-nota-tabla">Read it as the bass in playing position: the <strong>4th string</strong> (the thickest and lowest) on top and the <strong>1st</strong> at the bottom. Each fret raises the pitch by a <strong>half step</strong>, so at <strong>fret 12</strong> the open-string note returns an octave higher, which is why that column is marked. The frets with a dot (3, 5, 7, 9 and 12) are the ones with markers on the neck. Sharp notes show their flat equivalent below: <strong>F♯ and G♭ are the same key</strong>, only the spelling changes. This is what <em>sounds</em>; on the score the bass is written an octave higher.</p>
+
+<h3>Position markers: the dots on the fingerboard</h3>
+
+<p>You will have noticed <strong>dots</strong> (sometimes diamonds or blocks) set into the wood of the fingerboard, always at <strong>frets 3, 5, 7, 9 and 12</strong> (and higher up at 15, 17, 19 and 21). They are <strong>position markers</strong>: they <strong>do not change the sound</strong>. They are a visual guide so your hand can find a fret at a glance without counting bars one by one. The marker at <strong>fret 12 is double</strong> (or larger) because it marks the <strong>octave</strong>, the point where the neck repeats. It is the same system on the bass, the guitar and almost any fretted instrument.</p>
+
+<figure style="margin:16px auto;max-width:470px;text-align:center;">
+<svg viewBox="0 0 470 112" role="img" aria-label="The bass fingerboard with its position markers: dots at frets 3, 5, 7 and 9, and a double dot at fret 12" style="width:100%;height:auto;border:1px solid #e8e0cc;border-radius:8px;background:#fdfcf9">
+<rect x="30" y="18" width="410" height="66" fill="#5a3a24"/>
+<rect x="25" y="18" width="5" height="66" fill="#f5efe0"/>
+<line x1="76" y1="18" x2="76" y2="84" stroke="#c9c9c9" stroke-width="1.5"/><line x1="119.5" y1="18" x2="119.5" y2="84" stroke="#c9c9c9" stroke-width="1.5"/><line x1="160.5" y1="18" x2="160.5" y2="84" stroke="#c9c9c9" stroke-width="1.5"/><line x1="199.2" y1="18" x2="199.2" y2="84" stroke="#c9c9c9" stroke-width="1.5"/><line x1="235.7" y1="18" x2="235.7" y2="84" stroke="#c9c9c9" stroke-width="1.5"/><line x1="270.2" y1="18" x2="270.2" y2="84" stroke="#c9c9c9" stroke-width="1.5"/><line x1="302.7" y1="18" x2="302.7" y2="84" stroke="#c9c9c9" stroke-width="1.5"/><line x1="333.4" y1="18" x2="333.4" y2="84" stroke="#c9c9c9" stroke-width="1.5"/><line x1="362.5" y1="18" x2="362.5" y2="84" stroke="#c9c9c9" stroke-width="1.5"/><line x1="389.8" y1="18" x2="389.8" y2="84" stroke="#c9c9c9" stroke-width="1.5"/><line x1="415.6" y1="18" x2="415.6" y2="84" stroke="#c9c9c9" stroke-width="1.5"/><line x1="440" y1="18" x2="440" y2="84" stroke="#c9c9c9" stroke-width="1.5"/>
+<circle cx="140" cy="51" r="7" fill="#efe4c8"/><circle cx="217.3" cy="51" r="7" fill="#efe4c8"/><circle cx="286.9" cy="51" r="7" fill="#efe4c8"/><circle cx="348" cy="51" r="7" fill="#efe4c8"/>
+<circle cx="427.8" cy="37" r="7" fill="#efe4c8"/><circle cx="427.8" cy="65" r="7" fill="#efe4c8"/>
+<text x="140" y="102" font-family="Arial" font-size="13" fill="#8b6914" text-anchor="middle">3</text><text x="217.3" y="102" font-family="Arial" font-size="13" fill="#8b6914" text-anchor="middle">5</text><text x="286.9" y="102" font-family="Arial" font-size="13" fill="#8b6914" text-anchor="middle">7</text><text x="348" y="102" font-family="Arial" font-size="13" fill="#8b6914" text-anchor="middle">9</text><text x="427.8" y="102" font-family="Arial" font-size="13" fill="#8b6914" text-anchor="middle">12</text>
+</svg>
+<figcaption style="font-size:.85rem;color:#686868;margin-top:6px">The position markers of the bass: dots at frets 3, 5, 7 and 9, and a double dot at fret 12 (the octave). They are a guide for the eye and do not change the note.</figcaption>
+</figure>
+
+<p>There is also the <strong>fretless bass</strong>: the same neck, but smooth, with no bars. It sounds more <strong>singing</strong> (<em>cantabile</em>) and allows <em>glissandos</em> and vibrato like the <a href="/diccionario-musical/notas-del-contrabajo/">double bass</a>, at the price that your ear, not the fret, decides the pitch.</p>
+
+<h3>The Spanish page has an interactive bass diagram</h3>
+
+<p>The Spanish edition has an interactive diagram that shows any note on a real photo of the neck and on a drawn fingerboard, writes it in tablature and on the staff, and plays it, from the open 4th string (E1) to fret 12 of the 1st (G3). It is not available in English yet. Because <strong>one note lives in several places</strong> on the bass, it lights up <strong>all of them</strong> at once. To tune, use the <a href="/herramientas/afinador/bajo/">bass tuner</a>.</p>
+
+<h2>Tablature: playing the bass without reading standard notation</h2>
+
+<p>The bass shares with the guitar a notation system of its own that needs no music reading: <strong>tablature</strong> (or "tab"). It is a direct drawing of the neck. There are <strong>four lines</strong>, one per string, but <strong>upside down compared with the staff</strong> (UK: stave): the <strong>top</strong> line is the 1st string (G) and the <strong>bottom</strong> line is the 4th (low E).</p>
+
+<pre style="font-family:'Courier New',monospace;font-size:1rem;line-height:1.5;background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:12px 16px;overflow-x:auto">G │─────────│   ← 1st string (G)
+D │─────────│
+A │──0──3───│
+E │─────────│   ← 4th string (low E)</pre>
+
+<p>The <strong>number</strong> written on a line says which <strong>fret</strong> to press on that string; a <strong>0</strong> means play it <strong>open</strong>. The example above plays the open A string (A1) and then fret 3 of the same string (C2). Tab tells you <strong>where to put your fingers</strong> but not the <strong>rhythm</strong>, so it is best read <strong>together with standard notation</strong>, which does show the note values.</p>
+
+<h2>Why the same note is on several strings</h2>
+
+<p>If you look at the chart you will see that almost any note appears <strong>in more than one place</strong>. <strong>A2</strong>, for example, can be played in three ways:</p>
+
+<ul>
+  <li><strong>Fret 2 of the 1st string</strong> (G).</li>
+  <li><strong>Fret 7 of the 2nd string</strong> (D).</li>
+  <li><strong>Fret 12 of the 3rd string</strong> (A).</li>
+</ul>
+
+<p>It is the <strong>same pitch</strong>, the same note, and yet it <strong>does not sound exactly the same</strong>: open or at a low fret the string sounds more <strong>open and bright</strong>; on a thicker string at a high fret it sounds <strong>rounder and fuller</strong>. This happens because the four strings <strong>overlap</strong>: each starts on a different note, so their ranges cross.</p>
+
+<p>So <strong>which one does a bass player use?</strong> There is no fixed answer. It depends on:</p>
+
+<ul>
+  <li>The <strong>hand position</strong>: you choose the spot that is closest to what you play before and after. On the bass, staying "in a position" instead of jumping around is the key to rhythmic solidity.</li>
+  <li>The <strong>tone color</strong>: a thick string at a high fret sounds fatter; a thin string at a low fret sounds more defined.</li>
+  <li><strong>Comfort</strong>: in a fast line, the nearest fingering wins.</li>
+</ul>
+
+<p>Choosing where to play a note is therefore both a <strong>musical and a fingering decision</strong>.</p>
+
+<h2>Why the bass "sounds lower" than it reads</h2>
+
+<p>The electric bass is an <strong>octave-transposing instrument</strong>, like the <a href="/diccionario-musical/notas-del-contrabajo/">double bass</a>. It is written in <a href="/diccionario-musical/claves-musicales/clave-de-fa/">bass clef</a>, but it <strong>sounds an octave lower</strong> than it appears on the page. That is why its clef sometimes carries a small <strong>8 below</strong> (octave bass clef).</p>
+
+<p>Why is it done this way? Because the bass is a <strong>very low</strong> instrument: if it were written at its real pitch, its lowest notes would fall so far below the staff that you would need a pile of <strong>ledger lines</strong>. Writing everything an octave higher makes it comfortable to read. It is the same reason why the open 4th string, which sounds E1, is <strong>written</strong> as E2.</p>
+
+<h2>The role of the bass and its family</h2>
+
+<p>The bass belongs to the <a href="/diccionario-musical/instrumentos-de-cuerda-pulsada/"><strong>plucked strings</strong></a>: the strings are not rubbed with a bow but <strong>plucked</strong> with the fingers or a pick. Its job is the <strong>harmonic foundation</strong>: it marks the root of each chord and, together with the drums, defines the <em>groove</em>. That is why it has its own recognizable techniques, such as <strong>slap</strong> (striking and pulling the string, typical of funk).</p>
+
+<p>Its direct acoustic relative is the <a href="/diccionario-musical/notas-del-contrabajo/"><strong>double bass</strong></a>, with the same tuning in 4ths and the same octave transposition. It also belongs to the family of the <a href="/diccionario-musical/notas-de-la-guitarra/"><strong>guitar</strong></a>, the electric guitar, the <a href="/diccionario-musical/notas-del-ukelele/"><strong>ukulele</strong></a> and the harp.</p>
+
+<h2>What about the five-string bass?</h2>
+
+<p>More and more bass players, especially in <strong>metal</strong>, <strong>gospel</strong>, modern jazz and contemporary church music, use a <strong>five-string bass</strong>. The fifth is a <strong>lower</strong> string added below the 4th: a low <strong>B0</strong>, so the tuning becomes <strong>B0 · E1 · A1 · D2 · G2</strong>, still in the same pattern of 4ths.</p>
+
+<p>What is it for? Two reasons:</p>
+
+<ul>
+  <li><strong>It extends the low register</strong>: it adds five half steps below the low E, down to B0 (about 31&nbsp;Hz), notes a four-string bass cannot reach.</li>
+  <li><strong>It avoids position shifts</strong>, which in practice is almost the more useful part: with the low B within reach, many lines that would force you to jump position can be played without moving the hand, by crossing to the fifth string.</li>
+</ul>
+
+<p>One practical warning: B0 (30.9&nbsp;Hz) is below the range of the online <a href="/herramientas/afinador/bajo/">bass tuner</a>, so it cannot read that string directly. Tune it by ear, or with the harmonic at the 12th fret, which sounds B1.</p>
+
+<p>There is also a <strong>six-string bass</strong>, which adds a <strong>high</strong> string as well (a C, above the G) to gain range at the top. In all of them, the logic of the frets and of the repeated notes is exactly the same as you have just seen.</p>
+
+<h2>Common mistakes when learning bass notes</h2>
+
+<ul>
+  <li><strong>Numbering the strings backwards.</strong> The 1st is the thinnest (G), not the thickest. The 4th is the thick one (low E).</li>
+  <li><strong>Believing the bass sounds as it reads.</strong> It sounds an octave below what is written; it is an octave-transposing instrument.</li>
+  <li><strong>Thinking each note is in only one place.</strong> Almost all are in several, with different color and comfort.</li>
+  <li><strong>Mixing up its tuning with the guitar's.</strong> The four low strings coincide, but the bass sounds an octave lower and is tuned in 4ths <em>without</em> the major-3rd exception of the guitar.</li>
+</ul>
+
+<h2>Summary</h2>
+
+<ul>
+  <li>The electric bass has <strong>four strings</strong> (E1, A1, D2, G2) tuned <strong>all in perfect 4ths</strong>.</li>
+  <li>They are the four low strings of the <a href="/diccionario-musical/notas-de-la-guitarra/">guitar</a>, <strong>an octave lower</strong>.</li>
+  <li>It <strong>has frets</strong> (each one a half step); there is also the <strong>fretless</strong> bass.</li>
+  <li>The <strong>same note</strong> appears on several strings, each with its own color.</li>
+  <li>It is read in <strong>bass clef</strong> and <strong>sounds an octave lower</strong> than written.</li>
+</ul>
+
+<aside class="tm-nombres">
+  <h3>How it appears on the score</h3>
+  <dl class="tm-nombres-lista">
+    <div class="tm-nombres-par"><dt>Italian</dt><dd>basso elettrico</dd></div>
+    <div class="tm-nombres-par"><dt>English</dt><dd>electric bass (bass guitar)</dd></div>
+    <div class="tm-nombres-par"><dt>German</dt><dd>E-Bass</dd></div>
+    <div class="tm-nombres-par"><dt>French</dt><dd>basse électrique</dd></div>
+  </dl>
+  <p class="tm-nombres-pie">All of them, with their false friends, are in <a href="/diccionario-musical/nombres-de-los-instrumentos-en-otros-idiomas/">instrument names in other languages</a>.</p>
+</aside>
+
+<section class="tm-seccion">
+<div class="tm-seccion-inner">
+<div class="tm-seccion-cabecera">
+<h2 class="tm-seccion-titulo">Frequently Asked <span>Questions</span></h2>
+</div>
+<div>
+<div class="tm-faq-list">
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">What are the notes of the bass guitar strings?</div>
+      <div class="tm-faq-a">From the 4th string (the thickest) to the 1st (the thinnest): E1, A1, D2 and G2, tuned in perfect 4ths. They are the same notes as the four low strings of the guitar (E, A, D, G), but an octave lower.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">Is the bass tuned like a guitar?</div>
+      <div class="tm-faq-a">Partly: the four strings of the bass (E-A-D-G) match the four low strings of the guitar, but sound an octave lower. There is also an important difference: on the bass ALL the strings are tuned in perfect 4ths, while the guitar has a major 3rd between its 3rd and 2nd strings.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">Does the bass have frets?</div>
+      <div class="tm-faq-a">Most basses do: each fret raises the pitch by exactly one half step, as on the guitar. There is also the fretless bass, which has a smoother, more singing sound and allows glissandos; there the player's ear decides the pitch, as on the double bass.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">What clef is the bass guitar written in?</div>
+      <div class="tm-faq-a">In bass clef. The bass is also an octave-transposing instrument: it sounds an octave lower than written, which avoids filling the score with ledger lines below the staff.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">How many strings does a bass have?</div>
+      <div class="tm-faq-a">Four is the standard (E-A-D-G). There are also five-string basses, which add a low B (B0) below, and six-string basses, which add a high string as well (a C). The more strings, the more range without changing position.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">What is the difference between the electric bass and the double bass?</div>
+      <div class="tm-faq-a">They share the tuning (E-A-D-G in 4ths) and both sound an octave lower than written. The double bass is acoustic and very large, is played standing or on a high stool with a bow or pizzicato, and has no frets. The electric bass is a fretted neck that sounds through amplification and is played mostly with the fingers or a pick.</div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+`,
+});

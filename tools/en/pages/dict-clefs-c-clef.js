@@ -1,0 +1,195 @@
+const dictionaryPage = require('../dictionary-page');
+module.exports = dictionaryPage({
+  path: '/en/music-dictionary/clefs/c-clef/',
+  esPath: '/diccionario-musical/claves-musicales/clave-de-do/',
+  title: 'C Clef: Alto and Tenor Clef, Notes and Positions',
+  description: 'The C clef marks middle C on the line where its two curves meet. Learn alto (viola) and tenor clef, all 4 positions, the notes and who reads them.',
+  h1: 'C Clef (Alto and Tenor Clef)',
+  crumbLabel: 'C Clef',
+  crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Clefs', '/diccionario-musical/claves-musicales/']],
+  scripts: ['tm-piano-audio'],
+  body: `
+<figure class="fig-sm">
+  <img src="/assets/img/notacion/claves/glifo-clave-do.svg" width="154" height="122" alt="The C clef on the 3rd line (alto clef, used by the viola): a stylized C whose center points to the line of middle C" decoding="async">
+</figure>
+
+<p>The <strong>C clef</strong> is the sign that places <strong>middle C</strong> (C4) on the line of the staff that gives the clef its position. It is the clef of the <strong>middle registers</strong> and, unlike the other two, it can be placed in <strong>four different positions</strong>. Its everyday use today is mostly limited to the <strong>viola</strong> (C clef on the 3rd line, called the alto clef), but the other positions matter in conservatory study and for reading older scores. It is one of the three <a href="/diccionario-musical/claves-musicales/">clefs</a>, together with the <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef</a> and the <a href="/diccionario-musical/claves-musicales/clave-de-fa/">bass clef</a>.</p>
+
+<h2>Why the symbol is a “C”: where the C clef comes from</h2>
+<p>The C clef is a <strong>stylized letter C</strong>. In medieval notation, a scribe wrote at the start of the line the letter of the reference note, and C is the letter name for the note C. Over the centuries, that handwritten C was split into two symmetrical halves, ending up as today's sign with its two facing curves.</p>
+<p>That detail explains how to read it: <strong>the point where the two curves meet marks the line of C</strong>. That is why the C clef can be placed on different lines without changing its name: you just move the sign and C moves with it, which in practice does not happen with the other two clefs.</p>
+<p>Together with the <a href="/diccionario-musical/claves-musicales/clave-de-fa/">bass clef</a>, it is <strong>one of the two oldest clefs</strong>: both come from the staff that is credited to Guido of Arezzo in the 11th century. The <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef</a> came later.</p>
+
+<h2>How to draw the C clef step by step</h2>
+<ol>
+  <li><strong>Draw two vertical lines</strong> close together, at the left of the staff, covering its full height.</li>
+  <li><strong>Draw the upper half:</strong> a curve that starts at the top, opens to the right and returns toward the center.</li>
+  <li><strong>Draw the lower half</strong>, a mirror image of the first, so that both meet at the same point.</li>
+</ol>
+<p>The last step decides whether it is right: <strong>the meeting point of the two curves must fall on the line of C</strong>. In the C clef on the 3rd line it falls on the 3rd line; in the one on the 4th line, on the fourth. If that point shifts, you have written a different clef.</p>
+
+<!-- TODO-IMG: printable PDF worksheet /assets/img/claves/ficha-dibujar-clave-de-do.pdf (preview /assets/img/claves/preview-ficha-clave-de-do.png/.webp) — practice sheet for tracing the C clef with decreasing help; its text is in Spanish, so it is left out of the English page. -->
+
+<h2>Notes in the C clef on the 3rd line: how to read them all</h2>
+<p>The most used position is the <strong>C clef on the 3rd line</strong> (alto clef), the viola's clef. The reference note is <strong>middle C</strong> on the 3rd line:</p>
+
+<figure class="tm-staff" data-tm-notes data-tm-baseoct="3">
+<img src="/assets/img/notacion/claves/notas-clave-do.svg" width="448" height="144" alt="Notes in the alto clef (C clef on the 3rd line) on the staff: F, G, A, B, C, D, E, F, G" loading="lazy" decoding="async">
+<figcaption>The notes in the C clef on the 3rd line (alto clef), line by line and space by space.</figcaption>
+</figure>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead>
+    <tr><th>Position (top to bottom)</th><th>Note</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>5th line</td><td>G</td></tr>
+    <tr><td>4th space</td><td>F</td></tr>
+    <tr><td>4th line</td><td>E</td></tr>
+    <tr><td>3rd space</td><td>D</td></tr>
+    <tr><td>3rd line</td><td><strong>C</strong> (reference)</td></tr>
+    <tr><td>2nd space</td><td>B</td></tr>
+    <tr><td>2nd line</td><td>A</td></tr>
+    <tr><td>1st space</td><td>G</td></tr>
+    <tr><td>1st line</td><td>F</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The fixed-do names used in Spanish-, French- and Italian-speaking countries are Do, Re, Mi, Fa, Sol, La, Si for C, D, E, F, G, A, B.</p>
+
+<h2>The 4 positions of the C clef</h2>
+<p>The C clef can be placed on any of the first four lines. <strong>Middle C</strong> always falls on the line that gives the clef its name, and the other notes are rearranged accordingly. Each position is historically tied to a voice or instrument:</p>
+
+<figure class="tm-staff" data-tm-notes data-tm-baseoct="4">
+<img src="/assets/img/notacion/claves/notas-clave-do-1.svg" width="448" height="144" alt="Notes in the soprano clef (C clef on the 1st line) on the staff: C, D, E, F, G, A, B, C, D" loading="lazy" decoding="async">
+<figcaption>C clef on the 1st line (soprano clef): middle C on the 1st line.</figcaption>
+</figure>
+
+<figure class="tm-staff" data-tm-notes data-tm-baseoct="3">
+<img src="/assets/img/notacion/claves/notas-clave-do-2.svg" width="448" height="144" alt="Notes in the mezzo-soprano clef (C clef on the 2nd line) on the staff: A, B, C, D, E, F, G, A, B" loading="lazy" decoding="async">
+<figcaption>C clef on the 2nd line (mezzo-soprano clef): middle C on the 2nd line.</figcaption>
+</figure>
+
+<figure class="tm-staff" data-tm-notes data-tm-baseoct="3">
+<img src="/assets/img/notacion/claves/notas-clave-do-4.svg" width="448" height="144" alt="Notes in the tenor clef (C clef on the 4th line) on the staff: D, E, F, G, A, B, C, D, E" loading="lazy" decoding="async">
+<figcaption>C clef on the 4th line (tenor clef): middle C on the 4th line.</figcaption>
+</figure>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead>
+    <tr><th>C clef</th><th>Voice / instrument</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>C on the 1st line</strong> (soprano clef)</td><td>Soprano (historical)</td></tr>
+    <tr><td><strong>C on the 2nd line</strong> (mezzo-soprano clef)</td><td>Mezzo-soprano (historical)</td></tr>
+    <tr><td><strong>C on the 3rd line</strong> (alto clef)</td><td>Alto and <strong>viola</strong>; also the alto trombone</td></tr>
+    <tr><td><strong>C on the 4th line</strong> (tenor clef)</td><td>Tenor; cello, bassoon and trombone in their high register</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Practice now: which note is it?</h2>
+<p>The C clef is the one people practice least, and for that very reason the hardest. Try the exercises: <a href="/ejercicios/identificar-notas/clave-de-do-en-3/">identify notes in the alto clef (C clef on the 3rd line)</a> or <a href="/ejercicios/identificar-notas/clave-de-do-en-4/">in the tenor clef (C clef on the 4th line)</a>.</p>
+
+<h2>Notes outside the staff: ledger lines</h2>
+<p>Since it is the clef of the middle register, the C clef is the one that <strong>needs the fewest ledger lines</strong>: that is exactly why it exists. Even so, it is worth knowing how to read them:</p>
+
+<figure class="tm-staff">
+<img src="/assets/img/notacion/claves/lineas-adicionales-clave-do.svg" width="417" height="154" alt="Ledger lines in the alto clef: D3 and E3 below the staff; F3 on the first line; G4 on the fifth line; A4, B4 and C5 above" loading="lazy" decoding="async">
+<figcaption>The most common notes on ledger lines in the C clef on the 3rd line.</figcaption>
+</figure>
+
+<h2>Differences between the C, treble and bass clefs</h2>
+<p>The three clefs share out the range. Each puts its reference note on a different line so that the music of each instrument fits on the staff <strong>without filling up with ledger lines</strong>.</p>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead>
+    <tr><th>Clef</th><th>Note it places</th><th>Line</th><th>Register</th><th>Who uses it</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>C clef</strong></td><td>C4</td><td>3rd or 4th</td><td>Medium</td><td>Viola, bassoon and trombone (high register)</td></tr>
+    <tr><td><strong>Treble (G)</strong></td><td>G4</td><td>2nd</td><td>High and medium-high</td><td>Violin, flute, trumpet, right hand of the piano</td></tr>
+    <tr><td><strong>Bass (F)</strong></td><td>F3</td><td>4th</td><td>Low</td><td>Cello, double bass, tuba, left hand of the piano</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The practical consequence takes time to absorb: <strong>the same position on the staff is not always the same note</strong>. The 3rd line is C in the alto clef, but B in the treble clef and D in the bass clef. That is why you do not “read the staff”: you read the staff <em>in a clef</em>. You can see them compared on the <a href="/diccionario-musical/claves-musicales/">clefs</a> page.</p>
+
+<h2>What is the C clef for?</h2>
+<p>The C clef lets you write the <strong>middle registers</strong> comfortably without too many ledger lines. Instruments and voices such as the viola, the cello in its high register or the tenor move in the central zone of the sound: in the <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef</a> they would sit too low and in the <a href="/diccionario-musical/claves-musicales/clave-de-fa/">bass clef</a> too high, filling the staff with hard-to-read ledger lines. Putting middle C on an inner line of the staff keeps that register centered and readable.</p>
+
+<p>Who uses it today:</p>
+<ul>
+  <li><strong>C clef on the 3rd line:</strong> it is the <a href="/diccionario-musical/notas-de-la-viola/">viola</a>'s own clef, so much so that it is simply called the “viola clef” in some countries. The viola is the only common instrument that reads it all the time; the alto trombone also uses it.</li>
+  <li><strong>C clef on the 4th line:</strong> it appears in the high register of the <a href="/diccionario-musical/notas-del-violonchelo/">cello</a>, the <a href="/diccionario-musical/notas-del-fagot/">bassoon</a> and the <a href="/diccionario-musical/notas-del-trombon/">trombone</a>, to avoid filling the score with ledger lines above the staff.</li>
+  <li><strong>C clef on the 1st and 2nd lines:</strong> tied to the soprano and mezzo-soprano voices. They are not used today except in early music and in conservatory study.</li>
+</ul>
+<p>You can see the notes of each instrument on <a href="/diccionario-musical/notas-en-los-instrumentos/">notes on instruments</a>.</p>
+
+<h2>Common mistakes when learning the C clef</h2>
+<ul>
+  <li><strong>Forgetting to check which line it is on.</strong> This is the mistake that belongs to this clef: since it is the only one used in several positions, you must always check where the two curves meet before reading a single note.</li>
+  <li><strong>Confusing the 3rd-line clef with the 4th-line one.</strong> They look very alike and shift every note by one step. If something “sounds wrong” when you read, check this first.</li>
+  <li><strong>Reading it as the treble clef.</strong> The 3rd line is C here and B in the treble clef; the 4th line is E here and D in the treble clef.</li>
+  <li><strong>Counting the lines from the top.</strong> Lines are always counted from the bottom, as in the other two clefs.</li>
+  <li><strong>Writing it off as useless.</strong> Violists need it every day, and cellists, bassoonists and trombonists meet it often.</li>
+</ul>
+
+<section class="tm-seccion">
+<div class="tm-seccion-inner">
+<div class="tm-seccion-cabecera">
+<h2 class="tm-seccion-titulo">Frequently Asked <span>Questions</span></h2>
+</div>
+<div>
+<div class="tm-faq-list">
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">What is the C clef?</div>
+      <div class="tm-faq-a">The C clef is the sign that places middle C (C4) on the line of the staff that gives the clef its name. It is used to write the middle registers comfortably and can be placed in four different positions; the most used today is the C clef on the 3rd line (alto clef), the viola's clef.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">Which note does the C clef indicate?</div>
+      <div class="tm-faq-a">The C clef is the C-shaped sign that shows where middle C is on the staff: C is on the line where the two curves of the clef meet. Unlike the treble and bass clefs, it can be placed on four lines, and the most used today is the one on the 3rd line, the alto (viola) clef.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">Who uses the C clef?</div>
+      <div class="tm-faq-a">Mostly the viola (C clef on the 3rd line), and the bassoon, trombone and cello in their high register (C clef on the 4th line, or tenor clef). The alto trombone also reads the 3rd-line clef. The C clefs on the 1st and 2nd lines, for soprano and mezzo-soprano, appear only in early music and in conservatory study.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">How do you read the C clef?</div>
+      <div class="tm-faq-a">First find middle C: it is the line where the two curves of the clef meet. From there the notes follow their order. In the C clef on the 3rd line the lines are, from bottom to top, F, A, C, E and G, and the spaces are G, B, D and F; in the one on the 4th line the lines are D, F, A, C and E, and the spaces are E, G, B and D.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">How many positions does the C clef have?</div>
+      <div class="tm-faq-a">The C clef can be placed on four lines: 1st (soprano), 2nd (mezzo-soprano), 3rd (alto and viola) and 4th (tenor). In all of them, middle C falls on the line that gives the clef its name.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">Which instruments play in the C clef?</div>
+      <div class="tm-faq-a">The instrument that uses the C clef all the time is the viola, which reads the C clef on the 3rd line. The C clef on the 4th line also appears in high passages for the cello, the bassoon and the tenor trombone.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">What is the C clef for?</div>
+      <div class="tm-faq-a">It lets you write the middle registers without too many ledger lines. With middle C on an inner line of the staff, instruments such as the viola sit centered and are easier to read than in the treble or bass clef.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">Why does the C clef have that shape?</div>
+      <div class="tm-faq-a">It is a stylized letter C: in medieval notation the letter of the reference note was written at the start of the line, and C is the note C. Over time that C split into two symmetrical halves. The point where the two curves meet marks the line of C.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">How do you draw the C clef step by step?</div>
+      <div class="tm-faq-a">Draw two vertical lines close together at the left of the staff, covering its full height; then the upper half, a curve that opens to the right and returns to the center; and finally the lower half, a mirror image. What matters is that the meeting point of the two curves falls on the line of C: the 3rd or the 4th, depending on the position.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">What is the difference between the C clef on the 3rd and 4th lines?</div>
+      <div class="tm-faq-a">Only the line where middle C is placed changes, but that shifts the name of every note by one step. The 3rd-line clef is the viola's clef (alto clef); the 4th-line clef (tenor clef) appears in the high register of the cello, the bassoon and the trombone.</div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+`,
+});

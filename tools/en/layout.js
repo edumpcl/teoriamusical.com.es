@@ -27,6 +27,8 @@ const NAV = [
   // { href: '/en/music-dictionary/', label: 'Music Dictionary' },
   // { href: '/en/exercises/', label: 'Exercises' },
   // { href: '/en/games/', label: 'Games' },
+  { href: '/en/music-dictionary/', label: 'Music Dictionary' },
+  { href: '/en/exercises/', label: 'Exercises' },
   { href: '/en/tools/', label: 'Tools', sub: [{ href: '/en/tools/metronome/', label: 'Metronome' }, { href: '/en/tools/tuner/', label: 'Tuner' }] },
 ];
 
@@ -188,7 +190,8 @@ function renderPage(page, ctx) {
 <link rel="alternate" hreflang="x-default" href="${SITE + page.esPath}">
 `
     : '';
-  const ld = (page.jsonld || []).map(o => `<script type="application/ld+json">\n${JSON.stringify(o)}\n</script>`).join('\n');
+  const ldList = typeof page.jsonld === 'function' ? page.jsonld(ctx) : (page.jsonld || []);
+  const ld = ldList.map(o => `<script type="application/ld+json">\n${JSON.stringify(o)}\n</script>`).join('\n');
   const switcher = page.esPath && live
     ? `\n        <li class="tm-lang"><a href="${page.esPath}" hreflang="es" lang="es" title="Ver esta página en español">Español</a></li>`
     : '';

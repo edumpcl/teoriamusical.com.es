@@ -18,8 +18,11 @@ const write = (p, s) => { const f = path.join(ROOT, p); fs.mkdirSync(path.dirnam
 const crypto = require('crypto');
 // ?v= of any asset: the same content hash version_assets.cjs uses, so both agree.
 const assetV = f => crypto.createHash('sha1').update(fs.readFileSync(path.join(ROOT, f))).digest('hex').slice(0, 8);
+const { buildMap, rewrite } = require('./links');
 const ctx = { v: assetVersions(read('index.html')), assetV };
 const pages = fs.readdirSync(PAGES).filter(f => f.endsWith('.js')).sort().map(f => require(path.join(PAGES, f)));
+ctx.linkMap = buildMap(pages);
+for (const pg of pages) if (pg.rewriteLinks) pg.main = rewrite(pg.main, ctx.linkMap);
 
 let changed = 0;
 const written = [];
