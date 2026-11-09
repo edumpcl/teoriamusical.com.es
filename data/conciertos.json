@@ -1,5 +1,5 @@
 {
-  "comprobado": "2026-11-02",
+  "comprobado": "2026-11-09",
   "conciertos": [
     {
       "id": "bsmm-2026-11-03",
@@ -9768,6 +9768,147 @@
         {
           "texto": "Publicación oficial de la banda en Instagram (calendario de noviembre)",
           "url": "https://www.instagram.com/p/DfN0PeJOrMx/"
+        }
+      ]
+    },
+    {
+      "id": "cim-la-armonica-bunol-2026-11-28",
+      "agrupacion": "CIM La Armónica de Buñol",
+      "titulo": "Concierto de Santa Cecilia",
+      "fecha": "2026-11-28",
+      "lugar": "Palacio de la Música de Buñol",
+      "ciudad": "Buñol",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "nota": "La agenda de la FSMCV marca las 08:00, hora que parece provisional: confirma la hora con la sociedad.",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda/concierto-santa-cecilia-cim-la-armonica-de-bunol-2/?occurrence=2026-11-28"
+        }
+      ]
+    },
+    {
+      "id": "certamen-bandas-juveniles-tavernes-2026-12-05",
+      "agrupacion": "III Certamen de Bandas Juveniles «Lorenzo Sanchís» de Tavernes de la Valldigna",
+      "titulo": "III Certamen de Bandas Juveniles «Lorenzo Sanchís»",
+      "fecha": "2026-12-05",
+      "hora": "17:00",
+      "lugar": "Casa de la Cultura de Tavernes de la Valldigna",
+      "ciudad": "Tavernes de la Valldigna",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "nota": "La fuente no detalla las bandas participantes.",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda/iii-certamen-bandas-juveniles-lorenzo-sanchis-de-tavernes-de-la-valldigna/?occurrence=2026-12-05"
+        }
+      ]
+    },
+    {
+      "id": "am-carrera-fuente-san-luis-2026-11-15",
+      "agrupacion": "Agrupación Musical Carrera Fuente de San Luis",
+      "titulo": "Concierto de Parques y Jardines",
+      "fecha": "2026-11-15",
+      "hora": "12:30",
+      "lugar": "Parroquia de María Auxiliadora (Av. La Plata, 10)",
+      "ciudad": "València",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "nota": "La agrupación informará más adelante de los detalles.",
+      "fuentes": [
+        {
+          "texto": "Web de la Agrupación Musical Carrera Fuente de San Luis (próximos eventos)",
+          "url": "https://sites.google.com/view/musicalsanluis/"
+        }
+      ]
+    },
+    {
+      "id": "am-carrera-fuente-san-luis-2026-11-20",
+      "agrupacion": "Agrupación Musical Carrera Fuente de San Luis",
+      "titulo": "Concierto de Santa Cecilia y 40.º aniversario",
+      "fecha": "2026-11-20",
+      "hora": "20:00",
+      "lugar": "Hotel Senator Parque Central (Pl. Manuel Sanchis Guarner, 1)",
+      "ciudad": "València",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "nota": "La agrupación informará más adelante de los detalles.",
+      "fuentes": [
+        {
+          "texto": "Web de la Agrupación Musical Carrera Fuente de San Luis (próximos eventos)",
+          "url": "https://sites.google.com/view/musicalsanluis/"
+        }
+      ]
+    },
+    {
+      "id": "banda-joven-las-torres-torreperogil-2026-11-14",
+      "agrupacion": "Banda Joven «Las Torres» (Ateneo Musical de Torreperogil)",
+      "titulo": "Concierto de Santa Cecilia 2026: «Tierras de leyenda»",
+      "fecha": "2026-11-14",
+      "hora": "20:00",
+      "lugar": "Casa de la Cultura",
+      "ciudad": "Torreperogil",
+      "comunidad": "Andalucía",
+      "tipo": "sociedad",
+      "fuentes": [
+        {
+          "texto": "Blog oficial de la Banda Joven «Las Torres» (entrada del 3-11-2026)",
+          "url": "http://bandajovenlastorres.blogspot.com/"
+        }
+      ]
+    },
+    {
+      "id": "banda-municipal-palma-2026-11-20",
+      "agrupacion": "Banda Municipal de Música de Palma",
+      "titulo": "Ressonàncies còsmiques",
+      "fecha": "2026-11-20",
+      "hora": "19:30",
+      "lugar": "Auditori del Conservatori Superior de Música de les Illes Balears (c. d'Alfons el Magnànim, 64)",
+      "ciudad": "Palma",
+      "comunidad": "Islas Baleares",
+      "tipo": "banda",
+      "entrada": "Entrada libre hasta completar aforo",
+      "fuentes": [
+        {
+          "texto": "Palma Cultura: Banda Municipal de Palma",
+          "url": "https://palmacultura.es/banda-municipal-palma"
+        }
+      ]
+    },
+    {
+      "id": "unio-filharmonica-amposta-2026-11-21",
+      "agrupacion": "Unió Filharmònica d'Amposta",
+      "titulo": "Concert de Santa Cecília 2026",
+      "fecha": "2026-11-21",
+      "hora": "20:00",
+      "lugar": "Auditori de la Unió Filharmònica",
+      "ciudad": "Amposta",
+      "comunidad": "Cataluña",
+      "tipo": "sociedad",
+      "nota": "La fuente no detalla el programa.",
+      "fuentes": [
+        {
+          "texto": "Web de la Unió Filharmònica d'Amposta (noticia del 5-11-2026)",
+          "url": "https://filharmonica.org/2026/11/05/concert-santa-cecilia-2026/"
+        }
+      ]
+    },
+    {
+      "id": "banda-escola-beade-2026-11-21",
+      "agrupacion": "Banda-Escola de Música de Beade",
+      "titulo": "Concerto de Santa Icía",
+      "fecha": "2026-11-21",
+      "hora": "19:00",
+      "ciudad": "Vigo (Beade)",
+      "comunidad": "Galicia",
+      "tipo": "sociedad",
+      "nota": "La web de la banda no indica el lugar ni el programa.",
+      "fuentes": [
+        {
+          "texto": "Web de la Banda-Escola de Música de Beade (próximas actuacións)",
+          "url": "http://bandabeade.com/"
         }
       ]
     }

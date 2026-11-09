@@ -617,9 +617,11 @@ let sm = fs.readFileSync(SM, 'utf8');
 const loc = u => `https://www.teoriamusical.com.es${u}`;
 for (const u of [`/${BASE}/`, `/${ENVIAR}/`, ...conPagina.map(urlDe), `/${BASE_AGR}/`, ...entPagina.map(o => urlAgr(o.slug))]) {
   const entrada = `  <url><loc>${loc(u)}</loc><lastmod>${data.comprobado}</lastmod></url>\n`;
-  const re = new RegExp(`  <url><loc>${loc(u).replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')}</loc><lastmod>[\\d-]+</lastmod></url>\\n`);
-  if (re.test(sm)) sm = sm.replace(re, entrada);
-  else sm = sm.replace(/(  <url><loc>https:\/\/www\.teoriamusical\.com\.es\/oposiciones-de-musica\/<\/loc>[^\n]*\n)/, `$1${entrada}`);
+  const re = new RegExp(`  <url><loc>${loc(u).replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')}</loc><lastmod>[\\d-]+</lastmod></url>\\r?\\n`, 'g');
+  // Se actualiza la primera aparición y se borran las copias (hubo URLs repetidas hasta 3 veces).
+  let primera = true;
+  sm = sm.replace(re, () => (primera ? (primera = false, entrada) : ''));
+  if (primera) sm = sm.replace(/(  <url><loc>https:\/\/www\.teoriamusical\.com\.es\/oposiciones-de-musica\/<\/loc>[^\n]*\n)/, `$1${entrada}`);
 }
 fs.writeFileSync(SM, sm);
 

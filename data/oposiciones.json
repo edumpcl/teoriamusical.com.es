@@ -1,5 +1,5 @@
 {
-  "comprobado": "2026-11-02",
+  "comprobado": "2026-11-09",
   "convocatorias": [
     {
       "id": "real-filharmonia-2026",
@@ -564,6 +564,65 @@
         }
       ],
       "nota_plazo": "5 días hábiles desde el día siguiente a la publicación en el BOP de Badajoz (28/10/2026). Contrastado con el boletín."
+    },
+    {
+      "id": "fuerteventura-4-plazas-2026",
+      "entidad": "Cabildo Insular de Fuerteventura",
+      "titulo": "4 plazas de música: profesor/a de canto, profesor/a de clarinete/saxofón y educador/a musical de folclore y de guitarra eléctrica",
+      "tipo": "docencia",
+      "instrumentos": [
+        "canto",
+        "clarinete",
+        "saxofón",
+        "folclore",
+        "guitarra eléctrica"
+      ],
+      "comunidad": "Canarias",
+      "plazas": "4 plazas de personal laboral fijo (con lista de reserva)",
+      "acceso": "Concurso-oposición, turno libre",
+      "inicio": "2026-10-24",
+      "fin": "2026-11-12",
+      "fuentes": [
+        {
+          "texto": "BOE del 23/10/2026 (BOE-A-2026-22129, extracto)",
+          "url": "https://www.boe.es/boe/dias/2026/10/23/pdfs/BOE-A-2026-22129.pdf"
+        },
+        {
+          "texto": "BOP de Las Palmas nº 121, 09/10/2026 (bases)",
+          "url": "https://www.boplaspalmas.net/boletines/2026/09-10-26/09-10-26.pdf"
+        },
+        {
+          "texto": "Sede de solicitudes del Cabildo",
+          "url": "https://cabildofuer.convoca.online/index.html?type=0"
+        }
+      ],
+      "nota_plazo": "20 días naturales desde el día siguiente a la publicación en el BOE (viernes 23/10/2026): del 24 de octubre al jueves 12 de noviembre. Contrastado con el boletín."
+    },
+    {
+      "id": "barcelona-bolsa-primera-infancia-2026",
+      "entidad": "Institut Municipal d'Educació de Barcelona",
+      "titulo": "Ampliación de la bolsa de profesorado de pedagogía musical en la primera infancia, escuelas municipales de música",
+      "tipo": "docencia",
+      "instrumentos": [
+        "pedagogía musical"
+      ],
+      "comunidad": "Cataluña",
+      "plazas": "Bolsa de trabajo (interinidades y contratos temporales)",
+      "acceso": "Concurso de méritos",
+      "inicio": "2026-11-02",
+      "fin": "2026-11-13",
+      "requisitos": "Catalán nivel C1 (o prueba).",
+      "fuentes": [
+        {
+          "texto": "DOGC núm. 9784, 30/10/2026 (bases)",
+          "url": "https://portaldogc.gencat.cat/utilsEADOP/AppJava/PdfProviderServlet?versionId=2177824&type=01&language=es_ES"
+        },
+        {
+          "texto": "Registro electrónico del Ayuntamiento de Barcelona",
+          "url": "https://seuelectronica.ajuntament.barcelona.cat/ca/registre-electronic"
+        }
+      ],
+      "nota_plazo": "10 días hábiles desde el día siguiente a la publicación en el DOGC (viernes 30/10/2026): del lunes 2 al viernes 13 de noviembre. Contrastado con el boletín."
     }
   ],
   "anunciadas": [
