@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'The 7 scale degrees: tonic, supertonic, mediant, subdominant, dominant, submediant and leading tone. Roman numerals, functions, tonal vs modal degrees.',
   h1: 'Scale Degrees: Names and Functions',
   crumbs: [['Music Dictionary', '/diccionario-musical/']],
-  scripts: ['tm-piano-audio'],
+  scripts: ['tm-piano-audio', 'tm-mei', 'tm-notacion', 'grados-engine'],
   body: `
 <p>The <strong>scale degrees</strong> are the seven positions that each note occupies in a scale. Every degree has a Roman numeral, a proper name and a specific harmonic function. Knowing these names is essential for analyzing chords, understanding tonal harmony and seeing why some progressions create tension and others create rest. For background, see the page on <a href="/diccionario-musical/intervalos/intervalos-musicales/">musical intervals</a>.</p>
 
@@ -157,6 +157,26 @@ module.exports = dictionaryPage({
 <p><strong>Key point:</strong> the names and functions of the degrees <strong>do not change with the key</strong>. In <strong>G major</strong> (G–A–B–C–D–E–F♯), I is still the tonic (G), V the dominant (D) and VII the leading tone (F♯). Only the notes change; the degrees are always the same.</p>
 
 <p>The note names above use letters. In Spanish-, French- and Italian-speaking countries the fixed-do names are used instead: C = Do, D = Re, E = Mi, F = Fa, G = Sol, A = La, B = Si.</p>
+
+<!-- ejercicios-grados -->
+<h2>Scale degree exercises</h2>
+<p>You learn the names by using them. These two exercises work in both directions: one starts from a written note and asks for the degree, and the other starts from the degree and asks for the note. Each has three levels, and the last one mixes <strong>major and minor</strong> keys to practice the one degree whose name really changes: the 7th degree is the <strong>leading tone</strong> when it lies a half step below the tonic and the <strong>subtonic</strong> when it lies a whole step below.</p>
+
+<h3>Which scale degree is this note?</h3>
+<p>You see a key and a note on the staff. Say which degree it is, as a Roman numeral, and what it is called.</p>
+<div id="tmgrados1"></div>
+
+<h3>Which note is this scale degree?</h3>
+<p>The reverse exercise: you get the key and are asked for a degree, sometimes by its number and sometimes by its name. When you check your answer, the note appears written on the staff.</p>
+<div id="tmgrados2"></div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.tmGradosIdentificar) tmGradosIdentificar('tmgrados1');
+    if (window.tmGradosNota) tmGradosNota('tmgrados2');
+  });
+</script>
+<!-- /ejercicios-grados -->
 
 <h2>What are scale degrees for?</h2>
 <p>Identifying degrees is the basic tool for understanding and creating tonal music. They are used mainly to:</p>

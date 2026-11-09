@@ -134,6 +134,15 @@ module.exports = dictionaryPage({
     </div>
 
     <div class="ej-card">
+      <div class="ej-card-icon" aria-hidden="true" style="background:#6b5010">
+        <svg fill="white" width="30" height="30" viewBox="0 0 24 24"><text x="2" y="17" font-family="serif" font-size="13" font-weight="bold">V</text><text x="13" y="17" font-family="serif" font-size="13" font-weight="bold">I</text></svg>
+      </div>
+      <h2>Scale Degrees</h2>
+      <p>Which degree a note is in its key and what it is called, and the reverse exercise. With major and minor keys, so you learn to tell the leading tone from the subtonic. The exercises are inside the theory page on scale degrees.</p>
+      <a href="/diccionario-musical/nombres-de-los-grados-de-la-escala/#tmgrados1" class="ej-btn" style="background: #6b5010;">See the Scale Degree Exercises</a>
+    </div>
+
+    <div class="ej-card">
       <div class="ej-card-icon" aria-hidden="true" style="background:#2a7a6e">
         <svg fill="white" width="30" height="30" viewBox="0 0 24 24"><path d="M11 18V6l-8 5v5l8-3ZM12 6v12l8-5v-5l-8 3z"/></svg>
       </div>

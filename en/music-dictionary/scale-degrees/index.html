@@ -336,6 +336,26 @@
 
 <p>The note names above use letters. In Spanish-, French- and Italian-speaking countries the fixed-do names are used instead: C = Do, D = Re, E = Mi, F = Fa, G = Sol, A = La, B = Si.</p>
 
+<!-- ejercicios-grados -->
+<h2>Scale degree exercises</h2>
+<p>You learn the names by using them. These two exercises work in both directions: one starts from a written note and asks for the degree, and the other starts from the degree and asks for the note. Each has three levels, and the last one mixes <strong>major and minor</strong> keys to practice the one degree whose name really changes: the 7th degree is the <strong>leading tone</strong> when it lies a half step below the tonic and the <strong>subtonic</strong> when it lies a whole step below.</p>
+
+<h3>Which scale degree is this note?</h3>
+<p>You see a key and a note on the staff. Say which degree it is, as a Roman numeral, and what it is called.</p>
+<div id="tmgrados1"></div>
+
+<h3>Which note is this scale degree?</h3>
+<p>The reverse exercise: you get the key and are asked for a degree, sometimes by its number and sometimes by its name. When you check your answer, the note appears written on the staff.</p>
+<div id="tmgrados2"></div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.tmGradosIdentificar) tmGradosIdentificar('tmgrados1');
+    if (window.tmGradosNota) tmGradosNota('tmgrados2');
+  });
+</script>
+<!-- /ejercicios-grados -->
+
 <h2>What are scale degrees for?</h2>
 <p>Identifying degrees is the basic tool for understanding and creating tonal music. They are used mainly to:</p>
 <ul>
@@ -392,6 +412,9 @@
   </article>
 </div>
 <script src="/assets/js/tm-piano-audio.js?v=5d4cdd02" defer></script>
+<script src="/assets/js/tm-mei.js?v=39228839" defer></script>
+<script src="/assets/js/tm-notacion.js?v=b90e2d2c" defer></script>
+<script src="/assets/js/grados-engine.js?v=88c223f2" defer></script>
 </main>
 
 <footer class="tm-site-footer">
