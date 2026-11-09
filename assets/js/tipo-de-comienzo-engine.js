@@ -32,6 +32,9 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+
   function D() { return window.tmCompletarCompasData; }
 
   function mulberry32(a) {
@@ -54,7 +57,7 @@
   }
 
   var TIPOS = ['tetico', 'acefalo', 'anacrusico'];
-  var NOMBRE_TIPO = { tetico: 'tético', anacrusico: 'anacrúsico', acefalo: 'acéfalo' };
+  var NOMBRE_TIPO = { tetico: T('tético', 'thetic'), anacrusico: T('anacrúsico', 'anacrusic'), acefalo: T('acéfalo', 'acephalous') };
   var SIMPLES = ['2/4', '3/4', '4/4'];
   var TODOS = ['2/4', '3/4', '4/4', '6/8', '9/8', '12/8'];
   /* tonica = letra de la tónica (c=0 … b=6). Solo mayores: la armadura basta. */
@@ -228,8 +231,8 @@
 
   /* --------------------------------------------------------- Explicación */
 
-  var NUM = ['', 'una', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho'];
-  function plural(nombre) { return nombre.replace(/^(\S+)/, '$1s'); }
+  var NUM = T(['', 'una', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho'], ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight']);
+  function plural(nombre) { return EN ? nombre + 's' : nombre.replace(/^(\S+)/, '$1s'); }
   function frase(elems) {
     var FIG = D().FIG, grupos = [];
     elems.forEach(function (e) {
@@ -239,13 +242,28 @@
     var trozos = grupos.map(function (g) {
       return NUM[g.n] + ' ' + (g.n === 1 ? FIG[g.f].nombre : plural(FIG[g.f].nombre));
     });
-    return trozos.length === 1 ? trozos[0] : trozos.slice(0, -1).join(', ') + ' y ' + trozos[trozos.length - 1];
+    return trozos.length === 1 ? trozos[0] : trozos.slice(0, -1).join(', ') + T(' y ', ' and ') + trozos[trozos.length - 1];
   }
 
   function explicar(it) {
     var d = D().COMPASES[it.compas], FIG = D().FIG, total = d.tiempo * d.tiempos;
     var b1 = it.compases[0].elems;
     var suma = b1.reduce(function (a, e) { return a + e.u; }, 0);
+    if (EN) {
+      if (it.tipo === 'tetico') return 'Thetic beginning: the music enters on beat 1, the strong beat, and the first measure is complete.';
+      if (it.tipo === 'anacrusico') {
+        return 'Anacrusic beginning: the first measure is incomplete (it only has ' + frase(b1) + ') and that lasts '
+          + (suma * 2 === total ? 'exactly half the measure' : 'less than half the measure')
+          + ': the music enters at the middle of the measure or later, just before the strong beat. Those notes are the pickup (anacrusis).';
+      }
+      if (it.forma === 'silencio') {
+        var restEn = FIG[b1[0].f].nombre.replace(/ note$/, ' rest');
+        return 'Acephalous beginning: the first measure is complete, but the strong beat is occupied by '
+          + (/^[aeiou]/.test(restEn) ? 'an ' : 'a ') + restEn + ' and the music enters afterward, before the middle of the measure.';
+      }
+      return 'Acephalous beginning: the first measure is incomplete (it only has ' + frase(b1)
+        + '), but that is more than half the measure: the music enters after the strong beat and before the middle, as if the head were missing even though the initial rest is not written.';
+    }
     if (it.tipo === 'tetico') {
       return 'Comienzo tético: la música entra en el tiempo 1, el tiempo fuerte, y el primer compás está completo.';
     }
@@ -264,9 +282,9 @@
 
   function pista(correcto, elegido) {
     if (correcto === elegido) return '';
-    if (correcto === 'acefalo') return ' No lo confundas con el anacrúsico: en la anacrusa la música entra en la mitad del compás o después (lo escrito dura la mitad o menos); en el acéfalo entra antes de la mitad, con el silencio inicial escrito o sin escribir.';
-    if (correcto === 'anacrusico') return ' No lo confundas con el acéfalo: aquí lo escrito dura la mitad del compás o menos; en el acéfalo la música entra antes de la mitad, aunque el compás se vea incompleto.';
-    return ' Truco: mira cuándo entra la música. En el tiempo 1, tético; después del tiempo 1 pero antes de la mitad del compás, acéfalo; en la mitad o después, anacrúsico.';
+    if (correcto === 'acefalo') return T(' No lo confundas con el anacrúsico: en la anacrusa la música entra en la mitad del compás o después (lo escrito dura la mitad o menos); en el acéfalo entra antes de la mitad, con el silencio inicial escrito o sin escribir.', ' Do not confuse it with anacrusic: in a pickup the music enters at the middle of the measure or later (what is written lasts half the measure or less); in acephalous it enters before the middle, with the initial rest written or not written.');
+    if (correcto === 'anacrusico') return T(' No lo confundas con el acéfalo: aquí lo escrito dura la mitad del compás o menos; en el acéfalo la música entra antes de la mitad, aunque el compás se vea incompleto.', ' Do not confuse it with acephalous: here what is written lasts half the measure or less; in acephalous the music enters before the middle, even if the measure looks incomplete.');
+    return T(' Truco: mira cuándo entra la música. En el tiempo 1, tético; después del tiempo 1 pero antes de la mitad del compás, acéfalo; en la mitad o después, anacrúsico.', ' Trick: look at when the music enters. On beat 1, thetic; after beat 1 but before the middle of the measure, acephalous; at the middle or later, anacrusic.');
   }
 
   /* --------------------------------------------------------------- Dibujo */
@@ -318,7 +336,7 @@
     if (opts.final) fila.barras = [{}, { fin: 'end' }];
     var res = window.tmNotacion.dibujarSync(div, fila, {
       escala: 1.3, separacion: opts.separacion || (opts.compacto ? 0.2 : 0.4), id: 'com',
-      alt: 'Dos compases de una melodía en compás de ' + it.compas
+      alt: T('Dos compases de una melodía en compás de ', 'Two measures of a melody in ') + it.compas
     });
     res.elemento.style.maxWidth = '100%';
     div.__tmInfo = info;
@@ -327,9 +345,9 @@
   /* ------------------------------------------------------------------ UI */
 
   var NIVELES = [
-    { nivel: 1, t: 'Fácil', d: 'Compases simples; silencio o anacrusa de un tiempo entero' },
-    { nivel: 2, t: 'Medio', d: 'Simples y compuestos; el silencio inicial puede no estar escrito' },
-    { nivel: 3, t: 'Difícil', d: 'Figuras muy pequeñas y silencios dentro del compás que despistan' }
+    { nivel: 1, t: T('Fácil', 'Easy'), d: T('Compases simples; silencio o anacrusa de un tiempo entero', 'Simple meters; a rest or pickup of one whole beat') },
+    { nivel: 2, t: T('Medio', 'Medium'), d: T('Simples y compuestos; el silencio inicial puede no estar escrito', 'Simple and compound meters; the initial rest may not be written') },
+    { nivel: 3, t: T('Difícil', 'Hard'), d: T('Figuras muy pequeñas y silencios dentro del compás que despistan', 'Very small note values and rests inside the measure that mislead') }
   ];
   var PREGUNTAS = 8;
 
@@ -383,8 +401,8 @@
   window.tmComienzo = function (id) {
     var cont = document.getElementById(id);
     if (cont && D() && window.tmNotacion && !conVerovio()) {
-      cont.innerHTML = '<div class="tm-cm-card"><div class="tm-cm-sub">Cargando el ejercicio…</div></div>';
-      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<div class="tm-cm-card"><div class="tm-cm-sub">No se ha podido cargar el ejercicio. Recarga la página.</div></div>'; });
+      cont.innerHTML = '<div class="tm-cm-card"><div class="tm-cm-sub">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</div></div>';
+      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<div class="tm-cm-card"><div class="tm-cm-sub">' + T('No se ha podido cargar el ejercicio. Recarga la página.', 'The exercise could not be loaded. Reload the page.') + '</div></div>'; });
       return;
     }
     arrancar(id);
@@ -399,11 +417,13 @@
     window.tmComienzoDebug = function () { return cola[pos] || null; };
 
     function inicio() {
-      cont.innerHTML = '<div class="tm-cm-card"><div class="tm-cm-tit">¿Cómo empieza la melodía?</div>'
-        + '<div class="tm-cm-sub">Verás los dos primeros compases de una melodía. Decide si el comienzo es tético, anacrúsico o acéfalo.</div>'
-        + '<div class="tm-cm-recuerda">Lo que decide es <b>cuándo entra la música</b> dentro del compás. <b>Tético:</b> en el tiempo 1. '
+      cont.innerHTML = '<div class="tm-cm-card"><div class="tm-cm-tit">' + T('¿Cómo empieza la melodía?', 'How does the melody begin?') + '</div>'
+        + '<div class="tm-cm-sub">' + T('Verás los dos primeros compases de una melodía. Decide si el comienzo es tético, anacrúsico o acéfalo.', 'You will see the first two measures of a melody. Decide whether the beginning is thetic, anacrusic or acephalous.') + '</div>'
+        + '<div class="tm-cm-recuerda">' + T('Lo que decide es <b>cuándo entra la música</b> dentro del compás. <b>Tético:</b> en el tiempo 1. '
         + '<b>Acéfalo:</b> después del tiempo fuerte pero antes de la mitad del compás (el silencio inicial puede estar escrito o no). '
-        + '<b>Anacrúsico:</b> en la mitad del compás o después, justo antes del tiempo fuerte.</div>'
+        + '<b>Anacrúsico:</b> en la mitad del compás o después, justo antes del tiempo fuerte.', 'What decides it is <b>when the music enters</b> within the measure. <b>Thetic:</b> on beat 1. '
+        + '<b>Acephalous:</b> after the strong beat but before the middle of the measure (the initial rest may or may not be written). '
+        + '<b>Anacrusic:</b> at the middle of the measure or later, just before the strong beat.') + '</div>'
         + '<div class="tm-cm-modos">' + NIVELES.map(function (m) {
           return '<button type="button" class="tm-cm-modo" data-n="' + m.nivel + '"><strong>' + m.t + '</strong><span>' + m.d + '</span></button>';
         }).join('') + '</div></div>';
@@ -422,9 +442,9 @@
     function pregunta() {
       var it = cola[pos];
       cont.innerHTML = '<div class="tm-cm-card">'
-        + '<div class="tm-cm-prog">Pregunta ' + (pos + 1) + ' de ' + cola.length + '</div>'
+        + '<div class="tm-cm-prog">' + T('Pregunta ' + (pos + 1) + ' de ' + cola.length, 'Question ' + (pos + 1) + ' of ' + cola.length) + '</div>'
         + '<div class="tm-cm-barra"><div style="width:' + (pos / cola.length * 100) + '%"></div></div>'
-        + '<div class="tm-cm-preg">¿Qué tipo de comienzo tiene?</div>'
+        + '<div class="tm-cm-preg">' + T('¿Qué tipo de comienzo tiene?', 'What type of beginning does it have?') + '</div>'
         + '<div class="tm-cm-dibujo"><div></div></div>'
         + '<div class="tm-cm-ops">' + TIPOS.map(function (t) {
           return '<button type="button" class="tm-cm-op" data-t="' + t + '">' + NOMBRE_TIPO[t].charAt(0).toUpperCase() + NOMBRE_TIPO[t].slice(1) + '</button>';
@@ -447,9 +467,9 @@
           });
           fb.hidden = false;
           fb.className = 'tm-cm-fb ' + (ok ? 'tm-ok' : 'tm-ko');
-          fb.innerHTML = '<strong>' + (ok ? '¡Correcto!' : 'No es correcto, es ' + NOMBRE_TIPO[it.tipo] + '.') + '</strong> ' + explicar(it) + pista(it.tipo, elegido);
+          fb.innerHTML = '<strong>' + (ok ? T('¡Correcto!', 'Correct!') : T('No es correcto, es ' + NOMBRE_TIPO[it.tipo] + '.', 'Not correct, it is ' + NOMBRE_TIPO[it.tipo] + '.')) + '</strong> ' + explicar(it) + pista(it.tipo, elegido);
           btn.hidden = false;
-          btn.textContent = pos + 1 < cola.length ? 'Siguiente' : 'Ver resultado';
+          btn.textContent = pos + 1 < cola.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See result');
         });
       });
       btn.addEventListener('click', function () {
@@ -460,11 +480,11 @@
 
     function resultado() {
       var nota = aciertos / cola.length;
-      var msg = nota === 1 ? '¡Perfecto! Distingues los tres comienzos sin dudar.' : nota >= 0.8 ? 'Muy bien: casi todo correcto.' : nota >= 0.5 ? 'Vas bien. Repasa las explicaciones y vuelve a intentarlo.' : 'Conviene repasar cómo se distingue cada comienzo antes de volver a intentarlo.';
-      cont.innerHTML = '<div class="tm-cm-card tm-cm-res"><div class="tm-cm-nota">' + aciertos + '</div><div class="tm-cm-de">aciertos de ' + cola.length + '</div>'
+      var msg = nota === 1 ? T('¡Perfecto! Distingues los tres comienzos sin dudar.', 'Perfect! You tell the three beginnings apart without hesitation.') : nota >= 0.8 ? T('Muy bien: casi todo correcto.', 'Very good: almost all correct.') : nota >= 0.5 ? T('Vas bien. Repasa las explicaciones y vuelve a intentarlo.', 'You are doing well. Review the explanations and try again.') : T('Conviene repasar cómo se distingue cada comienzo antes de volver a intentarlo.', 'Review how to tell each beginning apart before trying again.');
+      cont.innerHTML = '<div class="tm-cm-card tm-cm-res"><div class="tm-cm-nota">' + aciertos + '</div><div class="tm-cm-de">' + T('aciertos de ' + cola.length, 'correct out of ' + cola.length) + '</div>'
         + '<div class="tm-cm-msg">' + msg + '</div>'
-        + '<button type="button" class="tm-cm-otra" data-a="otra">Otra ronda</button>'
-        + '<button type="button" class="tm-cm-otra tm-2" data-a="modo">Cambiar de nivel</button></div>';
+        + '<button type="button" class="tm-cm-otra" data-a="otra">' + T('Otra ronda', 'Another round') + '</button>'
+        + '<button type="button" class="tm-cm-otra tm-2" data-a="modo">' + T('Cambiar de nivel', 'Change level') + '</button></div>';
       cont.querySelector('[data-a="otra"]').addEventListener('click', function () { empezar(nivelActual); });
       cont.querySelector('[data-a="modo"]').addEventListener('click', inicio);
     }

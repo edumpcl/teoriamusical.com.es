@@ -26,6 +26,9 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+
   var TOTAL = 10, MAX_ESCUCHAS = 3, SOL4 = 67, ROJO = '#c62828';
   var LETRAS = ['A', 'B', 'C', 'D'];
   var rnd = function (n) { return Math.floor(Math.random() * n); };
@@ -38,20 +41,20 @@
   /* Figuras: d = tiempos que dura (la negra es el tiempo en 2/4, 3/4 y 4/4), s = silencio. cc = la figura en
      completar-compas-engine.js (para la tarjeta); vf = la duración en tm-mei.js. */
   var FIG = {
-    n: { d: 1, s: 0, cc: 'n', vf: 'q', nombre: 'negra' },
-    sn: { d: 1, s: 1, cc: 'n', vf: 'q', nombre: 'silencio de negra' },
-    b: { d: 2, s: 0, cc: 'b', vf: 'h', nombre: 'blanca' },
-    sb: { d: 2, s: 1, cc: 'b', vf: 'h', nombre: 'silencio de blanca' },
-    bp: { d: 3, s: 0, cc: 'bP', vf: 'h', p: 1, nombre: 'blanca con puntillo' },
-    sbp: { d: 3, s: 1, cc: 'bP', vf: 'h', p: 1, nombre: 'silencio de blanca con puntillo' },
-    r: { d: 4, s: 0, cc: 'r', vf: 'w', nombre: 'redonda' },
-    sr: { d: 4, s: 1, cc: 'r', vf: 'w', nombre: 'silencio de redonda' },
-    cc: { d: 1, s: 0, notas: 2, cc: 'c', vf: '8', nombre: 'dos corcheas' },          // un tiempo con dos notas, unidas con barra
-    ss: { d: 1, s: 0, notas: 4, cc: 'sc', vf: '16', nombre: 'cuatro semicorcheas' },  // un tiempo con cuatro notas
-    c: { d: 0.5, s: 0, cc: 'c', vf: '8', nombre: 'corchea' },                        // solo al escribir: tarjeta de una corchea
-    s: { d: 0.25, s: 0, cc: 'sc', vf: '16', nombre: 'semicorchea' },                 // solo al escribir: tarjeta de una semicorchea
-    scc: { d: 1, s: 0, partes: ['sc', 'c'], nombre: 'silencio de corchea y corchea' },  // un tiempo: la nota a contratiempo
-    sc: { d: 0.5, s: 1, cc: 'c', vf: '8', nombre: 'silencio de corchea' }            // solo al escribir (y dentro de scc)
+    n: { d: 1, s: 0, cc: 'n', vf: 'q', nombre: T('negra', 'quarter note') },
+    sn: { d: 1, s: 1, cc: 'n', vf: 'q', nombre: T('silencio de negra', 'quarter rest') },
+    b: { d: 2, s: 0, cc: 'b', vf: 'h', nombre: T('blanca', 'half note') },
+    sb: { d: 2, s: 1, cc: 'b', vf: 'h', nombre: T('silencio de blanca', 'half rest') },
+    bp: { d: 3, s: 0, cc: 'bP', vf: 'h', p: 1, nombre: T('blanca con puntillo', 'dotted half note') },
+    sbp: { d: 3, s: 1, cc: 'bP', vf: 'h', p: 1, nombre: T('silencio de blanca con puntillo', 'dotted half rest') },
+    r: { d: 4, s: 0, cc: 'r', vf: 'w', nombre: T('redonda', 'whole note') },
+    sr: { d: 4, s: 1, cc: 'r', vf: 'w', nombre: T('silencio de redonda', 'whole rest') },
+    cc: { d: 1, s: 0, notas: 2, cc: 'c', vf: '8', nombre: T('dos corcheas', 'two eighth notes') },          // un tiempo con dos notas, unidas con barra
+    ss: { d: 1, s: 0, notas: 4, cc: 'sc', vf: '16', nombre: T('cuatro semicorcheas', 'four sixteenth notes') },  // un tiempo con cuatro notas
+    c: { d: 0.5, s: 0, cc: 'c', vf: '8', nombre: T('corchea', 'eighth note') },                        // solo al escribir: tarjeta de una corchea
+    s: { d: 0.25, s: 0, cc: 'sc', vf: '16', nombre: T('semicorchea', 'sixteenth note') },                 // solo al escribir: tarjeta de una semicorchea
+    scc: { d: 1, s: 0, partes: ['sc', 'c'], nombre: T('silencio de corchea y corchea', 'eighth rest and eighth note') },  // un tiempo: la nota a contratiempo
+    sc: { d: 0.5, s: 1, cc: 'c', vf: '8', nombre: T('silencio de corchea', 'eighth rest') }            // solo al escribir (y dentro de scc)
   };
   var SUELTA = { cc: 'c', ss: 's', scc: 'sc' };   // la tarjeta de cada grupo (la corchea de scc ya sale con cc)
   var SILENCIO_DE = { 1: 'sn', 2: 'sb', 3: 'sbp', 4: 'sr' };   // el silencio de cada duración
@@ -61,28 +64,28 @@
      prefiere: una figura que saldría poco; sale en alrededor de la mitad de los dictados (ver generar). */
   var GRUPOS = {
     // 2/4 tiene pocos dictados (8 con negras, 7 con blancas): sale 3 veces
-    negras: { figs: ['n', 'sn'], texto: 'negras y silencios de negra', reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
-    blancas: { figs: ['n', 'sn', 'b', 'sb'], texto: 'blancas, negras y sus silencios', requiere: ['b'], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
-    puntillo: { figs: ['n', 'sn', 'b', 'sb', 'bp', 'sbp'], texto: 'blancas con puntillo, blancas, negras y sus silencios', requiere: ['bp', 'sbp'], maxSilencio: 3, vacio: ['sbp'], prefiere: 'sbp', reparto: [3, 3, 3, 3, 3, 4, 4, 4, 4, 4] },
+    negras: { figs: ['n', 'sn'], texto: T('negras y silencios de negra', 'quarter notes and quarter rests'), reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
+    blancas: { figs: ['n', 'sn', 'b', 'sb'], texto: T('blancas, negras y sus silencios', 'half notes, quarter notes and their rests'), requiere: ['b'], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
+    puntillo: { figs: ['n', 'sn', 'b', 'sb', 'bp', 'sbp'], texto: T('blancas con puntillo, blancas, negras y sus silencios', 'dotted half notes, half notes, quarter notes and their rests'), requiere: ['bp', 'sbp'], maxSilencio: 3, vacio: ['sbp'], prefiere: 'sbp', reparto: [3, 3, 3, 3, 3, 4, 4, 4, 4, 4] },
     // la redonda solo cabe en 4/4
-    redondas: { figs: ['n', 'sn', 'b', 'sb', 'bp', 'sbp', 'r', 'sr'], texto: 'redondas, blancas con puntillo, blancas, negras y sus silencios', requiere: ['r', 'sr'], maxSilencio: 4, vacio: ['sr'], prefiere: 'sr', reparto: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] },
+    redondas: { figs: ['n', 'sn', 'b', 'sb', 'bp', 'sbp', 'r', 'sr'], texto: T('redondas, blancas con puntillo, blancas, negras y sus silencios', 'whole notes, dotted half notes, half notes, quarter notes and their rests'), requiere: ['r', 'sr'], maxSilencio: 4, vacio: ['sr'], prefiere: 'sr', reparto: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] },
     // con corcheas: los mismos grupos con el de dos corcheas; el dictado lleva corcheas y la figura nueva (requiere: todas las listas)
-    'negras-c': { figs: ['n', 'sn', 'cc'], texto: 'negras, grupos de dos corcheas y silencios de negra', requiere: [['cc'], ['sn']], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
-    'blancas-c': { figs: ['n', 'sn', 'cc', 'b', 'sb'], texto: 'blancas, negras, grupos de dos corcheas y sus silencios', requiere: [['cc'], ['b', 'sb']], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
-    'puntillo-c': { figs: ['n', 'sn', 'cc', 'b', 'sb', 'bp', 'sbp'], texto: 'blancas con puntillo, blancas, negras, grupos de dos corcheas y sus silencios', requiere: [['cc'], ['bp', 'sbp']], maxSilencio: 3, vacio: ['sbp'], prefiere: 'sbp', reparto: [3, 3, 3, 3, 3, 4, 4, 4, 4, 4] },
-    'redondas-c': { figs: ['n', 'sn', 'cc', 'b', 'sb', 'bp', 'sbp', 'r', 'sr'], texto: 'redondas, blancas con puntillo, blancas, negras, grupos de dos corcheas y sus silencios', requiere: [['cc'], ['r', 'sr']], maxSilencio: 4, vacio: ['sr'], prefiere: 'sr', reparto: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] },
+    'negras-c': { figs: ['n', 'sn', 'cc'], texto: T('negras, grupos de dos corcheas y silencios de negra', 'quarter notes, groups of two eighth notes and quarter rests'), requiere: [['cc'], ['sn']], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
+    'blancas-c': { figs: ['n', 'sn', 'cc', 'b', 'sb'], texto: T('blancas, negras, grupos de dos corcheas y sus silencios', 'half notes, quarter notes, groups of two eighth notes and their rests'), requiere: [['cc'], ['b', 'sb']], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
+    'puntillo-c': { figs: ['n', 'sn', 'cc', 'b', 'sb', 'bp', 'sbp'], texto: T('blancas con puntillo, blancas, negras, grupos de dos corcheas y sus silencios', 'dotted half notes, half notes, quarter notes, groups of two eighth notes and their rests'), requiere: [['cc'], ['bp', 'sbp']], maxSilencio: 3, vacio: ['sbp'], prefiere: 'sbp', reparto: [3, 3, 3, 3, 3, 4, 4, 4, 4, 4] },
+    'redondas-c': { figs: ['n', 'sn', 'cc', 'b', 'sb', 'bp', 'sbp', 'r', 'sr'], texto: T('redondas, blancas con puntillo, blancas, negras, grupos de dos corcheas y sus silencios', 'whole notes, dotted half notes, half notes, quarter notes, groups of two eighth notes and their rests'), requiere: [['cc'], ['r', 'sr']], maxSilencio: 4, vacio: ['sr'], prefiere: 'sr', reparto: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] },
     // con semicorcheas (Eduardo): los mismos cuatro, con grupos de cuatro semicorcheas y también de dos corcheas
-    'negras-s': { figs: ['n', 'sn', 'cc', 'ss'], texto: 'negras, grupos de dos corcheas, grupos de cuatro semicorcheas y silencios de negra', requiere: [['ss'], ['sn']], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
-    'blancas-s': { figs: ['n', 'sn', 'cc', 'ss', 'b', 'sb'], texto: 'blancas, negras, grupos de corcheas y de semicorcheas y sus silencios', requiere: [['ss'], ['b', 'sb']], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
-    'puntillo-s': { figs: ['n', 'sn', 'cc', 'ss', 'b', 'sb', 'bp', 'sbp'], texto: 'blancas con puntillo, blancas, negras, grupos de corcheas y de semicorcheas y sus silencios', requiere: [['ss'], ['bp', 'sbp']], maxSilencio: 3, vacio: ['sbp'], prefiere: 'sbp', reparto: [3, 3, 3, 3, 3, 4, 4, 4, 4, 4] },
-    'redondas-s': { figs: ['n', 'sn', 'cc', 'ss', 'b', 'sb', 'bp', 'sbp', 'r', 'sr'], texto: 'redondas, blancas con puntillo, blancas, negras, grupos de corcheas y de semicorcheas y sus silencios', requiere: [['ss'], ['r', 'sr']], maxSilencio: 4, vacio: ['sr'], prefiere: 'sr', reparto: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] },
+    'negras-s': { figs: ['n', 'sn', 'cc', 'ss'], texto: T('negras, grupos de dos corcheas, grupos de cuatro semicorcheas y silencios de negra', 'quarter notes, groups of two eighth notes, groups of four sixteenth notes and quarter rests'), requiere: [['ss'], ['sn']], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
+    'blancas-s': { figs: ['n', 'sn', 'cc', 'ss', 'b', 'sb'], texto: T('blancas, negras, grupos de corcheas y de semicorcheas y sus silencios', 'half notes, quarter notes, groups of eighth notes and of sixteenth notes and their rests'), requiere: [['ss'], ['b', 'sb']], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
+    'puntillo-s': { figs: ['n', 'sn', 'cc', 'ss', 'b', 'sb', 'bp', 'sbp'], texto: T('blancas con puntillo, blancas, negras, grupos de corcheas y de semicorcheas y sus silencios', 'dotted half notes, half notes, quarter notes, groups of eighth notes and of sixteenth notes and their rests'), requiere: [['ss'], ['bp', 'sbp']], maxSilencio: 3, vacio: ['sbp'], prefiere: 'sbp', reparto: [3, 3, 3, 3, 3, 4, 4, 4, 4, 4] },
+    'redondas-s': { figs: ['n', 'sn', 'cc', 'ss', 'b', 'sb', 'bp', 'sbp', 'r', 'sr'], texto: T('redondas, blancas con puntillo, blancas, negras, grupos de corcheas y de semicorcheas y sus silencios', 'whole notes, dotted half notes, half notes, quarter notes, groups of eighth notes and of sixteenth notes and their rests'), requiere: [['ss'], ['r', 'sr']], maxSilencio: 4, vacio: ['sr'], prefiere: 'sr', reparto: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] },
     // con silencio de corchea y corchea (Eduardo): primero con negras y corcheas, y luego con el resto, como los de corcheas
     // (Eduardo: el 2.º añade las semicorcheas, y desde ahí siguen en todos)
-    'negras-sc': { figs: ['n', 'sn', 'cc', 'scc'], texto: 'negras, grupos de dos corcheas, silencio de corchea y corchea y silencios de negra', requiere: ['scc'], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
-    'semicorcheas-sc': { figs: ['n', 'sn', 'cc', 'scc', 'ss'], texto: 'negras, corcheas, semicorcheas, silencio de corchea y corchea y silencios de negra', requiere: [['scc'], ['ss']], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
-    'blancas-sc': { figs: ['n', 'sn', 'cc', 'scc', 'ss', 'b', 'sb'], texto: 'blancas, negras, corcheas, semicorcheas, silencio de corchea y corchea y sus silencios', requiere: [['scc'], ['b', 'sb']], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
-    'puntillo-sc': { figs: ['n', 'sn', 'cc', 'scc', 'ss', 'b', 'sb', 'bp', 'sbp'], texto: 'blancas con puntillo, blancas, negras, corcheas, semicorcheas, silencio de corchea y corchea y sus silencios', requiere: [['scc'], ['bp', 'sbp']], maxSilencio: 3, vacio: ['sbp'], prefiere: 'sbp', reparto: [3, 3, 3, 3, 3, 4, 4, 4, 4, 4] },
-    'redondas-sc': { figs: ['n', 'sn', 'cc', 'scc', 'ss', 'b', 'sb', 'bp', 'sbp', 'r', 'sr'], texto: 'redondas, blancas con puntillo, blancas, negras, corcheas, semicorcheas, silencio de corchea y corchea y sus silencios', requiere: [['scc'], ['r', 'sr']], maxSilencio: 4, vacio: ['sr'], prefiere: 'sr', reparto: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] }
+    'negras-sc': { figs: ['n', 'sn', 'cc', 'scc'], texto: T('negras, grupos de dos corcheas, silencio de corchea y corchea y silencios de negra', 'quarter notes, groups of two eighth notes, eighth rest and eighth note, and quarter rests'), requiere: ['scc'], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
+    'semicorcheas-sc': { figs: ['n', 'sn', 'cc', 'scc', 'ss'], texto: T('negras, corcheas, semicorcheas, silencio de corchea y corchea y silencios de negra', 'quarter notes, eighth notes, sixteenth notes, eighth rest and eighth note, and quarter rests'), requiere: [['scc'], ['ss']], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
+    'blancas-sc': { figs: ['n', 'sn', 'cc', 'scc', 'ss', 'b', 'sb'], texto: T('blancas, negras, corcheas, semicorcheas, silencio de corchea y corchea y sus silencios', 'half notes, quarter notes, eighth notes, sixteenth notes, eighth rest and eighth note, and their rests'), requiere: [['scc'], ['b', 'sb']], reparto: [2, 2, 2, 3, 3, 3, 3, 4, 4, 4] },
+    'puntillo-sc': { figs: ['n', 'sn', 'cc', 'scc', 'ss', 'b', 'sb', 'bp', 'sbp'], texto: T('blancas con puntillo, blancas, negras, corcheas, semicorcheas, silencio de corchea y corchea y sus silencios', 'dotted half notes, half notes, quarter notes, eighth notes, sixteenth notes, eighth rest and eighth note, and their rests'), requiere: [['scc'], ['bp', 'sbp']], maxSilencio: 3, vacio: ['sbp'], prefiere: 'sbp', reparto: [3, 3, 3, 3, 3, 4, 4, 4, 4, 4] },
+    'redondas-sc': { figs: ['n', 'sn', 'cc', 'scc', 'ss', 'b', 'sb', 'bp', 'sbp', 'r', 'sr'], texto: T('redondas, blancas con puntillo, blancas, negras, corcheas, semicorcheas, silencio de corchea y corchea y sus silencios', 'whole notes, dotted half notes, half notes, quarter notes, eighth notes, sixteenth notes, eighth rest and eighth note, and their rests'), requiere: [['scc'], ['r', 'sr']], maxSilencio: 4, vacio: ['sr'], prefiere: 'sr', reparto: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] }
   };
   var compasesDelGrupo = function (g) { return g.reparto.filter(function (x, i, a) { return a.indexOf(x) === i; }); };
   /* Dónde puede empezar una figura de dos tiempos (b = tiempo del compás, desde 0): en 2/4, en el 1.º; en 3/4, la blanca
@@ -312,17 +315,23 @@
     return f;
   }
   function describir(r) {
-    return 'Compás de ' + r.t + '/4: ' + r.c.map(function (c) { return c.map(function (f) { return FIG[f].nombre; }).join(', '); }).join(' | ');
+    return T('Compás de ', 'Time signature ') + r.t + '/4: ' + r.c.map(function (c) { return c.map(function (f) { return FIG[f].nombre; }).join(', '); }).join(' | ');
   }
-  var numero = function (x) { return String(x).replace('.', ','); };   // 3,5 tiempos
+  var numero = function (x) { return EN ? String(x) : String(x).replace('.', ','); };   // 3,5 tiempos
   function dibujar(div, r, ancho, op) {
     return window.tmNotacion.dibujarAAncho(div, fila(r, op), ancho, { escala: (op && op.escala) || 0.9, id: 'dr', alt: (op && op.alt) || describir(r) });
   }
   var ordinal = function (i) { return (i + 1) + '.º'; };
   /* «el 2.º tiempo del compás 1», «el 3.º y el 4.º tiempo del compás 2», «el 2.º tiempo del compás 1 y el 1.º del compás 2» */
-  var y = function (l) { return l.length > 1 ? l.slice(0, -1).join(', ') + ' y ' + l[l.length - 1] : l[0]; };
+  var y = function (l) { return l.length > 1 ? l.slice(0, -1).join(', ') + T(' y ', ' and ') + l[l.length - 1] : l[0]; };
   function dondeFalla(malos, t) {
     var porCompas = [[], []];
+    if (EN) {   // «beat 2 of measure 1», «beats 3 and 4 of measure 2»
+      malos.forEach(function (i) { porCompas[Math.floor(i / t)].push(i % t + 1); });
+      var partesEn = [];
+      porCompas.forEach(function (l, c) { if (l.length) partesEn.push((l.length > 1 ? 'beats ' : 'beat ') + y(l) + ' of measure ' + (c + 1)); });
+      return y(partesEn);
+    }
     malos.forEach(function (i) { porCompas[Math.floor(i / t)].push('el ' + ordinal(i % t)); });
     var partes = [];
     porCompas.forEach(function (l, c) { if (l.length) partes.push(y(l) + (partes.length ? '' : ' tiempo') + ' del compás ' + (c + 1)); });
@@ -379,9 +388,9 @@
 
   function textos(g) {
     return {
-      oir: { tit: 'Dictado rítmico: ¿qué ritmo suena?', sub: 'Suena un ritmo de dos compases en la nota Sol, con ' + g.texto + '. Elige cuál de los cuatro ritmos escritos es el que suena. Puedes escucharlo hasta ' + MAX_ESCUCHAS + ' veces y responder mientras suena.' },
-      leer: { tit: 'Lectura rítmica: ¿qué audio es?', sub: 'Verás un ritmo de dos compases con ' + g.texto + '. Escucha los cuatro audios (cada uno hasta ' + MAX_ESCUCHAS + ' veces) y elige el que suena como el ritmo escrito.' },
-      escribir: { tit: 'Dictado rítmico: escribe el ritmo', sub: 'Suena un ritmo de dos compases en la nota Sol, con ' + g.texto + '. Escríbelo con las tarjetas, con su barra de compás y la doble barra final, y pulsa Corregir. Puedes escucharlo hasta ' + MAX_ESCUCHAS + ' veces y escribir mientras suena.' }
+      oir: { tit: T('Dictado rítmico: ¿qué ritmo suena?', 'Rhythmic dictation: which rhythm is playing?'), sub: T('Suena un ritmo de dos compases en la nota Sol, con ' + g.texto + '. Elige cuál de los cuatro ritmos escritos es el que suena. Puedes escucharlo hasta ' + MAX_ESCUCHAS + ' veces y responder mientras suena.', 'A two-measure rhythm plays on the note G, with ' + g.texto + '. Choose which of the four written rhythms is the one you hear. You can listen up to ' + MAX_ESCUCHAS + ' times and answer while it plays.') },
+      leer: { tit: T('Lectura rítmica: ¿qué audio es?', 'Rhythm reading: which audio is it?'), sub: T('Verás un ritmo de dos compases con ' + g.texto + '. Escucha los cuatro audios (cada uno hasta ' + MAX_ESCUCHAS + ' veces) y elige el que suena como el ritmo escrito.', 'You will see a two-measure rhythm with ' + g.texto + '. Listen to the four audios (each up to ' + MAX_ESCUCHAS + ' times) and choose the one that sounds like the written rhythm.') },
+      escribir: { tit: T('Dictado rítmico: escribe el ritmo', 'Rhythmic dictation: write the rhythm'), sub: T('Suena un ritmo de dos compases en la nota Sol, con ' + g.texto + '. Escríbelo con las tarjetas, con su barra de compás y la doble barra final, y pulsa Corregir. Puedes escucharlo hasta ' + MAX_ESCUCHAS + ' veces y escribir mientras suena.', 'A two-measure rhythm plays on the note G, with ' + g.texto + '. Write it with the cards, with its bar line and the final double bar line, and press Check. You can listen up to ' + MAX_ESCUCHAS + ' times and write while it plays.') }
     };
   }
 
@@ -402,11 +411,11 @@
 
     function inicio() {
       wrap.innerHTML = '<div class="tm-card"><div class="tm-aud-ini">' +
-        '<h2 class="tm-aud-tit">' + TEXTOS[modo].tit + ' — ' + TOTAL + ' dictados</h2>' +
-        '<p class="tm-aud-sub">' + TEXTOS[modo].sub + ' Antes de cada audio suena un compás de metrónomo al mismo tempo, para que sepas la velocidad. Compases de ' + compasesDelGrupo(grupo).map(function (x) { return x + '/4'; }).join(', ').replace(/, ([^,]*)$/, ' y $1') + '. Sube el volumen o usa auriculares.</p>' +
-        '<button class="tm-aud-btnplay" id="' + uid + '_go" type="button">Empezar</button></div></div>';
+        '<h2 class="tm-aud-tit">' + TEXTOS[modo].tit + ' — ' + TOTAL + T(' dictados', ' dictations') + '</h2>' +
+        '<p class="tm-aud-sub">' + TEXTOS[modo].sub + T(' Antes de cada audio suena un compás de metrónomo al mismo tempo, para que sepas la velocidad. Compases de ', ' Before each audio, one measure of metronome clicks plays at the same tempo, so you know the speed. Measures of ') + compasesDelGrupo(grupo).map(function (x) { return x + '/4'; }).join(', ').replace(/, ([^,]*)$/, T(' y $1', ' and $1')) + T('. Sube el volumen o usa auriculares.', '. Turn up the volume or use headphones.') + '</p>' +
+        '<button class="tm-aud-btnplay" id="' + uid + '_go" type="button">' + T('Empezar', 'Start') + '</button></div></div>';
       $('_go').addEventListener('click', function () {
-        $('_go').disabled = true; $('_go').textContent = 'Cargando…';
+        $('_go').disabled = true; $('_go').textContent = T('Cargando…', 'Loading…');
         window.tmNotacion.listo().then(function () {
           compasesDelGrupo(grupo).forEach(function (x) { preparar(grupo, x); });   // los ritmos posibles, ahora (con semicorcheas, decenas de miles)
           n = 0; aciertos = 0; vistos = {};
@@ -415,7 +424,7 @@
           if (compasesDelGrupo(grupo).length > 1)   // con un solo compás (redondas: todo 4/4) no hay nada que evitar
             for (var g = 0; g < 50; g++) { orden = barajar(base); if (!orden.some(function (x, i) { return i >= 2 && x === orden[i - 1] && x === orden[i - 2]; })) break; }
           montar(); siguiente();
-        }, function () { $('_go').textContent = 'No se ha podido cargar. Recarga la página.'; });
+        }, function () { $('_go').textContent = T('No se ha podido cargar. Recarga la página.', 'Could not load. Reload the page.'); });
       });
     }
 
@@ -426,19 +435,19 @@
     var reproductor = '<div class="tm-aud-play"><button class="tm-aud-btnplay" id="' + uid + '_play" type="button"></button>' +
       '<p class="tm-aud-estado" id="' + uid + '_estado" aria-live="polite"></p></div>';
     var pie = '<div class="tm-aud-fb" id="' + uid + '_fb"></div><div class="tm-aud-part" id="' + uid + '_part"></div>' +
-      '<div class="tm-aud-acc" id="' + uid + '_acc"><button class="tm-aud-sec" id="' + uid + '_otra" type="button">▶ Escuchar otra vez</button>' +
-      '<button class="tm-aud-nxt" id="' + uid + '_nxt" type="button">Siguiente →</button></div>';
+      '<div class="tm-aud-acc" id="' + uid + '_acc"><button class="tm-aud-sec" id="' + uid + '_otra" type="button">' + T('▶ Escuchar otra vez', '▶ Listen again') + '</button>' +
+      '<button class="tm-aud-nxt" id="' + uid + '_nxt" type="button">' + T('Siguiente →', 'Next →') + '</button></div>';
 
     function montar() {
       var medio;
-      if (modo === 'oir') medio = reproductor + '<p class="tm-dr-cifra" id="' + uid + '_cifra"></p><div class="tm-dr-opts' + (grupo.figs.indexOf('ss') >= 0 ? ' tm-dr-una' : '') + '" id="' + uid + '_opts" role="group" aria-label="Ritmos"></div>';   // con semicorcheas, una columna: se lee mejor
-      else if (modo === 'leer') medio = '<div class="tm-dr-ritmo" id="' + uid + '_ritmo"></div><p class="tm-aud-estado" id="' + uid + '_estado" aria-live="polite"></p><div class="tm-dr-audios" id="' + uid + '_opts" role="group" aria-label="Audios"></div>';
+      if (modo === 'oir') medio = reproductor + '<p class="tm-dr-cifra" id="' + uid + '_cifra"></p><div class="tm-dr-opts' + (grupo.figs.indexOf('ss') >= 0 ? ' tm-dr-una' : '') + '" id="' + uid + '_opts" role="group" aria-label="' + T('Ritmos', 'Rhythms') + '"></div>';   // con semicorcheas, una columna: se lee mejor
+      else if (modo === 'leer') medio = '<div class="tm-dr-ritmo" id="' + uid + '_ritmo"></div><p class="tm-aud-estado" id="' + uid + '_estado" aria-live="polite"></p><div class="tm-dr-audios" id="' + uid + '_opts" role="group" aria-label="' + T('Audios', 'Audio clips') + '"></div>';
       else medio = reproductor + '<p class="tm-dr-cifra" id="' + uid + '_cifra"></p><div class="tm-dr-esc" id="' + uid + '_esc"></div>' +
-        '<div class="tm-dr-pal" role="group" aria-label="Tarjetas">' + grupo.figs.map(function (f) { return SUELTA[f] || f; }).concat(['|', '||']).map(function (f) {
-          return '<button type="button" class="tm-cc-carta" data-f="' + f + '"><span class="tm-dr-mini"></span><small>' + (FIG[f] ? FIG[f].nombre : f === '|' ? 'barra de compás' : 'doble barra final') + '</small></button>';
+        '<div class="tm-dr-pal" role="group" aria-label="' + T('Tarjetas', 'Cards') + '">' + grupo.figs.map(function (f) { return SUELTA[f] || f; }).concat(['|', '||']).map(function (f) {
+          return '<button type="button" class="tm-cc-carta" data-f="' + f + '"><span class="tm-dr-mini"></span><small>' + (FIG[f] ? FIG[f].nombre : f === '|' ? T('barra de compás', 'bar line') : T('doble barra final', 'final double bar line')) + '</small></button>';
         }).join('') + '</div>' +
-        '<div class="tm-dr-herr"><button type="button" id="' + uid + '_des">↶ Deshacer</button><button type="button" id="' + uid + '_bor">Borrar todo</button></div>' +
-        '<p class="tm-dr-lleva" id="' + uid + '_lleva"></p><button type="button" class="tm-dr-corr" id="' + uid + '_corr">Corregir</button>';
+        '<div class="tm-dr-herr"><button type="button" id="' + uid + '_des">' + T('↶ Deshacer', '↶ Undo') + '</button><button type="button" id="' + uid + '_bor">' + T('Borrar todo', 'Clear all') + '</button></div>' +
+        '<p class="tm-dr-lleva" id="' + uid + '_lleva"></p><button type="button" class="tm-dr-corr" id="' + uid + '_corr">' + T('Corregir', 'Check') + '</button>';
       wrap.innerHTML = '<div class="tm-card">' + cabecera() + medio + pie + '</div>';
       if (modo !== 'leer') $('_play').addEventListener('click', function () { if (!respondido && escuchas < MAX_ESCUCHAS) { escuchas++; tocar(it.p, 0); } });
       $('_otra').addEventListener('click', function () { tocar(it.p, 0, true); });
@@ -469,7 +478,7 @@
       it = { t: t, p: p, bpm: grupo.figs.indexOf('ss') >= 0 ? 60 + rnd(13) : 72 + rnd(19) };
       it.spb = 60 / it.bpm;
       $('_fill').style.width = ((n - 1) / TOTAL * 100) + '%';
-      $('_cnt').textContent = 'Dictado ' + n + ' de ' + TOTAL;
+      $('_cnt').textContent = T('Dictado ' + n + ' de ' + TOTAL, 'Dictation ' + n + ' of ' + TOTAL);
       $('_fb').className = 'tm-aud-fb'; $('_part').className = 'tm-aud-part'; $('_acc').className = 'tm-aud-acc';
       if (modo === 'oir') montarOir();
       else if (modo === 'leer') montarLeer();
@@ -480,15 +489,15 @@
     function montarOir() {
       var ops = barajar([it.p].concat(distractores(it.p, grupo)));
       it.ops = ops; it.bueno = ops.indexOf(it.p);
-      $('_cifra').textContent = 'Compás de ' + it.t + '/4';
+      $('_cifra').textContent = T('Compás de ' + it.t + '/4', 'Time signature: ' + it.t + '/4');
       var cont = $('_opts');
       cont.innerHTML = ops.map(function (q, i) {
         return '<button type="button" class="tm-dr-opt" data-i="' + i + '" disabled><span class="tm-dr-let">' + LETRAS[i] + '</span><span class="tm-dr-dib" id="' + uid + '_o' + i + '"></span></button>';
       }).join('');
       var w = ancho(cont.querySelector('.tm-dr-dib'));
-      ops.forEach(function (q, i) { dibujar($('_o' + i), q, w, { escala: 0.8, alt: 'Ritmo ' + LETRAS[i] + '. ' + describir(q) }); });
+      ops.forEach(function (q, i) { dibujar($('_o' + i), q, w, { escala: 0.8, alt: T('Ritmo ', 'Rhythm ') + LETRAS[i] + '. ' + describir(q) }); });
       Array.prototype.forEach.call(cont.querySelectorAll('.tm-dr-opt'), function (b) { b.addEventListener('click', function () { responderOpcion(+b.dataset.i); }); });
-      $('_estado').textContent = 'Pulsa para escuchar el dictado.';
+      $('_estado').textContent = T('Pulsa para escuchar el dictado.', 'Press to listen to the dictation.');
       actualizarPlay();
     }
     function responderOpcion(i) {
@@ -502,8 +511,9 @@
         if (k === it.bueno) b.classList.add('tm-ok'); else if (k === i) b.classList.add('tm-ko');
       });
       var malos = difSonido(it.p, it.ops[i]);
-      feedback(ok, ok ? 'Era el ritmo <strong>' + LETRAS[it.bueno] + '</strong>.' :
-        'Era el ritmo <strong>' + LETRAS[it.bueno] + '</strong>. El ' + LETRAS[i] + ' se diferencia en ' + dondeFalla(malos, it.t) + '.');
+      feedback(ok, ok ? T('Era el ritmo <strong>' + LETRAS[it.bueno] + '</strong>.', 'It was rhythm <strong>' + LETRAS[it.bueno] + '</strong>.') :
+        T('Era el ritmo <strong>' + LETRAS[it.bueno] + '</strong>. El ' + LETRAS[i] + ' se diferencia en ' + dondeFalla(malos, it.t) + '.',
+          'It was rhythm <strong>' + LETRAS[it.bueno] + '</strong>. ' + LETRAS[i] + ' differs at ' + dondeFalla(malos, it.t) + '.'));
       $('_estado').textContent = ''; actualizarPlay();
       terminar();
     }
@@ -513,13 +523,13 @@
       var ops = barajar([it.p].concat(distractores(it.p, grupo)));
       it.ops = ops; it.bueno = ops.indexOf(it.p); it.esc = [0, 0, 0, 0];
       var r = $('_ritmo');
-      dibujar(r, it.p, ancho(r), { escala: 1, alt: 'El ritmo escrito. ' + describir(it.p) });
+      dibujar(r, it.p, ancho(r), { escala: 1, alt: T('El ritmo escrito. ', 'The written rhythm. ') + describir(it.p) });
       var cont = $('_opts');
       cont.innerHTML = ops.map(function (q, i) {
         return '<div class="tm-dr-audio" id="' + uid + '_a' + i + '"><b>Audio ' + LETRAS[i] + '</b>' +
-          '<button type="button" class="tm-dr-oir" data-i="' + i + '">▶ Escuchar</button>' +
+          '<button type="button" class="tm-dr-oir" data-i="' + i + '">' + T('▶ Escuchar', '▶ Listen') + '</button>' +
           '<span class="tm-dr-cuenta" id="' + uid + '_c' + i + '"></span>' +
-          '<button type="button" class="tm-dr-elegir" data-i="' + i + '" disabled>Es este</button></div>';
+          '<button type="button" class="tm-dr-elegir" data-i="' + i + '" disabled>' + T('Es este', 'This one') + '</button></div>';
       }).join('');
       Array.prototype.forEach.call(cont.querySelectorAll('.tm-dr-oir'), function (b) {
         b.addEventListener('click', function () {
@@ -529,15 +539,15 @@
         });
       });
       Array.prototype.forEach.call(cont.querySelectorAll('.tm-dr-elegir'), function (b) { b.addEventListener('click', function () { responderAudio(+b.dataset.i); }); });
-      $('_estado').textContent = 'Escucha los audios y elige el que suena como el ritmo escrito.';
+      $('_estado').textContent = T('Escucha los audios y elige el que suena como el ritmo escrito.', 'Listen to the audios and choose the one that sounds like the written rhythm.');
       actualizarAudios();
     }
     function actualizarAudios() {
       Array.prototype.forEach.call(wrap.querySelectorAll('.tm-dr-oir'), function (b) {
         var i = +b.dataset.i, quedan = MAX_ESCUCHAS - it.esc[i];
         b.disabled = respondido ? sonando >= 0 : (sonando >= 0 || quedan <= 0);
-        b.textContent = sonando === i ? 'Sonando…' : respondido ? '▶ Escuchar' : quedan <= 0 ? 'Sin más escuchas' : '▶ Escuchar';
-        $('_c' + i).textContent = respondido ? '' : it.esc[i] ? 'Quedan ' + quedan : '';
+        b.textContent = sonando === i ? T('Sonando…', 'Playing…') : respondido ? T('▶ Escuchar', '▶ Listen') : quedan <= 0 ? T('Sin más escuchas', 'No more listens') : T('▶ Escuchar', '▶ Listen');
+        $('_c' + i).textContent = respondido ? '' : it.esc[i] ? T('Quedan ' + quedan, quedan + ' left') : '';
       });
       Array.prototype.forEach.call(wrap.querySelectorAll('.tm-dr-elegir'), function (b) { b.disabled = respondido || !it.esc[+b.dataset.i]; });
     }
@@ -549,14 +559,15 @@
       $('_badge').textContent = '✓ ' + aciertos;
       $('_a' + it.bueno).classList.add('tm-ok'); if (!ok) $('_a' + i).classList.add('tm-ko');
       var malos = difSonido(it.p, it.ops[i]);
-      feedback(ok, ok ? 'Era el audio <strong>' + LETRAS[it.bueno] + '</strong>.' :
-        'Era el audio <strong>' + LETRAS[it.bueno] + '</strong>. El ' + LETRAS[i] + ' suena distinto en ' + dondeFalla(malos, it.t) + '. Abajo tienes escrito lo que suena en el ' + LETRAS[i] + '.');
-      $('_estado').textContent = 'Puedes volver a escuchar los audios para compararlos.';
+      feedback(ok, ok ? T('Era el audio <strong>' + LETRAS[it.bueno] + '</strong>.', 'It was audio <strong>' + LETRAS[it.bueno] + '</strong>.') :
+        T('Era el audio <strong>' + LETRAS[it.bueno] + '</strong>. El ' + LETRAS[i] + ' suena distinto en ' + dondeFalla(malos, it.t) + '. Abajo tienes escrito lo que suena en el ' + LETRAS[i] + '.',
+          'It was audio <strong>' + LETRAS[it.bueno] + '</strong>. ' + LETRAS[i] + ' sounds different at ' + dondeFalla(malos, it.t) + '. Below, what plays in ' + LETRAS[i] + ' is written out.'));
+      $('_estado').textContent = T('Puedes volver a escuchar los audios para compararlos.', 'You can listen to the audios again to compare them.');
       actualizarAudios();
       // lo que sonaba en el audio elegido, si no era el bueno, con los tiempos distintos en rojo
-      if (!ok) partitura([{ lbl: 'Lo que suena en el audio ' + LETRAS[i], p: it.ops[i], rojo: marcas(malos) }]);
+      if (!ok) partitura([{ lbl: T('Lo que suena en el audio ', 'What plays in audio ') + LETRAS[i], p: it.ops[i], rojo: marcas(malos) }]);
       $('_acc').className = 'tm-aud-acc tm-show'; $('_otra').style.display = 'none';
-      if (n >= TOTAL) $('_nxt').textContent = 'Ver resultado →';
+      if (n >= TOTAL) $('_nxt').textContent = T('Ver resultado →', 'See result →');
     }
 
     /* ---- escribir: tarjetas. puestos = lo escrito, en orden: figuras, '|' (barra de compás) y '||' (doble barra final).
@@ -570,8 +581,8 @@
     }
     var tiempos = function (c) { return c.reduce(function (s, f) { return s + FIG[f].d; }, 0); };
     function montarEscribir() {
-      $('_cifra').textContent = 'Compás de ' + it.t + '/4 · dos compases';
-      $('_corr').style.display = ''; $('_estado').textContent = 'Pulsa para escuchar el dictado.';
+      $('_cifra').textContent = T('Compás de ' + it.t + '/4 · dos compases', 'Time signature: ' + it.t + '/4 · two measures');
+      $('_corr').style.display = ''; $('_estado').textContent = T('Pulsa para escuchar el dictado.', 'Press to listen to the dictation.');
       pintarEscrito(); actualizarPlay();
     }
     function sePuede(f) {
@@ -581,40 +592,41 @@
     function poner(f) { if (!sePuede(f)) return; puestos.push(f); pintarEscrito(); }
     function pintarEscrito(rojo) {
       var esc = $('_esc');
-      window.tmNotacion.dibujarAAncho(esc, filaEscrita(puestos, it.t, rojo), ancho(esc), { escala: 1, id: 'dr', alt: 'Lo que llevas escrito' });
+      window.tmNotacion.dibujarAAncho(esc, filaEscrita(puestos, it.t, rojo), ancho(esc), { escala: 1, id: 'dr', alt: T('Lo que llevas escrito', 'What you have written so far') });
       pintarBotones();
-      $('_lleva').textContent = respondido ? '' : !escuchas ? 'Las tarjetas se activan al empezar a sonar.' :
-        terminado() ? 'Ya puedes corregir.' : 'Al acabar cada compás, pon la barra de compás; al final, la doble barra.';
+      $('_lleva').textContent = respondido ? '' : !escuchas ? T('Las tarjetas se activan al empezar a sonar.', 'The cards activate when the audio starts playing.') :
+        terminado() ? T('Ya puedes corregir.', 'You can check now.') : T('Al acabar cada compás, pon la barra de compás; al final, la doble barra.', 'At the end of each measure, put a bar line; at the end, the double bar line.');
     }
     function corregirEscrito() {
       if (respondido || escuchas === 0) return;
-      if (!terminado()) { $('_lleva').textContent = puestos.length ? 'Te falta la doble barra final: ponla cuando acabes de escribir.' : 'Todavía no has escrito nada.'; return; }
+      if (!terminado()) { $('_lleva').textContent = puestos.length ? T('Te falta la doble barra final: ponla cuando acabes de escribir.', 'The final double bar line is missing: add it when you finish writing.') : T('Todavía no has escrito nada.', 'You have not written anything yet.'); return; }
       respondido = true; parar();
       var t = it.t, cs = compasesEscritos(), problemas = [], rojo = {};
       // dónde empieza cada figura escrita (tiempo, contando seguido) y qué elemento de puestos es
       var pos = [], b = 0;
       puestos.forEach(function (tk, i) { if (FIG[tk]) { pos.push({ i: i, b: b, d: FIG[tk].d }); b += FIG[tk].d; } });
       var total = b, plano = { t: t, c: [cs.reduce(function (a, c) { return a.concat(c); }, [])] }, bueno = { t: t, c: [it.p.c[0].concat(it.p.c[1])] };
-      if (cs.length === 1) problemas.push('falta la barra de compás entre los dos compases');
-      else if (cs.length > 2) problemas.push('has puesto ' + (cs.length - 1) + ' barras de compás, y el dictado tiene dos compases: una barra en medio y la doble barra al final');
+      if (cs.length === 1) problemas.push(T('falta la barra de compás entre los dos compases', 'the bar line between the two measures is missing'));
+      else if (cs.length > 2) problemas.push(T('has puesto ' + (cs.length - 1) + ' barras de compás, y el dictado tiene dos compases: una barra en medio y la doble barra al final', 'you put ' + (cs.length - 1) + ' bar lines, and the dictation has two measures: one bar line in the middle and the double bar line at the end'));
       cs.forEach(function (c, k) {
         var n = tiempos(c);
-        if (n !== t && cs.length > 1) problemas.push('el compás ' + (k + 1) + ' tiene ' + numero(n) + (n === 1 ? ' tiempo' : ' tiempos') + ', y en ' + t + '/4 caben ' + t);
+        if (n !== t && cs.length > 1) problemas.push(T('el compás ' + (k + 1) + ' tiene ' + numero(n) + (n === 1 ? ' tiempo' : ' tiempos') + ', y en ' + t + '/4 caben ' + t, 'measure ' + (k + 1) + ' has ' + numero(n) + (n === 1 ? ' beat' : ' beats') + ', and ' + t + '/4 holds ' + t));
       });
       if (total === 2 * t) {   // cuenta lo que suena: los silencios se pueden escribir juntos o por separado
         var sonido = difSonido(bueno, plano);
         sonido.forEach(function (x) { pos.forEach(function (q) { if (q.b < x + 1 && q.b + q.d > x) rojo[q.i] = 1; }); });   // la figura toca ese tiempo
-        if (sonido.length) problemas.push((sonido.length === 1 ? 'el ritmo falla en ' : 'el ritmo falla en ' + sonido.length + ' tiempos: ') + dondeFalla(sonido, t) + ' (en rojo)');
-      } else problemas.push('en total has escrito ' + numero(total) + (total === 1 ? ' tiempo' : ' tiempos') + ', y el dictado dura ' + (2 * t) + ' (dos compases de ' + t + '/4)');
+        if (sonido.length) problemas.push(T((sonido.length === 1 ? 'el ritmo falla en ' : 'el ritmo falla en ' + sonido.length + ' tiempos: ') + dondeFalla(sonido, t) + ' (en rojo)',
+          (sonido.length === 1 ? 'the rhythm is wrong at ' : 'the rhythm is wrong in ' + sonido.length + ' beats: ') + dondeFalla(sonido, t) + ' (in red)'));
+      } else problemas.push(T('en total has escrito ' + numero(total) + (total === 1 ? ' tiempo' : ' tiempos') + ', y el dictado dura ' + (2 * t) + ' (dos compases de ' + t + '/4)', 'in total you wrote ' + numero(total) + (total === 1 ? ' beat' : ' beats') + ', and the dictation lasts ' + (2 * t) + ' (two measures of ' + t + '/4)'));
       var ok = !problemas.length;
       if (ok) aciertos++;
       $('_badge').textContent = '✓ ' + aciertos;
       pintarEscrito(rojo);
       $('_corr').style.display = 'none';
       var mayus = function (x) { return x.charAt(0).toUpperCase() + x.slice(1); };
-      feedback(ok, ok ? 'Has escrito el ritmo bien, con sus barras.' :
-        problemas.map(function (x) { return mayus(x) + '.'; }).join(' ') + ' Debajo tienes el ritmo que sonaba.');
-      if (!ok) partitura([{ lbl: 'El ritmo que sonaba', p: it.p }]);
+      feedback(ok, ok ? T('Has escrito el ritmo bien, con sus barras.', 'You wrote the rhythm correctly, with its bar lines.') :
+        problemas.map(function (x) { return mayus(x) + '.'; }).join(' ') + T(' Debajo tienes el ritmo que sonaba.', ' Below is the rhythm that played.'));
+      if (!ok) partitura([{ lbl: T('El ritmo que sonaba', 'The rhythm that played'), p: it.p }]);
       $('_estado').textContent = ''; actualizarPlay();
       terminar();
     }
@@ -622,7 +634,7 @@
     function cartaBarra(div, final) {
       var f = { clave: 'sol', sinClave: true, compases: [[{ key: 'b/4', d: 'q', espacio: true }]] };
       if (final) f.barraFinal = 'end';
-      var r2 = window.tmNotacion.dibujarSync(div, f, { escala: 1.0, separacion: 0.3, id: 'drb', alt: final ? 'Doble barra final' : 'Barra de compás' });
+      var r2 = window.tmNotacion.dibujarSync(div, f, { escala: 1.0, separacion: 0.3, id: 'drb', alt: final ? T('Doble barra final', 'Final double bar line') : T('Barra de compás', 'Bar line') });
       r2.elemento.style.width = '100%'; r2.elemento.style.height = 'auto'; r2.elemento.style.maxHeight = '64px';
     }
 
@@ -631,7 +643,7 @@
     function feedback(ok, txt) {
       var fb = $('_fb');
       fb.className = 'tm-aud-fb tm-show ' + (ok ? 'tm-ok' : 'tm-ko');
-      fb.innerHTML = (ok ? '<strong>✓ ¡Correcto!</strong> ' : '<strong>✗ No.</strong> ') + txt;
+      fb.innerHTML = (ok ? '<strong>' + T('✓ ¡Correcto!', '✓ Correct!') + '</strong> ' : '<strong>' + T('✗ No.', '✗ Not quite.') + '</strong> ') + txt;
     }
     function partitura(lista) {
       var part = $('_part');
@@ -641,7 +653,7 @@
     }
     function terminar() {
       $('_acc').className = 'tm-aud-acc tm-show'; $('_otra').style.display = '';
-      if (n >= TOTAL) $('_nxt').textContent = 'Ver resultado →';
+      if (n >= TOTAL) $('_nxt').textContent = T('Ver resultado →', 'See result →');
     }
     function actualizarPlay() {
       if (modo === 'leer') { actualizarAudios(); return; }
@@ -649,7 +661,7 @@
       if (respondido) { b.style.display = 'none'; return; }
       b.style.display = '';
       b.disabled = sonando >= 0 || quedan <= 0;
-      b.textContent = sonando >= 0 ? 'Sonando…' : escuchas === 0 ? '▶ Escuchar' : quedan > 0 ? '▶ Escuchar otra vez (' + quedan + (quedan === 1 ? ' vez más)' : ' veces más)') : 'Sin más escuchas';
+      b.textContent = sonando >= 0 ? T('Sonando…', 'Playing…') : escuchas === 0 ? T('▶ Escuchar', '▶ Listen') : quedan > 0 ? T('▶ Escuchar otra vez (' + quedan + (quedan === 1 ? ' vez más)' : ' veces más)'), '▶ Listen again (' + quedan + (quedan === 1 ? ' more time)' : ' more times)')) : T('Sin más escuchas', 'No more listens');
       if (modo === 'oir') Array.prototype.forEach.call(wrap.querySelectorAll('.tm-dr-opt'), function (o) { o.disabled = respondido || escuchas === 0; });
       if (modo === 'escribir') pintarBotones();
     }
@@ -658,7 +670,7 @@
       cartas().forEach(function (b) { b.disabled = !sePuede(b.dataset.f); });
       $('_des').disabled = $('_bor').disabled = !activo || !puestos.length;
       $('_corr').disabled = !activo;
-      if (activo && !puestos.length) $('_lleva').textContent = 'Al acabar cada compás, pon la barra de compás; al final, la doble barra.';
+      if (activo && !puestos.length) $('_lleva').textContent = T('Al acabar cada compás, pon la barra de compás; al final, la doble barra.', 'At the end of each measure, put a bar line; at the end, the double bar line.');
     }
     function parar() {
       gen++; timers.forEach(clearTimeout); timers = []; sonando = -1;
@@ -668,21 +680,21 @@
       parar();
       var g = gen;
       sonando = cual; actualizarPlay();
-      if (!respondido && modo !== 'leer') $('_estado').textContent = 'Compás de entrada…';
+      if (!respondido && modo !== 'leer') $('_estado').textContent = T('Compás de entrada…', 'Count-in measure…');
       window.tmPiano.playEvents(entrada(it.t, it.spb).concat(eventos(p, it.spb, it.t * it.spb))).then(function (d) {
         if (g !== gen) return;
         if (!d) {   // sin sonido: no gasta la escucha
           sonando = -1;
           if (!gratis) { escuchas--; if (modo === 'leer') it.esc[cual]--; }
           actualizarPlay();
-          $('_estado').textContent = 'No se ha podido reproducir el sonido. Comprueba la conexión y vuelve a pulsar.';
+          $('_estado').textContent = T('No se ha podido reproducir el sonido. Comprueba la conexión y vuelve a pulsar.', 'The sound could not be played. Check your connection and press again.');
           return;
         }
-        if (!respondido && modo !== 'leer') timers.push(setTimeout(function () { if (g === gen && !respondido) $('_estado').textContent = 'Suena el dictado…'; }, it.t * it.spb * 1000));
+        if (!respondido && modo !== 'leer') timers.push(setTimeout(function () { if (g === gen && !respondido) $('_estado').textContent = T('Suena el dictado…', 'The dictation is playing…'); }, it.t * it.spb * 1000));
         timers.push(setTimeout(function () {
           if (g !== gen) return;
           sonando = -1;
-          if (!respondido && modo !== 'leer') $('_estado').textContent = escuchas < MAX_ESCUCHAS ? (modo === 'oir' ? '¿Qué ritmo es?' : 'Escribe el ritmo con las tarjetas.') : 'Ya no quedan escuchas.';
+          if (!respondido && modo !== 'leer') $('_estado').textContent = escuchas < MAX_ESCUCHAS ? (modo === 'oir' ? T('¿Qué ritmo es?', 'Which rhythm is it?') : T('Escribe el ritmo con las tarjetas.', 'Write the rhythm with the cards.')) : T('Ya no quedan escuchas.', 'No listens left.');
           actualizarPlay();
         }, ((duracion(p) + it.t) * it.spb + 0.5) * 1000));
       });
@@ -690,7 +702,7 @@
     function resultado() {
       parar();
       wrap.innerHTML = '<div class="tm-card"><div class="tm-aud-score"><b>' + aciertos + '/' + TOTAL + '</b><span>' + Math.round(aciertos / TOTAL * 100) + '%</span></div>' +
-        '<div class="tm-aud-acc tm-show"><button class="tm-aud-nxt" id="' + uid + '_re" type="button">Volver a empezar</button></div></div>';
+        '<div class="tm-aud-acc tm-show"><button class="tm-aud-nxt" id="' + uid + '_re" type="button">' + T('Volver a empezar', 'Start over') + '</button></div></div>';
       $('_re').addEventListener('click', inicio);
     }
     inicio();

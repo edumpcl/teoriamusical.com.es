@@ -2,6 +2,32 @@
 (function () {
   'use strict';
 
+  var EN = document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+  /* Inglés: letras en vez de Do Re Mi…; los datos (nombres de escalas, claves del config) siguen en castellano y solo se traducen al mostrarlos. */
+  var NOTE_EN = { 'Do': 'C', 'Re': 'D', 'Mi': 'E', 'Fa': 'F', 'Sol': 'G', 'La': 'A', 'Si': 'B' };
+  var TIPO_EN = {
+    'Mayor': 'major', 'Menor Natural': 'natural minor', 'Menor Armónica': 'harmonic minor', 'Menor Melódica': 'melodic minor',
+    'Menor Dórica': 'Dorian', 'Mixolidia': 'Mixolydian', 'Mayor Mixta Principal': 'harmonic major', 'Mayor Mixta Secundaria': 'melodic major',
+    'Cromática (ascendente)': 'chromatic (ascending)', 'Cromática (descendente)': 'chromatic (descending)'
+  };
+  var UI_EN = {
+    'Escalas Mayores': 'major scales', 'la Escala Cromática': 'the chromatic scale', 'la Escala Menor Natural': 'the natural minor scale',
+    'la Escala Menor Armónica': 'the harmonic minor scale', 'la Escala Menor Melódica': 'the melodic minor scale', 'la Escala Menor Dórica': 'the Dorian scale',
+    'la Escala Mixolidia': 'the Mixolydian scale', 'la Escala Mayor Mixta Principal': 'the harmonic major scale', 'la Escala Mayor Mixta Secundaria': 'the melodic major scale',
+    'Elige el nivel de dificultad': 'Choose a difficulty level', 'Elige el sentido': 'Choose the direction',
+    'Ascendente': 'Ascending', 'Descendente': 'Descending', 'Mezcladas': 'Mixed',
+    'Con sostenidos': 'With sharps', 'Con bemoles': 'With flats', 'Las dos, al azar': 'Both, at random'
+  };
+  function ui(s) { return EN && UI_EN[s] ? UI_EN[s] : s; }
+  /* 'Sol♯ Menor Melódica' -> 'G♯ melodic minor' */
+  function nombreEscala(name) {
+    if (!EN) return name;
+    var m = /^(Do|Re|Mi|Fa|Sol|La|Si)([♯♭]*)\s+(.+)$/.exec(name);
+    if (!m || !TIPO_EN[m[3]]) return name;
+    return NOTE_EN[m[1]] + m[2] + ' ' + TIPO_EN[m[3]];
+  }
+
   var NS       = [0, 2, 4, 5, 7, 9, 11];
   var VF_NAMES = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
   var NOTE_NAMES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
@@ -72,7 +98,7 @@
 
   var PREGUNTAS = 10;
   var ICONOS = ['☀️', '⚡', '🔥'];
-  var DIFF_LBL = ['F\xe1cil', 'Medio', 'Dif\xedcil'];
+  var DIFF_LBL = [T('F\xe1cil', 'Easy'), T('Medio', 'Medium'), T('Dif\xedcil', 'Hard')];
   var DIFF_BASE = [1, 4, 99];
   /* Alteraciones de la ARMADURA del relativo menor, por tónica. La melódica y la
      armónica añaden alteraciones (6ª/7ª) que NO van en la armadura, así que su
@@ -104,9 +130,9 @@
     return DIFF_BASE.map(function (b, i) {
       var last = i === DIFF_BASE.length - 1;
       var maxA = last ? b : Math.max(b, minA);
-      var desc = last ? 'Todas las tonalidades'
-               : maxA <= 1 ? 'Sin alteraciones o con 1'
-               : 'Hasta ' + maxA + ' alteraciones';
+      var desc = last ? T('Todas las tonalidades', 'All keys')
+               : maxA <= 1 ? T('Sin alteraciones o con 1', 'No accidentals or 1')
+               : T('Hasta ' + maxA + ' alteraciones', 'Up to ' + maxA + ' accidentals');
       return { lbl: DIFF_LBL[i], desc: desc, filtro: function (s) { return diffMetric(s) <= maxA; } };
     });
   }
@@ -205,8 +231,8 @@
     var uid = containerId;
 
     var totalQ = PREGUNTAS;
-    var TITULO = config.titulo || 'Escalas Mayores';
-    var SUBTITULO = config.subtitulo || 'Elige el nivel de dificultad';
+    var TITULO = ui(config.titulo || 'Escalas Mayores');
+    var SUBTITULO = ui(config.subtitulo || 'Elige el nivel de dificultad');
     var SCALES = config.scales || SCALES_MAYOR;
     var DIFICULTADES = buildDifficulties(SCALES, config.grupos);
     var currentQ, score, poolFiltro, cQ, answered, placedNotes, activeTool, lastLoupeKey, currentSvg;
@@ -218,11 +244,11 @@
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-iv-mode-screen">',
-            '<h2 class="tm-iv-title">Test — Construir ' + TITULO + '</h2>',
-            '<p class="tm-iv-subtitle">' + SUBTITULO + ' — ' + totalQ + ' preguntas</p>',
+            '<h2 class="tm-iv-title">' + T('Test — Construir ' + TITULO, 'Test — Write ' + TITULO) + '</h2>',
+            '<p class="tm-iv-subtitle">' + SUBTITULO + ' — ' + totalQ + T(' preguntas', ' questions') + '</p>',
             '<div class="tm-iv-modes">',
               DIFICULTADES.map(function (d, i) {
-                return '<button class="tm-iv-mode-btn" data-i="' + i + '"><span class="tm-iv-mode-icon">' + ICONOS[i] + '</span><span class="tm-iv-mode-lbl">' + d.lbl + '</span><span class="tm-iv-mode-desc">' + d.desc + '</span></button>';
+                return '<button class="tm-iv-mode-btn" data-i="' + i + '"><span class="tm-iv-mode-icon">' + ICONOS[i] + '</span><span class="tm-iv-mode-lbl">' + ui(d.lbl) + '</span><span class="tm-iv-mode-desc">' + ui(d.desc) + '</span></button>';
               }).join(''),
             '</div>',
           '</div>',
@@ -256,17 +282,17 @@
             '<div id="' + uid + '_not"></div>',
             '<div class="tm-high" id="' + uid + '_high"></div>',
           '</div>',
-          '<p class="tm-note-count" id="' + uid + '_nc">Notas colocadas: 0 / 8</p>',
+          '<p class="tm-note-count" id="' + uid + '_nc">' + T('Notas colocadas: 0 / 8', 'Notes placed: 0 / 8') + '</p>',
           '<div class="tm-tools-row">',
             '<div class="tm-tools-acc">' + tools + '</div>',
             '<div class="tm-tools-edit">',
-              '<button class="tm-tool-edit" id="' + uid + '_undo">↩ Deshacer</button>',
-              '<button class="tm-tool-edit" id="' + uid + '_clear">\xd7 Limpiar</button>',
+              '<button class="tm-tool-edit" id="' + uid + '_undo">' + T('↩ Deshacer', '↩ Undo') + '</button>',
+              '<button class="tm-tool-edit" id="' + uid + '_clear">' + T('\xd7 Limpiar', '\xd7 Clear') + '</button>',
             '</div>',
           '</div>',
-          '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>',
+          '<button class="tm-submit" id="' + uid + '_btn">' + T('Comprobar', 'Check') + '</button>',
           '<div class="tm-fb" id="' + uid + '_fb"></div>',
-          '<button class="tm-nxt" id="' + uid + '_nxt">Siguiente →</button>',
+          '<button class="tm-nxt" id="' + uid + '_nxt">' + T('Siguiente →', 'Next →') + '</button>',
         '</div>',
         '<div class="tm-iv-loupe" id="' + uid + '_loupe">',
           '<div class="tm-iv-loupe-staff" id="' + uid + '_lstaff"></div>',
@@ -328,7 +354,7 @@
       elNot.style.height = SVG_H + 'px';
       /* en modo secuencia se respeta el orden de colocación (asc + desc) */
       var sorted = isSeq() ? placedNotes.slice() : sortedByPitch(placedNotes);
-      var res = window.tmNotacion.dibujarAAncho(elNot, { clave: 'sol', compases: [eventos(sorted, isSeq())] }, vSW - 20, { escala: 1.0, id: uid, alt: 'Pentagrama donde se escribe la escala' });
+      var res = window.tmNotacion.dibujarAAncho(elNot, { clave: 'sol', compases: [eventos(sorted, isSeq())] }, vSW - 20, { escala: 1.0, id: uid, alt: T('Pentagrama donde se escribe la escala', 'Staff where the scale is written') });
       var svg = res.elemento;
       svg.style.display = 'block'; svg.style.margin = Math.round(TOPE - window.tmNotacion.geometria(svg).lineas[0]) + 'px auto 0';
       currentSvg = svg;
@@ -443,7 +469,7 @@
       var b  = document.getElementById(uid + '_btn');
       var nc = document.getElementById(uid + '_nc');
       if (b)  b.classList.toggle('tm-ready', placedNotes.length === targetLen());
-      if (nc) nc.textContent = 'Notas colocadas: ' + placedNotes.length + ' / ' + targetLen();
+      if (nc) nc.textContent = T('Notas colocadas: ', 'Notes placed: ') + placedNotes.length + ' / ' + targetLen();
     }
 
     function checkAnswer() {
@@ -481,19 +507,20 @@
       document.getElementById(uid + '_nxt').className = 'tm-nxt tm-show';
 
       var scaleLbl = expected.map(function (e) {
-        return NOTE_NAMES[VF_NAMES.indexOf(e.vfn)] + ACC_SYM[String(e.acc)];
+        var i = VF_NAMES.indexOf(e.vfn);
+        return (EN ? 'CDEFGAB'.charAt(i) : NOTE_NAMES[i]) + ACC_SYM[String(e.acc)];
       }).join(' — ');
 
       var elFb = document.getElementById(uid + '_fb');
       if (ok) {
         score++;
         elFb.className = 'tm-fb tm-ok tm-show';
-        elFb.innerHTML = '<strong>✓ \xa1Correcto!</strong> ' + scaleLbl + '.';
+        elFb.innerHTML = '<strong>' + T('✓ \xa1Correcto!', '✓ Correct!') + '</strong> ' + scaleLbl + '.';
       } else {
         placedNotes = expected.slice();
         drawStaff();
         elFb.className = 'tm-fb tm-ko tm-show';
-        elFb.innerHTML = '<strong>✗ Incorrecto.</strong> La escala correcta: ' + scaleLbl + '.';
+        elFb.innerHTML = '<strong>' + T('✗ Incorrecto.', '✗ Incorrect.') + '</strong> ' + T('La escala correcta: ', 'The correct scale: ') + scaleLbl + '.';
       }
 
       document.getElementById(uid + '_badge').textContent = '✓ ' + score;
@@ -511,9 +538,9 @@
       document.getElementById(uid + '_nxt').className = 'tm-nxt';
       document.getElementById(uid + '_wrap').classList.remove('tm-answered');
       genQ();
-      document.getElementById(uid + '_nc').textContent = 'Notas colocadas: 0 / ' + targetLen();
+      document.getElementById(uid + '_nc').textContent = T('Notas colocadas: 0 / ', 'Notes placed: 0 / ') + targetLen();
       document.getElementById(uid + '_q').innerHTML =
-        'Dibuja la escala completa: <strong>' + cQ.name + '</strong>';
+        T('Dibuja la escala completa: ', 'Write the complete scale: ') + '<strong>' + nombreEscala(cQ.name) + '</strong>';
       drawStaff();
     }
 
@@ -527,7 +554,7 @@
             '<div class="tm-iv-score-num">' + score + '/' + totalQ + '</div>',
             '<div class="tm-iv-score-pct">' + pct + '%</div>',
           '</div>',
-          '<button class="tm-submit tm-ready" id="' + uid + '_restart">Hacer otro test</button>',
+          '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Hacer otro test', 'Take another test') + '</button>',
         '</div>'
       ].join('');
       document.getElementById(uid + '_restart').addEventListener('click', function () {

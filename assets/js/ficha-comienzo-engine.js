@@ -9,9 +9,12 @@
 (function () {
   'use strict';
 
-  function T() { return window.tmComienzoTest; }
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
 
-  var TIT = { 1: '1. Fácil (compases simples; silencio o anacrusa de un tiempo entero)', 2: '2. Medio (simples y compuestos; el silencio inicial puede no estar escrito)', 3: '3. Difícil (figuras muy pequeñas y silencios que despistan)' };
+  function CT() { return window.tmComienzoTest; }
+
+  var TIT = { 1: T('1. Fácil (compases simples; silencio o anacrusa de un tiempo entero)', '1. Easy (simple meters; a rest or pickup of one whole beat)'), 2: T('2. Medio (simples y compuestos; el silencio inicial puede no estar escrito)', '2. Medium (simple and compound; the initial rest may not be written)'), 3: T('3. Difícil (figuras muy pequeñas y silencios que despistan)', '3. Hard (very small note values and rests that mislead)') };
   var LOTES = [[1, 6], [2, 6], [3, 6]];
 
   var CSS = [
@@ -60,7 +63,7 @@
 
   window.tmFichaComienzo = function (id) {
     var cont = document.getElementById(id);
-    if (!cont || !T()) return;
+    if (!cont || !CT()) return;
     if (!document.getElementById('tm-fm-css')) {
       var st = document.createElement('style');
       st.id = 'tm-fm-css';
@@ -72,15 +75,15 @@
 
     cont.innerHTML = '<div class="tm-fm">'
       + '<div class="tm-fm-acciones">'
-      + '<button type="button" class="tm-fm-btn tm-fm-btn-1" data-a="generar">Generar otra ficha</button>'
-      + '<button type="button" class="tm-fm-btn tm-fm-btn-2" data-a="soluciones">Ver soluciones</button>'
-      + '<button type="button" class="tm-fm-btn tm-fm-btn-2" data-a="imprimir">Imprimir</button>'
+      + '<button type="button" class="tm-fm-btn tm-fm-btn-1" data-a="generar">' + T('Generar otra ficha', 'Generate another sheet') + '</button>'
+      + '<button type="button" class="tm-fm-btn tm-fm-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show answers') + '</button>'
+      + '<button type="button" class="tm-fm-btn tm-fm-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<p class="tm-fm-enlace"></p>'
       + '</div>'
-      + '<div class="tm-fm-hoja"><div class="tm-fm-cab"><p class="tm-fm-tit">¿Cómo empieza la melodía?</p><span class="tm-fm-ref"></span></div>'
-      + '<div class="tm-fm-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
-      + '<p class="tm-fm-instr">Marca el tipo de comienzo de cada melodía. Lo que decide es cuándo entra la música dentro del compás: tético (tiempo 1), acéfalo (después del tiempo fuerte pero antes de la mitad) o anacrúsico (en la mitad del compás o después, justo antes del siguiente tiempo fuerte).</p>'
+      + '<div class="tm-fm-hoja"><div class="tm-fm-cab"><p class="tm-fm-tit">' + T('¿Cómo empieza la melodía?', 'How does the melody begin?') + '</p><span class="tm-fm-ref"></span></div>'
+      + '<div class="tm-fm-datos"><span>' + T('Nombre:', 'Name:') + '</span><span>' + T('Curso:', 'Class:') + '</span><span>' + T('Fecha:', 'Date:') + '</span></div>'
+      + '<p class="tm-fm-instr">' + T('Marca el tipo de comienzo de cada melodía. Lo que decide es cuándo entra la música dentro del compás: tético (tiempo 1), acéfalo (después del tiempo fuerte pero antes de la mitad) o anacrúsico (en la mitad del compás o después, justo antes del siguiente tiempo fuerte).', 'Mark the type of beginning of each melody. What decides it is when the music enters within the measure: thetic (beat 1), acephalous (after the strong beat but before the middle) or anacrusic (at the middle of the measure or later, just before the next strong beat).') + '</p>'
       + '<div class="tm-fm-cuerpo"></div></div>';
 
     var elRef = cont.querySelector('.tm-fm-ref');
@@ -88,7 +91,7 @@
     var anchoForzado = null;
 
     function pintar() {
-      var Tt = T();
+      var Tt = CT();
       elCuerpo.innerHTML = '';
       LOTES.forEach(function (lote, li) {
         var nivel = lote[0], cuantos = lote[1];
@@ -119,7 +122,7 @@
         var K = Math.min(1, interior / Math.max.apply(null, anchos));
         svgs.forEach(function (s, i) { s.style.width = (anchos[i] * K) + 'px'; s.style.maxWidth = 'none'; });
       });
-      elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
+      elRef.textContent = 'teoriamusical.com.es · ' + T('hoja n.º ', 'sheet no. ') + semilla;
     }
 
     function generar(semillaFija) {
@@ -128,11 +131,11 @@
       else { do { nueva = Math.floor(Math.random() * 90000 + 10000); } while (nueva === semilla); }
       semilla = nueva;
       solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show answers');
       pintar();
       var a = cont.querySelector('.tm-fm-enlace');
       var params = '?hoja=' + semilla;
-      a.innerHTML = 'Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.';
+      a.innerHTML = T('Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.', 'Each sheet comes from a number: with <a href="' + window.location.pathname + params + '#generador">this link</a> (sheet no. ' + semilla + ') you get the same one again.');
     }
 
     cont.addEventListener('click', function (ev) {
@@ -142,7 +145,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         solucion = !solucion;
-        btn.textContent = solucion ? 'Ocultar soluciones' : 'Ver soluciones';
+        btn.textContent = solucion ? T('Ocultar soluciones', 'Hide answers') : T('Ver soluciones', 'Show answers');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

@@ -5,18 +5,21 @@
 (function () {
   'use strict';
 
+  var EN = document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+
   var VF_NAMES = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];          /* índice diatónico */
-  var NOTE_NAMES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si']; /* mismo índice */
+  var NOTE_NAMES = T(['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'], ['C', 'D', 'E', 'F', 'G', 'A', 'B']); /* mismo índice */
 
   /* Cada clave: clef de VexFlow + rango de notas naturales (índice diatónico oct*7+letra) */
   var CLAVES = {
-    sol2: { id: 'sol2', label: 'Clave de Sol',        clef: 'treble',        icon: '𝄞', lo: di('c', 4), hi: di('a', 5) },
-    fa3:  { id: 'fa3',  label: 'Clave de Fa en 3ª',   clef: 'baritone-f',    icon: '𝄢', lo: di('g', 2), hi: di('e', 4) },
-    fa4:  { id: 'fa4',  label: 'Clave de Fa en 4ª',   clef: 'bass',          icon: '𝄢', lo: di('e', 2), hi: di('c', 4) },
-    do1:  { id: 'do1',  label: 'Clave de Do en 1ª',   clef: 'soprano',       icon: '𝄡', lo: di('a', 3), hi: di('e', 5) },
-    do2:  { id: 'do2',  label: 'Clave de Do en 2ª',   clef: 'mezzo-soprano', icon: '𝄡', lo: di('a', 3), hi: di('d', 5) },
-    do3:  { id: 'do3',  label: 'Clave de Do en 3ª',   clef: 'alto',          icon: '𝄡', lo: di('d', 3), hi: di('c', 5) },
-    do4:  { id: 'do4',  label: 'Clave de Do en 4ª',   clef: 'tenor',         icon: '𝄡', lo: di('c', 3), hi: di('c', 5) }
+    sol2: { id: 'sol2', label: T('Clave de Sol', 'Treble clef'),        clef: 'treble',        icon: '𝄞', lo: di('c', 4), hi: di('a', 5) },
+    fa3:  { id: 'fa3',  label: T('Clave de Fa en 3ª', 'F clef on the 3rd line'),   clef: 'baritone-f',    icon: '𝄢', lo: di('g', 2), hi: di('e', 4) },
+    fa4:  { id: 'fa4',  label: T('Clave de Fa en 4ª', 'Bass clef'),   clef: 'bass',          icon: '𝄢', lo: di('e', 2), hi: di('c', 4) },
+    do1:  { id: 'do1',  label: T('Clave de Do en 1ª', 'C clef on the 1st line'),   clef: 'soprano',       icon: '𝄡', lo: di('a', 3), hi: di('e', 5) },
+    do2:  { id: 'do2',  label: T('Clave de Do en 2ª', 'C clef on the 2nd line'),   clef: 'mezzo-soprano', icon: '𝄡', lo: di('a', 3), hi: di('d', 5) },
+    do3:  { id: 'do3',  label: T('Clave de Do en 3ª', 'Alto clef'),   clef: 'alto',          icon: '𝄡', lo: di('d', 3), hi: di('c', 5) },
+    do4:  { id: 'do4',  label: T('Clave de Do en 4ª', 'Tenor clef'),   clef: 'tenor',         icon: '𝄡', lo: di('c', 3), hi: di('c', 5) }
   };
   var CLAVE_ORDER = ['sol2', 'fa3', 'fa4', 'do1', 'do2', 'do3', 'do4'];
 
@@ -28,6 +31,9 @@
   };
 
   var PREGUNTAS_POR_TEST = 10;
+
+  /* nombre de la clave en minúsculas, para los textos alternativos */
+  function claveLc(c) { return T(c.label.toLowerCase(), c.label.charAt(0) === 'C' || c.label.charAt(0) === 'F' ? c.label : c.label.toLowerCase()); }
 
   function di(vfn, oct) { return oct * 7 + VF_NAMES.indexOf(vfn); }
   function vfnOf(idx) { return VF_NAMES[((idx % 7) + 7) % 7]; }
@@ -106,9 +112,9 @@
 
   /* Carga Verovio (una vez; se cachea) y entonces arranca el ejercicio. */
   function cargarVerovio(wrap, init) {
-    wrap.innerHTML = '<div class="tm-card"><p class="tm-hint">Cargando el ejercicio…</p></div>';
+    wrap.innerHTML = '<div class="tm-card"><p class="tm-hint">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</p></div>';
     tmNotacion.listo().then(init).catch(function () {
-      wrap.innerHTML = '<div class="tm-card"><p class="tm-hint">No se ha podido cargar el ejercicio. Recarga la página.</p></div>';
+      wrap.innerHTML = '<div class="tm-card"><p class="tm-hint">' + T('No se ha podido cargar el ejercicio. Recarga la página.', 'The exercise could not be loaded. Reload the page.') + '</p></div>';
     });
   }
 
@@ -140,12 +146,12 @@
         var c = CLAVES[k];
         return '<button class="tm-iv-mode-btn" data-k="' + k + '"><span class="tm-iv-mode-icon">' + c.icon + '</span><span class="tm-iv-mode-lbl">' + c.label + '</span></button>';
       }).join('');
-      modes += '<button class="tm-iv-mode-btn" data-k="todas"><span class="tm-iv-mode-icon">🎲</span><span class="tm-iv-mode-lbl">Todas</span></button>';
+      modes += '<button class="tm-iv-mode-btn" data-k="todas"><span class="tm-iv-mode-icon">🎲</span><span class="tm-iv-mode-lbl">' + T('Todas', 'All') + '</span></button>';
 
       wrap.innerHTML =
         '<div class="tm-card"><div class="tm-iv-mode-screen">' +
-          '<h2 class="tm-iv-title">¿Qué nota es?</h2>' +
-          '<p class="tm-iv-subtitle">Elige la clave que quieres practicar — ' + totalQ + ' preguntas</p>' +
+          '<h2 class="tm-iv-title">' + T('¿Qué nota es?', 'What note is it?') + '</h2>' +
+          '<p class="tm-iv-subtitle">' + T('Elige la clave que quieres practicar — ' + totalQ + ' preguntas', 'Choose the clef you want to practice — ' + totalQ + ' questions') + '</p>' +
           '<div class="tm-iv-modes">' + modes + '</div>' +
         '</div></div>';
 
@@ -172,9 +178,9 @@
           '<p class="tm-iv-clave-tag" id="' + uid + '_tag"></p>' +
           '<div class="tm-staff"><div id="' + uid + '_not"></div></div>' +
           '<div class="tm-grid" id="' + uid + '_opts"></div>' +
-          '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>' +
+          '<button class="tm-submit" id="' + uid + '_btn">' + T('Comprobar', 'Check') + '</button>' +
           '<div id="' + uid + '_fb" class="tm-fb"></div>' +
-          '<button id="' + uid + '_nxt" class="tm-nxt">Siguiente →</button>' +
+          '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente', 'Next') + ' →</button>' +
         '</div>';
       document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
       document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
@@ -198,7 +204,7 @@
       el.style.width = '100%'; el.style.height = '130px';
       dibujarPentagrama(el, filaNota(cQ.clave, cQ.idx), {
         escala: 1.3, separacion: 0.5, top: 42, id: uid,
-        alt: 'Pentagrama en ' + cQ.clave.label.toLowerCase() + ' con una nota redonda'
+        alt: T('Pentagrama en ' + claveLc(cQ.clave) + ' con una nota redonda', 'Staff in ' + claveLc(cQ.clave) + ' with a whole note')
       });
     }
 
@@ -231,8 +237,8 @@
       var elFb = document.getElementById(uid + '_fb');
       elFb.className = 'tm-fb tm-show ' + (correct ? 'tm-ok' : 'tm-ko');
       elFb.innerHTML = correct
-        ? '<strong>✓ ¡Correcto!</strong>'
-        : '<strong>✗ Incorrecto.</strong> Es un <strong>' + NOTE_NAMES[cQ.letter] + '</strong>.';
+        ? '<strong>✓ ' + T('¡Correcto!', 'Correct!') + '</strong>'
+        : T('<strong>✗ Incorrecto.</strong> Es un <strong>' + NOTE_NAMES[cQ.letter] + '</strong>.', '<strong>✗ Incorrect.</strong> It is the note <strong>' + NOTE_NAMES[cQ.letter] + '</strong>.');
       document.getElementById(uid + '_badge').textContent = '✓ ' + score;
       document.getElementById(uid + '_opts').querySelectorAll('.tm-opt').forEach(function (b) {
         b.disabled = true;
@@ -266,7 +272,7 @@
             '<div class="tm-iv-score-num">' + score + '/' + totalQ + '</div>' +
             '<div class="tm-iv-score-pct">' + pct + '%</div>' +
           '</div>' +
-          '<button class="tm-submit tm-ready" id="' + uid + '_restart">Practicar otra vez</button>' +
+          '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Practicar otra vez', 'Practice again') + '</button>' +
         '</div>';
       document.getElementById(uid + '_restart').addEventListener('click', function () {
         currentQ = 0; score = 0;
@@ -300,10 +306,10 @@
         var c = CLAVES[k];
         return '<button class="tm-iv-mode-btn" data-k="' + k + '"><span class="tm-iv-mode-icon">' + c.icon + '</span><span class="tm-iv-mode-lbl">' + c.label + '</span></button>';
       }).join('');
-      modes += '<button class="tm-iv-mode-btn" data-k="todas"><span class="tm-iv-mode-icon">🎲</span><span class="tm-iv-mode-lbl">Todas</span></button>';
+      modes += '<button class="tm-iv-mode-btn" data-k="todas"><span class="tm-iv-mode-icon">🎲</span><span class="tm-iv-mode-lbl">' + T('Todas', 'All') + '</span></button>';
       wrap.innerHTML = '<div class="tm-card"><div class="tm-iv-mode-screen">' +
-        '<h2 class="tm-iv-title">Escribe la nota</h2>' +
-        '<p class="tm-iv-subtitle">Elige la clave que quieres practicar — ' + totalQ + ' preguntas</p>' +
+        '<h2 class="tm-iv-title">' + T('Escribe la nota', 'Write the note') + '</h2>' +
+        '<p class="tm-iv-subtitle">' + T('Elige la clave que quieres practicar — ' + totalQ + ' preguntas', 'Choose the clef you want to practice — ' + totalQ + ' questions') + '</p>' +
         '<div class="tm-iv-modes">' + modes + '</div></div></div>';
       wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function (btn) {
         btn.addEventListener('click', function () { modeClave = btn.dataset.k; currentQ = 0; score = 0; startQuiz(); });
@@ -319,10 +325,10 @@
         '<p class="tm-iv-clave-tag" id="' + uid + '_tag"></p>' +
         '<p class="tm-tgt" id="' + uid + '_tgt"></p>' +
         '<div class="tm-staff-construir" id="' + uid + '_wrap"><div id="' + uid + '_not"></div><div class="tm-high" id="' + uid + '_high"></div></div>' +
-        '<p class="tm-hint">Toca el pentagrama para colocar la nota.</p>' +
-        '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>' +
+        '<p class="tm-hint">' + T('Toca el pentagrama para colocar la nota.', 'Tap the staff to place the note.') + '</p>' +
+        '<button class="tm-submit" id="' + uid + '_btn">' + T('Comprobar', 'Check') + '</button>' +
         '<div id="' + uid + '_fb" class="tm-fb"></div>' +
-        '<button id="' + uid + '_nxt" class="tm-nxt">Siguiente →</button>' +
+        '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente', 'Next') + ' →</button>' +
         '</div>' +
         '<div class="tm-iv-loupe" id="' + uid + '_loupe"><div class="tm-iv-loupe-staff" id="' + uid + '_lstaff"></div></div>';
       document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
@@ -414,7 +420,7 @@
       el.style.height = '150px';
       var r =dibujarPentagrama(el, filaNota(cQ.clave, placed ? placed.idx : null, placed ? (placedStyle ? placedStyle.fillStyle : DORADO) : null), {
         escala: 1.5, separacion: 0.5, top: 38, id: uid,
-        alt: 'Pentagrama en ' + cQ.clave.label.toLowerCase() + (placed ? ' con tu nota colocada' : ' vacío')
+        alt: T('Pentagrama en ' + claveLc(cQ.clave) + (placed ? ' con tu nota colocada' : ' vacío'), 'Staff in ' + claveLc(cQ.clave) + (placed ? ' with your note placed' : ' (empty)'))
       });
       currentSvg = r.elemento;
     }
@@ -434,8 +440,8 @@
       var elFb = document.getElementById(uid + '_fb');
       elFb.className = 'tm-fb tm-show ' + (correct ? 'tm-ok' : 'tm-ko');
       elFb.innerHTML = correct
-        ? '<strong>✓ ¡Correcto!</strong>'
-        : '<strong>✗ Incorrecto.</strong> Has colocado un <strong>' + NOTE_NAMES[placedLetter] + '</strong>; te pedían un <strong>' + NOTE_NAMES[cQ.target] + '</strong>.';
+        ? '<strong>✓ ' + T('¡Correcto!', 'Correct!') + '</strong>'
+        : T('<strong>✗ Incorrecto.</strong> Has colocado un <strong>' + NOTE_NAMES[placedLetter] + '</strong>; te pedían un <strong>' + NOTE_NAMES[cQ.target] + '</strong>.', '<strong>✗ Incorrect.</strong> You placed the note <strong>' + NOTE_NAMES[placedLetter] + '</strong>; you were asked for <strong>' + NOTE_NAMES[cQ.target] + '</strong>.');
       document.getElementById(uid + '_badge').textContent = '✓ ' + score;
     }
 
@@ -450,13 +456,13 @@
       document.getElementById(uid + '_wrap').classList.remove('tm-answered');
       genQ();
       document.getElementById(uid + '_tag').textContent = (modeClave === 'todas') ? cQ.clave.label : '';
-      document.getElementById(uid + '_tgt').innerHTML = 'Coloca un <strong>' + NOTE_NAMES[cQ.target] + '</strong> en el pentagrama.';
+      document.getElementById(uid + '_tgt').innerHTML = T('Coloca un <strong>' + NOTE_NAMES[cQ.target] + '</strong> en el pentagrama.', 'Place the note <strong>' + NOTE_NAMES[cQ.target] + '</strong> on the staff.');
       drawStaff();
     }
 
     function showResults() {
       var pct = Math.round(score / totalQ * 100);
-      wrap.innerHTML = '<div class="tm-card"><div class="tm-iv-score-box"><div class="tm-iv-score-num">' + score + '/' + totalQ + '</div><div class="tm-iv-score-pct">' + pct + '%</div></div><button class="tm-submit tm-ready" id="' + uid + '_restart">Practicar otra vez</button></div>';
+      wrap.innerHTML = '<div class="tm-card"><div class="tm-iv-score-box"><div class="tm-iv-score-num">' + score + '/' + totalQ + '</div><div class="tm-iv-score-pct">' + pct + '%</div></div><button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Practicar otra vez', 'Practice again') + '</button></div>';
       document.getElementById(uid + '_restart').addEventListener('click', function () { currentQ = 0; score = 0; if (lockedMode) { modeClave = lockedMode; startQuiz(); } else showModeScreen(); });
     }
 

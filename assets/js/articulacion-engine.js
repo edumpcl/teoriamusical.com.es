@@ -6,18 +6,21 @@
 (function () {
   'use strict';
 
+  var EN = typeof document !== 'undefined' && document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+
   var ARTICULACIONES = [
-    { id: 'legato',   nombre: 'Legato',   art: 'slur', efecto: 'Notas unidas, sin separación' },
-    { id: 'staccato', nombre: 'Staccato', art: 'a.',   efecto: 'Notas cortas y separadas' },
-    { id: 'acento',   nombre: 'Acento',   art: 'a>',   efecto: 'Nota atacada con más fuerza' },
-    { id: 'tenuto',   nombre: 'Tenuto',   art: 'a-',   efecto: 'Mantener la nota toda su duración, con peso' },
-    { id: 'marcato',  nombre: 'Marcato',  art: 'a^',   efecto: 'Muy marcado y enérgico' }
+    { id: 'legato',   nombre: 'Legato',   art: 'slur', efecto: T('Notas unidas, sin separación', 'Notes joined, with no gap') },
+    { id: 'staccato', nombre: 'Staccato', art: 'a.',   efecto: T('Notas cortas y separadas', 'Short, separated notes') },
+    { id: 'acento',   nombre: T('Acento', 'Accent'),   art: 'a>',   efecto: T('Nota atacada con más fuerza', 'Note attacked with more force') },
+    { id: 'tenuto',   nombre: 'Tenuto',   art: 'a-',   efecto: T('Mantener la nota toda su duración, con peso', 'Hold the note for its full value, with weight') },
+    { id: 'marcato',  nombre: 'Marcato',  art: 'a^',   efecto: T('Muy marcado y enérgico', 'Very marked and energetic') }
   ];
 
   var MODOS = [
-    { id: 'n2s', lbl: 'Nombre → Signo', desc: 'Se da el nombre, elige el signo dibujado' },
-    { id: 's2n', lbl: 'Signo → Nombre', desc: 'Se dibuja el signo, elige el nombre' },
-    { id: 'mix', lbl: 'Mezclado', desc: 'Los dos sentidos, al azar' }
+    { id: 'n2s', lbl: T('Nombre → Signo', 'Name → Symbol'), desc: T('Se da el nombre, elige el signo dibujado', 'You get the name; pick the symbol drawn') },
+    { id: 's2n', lbl: T('Signo → Nombre', 'Symbol → Name'), desc: T('Se dibuja el signo, elige el nombre', 'The symbol is drawn; pick the name') },
+    { id: 'mix', lbl: T('Mezclado', 'Mixed'), desc: T('Los dos sentidos, al azar', 'Both directions, at random') }
   ];
 
   var ICONOS = ['🔤', '🎼', '🔀'];
@@ -114,7 +117,7 @@
     };
     var fila = { clave: 'sol', compases: [[ev('e/4'), ev('g/4')]] };
     if (art.art === 'slur') fila.slurs = [{ de: [0, 0], a: [0, 1], curva: 'below' }];
-    tmNotacion.dibujarSync(div, fila, { escala: 1.0, separacion: 0.2, id: 'art', alt: 'Pentagrama con dos negras y un signo de articulación' });
+    tmNotacion.dibujarSync(div, fila, { escala: 1.0, separacion: 0.2, id: 'art', alt: T('Pentagrama con dos negras y un signo de articulación', 'Staff with two quarter notes and an articulation mark') });
   }
 
   function tmArticulacionEngine(containerId, config) {
@@ -144,13 +147,13 @@
     function showModeScreen() {
       var btns = MODOS.map(function (m, i) {
         var n = (m.id === 'mix' ? ARTICULACIONES.length * 2 : ARTICULACIONES.length);
-        return '<button class="tm-iv-mode-btn" data-i="' + i + '"><span class="tm-iv-mode-icon">' + ICONOS[i] + '</span><span class="tm-iv-mode-lbl">' + m.lbl + '</span><span class="tm-iv-mode-desc">' + m.desc + ' · ' + n + ' preguntas</span></button>';
+        return '<button class="tm-iv-mode-btn" data-i="' + i + '"><span class="tm-iv-mode-icon">' + ICONOS[i] + '</span><span class="tm-iv-mode-lbl">' + m.lbl + '</span><span class="tm-iv-mode-desc">' + m.desc + ' · ' + n + T(' preguntas', ' questions') + '</span></button>';
       }).join('');
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-iv-mode-screen">',
-            '<h2 class="tm-iv-title">Test — Articulación Musical</h2>',
-            '<p class="tm-iv-subtitle">Elige el sentido del test — sin preguntas repetidas</p>',
+            '<h2 class="tm-iv-title">' + T('Test — Articulación Musical', 'Quiz — Musical Articulation') + '</h2>',
+            '<p class="tm-iv-subtitle">' + T('Elige el sentido del test — sin preguntas repetidas', 'Choose the direction of the quiz — no repeated questions') + '</p>',
             '<div class="tm-iv-modes">' + btns + '</div>',
           '</div>',
         '</div>'
@@ -179,9 +182,9 @@
           '<p class="tm-construir-q" id="' + uid + '_q"></p>',
           '<div class="tm-staff" id="' + uid + '_staff"></div>',
           '<div id="' + uid + '_opts"></div>',
-          '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>',
+          '<button class="tm-submit" id="' + uid + '_btn">' + T('Comprobar', 'Check') + '</button>',
           '<div id="' + uid + '_fb" class="tm-fb"></div>',
-          '<button id="' + uid + '_nxt" class="tm-nxt">Siguiente →</button>',
+          '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente →', 'Next →') + '</button>',
         '</div>'
       ].join('');
       document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
@@ -199,7 +202,7 @@
       document.getElementById(uid + '_btn').classList.remove('tm-ready');
 
       if (cQ.sentido === 'n2s') {
-        elQ.textContent = '¿Cuál es el signo de ' + cQ.art.nombre.toUpperCase() + '?';
+        elQ.textContent = T('¿Cuál es el signo de ' + cQ.art.nombre.toUpperCase() + '?', 'Which is the symbol for ' + cQ.art.nombre.toUpperCase() + '?');
         elStaff.innerHTML = '';
         elStaff.style.display = 'none';
         var opciones = shuffled(ARTICULACIONES);
@@ -212,7 +215,7 @@
           btn.addEventListener('click', function () { selectOpt(btn); });
         });
       } else {
-        elQ.textContent = '¿Cómo se llama esta articulación?';
+        elQ.textContent = T('¿Cómo se llama esta articulación?', 'What is this articulation called?');
         elStaff.style.display = 'flex';
         elStaff.innerHTML = '<div id="' + uid + '_qmini" style="width:240px;max-width:100%;"></div>';
         dibujarMini(document.getElementById(uid + '_qmini'), cQ.art.id);
@@ -248,8 +251,8 @@
       var elFb = document.getElementById(uid + '_fb');
       elFb.className = 'tm-fb tm-show ' + (correcto ? 'tm-ok' : 'tm-ko');
       elFb.innerHTML = correcto
-        ? ('<strong>¡Correcto!</strong> ' + cQ.art.nombre + ': ' + cQ.art.efecto + '.')
-        : ('<strong>Incorrecto.</strong> Era ' + cQ.art.nombre + ': ' + cQ.art.efecto + '.');
+        ? ('<strong>' + T('¡Correcto!', 'Correct!') + '</strong> ' + cQ.art.nombre + ': ' + cQ.art.efecto + '.')
+        : ('<strong>' + T('Incorrecto.', 'Incorrect.') + '</strong> ' + T('Era ', 'It was ') + cQ.art.nombre + ': ' + cQ.art.efecto + '.');
 
       document.getElementById(uid + '_badge').textContent = '✓ ' + score;
 
@@ -285,7 +288,7 @@
             '<div class="tm-iv-score-num">' + score + '/' + totalQ + '</div>',
             '<div class="tm-iv-score-pct">' + pct + '%</div>',
           '</div>',
-          '<button class="tm-submit tm-ready" id="' + uid + '_restart">Hacer otro test</button>',
+          '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Hacer otro test', 'Take another quiz') + '</button>',
         '</div>'
       ].join('');
       document.getElementById(uid + '_restart').addEventListener('click', function () {
@@ -294,17 +297,17 @@
       });
     }
 
-    wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">Cargando el ejercicio…</p></div>';
+    wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</p></div>';
     tmNotacion.listo().then(showModeScreen).catch(function () {
-      wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">No se ha podido cargar el ejercicio. Recarga la página.</p></div>';
+      wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">' + T('No se ha podido cargar el ejercicio. Recarga la página.', 'The exercise could not be loaded. Reload the page.') + '</p></div>';
     });
   }
 
   /* ---- Segundo test: definición <-> nombre (sin pentagrama) ---- */
   var MODOS_DEF = [
-    { id: 'n2d', lbl: 'Nombre → Definición', desc: 'Se da el nombre, elige qué significa' },
-    { id: 'd2n', lbl: 'Definición → Nombre', desc: 'Se da el significado, elige el nombre' },
-    { id: 'mix', lbl: 'Mezclado', desc: 'Los dos sentidos, al azar' }
+    { id: 'n2d', lbl: T('Nombre → Definición', 'Name → Definition'), desc: T('Se da el nombre, elige qué significa', 'You get the name; pick what it means') },
+    { id: 'd2n', lbl: T('Definición → Nombre', 'Definition → Name'), desc: T('Se da el significado, elige el nombre', 'You get the meaning; pick the name') },
+    { id: 'mix', lbl: T('Mezclado', 'Mixed'), desc: T('Los dos sentidos, al azar', 'Both directions, at random') }
   ];
   var ICONOS_DEF = ['🔤', '📖', '🔀'];
 
@@ -334,13 +337,13 @@
     function showModeScreen() {
       var btns = MODOS_DEF.map(function (m, i) {
         var n = (m.id === 'mix' ? ARTICULACIONES.length * 2 : ARTICULACIONES.length);
-        return '<button class="tm-iv-mode-btn" data-i="' + i + '"><span class="tm-iv-mode-icon">' + ICONOS_DEF[i] + '</span><span class="tm-iv-mode-lbl">' + m.lbl + '</span><span class="tm-iv-mode-desc">' + m.desc + ' · ' + n + ' preguntas</span></button>';
+        return '<button class="tm-iv-mode-btn" data-i="' + i + '"><span class="tm-iv-mode-icon">' + ICONOS_DEF[i] + '</span><span class="tm-iv-mode-lbl">' + m.lbl + '</span><span class="tm-iv-mode-desc">' + m.desc + ' · ' + n + T(' preguntas', ' questions') + '</span></button>';
       }).join('');
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-iv-mode-screen">',
-            '<h2 class="tm-iv-title">Test — Definiciones de Articulación</h2>',
-            '<p class="tm-iv-subtitle">Elige el sentido del test — sin preguntas repetidas</p>',
+            '<h2 class="tm-iv-title">' + T('Test — Definiciones de Articulación', 'Quiz — Articulation Definitions') + '</h2>',
+            '<p class="tm-iv-subtitle">' + T('Elige el sentido del test — sin preguntas repetidas', 'Choose the direction of the quiz — no repeated questions') + '</p>',
             '<div class="tm-iv-modes">' + btns + '</div>',
           '</div>',
         '</div>'
@@ -368,9 +371,9 @@
           '</div>',
           '<p class="tm-construir-q" id="' + uid + '_q"></p>',
           '<div id="' + uid + '_opts"></div>',
-          '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>',
+          '<button class="tm-submit" id="' + uid + '_btn">' + T('Comprobar', 'Check') + '</button>',
           '<div id="' + uid + '_fb" class="tm-fb"></div>',
-          '<button id="' + uid + '_nxt" class="tm-nxt">Siguiente →</button>',
+          '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente →', 'Next →') + '</button>',
         '</div>'
       ].join('');
       document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
@@ -387,13 +390,13 @@
       document.getElementById(uid + '_btn').classList.remove('tm-ready');
 
       if (cQ.sentido === 'n2d') {
-        elQ.textContent = '¿Cuál es el efecto de ' + cQ.art.nombre.toUpperCase() + '?';
+        elQ.textContent = T('¿Cuál es el efecto de ' + cQ.art.nombre.toUpperCase() + '?', 'What is the effect of ' + cQ.art.nombre.toUpperCase() + '?');
         elOpts.className = 'tm-grid-list';
         elOpts.innerHTML = shuffled(ARTICULACIONES).map(function (a) {
           return '<button class="tm-opt" data-v="' + a.id + '">' + a.efecto + '</button>';
         }).join('');
       } else {
-        elQ.innerHTML = '¿Qué articulación tiene este efecto?<br>«' + cQ.art.efecto + '»';
+        elQ.innerHTML = T('¿Qué articulación tiene este efecto?<br>«' + cQ.art.efecto + '»', 'Which articulation has this effect?<br>“' + cQ.art.efecto + '”');
         elOpts.className = 'tm-grid';
         elOpts.innerHTML = shuffled(ARTICULACIONES).map(function (a) {
           return '<button class="tm-opt" data-v="' + a.id + '">' + a.nombre + '</button>';
@@ -425,8 +428,8 @@
       var elFb = document.getElementById(uid + '_fb');
       elFb.className = 'tm-fb tm-show ' + (correcto ? 'tm-ok' : 'tm-ko');
       elFb.innerHTML = correcto
-        ? ('<strong>¡Correcto!</strong> ' + cQ.art.nombre + ': ' + cQ.art.efecto + '.')
-        : ('<strong>Incorrecto.</strong> Era ' + cQ.art.nombre + ': ' + cQ.art.efecto + '.');
+        ? ('<strong>' + T('¡Correcto!', 'Correct!') + '</strong> ' + cQ.art.nombre + ': ' + cQ.art.efecto + '.')
+        : ('<strong>' + T('Incorrecto.', 'Incorrect.') + '</strong> ' + T('Era ', 'It was ') + cQ.art.nombre + ': ' + cQ.art.efecto + '.');
 
       document.getElementById(uid + '_badge').textContent = '✓ ' + score;
 
@@ -462,7 +465,7 @@
             '<div class="tm-iv-score-num">' + score + '/' + totalQ + '</div>',
             '<div class="tm-iv-score-pct">' + pct + '%</div>',
           '</div>',
-          '<button class="tm-submit tm-ready" id="' + uid + '_restart">Hacer otro test</button>',
+          '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Hacer otro test', 'Take another quiz') + '</button>',
         '</div>'
       ].join('');
       document.getElementById(uid + '_restart').addEventListener('click', function () {

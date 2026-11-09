@@ -25,6 +25,9 @@
 (function () {
   'use strict';
 
+  var EN = typeof document !== 'undefined' && document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+
   function mulberry32(a) {
     return function () {
       a |= 0; a = (a + 0x6D2B79F5) | 0;
@@ -45,22 +48,22 @@
   }
 
   var LETRAS = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
-  var NOMBRES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
+  var NOMBRES = EN ? ['C', 'D', 'E', 'F', 'G', 'A', 'B'] : ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
   function nota(idx) { return LETRAS[((idx % 7) + 7) % 7] + '/' + Math.floor(idx / 7); }
 
   /* tonica = letra de la tónica (c=0 … b=6); arm = alteraciones de la armadura (+ sostenidos, − bemoles). */
   var TONALIDADES = [
-    { id: 'C', tonica: 0, arm: 0, nombre: 'Do mayor' }, { id: 'G', tonica: 4, arm: 1, nombre: 'Sol mayor' },
-    { id: 'D', tonica: 1, arm: 2, nombre: 'Re mayor' }, { id: 'F', tonica: 3, arm: -1, nombre: 'Fa mayor' },
-    { id: 'Bb', tonica: 6, arm: -2, nombre: 'Si♭ mayor' }, { id: 'A', tonica: 5, arm: 3, nombre: 'La mayor' },
-    { id: 'Eb', tonica: 2, arm: -3, nombre: 'Mi♭ mayor' }
+    { id: 'C', tonica: 0, arm: 0, nombre: T('Do mayor', 'C major') }, { id: 'G', tonica: 4, arm: 1, nombre: T('Sol mayor', 'G major') },
+    { id: 'D', tonica: 1, arm: 2, nombre: T('Re mayor', 'D major') }, { id: 'F', tonica: 3, arm: -1, nombre: T('Fa mayor', 'F major') },
+    { id: 'Bb', tonica: 6, arm: -2, nombre: T('Si♭ mayor', 'B♭ major') }, { id: 'A', tonica: 5, arm: 3, nombre: T('La mayor', 'A major') },
+    { id: 'Eb', tonica: 2, arm: -3, nombre: T('Mi♭ mayor', 'E♭ major') }
   ];
   function tonalidad(id) { return TONALIDADES.filter(function (t) { return t.id === id; })[0]; }
 
   var FUNCIONES = {
-    T: { nombre: 'Tónica', frase: 'la tónica' },
-    S: { nombre: 'Subdominante', frase: 'la subdominante' },
-    D: { nombre: 'Dominante', frase: 'la dominante' }
+    T: { nombre: T('Tónica', 'Tonic'), frase: T('la tónica', 'the tonic') },
+    S: { nombre: T('Subdominante', 'Subdominant'), frase: T('la subdominante', 'the subdominant') },
+    D: { nombre: T('Dominante', 'Dominant'), frase: T('la dominante', 'the dominant') }
   };
   var ORDEN = ['T', 'S', 'D'];
 
@@ -133,34 +136,36 @@
     return NOMBRES[LETRAS.indexOf(l)] + (alt > 0 ? '♯' : alt < 0 ? '♭' : '');
   }
   var ORD = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
+  var ROM_EN = { I: 'I', II: 'ii', IV: 'IV', V: 'V', V7: 'V7', VI: 'vi', VII: 'vii°' };
   var SUSTITUTO = {
-    VI: ' Es la tónica «sustituta»: comparte dos notas con la tónica y puede ocupar su lugar (por ejemplo, en la cadencia rota).',
-    II: ' Es la subdominante «sustituta»: comparte dos notas con el IV y prepara igualmente la dominante.',
-    VII: ' Es un acorde de dominante «incompleto»: tiene la sensible y el 4.º grado, el tritono que pide resolver en la tónica.',
-    V7: ' Es la dominante con séptima: la séptima añade el 4.º grado y refuerza la tensión.',
-    V: ' La dominante genera tensión y suele conducir a la tónica: su sensible tiende a subir hasta ella.',
-    IV: ' La subdominante se aleja de la tónica y suele conducir a la dominante.',
-    I: ' La tónica es el centro y el reposo de la tonalidad.'
+    VI: T(' Es la tónica «sustituta»: comparte dos notas con la tónica y puede ocupar su lugar (por ejemplo, en la cadencia rota).', ' It is the “substitute” tonic: it shares two notes with the tonic and can take its place (for example, in the deceptive cadence).'),
+    II: T(' Es la subdominante «sustituta»: comparte dos notas con el IV y prepara igualmente la dominante.', ' It is the “substitute” subdominant: it shares two notes with IV and likewise prepares the dominant.'),
+    VII: T(' Es un acorde de dominante «incompleto»: tiene la sensible y el 4.º grado, el tritono que pide resolver en la tónica.', ' It is an “incomplete” dominant chord: it has the leading tone and the 4th degree, the tritone that asks to resolve to the tonic.'),
+    V7: T(' Es la dominante con séptima: la séptima añade el 4.º grado y refuerza la tensión.', ' It is the dominant seventh: the seventh adds the 4th degree and strengthens the tension.'),
+    V: T(' La dominante genera tensión y suele conducir a la tónica: su sensible tiende a subir hasta ella.', ' The dominant creates tension and usually leads to the tonic: its leading tone tends to rise to it.'),
+    IV: T(' La subdominante se aleja de la tónica y suele conducir a la dominante.', ' The subdominant moves away from the tonic and usually leads to the dominant.'),
+    I: T(' La tónica es el centro y el reposo de la tonalidad.', ' The tonic is the center and the rest point of the key.')
   };
 
   function explicar(it) {
     var tonal = tonalidad(it.tonalidad), ac = ACORDES[it.acorde];
     var nombres = it.notas.map(function (k) { return nombreNota(k, tonal); });
     var sens = notaGrado(tonal, 7), cuarto = notaGrado(tonal, 4);
-    var t = 'Es el acorde del ' + ORD[ac.grado] + ' grado de ' + tonal.nombre + ' (' + notaGrado(tonal, ac.grado) + (ac.tipo === 'septima' ? ', con séptima' : '') + '); sus notas son ' + nombres.join(' – ') + '. ';
-    if (ac.f === 'D') t += 'Contiene la sensible (' + sens + '), por eso es dominante.';
-    else if (ac.f === 'S') t += 'No tiene la sensible (' + sens + ') pero sí el 4.º grado (' + cuarto + '), por eso es subdominante.';
-    else t += 'No contiene ni la sensible (' + sens + ') ni el 4.º grado (' + cuarto + '), por eso es tónica.';
+    var t = T('Es el acorde del ' + ORD[ac.grado] + ' grado de ' + tonal.nombre + ' (' + notaGrado(tonal, ac.grado) + (ac.tipo === 'septima' ? ', con séptima' : '') + '); sus notas son ' + nombres.join(' – ') + '. ',
+      'This is the ' + ROM_EN[it.acorde] + ' chord of ' + tonal.nombre + ' (' + notaGrado(tonal, ac.grado) + (ac.tipo === 'septima' ? ', with a seventh' : '') + '); its notes are ' + nombres.join(' – ') + '. ');
+    if (ac.f === 'D') t += T('Contiene la sensible (' + sens + '), por eso es dominante.', 'It contains the leading tone (' + sens + '), so it is dominant.');
+    else if (ac.f === 'S') t += T('No tiene la sensible (' + sens + ') pero sí el 4.º grado (' + cuarto + '), por eso es subdominante.', 'It does not have the leading tone (' + sens + ') but it does have the 4th degree (' + cuarto + '), so it is subdominant.');
+    else t += T('No contiene ni la sensible (' + sens + ') ni el 4.º grado (' + cuarto + '), por eso es tónica.', 'It contains neither the leading tone (' + sens + ') nor the 4th degree (' + cuarto + '), so it is tonic.');
     t += SUSTITUTO[it.acorde] || '';
-    if (it.inversion) t += ' Está invertido, pero la función no cambia: depende del grado sobre el que se construye, no de la nota que quede en el bajo.';
+    if (it.inversion) t += T(' Está invertido, pero la función no cambia: depende del grado sobre el que se construye, no de la nota que quede en el bajo.', ' It is inverted, but the function does not change: it depends on the scale degree the chord is built on, not on the note left in the bass.');
     return t;
   }
 
   function pista(correcto, elegido) {
     if (correcto === elegido) return '';
-    if (correcto === 'D') return ' Busca primero la sensible (el 7.º grado, una nota por debajo de la tónica): si el acorde la lleva, es dominante.';
-    if (correcto === 'S') return ' La subdominante lleva el 4.º grado y no lleva la sensible. Si el acorde tuviera la sensible sería dominante.';
-    return ' La tónica no tiene ni la sensible ni el 4.º grado: sus notas son las del acorde de reposo (1-3-5) o las de su sustituto (6-1-3).';
+    if (correcto === 'D') return T(' Busca primero la sensible (el 7.º grado, una nota por debajo de la tónica): si el acorde la lleva, es dominante.', ' First look for the leading tone (the 7th degree, one note below the tonic): if the chord has it, it is dominant.');
+    if (correcto === 'S') return T(' La subdominante lleva el 4.º grado y no lleva la sensible. Si el acorde tuviera la sensible sería dominante.', ' The subdominant has the 4th degree and not the leading tone. If the chord had the leading tone it would be dominant.');
+    return T(' La tónica no tiene ni la sensible ni el 4.º grado: sus notas son las del acorde de reposo (1-3-5) o las de su sustituto (6-1-3).', ' The tonic has neither the leading tone nor the 4th degree: its notes are those of the chord of rest (1-3-5) or of its substitute (6-1-3).');
   }
 
   /* -------------------------------------------------------------- Dibujo */
@@ -179,7 +184,7 @@
       armadura: tonal.arm, llave: false, barraFinal: 'end',
       pentagramas: [{ clave: 'sol', compases: [[{ notas: it.notas.map(conArm), d: 'w' }]] }]
     };
-    var res = window.tmNotacion.dibujarSync(div, sistema, { escala: 1.4, separacion: 0.5, margenIzq: 12, id: 'ft', alt: 'Un acorde en una redonda, en ' + tonal.nombre });
+    var res = window.tmNotacion.dibujarSync(div, sistema, { escala: 1.4, separacion: 0.5, margenIzq: 12, id: 'ft', alt: T('Un acorde en una redonda, en ' + tonal.nombre, 'A chord as a whole note, in ' + tonal.nombre) });
     res.elemento.style.maxWidth = '100%';
     div.__tmInfo = { notas: it.notas.slice() };
   }
@@ -187,9 +192,9 @@
   /* ------------------------------------------------------------------ UI */
 
   var NIVELES = [
-    { nivel: 1, t: 'Funciones principales', d: 'I, IV y V en Do, Sol, Re y Fa mayor' },
-    { nivel: 2, t: 'Con sustitutos', d: 'Añade II, VI y VII, en siete tonalidades' },
-    { nivel: 3, t: 'Mezcladas', d: 'Con inversiones (fundamental, 1.ª y 2.ª) y el V7 de dominante' }
+    { nivel: 1, t: T('Funciones principales', 'Main functions'), d: T('I, IV y V en Do, Sol, Re y Fa mayor', 'I, IV and V in C, G, D and F major') },
+    { nivel: 2, t: T('Con sustitutos', 'With substitutes'), d: T('Añade II, VI y VII, en siete tonalidades', 'Adds ii, vi and vii°, in seven keys') },
+    { nivel: 3, t: T('Mezcladas', 'Mixed'), d: T('Con inversiones (fundamental, 1.ª y 2.ª) y el V7 de dominante', 'With inversions (root position, 1st and 2nd) and the dominant V7') }
   ];
   var PREGUNTAS = 6;
 
@@ -244,8 +249,8 @@
   window.tmFuncionesTonales = function (id) {
     var cont0 = document.getElementById(id);
     if (cont0 && window.tmNotacion && !conVerovio()) {
-      cont0.innerHTML = '<div class="tm-ft-card"><div class="tm-ft-sub">Cargando el ejercicio…</div></div>';
-      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont0.innerHTML = '<div class="tm-ft-card"><div class="tm-ft-sub">No se ha podido cargar el ejercicio. Recarga la página.</div></div>'; });
+      cont0.innerHTML = '<div class="tm-ft-card"><div class="tm-ft-sub">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</div></div>';
+      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont0.innerHTML = '<div class="tm-ft-card"><div class="tm-ft-sub">' + T('No se ha podido cargar el ejercicio. Recarga la página.', 'The exercise could not be loaded. Reload the page.') + '</div></div>'; });
       return;
     }
     arrancar(id);
@@ -260,8 +265,8 @@
     window.tmFuncionesTonalesDebug = function () { return cola[pos] || null; };
 
     function inicio() {
-      cont.innerHTML = '<div class="tm-ft-card"><div class="tm-ft-tit">¿Qué función tonal tiene este acorde?</div>'
-        + '<div class="tm-ft-sub">Verás un acorde escrito en una tonalidad mayor. Di si es una <strong>tónica</strong>, una <strong>subdominante</strong> o una <strong>dominante</strong>.</div>'
+      cont.innerHTML = '<div class="tm-ft-card"><div class="tm-ft-tit">' + T('¿Qué función tonal tiene este acorde?', 'What harmonic function does this chord have?') + '</div>'
+        + '<div class="tm-ft-sub">' + T('Verás un acorde escrito en una tonalidad mayor. Di si es una <strong>tónica</strong>, una <strong>subdominante</strong> o una <strong>dominante</strong>.', 'You will see a chord written in a major key. Say whether it is a <strong>tonic</strong>, a <strong>subdominant</strong> or a <strong>dominant</strong>.') + '</div>'
         + '<div class="tm-ft-modos">' + NIVELES.map(function (m) {
           return '<button type="button" class="tm-ft-modo" data-n="' + m.nivel + '"><strong>' + m.t + '</strong><span>' + m.d + '</span></button>';
         }).join('') + '</div></div>';
@@ -280,10 +285,10 @@
     function pregunta() {
       var it = cola[pos], tonal = tonalidad(it.tonalidad);
       cont.innerHTML = '<div class="tm-ft-card">'
-        + '<div class="tm-ft-prog">Pregunta ' + (pos + 1) + ' de ' + cola.length + '</div>'
+        + '<div class="tm-ft-prog">' + T('Pregunta ' + (pos + 1) + ' de ' + cola.length, 'Question ' + (pos + 1) + ' of ' + cola.length) + '</div>'
         + '<div class="tm-ft-barra"><div style="width:' + (pos / cola.length * 100) + '%"></div></div>'
-        + '<div class="tm-ft-preg">¿Qué función tiene este acorde?</div>'
-        + '<p class="tm-ft-tonal">Tonalidad: <strong>' + tonal.nombre + '</strong></p>'
+        + '<div class="tm-ft-preg">' + T('¿Qué función tiene este acorde?', 'What function does this chord have?') + '</div>'
+        + '<p class="tm-ft-tonal">' + T('Tonalidad: ', 'Key: ') + '<strong>' + tonal.nombre + '</strong></p>'
         + '<div class="tm-ft-dibujo"><div></div></div>'
         + '<div class="tm-ft-ops">' + ORDEN.map(function (f) {
           return '<button type="button" class="tm-ft-op" data-f="' + f + '">' + FUNCIONES[f].nombre + '</button>';
@@ -306,9 +311,9 @@
           });
           fb.hidden = false;
           fb.className = 'tm-ft-fb ' + (ok ? 'tm-ok' : 'tm-ko');
-          fb.innerHTML = '<strong>' + (ok ? '¡Correcto!' : 'No es correcto, es ' + FUNCIONES[it.funcion].frase + '.') + '</strong> ' + explicar(it) + pista(it.funcion, elegido);
+          fb.innerHTML = '<strong>' + (ok ? T('¡Correcto!', 'Correct!') : T('No es correcto, es ' + FUNCIONES[it.funcion].frase + '.', 'Not correct, it is ' + FUNCIONES[it.funcion].frase + '.')) + '</strong> ' + explicar(it) + pista(it.funcion, elegido);
           btn.hidden = false;
-          btn.textContent = pos + 1 < cola.length ? 'Siguiente' : 'Ver resultado';
+          btn.textContent = pos + 1 < cola.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See result');
         });
       });
       btn.addEventListener('click', function () {
@@ -319,11 +324,11 @@
 
     function resultado() {
       var nota_ = aciertos / cola.length;
-      var msg = nota_ === 1 ? '¡Perfecto! Reconoces la función de cada acorde sin dudar.' : nota_ >= 0.8 ? 'Muy bien: casi todo correcto.' : nota_ >= 0.5 ? 'Vas bien. Repasa la regla de la sensible y del 4.º grado y vuelve a intentarlo.' : 'Conviene repasar las funciones tonales antes de volver a intentarlo.';
-      cont.innerHTML = '<div class="tm-ft-card tm-ft-res"><div class="tm-ft-nota">' + aciertos + '</div><div class="tm-ft-de">aciertos de ' + cola.length + '</div>'
+      var msg = nota_ === 1 ? T('¡Perfecto! Reconoces la función de cada acorde sin dudar.', 'Perfect! You recognize the function of every chord without hesitation.') : nota_ >= 0.8 ? T('Muy bien: casi todo correcto.', 'Very good: almost everything correct.') : nota_ >= 0.5 ? T('Vas bien. Repasa la regla de la sensible y del 4.º grado y vuelve a intentarlo.', 'You are doing well. Review the rule of the leading tone and the 4th degree and try again.') : T('Conviene repasar las funciones tonales antes de volver a intentarlo.', 'It is worth reviewing the harmonic functions before trying again.');
+      cont.innerHTML = '<div class="tm-ft-card tm-ft-res"><div class="tm-ft-nota">' + aciertos + '</div><div class="tm-ft-de">' + T('aciertos de ' + cola.length, 'correct out of ' + cola.length) + '</div>'
         + '<div class="tm-ft-msg">' + msg + '</div>'
-        + '<button type="button" class="tm-ft-otra" data-a="otra">Otra ronda</button>'
-        + '<button type="button" class="tm-ft-otra tm-2" data-a="modo">Cambiar de nivel</button></div>';
+        + '<button type="button" class="tm-ft-otra" data-a="otra">' + T('Otra ronda', 'Another round') + '</button>'
+        + '<button type="button" class="tm-ft-otra tm-2" data-a="modo">' + T('Cambiar de nivel', 'Change level') + '</button></div>';
       cont.querySelector('[data-a="otra"]').addEventListener('click', function () { empezar(nivelActual); });
       cont.querySelector('[data-a="modo"]').addEventListener('click', inicio);
     }

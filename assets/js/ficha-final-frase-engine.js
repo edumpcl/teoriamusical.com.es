@@ -9,9 +9,12 @@
 (function () {
   'use strict';
 
-  function T() { return window.tmFinalTest; }
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
 
-  var TIT = { 1: '1. Fácil (compases simples; la última nota llega hasta el final del compás)', 2: '2. Medio (simples y compuestos; silencios tras la última nota y último compás incompleto)', 3: '3. Difícil (contratiempos, figuras pequeñas y silencios antes de la última nota)' };
+  function CT() { return window.tmFinalTest; }
+
+  var TIT = { 1: T('1. Fácil (compases simples; la última nota llega hasta el final del compás)', '1. Easy (simple meters; the last note lasts until the end of the measure)'), 2: T('2. Medio (simples y compuestos; silencios tras la última nota y último compás incompleto)', '2. Medium (simple and compound; rests after the last note and an incomplete last measure)'), 3: T('3. Difícil (contratiempos, figuras pequeñas y silencios antes de la última nota)', '3. Hard (off-beats, small note values and rests before the last note)') };
   var LOTES = [[1, 6], [2, 6], [3, 6]];
 
   var CSS = [
@@ -60,7 +63,7 @@
 
   window.tmFichaFinalFrase = function (id) {
     var cont = document.getElementById(id);
-    if (!cont || !T()) return;
+    if (!cont || !CT()) return;
     if (!document.getElementById('tm-ff-css')) {
       var st = document.createElement('style');
       st.id = 'tm-ff-css';
@@ -72,15 +75,15 @@
 
     cont.innerHTML = '<div class="tm-ff">'
       + '<div class="tm-ff-acciones">'
-      + '<button type="button" class="tm-ff-btn tm-ff-btn-1" data-a="generar">Generar otra ficha</button>'
-      + '<button type="button" class="tm-ff-btn tm-ff-btn-2" data-a="soluciones">Ver soluciones</button>'
-      + '<button type="button" class="tm-ff-btn tm-ff-btn-2" data-a="imprimir">Imprimir</button>'
+      + '<button type="button" class="tm-ff-btn tm-ff-btn-1" data-a="generar">' + T('Generar otra ficha', 'Generate another sheet') + '</button>'
+      + '<button type="button" class="tm-ff-btn tm-ff-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show answers') + '</button>'
+      + '<button type="button" class="tm-ff-btn tm-ff-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<p class="tm-ff-enlace"></p>'
       + '</div>'
-      + '<div class="tm-ff-hoja"><div class="tm-ff-cab"><p class="tm-ff-tit">¿Cómo termina la melodía?</p><span class="tm-ff-ref"></span></div>'
-      + '<div class="tm-ff-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
-      + '<p class="tm-ff-instr">Marca cómo termina cada melodía. Fíjate en en qué tiempo empieza la última nota del último compás, no en cuánto dura ni en los silencios que haya detrás. Tiempo fuerte (íctico): empieza en el tiempo 1. Tiempo débil (posíctico): empieza en cualquier otro punto del compás.</p>'
+      + '<div class="tm-ff-hoja"><div class="tm-ff-cab"><p class="tm-ff-tit">' + T('¿Cómo termina la melodía?', 'How does the melody end?') + '</p><span class="tm-ff-ref"></span></div>'
+      + '<div class="tm-ff-datos"><span>' + T('Nombre:', 'Name:') + '</span><span>' + T('Curso:', 'Class:') + '</span><span>' + T('Fecha:', 'Date:') + '</span></div>'
+      + '<p class="tm-ff-instr">' + T('Marca cómo termina cada melodía. Fíjate en en qué tiempo empieza la última nota del último compás, no en cuánto dura ni en los silencios que haya detrás. Tiempo fuerte (íctico): empieza en el tiempo 1. Tiempo débil (posíctico): empieza en cualquier otro punto del compás.', 'Mark how each melody ends. Look at which beat the last note of the last measure starts on, not at how long it lasts or at any rests after it. Strong beat: it starts on beat 1. Weak beat: it starts at any other point of the measure.') + '</p>'
       + '<div class="tm-ff-cuerpo"></div></div>';
 
     var elRef = cont.querySelector('.tm-ff-ref');
@@ -88,7 +91,7 @@
     var anchoForzado = null;
 
     function pintar() {
-      var Tt = T();
+      var Tt = CT();
       elCuerpo.innerHTML = '';
       LOTES.forEach(function (lote, li) {
         var nivel = lote[0], cuantos = lote[1];
@@ -119,7 +122,7 @@
         var K = Math.min(1, interior / Math.max.apply(null, anchos));
         svgs.forEach(function (s, i) { s.style.width = (anchos[i] * K) + 'px'; s.style.maxWidth = 'none'; });
       });
-      elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
+      elRef.textContent = 'teoriamusical.com.es · ' + T('hoja n.º ', 'sheet no. ') + semilla;
     }
 
     function generar(semillaFija) {
@@ -128,11 +131,11 @@
       else { do { nueva = Math.floor(Math.random() * 90000 + 10000); } while (nueva === semilla); }
       semilla = nueva;
       solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show answers');
       pintar();
       var a = cont.querySelector('.tm-ff-enlace');
       var params = '?hoja=' + semilla;
-      a.innerHTML = 'Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.';
+      a.innerHTML = T('Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.', 'Each sheet comes from a number: with <a href="' + window.location.pathname + params + '#generador">this link</a> (sheet no. ' + semilla + ') you get the same one again.');
     }
 
     cont.addEventListener('click', function (ev) {
@@ -142,7 +145,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         solucion = !solucion;
-        btn.textContent = solucion ? 'Ocultar soluciones' : 'Ver soluciones';
+        btn.textContent = solucion ? T('Ocultar soluciones', 'Hide answers') : T('Ver soluciones', 'Show answers');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

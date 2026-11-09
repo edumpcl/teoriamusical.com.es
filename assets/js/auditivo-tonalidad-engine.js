@@ -18,9 +18,13 @@
    cuenta como acierto si están bien el compás y la tonalidad. */
 (function () {
   'use strict';
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
 
   var LETRAS = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
-  var NOMBRE = { c: 'Do', d: 'Re', e: 'Mi', f: 'Fa', g: 'Sol', a: 'La', b: 'Si' };
+  var NOMBRE = EN ? { c: 'C', d: 'D', e: 'E', f: 'F', g: 'G', a: 'A', b: 'B' } : { c: 'Do', d: 'Re', e: 'Mi', f: 'Fa', g: 'Sol', a: 'La', b: 'Si' };
+  var MODO_TXT = { mayor: T('mayor', 'major'), menor: T('menor', 'minor') };
+  var LA_NOMBRE = NOMBRE.a;
   var NAT = { c: 0, d: 2, e: 4, f: 5, g: 7, a: 9, b: 11 };
   /* armadura de la tonalidad sobre cada nota natural */
   var ARM_NAT = { mayor: { c: 0, g: 1, d: 2, a: 3, e: 4, b: 5, f: -1 }, menor: { a: 0, e: 1, b: 2, d: -1, g: -2, c: -3, f: -4 } };
@@ -43,31 +47,34 @@
   };
   ['mayor', 'menor'].forEach(function (modo) { TONOS[modo].forEach(function (t) { t.arm = armadura(t.l, t.a, modo); t.modo = modo; }); });
   var NIVELES = [
-    { nombre: 'Fácil', desc: 'Hasta 2 alteraciones', max: 2 },
-    { nombre: 'Medio', desc: 'Hasta 4 alteraciones', max: 4 },
-    { nombre: 'Difícil', desc: 'Todas las tonalidades', max: 7 }
+    { nombre: T('Fácil', 'Easy'), desc: T('Hasta 2 alteraciones', 'Up to 2 sharps or flats'), max: 2 },
+    { nombre: T('Medio', 'Medium'), desc: T('Hasta 4 alteraciones', 'Up to 4 sharps or flats'), max: 4 },
+    { nombre: T('Difícil', 'Hard'), desc: T('Todas las tonalidades', 'All keys'), max: 7 }
   ];
   var LA4 = 69, PAUSA = 1.6, MAX_ESCUCHAS = 3, TOTAL = 10;
   /* grados por semitonos sobre la tónica (en menor, la armónica: la que suena en las melodías) */
+  var G1 = T('1.er grado (la tónica)', '1st degree (the tonic)'), G2 = T('2.º grado', '2nd degree'), G3 = T('3.er grado', '3rd degree'), G4 = T('4.º grado', '4th degree'),
+    G5 = T('5.º grado (la dominante)', '5th degree (the dominant)'), G6 = T('6.º grado', '6th degree'), G7 = T('7.º grado (la sensible)', '7th degree (the leading tone)');
   var GRADO = {
-    mayor: { 0: '1.er grado (la tónica)', 2: '2.º grado', 4: '3.er grado', 5: '4.º grado', 7: '5.º grado (la dominante)', 9: '6.º grado', 11: '7.º grado (la sensible)' },
-    menor: { 0: '1.er grado (la tónica)', 2: '2.º grado', 3: '3.er grado', 5: '4.º grado', 7: '5.º grado (la dominante)', 8: '6.º grado', 11: '7.º grado (la sensible)' }
+    mayor: { 0: G1, 2: G2, 4: G3, 5: G4, 7: G5, 9: G6, 11: G7 },
+    menor: { 0: G1, 2: G2, 3: G3, 5: G4, 7: G5, 8: G6, 11: G7 }
   };
-  var ORD = ['1.er grado (la tónica)', '2.º grado', '3.er grado', '4.º grado', '5.º grado (la dominante)', '6.º grado', '7.º grado (la sensible)'];
-  var EJEMPLO = { mayor: 'Do♯ mayor y Re♭ mayor', menor: 'Sol♯ menor y La♭ menor', mixto: 'Do♯ mayor y Re♭ mayor, o Sol♯ menor y La♭ menor,' };
+  var ORD = [G1, G2, G3, G4, G5, G6, G7];
+  var EJEMPLO = EN ? { mayor: 'C♯ major and D♭ major', menor: 'G♯ minor and A♭ minor', mixto: 'C♯ major and D♭ major, or G♯ minor and A♭ minor,' } :
+    { mayor: 'Do♯ mayor y Re♭ mayor', menor: 'Sol♯ menor y La♭ menor', mixto: 'Do♯ mayor y Re♭ mayor, o Sol♯ menor y La♭ menor,' };
 
   function armadura(l, a, modo) { return ARM_NAT[modo][l] + 7 * a; }
   function pc(l, a) { return (NAT[l] + a + 12) % 12; }
   function alt(a) { return a > 0 ? '♯' : a < 0 ? '♭' : ''; }
-  function nombreTono(l, a, modo) { return NOMBRE[l] + alt(a) + ' ' + modo; }
+  function nombreTono(l, a, modo) { return NOMBRE[l] + alt(a) + ' ' + MODO_TXT[modo]; }
   function listaArmadura(arm) {
-    if (!arm) return 'sin alteraciones';
+    if (!arm) return T('sin alteraciones', 'no sharps or flats');
     var n = Math.abs(arm), notas = (arm > 0 ? SOST : BEM).slice(0, n).map(function (l) { return NOMBRE[l] + (arm > 0 ? '♯' : '♭'); });
-    return n + (arm > 0 ? (n === 1 ? ' sostenido' : ' sostenidos') : (n === 1 ? ' bemol' : ' bemoles')) + ' (' + notas.join(', ') + ')';
+    return n + (arm > 0 ? (n === 1 ? T(' sostenido', ' sharp') : T(' sostenidos', ' sharps')) : (n === 1 ? T(' bemol', ' flat') : T(' bemoles', ' flats'))) + ' (' + notas.join(', ') + ')';
   }
   function cuentaArmadura(arm) {
     var n = Math.abs(arm);
-    return n + (arm > 0 ? (n === 1 ? ' sostenido' : ' sostenidos') : (n === 1 ? ' bemol' : ' bemoles'));
+    return n + (arm > 0 ? (n === 1 ? T(' sostenido', ' sharp') : T(' sostenidos', ' sharps')) : (n === 1 ? T(' bemol', ' flat') : T(' bemoles', ' flats')));
   }
   var nota = function (t, modo, g) { var M = window.tmAudModo; return M.nombreNota(M.deletrear(t, modo, g)); };
   /* Qué es el La de referencia dentro de la tonalidad: un grado de la escala o, si no está en ella,
@@ -77,17 +84,18 @@
     var d = (9 - pc(t.l, t.a) + 12) % 12, nombre = nombreTono(t.l, t.a, modo);
     if (GRADO[modo][d]) {
       var gi = ORD.indexOf(GRADO[modo][d]), escrito = nota(t, modo, gi);
-      if (escrito === 'La') return 'El La de referencia es el ' + GRADO[modo][d] + ' de ' + nombre + '.';
-      return 'El La de referencia suena igual que el ' + GRADO[modo][d] + ' de ' + nombre + ', que se escribe ' + escrito + '.';
+      if (escrito === LA_NOMBRE) return T('El La de referencia es el ' + GRADO[modo][d] + ' de ' + nombre + '.', 'The reference A is the ' + GRADO[modo][d] + ' of ' + nombre + '.');
+      return T('El La de referencia suena igual que el ' + GRADO[modo][d] + ' de ' + nombre + ', que se escribe ' + escrito + '.', 'The reference A sounds the same as the ' + GRADO[modo][d] + ' of ' + nombre + ', which is written ' + escrito + '.');
     }
     var g = (LETRAS.indexOf('a') - LETRAS.indexOf(t.l) + 7) % 7, n = nota(t, modo, g);
-    if (modo === 'menor' && d === 10) return 'El La de referencia es el 7.º grado de ' + nombre + ' natural; en la melodía suena subido, ' + n + ', porque hace de sensible.';
-    return 'El La natural no está en la escala de ' + nombre + ': su ' + ORD[g] + ' es ' + n + ', medio tono ' + (/♯|sostenido/.test(n) ? 'por encima' : 'por debajo') + ' del La.';
+    if (modo === 'menor' && d === 10) return T('El La de referencia es el 7.º grado de ' + nombre + ' natural; en la melodía suena subido, ' + n + ', porque hace de sensible.', 'The reference A is the 7th degree of natural ' + nombre + '; in the melody it sounds raised, ' + n + ', because it acts as the leading tone.');
+    return T('El La natural no está en la escala de ' + nombre + ': su ' + ORD[g] + ' es ' + n + ', medio tono ' + (/♯|sostenido/.test(n) ? 'por encima' : 'por debajo') + ' del La.', 'A natural is not in the scale of ' + nombre + ': its ' + ORD[g] + ' is ' + n + ', a half step ' + (/♯|sharp/.test(n) ? 'above' : 'below') + ' A.');
   }
   /* la relativa (misma armadura) y, en menor, la sensible, que no está en la armadura */
   function extra(t, modo) {
-    if (modo === 'mayor') return ' Su relativa es ' + nota(t, 'mayor', 5) + ' menor, con la misma armadura.';
-    return ' Su relativa es ' + nota(t, 'menor', 2) + ' mayor, con la misma armadura. La sensible, ' + nota(t, 'menor', 6) + ', no está en la armadura: se sube con una alteración, como en la escala menor armónica.';
+    if (modo === 'mayor') return T(' Su relativa es ' + nota(t, 'mayor', 5) + ' menor, con la misma armadura.', ' Its relative is ' + nota(t, 'mayor', 5) + ' minor, with the same key signature.');
+    return T(' Su relativa es ' + nota(t, 'menor', 2) + ' mayor, con la misma armadura. La sensible, ' + nota(t, 'menor', 6) + ', no está en la armadura: se sube con una alteración, como en la escala menor armónica.',
+      ' Its relative is ' + nota(t, 'menor', 2) + ' major, with the same key signature. The leading tone, ' + nota(t, 'menor', 6) + ', is not in the key signature: it is raised with an accidental, as in the harmonic minor scale.');
   }
   /* ¿la respuesta es la relativa de la tonalidad que sonaba? Por el sonido, no por la armadura, para que
      valga también escrita con la enarmónica */
@@ -176,7 +184,7 @@
   function tmAudTonalidadEngine(containerId, opciones) {
     var conCompas = !!(opciones && opciones.compas);
     var modo = conCompas ? 'mixto' : opciones && (opciones.modo === 'menor' || opciones.modo === 'mixto') ? opciones.modo : 'mayor';
-    var mixto = modo === 'mixto', deQue = mixto ? '' : ' ' + modo;   // «¿Qué tonalidad es?» / «¿Qué tonalidad mayor es?»
+    var mixto = modo === 'mixto', deQue = mixto ? '' : ' ' + MODO_TXT[modo];   // «¿Qué tonalidad es?» / «¿Qué tonalidad mayor es?»
     var M = window.tmAudModo;
     M.injectCSS();
     if (!document.getElementById('tm-audt-css')) { var st = document.createElement('style'); st.id = 'tm-audt-css'; st.textContent = CSS_EXTRA; document.head.appendChild(st); }
@@ -186,16 +194,18 @@
     var uid = containerId;
     var n, aciertos, mel, escuchas, respondido, sonando = 0, timer = 0, gen = 0, orden = [], ordenC = [], nivel = NIVELES[0];
     var selL = '', selA = null, selM = mixto ? '' : modo, selC = -1;
-    var queSe = conCompas ? '¿En qué compás y en qué tonalidad está?' : '¿En qué tonalidad' + deQue + ' está?';
+    var queSe = conCompas ? T('¿En qué compás y en qué tonalidad está?', 'What time signature and key is it in?') : T('¿En qué tonalidad' + deQue + ' está?', 'What' + deQue + ' key is it in?');
     var $ = function (s) { return document.getElementById(uid + s); };
 
     function inicio() {
       wrap.innerHTML = '<div class="tm-card"><div class="tm-aud-ini">' +
-        (conCompas ? '<h2 class="tm-aud-tit">¿Qué compás y qué tonalidad? — ' + TOTAL + ' melodías</h2>' +
-        '<p class="tm-aud-sub">Primero suena el <strong>La4</strong> de referencia y después una melodía de 8 compases al piano. Di en qué <strong>compás</strong> está (2/4, 3/4, 4/4, 6/8, 9/8 o 12/8) y en qué <strong>tonalidad</strong>, con el constructor: nota, alteración y modo. Solo cuenta como acierto si están bien las dos cosas. Las enarmónicas valen. Puedes escuchar cada melodía hasta ' + MAX_ESCUCHAS + ' veces y responder mientras suena. Los seis compases salen en todos los niveles; lo que cambia es la tonalidad. Elige el nivel para empezar:</p>' :
-        '<h2 class="tm-aud-tit">¿Qué tonalidad' + deQue + ' es? — ' + TOTAL + ' melodías</h2>' +
-        '<p class="tm-aud-sub">Primero suena el <strong>La4</strong> de referencia y después una melodía de 8 compases al piano en una tonalidad ' + (mixto ? 'mayor o menor' : modo) + '. Escríbela con el constructor: ' + (mixto ? 'nota, alteración y modo.' : 'nota y alteración.') + ' Las enarmónicas valen (' + EJEMPLO[modo] + ' suenan igual). Puedes escuchar cada melodía hasta ' + MAX_ESCUCHAS + ' veces y responder mientras suena. Elige el nivel para empezar:</p>') +
-        '<div class="tm-audt-niveles" role="group" aria-label="Nivel">' + NIVELES.map(function (v, i) {
+        (conCompas ? '<h2 class="tm-aud-tit">' + T('¿Qué compás y qué tonalidad? — ' + TOTAL + ' melodías', 'Which time signature and key? — ' + TOTAL + ' melodies') + '</h2>' +
+        '<p class="tm-aud-sub">' + T('Primero suena el <strong>La4</strong> de referencia y después una melodía de 8 compases al piano. Di en qué <strong>compás</strong> está (2/4, 3/4, 4/4, 6/8, 9/8 o 12/8) y en qué <strong>tonalidad</strong>, con el constructor: nota, alteración y modo. Solo cuenta como acierto si están bien las dos cosas. Las enarmónicas valen. Puedes escuchar cada melodía hasta ' + MAX_ESCUCHAS + ' veces y responder mientras suena. Los seis compases salen en todos los niveles; lo que cambia es la tonalidad. Elige el nivel para empezar:',
+          'First the reference <strong>A4</strong> sounds, then an 8-measure melody on the piano. Say which <strong>time signature</strong> it is in (2/4, 3/4, 4/4, 6/8, 9/8 or 12/8) and which <strong>key</strong>, using the builder: note, accidental and mode. It only counts as correct if both are right. Enharmonic keys count. You can listen to each melody up to ' + MAX_ESCUCHAS + ' times and answer while it plays. All six time signatures appear at every level; what changes is the key. Choose a level to start:') + '</p>' :
+        '<h2 class="tm-aud-tit">' + T('¿Qué tonalidad' + deQue + ' es? — ' + TOTAL + ' melodías', 'Which' + deQue + ' key is it? — ' + TOTAL + ' melodies') + '</h2>' +
+        '<p class="tm-aud-sub">' + T('Primero suena el <strong>La4</strong> de referencia y después una melodía de 8 compases al piano en una tonalidad ' + (mixto ? 'mayor o menor' : modo) + '. Escríbela con el constructor: ' + (mixto ? 'nota, alteración y modo.' : 'nota y alteración.') + ' Las enarmónicas valen (' + EJEMPLO[modo] + ' suenan igual). Puedes escuchar cada melodía hasta ' + MAX_ESCUCHAS + ' veces y responder mientras suena. Elige el nivel para empezar:',
+          'First the reference <strong>A4</strong> sounds, then an 8-measure melody on the piano in a ' + (mixto ? 'major or minor' : MODO_TXT[modo]) + ' key. Build it with the builder: ' + (mixto ? 'note, accidental and mode.' : 'note and accidental.') + ' Enharmonic keys count (' + EJEMPLO[modo] + ' sound the same). You can listen to each melody up to ' + MAX_ESCUCHAS + ' times and answer while it plays. Choose a level to start:') + '</p>') +
+        '<div class="tm-audt-niveles" role="group" aria-label="' + T('Nivel', 'Level') + '">' + NIVELES.map(function (v, i) {
           return '<button class="tm-aud-opt tm-audt-niv" type="button" data-n="' + i + '"><b>' + v.nombre + '</b><span>' + v.desc + '</span></button>';
         }).join('') + '</div></div></div>';
       Array.prototype.forEach.call(wrap.querySelectorAll('.tm-audt-niv'), function (b) {
@@ -216,22 +226,22 @@
         '<div class="tm-aud-play"><button class="tm-aud-btnplay" id="' + uid + '_play" type="button"></button>' +
         '<p class="tm-aud-estado" id="' + uid + '_estado" aria-live="polite"></p></div>' +
         '<div class="tm-audt-prev" id="' + uid + '_prev" aria-live="polite">…</div>' +
-        (conCompas ? '<p class="tm-audt-lbl">Compás</p><div class="tm-audt-fila tm-audt-comps" role="group" aria-label="Compás">' +
-          window.tmAudCompas.COMPASES.map(function (c, i) { return '<button class="tm-aud-opt" type="button" data-c="' + i + '" aria-label="' + c.num + ' por ' + c.den + '">' + nomC(c) + '</button>'; }).join('') + '</div>' +
-          '<p class="tm-audt-lbl">Tonalidad · 1 · Nota</p>' : '<p class="tm-audt-lbl">1 · Nota</p>') +
-        '<div class="tm-audt-fila tm-audt-notas" role="group" aria-label="Nota">' +
+        (conCompas ? '<p class="tm-audt-lbl">' + T('Compás', 'Time signature') + '</p><div class="tm-audt-fila tm-audt-comps" role="group" aria-label="' + T('Compás', 'Time signature') + '">' +
+          window.tmAudCompas.COMPASES.map(function (c, i) { return '<button class="tm-aud-opt" type="button" data-c="' + i + '" aria-label="' + c.num + T(' por ', ' over ') + c.den + '">' + nomC(c) + '</button>'; }).join('') + '</div>' +
+          '<p class="tm-audt-lbl">' + T('Tonalidad · 1 · Nota', 'Key · 1 · Note') + '</p>' : '<p class="tm-audt-lbl">' + T('1 · Nota', '1 · Note') + '</p>') +
+        '<div class="tm-audt-fila tm-audt-notas" role="group" aria-label="' + T('Nota', 'Note') + '">' +
         LETRAS.map(function (l) { return '<button class="tm-aud-opt" type="button" data-l="' + l + '">' + NOMBRE[l] + '</button>'; }).join('') + '</div>' +
-        '<p class="tm-audt-lbl">2 · Alteración</p><div class="tm-audt-fila tm-audt-alts" role="group" aria-label="Alteración">' +
-        [[-1, '♭', 'bemol'], [0, '—', 'sin alteración'], [1, '♯', 'sostenido']].map(function (x) {
+        '<p class="tm-audt-lbl">' + T('2 · Alteración', '2 · Accidental') + '</p><div class="tm-audt-fila tm-audt-alts" role="group" aria-label="' + T('Alteración', 'Accidental') + '">' +
+        [[-1, '♭', T('bemol', 'flat')], [0, '—', T('sin alteración', 'natural')], [1, '♯', T('sostenido', 'sharp')]].map(function (x) {
           return '<button class="tm-aud-opt" type="button" data-a="' + x[0] + '" aria-label="' + x[2] + '">' + x[1] + '</button>';
         }).join('') + '</div>' +
-        (mixto ? '<p class="tm-audt-lbl">3 · Modo</p><div class="tm-audt-fila tm-audt-modos" role="group" aria-label="Modo">' +
-          '<button class="tm-aud-opt" type="button" data-m="mayor">Mayor</button><button class="tm-aud-opt" type="button" data-m="menor">menor</button></div>' : '') +
-        '<button class="tm-audt-resp" id="' + uid + '_resp" type="button">' + (conCompas ? 'Corregir' : 'Responder') + '</button>' +
+        (mixto ? '<p class="tm-audt-lbl">' + T('3 · Modo', '3 · Mode') + '</p><div class="tm-audt-fila tm-audt-modos" role="group" aria-label="' + T('Modo', 'Mode') + '">' +
+          '<button class="tm-aud-opt" type="button" data-m="mayor">' + T('Mayor', 'Major') + '</button><button class="tm-aud-opt" type="button" data-m="menor">' + T('menor', 'minor') + '</button></div>' : '') +
+        '<button class="tm-audt-resp" id="' + uid + '_resp" type="button">' + (conCompas ? T('Corregir', 'Check') : T('Responder', 'Answer')) + '</button>' +
         '<div class="tm-aud-fb" id="' + uid + '_fb"></div>' +
         '<div class="tm-aud-part" id="' + uid + '_part"></div>' +
-        '<div class="tm-aud-acc" id="' + uid + '_acc"><button class="tm-aud-sec" id="' + uid + '_otra" type="button">▶ Escuchar otra vez</button>' +
-        '<button class="tm-aud-nxt" id="' + uid + '_nxt" type="button">Siguiente →</button></div></div>';
+        '<div class="tm-aud-acc" id="' + uid + '_acc"><button class="tm-aud-sec" id="' + uid + '_otra" type="button">' + T('▶ Escuchar otra vez', '▶ Listen again') + '</button>' +
+        '<button class="tm-aud-nxt" id="' + uid + '_nxt" type="button">' + T('Siguiente →', 'Next →') + '</button></div></div>';
       $('_play').addEventListener('click', function () { if (!respondido && escuchas < MAX_ESCUCHAS) { escuchas++; tocar(); } });
       $('_otra').addEventListener('click', tocar);
       $('_nxt').addEventListener('click', siguiente);
@@ -255,7 +265,7 @@
       // con compás, Corregir se puede pulsar desde que empieza a sonar: si falta algo, lo dice
       $('_resp').disabled = !activo || (!conCompas && (!selL || selA === null || !selM));
       $('_resp').style.display = respondido ? 'none' : '';
-      if (!respondido) $('_prev').textContent = (conCompas ? (selC >= 0 ? nomC(window.tmAudCompas.COMPASES[selC]) : '…') + ' · ' : '') + (selL ? NOMBRE[selL] + (selA === null ? '' : alt(selA)) : '…') + (selM && (selA !== null || mixto) ? ' ' + selM : '');
+      if (!respondido) $('_prev').textContent = (conCompas ? (selC >= 0 ? nomC(window.tmAudCompas.COMPASES[selC]) : '…') + ' · ' : '') + (selL ? NOMBRE[selL] + (selA === null ? '' : alt(selA)) : '…') + (selM && (selA !== null || mixto) ? ' ' + MODO_TXT[selM] : '');
     }
     function siguiente() {
       parar();
@@ -263,11 +273,11 @@
       n++; escuchas = 0; respondido = false; selL = ''; selA = null; selM = mixto ? '' : modo; selC = -1;
       mel = generar(orden[n - 1], orden[n - 1].modo, conCompas ? ordenC[n - 1] : null);
       $('_fill').style.width = ((n - 1) / TOTAL * 100) + '%';
-      $('_cnt').textContent = nivel.nombre + ' · Melodía ' + n + ' de ' + TOTAL;
+      $('_cnt').textContent = nivel.nombre + T(' · Melodía ' + n + ' de ' + TOTAL, ' · Melody ' + n + ' of ' + TOTAL);
       $('_fb').className = 'tm-aud-fb'; $('_part').className = 'tm-aud-part'; $('_acc').className = 'tm-aud-acc';
       $('_prev').className = 'tm-audt-prev';
       botonesNota().concat(botonesAlt(), botonesModo(), botonesComp()).forEach(function (b) { b.className = 'tm-aud-opt'; });
-      $('_estado').textContent = 'Pulsa para escuchar: primero el La4 y después la melodía.';
+      $('_estado').textContent = T('Pulsa para escuchar: primero el La4 y después la melodía.', 'Press to listen: first the A4, then the melody.');
       refrescar(); actualizarPlay();
     }
     function actualizarPlay() {
@@ -275,7 +285,7 @@
       if (respondido) { b.style.display = 'none'; return; }
       b.style.display = '';
       b.disabled = !!sonando || quedan <= 0;
-      b.textContent = sonando ? 'Sonando…' : escuchas === 0 ? '▶ Escuchar' : quedan > 0 ? '▶ Escuchar otra vez (' + quedan + (quedan === 1 ? ' vez más)' : ' veces más)') : 'Sin más escuchas';
+      b.textContent = sonando ? T('Sonando…', 'Playing…') : escuchas === 0 ? T('▶ Escuchar', '▶ Listen') : quedan > 0 ? T('▶ Escuchar otra vez (' + quedan + (quedan === 1 ? ' vez más)' : ' veces más)'), '▶ Listen again (' + quedan + (quedan === 1 ? ' more time)' : ' more times)')) : T('Sin más escuchas', 'No listens left');
     }
     function parar() { gen++; clearTimeout(timer); sonando = 0; if (window.tmPiano && window.tmPiano.stopAll) window.tmPiano.stopAll(); }
     /* La4, una pausa y la melodía */
@@ -283,28 +293,28 @@
       parar();
       var g = gen, ev = [{ midi: LA4, when: 0, dur: 1.1 }].concat(mel.ev.map(function (e) { return { midi: e.midi, when: e.when + PAUSA, dur: e.dur }; }));
       sonando = 1; actualizarPlay(); refrescar();
-      $('_estado').textContent = respondido ? '' : 'Suena el La4…';
+      $('_estado').textContent = respondido ? '' : T('Suena el La4…', 'The A4 is playing…');
       window.tmPiano.playEvents(ev).then(function (d) {
         if (g !== gen) return;
         if (!d) {   // sin sonido (no cargan las muestras o el navegador no deja): no gasta la escucha
           sonando = 0; escuchas--; actualizarPlay(); refrescar();
-          $('_estado').textContent = 'No se ha podido reproducir el sonido. Comprueba la conexión y vuelve a pulsar.';
+          $('_estado').textContent = T('No se ha podido reproducir el sonido. Comprueba la conexión y vuelve a pulsar.', 'The sound could not be played. Check your connection and press again.');
           return;
         }
-        timer = setTimeout(function () { if (g === gen && !respondido) $('_estado').textContent = 'Suena la melodía…'; }, PAUSA * 1000);
+        timer = setTimeout(function () { if (g === gen && !respondido) $('_estado').textContent = T('Suena la melodía…', 'The melody is playing…'); }, PAUSA * 1000);
         setTimeout(function () {
           if (g !== gen) return;
           sonando = 0;
-          if (!respondido) $('_estado').textContent = escuchas < MAX_ESCUCHAS ? queSe : 'Ya no quedan escuchas: ¿e' + queSe.slice(2);
+          if (!respondido) $('_estado').textContent = escuchas < MAX_ESCUCHAS ? queSe : T('Ya no quedan escuchas: ¿e' + queSe.slice(2), 'No listens left: ' + queSe.charAt(0).toLowerCase() + queSe.slice(1));
           actualizarPlay();
         }, (PAUSA + mel.dur + 0.4) * 1000);
       });
     }
     function responder() {
       if (conCompas && !respondido && escuchas > 0) {
-        var falta = [selC < 0 && 'el compás', !selL && 'la nota', selL && selA === null && 'la alteración (— si no lleva)', !selM && 'el modo'].filter(Boolean);
+        var falta = [selC < 0 && T('el compás', 'the time signature'), !selL && T('la nota', 'the note'), selL && selA === null && T('la alteración (— si no lleva)', 'the accidental (— if none)'), !selM && T('el modo', 'the mode')].filter(Boolean);
         if (falta.length) {
-          $('_estado').textContent = 'Te falta elegir ' + (falta.length > 1 ? falta.slice(0, -1).join(', ') + ' y ' + falta[falta.length - 1] : falta[0]) + '.';
+          $('_estado').textContent = T('Te falta elegir ', 'You still need to choose ') + (falta.length > 1 ? falta.slice(0, -1).join(', ') + T(' y ', ' and ') + falta[falta.length - 1] : falta[0]) + '.';
           return;
         }
       }
@@ -321,27 +331,32 @@
       prev.textContent = (ok ? '✓ ' : '✗ ') + (conCompas ? nomC(C[selC]) + ' · ' : '') + dicho;
       if (conCompas) botonesComp().forEach(function (b) { var cb = C[+b.dataset.c]; if (cb === cReal) b.classList.add('tm-ok'); else if (+b.dataset.c === selC) b.classList.add('tm-ko'); });
       var txt, okTodo = ok; ok = tonOk;   // primero, el texto de la tonalidad, como en los otros ejercicios
-      if (!ok && tonicaOk) txt = '<strong>✗ Casi:</strong> la tónica es correcta, pero el modo no. Estaba en <strong>' + nombre + '</strong>.';
+      if (!ok && tonicaOk) txt = T('<strong>✗ Casi:</strong> la tónica es correcta, pero el modo no. Estaba en <strong>' + nombre + '</strong>.', '<strong>✗ Almost:</strong> the tonic is right, but the mode is not. It was in <strong>' + nombre + '</strong>.');
       else if (!ok && esRelativa(t, real, selL, selA, selM)) {
-        var rel = real === 'mayor' ? nota(t, 'mayor', 5) + ' menor' : nota(t, 'menor', 2) + ' mayor';
-        txt = '<strong>✗ No:</strong> ' + (rel === dicho ? dicho + ' es su relativa' : dicho + ' suena como su relativa, ' + rel) + ', con la misma armadura pero otra tónica. Estaba en <strong>' + nombre + '</strong>.';
+        var rel = real === 'mayor' ? nota(t, 'mayor', 5) + ' ' + MODO_TXT.menor : nota(t, 'menor', 2) + ' ' + MODO_TXT.mayor;
+        txt = T('<strong>✗ No:</strong> ' + (rel === dicho ? dicho + ' es su relativa' : dicho + ' suena como su relativa, ' + rel) + ', con la misma armadura pero otra tónica. Estaba en <strong>' + nombre + '</strong>.',
+          '<strong>✗ No:</strong> ' + (rel === dicho ? dicho + ' is its relative' : dicho + ' sounds like its relative, ' + rel) + ', with the same key signature but a different tonic. It was in <strong>' + nombre + '</strong>.');
       }
-      else if (!ok && modoOk && mixto) txt = '<strong>✗ No.</strong> El modo es correcto, pero estaba en <strong>' + nombre + '</strong>.';
-      else if (!ok) txt = '<strong>✗ No.</strong> Estaba en <strong>' + nombre + '</strong>.';
-      else if (selL === t.l && selA === t.a) txt = '<strong>✓ ¡Correcto!</strong> Estaba en <strong>' + nombre + '</strong>.';
-      else if (Math.abs(armDicha) <= 7) txt = '<strong>✓ ¡Correcto!</strong> La melodía estaba escrita en <strong>' + nombre + '</strong>, que suena igual que ' + dicho + ': son tonalidades enarmónicas.';
-      else txt = '<strong>✓ Suena igual,</strong> pero ' + dicho + ' no se usa en la práctica: tendría ' + cuentaArmadura(armDicha) + '. Se escribe <strong>' + nombre + '</strong>.';
+      else if (!ok && modoOk && mixto) txt = T('<strong>✗ No.</strong> El modo es correcto, pero estaba en <strong>' + nombre + '</strong>.', '<strong>✗ No.</strong> The mode is right, but it was in <strong>' + nombre + '</strong>.');
+      else if (!ok) txt = T('<strong>✗ No.</strong> Estaba en <strong>' + nombre + '</strong>.', '<strong>✗ No.</strong> It was in <strong>' + nombre + '</strong>.');
+      else if (selL === t.l && selA === t.a) txt = T('<strong>✓ ¡Correcto!</strong> Estaba en <strong>' + nombre + '</strong>.', '<strong>✓ Correct!</strong> It was in <strong>' + nombre + '</strong>.');
+      else if (Math.abs(armDicha) <= 7) txt = T('<strong>✓ ¡Correcto!</strong> La melodía estaba escrita en <strong>' + nombre + '</strong>, que suena igual que ' + dicho + ': son tonalidades enarmónicas.', '<strong>✓ Correct!</strong> The melody was written in <strong>' + nombre + '</strong>, which sounds the same as ' + dicho + ': they are enharmonic keys.');
+      else txt = T('<strong>✓ Suena igual,</strong> pero ' + dicho + ' no se usa en la práctica: tendría ' + cuentaArmadura(armDicha) + '. Se escribe <strong>' + nombre + '</strong>.', '<strong>✓ Same sound,</strong> but ' + dicho + ' is not used in practice: it would have ' + cuentaArmadura(armDicha) + '. It is written <strong>' + nombre + '</strong>.');
       ok = okTodo;
       if (conCompas) {   // compás y tonalidad, cada uno con su línea
         var sinVeredicto = txt.replace(/<strong>[^<]*<\/strong>\s*/, '').replace(/<\/?strong>/g, '');
-        txt = (ok ? '<strong>✓ ¡Correcto!</strong> Compás de ' + nomC(cReal) + ' y ' + nombre + '.'
+        txt = T((ok ? '<strong>✓ ¡Correcto!</strong> Compás de ' + nomC(cReal) + ' y ' + nombre + '.'
           : '<strong>✗ ' + (compOk || tonOk ? 'Solo una de las dos.' : 'No.') + '</strong> Era compás de <strong>' + nomC(cReal) + '</strong> y <strong>' + nombre + '</strong>.') +
           '<br><span style="font-weight:400"><b>Compás:</b> ' + (compOk ? '✓ ' : '✗ has dicho ' + nomC(C[selC]) + '. ') + window.tmAudCompas.explicar(cReal, compOk ? null : C[selC]) + '</span>' +
-          '<br><span style="font-weight:400"><b>Tonalidad:</b> ' + (tonOk ? '✓ ' : '✗ ') + sinVeredicto.charAt(0).toUpperCase() + sinVeredicto.slice(1) + '</span>';
+          '<br><span style="font-weight:400"><b>Tonalidad:</b> ' + (tonOk ? '✓ ' : '✗ ') + sinVeredicto.charAt(0).toUpperCase() + sinVeredicto.slice(1) + '</span>',
+          (ok ? '<strong>✓ Correct!</strong> ' + nomC(cReal) + ' time and ' + nombre + '.'
+          : '<strong>✗ ' + (compOk || tonOk ? 'Only one of the two.' : 'No.') + '</strong> It was <strong>' + nomC(cReal) + '</strong> time and <strong>' + nombre + '</strong>.') +
+          '<br><span style="font-weight:400"><b>Time signature:</b> ' + (compOk ? '✓ ' : '✗ you said ' + nomC(C[selC]) + '. ') + window.tmAudCompas.explicar(cReal, compOk ? null : C[selC]) + '</span>' +
+          '<br><span style="font-weight:400"><b>Key:</b> ' + (tonOk ? '✓ ' : '✗ ') + sinVeredicto.charAt(0).toUpperCase() + sinVeredicto.slice(1) + '</span>');
       }
       $('_fb').className = 'tm-aud-fb tm-show ' + (ok ? 'tm-ok' : 'tm-ko');
-      $('_fb').innerHTML = txt + '<br><span style="font-weight:400">Armadura de ' + nombre + ': ' + listaArmadura(t.arm) + '.' + (mixto ? ' La 3.ª de la tónica, ' + nota(t, real, 0) + '-' + nota(t, real, 2) + ', es ' + real + '.' : '') + extra(t, real) + ' ' + papelDelLa(t, real) +
-        (conCompas ? '' : ' Melodía en compás de ' + mel.compas.num + '/' + mel.compas.den + '.') + '</span>';
+      $('_fb').innerHTML = txt + '<br><span style="font-weight:400">' + T('Armadura de ', 'Key signature of ') + nombre + ': ' + listaArmadura(t.arm) + '.' + (mixto ? T(' La 3.ª de la tónica, ' + nota(t, real, 0) + '-' + nota(t, real, 2) + ', es ' + real + '.', ' The 3rd above the tonic, ' + nota(t, real, 0) + '-' + nota(t, real, 2) + ', is ' + MODO_TXT[real] + '.') : '') + extra(t, real) + ' ' + papelDelLa(t, real) +
+        (conCompas ? '' : T(' Melodía en compás de ' + mel.compas.num + '/' + mel.compas.den + '.', ' Melody in ' + mel.compas.num + '/' + mel.compas.den + ' time.')) + '</span>';
       $('_estado').textContent = '';
       refrescar(); actualizarPlay();
       var part = $('_part');
@@ -350,19 +365,19 @@
       part.innerHTML = fs.map(function (f, k) { return '<div id="' + uid + '_s' + k + '"></div>'; }).join('');
       window.tmNotacion.listo().then(function () {
         fs.forEach(function (f, k) {
-          window.tmNotacion.dibujarAAncho($('_s' + k), f, ancho, { escala: 0.9, id: uid + 's' + k, alt: 'La melodía escrita en ' + nombre + ', compases ' + (k * porFila + 1) + ' a ' + (k * porFila + porFila) });
+          window.tmNotacion.dibujarAAncho($('_s' + k), f, ancho, { escala: 0.9, id: uid + 's' + k, alt: T('La melodía escrita en ' + nombre + ', compases ' + (k * porFila + 1) + ' a ' + (k * porFila + porFila), 'The melody written in ' + nombre + ', measures ' + (k * porFila + 1) + ' to ' + (k * porFila + porFila)) });
         });
       }).catch(function () {});
       $('_acc').className = 'tm-aud-acc tm-show';
-      if (n >= TOTAL) $('_nxt').textContent = 'Ver resultado →';
+      if (n >= TOTAL) $('_nxt').textContent = T('Ver resultado →', 'See results →');
     }
     function resultado() {
       parar();
       var sig = NIVELES[NIVELES.indexOf(nivel) + 1];
       wrap.innerHTML = '<div class="tm-card"><div class="tm-aud-score"><b>' + aciertos + '/' + TOTAL + '</b><span>' + Math.round(aciertos / TOTAL * 100) + '%</span>' +
         '<span class="tm-audt-nivres">' + nivel.nombre + ' · ' + nivel.desc.toLowerCase() + '</span></div>' +
-        '<div class="tm-aud-acc tm-show"><button class="tm-aud-sec" id="' + uid + '_ini" type="button">Elegir nivel</button>' +
-        '<button class="tm-aud-sec" id="' + uid + '_re" type="button">Repetir</button>' +
+        '<div class="tm-aud-acc tm-show"><button class="tm-aud-sec" id="' + uid + '_ini" type="button">' + T('Elegir nivel', 'Choose level') + '</button>' +
+        '<button class="tm-aud-sec" id="' + uid + '_re" type="button">' + T('Repetir', 'Repeat') + '</button>' +
         (sig ? '<button class="tm-aud-nxt" id="' + uid + '_sig" type="button">' + sig.nombre + ' →</button>' : '') + '</div></div>';
       $('_ini').addEventListener('click', inicio);
       $('_re').addEventListener('click', function () { empezar(nivel); });

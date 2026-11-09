@@ -14,9 +14,12 @@
    Depende de tm-piano-audio.js (sonido) y tm-mei.js + tm-notacion.js (la partitura). */
 (function () {
   'use strict';
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
 
   var LETRAS = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
-  var NOMBRE_LETRA = { c: 'Do', d: 'Re', e: 'Mi', f: 'Fa', g: 'Sol', a: 'La', b: 'Si' };
+  var NOMBRE_LETRA = EN ? { c: 'C', d: 'D', e: 'E', f: 'F', g: 'G', a: 'A', b: 'B' } : { c: 'Do', d: 'Re', e: 'Mi', f: 'Fa', g: 'Sol', a: 'La', b: 'Si' };
+  var MODO_TXT = { mayor: T('mayor', 'major'), menor: T('menor', 'minor') };
   var NAT = [0, 2, 4, 5, 7, 9, 11];
   var ESCALA = { mayor: [0, 2, 4, 5, 7, 9, 11], menor: [0, 2, 3, 5, 7, 8, 11] };   // menor armónica
   /* Tonalidades: tónica (letra, alteración, MIDI) y armadura. Tónicas entre La3 y Sol4, para que la
@@ -207,10 +210,10 @@
     if (alt > 2) { oct++; alt -= 12; } else if (alt < -2) { oct--; alt += 12; }
     return letra + (alt > 0 ? '##'.slice(0, alt) : alt < 0 ? 'bb'.slice(0, -alt) : '') + '/' + oct;
   }
-  function nombreNota(key) { var m = /^([a-g])(##|bb|#|b)?\//.exec(key); return NOMBRE_LETRA[m[1]] + ({ '#': '♯', b: '♭', '##': ' doble sostenido', bb: '♭♭' }[m[2]] || ''); }
+  function nombreNota(key) { var m = /^([a-g])(##|bb|#|b)?\//.exec(key); return NOMBRE_LETRA[m[1]] + ({ '#': '♯', b: '♭', '##': T(' doble sostenido', ' double sharp'), bb: '♭♭' }[m[2]] || ''); }
   var firma = function (mel) { return mel.tono.m + mel.modo + mel.compas.num + mel.compas.den + mel.notas.map(function (x) { return x.silencio ? 'r' + x.dur : x.x + ':' + x.dur; }).join(','); };
   function nombreTono(tono, modo) {
-    return NOMBRE_LETRA[tono.l] + (tono.a > 0 ? '♯' : tono.a < 0 ? '♭' : '') + (modo === 'mayor' ? ' mayor' : ' menor');
+    return NOMBRE_LETRA[tono.l] + (tono.a > 0 ? '♯' : tono.a < 0 ? '♭' : '') + ' ' + MODO_TXT[modo];
   }
   /* la partitura: sistemas de «porFila» compases (4 en pantallas anchas, 2 en el móvil) */
   function filas(mel, porFila) {
@@ -299,9 +302,9 @@
 
     function inicio() {
       wrap.innerHTML = '<div class="tm-card"><div class="tm-aud-ini">' +
-        '<h2 class="tm-aud-tit">¿Mayor o menor? — ' + TOTAL + ' melodías</h2>' +
-        '<p class="tm-aud-sub">Escucharás una melodía de 8 compases al piano (antes suena el La4 de referencia). Decide si está en modo <strong>mayor</strong> o <strong>menor</strong>. Puedes escuchar cada melodía hasta ' + MAX_ESCUCHAS + ' veces. Sube el volumen o usa auriculares.</p>' +
-        '<button class="tm-aud-btnplay" id="' + uid + '_go" type="button">Empezar</button>' +
+        '<h2 class="tm-aud-tit">' + T('¿Mayor o menor? — ' + TOTAL + ' melodías', 'Major or minor? — ' + TOTAL + ' melodies') + '</h2>' +
+        '<p class="tm-aud-sub">' + T('Escucharás una melodía de 8 compases al piano (antes suena el La4 de referencia). Decide si está en modo <strong>mayor</strong> o <strong>menor</strong>. Puedes escuchar cada melodía hasta ' + MAX_ESCUCHAS + ' veces. Sube el volumen o usa auriculares.', 'You will hear an 8-measure melody on the piano (the reference A4 sounds first). Decide whether it is in a <strong>major</strong> or a <strong>minor</strong> key. You can listen to each melody up to ' + MAX_ESCUCHAS + ' times. Turn up the volume or use headphones.') + '</p>' +
+        '<button class="tm-aud-btnplay" id="' + uid + '_go" type="button">' + T('Empezar', 'Start') + '</button>' +
         '</div></div>';
       $('_go').addEventListener('click', function () {
         n = 0; aciertos = 0; firmas = {};
@@ -317,13 +320,13 @@
         '<span class="tm-aud-cnt" id="' + uid + '_cnt"></span></div><span class="tm-aud-badge" id="' + uid + '_badge">✓ 0</span></div>' +
         '<div class="tm-aud-play"><button class="tm-aud-btnplay" id="' + uid + '_play" type="button"></button>' +
         '<p class="tm-aud-estado" id="' + uid + '_estado" aria-live="polite"></p></div>' +
-        '<div class="tm-aud-opts" role="group" aria-label="Respuesta">' +
-        '<button class="tm-aud-opt" id="' + uid + '_may" type="button">Mayor</button>' +
-        '<button class="tm-aud-opt" id="' + uid + '_men" type="button">Menor</button></div>' +
+        '<div class="tm-aud-opts" role="group" aria-label="' + T('Respuesta', 'Answer') + '">' +
+        '<button class="tm-aud-opt" id="' + uid + '_may" type="button">' + T('Mayor', 'Major') + '</button>' +
+        '<button class="tm-aud-opt" id="' + uid + '_men" type="button">' + T('Menor', 'Minor') + '</button></div>' +
         '<div class="tm-aud-fb" id="' + uid + '_fb"></div>' +
         '<div class="tm-aud-part" id="' + uid + '_part"></div>' +
-        '<div class="tm-aud-acc" id="' + uid + '_acc"><button class="tm-aud-sec" id="' + uid + '_otra" type="button">▶ Escuchar otra vez</button>' +
-        '<button class="tm-aud-nxt" id="' + uid + '_nxt" type="button">Siguiente →</button></div>' +
+        '<div class="tm-aud-acc" id="' + uid + '_acc"><button class="tm-aud-sec" id="' + uid + '_otra" type="button">' + T('▶ Escuchar otra vez', '▶ Listen again') + '</button>' +
+        '<button class="tm-aud-nxt" id="' + uid + '_nxt" type="button">' + T('Siguiente →', 'Next →') + '</button></div>' +
         '</div>';
       $('_play').addEventListener('click', function () { if (!respondido && escuchas < MAX_ESCUCHAS) { escuchas++; tocar(); } });
       $('_otra').addEventListener('click', tocar);
@@ -338,10 +341,10 @@
       for (var k = 0; k < 50; k++) { mel = generar(orden[n - 1]); if (!firmas[firma(mel)]) break; }   // sin repetir melodía (con tope)
       firmas[firma(mel)] = 1;
       $('_fill').style.width = ((n - 1) / TOTAL * 100) + '%';
-      $('_cnt').textContent = 'Melodía ' + n + ' de ' + TOTAL;
+      $('_cnt').textContent = T('Melodía ' + n + ' de ' + TOTAL, 'Melody ' + n + ' of ' + TOTAL);
       $('_fb').className = 'tm-aud-fb'; $('_part').className = 'tm-aud-part'; $('_acc').className = 'tm-aud-acc';
       ['_may', '_men'].forEach(function (k) { var b = $(k); b.className = 'tm-aud-opt'; b.disabled = true; });
-      $('_estado').textContent = 'Pulsa para escuchar: primero el La4 y después la melodía.';
+      $('_estado').textContent = T('Pulsa para escuchar: primero el La4 y después la melodía.', 'Press to listen: first the A4, then the melody.');
       actualizarPlay();
     }
     function actualizarPlay() {
@@ -349,7 +352,7 @@
       if (respondido) { b.style.display = 'none'; return; }
       b.style.display = '';
       b.disabled = !!sonando || quedan <= 0;
-      b.textContent = sonando ? 'Sonando…' : escuchas === 0 ? '▶ Escuchar' : quedan > 0 ? '▶ Escuchar otra vez (' + quedan + (quedan === 1 ? ' vez más)' : ' veces más)') : 'Sin más escuchas';
+      b.textContent = sonando ? T('Sonando…', 'Playing…') : escuchas === 0 ? T('▶ Escuchar', '▶ Listen') : quedan > 0 ? T('▶ Escuchar otra vez (' + quedan + (quedan === 1 ? ' vez más)' : ' veces más)'), '▶ Listen again (' + quedan + (quedan === 1 ? ' more time)' : ' more times)')) : T('Sin más escuchas', 'No listens left');
     }
     function parar() { gen++; clearTimeout(timer); sonando = 0; if (window.tmPiano && window.tmPiano.stopAll) window.tmPiano.stopAll(); }
     /* La4, una pausa y la melodía */
@@ -359,21 +362,21 @@
       sonando = 1; actualizarPlay();
       // se puede responder mientras suena (al responder, se para)
       if (!respondido) ['_may', '_men'].forEach(function (k) { $(k).disabled = false; });
-      $('_estado').textContent = 'Suena el La4…';
+      $('_estado').textContent = T('Suena el La4…', 'The A4 is playing…');
       window.tmPiano.playEvents(ev).then(function (d) {
         if (g !== gen) return;
         if (!d) {   // sin sonido (no cargan las muestras o el navegador no deja): no gasta la escucha
           sonando = 0; escuchas--; actualizarPlay();
-          $('_estado').textContent = 'No se ha podido reproducir el sonido. Comprueba la conexión y vuelve a pulsar.';
+          $('_estado').textContent = T('No se ha podido reproducir el sonido. Comprueba la conexión y vuelve a pulsar.', 'The sound could not be played. Check your connection and press again.');
           return;
         }
-        timer = setTimeout(function () { if (g === gen) $('_estado').textContent = 'Suena la melodía…'; }, PAUSA * 1000);
+        timer = setTimeout(function () { if (g === gen) $('_estado').textContent = T('Suena la melodía…', 'The melody is playing…'); }, PAUSA * 1000);
         setTimeout(function () {
           if (g !== gen) return;
           sonando = 0;
           if (!respondido) {
             ['_may', '_men'].forEach(function (k) { $(k).disabled = false; });
-            $('_estado').textContent = escuchas < MAX_ESCUCHAS ? '¿Mayor o menor?' : 'Ya no quedan escuchas: ¿mayor o menor?';
+            $('_estado').textContent = escuchas < MAX_ESCUCHAS ? T('¿Mayor o menor?', 'Major or minor?') : T('Ya no quedan escuchas: ¿mayor o menor?', 'No listens left: major or minor?');
           } else $('_estado').textContent = '';
           actualizarPlay();
         }, (PAUSA + mel.dur + 0.4) * 1000);
@@ -391,10 +394,15 @@
       var fb = $('_fb');
       fb.className = 'tm-aud-fb tm-show ' + (ok ? 'tm-ok' : 'tm-ko');
       var tonica = nombreNota(deletrear(mel.tono, mel.modo, 0)), tercera = nombreNota(deletrear(mel.tono, mel.modo, 2)), sensible = nombreNota(deletrear(mel.tono, mel.modo, -1));
-      fb.innerHTML = (ok ? '<strong>✓ ¡Correcto!</strong> ' : '<strong>✗ No.</strong> ') + 'Estaba en <strong>' + nombreTono(mel.tono, mel.modo) + '</strong>, en compás de ' + mel.compas.num + '/' + mel.compas.den + '.' +
+      fb.innerHTML = T(
+        (ok ? '<strong>✓ ¡Correcto!</strong> ' : '<strong>✗ No.</strong> ') + 'Estaba en <strong>' + nombreTono(mel.tono, mel.modo) + '</strong>, en compás de ' + mel.compas.num + '/' + mel.compas.den + '.' +
         '<br>Tónica: ' + tonica + ' · 3.ª ' + mel.modo + ': ' + tercera + ' · sensible: ' + sensible + '.' +
         '<br><span style="font-weight:400">La tercera ' + mel.modo + ' ' + tonica + '-' + tercera + ' es la que hace que la melodía esté en modo ' + mel.modo + '.' +
-        (mel.modo === 'menor' ? ' La sensible subida (' + sensible + ') refuerza la vuelta a la tónica.' : '') + '</span>';
+        (mel.modo === 'menor' ? ' La sensible subida (' + sensible + ') refuerza la vuelta a la tónica.' : '') + '</span>',
+        (ok ? '<strong>✓ Correct!</strong> ' : '<strong>✗ No.</strong> ') + 'It was in <strong>' + nombreTono(mel.tono, mel.modo) + '</strong>, in ' + mel.compas.num + '/' + mel.compas.den + ' time.' +
+        '<br>Tonic: ' + tonica + ' · ' + MODO_TXT[mel.modo] + ' 3rd: ' + tercera + ' · leading tone: ' + sensible + '.' +
+        '<br><span style="font-weight:400">The ' + MODO_TXT[mel.modo] + ' third ' + tonica + '-' + tercera + ' is what makes the melody sound ' + MODO_TXT[mel.modo] + '.' +
+        (mel.modo === 'menor' ? ' The raised leading tone (' + sensible + ') strengthens the return to the tonic.' : '') + '</span>');
       $('_estado').textContent = '';
       actualizarPlay();
       var part = $('_part');
@@ -403,16 +411,16 @@
       part.innerHTML = fs.map(function (f, k) { return '<div id="' + uid + '_s' + k + '"></div>'; }).join('');
       window.tmNotacion.listo().then(function () {
         fs.forEach(function (f, k) {
-          window.tmNotacion.dibujarAAncho($('_s' + k), f, ancho, { escala: 0.9, id: uid + 's' + k, alt: 'La melodía escrita, compases ' + (k * porFila + 1) + ' a ' + (k * porFila + porFila) });
+          window.tmNotacion.dibujarAAncho($('_s' + k), f, ancho, { escala: 0.9, id: uid + 's' + k, alt: T('La melodía escrita, compases ' + (k * porFila + 1) + ' a ' + (k * porFila + porFila), 'The written melody, measures ' + (k * porFila + 1) + ' to ' + (k * porFila + porFila)) });
         });
       }).catch(function () {});
       $('_acc').className = 'tm-aud-acc tm-show';
-      if (n >= TOTAL) $('_nxt').textContent = 'Ver resultado →';
+      if (n >= TOTAL) $('_nxt').textContent = T('Ver resultado →', 'See results →');
     }
     function resultado() {
       parar();
       wrap.innerHTML = '<div class="tm-card"><div class="tm-aud-score"><b>' + aciertos + '/' + TOTAL + '</b><span>' + Math.round(aciertos / TOTAL * 100) + '%</span></div>' +
-        '<div class="tm-aud-acc tm-show"><button class="tm-aud-nxt" id="' + uid + '_re" type="button">Volver a empezar</button></div></div>';
+        '<div class="tm-aud-acc tm-show"><button class="tm-aud-nxt" id="' + uid + '_re" type="button">' + T('Volver a empezar', 'Start over') + '</button></div></div>';
       $('_re').addEventListener('click', inicio);
     }
     inicio();

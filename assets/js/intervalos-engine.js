@@ -2,6 +2,31 @@
 (function () {
   'use strict';
 
+  var EN = document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+  /* Textos que se muestran en inglés; el valor español sigue siendo la clave interna (data-v, comparaciones). */
+  var DISP = {
+    'Disminuida':'Diminished', 'menor':'minor', 'Justa':'Perfect', 'Mayor':'Major', 'Aumentada':'Augmented',
+    'Doble Aumentada':'Doubly augmented', 'Doble Disminuida':'Doubly diminished',
+    'Simple':'Simple', 'Compuesto':'Compound', 'Conjunto':'Conjunct', 'Disjunto':'Disjunct',
+    'Arm\xf3nico':'Harmonic', 'Mel\xf3dico':'Melodic', 'Ascendente':'Ascending', 'Descendente':'Descending',
+    'Un\xedsono':'Unison', 'Semitono diat\xf3nico':'Diatonic half step', 'Semitono crom\xe1tico':'Chromatic half step', 'Enarm\xf3nicas':'Enharmonic equivalents',
+    'Consonancia Perfecta':'Perfect consonance', 'Consonancia Imperfecta':'Imperfect consonance', 'Semiconsonancia':'Semi-consonance',
+    'Disonancia Absoluta':'Absolute dissonance', 'Disonancia Condicional':'Conditional dissonance'
+  };
+  function D(v) { return EN && DISP[v] ? DISP[v] : v; }
+  var ORD_EN = {1:'1st',2:'2nd',3:'3rd'};
+  function ordEn(n) { n = Number(n); return ORD_EN[n] || (n + 'th'); }
+  /* Número ordinal en un botón: 3\xaa / 3rd */
+  function ORDB(n) { return EN ? ordEn(n) : n + '\xaa'; }
+  var TIPO_EN = { "Dis":"Diminished", "Aum":"Augmented", "menor":"minor", "Mayor":"Major", "Justa":"Perfect", "DblAum":"Doubly augmented", "DblDis":"Doubly diminished" };
+  /* Nombre completo de un intervalo: "3\xaa Mayor" / "Major 3rd" (calidad primero; unison y octave sin ordinal) */
+  function ivLabelOf(def) {
+    if (!EN) return def[2] + '\xaa ' + (TIPO_LABEL[def[3]] || def[3]);
+    var n = Number(def[2]);
+    return (TIPO_EN[def[3]] || def[3]) + ' ' + (n === 1 ? 'unison' : n === 8 ? 'octave' : ordEn(n));
+  }
+
   var DEFS = {
     "1j":[0,0,"1","Justa"], "2d":[1,0,"2","Dis"],  "2m":[1,1,"2","menor"],
     "2M":[1,2,"2","Mayor"], "3d":[2,2,"3","Dis"],  "3m":[2,3,"3","menor"],
@@ -78,6 +103,12 @@
     { lbl:"Dif\xedcil", maxAlt:2, simple:true, types:'single', icon:'🔥', desc:'Con dobles alteraciones',        id:'hard'   },
     { lbl:"Pro",        maxAlt:2, simple:true, types:'all',    icon:'💎', desc:'Intervalos dobles aum./dis.',    id:'pro'    }
   ];
+  var DIF_EN_LBL = { easy:'Easy', medium:'Medium', hard:'Hard', pro:'Pro' };
+  [
+    [DIF_BASIC, ['Natural notes only','With sharps and flats','With double accidentals']],
+    [DIF_FULL, ['Up to the 8th, natural notes','Up to the 8th, with accidentals','Up to the 15th (compound)','Up to the 15th, double accidentals']],
+    [DIF_CONSTRUIR, ['Natural notes only','With sharps and flats','With double accidentals','Doubly augmented/diminished intervals']]
+  ].forEach(function (p) { p[0].forEach(function (d, i) { d.den = p[1][i]; }); });
   var PREGUNTAS_POR_TEST = 10;
 
   var CSS = [
@@ -168,7 +199,18 @@
                      : (config.test === 'construir' && !config.val) ? DIF_CONSTRUIR
                      : DIF_BASIC;
 
-    var TITULOS = {
+    var TITULOS = EN ? {
+      'grupo':      ({'2':'Seconds','3':'Thirds','4':'Fourths','5':'Fifths','6':'Sixths','7':'Sevenths','8':'Octaves'}[config.val] || (config.val ? ordEn(config.val) + ' intervals' : 'Intervals')),
+      'completo':   'Full interval analysis',
+      'numero':     'Interval number',
+      'consonancia':'Consonance and dissonance',
+      'arm_mel':    'Harmonic and melodic intervals',
+      'asc_des':    'Ascending and descending intervals',
+      'con_dis':    'Conjunct and disjunct intervals',
+      'construir':  config.val ? 'Building ' + ({'2':'seconds','3':'thirds','4':'fourths','5':'fifths','6':'sixths','7':'sevenths','8':'octaves'}[config.val] || ordEn(config.val) + 's') : 'Building intervals',
+      'construir_semitono': 'Building half steps and enharmonic equivalents',
+      'construir_numero':   'Building by interval number'
+    } : {
       'grupo':      'Intervalos de ' + (config.val || '') + '\xaa',
       'completo':   'An\xe1lisis completo de intervalos',
       'numero':     'N\xfamero del intervalo',
@@ -181,8 +223,8 @@
       'construir_numero':   'Construir por n\xfamero'
     };
 
-    var NOTE_NAMES_ES = ['Do','Re','Mi','Fa','Sol','La','Si'];
-    var ACC_DISPLAY = {'-2':'bb','-1':'♭','0':'','1':'♯','2':'×'};
+    var NOTE_NAMES_ES = T(['Do','Re','Mi','Fa','Sol','La','Si'], ['C','D','E','F','G','A','B']);
+    var ACC_DISPLAY = {'-2':T('bb','\u266d\u266d'),'-1':'♭','0':'','1':'♯','2':'×'};
     function noteLabel(n, a) { return NOTE_NAMES_ES[n] + (ACC_DISPLAY[String(a)] || ''); }
 
     /* Posiciones del pentagrama de Do4 (grave) a Sol5 (agudo) */
@@ -469,8 +511,8 @@
         return [
           '<button class="tm-iv-mode-btn" data-i="' + i + '">',
             '<span class="tm-iv-mode-icon">' + d.icon + '</span>',
-            '<span class="tm-iv-mode-lbl">' + d.lbl + '</span>',
-            '<span class="tm-iv-mode-desc">' + d.desc + '</span>',
+            '<span class="tm-iv-mode-lbl">' + T(d.lbl, DIF_EN_LBL[d.id]) + '</span>',
+            '<span class="tm-iv-mode-desc">' + T(d.desc, d.den) + '</span>',
           '</button>'
         ].join('');
       }).join('');
@@ -478,8 +520,8 @@
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-iv-mode-screen">',
-            '<h2 class="tm-iv-title">Test de ' + (TITULOS[config.test] || 'Intervalos') + '</h2>',
-            '<p class="tm-iv-subtitle">Elige el nivel de dificultad &mdash; ' + totalQ + ' preguntas</p>',
+            '<h2 class="tm-iv-title">' + T('Test de ' + (TITULOS[config.test] || 'Intervalos'), (TITULOS[config.test] || 'Intervals') + ' quiz') + '</h2>',
+            '<p class="tm-iv-subtitle">' + T('Elige el nivel de dificultad &mdash; ' + totalQ + ' preguntas', 'Choose the difficulty level &mdash; ' + totalQ + ' questions') + '</p>',
             '<div class="tm-iv-modes">' + btns + '</div>',
           '</div>',
         '</div>'
@@ -512,9 +554,9 @@
           '</div>',
           '<div class="tm-staff"><div id="' + uid + '_not"></div></div>',
           '<div id="' + uid + '_content"></div>',
-          '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>',
+          '<button class="tm-submit" id="' + uid + '_btn">' + T('Comprobar', 'Check') + '</button>',
           '<div id="' + uid + '_fb" class="tm-fb"></div>',
-          '<button id="' + uid + '_nxt" class="tm-nxt">Siguiente \u2192</button>',
+          '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente', 'Next') + ' \u2192</button>',
         '</div>',
         '<div class="tm-iv-loupe" id="' + uid + '_loupe"><div class="tm-iv-loupe-staff" id="' + uid + '_lstaff"></div></div>'
       ].join('');
@@ -575,7 +617,7 @@
           drawConstruirPreview(rd.vfn, rd.oct, sel.acc);
           document.getElementById(uid + '_btn').classList.add('tm-ready');
           var hintEl = document.getElementById(uid + '_content').querySelector('.tm-construir-hint');
-          if (hintEl) hintEl.textContent = 'Pulsa de nuevo para cambiar la nota';
+          if (hintEl) hintEl.textContent = T('Pulsa de nuevo para cambiar la nota', 'Tap again to change the note');
         };
 
         elNotDiv.addEventListener('click', onConstruirStaffInteract);
@@ -610,38 +652,38 @@
           : ['2','3','4','5','6','7','8','9','10','11','12','13','14','15'];
         h += '<div><div class="tm-grid">' +
           numOpts.map(function(n){
-            return '<button class="tm-opt" data-g="num" data-v="' + n + '">' + n + '\xaa</button>';
+            return '<button class="tm-opt" data-g="num" data-v="' + n + '">' + ORDB(n) + '</button>';
           }).join('') + '</div></div>';
         var tiposCompleto = currentDiffObj.types === 'all'
           ? ['Doble Disminuida','Disminuida','menor','Justa','Mayor','Aumentada','Doble Aumentada']
           : ['Disminuida','menor','Justa','Mayor','Aumentada'];
         h += '<div style="margin-top:10px"><div class="tm-grid">' +
           tiposCompleto.map(function(t){
-            return '<button class="tm-opt" data-g="tipo" data-v="' + t + '">' + t + '</button>';
+            return '<button class="tm-opt" data-g="tipo" data-v="' + t + '">' + D(t) + '</button>';
           }).join('') + '</div></div>';
         h += '<div style="margin-top:10px"><div class="tm-grid">' +
           ['Simple','Compuesto'].map(function(t){
-            return '<button class="tm-opt" data-g="simcomp" data-v="' + t + '">' + t + '</button>';
+            return '<button class="tm-opt" data-g="simcomp" data-v="' + t + '">' + D(t) + '</button>';
           }).join('') + '</div></div>';
         h += '<div style="margin-top:10px"><div class="tm-grid">' +
           ['Conjunto','Disjunto'].map(function(t){
-            return '<button class="tm-opt" data-g="conjdis" data-v="' + t + '">' + t + '</button>';
+            return '<button class="tm-opt" data-g="conjdis" data-v="' + t + '">' + D(t) + '</button>';
           }).join('') + '</div></div>';
         h += '<div style="margin-top:10px"><div class="tm-grid">' +
           ['Arm\xf3nico','Mel\xf3dico'].map(function(t){
-            return '<button class="tm-opt" data-g="arm_mel" data-v="' + t + '">' + t + '</button>';
+            return '<button class="tm-opt" data-g="arm_mel" data-v="' + t + '">' + D(t) + '</button>';
           }).join('') + '</div></div>';
         h += '<div id="' + uid + '_asdrow" style="margin-top:10px;display:none"><div class="tm-grid">' +
           ['Ascendente','Descendente'].map(function(t){
-            return '<button class="tm-opt" data-g="asc_des" data-v="' + t + '">' + t + '</button>';
+            return '<button class="tm-opt" data-g="asc_des" data-v="' + t + '">' + D(t) + '</button>';
           }).join('') + '</div></div>';
       } else if (config.test === 'consonancia') {
         var consOpts = [
-          {v:'Consonancia Perfecta',  d:'Consonancia<br>Perfecta'},
-          {v:'Consonancia Imperfecta',d:'Consonancia<br>Imperfecta'},
-          {v:'Semiconsonancia',       d:'Semi-<br>consonancia'},
-          {v:'Disonancia Absoluta',   d:'Disonancia<br>Absoluta'},
-          {v:'Disonancia Condicional',d:'Disonancia<br>Condicional'}
+          {v:'Consonancia Perfecta',  d:T('Consonancia<br>Perfecta','Perfect<br>consonance')},
+          {v:'Consonancia Imperfecta',d:T('Consonancia<br>Imperfecta','Imperfect<br>consonance')},
+          {v:'Semiconsonancia',       d:T('Semi-<br>consonancia','Semi-<br>consonance')},
+          {v:'Disonancia Absoluta',   d:T('Disonancia<br>Absoluta','Absolute<br>dissonance')},
+          {v:'Disonancia Condicional',d:T('Disonancia<br>Condicional','Conditional<br>dissonance')}
         ];
         h += '<div class="tm-grid">' +
           consOpts.map(function(o){
@@ -650,36 +692,36 @@
       } else if (config.test === 'arm_mel') {
         h += '<div class="tm-grid">' +
           ['Arm\xf3nico','Mel\xf3dico'].map(function(t){
-            return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
+            return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + D(t) + '</button>';
           }).join('') + '</div>';
       } else if (config.test === 'asc_des') {
         h += '<div class="tm-grid">' +
           ['Ascendente','Descendente'].map(function(t){
-            return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
+            return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + D(t) + '</button>';
           }).join('') + '</div>';
       } else if (config.test === 'semitono') {
         h += '<div class="tm-grid">' +
           ['Un\xedsono','Semitono diat\xf3nico','Semitono crom\xe1tico','Enarm\xf3nicas'].map(function(t){
-            return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
+            return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + D(t) + '</button>';
           }).join('') + '</div>';
       } else if (config.test === 'con_dis') {
         h += '<div class="tm-grid">' +
           ['Conjunto','Disjunto'].map(function(t){
-            return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
+            return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + D(t) + '</button>';
           }).join('') + '</div>';
       } else if (config.test === 'numero') {
         h += '<div class="tm-grid">' +
           ['1','2','3','4','5','6','7','8'].map(function(n){
-            return '<button class="tm-opt" data-g="ans" data-v="' + n + '">' + n + '\xaa</button>';
+            return '<button class="tm-opt" data-g="ans" data-v="' + n + '">' + ORDB(n) + '</button>';
           }).join('') + '</div>';
       } else if (config.test === 'construir') {
-        var intLbl = cQ.def[2] + '\xaa ' + tipoLabel(cQ.def[3]);
+        var intLbl = ivLabelOf(cQ.def);
         var dirTxt = cQ.ascending ? '↑' : '↓';
         h += '<div class="tm-construir-dir">' + noteLabel(cQ.n1, 0) + ' &mdash; <strong>' + intLbl + '</strong> &mdash; ' + dirTxt + '</div>';
-        h += '<p class="tm-construir-hint">Pulsa en el pentagrama para colocar la segunda nota</p>';
+        h += '<p class="tm-construir-hint">' + T('Pulsa en el pentagrama para colocar la segunda nota', 'Tap the staff to place the second note') + '</p>';
         var accOpts;
         if (maxAlt >= 2) {
-          accOpts = [{v:-2,t:'bb'},{v:-1,t:'♭'},{v:0,t:'♮'},{v:1,t:'♯'},{v:2,t:'×'}];
+          accOpts = [{v:-2,t:T('bb','\u266d\u266d')},{v:-1,t:'♭'},{v:0,t:'♮'},{v:1,t:'♯'},{v:2,t:'×'}];
         } else if (maxAlt >= 1) {
           accOpts = [{v:-1,t:'♭'},{v:0,t:'♮'},{v:1,t:'♯'}];
         } else {
@@ -691,19 +733,26 @@
         });
         h += '</div>';
       } else if (config.test === 'construir_semitono') {
-        var cs_lbl_map = {
+        var cs_lbl_map = T({
           'unisono':       'el Un\xedsono',
           'diaton_asc':    'el Semitono diat\xf3nico ↑',
           'diaton_desc':   'el Semitono diat\xf3nico ↓',
           'cromatico_asc': 'el Semitono crom\xe1tico ↑',
           'cromatico_desc':'el Semitono crom\xe1tico ↓',
           'enarmonicas':   'la nota Enarm\xf3nica'
-        };
-        h += '<div class="tm-construir-dir">Escribe ' + (cs_lbl_map[cQ.cs_tipo] || '') + ' de <strong>' + noteLabel(cQ.n1, cQ.a1) + '</strong></div>';
-        h += '<p class="tm-construir-hint">Pulsa en el pentagrama para colocar la nota</p>';
+        }, {
+          'unisono':       'the unison',
+          'diaton_asc':    'the diatonic half step ↑',
+          'diaton_desc':   'the diatonic half step ↓',
+          'cromatico_asc': 'the chromatic half step ↑',
+          'cromatico_desc':'the chromatic half step ↓',
+          'enarmonicas':   'the enharmonic equivalent'
+        });
+        h += '<div class="tm-construir-dir">' + T('Escribe ', 'Write ') + (cs_lbl_map[cQ.cs_tipo] || '') + T(' de ', ' of ') + '<strong>' + noteLabel(cQ.n1, cQ.a1) + '</strong></div>';
+        h += '<p class="tm-construir-hint">' + T('Pulsa en el pentagrama para colocar la nota', 'Tap the staff to place the note') + '</p>';
         var accOpts2;
         if (maxAlt >= 2) {
-          accOpts2 = [{v:-2,t:'bb'},{v:-1,t:'♭'},{v:0,t:'♮'},{v:1,t:'♯'},{v:2,t:'×'}];
+          accOpts2 = [{v:-2,t:T('bb','\u266d\u266d')},{v:-1,t:'♭'},{v:0,t:'♮'},{v:1,t:'♯'},{v:2,t:'×'}];
         } else if (maxAlt >= 1) {
           accOpts2 = [{v:-1,t:'♭'},{v:0,t:'♮'},{v:1,t:'♯'}];
         } else {
@@ -716,8 +765,8 @@
         h += '</div>';
       } else if (config.test === 'construir_numero') {
         var dirTxtN = cQ.ascending ? '↑' : '↓';
-        h += '<div class="tm-construir-dir">' + noteLabel(cQ.n1, 0) + ' &mdash; <strong>' + cQ.cn_d + '\xaa</strong> &mdash; ' + dirTxtN + '</div>';
-        h += '<p class="tm-construir-hint">Pulsa en el pentagrama para colocar la nota</p>';
+        h += '<div class="tm-construir-dir">' + noteLabel(cQ.n1, 0) + ' &mdash; <strong>' + (EN ? (cQ.cn_d === 8 ? 'octave' : ordEn(cQ.cn_d)) : cQ.cn_d + '\xaa') + '</strong> &mdash; ' + dirTxtN + '</div>';
+        h += '<p class="tm-construir-hint">' + T('Pulsa en el pentagrama para colocar la nota', 'Tap the staff to place the note') + '</p>';
       } else {
         var PERFECTAS = ['1','4','5','8'];
         var esPerfecta = PERFECTAS.indexOf(config.val) !== -1;
@@ -732,7 +781,7 @@
         }
         h += '<div class="tm-grid">' +
           tiposGrupo.map(function(t){
-            return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + t + '</button>';
+            return '<button class="tm-opt" data-g="ans" data-v="' + t + '">' + D(t) + '</button>';
           }).join('') + '</div>';
       }
       elCont.innerHTML = h;
@@ -855,26 +904,26 @@
 
     function correctLabel() {
       if (config.test === 'completo') {
-        var lbl = cQ.def[2] + '\xaa ' + correctTipo();
-        lbl += ' — ' + (cQ.def[0] >= 8 ? 'Compuesto' : 'Simple');
-        lbl += ' — ' + (cQ.def[0] === 1 ? 'Conjunto' : 'Disjunto');
-        lbl += ' — ' + (cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico');
-        if (!cQ.harmonic) lbl += ' — ' + (cQ.ascending ? 'Ascendente' : 'Descendente');
+        var lbl = ivLabelOf(cQ.def);
+        lbl += ' — ' + D(cQ.def[0] >= 8 ? 'Compuesto' : 'Simple');
+        lbl += ' — ' + D(cQ.def[0] === 1 ? 'Conjunto' : 'Disjunto');
+        lbl += ' — ' + D(cQ.harmonic ? 'Arm\xf3nico' : 'Mel\xf3dico');
+        if (!cQ.harmonic) lbl += ' — ' + D(cQ.ascending ? 'Ascendente' : 'Descendente');
         return lbl;
       }
-      if (config.test === 'numero')      return cQ.def[2] + '\xaa';
-      if (config.test === 'consonancia') return CONSONANCIA_MAP[cQ.k] || '\u2014';
-      if (config.test === 'arm_mel')     return cQ.harmonic  ? 'Arm\xf3nico'  : 'Mel\xf3dico';
-      if (config.test === 'asc_des')     return cQ.ascending ? 'Ascendente'   : 'Descendente';
-      if (config.test === 'semitono')    return SEMITIPO_LABEL[cQ.semitipo] || '\u2014';
-      if (config.test === 'con_dis')     return cQ.conjunto  ? 'Conjunto'     : 'Disjunto';
+      if (config.test === 'numero')      return ORDB(cQ.def[2]);
+      if (config.test === 'consonancia') return D(CONSONANCIA_MAP[cQ.k] || '\u2014');
+      if (config.test === 'arm_mel')     return D(cQ.harmonic  ? 'Arm\xf3nico'  : 'Mel\xf3dico');
+      if (config.test === 'asc_des')     return D(cQ.ascending ? 'Ascendente'   : 'Descendente');
+      if (config.test === 'semitono')    return D(SEMITIPO_LABEL[cQ.semitipo] || '\u2014');
+      if (config.test === 'con_dis')     return D(cQ.conjunto  ? 'Conjunto'     : 'Disjunto');
       if (config.test === 'construir')          return noteLabel(cQ.n2, cQ.a2);
       if (config.test === 'construir_semitono') {
-        if (cQ.validas && cQ.validas.length > 1) return cQ.validas.map(function (v) { return noteLabel(v.n2, v.a2); }).join(' o ');
+        if (cQ.validas && cQ.validas.length > 1) return cQ.validas.map(function (v) { return noteLabel(v.n2, v.a2); }).join(T(' o ', ' or '));
         return noteLabel(cQ.n2, cQ.a2);
       }
       if (config.test === 'construir_numero')   return noteLabel(cQ.n2, 0);
-      return cQ.def[2] + '\xaa ' + correctTipo();
+      return ivLabelOf(cQ.def);
     }
 
     function checkAnswer() {
@@ -890,8 +939,8 @@
       var elFb = document.getElementById(uid + '_fb');
       elFb.className = 'tm-fb tm-show ' + (correct ? 'tm-ok' : 'tm-ko');
       elFb.textContent = correct
-        ? '\u00a1Correcto!'
-        : 'Incorrecto. La respuesta es: ' + correctLabel() + '.';
+        ? T('\u00a1Correcto!', 'Correct!')
+        : T('Incorrecto. La respuesta es: ' + correctLabel() + '.', 'Incorrect. The answer is: ' + correctLabel() + '.');
 
       document.getElementById(uid + '_badge').textContent = '\u2713 ' + score;
 
@@ -966,7 +1015,7 @@
             '<div class="tm-iv-score-num">' + score + '/' + totalQ + '</div>',
             '<div class="tm-iv-score-pct">' + pct + '%</div>',
           '</div>',
-          '<button class="tm-submit tm-ready" id="' + uid + '_restart">Hacer otro test</button>',
+          '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Hacer otro test', 'Take another quiz') + '</button>',
         '</div>'
       ].join('');
       document.getElementById(uid + '_restart').addEventListener('click', function() {
@@ -992,9 +1041,9 @@
     }
 
     /* Verovio se carga bajo demanda: el motor arranca cuando ya está. */
-    wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">Cargando el ejercicio…</p></div>';
+    wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</p></div>';
     window.tmNotacion.listo().then(init).catch(function () {
-      wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">No se ha podido cargar el ejercicio. Recarga la página.</p></div>';
+      wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">' + T('No se ha podido cargar el ejercicio. Recarga la página.', 'The exercise could not be loaded. Reload the page.') + '</p></div>';
     });
   }
 

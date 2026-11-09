@@ -10,6 +10,9 @@
 (function () {
   'use strict';
 
+  var EN = typeof document !== 'undefined' && document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+
   function M() { return window.tmDinamicaEjercicios; }
   var LETRAS = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -102,15 +105,15 @@
 
     cont.innerHTML = '<div class="tm-fd">'
       + '<div class="tm-fd-acciones">'
-      + '<button type="button" class="tm-fd-btn tm-fd-btn-1" data-a="generar">Generar otra ficha</button>'
-      + '<button type="button" class="tm-fd-btn tm-fd-btn-2" data-a="soluciones">Ver soluciones</button>'
-      + '<button type="button" class="tm-fd-btn tm-fd-btn-2" data-a="imprimir">Imprimir</button>'
+      + '<button type="button" class="tm-fd-btn tm-fd-btn-1" data-a="generar">' + T('Generar otra ficha', 'Generate another sheet') + '</button>'
+      + '<button type="button" class="tm-fd-btn tm-fd-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show solutions') + '</button>'
+      + '<button type="button" class="tm-fd-btn tm-fd-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<p class="tm-fd-enlace"></p>'
       + '</div>'
-      + '<div class="tm-fd-hoja"><div class="tm-fd-cab"><p class="tm-fd-tit">Dinámica y matices</p><span class="tm-fd-ref"></span></div>'
-      + '<div class="tm-fd-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
-      + '<p class="tm-fd-instr">Primera parte: escribe al lado de cada matiz o término la letra de su significado. Segunda parte: numera cada serie según el orden que se pide.</p>'
+      + '<div class="tm-fd-hoja"><div class="tm-fd-cab"><p class="tm-fd-tit">' + T('Dinámica y matices', 'Dynamics and markings') + '</p><span class="tm-fd-ref"></span></div>'
+      + '<div class="tm-fd-datos"><span>' + T('Nombre:', 'Name:') + '</span><span>' + T('Curso:', 'Class:') + '</span><span>' + T('Fecha:', 'Date:') + '</span></div>'
+      + '<p class="tm-fd-instr">' + T('Primera parte: escribe al lado de cada matiz o término la letra de su significado. Segunda parte: numera cada serie según el orden que se pide.', 'Part one: next to each marking or term, write the letter of its meaning. Part two: number each series in the order requested.') + '</p>'
       + '<div class="tm-fd-cuerpo"></div></div>';
 
     var elRef = cont.querySelector('.tm-fd-ref');
@@ -122,7 +125,7 @@
       var series = Mo.generar('ordenar', { sentido: 'mezcla', cuantos: 4, n: 6 }, semilla + 10);
       var hueco = function (v) { return solucion ? '<span class="tm-fd-hueco tm-fd-val">' + v + '</span>' : '<span class="tm-fd-hueco"></span>'; };
 
-      var h1 = document.createElement('h2'); h1.className = 'tm-fd-h2'; h1.textContent = '1. Cada matiz o término con su significado';
+      var h1 = document.createElement('h2'); h1.className = 'tm-fd-h2'; h1.textContent = T('1. Cada matiz o término con su significado', '1. Match each marking or term with its meaning');
       var cols = document.createElement('div'); cols.className = 'tm-fd-cols';
       cols.innerHTML = '<ul class="tm-fd-lista">' + u.items.map(function (x) {
         var etiqueta = x.signo ? '<span class="tm-fd-signo">' + x.etiqueta + '</span>' : '<strong>' + x.etiqueta + '</strong>';
@@ -132,13 +135,13 @@
           return '<li><span class="tm-fd-let">' + x.letra + ')</span> ' + x.sig + '</li>';
         }).join('') + '</ul>';
 
-      var h2 = document.createElement('h2'); h2.className = 'tm-fd-h2'; h2.textContent = '2. Ordena los matices';
+      var h2 = document.createElement('h2'); h2.className = 'tm-fd-h2'; h2.textContent = T('2. Ordena los matices', '2. Order the dynamic markings');
       var series2 = document.createElement('div'); series2.className = 'tm-fd-series';
       series2.innerHTML = series.map(function (s, i) {
         var orden = {};
         s.solucion.forEach(function (x, k) { orden[x] = k + 1; });
-        var sentido = s.sentido === 'suave-fuerte' ? 'suave a más fuerte' : 'fuerte a más suave';
-        return '<div class="tm-fd-serie"><p>' + (i + 1) + '. De más ' + sentido + ':</p><div class="tm-fd-fichas">'
+        var sentido = s.sentido === 'suave-fuerte' ? T('suave a más fuerte', 'softest to loudest') : T('fuerte a más suave', 'loudest to softest');
+        return '<div class="tm-fd-serie"><p>' + (i + 1) + T('. De más ', '. From ') + sentido + ':</p><div class="tm-fd-fichas">'
           + s.fichas.map(function (x) {
             return '<span class="tm-fd-ficha"><span class="tm-fd-caja' + (solucion ? ' tm-val' : '') + '">' + (solucion ? orden[x] : '') + '</span><span class="tm-fd-signo">' + x + '</span></span>';
           }).join('') + '</div></div>';
@@ -147,7 +150,7 @@
       elCuerpo.innerHTML = '';
       elCuerpo.appendChild(h1); elCuerpo.appendChild(cols);
       elCuerpo.appendChild(h2); elCuerpo.appendChild(series2);
-      elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
+      elRef.textContent = 'teoriamusical.com.es · ' + T('hoja n.º ', 'sheet no. ') + semilla;
     }
 
     function generar(semillaFija) {
@@ -156,11 +159,11 @@
       else { do { nueva = Math.floor(Math.random() * 90000 + 10000); } while (nueva === semilla); }
       semilla = nueva;
       solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show solutions');
       pintar();
       var a = cont.querySelector('.tm-fd-enlace');
       var params = '?hoja=' + semilla;
-      a.innerHTML = 'Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.';
+      a.innerHTML = T('Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.', 'Each sheet comes from a number: <a href="' + window.location.pathname + params + '#generador">this link</a> (sheet no. ' + semilla + ') brings up the same one again.');
     }
 
     cont.addEventListener('click', function (ev) {
@@ -170,7 +173,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         solucion = !solucion;
-        btn.textContent = solucion ? 'Ocultar soluciones' : 'Ver soluciones';
+        btn.textContent = solucion ? T('Ocultar soluciones', 'Hide solutions') : T('Ver soluciones', 'Show solutions');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

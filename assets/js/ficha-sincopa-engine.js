@@ -16,6 +16,9 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+
   var PREGUNTAS_POR_FICHA = 10;
 
   var CSS = [
@@ -77,21 +80,21 @@
     }
 
     var semilla = 0, solucion = false;
-    var titulo = dificil ? 'Síncopa — nivel difícil' : 'Síncopa';
+    var titulo = dificil ? T('Síncopa — nivel difícil', 'Syncopation — hard level') : T('Síncopa', 'Syncopation');
     var instr = dificil
-      ? 'Cada fragmento tiene 2 compases. Rodea con un círculo TODAS las notas donde crees que empieza una síncopa (puede haber varias, o ninguna), o marca la casilla «No hay síncopa» si el fragmento no tiene ninguna.'
-      : 'Rodea con un círculo la nota donde crees que empieza la síncopa, o marca la casilla «No hay síncopa» si el fragmento no la tiene.';
+      ? T('Cada fragmento tiene 2 compases. Rodea con un círculo TODAS las notas donde crees que empieza una síncopa (puede haber varias, o ninguna), o marca la casilla «No hay síncopa» si el fragmento no tiene ninguna.', 'Each excerpt has 2 measures. Circle ALL the notes where you think a syncopation starts (there may be several, or none), or check the "No syncopation" box if the excerpt has none.')
+      : T('Rodea con un círculo la nota donde crees que empieza la síncopa, o marca la casilla «No hay síncopa» si el fragmento no la tiene.', 'Circle the note where you think the syncopation starts, or check the "No syncopation" box if the excerpt has none.');
 
     cont.innerHTML = '<div class="tm-sf">'
       + '<div class="tm-sf-acciones">'
-      + '<button type="button" class="tm-sf-btn tm-sf-btn-1" data-a="generar">Generar otra ficha</button>'
-      + '<button type="button" class="tm-sf-btn tm-sf-btn-2" data-a="soluciones">Ver soluciones</button>'
-      + '<button type="button" class="tm-sf-btn tm-sf-btn-2" data-a="imprimir">Imprimir</button>'
+      + '<button type="button" class="tm-sf-btn tm-sf-btn-1" data-a="generar">' + T('Generar otra ficha', 'Generate another sheet') + '</button>'
+      + '<button type="button" class="tm-sf-btn tm-sf-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show answers') + '</button>'
+      + '<button type="button" class="tm-sf-btn tm-sf-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<p class="tm-sf-enlace"></p>'
       + '</div>'
       + '<div class="tm-sf-hoja"><div class="tm-sf-cab"><p class="tm-sf-tit">' + titulo + '</p><span class="tm-sf-ref"></span></div>'
-      + '<div class="tm-sf-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
+      + '<div class="tm-sf-datos"><span>' + T('Nombre:', 'Name:') + '</span><span>' + T('Curso:', 'Class:') + '</span><span>' + T('Fecha:', 'Date:') + '</span></div>'
       + '<p class="tm-sf-instr">' + instr + '</p>'
       + '<div class="tm-sf-cuerpo"></div></div>';
 
@@ -103,7 +106,7 @@
     function celdaHTML(frag, i) {
       var noSincopa = frag.correctas.length === 0;
       return '<span class="tm-sf-n">' + (i + 1) + '</span><div class="tm-sf-svg"></div>'
-        + '<div class="tm-sf-chk' + (solucion && noSincopa ? ' sol' : '') + '">' + (solucion && noSincopa ? '☒' : '☐') + ' No hay síncopa</div>';
+        + '<div class="tm-sf-chk' + (solucion && noSincopa ? ' sol' : '') + '">' + (solucion && noSincopa ? '☒' : '☐') + ' ' + T('No hay síncopa', 'No syncopation') + '</div>';
     }
 
     /* Todos los dibujos de la hoja a la MISMA escala (la mayor que quepa a todos): los de dos compases son más anchos y,
@@ -140,7 +143,7 @@
         var ancha = dificil || s.closest('.tm-sf-celda').classList.contains('ancha');
         return ancha ? ancho - 24 : Math.floor(ancho / cols) - 24;
       });
-      elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
+      elRef.textContent = 'teoriamusical.com.es · ' + T('hoja n.º ', 'sheet no. ') + semilla;
     }
 
     function generar(semillaFija) {
@@ -149,12 +152,12 @@
       else { do { nueva = Math.floor(Math.random() * 90000 + 10000); } while (nueva === semilla); }
       semilla = nueva;
       solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show answers');
       fragmentosActuales = generarFicha(semilla, dificil);
       pintar();
       var a = cont.querySelector('.tm-sf-enlace');
       var params = '?' + (dificil ? 'hojad' : 'hoja') + '=' + semilla;
-      a.innerHTML = 'Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#' + id + '">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.';
+      a.innerHTML = T('Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#' + id + '">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.', 'Each sheet comes from a number: with <a href="' + window.location.pathname + params + '#' + id + '">this link</a> (sheet no. ' + semilla + ') you get the same one again.');
     }
 
     cont.addEventListener('click', function (ev) {
@@ -164,7 +167,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         solucion = !solucion;
-        btn.textContent = solucion ? 'Ocultar soluciones' : 'Ver soluciones';
+        btn.textContent = solucion ? T('Ocultar soluciones', 'Hide answers') : T('Ver soluciones', 'Show answers');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

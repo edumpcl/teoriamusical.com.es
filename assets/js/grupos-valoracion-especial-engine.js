@@ -41,6 +41,9 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+
   function D() { return window.tmCompletarCompasData; }
 
   function mulberry32(a) {
@@ -87,7 +90,7 @@
     seisillo: { n: 6, equivale: 4, variantes: [{ base: 'sc', equivaleFig: 'n', uGrupo: 16, compases: ['2/4', '3/4', '4/4'] }] }
   };
   var ORDEN = ['tresillo', 'dosillo', 'cuatrillo', 'seisillo'];
-  var NOMBRE_ART = { tresillo: 'un tresillo', dosillo: 'un dosillo', cuatrillo: 'un cuatrillo', seisillo: 'un seisillo' };
+  var NOMBRE_ART = { tresillo: T('un tresillo', 'a triplet'), dosillo: T('un dosillo', 'a duplet'), cuatrillo: T('un cuatrillo', 'a quadruplet'), seisillo: T('un seisillo', 'a sextuplet') };
 
   /* Escala de duraciones (sin puntillo) según la unidad base del grupo
      y cuántas «partes» (1, 2 o 4) ocupa una figura dentro de él. */
@@ -182,6 +185,8 @@
     var g = GRUPOS_VE[it.grupo];
     var nombreBase = D().FIG[it.variante.base].nombre;
     var nombreEquiv = D().FIG[it.variante.equivaleFig].nombre;
+    if (EN) return 'It is ' + NOMBRE_ART[it.grupo] + ' of ' + nombreBase + 's: ' + g.n + ' in the time of ' + g.equivale
+      + ', so the whole group equals ' + (/^[aeiou]/.test(nombreEquiv) ? 'an ' : 'a ') + nombreEquiv + '.';
     return 'Es ' + NOMBRE_ART[it.grupo] + ' de ' + nombreBase + 's: ' + g.n + ' en el tiempo de ' + g.equivale
       + ', así que el grupo entero equivale a una ' + nombreEquiv + '.';
   }
@@ -233,7 +238,7 @@
     cerrarFuera();
     var p = it.compasGrupo.split('/');
     var fila = { clave: 'sol', num: Number(p[0]), den: Number(p[1]), compases: [evs], tuplets: [{ c: 0, ini: ini, fin: fin, num: g.n, numbase: g.equivale }] };
-    var r = window.tmNotacion.dibujarSync(div, fila, { escala: 1.3, separacion: opts.separacion || (opts.compacto ? 0.15 : 0.5), id: 'gve', alt: 'Compás de ' + it.compasGrupo + ' con un grupo de valoración especial' });
+    var r = window.tmNotacion.dibujarSync(div, fila, { escala: 1.3, separacion: opts.separacion || (opts.compacto ? 0.15 : 0.5), id: 'gve', alt: T('Compás de ' + it.compasGrupo + ' con un grupo de valoración especial', 'Measure in ' + it.compasGrupo + ' with a tuplet') });
     r.elemento.style.maxWidth = Math.round((opts.w || 460) * 1.2) + 'px';
     div.__tmInfo = info;
   }
@@ -241,9 +246,9 @@
   /* -------------------------------------------------------------- UI */
 
   var NIVELES = [
-    { nivel: 1, t: 'Fácil', d: 'Ritmo uniforme dentro del grupo' },
-    { nivel: 2, t: 'Medio', d: 'Ritmo uniforme, puede haber un silencio' },
-    { nivel: 3, t: 'Difícil', d: 'Ritmo mixto dentro del grupo, con silencios' }
+    { nivel: 1, t: T('Fácil', 'Easy'), d: T('Ritmo uniforme dentro del grupo', 'Uniform rhythm within the group') },
+    { nivel: 2, t: T('Medio', 'Medium'), d: T('Ritmo uniforme, puede haber un silencio', 'Uniform rhythm, there may be a rest') },
+    { nivel: 3, t: T('Difícil', 'Hard'), d: T('Ritmo mixto dentro del grupo, con silencios', 'Mixed rhythm within the group, with rests') }
   ];
   var CARTAS_RESPUESTA = ['sc', 'c', 'cP', 'n', 'nP', 'b', 'bP'];
   var PREGUNTAS = 8;
@@ -299,8 +304,8 @@
   window.tmGruposVE = function (id) {
     var cont = document.getElementById(id);
     if (cont && D() && window.tmNotacion && !conVerovio()) {
-      cont.innerHTML = '<div class="tm-gv-card"><div class="tm-gv-sub">Cargando el ejercicio…</div></div>';
-      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<div class="tm-gv-card"><div class="tm-gv-sub">No se ha podido cargar el ejercicio. Recarga la página.</div></div>'; });
+      cont.innerHTML = '<div class="tm-gv-card"><div class="tm-gv-sub">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</div></div>';
+      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<div class="tm-gv-card"><div class="tm-gv-sub">' + T('No se ha podido cargar el ejercicio. Recarga la página.', 'The exercise could not be loaded. Reload the page.') + '</div></div>'; });
       return;
     }
     arrancar(id);
@@ -315,8 +320,8 @@
     window.tmGruposVEDebug = function () { return cola[pos] || null; };
 
     function inicio() {
-      cont.innerHTML = '<div class="tm-gv-card"><div class="tm-gv-tit">¿A qué figura equivale?</div>'
-        + '<div class="tm-gv-sub">Se ve un grupo de valoración especial (tresillo, dosillo, cuatrillo o seisillo) escrito dentro de un compás. Elige la figura sencilla a la que equivale.</div>'
+      cont.innerHTML = '<div class="tm-gv-card"><div class="tm-gv-tit">' + T('¿A qué figura equivale?', 'Which note does it equal?') + '</div>'
+        + '<div class="tm-gv-sub">' + T('Se ve un grupo de valoración especial (tresillo, dosillo, cuatrillo o seisillo) escrito dentro de un compás. Elige la figura sencilla a la que equivale.', 'You see a tuplet (triplet, duplet, quadruplet or sextuplet) written inside a measure. Choose the simple note value it equals.') + '</div>'
         + '<div class="tm-gv-modos">' + NIVELES.map(function (m) {
           return '<button type="button" class="tm-gv-modo" data-n="' + m.nivel + '"><strong>' + m.t + '</strong><span>' + m.d + '</span></button>';
         }).join('') + '</div></div>';
@@ -336,15 +341,15 @@
     function pregunta() {
       var it = cola[pos];
       cont.innerHTML = '<div class="tm-gv-card">'
-        + '<div class="tm-gv-prog">Pregunta ' + (pos + 1) + ' de ' + cola.length + '</div>'
+        + '<div class="tm-gv-prog">' + T('Pregunta ' + (pos + 1) + ' de ' + cola.length, 'Question ' + (pos + 1) + ' of ' + cola.length) + '</div>'
         + '<div class="tm-gv-barra"><div style="width:' + (pos / cola.length * 100) + '%"></div></div>'
-        + '<div class="tm-gv-preg">¿A qué figura equivale el grupo?</div>'
+        + '<div class="tm-gv-preg">' + T('¿A qué figura equivale el grupo?', 'Which note does the group equal?') + '</div>'
         + '<div class="tm-gv-dibujo"><div></div></div>'
         + '<div class="tm-gv-paleta">' + CARTAS_RESPUESTA.map(function (f) {
           return '<button type="button" class="tm-gv-carta" data-f="' + f + '"><span class="tm-gv-mini"></span><small>' + D().nombre({ f: f, s: false }) + '</small></button>';
         }).join('') + '</div>'
         + '<div class="tm-gv-fb" hidden></div>'
-        + '<button type="button" class="tm-gv-btn">Comprobar</button></div>';
+        + '<button type="button" class="tm-gv-btn">' + T('Comprobar', 'Check') + '</button></div>';
 
       dibujarConGrupo(cont.querySelector('.tm-gv-dibujo > div'), it, { w: 460 });
       Array.prototype.forEach.call(cont.querySelectorAll('.tm-gv-mini'), function (m, i) { D().carta(m, CARTAS_RESPUESTA[i], false); });
@@ -375,8 +380,8 @@
           var fb = cont.querySelector('.tm-gv-fb');
           fb.hidden = false;
           fb.className = 'tm-gv-fb ' + (ok ? 'tm-ok' : 'tm-ko');
-          fb.innerHTML = '<strong>' + (ok ? '¡Correcto!' : 'No es correcto.') + '</strong> ' + explicar(it);
-          btn.textContent = pos + 1 < cola.length ? 'Siguiente' : 'Ver resultado';
+          fb.innerHTML = '<strong>' + (ok ? T('¡Correcto!', 'Correct!') : T('No es correcto.', 'Not correct.')) + '</strong> ' + explicar(it);
+          btn.textContent = pos + 1 < cola.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See result');
           btn.classList.add('tm-listo');
         } else {
           pos++;
@@ -387,11 +392,11 @@
 
     function resultado() {
       var nota = aciertos / cola.length;
-      var msg = nota === 1 ? '¡Perfecto! Lo dominas.' : nota >= 0.8 ? 'Muy bien: casi todo correcto.' : nota >= 0.5 ? 'Vas bien. Repasa las explicaciones y vuelve a intentarlo.' : 'Conviene repasar cuánto equivale cada grupo antes de volver a intentarlo.';
-      cont.innerHTML = '<div class="tm-gv-card tm-gv-res"><div class="tm-gv-nota">' + aciertos + '</div><div class="tm-gv-de">aciertos de ' + cola.length + '</div>'
+      var msg = nota === 1 ? T('¡Perfecto! Lo dominas.', 'Perfect! You have it down.') : nota >= 0.8 ? T('Muy bien: casi todo correcto.', 'Very good: almost all correct.') : nota >= 0.5 ? T('Vas bien. Repasa las explicaciones y vuelve a intentarlo.', 'You are doing well. Review the explanations and try again.') : T('Conviene repasar cuánto equivale cada grupo antes de volver a intentarlo.', 'Review what each group equals before trying again.');
+      cont.innerHTML = '<div class="tm-gv-card tm-gv-res"><div class="tm-gv-nota">' + aciertos + '</div><div class="tm-gv-de">' + T('aciertos de ' + cola.length, 'correct out of ' + cola.length) + '</div>'
         + '<div class="tm-gv-msg">' + msg + '</div>'
-        + '<button type="button" class="tm-gv-otra" data-a="otra">Otra ronda</button>'
-        + '<button type="button" class="tm-gv-otra tm-2" data-a="modo">Cambiar de nivel</button></div>';
+        + '<button type="button" class="tm-gv-otra" data-a="otra">' + T('Otra ronda', 'Another round') + '</button>'
+        + '<button type="button" class="tm-gv-otra tm-2" data-a="modo">' + T('Cambiar de nivel', 'Change level') + '</button></div>';
       cont.querySelector('[data-a="otra"]').addEventListener('click', function () { empezar(nivelActual); });
       cont.querySelector('[data-a="modo"]').addEventListener('click', inicio);
     }

@@ -16,28 +16,31 @@
 (function () {
   'use strict';
 
+  var EN = typeof document !== 'undefined' && document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+
   /* De más suave a más fuerte. */
   var GRADOS = [
-    { s: 'ppp', t: 'pianississimo', sig: 'Lo más suave posible' },
-    { s: 'pp', t: 'pianissimo', sig: 'Muy suave' },
-    { s: 'p', t: 'piano', sig: 'Suave' },
-    { s: 'mp', t: 'mezzopiano', sig: 'Medio suave' },
-    { s: 'mf', t: 'mezzoforte', sig: 'Medio fuerte' },
-    { s: 'f', t: 'forte', sig: 'Fuerte' },
-    { s: 'ff', t: 'fortissimo', sig: 'Muy fuerte' },
-    { s: 'fff', t: 'fortississimo', sig: 'Lo más fuerte posible' }
+    { s: 'ppp', t: 'pianississimo', sig: T('Lo más suave posible', 'As soft as possible') },
+    { s: 'pp', t: 'pianissimo', sig: T('Muy suave', 'Very soft') },
+    { s: 'p', t: 'piano', sig: T('Suave', 'Soft') },
+    { s: 'mp', t: 'mezzopiano', sig: T('Medio suave', 'Medium soft') },
+    { s: 'mf', t: 'mezzoforte', sig: T('Medio fuerte', 'Medium loud') },
+    { s: 'f', t: 'forte', sig: T('Fuerte', 'Loud') },
+    { s: 'ff', t: 'fortissimo', sig: T('Muy fuerte', 'Very loud') },
+    { s: 'fff', t: 'fortississimo', sig: T('Lo más fuerte posible', 'As loud as possible') }
   ];
 
   var CAMBIOS = [
-    { t: 'Crescendo', abr: 'cresc.', sig: 'Ir aumentando el volumen poco a poco' },
-    { t: 'Diminuendo', abr: 'dim.', sig: 'Ir disminuyendo el volumen poco a poco' },
-    { t: 'Sforzando', abr: 'sfz', sig: 'Acento súbito y enérgico sobre una nota o acorde' },
-    { t: 'Fortepiano', abr: 'fp', sig: 'Atacar fuerte y pasar inmediatamente a suave' },
-    { t: 'Rinforzando', abr: 'rinf.', sig: 'Reforzar momentáneamente un grupo de notas' },
-    { t: 'Subito', abr: 'sub.', sig: 'De golpe, sin transición (por ejemplo, subito piano)' },
-    { t: 'Morendo', abr: null, sig: 'Muriendo: bajar la intensidad, y también el tempo, hasta apagarse' },
-    { t: 'Perdendosi', abr: null, sig: 'Perdiéndose: el sonido se va apagando y frenando' },
-    { t: 'Calando', abr: null, sig: 'Decreciendo en intensidad y en tempo a la vez' }
+    { t: 'Crescendo', abr: 'cresc.', sig: T('Ir aumentando el volumen poco a poco', 'Gradually get louder') },
+    { t: 'Diminuendo', abr: 'dim.', sig: T('Ir disminuyendo el volumen poco a poco', 'Gradually get softer') },
+    { t: 'Sforzando', abr: 'sfz', sig: T('Acento súbito y enérgico sobre una nota o acorde', 'A sudden, forceful accent on a note or chord') },
+    { t: 'Fortepiano', abr: 'fp', sig: T('Atacar fuerte y pasar inmediatamente a suave', 'Attack loudly and drop immediately to soft') },
+    { t: 'Rinforzando', abr: 'rinf.', sig: T('Reforzar momentáneamente un grupo de notas', 'Briefly reinforce a group of notes') },
+    { t: 'Subito', abr: 'sub.', sig: T('De golpe, sin transición (por ejemplo, subito piano)', 'Suddenly, with no transition (for example, subito piano)') },
+    { t: 'Morendo', abr: null, sig: T('Muriendo: bajar la intensidad, y también el tempo, hasta apagarse', 'Dying away: decrease the intensity, and the tempo too, until it fades out') },
+    { t: 'Perdendosi', abr: null, sig: T('Perdiéndose: el sonido se va apagando y frenando', 'Losing itself: the sound fades away and slows down') },
+    { t: 'Calando', abr: null, sig: T('Decreciendo en intensidad y en tempo a la vez', 'Decreasing in volume and in tempo at the same time') }
   ];
 
   function mulberry32(a) {
@@ -75,13 +78,13 @@
         // Tres formas de preguntar por un matiz: qué significa, cómo se llama y qué signo es.
         var forma = A.entero(3);
         if (forma === 0) {
-          out.push({ tipo: 'grado-significado', clave: x.s, enunciado: '¿Qué significa ' + signo(x.s) + '?',
+          out.push({ tipo: 'grado-significado', clave: x.s, enunciado: T('¿Qué significa ' + signo(x.s) + '?', 'What does ' + signo(x.s) + ' mean?'),
             correcta: x.sig, opciones: A.barajar([x.sig].concat(otros.map(function (g) { return g.sig; }))) });
         } else if (forma === 1) {
-          out.push({ tipo: 'grado-nombre', clave: x.s, enunciado: '¿Cómo se llama el matiz ' + signo(x.s) + '?',
+          out.push({ tipo: 'grado-nombre', clave: x.s, enunciado: T('¿Cómo se llama el matiz ' + signo(x.s) + '?', 'What is the dynamic marking ' + signo(x.s) + ' called?'),
             correcta: x.t, opciones: A.barajar([x.t].concat(otros.map(function (g) { return g.t; }))) });
         } else {
-          out.push({ tipo: 'grado-signo', clave: x.s, enunciado: '¿Qué signo indica «' + x.sig.toLowerCase() + '»?',
+          out.push({ tipo: 'grado-signo', clave: x.s, enunciado: T('¿Qué signo indica «' + x.sig.toLowerCase() + '»?', 'Which marking means "' + x.sig.toLowerCase() + '"?'),
             correcta: x.s, opciones: A.barajar([x.s].concat(otros.map(function (g) { return g.s; }))), signos: true });
         }
       } else {
@@ -89,7 +92,7 @@
         // Si tiene abreviatura, la mitad de las veces se pregunta por ella.
         var porAbr = x.abr && rnd() < 0.5;
         out.push({ tipo: 'cambio', clave: x.t,
-          enunciado: '¿Qué indica ' + (porAbr ? signo(x.abr) : '<strong>' + x.t.toLowerCase() + '</strong>') + '?',
+          enunciado: T('¿Qué indica ' + (porAbr ? signo(x.abr) : '<strong>' + x.t.toLowerCase() + '</strong>') + '?', 'What does ' + (porAbr ? signo(x.abr) : '<strong>' + x.t.toLowerCase() + '</strong>') + ' indicate?'),
           correcta: x.sig, opciones: A.barajar([x.sig].concat(otras.map(function (c) { return c.sig; }))) });
       }
     }
@@ -109,7 +112,7 @@
       var nombres = !!o.nombres;
       out.push({
         tipo: 'ordenar', sentido: sube ? 'suave-fuerte' : 'fuerte-suave', nombres: nombres,
-        enunciado: sube ? 'Ordena de <strong>más suave a más fuerte</strong>' : 'Ordena de <strong>más fuerte a más suave</strong>',
+        enunciado: sube ? T('Ordena de <strong>más suave a más fuerte</strong>', 'Order from <strong>softest to loudest</strong>') : T('Ordena de <strong>más fuerte a más suave</strong>', 'Order from <strong>loudest to softest</strong>'),
         fichas: A.barajar(elegidos).map(function (g) { return nombres ? g.t : g.s; }),
         solucion: sol.map(function (g) { return nombres ? g.t : g.s; }),
         signos: sol.map(function (g) { return g.s; })
@@ -135,7 +138,7 @@
       return c.t + (c.abr ? ' (' + c.abr + ')' : '') + ': ' + c.sig.charAt(0).toLowerCase() + c.sig.slice(1) + '.';
     }
     var g = porSigno(it.clave);
-    return g.s + ' es ' + g.t + ': ' + g.sig.toLowerCase() + '.';
+    return T(g.s + ' es ' + g.t + ': ' + g.sig.toLowerCase() + '.', g.s + ' is ' + g.t + ': ' + g.sig.toLowerCase() + '.');
   }
 
   /* ------------------------------------------------------------------- UI */
@@ -210,18 +213,18 @@
 
   function resultado(cont, aciertos, total, otra, inicio) {
     var nota = aciertos / total;
-    var msg = nota === 1 ? '¡Perfecto! Lo dominas.' : nota >= 0.8 ? 'Muy bien: casi todo correcto.'
-      : nota >= 0.5 ? 'Vas bien. Repasa las explicaciones y vuelve a intentarlo.' : 'Conviene repasar la teoría antes de volver a intentarlo.';
-    cont.innerHTML = '<div class="tm-di-card tm-di-res"><div class="tm-di-nota">' + aciertos + '</div><div class="tm-di-de">aciertos de ' + total + '</div>'
+    var msg = nota === 1 ? T('¡Perfecto! Lo dominas.', 'Perfect! You have it down.') : nota >= 0.8 ? T('Muy bien: casi todo correcto.', 'Very good: almost everything correct.')
+      : nota >= 0.5 ? T('Vas bien. Repasa las explicaciones y vuelve a intentarlo.', 'You are doing well. Review the explanations and try again.') : T('Conviene repasar la teoría antes de volver a intentarlo.', 'It is worth reviewing the theory before trying again.');
+    cont.innerHTML = '<div class="tm-di-card tm-di-res"><div class="tm-di-nota">' + aciertos + '</div><div class="tm-di-de">' + T('aciertos de ' + total, 'correct out of ' + total) + '</div>'
       + '<div class="tm-di-msg">' + msg + '</div>'
-      + '<button type="button" class="tm-di-otra" data-a="otra">Otra ronda</button>'
-      + '<button type="button" class="tm-di-otra tm-2" data-a="modo">Cambiar de nivel</button></div>';
+      + '<button type="button" class="tm-di-otra" data-a="otra">' + T('Otra ronda', 'Another round') + '</button>'
+      + '<button type="button" class="tm-di-otra tm-2" data-a="modo">' + T('Cambiar de nivel', 'Change level') + '</button></div>';
     cont.querySelector('[data-a="otra"]').addEventListener('click', otra);
     cont.querySelector('[data-a="modo"]').addEventListener('click', inicio);
   }
 
   function cabecera(pos, total, enunciado) {
-    return '<div class="tm-di-prog">Pregunta ' + (pos + 1) + ' de ' + total + '</div>'
+    return '<div class="tm-di-prog">' + T('Pregunta ' + (pos + 1) + ' de ' + total, 'Question ' + (pos + 1) + ' of ' + total) + '</div>'
       + '<div class="tm-di-barra"><div style="width:' + (pos / total * 100) + '%"></div></div>'
       + '<div class="tm-di-preg">' + enunciado + '</div>';
   }
@@ -232,12 +235,12 @@
     if (!cont) return;
     css();
     var cfg = {
-      tit: '¿Qué significa este matiz?',
-      sub: 'Aparece un signo o un término de dinámica y hay que elegir qué indica, cómo se llama o qué signo le corresponde.',
+      tit: T('¿Qué significa este matiz?', 'What does this dynamic marking mean?'),
+      sub: T('Aparece un signo o un término de dinámica y hay que elegir qué indica, cómo se llama o qué signo le corresponde.', 'A dynamics sign or term appears and you choose what it indicates, what it is called or which sign matches it.'),
       modos: [
-        { v: { nivel: 'grados' }, t: 'Los matices, de ppp a fff', d: 'Qué significa cada signo, cómo se llama y qué signo es' },
-        { v: { nivel: 'cambios' }, t: 'Cambios de intensidad', d: 'Crescendo, diminuendo, sforzando, fortepiano, subito…' },
-        { v: { nivel: 'mezcla' }, t: 'Todo mezclado', d: 'Matices y cambios en la misma ronda' }
+        { v: { nivel: 'grados' }, t: T('Los matices, de ppp a fff', 'The dynamic markings, from ppp to fff'), d: T('Qué significa cada signo, cómo se llama y qué signo es', 'What each sign means, what it is called and which sign it is') },
+        { v: { nivel: 'cambios' }, t: T('Cambios de intensidad', 'Changes in intensity'), d: 'Crescendo, diminuendo, sforzando, fortepiano, subito…' },
+        { v: { nivel: 'mezcla' }, t: T('Todo mezclado', 'Everything mixed'), d: T('Matices y cambios en la misma ronda', 'Markings and changes in the same round') }
       ]
     };
     var cola = [], pos = 0, aciertos = 0, nivel = null;
@@ -248,7 +251,7 @@
       cont.innerHTML = '<div class="tm-di-card">' + cabecera(pos, cola.length, it.enunciado)
         + '<div class="tm-di-ops' + (it.signos ? ' tm-di-cortas' : '') + '">' + it.opciones.map(function (o, i) {
           return '<button type="button" class="tm-di-op" data-i="' + i + '">' + (it.signos ? signo(o) : o) + '</button>';
-        }).join('') + '</div><div class="tm-di-fb" hidden></div><button type="button" class="tm-di-btn">Comprobar</button></div>';
+        }).join('') + '</div><div class="tm-di-fb" hidden></div><button type="button" class="tm-di-btn">' + T('Comprobar', 'Check') + '</button></div>';
       var sel = null, corregida = false, btn = cont.querySelector('.tm-di-btn');
       cont.querySelector('.tm-di-ops').addEventListener('click', function (ev) {
         var op = ev.target.closest('.tm-di-op');
@@ -274,8 +277,8 @@
           var fb = cont.querySelector('.tm-di-fb');
           fb.hidden = false;
           fb.className = 'tm-di-fb ' + (ok ? 'tm-ok' : 'tm-ko');
-          fb.innerHTML = '<strong>' + (ok ? '¡Correcto!' : 'No es correcto.') + '</strong> ' + explicar(it);
-          btn.textContent = pos + 1 < cola.length ? 'Siguiente' : 'Ver resultado';
+          fb.innerHTML = '<strong>' + (ok ? T('¡Correcto!', 'Correct!') : T('No es correcto.', 'Not correct.')) + '</strong> ' + explicar(it);
+          btn.textContent = pos + 1 < cola.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See result');
         } else {
           pos++;
           if (pos < cola.length) pregunta(); else resultado(cont, aciertos, cola.length, function () { empezar(nivel); }, inicio);
@@ -291,12 +294,12 @@
     if (!cont) return;
     css();
     var cfg = {
-      tit: 'Ordena los matices',
-      sub: 'Toca los matices en orden. Si te equivocas al colocar, puedes deshacer el último.',
+      tit: T('Ordena los matices', 'Order the dynamic markings'),
+      sub: T('Toca los matices en orden. Si te equivocas al colocar, puedes deshacer el último.', 'Tap the markings in order. If you place one wrongly, you can undo the last one.'),
       modos: [
-        { v: { sentido: 'suave-fuerte', cuantos: 4 }, t: 'De más suave a más fuerte', d: 'Cuatro signos por pregunta' },
-        { v: { sentido: 'fuerte-suave', cuantos: 4 }, t: 'De más fuerte a más suave', d: 'El orden inverso' },
-        { v: { sentido: 'mezcla', cuantos: 5, nombres: true }, t: 'Con los nombres italianos', d: 'Pianissimo, mezzoforte… y el sentido cambia en cada pregunta' }
+        { v: { sentido: 'suave-fuerte', cuantos: 4 }, t: T('De más suave a más fuerte', 'Softest to loudest'), d: T('Cuatro signos por pregunta', 'Four signs per question') },
+        { v: { sentido: 'fuerte-suave', cuantos: 4 }, t: T('De más fuerte a más suave', 'Loudest to softest'), d: T('El orden inverso', 'The reverse order') },
+        { v: { sentido: 'mezcla', cuantos: 5, nombres: true }, t: T('Con los nombres italianos', 'With the Italian names'), d: T('Pianissimo, mezzoforte… y el sentido cambia en cada pregunta', 'Pianissimo, mezzoforte… and the direction changes on every question') }
       ]
     };
     var cola = [], pos = 0, aciertos = 0, nivel = null;
@@ -306,18 +309,18 @@
     function pregunta() {
       var it = cola[pos], puestos = [];
       cont.innerHTML = '<div class="tm-di-card">' + cabecera(pos, cola.length, it.enunciado)
-        + '<div class="tm-di-huecos"><span class="tm-di-vacio">Toca los matices en orden…</span></div>'
+        + '<div class="tm-di-huecos"><span class="tm-di-vacio">' + T('Toca los matices en orden…', 'Tap the markings in order…') + '</span></div>'
         + '<div class="tm-di-fichas">' + it.fichas.map(function (x, i) {
           return '<button type="button" class="tm-di-ficha" data-v="' + x + '" data-i="' + i + '">' + pinta(it, x) + '</button>';
         }).join('') + '</div>'
-        + '<button type="button" class="tm-di-deshacer" hidden>Deshacer</button>'
-        + '<div class="tm-di-fb" hidden></div><button type="button" class="tm-di-btn">Comprobar</button></div>';
+        + '<button type="button" class="tm-di-deshacer" hidden>' + T('Deshacer', 'Undo') + '</button>'
+        + '<div class="tm-di-fb" hidden></div><button type="button" class="tm-di-btn">' + T('Comprobar', 'Check') + '</button></div>';
       var huecos = cont.querySelector('.tm-di-huecos'), btn = cont.querySelector('.tm-di-btn');
       var deshacer = cont.querySelector('.tm-di-deshacer'), corregida = false;
       function pintar() {
         huecos.innerHTML = puestos.length
           ? puestos.map(function (x, i) { return '<span class="tm-di-hueco"><small>' + (i + 1) + '</small>' + pinta(it, x) + '</span>'; }).join('')
-          : '<span class="tm-di-vacio">Toca los matices en orden…</span>';
+          : '<span class="tm-di-vacio">' + T('Toca los matices en orden…', 'Tap the markings in order…') + '</span>';
         deshacer.hidden = !puestos.length || corregida;
         btn.classList.toggle('tm-listo', puestos.length === it.fichas.length);
       }
@@ -348,8 +351,8 @@
           var fb = cont.querySelector('.tm-di-fb');
           fb.hidden = false;
           fb.className = 'tm-di-fb ' + (ok ? 'tm-ok' : 'tm-ko');
-          fb.innerHTML = '<strong>' + (ok ? '¡Correcto!' : 'No es correcto.') + '</strong> El orden era: ' + explicar(it);
-          btn.textContent = pos + 1 < cola.length ? 'Siguiente' : 'Ver resultado';
+          fb.innerHTML = '<strong>' + (ok ? T('¡Correcto!', 'Correct!') : T('No es correcto.', 'Not correct.')) + '</strong> ' + T('El orden era: ', 'The order was: ') + explicar(it);
+          btn.textContent = pos + 1 < cola.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See result');
           btn.classList.add('tm-listo');
         } else {
           pos++;

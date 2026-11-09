@@ -21,6 +21,9 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+
   function mulberry32(a) {
     return function () {
       a |= 0; a = a + 0x6D2B79F5 | 0;
@@ -109,7 +112,8 @@
     }
     return {
       tipo: 'contratiempo', notas: notas, ligaduras: [], correctas: [[idxNota]],
-      explicacion: 'Silencio de corchea en la parte fuerte del tiempo ' + (i + 1) + ' y la nota ataca en el «y» (parte débil), sin ligadura: es un contratiempo.'
+      explicacion: T('Silencio de corchea en la parte fuerte del tiempo ' + (i + 1) + ' y la nota ataca en el «y» (parte débil), sin ligadura: es un contratiempo.',
+        'An eighth rest on the strong part of beat ' + (i + 1) + ' and the note attacks on the "and" (weak part), with no tie: it is an off-beat note.')
     };
   }
 
@@ -127,7 +131,8 @@
     }
     return {
       tipo: 'contratiempo', notas: notas, ligaduras: [], correctas: [[idxNota]],
-      explicacion: 'El tiempo ' + (i + 1) + ' está en silencio y la nota ataca en el tiempo ' + (i + 2) + ' (débil): es un contratiempo de tiempo.'
+      explicacion: T('El tiempo ' + (i + 1) + ' está en silencio y la nota ataca en el tiempo ' + (i + 2) + ' (débil): es un contratiempo de tiempo.',
+        'Beat ' + (i + 1) + ' is a rest and the note attacks on beat ' + (i + 2) + ' (weak): it is an off-beat on the beat level.')
     };
   }
 
@@ -141,7 +146,7 @@
       notas[i] = nota(p[i], 'qd', 0);
       notas[i + 1] = nota(p[i + 1], '8', 0);
     }
-    return { tipo: 'ninguna', notas: notas, ligaduras: [], correctas: [], explicacion: 'No hay ningún silencio en parte fuerte seguido de nota en parte débil: no hay contratiempo.' };
+    return { tipo: 'ninguna', notas: notas, ligaduras: [], correctas: [], explicacion: T('No hay ningún silencio en parte fuerte seguido de nota en parte débil: no hay contratiempo.', 'There is no rest on a strong part followed by a note on a weak part: there is no off-beat.') };
   }
 
   // -- ninguna: silencio en la parte débil (el "y") de un tiempo, con el
@@ -162,7 +167,8 @@
     }
     return {
       tipo: 'ninguna', notas: notas, ligaduras: [], correctas: [],
-      explicacion: 'Hay un silencio justo antes (el «y» del tiempo ' + (i + 1) + '), pero la nota del tiempo ' + (i + 2) + ' no cae en una parte débil: no es un contratiempo.'
+      explicacion: T('Hay un silencio justo antes (el «y» del tiempo ' + (i + 1) + '), pero la nota del tiempo ' + (i + 2) + ' no cae en una parte débil: no es un contratiempo.',
+        'There is a rest right before it (the "and" of beat ' + (i + 1) + '), but the note on beat ' + (i + 2) + ' does not fall on a weak part: it is not an off-beat.')
     };
   }
 
@@ -181,7 +187,8 @@
     }
     return {
       tipo: 'ninguna', notas: notas, ligaduras: [[i, i + 1]], correctas: [],
-      explicacion: 'La nota del tiempo ' + (i + 1) + ' se liga al tiempo ' + (i + 2) + ': eso es una síncopa (hay ligadura y ningún silencio), no un contratiempo.'
+      explicacion: T('La nota del tiempo ' + (i + 1) + ' se liga al tiempo ' + (i + 2) + ': eso es una síncopa (hay ligadura y ningún silencio), no un contratiempo.',
+        'The note on beat ' + (i + 1) + ' is tied to beat ' + (i + 2) + ': that is a syncopation (there is a tie and no rest), not an off-beat.')
     };
   }
 
@@ -232,15 +239,15 @@
       (frag.ligaduras || []).forEach(function (p) { ligaduras.push([p[0] + offset, p[1] + offset]); });
       (frag.correctas || []).forEach(function (p) {
         correctas.push([p[0] + offset]);
-        resumen.push('compás ' + (m + 1));
+        resumen.push(T('compás ', 'measure ') + (m + 1));
       });
 
       offset += frag.notas.length;
     }
 
     var explicacion = correctas.length === 0
-      ? 'Este fragmento no tiene ningún contratiempo.'
-      : (correctas.length === 1 ? 'Hay un contratiempo: ' : 'Hay ' + correctas.length + ' contratiempos: ') + resumen.join(', ') + '.';
+      ? T('Este fragmento no tiene ningún contratiempo.', 'This excerpt has no off-beat notes.')
+      : (correctas.length === 1 ? T('Hay un contratiempo: ', 'There is one off-beat note: ') : T('Hay ' + correctas.length + ' contratiempos: ', 'There are ' + correctas.length + ' off-beat notes: ')) + resumen.join(', ') + '.';
 
     return { tipo: 'dificil', notas: notas, ligaduras: ligaduras, correctas: correctas, explicacion: explicacion, compasTxt: compas.txt };
   }
@@ -325,7 +332,7 @@
 
   function dibujarSVG(div, frag, solucion, escala) {
     var r = tmNotacion.dibujarSync(div, filaDeFragmento(frag, solucion), {
-      escala: escala, separacion: 0.4, id: 'contra', alt: 'Fragmento rítmico en compás ' + (frag.compasTxt || '4/4')
+      escala: escala, separacion: 0.4, id: 'contra', alt: T('Fragmento rítmico en compás ', 'Rhythm excerpt in ') + (frag.compasTxt || '4/4')
     });
     return r.elemento;
   }
@@ -366,7 +373,7 @@
       rect.style.stroke = 'none';   // el SVG de Verovio trae «#id rect { stroke: currentcolor }», que le gana a la clase del carril
       rect.setAttribute('tabindex', '0');
       rect.setAttribute('role', 'button');
-      rect.setAttribute('aria-label', 'Nota o silencio ' + (i + 1) + ' de ' + lanes.length);
+      rect.setAttribute('aria-label', T('Nota o silencio ' + (i + 1) + ' de ' + lanes.length, 'Note or rest ' + (i + 1) + ' of ' + lanes.length));
       rect.dataset.idx = i;
       svg.appendChild(rect);
       return rect;
@@ -408,11 +415,11 @@
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-ct-mode-screen">',
-            '<h2 class="tm-ct-mode-title">Test de contratiempos</h2>',
-            '<p class="tm-ct-mode-subtitle">Elige la dificultad — ' + PREGUNTAS_POR_TEST + ' preguntas</p>',
+            '<h2 class="tm-ct-mode-title">' + T('Test de contratiempos', 'Off-beat quiz') + '</h2>',
+            '<p class="tm-ct-mode-subtitle">' + T('Elige la dificultad — ' + PREGUNTAS_POR_TEST + ' preguntas', 'Choose the difficulty — ' + PREGUNTAS_POR_TEST + ' questions') + '</p>',
             '<div class="tm-ct-modes">',
-              '<button class="tm-ct-mode-btn" data-modo="normal"><span class="tm-ct-mode-lbl">Normal</span><span class="tm-ct-mode-desc">Un fragmento de un compás: ningún contratiempo o como mucho uno</span></button>',
-              '<button class="tm-ct-mode-btn" data-modo="dificil"><span class="tm-ct-mode-lbl">Difícil</span><span class="tm-ct-mode-desc">Fragmentos de 2 compases: puede haber varios contratiempos a la vez, o ninguno</span></button>',
+              '<button class="tm-ct-mode-btn" data-modo="normal"><span class="tm-ct-mode-lbl">Normal</span><span class="tm-ct-mode-desc">' + T('Un fragmento de un compás: ningún contratiempo o como mucho uno', 'One measure: no off-beat note or at most one') + '</span></button>',
+              '<button class="tm-ct-mode-btn" data-modo="dificil"><span class="tm-ct-mode-lbl">' + T('Difícil', 'Hard') + '</span><span class="tm-ct-mode-desc">' + T('Fragmentos de 2 compases: puede haber varios contratiempos a la vez, o ninguno', 'Two-measure excerpts: there may be several off-beat notes at once, or none') + '</span></button>',
             '</div>',
           '</div>',
         '</div>'
@@ -430,8 +437,8 @@
       totalQ = queue.length;
       currentQ = 0; score = 0;
       var pregunta = modoDificil
-        ? 'Toca todas las notas que estén a contratiempo (puede haber varias, o ninguna)'
-        : 'Toca la nota que está a contratiempo (o «No hay contratiempo» si no la hay)';
+        ? T('Toca todas las notas que estén a contratiempo (puede haber varias, o ninguna)', 'Tap all the notes that are off-beat (there may be several, or none)')
+        : T('Toca la nota que está a contratiempo (o «No hay contratiempo» si no la hay)', 'Tap the off-beat note (or "No off-beat" if there is none)');
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-ct-header">',
@@ -443,10 +450,10 @@
           '</div>',
           '<p class="tm-ct-q" id="' + uid + '_q">' + pregunta + '</p>',
           '<div class="tm-ct-staff" id="' + uid + '_staff"></div>',
-          '<button class="tm-ct-none" id="' + uid + '_none">No hay contratiempo</button>',
-          '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>',
+          '<button class="tm-ct-none" id="' + uid + '_none">' + T('No hay contratiempo', 'No off-beat') + '</button>',
+          '<button class="tm-submit" id="' + uid + '_btn">' + T('Comprobar', 'Check') + '</button>',
           '<div id="' + uid + '_fb" class="tm-fb"></div>',
-          '<button id="' + uid + '_nxt" class="tm-nxt">Siguiente →</button>',
+          '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente →', 'Next →') + '</button>',
         '</div>'
       ].join('');
       document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
@@ -519,7 +526,7 @@
 
       var elFb = document.getElementById(uid + '_fb');
       elFb.className = 'tm-fb tm-show ' + (correcto ? 'tm-ok' : 'tm-ko');
-      elFb.innerHTML = (correcto ? '<strong>¡Correcto!</strong> ' : '<strong>Incorrecto.</strong> ') + cFrag.explicacion;
+      elFb.innerHTML = (correcto ? '<strong>' + T('¡Correcto!', 'Correct!') + '</strong> ' : '<strong>' + T('Incorrecto.', 'Incorrect.') + '</strong> ') + cFrag.explicacion;
 
       document.getElementById(uid + '_badge').textContent = '✓ ' + score;
     }
@@ -549,15 +556,15 @@
             '<div class="tm-ct-score-num">' + score + '/' + totalQ + '</div>',
             '<div class="tm-ct-score-pct">' + pct + '%</div>',
           '</div>',
-          '<button class="tm-submit tm-ready" id="' + uid + '_restart">Hacer otro test</button>',
+          '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Hacer otro test', 'Take another quiz') + '</button>',
         '</div>'
       ].join('');
       document.getElementById(uid + '_restart').addEventListener('click', showModeScreen);
     }
 
-    wrap.innerHTML = '<div class="tm-card"><p class="tm-ct-mode-subtitle">Cargando el ejercicio…</p></div>';
+    wrap.innerHTML = '<div class="tm-card"><p class="tm-ct-mode-subtitle">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</p></div>';
     tmNotacion.listo().then(showModeScreen).catch(function () {
-      wrap.innerHTML = '<div class="tm-card"><p class="tm-ct-mode-subtitle">No se ha podido cargar el ejercicio. Recarga la página.</p></div>';
+      wrap.innerHTML = '<div class="tm-card"><p class="tm-ct-mode-subtitle">' + T('No se ha podido cargar el ejercicio. Recarga la página.', 'The exercise could not be loaded. Reload the page.') + '</p></div>';
     });
   }
 

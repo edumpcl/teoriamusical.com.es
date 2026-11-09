@@ -17,6 +17,9 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+
   function mulberry32(a) {
     return function () {
       a |= 0; a = a + 0x6D2B79F5 | 0;
@@ -100,7 +103,8 @@
     }
     return {
       tipo: 'sincopa', clase: 'tiempo', notas: notas, ligaduras: [[i, i + 1]], correctas: [[i, i + 1]],
-      explicacion: 'La nota del tiempo ' + (i + 1) + ' (débil) se liga a la del tiempo ' + (i + 2) + ': es síncopa de tiempo.'
+      explicacion: T('La nota del tiempo ' + (i + 1) + ' (débil) se liga a la del tiempo ' + (i + 2) + ': es síncopa de tiempo.',
+        'The note on beat ' + (i + 1) + ' (weak) is tied to the one on beat ' + (i + 2) + ': it is a beat syncopation.')
     };
   }
 
@@ -128,11 +132,12 @@
         notas.push(nota(p[pIdx++], 'q', 0));
       }
     }
-    var nombreParte = semicorcheas ? 'La última semicorchea' : 'La segunda corchea';
+    var nombreParte = semicorcheas ? T('La última semicorchea', 'The last sixteenth note') : T('La segunda corchea', 'The second eighth note');
     return {
       tipo: 'sincopa', clase: 'parte', notas: notas, beams: [grupoBeam],
       ligaduras: [[idxUltimaParte, idxSiguiente]], correctas: [[idxUltimaParte, idxSiguiente]],
-      explicacion: nombreParte + ' del tiempo ' + (i + 1) + ' (parte débil) se liga al tiempo ' + (i + 2) + ' entero: es síncopa de parte.'
+      explicacion: nombreParte + T(' del tiempo ' + (i + 1) + ' (parte débil) se liga al tiempo ' + (i + 2) + ' entero: es síncopa de parte.',
+        ' of beat ' + (i + 1) + ' (weak part) is tied to the whole of beat ' + (i + 2) + ': it is a subdivision syncopation.')
     };
   }
 
@@ -148,7 +153,8 @@
     for (var j = 1; j < t; j++) notas.push(nota(p1[j - 1], 'q', 1));
     return {
       tipo: 'sincopa', notas: notas, ligaduras: [[t - 1, t]], correctas: [[t - 1, t]],
-      explicacion: 'La nota del tiempo ' + t + ' (débil) cruza la línea de compás ligada al tiempo 1 siguiente (fuerte): es síncopa de compás.'
+      explicacion: T('La nota del tiempo ' + t + ' (débil) cruza la línea de compás ligada al tiempo 1 siguiente (fuerte): es síncopa de compás.',
+        'The note on beat ' + t + ' (weak) crosses the bar line tied to the next beat 1 (strong): it is a bar-crossing syncopation.')
     };
   }
 
@@ -162,7 +168,7 @@
       notas[i] = nota(p[i], 'qd', 0);
       notas[i + 1] = nota(p[i + 1], '8', 0);
     }
-    return { tipo: 'ninguna', notas: notas, ligaduras: [], correctas: [], explicacion: 'No hay ninguna ligadura en este fragmento: no hay síncopa.' };
+    return { tipo: 'ninguna', notas: notas, ligaduras: [], correctas: [], explicacion: T('No hay ninguna ligadura en este fragmento: no hay síncopa.', 'There is no tie in this excerpt: there is no syncopation.') };
   }
 
   // -- ninguna: ligadura que SÍ existe pero empieza en tiempo 1 (fuerte)
@@ -173,7 +179,8 @@
     for (var i = 1; i < compas.tiempos - 1; i++) notas.push(nota(p[i], 'q', 0));
     return {
       tipo: 'ninguna', notas: notas, ligaduras: [[0, 1]], correctas: [],
-      explicacion: 'Hay ligadura, pero empieza en el tiempo 1 (fuerte), no en un tiempo débil: no es síncopa (es solo una nota larga escrita en dos partes).'
+      explicacion: T('Hay ligadura, pero empieza en el tiempo 1 (fuerte), no en un tiempo débil: no es síncopa (es solo una nota larga escrita en dos partes).',
+        'There is a tie, but it starts on beat 1 (strong), not on a weak beat: it is not syncopation (it is just a long note written in two parts).')
     };
   }
 
@@ -189,7 +196,8 @@
     }
     return {
       tipo: 'ninguna', notas: notas, ligaduras: [], correctas: [],
-      explicacion: 'La nota ataca en el "y" del tiempo ' + (i + 1) + ' (parte débil), sin ligadura hacia ningún tiempo fuerte: es un contratiempo, no una síncopa.'
+      explicacion: T('La nota ataca en el "y" del tiempo ' + (i + 1) + ' (parte débil), sin ligadura hacia ningún tiempo fuerte: es un contratiempo, no una síncopa.',
+        'The note attacks on the "and" of beat ' + (i + 1) + ' (weak part), with no tie to any strong beat: it is an off-beat, not a syncopation.')
     };
   }
 
@@ -208,7 +216,8 @@
     }
     return {
       tipo: 'ninguna', notas: notas, ligaduras: [[i, i + 1]], correctas: [],
-      explicacion: 'Hay ligadura, pero empieza en el tiempo ' + (i + 1) + ' y va a uno no más fuerte (tiempo ' + (i + 2) + '): no es síncopa, porque no termina en un tiempo más fuerte que el de inicio.'
+      explicacion: T('Hay ligadura, pero empieza en el tiempo ' + (i + 1) + ' y va a uno no más fuerte (tiempo ' + (i + 2) + '): no es síncopa, porque no termina en un tiempo más fuerte que el de inicio.',
+        'There is a tie, but it starts on beat ' + (i + 1) + ' and goes to one that is not stronger (beat ' + (i + 2) + '): it is not syncopation, because it does not end on a stronger beat than the one where it started.')
     };
   }
 
@@ -279,7 +288,8 @@
       (frag.beams || []).forEach(function (grupo) { beams.push(grupo.map(function (idx) { return idx + offset; })); });
       (frag.correctas || []).forEach(function (p) {
         correctas.push([p[0] + offset, p[1] + offset]);
-        resumen.push('compás ' + (m + 1) + ' (síncopa de ' + (frag.clase || 'compás') + ')');
+        resumen.push(T('compás ' + (m + 1) + ' (síncopa de ' + (frag.clase || 'compás') + ')',
+          'measure ' + (m + 1) + ' (' + ({ tiempo: 'beat', parte: 'subdivision' }[frag.clase] || 'bar-crossing') + ' syncopation)'));
       });
 
       var idxPrimera = offset;
@@ -288,7 +298,7 @@
         notas[idxPrimera].keys = notas[idxFinAnterior].keys.slice();
         ligaduras.push([idxFinAnterior, idxPrimera]);
         correctas.push([idxFinAnterior, idxPrimera]);
-        resumen.push('entre el compás ' + m + ' y el ' + (m + 1) + ' (síncopa de compás)');
+        resumen.push(T('entre el compás ' + m + ' y el ' + (m + 1) + ' (síncopa de compás)', 'between measure ' + m + ' and ' + (m + 1) + ' (bar-crossing syncopation)'));
       }
 
       offset += frag.notas.length;
@@ -297,8 +307,8 @@
     }
 
     var explicacion = correctas.length === 0
-      ? 'Este fragmento no tiene ninguna síncopa.'
-      : (correctas.length === 1 ? 'Hay una síncopa: ' : 'Hay ' + correctas.length + ' síncopas: ') + resumen.join(', ') + '.';
+      ? T('Este fragmento no tiene ninguna síncopa.', 'This excerpt has no syncopation.')
+      : (correctas.length === 1 ? T('Hay una síncopa: ', 'There is one syncopation: ') : T('Hay ' + correctas.length + ' síncopas: ', 'There are ' + correctas.length + ' syncopations: ')) + resumen.join(', ') + '.';
 
     return { tipo: 'dificil', notas: notas, ligaduras: ligaduras, correctas: correctas, beams: beams, explicacion: explicacion, compasTxt: compas.txt };
   }
@@ -389,7 +399,7 @@
 
   function dibujarSVG(div, frag, solucion, escala) {
     var r = tmNotacion.dibujarSync(div, filaDeFragmento(frag, solucion), {
-      escala: escala, separacion: 0.4, id: 'sinc', alt: 'Fragmento rítmico en compás ' + (frag.compasTxt || '4/4')
+      escala: escala, separacion: 0.4, id: 'sinc', alt: T('Fragmento rítmico en compás ', 'Rhythm excerpt in ') + (frag.compasTxt || '4/4')
     });
     return r.elemento;
   }
@@ -443,7 +453,7 @@
       rect.style.stroke = 'none';   // el SVG de Verovio trae «#id rect { stroke: currentcolor }», que le gana a la clase del carril
       rect.setAttribute('tabindex', '0');
       rect.setAttribute('role', 'button');
-      rect.setAttribute('aria-label', 'Nota o grupo de notas ' + (i + 1) + ' de ' + lanes.length);
+      rect.setAttribute('aria-label', T('Nota o grupo de notas ' + (i + 1) + ' de ' + lanes.length, 'Note or group of notes ' + (i + 1) + ' of ' + lanes.length));
       rect.dataset.idx = i;
       svg.appendChild(rect);
       return rect;
@@ -507,11 +517,11 @@
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-si-mode-screen">',
-            '<h2 class="tm-si-mode-title">Test de síncopas</h2>',
-            '<p class="tm-si-mode-subtitle">Elige la dificultad — ' + PREGUNTAS_POR_TEST + ' preguntas</p>',
+            '<h2 class="tm-si-mode-title">' + T('Test de síncopas', 'Syncopation quiz') + '</h2>',
+            '<p class="tm-si-mode-subtitle">' + T('Elige la dificultad — ' + PREGUNTAS_POR_TEST + ' preguntas', 'Choose the difficulty — ' + PREGUNTAS_POR_TEST + ' questions') + '</p>',
             '<div class="tm-si-modes">',
-              '<button class="tm-si-mode-btn" data-modo="normal"><span class="tm-si-mode-lbl">Normal</span><span class="tm-si-mode-desc">Un fragmento de un compás (o dos, si cruza la barra): ninguna síncopa o como mucho una</span></button>',
-              '<button class="tm-si-mode-btn" data-modo="dificil"><span class="tm-si-mode-lbl">Difícil</span><span class="tm-si-mode-desc">Fragmentos de 2 compases: puede haber varias síncopas a la vez, o ninguna</span></button>',
+              '<button class="tm-si-mode-btn" data-modo="normal"><span class="tm-si-mode-lbl">Normal</span><span class="tm-si-mode-desc">' + T('Un fragmento de un compás (o dos, si cruza la barra): ninguna síncopa o como mucho una', 'One measure (or two, if it crosses the bar line): no syncopation or at most one') + '</span></button>',
+              '<button class="tm-si-mode-btn" data-modo="dificil"><span class="tm-si-mode-lbl">' + T('Difícil', 'Hard') + '</span><span class="tm-si-mode-desc">' + T('Fragmentos de 2 compases: puede haber varias síncopas a la vez, o ninguna', 'Two-measure excerpts: there may be several syncopations at once, or none') + '</span></button>',
             '</div>',
           '</div>',
         '</div>'
@@ -529,8 +539,8 @@
       totalQ = queue.length;
       currentQ = 0; score = 0;
       var pregunta = modoDificil
-        ? 'Toca todas las notas donde empiece una síncopa (puede haber varias, o ninguna)'
-        : 'Toca la nota donde empieza la síncopa (o «No hay síncopa» si no la hay)';
+        ? T('Toca todas las notas donde empiece una síncopa (puede haber varias, o ninguna)', 'Tap all the notes where a syncopation starts (there may be several, or none)')
+        : T('Toca la nota donde empieza la síncopa (o «No hay síncopa» si no la hay)', 'Tap the note where the syncopation starts (or "No syncopation" if there is none)');
       wrap.innerHTML = [
         '<div class="tm-card">',
           '<div class="tm-si-header">',
@@ -542,10 +552,10 @@
           '</div>',
           '<p class="tm-si-q" id="' + uid + '_q">' + pregunta + '</p>',
           '<div class="tm-si-staff" id="' + uid + '_staff"></div>',
-          '<button class="tm-si-none" id="' + uid + '_none">No hay síncopa</button>',
-          '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>',
+          '<button class="tm-si-none" id="' + uid + '_none">' + T('No hay síncopa', 'No syncopation') + '</button>',
+          '<button class="tm-submit" id="' + uid + '_btn">' + T('Comprobar', 'Check') + '</button>',
           '<div id="' + uid + '_fb" class="tm-fb"></div>',
-          '<button id="' + uid + '_nxt" class="tm-nxt">Siguiente →</button>',
+          '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente →', 'Next →') + '</button>',
         '</div>'
       ].join('');
       document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
@@ -622,7 +632,7 @@
 
       var elFb = document.getElementById(uid + '_fb');
       elFb.className = 'tm-fb tm-show ' + (correcto ? 'tm-ok' : 'tm-ko');
-      elFb.innerHTML = (correcto ? '<strong>¡Correcto!</strong> ' : '<strong>Incorrecto.</strong> ') + cFrag.explicacion;
+      elFb.innerHTML = (correcto ? '<strong>' + T('¡Correcto!', 'Correct!') + '</strong> ' : '<strong>' + T('Incorrecto.', 'Incorrect.') + '</strong> ') + cFrag.explicacion;
 
       document.getElementById(uid + '_badge').textContent = '✓ ' + score;
     }
@@ -652,15 +662,15 @@
             '<div class="tm-si-score-num">' + score + '/' + totalQ + '</div>',
             '<div class="tm-si-score-pct">' + pct + '%</div>',
           '</div>',
-          '<button class="tm-submit tm-ready" id="' + uid + '_restart">Hacer otro test</button>',
+          '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Hacer otro test', 'Take another quiz') + '</button>',
         '</div>'
       ].join('');
       document.getElementById(uid + '_restart').addEventListener('click', showModeScreen);
     }
 
-    wrap.innerHTML = '<div class="tm-card"><p class="tm-si-mode-subtitle">Cargando el ejercicio…</p></div>';
+    wrap.innerHTML = '<div class="tm-card"><p class="tm-si-mode-subtitle">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</p></div>';
     tmNotacion.listo().then(showModeScreen).catch(function () {
-      wrap.innerHTML = '<div class="tm-card"><p class="tm-si-mode-subtitle">No se ha podido cargar el ejercicio. Recarga la página.</p></div>';
+      wrap.innerHTML = '<div class="tm-card"><p class="tm-si-mode-subtitle">' + T('No se ha podido cargar el ejercicio. Recarga la página.', 'The exercise could not be loaded. Reload the page.') + '</p></div>';
     });
   }
 

@@ -15,18 +15,21 @@
 (function () {
   'use strict';
 
+  var EN = typeof document !== 'undefined' && document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+
   var ADELANTO = 0.2;    // segundos de clics programados por adelantado
   var REVISION = 25;     // cada cuánto se revisa (ms)
 
   /* de/a = pulsaciones por minuto; dura = segundos del tramo que cambia.
      rampa: 'lineal' reparte el cambio poco a poco; 'golpe' lo hace de una vez. */
   var DEMOS = {
-    accelerando: { de: 60, a: 132, dura: 8, rampa: 'lineal', etiqueta: 'Accelerando: de 60 a 132' },
-    ritardando: { de: 120, a: 60, dura: 8, rampa: 'lineal', etiqueta: 'Ritardando: de 120 a 60' },
-    ritenuto: { de: 120, a: 84, dura: 8, rampa: 'golpe', golpeEn: 4, etiqueta: 'Ritenuto: 120 y de golpe 84' },
-    'a-tempo': { de: 120, a: 60, dura: 8, rampa: 'lineal', vuelta: true, etiqueta: 'Ritardando y a tempo' },
-    calderon: { de: 96, a: 96, dura: 9, rampa: 'lineal', calderonEn: 4, esperaCalderon: 2.5, etiqueta: 'Calderón: el pulso se detiene' },
-    rubato: { de: 92, a: 92, dura: 10, rampa: 'rubato', etiqueta: 'Rubato: roba y devuelve' }
+    accelerando: { de: 60, a: 132, dura: 8, rampa: 'lineal', etiqueta: T('Accelerando: de 60 a 132', 'Accelerando: from 60 to 132') },
+    ritardando: { de: 120, a: 60, dura: 8, rampa: 'lineal', etiqueta: T('Ritardando: de 120 a 60', 'Ritardando: from 120 to 60') },
+    ritenuto: { de: 120, a: 84, dura: 8, rampa: 'golpe', golpeEn: 4, etiqueta: T('Ritenuto: 120 y de golpe 84', 'Ritenuto: 120, then suddenly 84') },
+    'a-tempo': { de: 120, a: 60, dura: 8, rampa: 'lineal', vuelta: true, etiqueta: T('Ritardando y a tempo', 'Ritardando and a tempo') },
+    calderon: { de: 96, a: 96, dura: 9, rampa: 'lineal', calderonEn: 4, esperaCalderon: 2.5, etiqueta: T('Calderón: el pulso se detiene', 'Fermata: the pulse stops') },
+    rubato: { de: 92, a: 92, dura: 10, rampa: 'rubato', etiqueta: T('Rubato: roba y devuelve', 'Rubato: borrows and gives back') }
   };
 
   var ctx = null, demo = null, siguiente = 0, t0 = 0, pulso = 0, temporizador = null, activo = null, tipoActual = null;
@@ -118,7 +121,7 @@
     if (!arrancar(btn.dataset.tipo)) return;
     activo = btn;
     btn.setAttribute('aria-pressed', 'true');
-    btn.querySelector('.tm-ag-txt').textContent = 'Parar';
+    btn.querySelector('.tm-ag-txt').textContent = T('Parar', 'Stop');
   }
 
   function preparar(btn) {
@@ -126,8 +129,8 @@
     if (!d) return;
     btn.type = 'button';
     btn.setAttribute('aria-pressed', 'false');
-    btn.setAttribute('aria-label', 'Escuchar un ' + btn.dataset.tipo.replace('-', ' ') + '. ' + d.etiqueta);
-    btn.dataset.txt = btn.dataset.txt || (btn.textContent || '').trim() || 'Escuchar';
+    btn.setAttribute('aria-label', T('Escuchar un ' + btn.dataset.tipo.replace('-', ' ') + '. ' + d.etiqueta, 'Listen to ' + (btn.dataset.tipo === 'calderon' ? 'a fermata' : 'an example of ' + btn.dataset.tipo.replace('-', ' ')) + '. ' + d.etiqueta));
+    btn.dataset.txt = btn.dataset.txt || (btn.textContent || '').trim() || T('Escuchar', 'Listen');
     btn.innerHTML = '<span class="tm-ag-ico" aria-hidden="true"></span><span class="tm-ag-txt">' + btn.dataset.txt + '</span>';
     btn.hidden = false;   // sin JavaScript no sonaría: mejor que no aparezca
     btn.addEventListener('click', function () { if (activo === btn) parar(); else tocar(btn); });

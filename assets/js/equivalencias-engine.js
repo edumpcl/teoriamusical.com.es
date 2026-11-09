@@ -4,6 +4,8 @@
          <script>tmEquivEngine('x');</script>  */
 (function () {
   'use strict';
+  const IS_EN = document.documentElement.lang === 'en';   // (EN ya es la lista de letras inglesas)
+  const T = (es, en) => IS_EN ? en : es;
 
   var ES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
   var EN = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
@@ -65,25 +67,25 @@
     var q, opts, ans, explain;
 
     if (t === 'es2en') {
-      q = '¿Cómo se escribe el <strong>' + ES[i] + '</strong> en la notación inglesa?';
+      q = T('¿Cómo se escribe el <strong>' + ES[i] + '</strong> en la notación inglesa?', 'Which letter is the solfège note <strong>' + ES[i] + '</strong> in English notation?');
       opts = EN.slice(); ans = EN[i];
-      explain = 'El ' + ES[i] + ' es la <strong>' + EN[i] + '</strong> en inglés.';
+      explain = T('El ' + ES[i] + ' es la <strong>' + EN[i] + '</strong> en inglés.', ES[i] + ' is <strong>' + EN[i] + '</strong> in English notation.');
     } else if (t === 'es2de') {
-      q = '¿Cómo se escribe el <strong>' + ES[i] + '</strong> en la notación alemana?';
+      q = T('¿Cómo se escribe el <strong>' + ES[i] + '</strong> en la notación alemana?', 'Which letter is the solfège note <strong>' + ES[i] + '</strong> in German notation?');
       opts = DE.slice(); ans = DE[i];
-      explain = 'El ' + ES[i] + ' es la <strong>' + DE[i] + '</strong> en alemán' + (i === 6 ? ' (¡no B! La B alemana es el Si♭)' : '') + '.';
+      explain = T('El ' + ES[i] + ' es la <strong>' + DE[i] + '</strong> en alemán' + (i === 6 ? ' (¡no B! La B alemana es el Si♭)' : '') + '.', ES[i] + ' is <strong>' + DE[i] + '</strong> in German notation' + (i === 6 ? ' (not B! German B is B♭)' : '') + '.');
     } else if (t === 'en2es') {
-      q = '¿Qué nota es la <strong>' + EN[i] + '</strong> de la notación inglesa?';
+      q = T('¿Qué nota es la <strong>' + EN[i] + '</strong> de la notación inglesa?', 'Which solfège note is <strong>' + EN[i] + '</strong> in English notation?');
       opts = ES.slice(); ans = ES[i];
-      explain = 'La ' + EN[i] + ' inglesa es el <strong>' + ES[i] + '</strong>.';
+      explain = T('La ' + EN[i] + ' inglesa es el <strong>' + ES[i] + '</strong>.', 'English ' + EN[i] + ' is <strong>' + ES[i] + '</strong>.');
     } else if (t === 'germanB') {
-      q = 'En el sistema alemán, ¿qué nota representa la letra <strong>B</strong>?';
-      opts = ['Do', 'La', 'Si', 'Si♭']; ans = 'Si♭';
-      explain = '¡Cuidado! En alemán la <strong>B</strong> es el <strong>Si♭</strong>; el Si natural es la H.';
+      q = T('En el sistema alemán, ¿qué nota representa la letra <strong>B</strong>?', 'In the German system, which note does the letter <strong>B</strong> stand for?');
+      opts = T(['Do', 'La', 'Si', 'Si♭'], ['C', 'A', 'B', 'B♭']); ans = T('Si♭', 'B♭');
+      explain = T('¡Cuidado! En alemán la <strong>B</strong> es el <strong>Si♭</strong>; el Si natural es la H.', 'Careful! In German, <strong>B</strong> is <strong>B♭</strong>; B natural is H.');
     } else { /* germanH */
-      q = 'En el sistema alemán, la letra <strong>H</strong> corresponde a…';
-      opts = ['Do', 'La', 'Si', 'Si♭']; ans = 'Si';
-      explain = 'La <strong>H</strong> alemana es el <strong>Si</strong> natural (y la B es el Si♭).';
+      q = T('En el sistema alemán, la letra <strong>H</strong> corresponde a…', 'In the German system, the letter <strong>H</strong> corresponds to…');
+      opts = T(['Do', 'La', 'Si', 'Si♭'], ['C', 'A', 'B', 'B♭']); ans = T('Si', 'B');
+      explain = T('La <strong>H</strong> alemana es el <strong>Si</strong> natural (y la B es el Si♭).', 'German <strong>H</strong> is <strong>B</strong> natural (and German B is B♭).');
     }
 
     opts = shuffle(opts.slice());
@@ -111,9 +113,9 @@
           '</div>' +
           '<div class="tm-eq-q" id="' + uid + '_q"></div>' +
           '<div class="tm-grid" id="' + uid + '_opts"></div>' +
-          '<button class="tm-submit" id="' + uid + '_btn">Comprobar</button>' +
+          '<button class="tm-submit" id="' + uid + '_btn">' + T('Comprobar', 'Check') + '</button>' +
           '<div id="' + uid + '_fb" class="tm-fb"></div>' +
-          '<button id="' + uid + '_nxt" class="tm-nxt">Siguiente →</button>' +
+          '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente →', 'Next →') + '</button>' +
         '</div>';
       document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
       document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
@@ -148,7 +150,7 @@
       if (correct) score++;
       var elFb = document.getElementById(uid + '_fb');
       elFb.className = 'tm-fb tm-show ' + (correct ? 'tm-ok' : 'tm-ko');
-      elFb.innerHTML = (correct ? '<strong>✓ ¡Correcto!</strong> ' : '<strong>✗ Incorrecto.</strong> ') + cQ.explain;
+      elFb.innerHTML = (correct ? T('<strong>✓ ¡Correcto!</strong> ', '<strong>✓ Correct!</strong> ') : T('<strong>✗ Incorrecto.</strong> ', '<strong>✗ Incorrect.</strong> ')) + cQ.explain;
       document.getElementById(uid + '_badge').textContent = '✓ ' + score;
       document.getElementById(uid + '_opts').querySelectorAll('.tm-opt').forEach(function (b) {
         b.disabled = true;
@@ -182,7 +184,7 @@
             '<div class="tm-iv-score-num">' + score + '/' + totalQ + '</div>' +
             '<div class="tm-iv-score-pct">' + pct + '%</div>' +
           '</div>' +
-          '<button class="tm-submit tm-ready" id="' + uid + '_restart">Practicar otra vez</button>' +
+          '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Practicar otra vez', 'Practice again') + '</button>' +
         '</div>';
       document.getElementById(uid + '_restart').addEventListener('click', function () {
         currentQ = 0; score = 0; startQuiz();

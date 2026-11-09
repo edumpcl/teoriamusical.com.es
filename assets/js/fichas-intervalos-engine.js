@@ -11,11 +11,20 @@
 (function () {
   'use strict';
 
+  var EN = document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+
   /* ------------------------------------------------------------- teoría */
 
   var LETTERS = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
   var NS = [0, 2, 4, 5, 7, 9, 11];
-  var NOMBRE_CAL = { M: 'Mayor', m: 'menor', J: 'justa', A: 'aumentada', d: 'disminuida' };
+  var NOMBRE_CAL = T({ M: 'Mayor', m: 'menor', J: 'justa', A: 'aumentada', d: 'disminuida' },
+                     { M: 'Major', m: 'minor', J: 'Perfect', A: 'Augmented', d: 'Diminished' });
+  var ABREV_EN = { M: 'M', m: 'm', J: 'P', A: 'A', d: 'd' };
+  var ORD_EN = { 2: '2nd', 3: '3rd', 4: '4th', 5: '5th', 6: '6th', 7: '7th', 8: '8th' };
+  /* "3ª Mayor" / "Major 3rd" (la octava, "Perfect octave") y la forma corta de las soluciones: "3ª M" / "M3" */
+  function nombreLargo(num, q) { return T(num + 'ª ' + NOMBRE_CAL[q], NOMBRE_CAL[q] + ' ' + (num === 8 ? 'octave' : ORD_EN[num])); }
+  function nombreCorto(num, q) { return T(num + 'ª ' + q, ABREV_EN[q] + num); }
 
   var CALIDADES = {
     2: [{ q: 'm', s: 1, peso: 4 }, { q: 'M', s: 2, peso: 4 }, { q: 'd', s: 0, peso: 1 }, { q: 'A', s: 3, peso: 1 }],
@@ -71,7 +80,8 @@
                 n2: { key: vexKey(n2), acc: accGlyph(n2) },
                 dir: dir,
                 etiqueta: num + 'ª ' + cal.q,
-                larga: num + 'ª ' + NOMBRE_CAL[cal.q]
+                corta: nombreCorto(num, cal.q),
+                larga: nombreLargo(num, cal.q)
               };
               if (base.alt === 0 && n2.alt === 0) nat.push(ej);
               else alt[cal.q].push(ej);
@@ -196,7 +206,7 @@
      ficha y su solución salen con la misma maqueta exacta.
      opts: w (ancho), gap (hueco bajo el pentagrama), modo, solucion, desde (número del primero). */
   function dibujarSistema(div, ejercicios, opts) {
-    var T = window.tmNotacion;
+    var TN = window.tmNotacion;
     var oculta = opts.modo === 'escribir' && !opts.solucion;
     var fila = { clave: 'sol', sinBarraFinal: true, compases: ejercicios.map(function (e) {
       var n2 = { key: claveMEI(e.n2), d: 'w' };
@@ -205,14 +215,14 @@
     }) };
     div.innerHTML = '';
     div.style.position = 'relative';
-    var res = T.dibujarAAncho(div, fila, opts.w, { escala: 0.9, id: 'fgs', alt: 'Pentagrama con ' + ejercicios.length + ' ejercicios de intervalos' });
+    var res = TN.dibujarAAncho(div, fila, opts.w, { escala: 0.9, id: 'fgs', alt: T('Pentagrama con ' + ejercicios.length + ' ejercicios de intervalos', 'Staff with ' + ejercicios.length + ' interval exercises') });
     var svg = res.elemento;
     svg.style.display = 'block';
     /* la línea superior siempre a la misma altura: Verovio recorta el SVG a lo que se ve, y la hoja en blanco (segunda nota oculta) y la solución deben ser idénticas */
-    var TOPE = 28, g0 = T.geometria(svg);
+    var TOPE = 28, g0 = TN.geometria(svg);
     svg.style.margin = Math.round(TOPE - g0.lineas[0]) + 'px auto 0 0';
     var dr = div.getBoundingClientRect(), sr = svg.getBoundingClientRect();
-    var g = T.geometria(svg), cajas = T.compases(svg);
+    var g = TN.geometria(svg), cajas = TN.compases(svg);
     var cl = svg.querySelector('.clef');
     if (cl) cajas[0].izq = cl.getBoundingClientRect().right - sr.left + 6;   // la primera casilla empieza tras la clave
     var dx = sr.left - dr.left, dy = sr.top - dr.top;
@@ -233,7 +243,7 @@
       var yTxt = yInf + opts.gap - 10;
       if (opts.modo === 'analizar') {
         if (opts.solucion) {
-          var t = poner(cx, yTxt, e.etiqueta + ' ' + flecha, 'font-size:15px;font-weight:600;color:' + ROJO + ';');
+          var t = poner(cx, yTxt, e.corta + ' ' + flecha, 'font-size:15px;font-weight:600;color:' + ROJO + ';');
           t.style.transform = 'translateX(-50%)';
         } else {
           var l = document.createElement('div');
@@ -242,7 +252,7 @@
           div.appendChild(l);
         }
       } else {
-        var t2 = poner(cx, yTxt, e.etiqueta + ' ' + flecha, 'font-size:14.5px;color:#1a1a1a;');
+        var t2 = poner(cx, yTxt, e.corta + ' ' + flecha, 'font-size:14.5px;color:#1a1a1a;');
         t2.style.transform = 'translateX(-50%)';
       }
     });
@@ -255,7 +265,7 @@
     div.style.height = '150px';
     var compases = [[{ key: claveMEI(e.n1), d: 'w' }]];
     if (opts.mostrarSegunda) compases.push([opts.colorSegunda ? { key: claveMEI(e.n2), d: 'w', color: opts.colorSegunda } : { key: claveMEI(e.n2), d: 'w' }]);
-    window.tmNotacion.dibujarAlineado(div, { clave: 'sol', compases: compases }, { escala: 1.4, separacion: 0.4, top: 62, id: 'fgu', alt: 'Intervalo de dos notas en clave de sol' });
+    window.tmNotacion.dibujarAlineado(div, { clave: 'sol', compases: compases }, { escala: 1.4, separacion: 0.4, top: 62, id: 'fgu', alt: T('Intervalo de dos notas en clave de sol', 'Interval of two notes in treble clef') });
   }
 
   /* ----------------------------------------------------------------- UI */
@@ -354,7 +364,7 @@
 
   var NUMS = [2, 3, 4, 5, 6, 7, 8];
   var MAX_EJERCICIOS = 60;
-  var ORD = { 2: '2ª', 3: '3ª', 4: '4ª', 5: '5ª', 6: '6ª', 7: '7ª', 8: '8ª' };
+  var ORD = T({ 2: '2ª', 3: '3ª', 4: '4ª', 5: '5ª', 6: '6ª', 7: '7ª', 8: '8ª' }, ORD_EN);
 
   /* Expuesto para tools/verificar-fichas-intervalos.js --web: permite auditar
      miles de hojas sin pasar por la interfaz. */
@@ -399,53 +409,53 @@
 
     cont.innerHTML =
       '<div class="tm-fg">'
-      + (soloPractica ? '' : '<div class="tm-fg-fila"><span class="tm-fg-lbl">Cómo quieres usarlo</span>'
+      + (soloPractica ? '' : '<div class="tm-fg-fila"><span class="tm-fg-lbl">' + T('Cómo quieres usarlo', 'How do you want to use it') + '</span>'
         + '<div class="tm-fg-ops" data-g="salida">'
-        + botones([{ v: 'ficha', t: 'Ficha para imprimir' }, { v: 'practica', t: 'Practicar en pantalla' }],
+        + botones([{ v: 'ficha', t: T('Ficha para imprimir', 'Printable worksheet') }, { v: 'practica', t: T('Practicar en pantalla', 'Practice on screen') }],
           function (v) { return estado.salida === v; })
         + '</div></div>')
 
-      + '<div class="tm-fg-fila"><span class="tm-fg-lbl">Qué intervalos</span>'
+      + '<div class="tm-fg-fila"><span class="tm-fg-lbl">' + T('Qué intervalos', 'Which intervals') + '</span>'
       + '<div class="tm-fg-ops" data-g="nums">'
       + botones(NUMS.map(function (n) { return { v: n, t: ORD[n] }; }),
         function (v) { return estado.nums.indexOf(Number(v)) >= 0; })
       + '</div></div>'
 
-      + '<div class="tm-fg-fila"><span class="tm-fg-lbl">Qué hay que hacer</span>'
+      + '<div class="tm-fg-fila"><span class="tm-fg-lbl">' + T('Qué hay que hacer', 'What to do') + '</span>'
       + '<div class="tm-fg-ops" data-g="modo">'
-      + botones([{ v: 'analizar', t: 'Analizar el intervalo' }, { v: 'escribir', t: 'Escribir la 2ª nota' }],
+      + botones([{ v: 'analizar', t: T('Analizar el intervalo', 'Identify the interval') }, { v: 'escribir', t: T('Escribir la 2ª nota', 'Write the 2nd note') }],
         function (v) { return estado.modo === v; })
       + '</div></div>'
 
-      + '<div class="tm-fg-fila"><span class="tm-fg-lbl">Dificultad</span>'
+      + '<div class="tm-fg-fila"><span class="tm-fg-lbl">' + T('Dificultad', 'Difficulty') + '</span>'
       + '<div class="tm-fg-ops" data-g="dificultad">'
-      + botones([{ v: 'naturales', t: 'Sin alteraciones' }, { v: 'progresivo', t: 'Progresiva' },
-      { v: 'alteradas', t: 'Con alteraciones' }], function (v) { return estado.dificultad === v; })
+      + botones([{ v: 'naturales', t: T('Sin alteraciones', 'No accidentals') }, { v: 'progresivo', t: T('Progresiva', 'Progressive') },
+      { v: 'alteradas', t: T('Con alteraciones', 'With accidentals') }], function (v) { return estado.dificultad === v; })
       + '</div></div>'
 
-      + '<div class="tm-fg-fila"><span class="tm-fg-lbl">Cuántos ejercicios</span>'
+      + '<div class="tm-fg-fila"><span class="tm-fg-lbl">' + T('Cuántos ejercicios', 'How many exercises') + '</span>'
       + '<div class="tm-fg-ops" data-g="total">'
-      + botones([{ v: 12, t: '12' }, { v: 24, t: '24' }, { v: 42, t: soloPractica ? '42' : '42 (hoja llena)' }],
+      + botones([{ v: 12, t: '12' }, { v: 24, t: '24' }, { v: 42, t: soloPractica ? '42' : T('42 (hoja llena)', '42 (full sheet)') }],
         function (v) { return estado.total === Number(v); })
       // Cantidad libre: en clase se piden cosas como "uno por alumno" y los
       // números redondos no sirven.
-      + '<label class="tm-fg-otro">otro: <input type="number" class="tm-fg-num" min="1" max="' + MAX_EJERCICIOS
-      + '" step="1" value="' + estado.total + '" aria-label="Número de ejercicios"></label>'
+      + '<label class="tm-fg-otro">' + T('otro: ', 'other: ') + '<input type="number" class="tm-fg-num" min="1" max="' + MAX_EJERCICIOS
+      + '" step="1" value="' + estado.total + '" aria-label="' + T('Número de ejercicios', 'Number of exercises') + '"></label>'
       + '</div></div>'
 
       + '<div class="tm-fg-acciones" data-zona="ficha">'
-      + '<button type="button" class="tm-fg-btn tm-fg-btn-1" data-a="generar">Generar ficha nueva</button>'
-      + '<button type="button" class="tm-fg-btn tm-fg-btn-2" data-a="soluciones">Ver soluciones</button>'
-      + '<button type="button" class="tm-fg-btn tm-fg-btn-2" data-a="imprimir">Imprimir</button>'
+      + '<button type="button" class="tm-fg-btn tm-fg-btn-1" data-a="generar">' + T('Generar ficha nueva', 'Generate new worksheet') + '</button>'
+      + '<button type="button" class="tm-fg-btn tm-fg-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show answers') + '</button>'
+      + '<button type="button" class="tm-fg-btn tm-fg-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<div class="tm-fg-acciones" data-zona="practica" hidden>'
-      + '<button type="button" class="tm-fg-btn tm-fg-btn-1" data-a="empezar">Empezar otra tanda</button>'
+      + '<button type="button" class="tm-fg-btn tm-fg-btn-1" data-a="empezar">' + T('Empezar otra tanda', 'Start another round') + '</button>'
       + '</div>'
       + '<div class="tm-fg-aviso" hidden></div>'
       + '</div>'
 
       + '<div class="tm-fg-hoja"><div class="tm-fg-cab"><p class="tm-fg-tit"></p><span class="tm-fg-ref"></span></div>'
-      + '<div class="tm-fg-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
+      + '<div class="tm-fg-datos"><span>' + T('Nombre:', 'Name:') + '</span><span>' + T('Curso:', 'Class:') + '</span><span>' + T('Fecha:', 'Date:') + '</span></div>'
       + '<p class="tm-fg-instr"></p><div class="tm-fg-sistemas"></div></div>'
 
       + '<div class="tm-fg-practica" hidden></div>';
@@ -462,9 +472,10 @@
 
     function rotulo() {
       var ns = estado.nums.slice().sort(function (a, b) { return a - b; });
-      if (ns.length === 1) return 'intervalos de ' + ORD[ns[0]];
-      if (ns.length === NUMS.length) return 'intervalos de 2ª a 8ª';
-      return 'intervalos de ' + ns.map(function (n) { return ORD[n]; }).join(', ').replace(/, ([^,]*)$/, ' y $1');
+      if (ns.length === 1) return T('intervalos de ' + ORD[ns[0]], 'intervals: ' + ORD[ns[0]]);
+      if (ns.length === NUMS.length) return T('intervalos de 2ª a 8ª', 'intervals: 2nd to 8th');
+      return T('intervalos de ' + ns.map(function (n) { return ORD[n]; }).join(', ').replace(/, ([^,]*)$/, ' y $1'),
+               'intervals: ' + ns.map(function (n) { return ORD[n]; }).join(', ').replace(/, ([^,]*)$/, ns.length > 2 ? ', and $1' : ' and $1'));
     }
 
     function pintar() {
@@ -492,7 +503,7 @@
       var alt = !m[2] ? 0 : (m[2][0] === '#' ? m[2].length : -m[2].length);
       return { l: LETTERS.indexOf(m[1]), alt: alt, oct: Number(m[3]) };
     }
-    var NOMBRE_NOTA = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
+    var NOMBRE_NOTA = T(['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'], ['C', 'D', 'E', 'F', 'G', 'A', 'B']);
     var SIGNO = { '-1': '♭', '0': '', '1': '♯' };
     function nombreEs(n) { return NOMBRE_NOTA[n.l] + (SIGNO[String(n.alt)] || ''); }
 
@@ -592,12 +603,12 @@
 
       var h = '<div class="tm-fg-barra"><div class="tm-fg-relleno" style="width:'
         + Math.round(100 * pr.i / ejercicios.length) + '%"></div></div>'
-        + '<div class="tm-fg-marcador"><span>Ejercicio ' + (pr.i + 1) + ' de ' + ejercicios.length + '</span>'
-        + '<span>' + pr.aciertos + ' acierto' + (pr.aciertos === 1 ? '' : 's') + '</span></div>';
+        + '<div class="tm-fg-marcador"><span>' + T('Ejercicio ' + (pr.i + 1) + ' de ' + ejercicios.length, 'Exercise ' + (pr.i + 1) + ' of ' + ejercicios.length) + '</span>'
+        + '<span>' + T(pr.aciertos + ' acierto' + (pr.aciertos === 1 ? '' : 's'), pr.aciertos + ' correct') + '</span></div>';
 
       if (esAnalizar) {
-        h += '<p class="tm-fg-enunciado">¿Qué intervalo es?</p>'
-          + '<p class="tm-fg-pista">Elige el número, el tipo y si es ascendente o descendente.</p>';
+        h += '<p class="tm-fg-enunciado">' + T('¿Qué intervalo es?', 'What interval is it?') + '</p>'
+          + '<p class="tm-fg-pista">' + T('Elige el número, el tipo y si es ascendente o descendente.', 'Choose the number, the quality, and whether it is ascending or descending.') + '</p>';
       }
       // En "escribir" el enunciado va en su barra debajo del pentagrama, como en
       // el test de construir intervalos.
@@ -636,7 +647,7 @@
         }).join('') + '</div>';
 
         h += '<div class="tm-fg-grid" data-r="dir">' + [
-          { v: 1, t: 'Ascendente ↑' }, { v: -1, t: 'Descendente ↓' }
+          { v: 1, t: T('Ascendente ↑', 'Ascending ↑') }, { v: -1, t: T('Descendente ↓', 'Descending ↓') }
         ].map(function (o) {
           var cls = 'tm-fg-resp';
           if (hecho) {
@@ -652,8 +663,8 @@
         h += '<div class="tm-fg-dir">' + nombreEs(parseKey(e.n1.key)) + ' &mdash; <strong>'
           + e.larga + '</strong> &mdash; ' + (e.dir > 0 ? '↑' : '↓') + '</div>'
           + '<p class="tm-fg-pista tm-fg-hint">' + (pr.fila === null
-            ? 'Pulsa en el pentagrama para colocar la segunda nota'
-            : 'Pulsa de nuevo para cambiar la nota') + '</p>'
+            ? T('Pulsa en el pentagrama para colocar la segunda nota', 'Tap the staff to place the second note')
+            : T('Pulsa de nuevo para cambiar la nota', 'Tap again to change the note')) + '</p>'
           + '<div class="tm-fg-grid" data-r="alt">' + [
             { v: -1, t: '♭' }, { v: 0, t: '♮' }, { v: 1, t: '♯' }
           ].map(function (o) {
@@ -669,8 +680,8 @@
         + '<div class="tm-fg-acciones">'
         + (hecho
           ? '<button type="button" class="tm-fg-btn tm-fg-btn-1" data-a="siguiente">'
-          + (pr.i + 1 < ejercicios.length ? 'Siguiente' : 'Ver resultado') + '</button>'
-          : '<button type="button" class="tm-fg-btn tm-fg-btn-1" data-a="comprobar">Comprobar</button>')
+          + (pr.i + 1 < ejercicios.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See result')) + '</button>'
+          : '<button type="button" class="tm-fg-btn tm-fg-btn-1" data-a="comprobar">' + T('Comprobar', 'Check') + '</button>')
         + '</div>';
 
       elPra.innerHTML = h;
@@ -694,10 +705,10 @@
         var bien = pr.acierto;
         fb.className = 'tm-fg-fb ver ' + (bien ? 'bien' : 'mal');
         fb.textContent = bien
-          ? '¡Correcto! ' + e.larga + ' ' + (e.dir > 0 ? 'ascendente' : 'descendente') + '.'
+          ? T('¡Correcto! ' + e.larga + ' ' + (e.dir > 0 ? 'ascendente' : 'descendente') + '.', 'Correct! ' + e.larga + ', ' + (e.dir > 0 ? 'ascending' : 'descending') + '.')
           : (esAnalizar
-            ? 'Era una ' + e.larga + ' ' + (e.dir > 0 ? 'ascendente' : 'descendente') + '.'
-            : 'La segunda nota era ' + nombreEs(sol) + '.');
+            ? T('Era una ' + e.larga + ' ' + (e.dir > 0 ? 'ascendente' : 'descendente') + '.', 'It was: ' + e.larga + ', ' + (e.dir > 0 ? 'ascending' : 'descending') + '.')
+            : T('La segunda nota era ' + nombreEs(sol) + '.', 'The second note was ' + nombreEs(sol) + '.'));
       }
     }
 
@@ -741,13 +752,13 @@
         elPra.innerHTML = '<div class="tm-fg-final">'
           + '<div class="tm-fg-nota">' + pr.aciertos + '/' + ejercicios.length + '</div>'
           + '<div class="tm-fg-marcas">'
-          + '<span class="tm-fg-bien">✓ ' + pr.aciertos + ' bien</span>'
-          + '<span class="tm-fg-mal">✗ ' + fallos + ' mal</span>'
+          + '<span class="tm-fg-bien">✓ ' + pr.aciertos + T(' bien', ' right') + '</span>'
+          + '<span class="tm-fg-mal">✗ ' + fallos + T(' mal', ' wrong') + '</span>'
           + '</div>'
-          + '<p>' + pct + '% de aciertos'
-          + (pct === 100 ? ' — perfecto.' : pct >= 70 ? ' — bien.' : ' — repasa y vuelve a intentarlo.') + '</p>'
-          + (lista.length ? '<p class="tm-fg-fallos"><strong>Para repasar:</strong> ' + lista.join(' · ') + '</p>' : '')
-          + '<button type="button" class="tm-fg-btn tm-fg-btn-1" data-a="empezar">Otra tanda</button></div>';
+          + '<p>' + T(pct + '% de aciertos', pct + '% correct')
+          + (pct === 100 ? T(' — perfecto.', ' — perfect.') : pct >= 70 ? T(' — bien.', ' — good.') : T(' — repasa y vuelve a intentarlo.', ' — review and try again.')) + '</p>'
+          + (lista.length ? '<p class="tm-fg-fallos"><strong>' + T('Para repasar:', 'To review:') + '</strong> ' + lista.join(' · ') + '</p>' : '')
+          + '<button type="button" class="tm-fg-btn tm-fg-btn-1" data-a="empezar">' + T('Otra tanda', 'Another round') + '</button></div>';
       }
     }
 
@@ -767,28 +778,33 @@
     function generar(semilla) {
       if (!estado.nums.length) {
         elAviso.hidden = false;
-        elAviso.textContent = 'Elige al menos un número de intervalo.';
+        elAviso.textContent = T('Elige al menos un número de intervalo.', 'Choose at least one interval number.');
         return;
       }
       estado.semilla = semilla || Math.floor(Math.random() * 90000 + 10000);
       estado.solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show answers');
 
       var ns = estado.nums.slice().sort(function (a, b) { return a - b; });
       ejercicios = generarHoja(ns, estado.total, estado.semilla, estado.dificultad);
 
       elAviso.hidden = ejercicios.length >= estado.total;
       if (ejercicios.length < estado.total) {
-        elAviso.textContent = 'Con estas opciones solo existen ' + ejercicios.length
+        elAviso.textContent = T('Con estas opciones solo existen ' + ejercicios.length
           + ' intervalos distintos sin repetir notas, así que ' + (estado.salida === 'practica'
-            ? 'la tanda lleva esos.' : 'la ficha lleva esos.');
+            ? 'la tanda lleva esos.' : 'la ficha lleva esos.'),
+          'With these options there are only ' + ejercicios.length
+          + ' distinct intervals without repeating notes, so the ' + (estado.salida === 'practica'
+            ? 'round contains just those.' : 'worksheet contains just those.'));
       }
 
-      elTit.textContent = (estado.modo === 'analizar' ? 'Analizar ' : 'Escribir ') + rotulo();
-      elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + estado.semilla;
+      elTit.textContent = (estado.modo === 'analizar' ? T('Analizar ', 'Identify ') : T('Escribir ', 'Write ')) + rotulo();
+      elRef.textContent = T('teoriamusical.com.es · hoja n.º ', 'teoriamusical.com.es/en · sheet no. ') + estado.semilla;
       elInstr.textContent = estado.modo === 'analizar'
-        ? 'Escribe debajo de cada intervalo qué intervalo es y si es ascendente (↑) o descendente (↓).'
-        : 'Escribe la segunda nota de cada intervalo. La flecha indica si sube o baja; no olvides la alteración.';
+        ? T('Escribe debajo de cada intervalo qué intervalo es y si es ascendente (↑) o descendente (↓).',
+            'Under each interval, write which interval it is (M = major, m = minor, P = perfect, A = augmented, d = diminished; e.g. M3, P5) and whether it ascends (↑) or descends (↓).')
+        : T('Escribe la segunda nota de cada intervalo. La flecha indica si sube o baja; no olvides la alteración.',
+            'Write the second note of each interval. The arrow shows whether it goes up or down; do not forget the accidental.');
 
       aplicarSalida();
       if (estado.salida === 'practica') empezarPractica();
@@ -858,7 +874,7 @@
       else if (accion === 'siguiente') siguiente();
       else if (accion === 'soluciones') {
         estado.solucion = !estado.solucion;
-        btn.textContent = estado.solucion ? 'Ocultar soluciones' : 'Ver soluciones';
+        btn.textContent = estado.solucion ? T('Ocultar soluciones', 'Hide answers') : T('Ver soluciones', 'Show answers');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

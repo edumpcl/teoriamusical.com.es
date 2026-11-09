@@ -15,6 +15,8 @@
    - el tempo cambia un poco de una melodía a otra, para que no se adivine por la velocidad. */
 (function () {
   'use strict';
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
 
   /* Ritmos (unidad = corchea; 0,5 = semicorchea, 1,5 = corchea con puntillo). Las semicorcheas van en
      los grupos propios de cada pulso: cuatro o dos+corchea en el de negra, dos en lugar de una corchea
@@ -107,6 +109,17 @@
 
   /* Por qué es el compás que es (y, si se ha fallado, en qué se diferencia del elegido) */
   function explicar(c, elegido) {
+    if (EN) {
+      var tipoEn = function (x) { return x.tipo === 'simple' ? 'simple' : 'compound'; };
+      var unit = c.tipo === 'simple' ? 'quarter-note' : 'dotted-quarter-note';
+      var subEn = c.tipo === 'simple' ? 'two eighth notes' : 'three eighth notes';
+      var tx = 'It is a ' + tipoEn(c) + ' meter with ' + c.tiempos + ' beats: the accent comes back every ' + c.tiempos + ' beats (' + unit + ' beats), and each beat divides into ' + subEn + '.';
+      if (!elegido || elegido === c) return tx;
+      if (elegido.tiempos === c.tiempos) tx += ' ' + nombre(elegido) + ' also has ' + c.tiempos + ' beats, but it is ' + tipoEn(elegido) + ': its beats divide into ' + (elegido.tipo === 'simple' ? 'two' : 'three') + ', not ' + (c.tipo === 'simple' ? 'two' : 'three') + '.';
+      else if (elegido.tipo === c.tipo) tx += ' ' + nombre(elegido) + ' is also ' + tipoEn(c) + ', but it has ' + elegido.tiempos + ' beats: count the beats from one accent to the next.';
+      else if (elegido.num * (elegido.den === 4 ? 2 : 1) === c.num * (c.den === 4 ? 2 : 1)) tx += ' ' + nombre(elegido) + ' lasts the same (' + (c.num * (c.den === 4 ? 2 : 1)) + ' eighth notes), but it groups them differently: ' + (elegido.tipo === 'simple' ? 'in twos' : 'in threes') + ' instead of ' + (c.tipo === 'simple' ? 'in twos' : 'in threes') + '.';
+      return tx;
+    }
     var unidad = c.tipo === 'simple' ? 'negra' : 'negra con puntillo';
     var sub = c.tipo === 'simple' ? 'dos corcheas' : 'tres corcheas';
     var txt = 'Es un compás ' + c.tipo + ' de ' + c.tiempos + ' tiempos: el acento vuelve cada ' + c.tiempos + ' pulsos (de ' + unidad + '), y cada pulso se divide en ' + sub + '.';
@@ -131,9 +144,9 @@
 
   /* Niveles: 1 = simples, 2 = compuestos, 3 = los seis mezclados */
   var NIVELES = [
-    { nombre: 'Simples', desc: '2/4, 3/4 y 4/4', tipos: ['simple'] },
-    { nombre: 'Compuestos', desc: '6/8, 9/8 y 12/8', tipos: ['compuesto'] },
-    { nombre: 'Simples y compuestos', desc: 'Los seis compases', tipos: ['simple', 'compuesto'] }
+    { nombre: T('Simples', 'Simple'), desc: T('2/4, 3/4 y 4/4', '2/4, 3/4 and 4/4'), tipos: ['simple'] },
+    { nombre: T('Compuestos', 'Compound'), desc: T('6/8, 9/8 y 12/8', '6/8, 9/8 and 12/8'), tipos: ['compuesto'] },
+    { nombre: T('Simples y compuestos', 'Simple and compound'), desc: T('Los seis compases', 'All six time signatures'), tipos: ['simple', 'compuesto'] }
   ];
 
   function tmAudCompasEngine(containerId) {
@@ -149,10 +162,11 @@
 
     function inicio() {
       wrap.innerHTML = '<div class="tm-card"><div class="tm-aud-ini">' +
-        '<h2 class="tm-aud-tit">Adivina el compás — ' + TOTAL + ' melodías</h2>' +
-        '<p class="tm-aud-sub">Escucharás una melodía de 8 compases al piano, con el <strong>1.er tiempo de cada compás acentuado</strong>, y tendrás que decidir en qué compás está. Puedes escuchar cada melodía hasta ' + MAX_ESCUCHAS + ' veces y responder mientras suena. Elige el nivel para empezar:</p>' +
-        '<div class="tm-audc-niveles" role="group" aria-label="Nivel">' + NIVELES.map(function (v, i) {
-          return '<button class="tm-aud-opt tm-audc-niv" type="button" data-n="' + i + '"><span>Nivel ' + (i + 1) + '</span><b>' + v.nombre + '</b><span>' + v.desc + '</span></button>';
+        '<h2 class="tm-aud-tit">' + T('Adivina el compás — ' + TOTAL + ' melodías', 'Guess the time signature — ' + TOTAL + ' melodies') + '</h2>' +
+        '<p class="tm-aud-sub">' + T('Escucharás una melodía de 8 compases al piano, con el <strong>1.er tiempo de cada compás acentuado</strong>, y tendrás que decidir en qué compás está. Puedes escuchar cada melodía hasta ' + MAX_ESCUCHAS + ' veces y responder mientras suena. Elige el nivel para empezar:',
+          'You will hear an 8-measure melody on the piano, with the <strong>first beat of every measure accented</strong>, and you have to decide which time signature it is in. You can listen to each melody up to ' + MAX_ESCUCHAS + ' times and answer while it plays. Choose a level to start:') + '</p>' +
+        '<div class="tm-audc-niveles" role="group" aria-label="' + T('Nivel', 'Level') + '">' + NIVELES.map(function (v, i) {
+          return '<button class="tm-aud-opt tm-audc-niv" type="button" data-n="' + i + '"><span>' + T('Nivel ', 'Level ') + (i + 1) + '</span><b>' + v.nombre + '</b><span>' + v.desc + '</span></button>';
         }).join('') + '</div></div></div>';
       Array.prototype.forEach.call(wrap.querySelectorAll('.tm-audc-niv'), function (b) {
         b.addEventListener('click', function () { empezar(NIVELES[+b.dataset.n]); });
@@ -171,7 +185,7 @@
     function botones(tipo, lbl) {
       return '<div class="tm-audc-grupo"><span class="tm-audc-lbl">' + lbl + '</span>' +
         COMPASES.filter(function (c) { return c.tipo === tipo; }).map(function (c) {
-          return '<button class="tm-aud-opt" type="button" data-c="' + COMPASES.indexOf(c) + '" aria-label="' + c.num + ' por ' + c.den + '">' + nombre(c) + '</button>';
+          return '<button class="tm-aud-opt" type="button" data-c="' + COMPASES.indexOf(c) + '" aria-label="' + c.num + T(' por ', ' over ') + c.den + '">' + nombre(c) + '</button>';
         }).join('') + '</div>';
     }
     function montar() {
@@ -180,12 +194,12 @@
         '<span class="tm-aud-cnt" id="' + uid + '_cnt"></span></div><span class="tm-aud-badge" id="' + uid + '_badge">✓ 0</span></div>' +
         '<div class="tm-aud-play"><button class="tm-aud-btnplay" id="' + uid + '_play" type="button"></button>' +
         '<p class="tm-aud-estado" id="' + uid + '_estado" aria-live="polite"></p></div>' +
-        '<div id="' + uid + '_opts" role="group" aria-label="Compás">' +
-        (nivel.tipos.indexOf('simple') >= 0 ? botones('simple', 'Simples') : '') + (nivel.tipos.indexOf('compuesto') >= 0 ? botones('compuesto', 'Compuestos') : '') + '</div>' +
+        '<div id="' + uid + '_opts" role="group" aria-label="' + T('Compás', 'Time signature') + '">' +
+        (nivel.tipos.indexOf('simple') >= 0 ? botones('simple', T('Simples', 'Simple')) : '') + (nivel.tipos.indexOf('compuesto') >= 0 ? botones('compuesto', T('Compuestos', 'Compound')) : '') + '</div>' +
         '<div class="tm-aud-fb" id="' + uid + '_fb"></div>' +
         '<div class="tm-aud-part" id="' + uid + '_part"></div>' +
-        '<div class="tm-aud-acc" id="' + uid + '_acc"><button class="tm-aud-sec" id="' + uid + '_otra" type="button">▶ Escuchar otra vez</button>' +
-        '<button class="tm-aud-nxt" id="' + uid + '_nxt" type="button">Siguiente →</button></div></div>';
+        '<div class="tm-aud-acc" id="' + uid + '_acc"><button class="tm-aud-sec" id="' + uid + '_otra" type="button">' + T('▶ Escuchar otra vez', '▶ Listen again') + '</button>' +
+        '<button class="tm-aud-nxt" id="' + uid + '_nxt" type="button">' + T('Siguiente →', 'Next →') + '</button></div></div>';
       $('_play').addEventListener('click', function () { if (!respondido && escuchas < MAX_ESCUCHAS) { escuchas++; tocar(); } });
       $('_otra').addEventListener('click', tocar);
       $('_nxt').addEventListener('click', siguiente);
@@ -198,10 +212,10 @@
       n++; escuchas = 0; respondido = false;
       mel = generar(orden[n - 1]);
       $('_fill').style.width = ((n - 1) / TOTAL * 100) + '%';
-      $('_cnt').textContent = nivel.nombre + ' · Melodía ' + n + ' de ' + TOTAL;
+      $('_cnt').textContent = nivel.nombre + T(' · Melodía ' + n + ' de ' + TOTAL, ' · Melody ' + n + ' of ' + TOTAL);
       $('_fb').className = 'tm-aud-fb'; $('_part').className = 'tm-aud-part'; $('_acc').className = 'tm-aud-acc';
       opciones().forEach(function (b) { b.className = 'tm-aud-opt'; b.disabled = true; });
-      $('_estado').textContent = 'Pulsa para escuchar la melodía.';
+      $('_estado').textContent = T('Pulsa para escuchar la melodía.', 'Press to listen to the melody.');
       actualizarPlay();
     }
     function actualizarPlay() {
@@ -209,7 +223,7 @@
       if (respondido) { b.style.display = 'none'; return; }
       b.style.display = '';
       b.disabled = !!sonando || quedan <= 0;
-      b.textContent = sonando ? 'Sonando…' : escuchas === 0 ? '▶ Escuchar' : quedan > 0 ? '▶ Escuchar otra vez (' + quedan + (quedan === 1 ? ' vez más)' : ' veces más)') : 'Sin más escuchas';
+      b.textContent = sonando ? T('Sonando…', 'Playing…') : escuchas === 0 ? T('▶ Escuchar', '▶ Listen') : quedan > 0 ? T('▶ Escuchar otra vez (' + quedan + (quedan === 1 ? ' vez más)' : ' veces más)'), '▶ Listen again (' + quedan + (quedan === 1 ? ' more time)' : ' more times)')) : T('Sin más escuchas', 'No listens left');
     }
     function parar() { gen++; sonando = 0; if (window.tmPiano && window.tmPiano.stopAll) window.tmPiano.stopAll(); }
     function tocar() {
@@ -217,18 +231,18 @@
       var g = gen;
       sonando = 1; actualizarPlay();
       if (!respondido) opciones().forEach(function (b) { b.disabled = false; });   // se puede responder mientras suena
-      $('_estado').textContent = respondido ? '' : 'Suena la melodía… cuenta los pulsos de un acento al siguiente.';
+      $('_estado').textContent = respondido ? '' : T('Suena la melodía… cuenta los pulsos de un acento al siguiente.', 'The melody is playing… count the beats from one accent to the next.');
       window.tmPiano.playEvents(mel.ev).then(function (d) {
         if (g !== gen) return;
         if (!d) {
           sonando = 0; escuchas--; actualizarPlay();
-          $('_estado').textContent = 'No se ha podido reproducir el sonido. Comprueba la conexión y vuelve a pulsar.';
+          $('_estado').textContent = T('No se ha podido reproducir el sonido. Comprueba la conexión y vuelve a pulsar.', 'The sound could not be played. Check your connection and press again.');
           return;
         }
         setTimeout(function () {
           if (g !== gen) return;
           sonando = 0;
-          if (!respondido) $('_estado').textContent = escuchas < MAX_ESCUCHAS ? '¿En qué compás está?' : 'Ya no quedan escuchas: ¿en qué compás está?';
+          if (!respondido) $('_estado').textContent = escuchas < MAX_ESCUCHAS ? T('¿En qué compás está?', 'What time signature is it in?') : T('Ya no quedan escuchas: ¿en qué compás está?', 'No listens left: what time signature is it in?');
           actualizarPlay();
         }, (mel.dur + 0.4) * 1000);
       });
@@ -247,7 +261,7 @@
       });
       var fb = $('_fb');
       fb.className = 'tm-aud-fb tm-show ' + (ok ? 'tm-ok' : 'tm-ko');
-      fb.innerHTML = (ok ? '<strong>✓ ¡Correcto!</strong> ' : '<strong>✗ No.</strong> ') + 'Estaba en <strong>' + nombre(mel.compas) + '</strong>.' +
+      fb.innerHTML = (ok ? T('<strong>✓ ¡Correcto!</strong> ', '<strong>✓ Correct!</strong> ') : '<strong>✗ No.</strong> ') + T('Estaba en <strong>', 'It was in <strong>') + nombre(mel.compas) + '</strong>.' +
         '<br><span style="font-weight:400">' + explicar(mel.compas, ok ? null : COMPASES.filter(function (x) { return x.num === c.num; })[0]) + '</span>';
       $('_estado').textContent = '';
       actualizarPlay();
@@ -257,19 +271,19 @@
       part.innerHTML = fs.map(function (f, k) { return '<div id="' + uid + '_s' + k + '"></div>'; }).join('');
       window.tmNotacion.listo().then(function () {
         fs.forEach(function (f, k) {
-          window.tmNotacion.dibujarAAncho($('_s' + k), f, ancho, { escala: 0.9, id: uid + 's' + k, alt: 'La melodía escrita, compases ' + (k * porFila + 1) + ' a ' + (k * porFila + porFila) });
+          window.tmNotacion.dibujarAAncho($('_s' + k), f, ancho, { escala: 0.9, id: uid + 's' + k, alt: T('La melodía escrita, compases ' + (k * porFila + 1) + ' a ' + (k * porFila + porFila), 'The written melody, measures ' + (k * porFila + 1) + ' to ' + (k * porFila + porFila)) });
         });
       }).catch(function () {});
       $('_acc').className = 'tm-aud-acc tm-show';
-      if (n >= TOTAL) $('_nxt').textContent = 'Ver resultado →';
+      if (n >= TOTAL) $('_nxt').textContent = T('Ver resultado →', 'See results →');
     }
     function resultado() {
       parar();
       var sig = NIVELES[NIVELES.indexOf(nivel) + 1];
       wrap.innerHTML = '<div class="tm-card"><div class="tm-aud-score"><b>' + aciertos + '/' + TOTAL + '</b><span>' + Math.round(aciertos / TOTAL * 100) + '%</span>' +
         '<span class="tm-audc-nivres">' + nivel.nombre + ' · ' + nivel.desc + '</span></div>' +
-        '<div class="tm-aud-acc tm-show"><button class="tm-aud-sec" id="' + uid + '_ini" type="button">Elegir nivel</button>' +
-        '<button class="tm-aud-sec" id="' + uid + '_re" type="button">Repetir</button>' +
+        '<div class="tm-aud-acc tm-show"><button class="tm-aud-sec" id="' + uid + '_ini" type="button">' + T('Elegir nivel', 'Choose level') + '</button>' +
+        '<button class="tm-aud-sec" id="' + uid + '_re" type="button">' + T('Repetir', 'Repeat') + '</button>' +
         (sig ? '<button class="tm-aud-nxt" id="' + uid + '_sig" type="button">' + sig.nombre + ' →</button>' : '') + '</div></div>';
       $('_ini').addEventListener('click', inicio);
       $('_re').addEventListener('click', function () { empezar(nivel); });

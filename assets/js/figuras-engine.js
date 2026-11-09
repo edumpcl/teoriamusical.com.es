@@ -21,14 +21,17 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+
   /* ------------------------------------------------------------- teoría */
 
   var FIG = {
-    r: { u: 64, nombre: 'redonda', plural: 'redondas', vf: 'w' },
-    b: { u: 32, nombre: 'blanca', plural: 'blancas', vf: 'h' },
-    n: { u: 16, nombre: 'negra', plural: 'negras', vf: 'q' },
-    c: { u: 8, nombre: 'corchea', plural: 'corcheas', vf: '8' },
-    sc: { u: 4, nombre: 'semicorchea', plural: 'semicorcheas', vf: '16' }
+    r: { u: 64, nombre: T('redonda', 'whole note'), plural: T('redondas', 'whole notes'), vf: 'w' },
+    b: { u: 32, nombre: T('blanca', 'half note'), plural: T('blancas', 'half notes'), vf: 'h' },
+    n: { u: 16, nombre: T('negra', 'quarter note'), plural: T('negras', 'quarter notes'), vf: 'q' },
+    c: { u: 8, nombre: T('corchea', 'eighth note'), plural: T('corcheas', 'eighth notes'), vf: '8' },
+    sc: { u: 4, nombre: T('semicorchea', 'sixteenth note'), plural: T('semicorcheas', 'sixteenth notes'), vf: '16' }
   };
   var ORDEN = ['r', 'b', 'n', 'c', 'sc'];
 
@@ -80,6 +83,13 @@
   function enTiempos(f, html) {
     var F = html ? fraccionHTML : fraccionTexto;
     var ent = Math.floor(f.n / f.d), resto = f.n % f.d;
+    if (EN) {
+      var rEn = resto ? fr(resto, f.d) : null;
+      if (!ent) return F(rEn) + (rEn.n * 2 === rEn.d ? ' beat' : ' of a beat');
+      if (!resto) return ent + (ent === 1 ? ' beat' : ' beats');
+      if (rEn.d === 2) return ent + F(rEn) + ' beats';
+      return ent + ' and ' + F(rEn) + ' beats';
+    }
     var parte = '';
     if (resto) {
       var r = fr(resto, f.d);
@@ -92,11 +102,15 @@
     return resto ? entero + ' y ' + parte : entero;
   }
 
+  /* Inglés: «half note» / «half rest»; con puntillo, «dotted half note». */
+  function figuraRest(f, s) { var n = FIG[f].nombre; return EN && s ? n.replace(/ note$/, ' rest') : n; }
+  function art(n) { return (/^[aeiou]/.test(n) ? 'an ' : 'a ') + n; }
   function nombre(s) {
+    if (EN) return (s.p === 1 ? 'dotted ' : s.p === 2 ? 'double-dotted ' : '') + figuraRest(s.f, s.s);
     return (s.s ? 'silencio de ' : '') + FIG[s.f].nombre
       + (s.p === 1 ? ' con puntillo' : s.p === 2 ? ' con doble puntillo' : '');
   }
-  function conArticulo(s) { return (s.s ? 'un ' : 'una ') + nombre(s); }
+  function conArticulo(s) { return EN ? art(nombre(s)) : (s.s ? 'un ' : 'una ') + nombre(s); }
 
   function mulberry32(a) {
     return function () {
@@ -426,22 +440,40 @@
     r: 'cabeza blanca y sin plica', b: 'cabeza blanca con plica', n: 'cabeza negra con plica',
     c: 'cabeza negra, plica y un corchete', sc: 'cabeza negra, plica y dos corchetes'
   };
+  if (EN) RASGO_FIGURA = {
+    r: 'open notehead and no stem', b: 'open notehead with a stem', n: 'filled notehead with a stem',
+    c: 'filled notehead, stem and one flag', sc: 'filled notehead, stem and two flags'
+  };
   var RASGO_SILENCIO = {
     r: 'un rectángulo que cuelga de la cuarta línea', b: 'un rectángulo apoyado sobre la tercera línea',
     n: 'un trazo vertical en zigzag', c: 'un trazo inclinado con un gancho', sc: 'un trazo inclinado con dos ganchos'
   };
+  if (EN) RASGO_SILENCIO = {
+    r: 'a rectangle hanging from the fourth line', b: 'a rectangle sitting on the third line',
+    n: 'a vertical zigzag stroke', c: 'a slanted stroke with a hook', sc: 'a slanted stroke with two hooks'
+  };
 
-  function frase(s) { return FIG[s.f].nombre + (s.p === 1 ? ' con puntillo' : s.p === 2 ? ' con doble puntillo' : ''); }
+  function frase(s) {
+    if (EN) return (s.p === 1 ? 'dotted ' : s.p === 2 ? 'double-dotted ' : '') + FIG[s.f].nombre;
+    return FIG[s.f].nombre + (s.p === 1 ? ' con puntillo' : s.p === 2 ? ' con doble puntillo' : '');
+  }
 
   function explicarValor(sim, compas, html) {
     var t = COMPASES[compas].tiempo, u = FIG[sim.f].u;
     var b = fr(u, t);
-    var txt = 'En ' + compas + ' el tiempo es la ' + (COMPASES[compas].compuesto ? 'negra con puntillo' : 'negra')
+    var txt = EN
+      ? 'In ' + compas + ' the beat is the ' + (COMPASES[compas].compuesto ? 'dotted quarter note' : 'quarter note')
+        + ', so the ' + figuraRest(sim.f, sim.s) + ' is worth ' + enTiempos(b, html) + '.'
+      : 'En ' + compas + ' el tiempo es la ' + (COMPASES[compas].compuesto ? 'negra con puntillo' : 'negra')
       + ', así que ' + (sim.s ? 'el silencio de ' : 'la ') + FIG[sim.f].nombre + ' vale ' + enTiempos(b, html) + '.';
     if (sim.p) {
       var h = fr(u / 2, t), q = fr(u / 4, t), v = fr(valor(sim), t);
       var F = function (x) { return enTiempos(x, html); };
-      txt += ' El puntillo añade la mitad (' + F(h) + ')'
+      if (EN) txt += ' The dot adds half (' + F(h) + ')'
+        + (sim.p === 2 ? ' and the second dot adds half of what the first one adds (' + F(q) + '): ' + F(b) + ' + ' + F(h) + ' + ' + F(q)
+          : ': ' + F(b) + ' + ' + F(h))
+        + ' = ' + enTiempos(v, html) + '.';
+      else txt += ' El puntillo añade la mitad (' + F(h) + ')'
         + (sim.p === 2 ? ' y el segundo puntillo, la mitad de lo que añade el primero (' + F(q) + '): ' + F(b) + ' + ' + F(h) + ' + ' + F(q)
           : ': ' + F(b) + ' + ' + F(h))
         + ' = ' + enTiempos(v, html) + '.';
@@ -455,6 +487,7 @@
       // Se explica el rasgo que había que mirar, no solo el nombre.
       var s = item.sim;
       var rasgo = s.s ? RASGO_SILENCIO[s.f] : RASGO_FIGURA[s.f];
+      if (EN) return 'It is ' + conArticulo(s) + ': ' + rasgo + (s.p === 1 ? ', and it has a dot' : s.p === 2 ? ', and it has two dots' : '') + '.';
       var puntos = s.p === 1 ? ', y lleva un puntillo' : s.p === 2 ? ', y lleva dos puntillos' : '';
       return 'Es ' + conArticulo(s) + ': ' + rasgo + puntos + '.';
     }
@@ -465,6 +498,16 @@
       if (a.p >= 1) partes.push(u / 2 / vb);
       if (a.p >= 2) partes.push(u / 4 / vb);
       var total = valor(a) / vb;
+      if (EN) {
+        var detalleEn = a.p
+          ? ' The ' + FIG[a.f].nombre + ' is worth ' + partes[0] + ' ' + FIG[item.b].plural + (a.p === 1
+            ? '; the dot adds half (' + partes[1] + '): ' + partes.join(' + ') + ' = ' + total + '.'
+            : '; the dot adds half (' + partes[1] + ') and the second dot adds half of what the first one adds (' + partes[2] + '): ' + partes.join(' + ') + ' = ' + total + '.')
+          : '';
+        return (item.clase === 'cuantas'
+          ? 'In ' + art(frase(a)) + ' there are ' + total + ' ' + FIG[item.b].plural + '.'
+          : total + ' ' + FIG[item.b].plural + ' are worth the same as ' + art(frase(a)) + '.') + detalleEn;
+      }
       var detalle = a.p
         ? ' La ' + FIG[a.f].nombre + ' vale ' + partes[0] + ' ' + FIG[item.b].plural + (a.p === 1
           ? '; el puntillo añade la mitad (' + partes[1] + '): ' + partes.join(' + ') + ' = ' + total + '.'
@@ -477,6 +520,14 @@
     if (item.tipo === 'puntillo') {
       var grupoPuntillo = item.sentido === 'aLigadura' ? item.correcta.grupo : item.grupo;
       var nombresGrupo = grupoPuntillo.map(function (e) { return FIG[e.f].nombre; });
+      if (EN) {
+        var ligadoEn = nombresGrupo.map(art).join(' tied to ');
+        var razonEn = item.sim.p === 1
+          ? 'The dot adds half the value of the note'
+          : 'The first dot adds half the value of the note, and the second adds half of what the first one adds';
+        var abre = conArticulo(item.sim);
+        return abre.charAt(0).toUpperCase() + abre.slice(1) + ' lasts exactly as long as ' + ligadoEn + '. ' + razonEn + ': that is why a dot is just a shorthand way of writing that tie.';
+      }
       var ligado = nombresGrupo.length === 2
         ? 'una ' + nombresGrupo[0] + ' ligada a una ' + nombresGrupo[1]
         : 'una ' + nombresGrupo[0] + ' ligada a una ' + nombresGrupo[1] + ' ligada a una ' + nombresGrupo[2];
@@ -486,13 +537,19 @@
       return conArticulo(item.sim).charAt(0).toUpperCase() + conArticulo(item.sim).slice(1) + ' dura exactamente lo mismo que ' + ligado + '. ' + razon + ': por eso el puntillo no es más que una forma abreviada de escribir esa ligadura.';
     }
     var t = COMPASES[item.compas].tiempo;
-    var uT = 'En ' + item.compas + ' el tiempo es la ' + (COMPASES[item.compas].compuesto ? 'negra con puntillo' : 'negra') + '.';
+    var uT = EN ? 'In ' + item.compas + ' the beat is the ' + (COMPASES[item.compas].compuesto ? 'dotted quarter note' : 'quarter note') + '.'
+      : 'En ' + item.compas + ' el tiempo es la ' + (COMPASES[item.compas].compuesto ? 'negra con puntillo' : 'negra') + '.';
     if (item.tipo === 'sumar') {
       return uT + ' ' + item.elems.map(function (e) { return F(fr(valor(e), t)); }).join(' + ')
         + ' = ' + enTiempos(item.correcta, html) + '.';
     }
     var a = item.curva[0];
     var v0 = fr(valor(item.elems[a]), t), v1 = fr(valor(item.elems[a + 1]), t);
+    if (EN) return item.clase === 'union'
+      ? 'The two notes are the same pitch: it is a tie. The second one is not played again'
+        + (item.barra != null ? ', even though it is on the other side of the bar line,' : '')
+        + ' and their durations add up into a single sound. ' + uT + ' ' + F(v0) + ' + ' + F(v1) + ' = ' + enTiempos(item.correcta, html) + '.'
+      : 'The notes are different: it is a slur, which is played smoothly but does not change the duration. ' + uT + ' The first note lasts ' + enTiempos(item.correcta, html) + '.';
     return item.clase === 'union'
       ? 'Las dos notas son la misma: es una ligadura de unión. La segunda no se vuelve a tocar'
         + (item.barra != null ? ', aunque esté al otro lado de la barra de compás,' : '')
@@ -508,7 +565,7 @@
   /* spec = { compas?, elems: [{f, p, s, k?}], tie?: [i, j], ties?: [[i, j], ...], slur?: [i, j], barra?, w?, escala?, rojo? }
      w = ancho FINAL del dibujo en px (el pentagrama se alarga hasta llenarlo); escala = tamaño (1 = 11 px entre líneas). */
   function dibujar(div, spec) {
-    var T = window.tmNotacion;
+    var TN = window.tmNotacion;
     div.innerHTML = '';
     /* las miniaturas se dibujan sin estar aún en la página: para medir el pentagrama se cuelgan un momento fuera de pantalla */
     var aparte = null;
@@ -551,12 +608,12 @@
     }
     var fila = { clave: 'sol', sinClave: true, sinBarraFinal: true, compases: compases, slurs: slurs };
     if (cifra) { fila.num = Number(cifra[0]); fila.den = Number(cifra[1]); }
-    var op = { escala: esc, id: 'fig', alt: 'Figuras en un pentagrama' };
-    var res = spec.w ? T.dibujarAAncho(div, fila, spec.w, Object.assign(op, { llenar: true })) : T.dibujarSync(div, fila, Object.assign(op, { separacion: 0.5 }));
+    var op = { escala: esc, id: 'fig', alt: T('Figuras en un pentagrama', 'Notes on a staff') };
+    var res = spec.w ? TN.dibujarAAncho(div, fila, spec.w, Object.assign(op, { llenar: true })) : TN.dibujarSync(div, fila, Object.assign(op, { separacion: 0.5 }));
     var svg = res.elemento;
     // el pentagrama siempre a la misma altura (Verovio recorta el SVG a lo que se ve) y con el mismo hueco arriba y abajo
     svg.style.display = 'block';
-    svg.style.margin = Math.round(34 * esc - T.geometria(svg).lineas[0]) + 'px 0 0';
+    svg.style.margin = Math.round(34 * esc - TN.geometria(svg).lineas[0]) + 'px 0 0';
     div.style.height = Math.round(104 * esc) + 'px';   // todas las figuras del mismo tamaño miden lo mismo: los pentagramas quedan a la misma altura
     if (spec.rojo) {
       Array.prototype.forEach.call(svg.querySelectorAll('.note, .rest, .tie, .slur, .beam'), function (g) {
@@ -588,16 +645,17 @@
 
   function enunciado(item, html) {
     switch (item.tipo) {
-      case 'identificar': return item.modo === 'silencios' ? '¿Qué silencio es?' : item.modo === 'figuras' ? '¿Qué figura es?' : '¿Qué es?';
-      case 'valor': return 'En un compás de ' + item.compas + ', ¿cuánto vale ' + (item.sim.s ? 'este silencio' : 'esta figura') + '?';
+      case 'identificar': return item.modo === 'silencios' ? T('¿Qué silencio es?', 'Which rest is it?') : item.modo === 'figuras' ? T('¿Qué figura es?', 'Which note is it?') : T('¿Qué es?', 'What is it?');
+      case 'valor': return T('En un compás de ' + item.compas + ', ¿cuánto vale ' + (item.sim.s ? 'este silencio' : 'esta figura') + '?',
+        'In a measure of ' + item.compas + ', how much is this ' + (item.sim.s ? 'rest' : 'note') + ' worth?');
       case 'equivalencias': return item.clase === 'cuantas'
-        ? '¿Cuántas ' + FIG[item.b].plural + ' hay en una ' + frase(item.a) + '?'
-        : '¿Qué figura equivale a ' + item.k + ' ' + FIG[item.b].plural + '?';
-      case 'sumar': return 'En ' + item.compas + ', ¿cuántos tiempos suman estas figuras?';
+        ? T('¿Cuántas ' + FIG[item.b].plural + ' hay en una ' + frase(item.a) + '?', 'How many ' + FIG[item.b].plural + ' are in ' + art(frase(item.a)) + '?')
+        : T('¿Qué figura equivale a ' + item.k + ' ' + FIG[item.b].plural + '?', 'Which note equals ' + item.k + ' ' + FIG[item.b].plural + '?');
+      case 'sumar': return T('En ' + item.compas + ', ¿cuántos tiempos suman estas figuras?', 'In ' + item.compas + ', how many beats do these notes add up to?');
       case 'puntillo': return item.sentido === 'aLigadura'
-        ? '¿Qué pareja de figuras ligadas dura lo mismo que ' + conArticulo(item.sim) + '?'
-        : '¿Qué figura con puntillo dura lo mismo que estas notas ligadas?';
-      default: return 'En ' + item.compas + ', ¿qué ligadura es y cuánto dura la primera nota?';
+        ? T('¿Qué pareja de figuras ligadas dura lo mismo que ' + conArticulo(item.sim) + '?', 'Which pair of tied notes lasts as long as ' + conArticulo(item.sim) + '?')
+        : T('¿Qué figura con puntillo dura lo mismo que estas notas ligadas?', 'Which dotted note lasts as long as these tied notes?');
+      default: return T('En ' + item.compas + ', ¿qué ligadura es y cuánto dura la primera nota?', 'In ' + item.compas + ', is it a tie or a slur, and how long does the first note last?');
     }
   }
 
@@ -670,57 +728,57 @@
 
   var MODOS = {
     identificar: {
-      tit: 'Identificar figuras y silencios',
-      sub: 'Se muestra un símbolo y hay que decir qué es y si lleva puntillo.',
+      tit: T('Identificar figuras y silencios', 'Identify notes and rests'),
+      sub: T('Se muestra un símbolo y hay que decir qué es y si lleva puntillo.', 'A symbol is shown and you have to say what it is and whether it has a dot.'),
       modos: [
-        { v: { modo: 'figuras' }, t: 'Figuras', d: 'Redonda, blanca, negra, corchea y semicorchea, con y sin puntillo' },
-        { v: { modo: 'silencios' }, t: 'Silencios', d: 'Los silencios de cada figura, con y sin puntillo' },
-        { v: { modo: 'mezcla' }, t: 'Figuras y silencios mezclados', d: 'Hay que decir también si es figura o silencio' }
+        { v: { modo: 'figuras' }, t: T('Figuras', 'Notes'), d: T('Redonda, blanca, negra, corchea y semicorchea, con y sin puntillo', 'Whole, half, quarter, eighth and sixteenth notes, with and without a dot') },
+        { v: { modo: 'silencios' }, t: T('Silencios', 'Rests'), d: T('Los silencios de cada figura, con y sin puntillo', 'The rest for each note value, with and without a dot') },
+        { v: { modo: 'mezcla' }, t: T('Figuras y silencios mezclados', 'Notes and rests mixed'), d: T('Hay que decir también si es figura o silencio', 'You also have to say whether it is a note or a rest') }
       ]
     },
     valor: {
-      tit: '¿Cuánto vale la figura en este compás?',
-      sub: 'El valor depende del compás: la negra con puntillo vale 1 tiempo y medio en 2/4, y 1 tiempo en 6/8.',
+      tit: T('¿Cuánto vale la figura en este compás?', 'How much is the note worth in this measure?'),
+      sub: T('El valor depende del compás: la negra con puntillo vale 1 tiempo y medio en 2/4, y 1 tiempo en 6/8.', 'The value depends on the time signature: the dotted quarter note is worth 1½ beats in 2/4 and 1 beat in 6/8.'),
       modos: [
-        { v: { grupo: 'simples' }, t: 'Compases simples', d: '2/4, 3/4 y 4/4: el tiempo es la negra' },
-        { v: { grupo: 'compuestos' }, t: 'Compases compuestos', d: '6/8, 9/8 y 12/8: el tiempo es la negra con puntillo' },
-        { v: { grupo: 'mezcla' }, t: 'Simples y compuestos', d: 'Fíjate primero en el compás' }
+        { v: { grupo: 'simples' }, t: T('Compases simples', 'Simple meters'), d: T('2/4, 3/4 y 4/4: el tiempo es la negra', '2/4, 3/4 and 4/4: the beat is the quarter note') },
+        { v: { grupo: 'compuestos' }, t: T('Compases compuestos', 'Compound meters'), d: T('6/8, 9/8 y 12/8: el tiempo es la negra con puntillo', '6/8, 9/8 and 12/8: the beat is the dotted quarter note') },
+        { v: { grupo: 'mezcla' }, t: T('Simples y compuestos', 'Simple and compound'), d: T('Fíjate primero en el compás', 'Look at the time signature first') }
       ]
     },
     equivalencias: {
-      tit: 'Equivalencias entre figuras',
-      sub: 'Cuántas figuras de un tipo caben en otra, también con puntillo y doble puntillo.',
+      tit: T('Equivalencias entre figuras', 'Note value equivalences'),
+      sub: T('Cuántas figuras de un tipo caben en otra, también con puntillo y doble puntillo.', 'How many notes of one value fit in another, also with dots and double dots.'),
       modos: [
-        { v: { clase: 'cuantas' }, t: '¿Cuántas caben?', d: '¿Cuántas corcheas hay en una blanca con puntillo?' },
-        { v: { clase: 'que' }, t: '¿Qué figura es?', d: '¿Qué figura equivale a tres negras?' },
-        { v: { clase: 'mezcla' }, t: 'Las dos preguntas mezcladas', d: '' }
+        { v: { clase: 'cuantas' }, t: T('¿Cuántas caben?', 'How many fit?'), d: T('¿Cuántas corcheas hay en una blanca con puntillo?', 'How many eighth notes are in a dotted half note?') },
+        { v: { clase: 'que' }, t: T('¿Qué figura es?', 'Which note is it?'), d: T('¿Qué figura equivale a tres negras?', 'Which note equals three quarter notes?') },
+        { v: { clase: 'mezcla' }, t: T('Las dos preguntas mezcladas', 'Both questions mixed'), d: '' }
       ]
     },
     sumar: {
-      tit: 'Sumar las figuras de un compás',
-      sub: 'Varias figuras y silencios seguidos: ¿cuántos tiempos suman en ese compás?',
+      tit: T('Sumar las figuras de un compás', 'Add up the notes in a measure'),
+      sub: T('Varias figuras y silencios seguidos: ¿cuántos tiempos suman en ese compás?', 'Several notes and rests in a row: how many beats do they add up to in that measure?'),
       modos: [
-        { v: { grupo: 'simples' }, t: 'Compases simples', d: '2/4, 3/4 y 4/4' },
-        { v: { grupo: 'compuestos' }, t: 'Compases compuestos', d: '6/8, 9/8 y 12/8' },
-        { v: { grupo: 'mezcla' }, t: 'Simples y compuestos', d: '' }
+        { v: { grupo: 'simples' }, t: T('Compases simples', 'Simple meters'), d: '2/4, 3/4 ' + T('y', 'and') + ' 4/4' },
+        { v: { grupo: 'compuestos' }, t: T('Compases compuestos', 'Compound meters'), d: '6/8, 9/8 ' + T('y', 'and') + ' 12/8' },
+        { v: { grupo: 'mezcla' }, t: T('Simples y compuestos', 'Simple and compound'), d: '' }
       ]
     },
     ligaduras: {
-      tit: 'Ligadura de unión o de expresión',
-      sub: 'Hay que decir qué ligadura es y cuánto dura la primera nota: la de unión suma las duraciones y la de expresión no.',
+      tit: T('Ligadura de unión o de expresión', 'Tie or slur'),
+      sub: T('Hay que decir qué ligadura es y cuánto dura la primera nota: la de unión suma las duraciones y la de expresión no.', 'You have to say which one it is and how long the first note lasts: a tie adds the durations and a slur does not.'),
       modos: [
-        { v: { grupo: 'simples' }, t: 'Compases simples', d: '2/4, 3/4 y 4/4' },
-        { v: { grupo: 'compuestos' }, t: 'Compases compuestos', d: '6/8, 9/8 y 12/8' },
-        { v: { grupo: 'mezcla' }, t: 'Simples y compuestos', d: '' }
+        { v: { grupo: 'simples' }, t: T('Compases simples', 'Simple meters'), d: '2/4, 3/4 ' + T('y', 'and') + ' 4/4' },
+        { v: { grupo: 'compuestos' }, t: T('Compases compuestos', 'Compound meters'), d: '6/8, 9/8 ' + T('y', 'and') + ' 12/8' },
+        { v: { grupo: 'mezcla' }, t: T('Simples y compuestos', 'Simple and compound'), d: '' }
       ]
     },
     puntillo: {
-      tit: 'El puntillo es una ligadura',
-      sub: 'Toda figura con puntillo suena exactamente igual que una pareja de figuras ligadas (con doble puntillo, un trío). No depende del compás.',
+      tit: T('El puntillo es una ligadura', 'A dot is a tie'),
+      sub: T('Toda figura con puntillo suena exactamente igual que una pareja de figuras ligadas (con doble puntillo, un trío). No depende del compás.', 'Every dotted note sounds exactly like a pair of tied notes (with a double dot, a trio). It does not depend on the time signature.'),
       modos: [
-        { v: { clase: 'aLigadura' }, t: 'De puntillo a ligadura', d: 'Se ve la figura con puntillo: hay que elegir la pareja ligada equivalente' },
-        { v: { clase: 'aFigura' }, t: 'De ligadura a puntillo', d: 'Se ven las notas ligadas: hay que elegir la figura con puntillo equivalente' },
-        { v: { clase: 'mezcla' }, t: 'Los dos sentidos mezclados', d: '' }
+        { v: { clase: 'aLigadura' }, t: T('De puntillo a ligadura', 'From dot to tie'), d: T('Se ve la figura con puntillo: hay que elegir la pareja ligada equivalente', 'You see the dotted note: choose the equivalent tied pair') },
+        { v: { clase: 'aFigura' }, t: T('De ligadura a puntillo', 'From tie to dot'), d: T('Se ven las notas ligadas: hay que elegir la figura con puntillo equivalente', 'You see the tied notes: choose the equivalent dotted note') },
+        { v: { clase: 'mezcla' }, t: T('Los dos sentidos mezclados', 'Both directions mixed'), d: '' }
       ]
     }
   };
@@ -785,24 +843,24 @@
       var item = cola[pos];
       var secciones = [];
       if (tipo === 'identificar') {
-        if (item.modo === 'mezcla') secciones.push({ g: 'clase', q: '¿Figura o silencio?', ops: ['Figura', 'Silencio'] });
-        secciones.push({ g: 'cual', q: item.modo === 'silencios' ? '¿De qué figura?' : '¿Cuál?', ops: ORDEN.map(function (f) { var n = FIG[f].nombre; return n.charAt(0).toUpperCase() + n.slice(1); }) });
-        secciones.push({ g: 'punt', q: '¿Puntillo?', ops: ['Sin puntillo', 'Con puntillo', 'Doble puntillo'] });
+        if (item.modo === 'mezcla') secciones.push({ g: 'clase', q: T('¿Figura o silencio?', 'Note or rest?'), ops: [T('Figura', 'Note'), T('Silencio', 'Rest')] });
+        secciones.push({ g: 'cual', q: item.modo === 'silencios' ? T('¿De qué figura?', 'Which note value?') : T('¿Cuál?', 'Which one?'), ops: ORDEN.map(function (f) { var n = FIG[f].nombre; return n.charAt(0).toUpperCase() + n.slice(1); }) });
+        secciones.push({ g: 'punt', q: T('¿Puntillo?', 'Dot?'), ops: [T('Sin puntillo', 'No dot'), T('Con puntillo', 'Dotted'), T('Doble puntillo', 'Double-dotted')] });
       } else if (tipo === 'ligaduras') {
-        secciones.push({ g: 'clase', q: '¿Qué ligadura es?', ops: ['De unión', 'De expresión'] });
-        secciones.push({ g: 'val', q: '¿Cuánto dura la primera nota?', html: botonesFr(item, 'val') });
+        secciones.push({ g: 'clase', q: T('¿Qué ligadura es?', 'Which one is it?'), ops: [T('De unión', 'Tie'), T('De expresión', 'Slur')] });
+        secciones.push({ g: 'val', q: T('¿Cuánto dura la primera nota?', 'How long is the first note?'), html: botonesFr(item, 'val') });
       } else if (tipo === 'equivalencias' && item.clase === 'cuantas') {
-        secciones.push({ g: 'val', q: 'Respuesta', ops: item.opciones.map(String) });
+        secciones.push({ g: 'val', q: T('Respuesta', 'Answer'), ops: item.opciones.map(String) });
       } else if (tipo === 'equivalencias') {
-        secciones.push({ g: 'val', q: 'Elige la figura', figs: item.opciones });
+        secciones.push({ g: 'val', q: T('Elige la figura', 'Choose the note'), figs: item.opciones });
       } else if (tipo === 'puntillo') {
-        secciones.push({ g: 'val', q: 'Elige la que dura lo mismo', dibujos: item.opciones });
+        secciones.push({ g: 'val', q: T('Elige la que dura lo mismo', 'Choose the one that lasts the same'), dibujos: item.opciones });
       } else {
-        secciones.push({ g: 'val', q: 'Respuesta', html: botonesFr(item, 'val') });
+        secciones.push({ g: 'val', q: T('Respuesta', 'Answer'), html: botonesFr(item, 'val') });
       }
 
       cont.innerHTML = '<div class="tm-fg-card">'
-        + '<div class="tm-fg-prog">Pregunta ' + (pos + 1) + ' de ' + cola.length + '</div>'
+        + '<div class="tm-fg-prog">' + T('Pregunta ' + (pos + 1) + ' de ' + cola.length, 'Question ' + (pos + 1) + ' of ' + cola.length) + '</div>'
         + '<div class="tm-fg-barra"><div style="width:' + (pos / cola.length * 100) + '%"></div></div>'
         + '<div class="tm-fg-preg">' + enunciado(item, true) + '</div>'
         + '<div class="tm-fg-dibujo"><div></div></div>'
@@ -817,7 +875,7 @@
           return '<div class="tm-fg-seccion" data-g="' + s.g + '"><div class="tm-fg-q">' + s.q + '</div><div class="tm-fg-ops">' + ops + '</div></div>';
         }).join('')
         + '<div class="tm-fg-fb" hidden></div>'
-        + '<button type="button" class="tm-fg-btn">Comprobar</button></div>';
+        + '<button type="button" class="tm-fg-btn">' + T('Comprobar', 'Check') + '</button></div>';
 
       var spec = specDe(item);
       if (spec) dibujar(cont.querySelector('.tm-fg-dibujo > div'), spec);
@@ -849,7 +907,7 @@
           if (!secciones.every(function (s) { return s.g in sel; })) return;
           corregida = true;
           corregir(item, secciones, sel);
-          btn.textContent = pos + 1 < cola.length ? 'Siguiente' : 'Ver resultado';
+          btn.textContent = pos + 1 < cola.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See result');
           btn.classList.add('tm-listo');
         } else {
           pos++;
@@ -892,16 +950,16 @@
       var fb = cont.querySelector('.tm-fg-fb');
       fb.hidden = false;
       fb.className = 'tm-fg-fb ' + (todo ? 'tm-ok' : 'tm-ko');
-      fb.innerHTML = '<strong>' + (todo ? '¡Correcto!' : 'No es correcto.') + '</strong> ' + explicar(item, true);
+      fb.innerHTML = '<strong>' + (todo ? T('¡Correcto!', 'Correct!') : T('No es correcto.', 'Not correct.')) + '</strong> ' + explicar(item, true);
     }
 
     function resultado() {
       var nota = aciertos / cola.length;
-      var msg = nota === 1 ? '¡Perfecto! Lo dominas.' : nota >= 0.8 ? 'Muy bien: casi todo correcto.' : nota >= 0.5 ? 'Vas bien. Repasa las explicaciones de los fallos y vuelve a intentarlo.' : 'Conviene repasar la teoría antes de volver a intentarlo.';
-      cont.innerHTML = '<div class="tm-fg-card tm-fg-res"><div class="tm-fg-nota">' + aciertos + '</div><div class="tm-fg-de">aciertos de ' + cola.length + '</div>'
+      var msg = nota === 1 ? T('¡Perfecto! Lo dominas.', 'Perfect! You have it down.') : nota >= 0.8 ? T('Muy bien: casi todo correcto.', 'Very good: almost all correct.') : nota >= 0.5 ? T('Vas bien. Repasa las explicaciones de los fallos y vuelve a intentarlo.', 'You are doing well. Review the explanations for your mistakes and try again.') : T('Conviene repasar la teoría antes de volver a intentarlo.', 'Review the theory before trying again.');
+      cont.innerHTML = '<div class="tm-fg-card tm-fg-res"><div class="tm-fg-nota">' + aciertos + '</div><div class="tm-fg-de">' + T('aciertos de ' + cola.length, 'correct out of ' + cola.length) + '</div>'
         + '<div class="tm-fg-msg">' + msg + '</div>'
-        + '<button type="button" class="tm-fg-otra" data-a="otra">Otra ronda</button>'
-        + '<button type="button" class="tm-fg-otra tm-2" data-a="modo">Cambiar de nivel</button></div>';
+        + '<button type="button" class="tm-fg-otra" data-a="otra">' + T('Otra ronda', 'Another round') + '</button>'
+        + '<button type="button" class="tm-fg-otra tm-2" data-a="modo">' + T('Cambiar de nivel', 'Change level') + '</button></div>';
       cont.querySelector('[data-a="otra"]').addEventListener('click', function () { empezar(opcionesModo); });
       cont.querySelector('[data-a="modo"]').addEventListener('click', inicio);
     }

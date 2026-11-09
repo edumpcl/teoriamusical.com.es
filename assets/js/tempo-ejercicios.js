@@ -13,37 +13,40 @@
 (function () {
   'use strict';
 
+  var EN = typeof document !== 'undefined' && document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+
   /* Velocidad: orden de más lento a más rápido; bpm = el que suena en la web. */
   var VELOCIDADES = [
-    { t: 'Grave', bpm: 30, rango: '15–39', sig: 'Muy lento y solemne' },
-    { t: 'Largo', bpm: 50, rango: '40–59', sig: 'Amplio y sostenido' },
-    { t: 'Larghetto', bpm: 63, rango: '60–65', sig: 'Algo menos lento que el Largo' },
-    { t: 'Adagio', bpm: 70, rango: '66–75', sig: 'Lento y expresivo' },
-    { t: 'Andante', bpm: 80, rango: '76–89', sig: 'Al paso, tranquilo' },
-    { t: 'Moderato', bpm: 96, rango: '90–104', sig: 'Moderado, equilibrado' },
-    { t: 'Allegretto', bpm: 108, rango: '105–114', sig: 'Algo vivo, ligero' },
-    { t: 'Allegro', bpm: 120, rango: '115–129', sig: 'Rápido y alegre' },
-    { t: 'Vivace', bpm: 144, rango: '130–167', sig: 'Vivo y enérgico' },
-    { t: 'Presto', bpm: 176, rango: '168–199', sig: 'Muy rápido' },
-    { t: 'Prestissimo', bpm: 208, rango: '200–300', sig: 'Extremadamente rápido' }
+    { t: 'Grave', bpm: 30, rango: '15–39', sig: T('Muy lento y solemne', 'Very slow and solemn') },
+    { t: 'Largo', bpm: 50, rango: '40–59', sig: T('Amplio y sostenido', 'Broad and sustained') },
+    { t: 'Larghetto', bpm: 63, rango: '60–65', sig: T('Algo menos lento que el Largo', 'Somewhat less slow than Largo') },
+    { t: 'Adagio', bpm: 70, rango: '66–75', sig: T('Lento y expresivo', 'Slow and expressive') },
+    { t: 'Andante', bpm: 80, rango: '76–89', sig: T('Al paso, tranquilo', 'At a walking pace, calm') },
+    { t: 'Moderato', bpm: 96, rango: '90–104', sig: T('Moderado, equilibrado', 'Moderate, balanced') },
+    { t: 'Allegretto', bpm: 108, rango: '105–114', sig: T('Algo vivo, ligero', 'Fairly lively, light') },
+    { t: 'Allegro', bpm: 120, rango: '115–129', sig: T('Rápido y alegre', 'Fast and cheerful') },
+    { t: 'Vivace', bpm: 144, rango: '130–167', sig: T('Vivo y enérgico', 'Lively and energetic') },
+    { t: 'Presto', bpm: 176, rango: '168–199', sig: T('Muy rápido', 'Very fast') },
+    { t: 'Prestissimo', bpm: 208, rango: '200–300', sig: T('Extremadamente rápido', 'Extremely fast') }
   ];
 
   var AGOGICA = [
-    { t: 'Accelerando', sig: 'Acelerar poco a poco' },
-    { t: 'Stringendo', sig: '«Apretando»: avanzar con más tensión, tendiendo a acelerar' },
-    { t: 'Doppio movimento', sig: 'Pasar de inmediato a un movimiento doble' },
-    { t: 'Ritardando', sig: 'Frenar poco a poco' },
-    { t: 'Rallentando', sig: 'Frenar poco a poco, con sensación de mayor amplitud' },
-    { t: 'Ritenuto', sig: 'Retener el tempo de golpe y seguir a esa velocidad' },
-    { t: 'Allargando', sig: 'Frenar ampliando el carácter de la frase' },
-    { t: 'Morendo', sig: 'Apagarse poco a poco, perdiendo intensidad' },
-    { t: 'A tempo', sig: 'Volver a la velocidad que había antes del cambio' },
-    { t: 'Tempo primo', sig: 'Volver al tempo del principio de la obra' },
-    { t: 'Più mosso', sig: 'Un tempo nuevo y más rápido, desde esa misma nota' },
-    { t: 'Meno mosso', sig: 'Un tempo nuevo y más lento, desde esa misma nota' },
-    { t: 'L’istesso tempo', sig: 'El mismo tempo aunque cambie el compás o la figura del pulso' },
-    { t: 'Rubato', sig: 'Robar tiempo a unas notas y devolverlo en otras' },
-    { t: 'Calderón', sig: 'Prolongar la nota o el silencio a voluntad del intérprete' }
+    { t: 'Accelerando', sig: T('Acelerar poco a poco', 'Speed up gradually') },
+    { t: 'Stringendo', sig: T('«Apretando»: avanzar con más tensión, tendiendo a acelerar', '"Pressing": move forward with more tension, tending to speed up') },
+    { t: 'Doppio movimento', sig: T('Pasar de inmediato a un movimiento doble', 'Move at once to a doubled speed') },
+    { t: 'Ritardando', sig: T('Frenar poco a poco', 'Slow down gradually') },
+    { t: 'Rallentando', sig: T('Frenar poco a poco, con sensación de mayor amplitud', 'Slow down gradually, with a broader, wider feel') },
+    { t: 'Ritenuto', sig: T('Retener el tempo de golpe y seguir a esa velocidad', 'Hold the tempo back at once and continue at that speed') },
+    { t: 'Allargando', sig: T('Frenar ampliando el carácter de la frase', 'Slow down while broadening the character of the phrase') },
+    { t: 'Morendo', sig: T('Apagarse poco a poco, perdiendo intensidad', 'Die away gradually, losing intensity') },
+    { t: 'A tempo', sig: T('Volver a la velocidad que había antes del cambio', 'Return to the speed before the change') },
+    { t: 'Tempo primo', sig: T('Volver al tempo del principio de la obra', 'Return to the tempo at the beginning of the piece') },
+    { t: 'Più mosso', sig: T('Un tempo nuevo y más rápido, desde esa misma nota', 'A new, faster tempo, starting from that very note') },
+    { t: 'Meno mosso', sig: T('Un tempo nuevo y más lento, desde esa misma nota', 'A new, slower tempo, starting from that very note') },
+    { t: 'L’istesso tempo', sig: T('El mismo tempo aunque cambie el compás o la figura del pulso', 'The same tempo even though the time signature or the note carrying the beat changes') },
+    { t: 'Rubato', sig: T('Robar tiempo a unas notas y devolverlo en otras', 'Borrow time from some notes and give it back on others') },
+    { t: T('Calderón', 'Fermata'), sig: T('Prolongar la nota o el silencio a voluntad del intérprete', 'Hold the note or rest for as long as the performer decides') }
   ];
 
   function mulberry32(a) {
@@ -81,7 +84,7 @@
         var otras = A.barajar(VELOCIDADES.filter(function (v) { return v.t !== x.t; })).slice(0, 3);
         out.push({
           tipo: 'bpm', termino: x.t,
-          enunciado: '¿Cuál es el rango de BPM del <strong>' + x.t + '</strong>?',
+          enunciado: T('¿Cuál es el rango de BPM del <strong>' + x.t + '</strong>?', 'What is the BPM range of <strong>' + x.t + '</strong>?'),
           correcta: x.rango,
           opciones: A.barajar([x.rango].concat(otras.map(function (v) { return v.rango; })))
         });
@@ -91,7 +94,7 @@
         var dis = A.barajar(mismos).slice(0, 3);
         out.push({
           tipo: 'significado', termino: x.t, familia: esVel ? 'velocidad' : 'agogica',
-          enunciado: '¿Qué significa <strong>' + x.t + '</strong>?',
+          enunciado: T('¿Qué significa <strong>' + x.t + '</strong>?', 'What does <strong>' + x.t + '</strong> mean?'),
           correcta: x.sig,
           opciones: A.barajar([x.sig].concat(dis.map(function (v) { return v.sig; })))
         });
@@ -125,7 +128,7 @@
       out.push({
         tipo: 'ordenar',
         sentido: haciaArriba ? 'lento-rapido' : 'rapido-lento',
-        enunciado: haciaArriba ? 'Ordena de <strong>más lento a más rápido</strong>' : 'Ordena de <strong>más rápido a más lento</strong>',
+        enunciado: haciaArriba ? T('Ordena de <strong>más lento a más rápido</strong>', 'Order from <strong>slowest to fastest</strong>') : T('Ordena de <strong>más rápido a más lento</strong>', 'Order from <strong>fastest to slowest</strong>'),
         fichas: A.barajar(elegidos).map(function (v) { return v.t; }),
         solucion: solucion.map(function (v) { return v.t; }),
         bpm: solucion.map(function (v) { return v.bpm; })
@@ -139,12 +142,12 @@
      Usa las demostraciones de /diccionario-musical/agogica/ (agogica-audio.js):
      suena un cambio de tempo y hay que decir cuál es. */
   var OIDO = [
-    { tipo: 'accelerando', t: 'Accelerando', pista: 'el pulso se va acelerando poco a poco' },
-    { tipo: 'ritardando', t: 'Ritardando', pista: 'el pulso frena poco a poco' },
-    { tipo: 'ritenuto', t: 'Ritenuto', pista: 'el tempo baja de golpe y se mantiene' },
-    { tipo: 'a-tempo', t: 'A tempo', pista: 'frena y después recupera la velocidad de antes' },
-    { tipo: 'calderon', t: 'Calderón', pista: 'el pulso se detiene y luego sigue igual' },
-    { tipo: 'rubato', t: 'Rubato', pista: 'el pulso va y viene alrededor del mismo tempo' }
+    { tipo: 'accelerando', t: 'Accelerando', pista: T('el pulso se va acelerando poco a poco', 'the pulse gradually speeds up') },
+    { tipo: 'ritardando', t: 'Ritardando', pista: T('el pulso frena poco a poco', 'the pulse gradually slows down') },
+    { tipo: 'ritenuto', t: 'Ritenuto', pista: T('el tempo baja de golpe y se mantiene', 'the tempo drops at once and stays there') },
+    { tipo: 'a-tempo', t: 'A tempo', pista: T('frena y después recupera la velocidad de antes', 'it slows down and then returns to the previous speed') },
+    { tipo: 'calderon', t: T('Calderón', 'Fermata'), pista: T('el pulso se detiene y luego sigue igual', 'the pulse stops and then continues as before') },
+    { tipo: 'rubato', t: 'Rubato', pista: T('el pulso va y viene alrededor del mismo tempo', 'the pulse pushes and pulls around the same tempo') }
   ];
 
   function generarOido(o, rnd) {
@@ -155,7 +158,7 @@
       var otras = A.barajar(OIDO.filter(function (y) { return y.t !== x.t; })).slice(0, 3);
       out.push({
         tipo: 'oido', demo: x.tipo, termino: x.t, pista: x.pista,
-        enunciado: '¿Qué cambio de tempo estás escuchando?',
+        enunciado: T('¿Qué cambio de tempo estás escuchando?', 'Which tempo change are you hearing?'),
         correcta: x.t,
         opciones: A.barajar([x.t].concat(otras.map(function (y) { return y.t; })))
       });
@@ -171,8 +174,8 @@
   }
 
   function explicar(item) {
-    if (item.tipo === 'oido') return 'Era un ' + item.termino.toLowerCase() + ': ' + item.pista + '.';
-    if (item.tipo === 'bpm') return 'El ' + item.termino + ' va a ' + item.correcta + ' pulsaciones por minuto.';
+    if (item.tipo === 'oido') return T('Era un ' + item.termino.toLowerCase() + ': ' + item.pista + '.', 'It was ' + item.termino.toLowerCase() + ': ' + item.pista + '.');
+    if (item.tipo === 'bpm') return T('El ' + item.termino + ' va a ' + item.correcta + ' pulsaciones por minuto.', item.termino + ' runs at ' + item.correcta + ' beats per minute.');
     if (item.tipo === 'significado') return item.termino + ': ' + item.correcta + '.';
     return item.solucion.map(function (t, i) { return t + ' (' + item.bpm[i] + ')'; }).join(' → ') + '.';
   }
@@ -249,12 +252,12 @@
 
   function resultado(cont, aciertos, total, otra, inicio) {
     var nota = aciertos / total;
-    var msg = nota === 1 ? '¡Perfecto! Lo dominas.' : nota >= 0.8 ? 'Muy bien: casi todo correcto.'
-      : nota >= 0.5 ? 'Vas bien. Repasa las explicaciones y vuelve a intentarlo.' : 'Conviene repasar la teoría antes de volver a intentarlo.';
-    cont.innerHTML = '<div class="tm-te-card tm-te-res"><div class="tm-te-nota">' + aciertos + '</div><div class="tm-te-de">aciertos de ' + total + '</div>'
+    var msg = nota === 1 ? T('¡Perfecto! Lo dominas.', 'Perfect! You have it down.') : nota >= 0.8 ? T('Muy bien: casi todo correcto.', 'Very good: almost everything correct.')
+      : nota >= 0.5 ? T('Vas bien. Repasa las explicaciones y vuelve a intentarlo.', 'You are doing well. Review the explanations and try again.') : T('Conviene repasar la teoría antes de volver a intentarlo.', 'It is worth reviewing the theory before trying again.');
+    cont.innerHTML = '<div class="tm-te-card tm-te-res"><div class="tm-te-nota">' + aciertos + '</div><div class="tm-te-de">' + T('aciertos de ' + total, 'correct out of ' + total) + '</div>'
       + '<div class="tm-te-msg">' + msg + '</div>'
-      + '<button type="button" class="tm-te-otra" data-a="otra">Otra ronda</button>'
-      + '<button type="button" class="tm-te-otra tm-2" data-a="modo">Cambiar de nivel</button></div>';
+      + '<button type="button" class="tm-te-otra" data-a="otra">' + T('Otra ronda', 'Another round') + '</button>'
+      + '<button type="button" class="tm-te-otra tm-2" data-a="modo">' + T('Cambiar de nivel', 'Change level') + '</button></div>';
     cont.querySelector('[data-a="otra"]').addEventListener('click', otra);
     cont.querySelector('[data-a="modo"]').addEventListener('click', inicio);
   }
@@ -265,12 +268,12 @@
     if (!cont) return;
     css();
     var cfg = {
-      tit: '¿Qué significa este término?',
-      sub: 'Se muestra un término italiano y hay que elegir qué indica. En los de velocidad, algunas preguntas piden su rango de BPM.',
+      tit: T('¿Qué significa este término?', 'What does this term mean?'),
+      sub: T('Se muestra un término italiano y hay que elegir qué indica. En los de velocidad, algunas preguntas piden su rango de BPM.', 'An Italian term is shown and you choose what it indicates. For speed terms, some questions ask for their BPM range.'),
       modos: [
-        { v: { nivel: 'velocidad' }, t: 'Términos de velocidad', d: 'Grave, Largo, Andante, Allegro, Presto…' },
-        { v: { nivel: 'agogica' }, t: 'Cambios de tempo (agógica)', d: 'Accelerando, ritenuto, a tempo, rubato, calderón…' },
-        { v: { nivel: 'mezcla' }, t: 'Todo mezclado', d: 'Velocidad y agógica en la misma ronda' }
+        { v: { nivel: 'velocidad' }, t: T('Términos de velocidad', 'Speed terms'), d: T('Grave, Largo, Andante, Allegro, Presto…', 'Grave, Largo, Andante, Allegro, Presto…') },
+        { v: { nivel: 'agogica' }, t: T('Cambios de tempo (agógica)', 'Tempo changes (agogics)'), d: T('Accelerando, ritenuto, a tempo, rubato, calderón…', 'Accelerando, ritenuto, a tempo, rubato, fermata…') },
+        { v: { nivel: 'mezcla' }, t: T('Todo mezclado', 'Everything mixed'), d: T('Velocidad y agógica en la misma ronda', 'Speed and agogics in the same round') }
       ]
     };
     var cola = [], pos = 0, aciertos = 0, nivel = null;
@@ -285,14 +288,14 @@
     function pregunta() {
       var it = cola[pos];
       cont.innerHTML = '<div class="tm-te-card">'
-        + '<div class="tm-te-prog">Pregunta ' + (pos + 1) + ' de ' + cola.length + '</div>'
+        + '<div class="tm-te-prog">' + T('Pregunta ' + (pos + 1) + ' de ' + cola.length, 'Question ' + (pos + 1) + ' of ' + cola.length) + '</div>'
         + '<div class="tm-te-barra"><div style="width:' + (pos / cola.length * 100) + '%"></div></div>'
         + '<div class="tm-te-preg">' + it.enunciado + '</div>'
         + '<div class="tm-te-ops">' + it.opciones.map(function (o, i) {
           return '<button type="button" class="tm-te-op" data-i="' + i + '">' + o + '</button>';
         }).join('') + '</div>'
         + '<div class="tm-te-fb" hidden></div>'
-        + '<button type="button" class="tm-te-btn">Comprobar</button></div>';
+        + '<button type="button" class="tm-te-btn">' + T('Comprobar', 'Check') + '</button></div>';
       var sel = null, corregida = false;
       var btn = cont.querySelector('.tm-te-btn');
       cont.querySelector('.tm-te-card').addEventListener('click', function (ev) {
@@ -320,8 +323,8 @@
           var fb = cont.querySelector('.tm-te-fb');
           fb.hidden = false;
           fb.className = 'tm-te-fb ' + (ok ? 'tm-ok' : 'tm-ko');
-          fb.innerHTML = '<strong>' + (ok ? '¡Correcto!' : 'No es correcto.') + '</strong> ' + explicar(it);
-          btn.textContent = pos + 1 < cola.length ? 'Siguiente' : 'Ver resultado';
+          fb.innerHTML = '<strong>' + (ok ? T('¡Correcto!', 'Correct!') : T('No es correcto.', 'Not correct.')) + '</strong> ' + explicar(it);
+          btn.textContent = pos + 1 < cola.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See result');
         } else {
           pos++;
           if (pos < cola.length) pregunta();
@@ -338,12 +341,12 @@
     if (!cont) return;
     css();
     var cfg = {
-      tit: 'Ordena las velocidades',
-      sub: 'Toca los términos en orden. Si te equivocas al colocar, puedes deshacer el último.',
+      tit: T('Ordena las velocidades', 'Order the speeds'),
+      sub: T('Toca los términos en orden. Si te equivocas al colocar, puedes deshacer el último.', 'Tap the terms in order. If you place one wrongly, you can undo the last one.'),
       modos: [
-        { v: { sentido: 'lento-rapido', cuantos: 4 }, t: 'De más lento a más rápido', d: 'Cuatro términos por ronda' },
-        { v: { sentido: 'rapido-lento', cuantos: 4 }, t: 'De más rápido a más lento', d: 'El orden inverso' },
-        { v: { sentido: 'mezcla', cuantos: 5 }, t: 'Mezclado y más largo', d: 'Cinco términos y el sentido cambia en cada pregunta' }
+        { v: { sentido: 'lento-rapido', cuantos: 4 }, t: T('De más lento a más rápido', 'Slowest to fastest'), d: T('Cuatro términos por ronda', 'Four terms per round') },
+        { v: { sentido: 'rapido-lento', cuantos: 4 }, t: T('De más rápido a más lento', 'Fastest to slowest'), d: T('El orden inverso', 'The reverse order') },
+        { v: { sentido: 'mezcla', cuantos: 5 }, t: T('Mezclado y más largo', 'Mixed and longer'), d: T('Cinco términos y el sentido cambia en cada pregunta', 'Five terms and the direction changes on every question') }
       ]
     };
     var cola = [], pos = 0, aciertos = 0, nivel = null;
@@ -358,16 +361,16 @@
     function pregunta() {
       var it = cola[pos], puestos = [];
       cont.innerHTML = '<div class="tm-te-card">'
-        + '<div class="tm-te-prog">Pregunta ' + (pos + 1) + ' de ' + cola.length + '</div>'
+        + '<div class="tm-te-prog">' + T('Pregunta ' + (pos + 1) + ' de ' + cola.length, 'Question ' + (pos + 1) + ' of ' + cola.length) + '</div>'
         + '<div class="tm-te-barra"><div style="width:' + (pos / cola.length * 100) + '%"></div></div>'
         + '<div class="tm-te-preg">' + it.enunciado + '</div>'
-        + '<div class="tm-te-huecos"><span class="tm-te-vacio">Toca los términos en orden…</span></div>'
+        + '<div class="tm-te-huecos"><span class="tm-te-vacio">' + T('Toca los términos en orden…', 'Tap the terms in order…') + '</span></div>'
         + '<div class="tm-te-fichas">' + it.fichas.map(function (t, i) {
           return '<button type="button" class="tm-te-ficha" data-i="' + i + '">' + t + '</button>';
         }).join('') + '</div>'
-        + '<div class="tm-te-acc"><button type="button" class="tm-te-deshacer" hidden>Deshacer</button></div>'
+        + '<div class="tm-te-acc"><button type="button" class="tm-te-deshacer" hidden>' + T('Deshacer', 'Undo') + '</button></div>'
         + '<div class="tm-te-fb" hidden></div>'
-        + '<button type="button" class="tm-te-btn">Comprobar</button></div>';
+        + '<button type="button" class="tm-te-btn">' + T('Comprobar', 'Check') + '</button></div>';
       var huecos = cont.querySelector('.tm-te-huecos');
       var btn = cont.querySelector('.tm-te-btn');
       var deshacer = cont.querySelector('.tm-te-deshacer');
@@ -376,7 +379,7 @@
       function pintar() {
         huecos.innerHTML = puestos.length
           ? puestos.map(function (t, i) { return '<span class="tm-te-hueco"><small>' + (i + 1) + '</small>' + t + '</span>'; }).join('')
-          : '<span class="tm-te-vacio">Toca los términos en orden…</span>';
+          : '<span class="tm-te-vacio">' + T('Toca los términos en orden…', 'Tap the terms in order…') + '</span>';
         deshacer.hidden = !puestos.length || corregida;
         btn.classList.toggle('tm-listo', puestos.length === it.fichas.length);
       }
@@ -408,8 +411,8 @@
           var fb = cont.querySelector('.tm-te-fb');
           fb.hidden = false;
           fb.className = 'tm-te-fb ' + (ok ? 'tm-ok' : 'tm-ko');
-          fb.innerHTML = '<strong>' + (ok ? '¡Correcto!' : 'No es correcto.') + '</strong> El orden era: ' + explicar(it);
-          btn.textContent = pos + 1 < cola.length ? 'Siguiente' : 'Ver resultado';
+          fb.innerHTML = '<strong>' + (ok ? T('¡Correcto!', 'Correct!') : T('No es correcto.', 'Not correct.')) + '</strong> ' + T('El orden era: ', 'The order was: ') + explicar(it);
+          btn.textContent = pos + 1 < cola.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See result');
           btn.classList.add('tm-listo');
         } else {
           pos++;
@@ -429,14 +432,14 @@
     if (!cont) return;
     css();
     if (!window.tmAgogicaAudio) {
-      cont.innerHTML = '<div class="tm-te-card"><div class="tm-te-sub">Este ejercicio necesita el audio de la página de agógica.</div></div>';
+      cont.innerHTML = '<div class="tm-te-card"><div class="tm-te-sub">' + T('Este ejercicio necesita el audio de la página de agógica.', 'This exercise needs the audio from the agogics page.') + '</div></div>';
       return;
     }
     var cfg = {
-      tit: '¿Qué cambio de tempo escuchas?',
-      sub: 'Suena un cambio de tempo y hay que reconocerlo. Se puede repetir las veces que haga falta.',
+      tit: T('¿Qué cambio de tempo escuchas?', 'Which tempo change do you hear?'),
+      sub: T('Suena un cambio de tempo y hay que reconocerlo. Se puede repetir las veces que haga falta.', 'A tempo change plays and you have to recognize it. You can replay it as many times as you need.'),
       modos: [
-        { v: { n: 8 }, t: 'Empezar', d: 'Ocho ejemplos: accelerando, ritardando, ritenuto, a tempo, calderón y rubato' }
+        { v: { n: 8 }, t: T('Empezar', 'Start'), d: T('Ocho ejemplos: accelerando, ritardando, ritenuto, a tempo, calderón y rubato', 'Eight examples: accelerando, ritardando, ritenuto, a tempo, fermata and rubato') }
       ]
     };
     var cola = [], pos = 0, aciertos = 0, nivel = null;
@@ -451,15 +454,15 @@
     function pregunta() {
       var it = cola[pos];
       cont.innerHTML = '<div class="tm-te-card">'
-        + '<div class="tm-te-prog">Pregunta ' + (pos + 1) + ' de ' + cola.length + '</div>'
+        + '<div class="tm-te-prog">' + T('Pregunta ' + (pos + 1) + ' de ' + cola.length, 'Question ' + (pos + 1) + ' of ' + cola.length) + '</div>'
         + '<div class="tm-te-barra"><div style="width:' + (pos / cola.length * 100) + '%"></div></div>'
         + '<div class="tm-te-preg">' + it.enunciado + '</div>'
-        + '<div class="tm-te-acc"><button type="button" class="tm-te-deshacer tm-te-oir">Escuchar el ejemplo</button></div>'
+        + '<div class="tm-te-acc"><button type="button" class="tm-te-deshacer tm-te-oir">' + T('Escuchar el ejemplo', 'Listen to the example') + '</button></div>'
         + '<div class="tm-te-ops">' + it.opciones.map(function (o, i) {
           return '<button type="button" class="tm-te-op" data-i="' + i + '">' + o + '</button>';
         }).join('') + '</div>'
         + '<div class="tm-te-fb" hidden></div>'
-        + '<button type="button" class="tm-te-btn">Comprobar</button></div>';
+        + '<button type="button" class="tm-te-btn">' + T('Comprobar', 'Check') + '</button></div>';
       var sel = null, corregida = false;
       var btn = cont.querySelector('.tm-te-btn');
       var oir = cont.querySelector('.tm-te-oir');
@@ -493,8 +496,8 @@
           var fb = cont.querySelector('.tm-te-fb');
           fb.hidden = false;
           fb.className = 'tm-te-fb ' + (ok ? 'tm-ok' : 'tm-ko');
-          fb.innerHTML = '<strong>' + (ok ? '¡Correcto!' : 'No es correcto.') + '</strong> ' + explicar(it);
-          btn.textContent = pos + 1 < cola.length ? 'Siguiente' : 'Ver resultado';
+          fb.innerHTML = '<strong>' + (ok ? T('¡Correcto!', 'Correct!') : T('No es correcto.', 'Not correct.')) + '</strong> ' + explicar(it);
+          btn.textContent = pos + 1 < cola.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See result');
         } else {
           window.tmAgogicaAudio.parar();
           pos++;

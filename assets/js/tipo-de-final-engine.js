@@ -34,6 +34,9 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+
   function D() { return window.tmCompletarCompasData; }
   function C() { return window.tmComienzoTest; }
 
@@ -57,8 +60,8 @@
   }
 
   var TIPOS = ['fuerte', 'debil'];
-  var NOMBRE_TIPO = { fuerte: 'tiempo fuerte', debil: 'tiempo débil' };
-  var ETIQUETA = { fuerte: 'Tiempo fuerte', debil: 'Tiempo débil' };
+  var NOMBRE_TIPO = { fuerte: T('tiempo fuerte', 'strong beat'), debil: T('tiempo débil', 'weak beat') };
+  var ETIQUETA = { fuerte: T('Tiempo fuerte', 'Strong beat'), debil: T('Tiempo débil', 'Weak beat') };
   var DURS = [4, 8, 12, 16, 24, 32, 48, 64, 96];
   var FIG_U = { 4: 'sc', 8: 'c', 12: 'cP', 16: 'n', 24: 'nP', 32: 'b', 48: 'bP', 64: 'r', 96: 'rP' };
 
@@ -199,6 +202,20 @@
     var t = D().COMPASES[it.compas].tiempo, FIG = D().FIG;
     var e = ultimaNota(it), elems = it.compases[1].elems;
     var hayCola = elems[elems.length - 1].s;
+    if (EN) {
+      var cola = hayCola ? '. There is a rest afterward, but what counts is where the note starts' : '';
+      if (it.tipo === 'fuerte') {
+        var nm = FIG[e.f].nombre;
+        return 'Strong-beat ending: the last note starts on beat 1 of the last measure, right on the accent'
+          + (it.forma === 'incompleto' ? ' (the measure is incomplete, but its strong beat is still the first one)' : '')
+          + cola + '. It does not matter how long it lasts: it is ' + (/^[aeiou]/.test(nm) ? 'an ' : 'a ') + nm + '.';
+      }
+      var nn = Math.floor(e.t0 / t) + 1;
+      var dd = e.t0 % t === 0 ? 'on beat ' + nn : 'on the weak part of beat ' + nn;
+      return 'Weak-beat ending: the last note starts ' + dd + ', after the accent: the only strong beat of the measure is beat 1'
+        + (it.forma === 'incompleto' ? ' (the measure is incomplete, but it is counted from its beginning)' : '')
+        + cola + '.';
+    }
     if (it.tipo === 'fuerte') {
       return 'Final en tiempo fuerte (íctico): la última nota empieza en el tiempo 1 del último compás, justo sobre el acento'
         + (it.forma === 'incompleto' ? ' (el compás está incompleto, pero su tiempo fuerte sigue siendo el primero)' : '')
@@ -215,16 +232,16 @@
 
   function pista(correcto, elegido) {
     if (correcto === elegido) return '';
-    if (correcto === 'fuerte') return ' Fíjate en dónde empieza la última nota, no en cuánto dura ni en si hay silencio después: aquí empieza justo en el tiempo 1.';
-    return ' Aunque la última nota dure lo que dure, no empieza en el tiempo 1 sino después del acento, y solo el tiempo 1 es fuerte.';
+    if (correcto === 'fuerte') return T(' Fíjate en dónde empieza la última nota, no en cuánto dura ni en si hay silencio después: aquí empieza justo en el tiempo 1.', ' Look at where the last note starts, not at how long it lasts or whether there is a rest afterward: here it starts right on beat 1.');
+    return T(' Aunque la última nota dure lo que dure, no empieza en el tiempo 1 sino después del acento, y solo el tiempo 1 es fuerte.', ' No matter how long the last note lasts, it does not start on beat 1 but after the accent, and only beat 1 is strong.');
   }
 
   /* ------------------------------------------------------------------ UI */
 
   var NIVELES = [
-    { nivel: 1, t: 'Fácil', d: 'Compases simples; la última nota llega hasta el final del compás' },
-    { nivel: 2, t: 'Medio', d: 'Simples y compuestos; silencios tras la última nota y último compás incompleto' },
-    { nivel: 3, t: 'Difícil', d: 'Contratiempos, figuras pequeñas y silencios antes de la última nota' }
+    { nivel: 1, t: T('Fácil', 'Easy'), d: T('Compases simples; la última nota llega hasta el final del compás', 'Simple meters; the last note lasts until the end of the measure') },
+    { nivel: 2, t: T('Medio', 'Medium'), d: T('Simples y compuestos; silencios tras la última nota y último compás incompleto', 'Simple and compound meters; rests after the last note and an incomplete last measure') },
+    { nivel: 3, t: T('Difícil', 'Hard'), d: T('Contratiempos, figuras pequeñas y silencios antes de la última nota', 'Off-beats, small note values and rests before the last note') }
   ];
   var PREGUNTAS = 8;
 
@@ -278,8 +295,8 @@
   window.tmFinal = function (id) {
     var cont = document.getElementById(id);
     if (cont && D() && C() && window.tmNotacion && !window.tmNotacion.cargado()) {
-      cont.innerHTML = '<div class="tm-fi-card"><div class="tm-fi-sub">Cargando el ejercicio…</div></div>';
-      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<div class="tm-fi-card"><div class="tm-fi-sub">No se ha podido cargar el ejercicio. Recarga la página.</div></div>'; });
+      cont.innerHTML = '<div class="tm-fi-card"><div class="tm-fi-sub">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</div></div>';
+      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont.innerHTML = '<div class="tm-fi-card"><div class="tm-fi-sub">' + T('No se ha podido cargar el ejercicio. Recarga la página.', 'The exercise could not be loaded. Reload the page.') + '</div></div>'; });
       return;
     }
     arrancar(id);
@@ -294,11 +311,13 @@
     window.tmFinalDebug = function () { return cola[pos] || null; };
 
     function inicio() {
-      cont.innerHTML = '<div class="tm-fi-card"><div class="tm-fi-tit">¿Cómo termina la melodía?</div>'
-        + '<div class="tm-fi-sub">Verás los dos últimos compases de una melodía. Decide si la frase termina en tiempo fuerte o en tiempo débil.</div>'
-        + '<div class="tm-fi-recuerda">Fíjate en <b>en qué tiempo empieza la última nota</b>, no en cuánto dura. '
+      cont.innerHTML = '<div class="tm-fi-card"><div class="tm-fi-tit">' + T('¿Cómo termina la melodía?', 'How does the melody end?') + '</div>'
+        + '<div class="tm-fi-sub">' + T('Verás los dos últimos compases de una melodía. Decide si la frase termina en tiempo fuerte o en tiempo débil.', 'You will see the last two measures of a melody. Decide whether the phrase ends on a strong beat or a weak beat.') + '</div>'
+        + '<div class="tm-fi-recuerda">' + T('Fíjate en <b>en qué tiempo empieza la última nota</b>, no en cuánto dura. '
         + '<b>Tiempo fuerte (íctico):</b> empieza en el tiempo 1 del último compás. '
-        + '<b>Tiempo débil (posíctico):</b> empieza después del tiempo fuerte.</div>'
+        + '<b>Tiempo débil (posíctico):</b> empieza después del tiempo fuerte.', 'Look at <b>which beat the last note starts on</b>, not at how long it lasts. '
+        + '<b>Strong beat:</b> it starts on beat 1 of the last measure. '
+        + '<b>Weak beat:</b> it starts after the strong beat.') + '</div>'
         + '<div class="tm-fi-modos">' + NIVELES.map(function (m) {
           return '<button type="button" class="tm-fi-modo" data-n="' + m.nivel + '"><strong>' + m.t + '</strong><span>' + m.d + '</span></button>';
         }).join('') + '</div></div>';
@@ -317,9 +336,9 @@
     function pregunta() {
       var it = cola[pos];
       cont.innerHTML = '<div class="tm-fi-card">'
-        + '<div class="tm-fi-prog">Pregunta ' + (pos + 1) + ' de ' + cola.length + '</div>'
+        + '<div class="tm-fi-prog">' + T('Pregunta ' + (pos + 1) + ' de ' + cola.length, 'Question ' + (pos + 1) + ' of ' + cola.length) + '</div>'
         + '<div class="tm-fi-barra"><div style="width:' + (pos / cola.length * 100) + '%"></div></div>'
-        + '<div class="tm-fi-preg">¿En qué tiempo termina la frase?</div>'
+        + '<div class="tm-fi-preg">' + T('¿En qué tiempo termina la frase?', 'On which beat does the phrase end?') + '</div>'
         + '<div class="tm-fi-dibujo"><div></div></div>'
         + '<div class="tm-fi-ops">' + TIPOS.map(function (t) {
           return '<button type="button" class="tm-fi-op" data-t="' + t + '">' + ETIQUETA[t] + '</button>';
@@ -342,9 +361,9 @@
           });
           fb.hidden = false;
           fb.className = 'tm-fi-fb ' + (ok ? 'tm-ok' : 'tm-ko');
-          fb.innerHTML = '<strong>' + (ok ? '¡Correcto!' : 'No es correcto, es final en ' + NOMBRE_TIPO[it.tipo] + '.') + '</strong> ' + explicar(it) + pista(it.tipo, elegido);
+          fb.innerHTML = '<strong>' + (ok ? T('¡Correcto!', 'Correct!') : T('No es correcto, es final en ' + NOMBRE_TIPO[it.tipo] + '.', 'Not correct, it is a ' + NOMBRE_TIPO[it.tipo] + ' ending.')) + '</strong> ' + explicar(it) + pista(it.tipo, elegido);
           btn.hidden = false;
-          btn.textContent = pos + 1 < cola.length ? 'Siguiente' : 'Ver resultado';
+          btn.textContent = pos + 1 < cola.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See result');
         });
       });
       btn.addEventListener('click', function () {
@@ -355,11 +374,11 @@
 
     function resultado() {
       var nota = aciertos / cola.length;
-      var msg = nota === 1 ? '¡Perfecto! Distingues los finales sin dudar.' : nota >= 0.8 ? 'Muy bien: casi todo correcto.' : nota >= 0.5 ? 'Vas bien. Repasa las explicaciones y vuelve a intentarlo.' : 'Conviene repasar en qué tiempo empieza la última nota antes de volver a intentarlo.';
-      cont.innerHTML = '<div class="tm-fi-card tm-fi-res"><div class="tm-fi-nota">' + aciertos + '</div><div class="tm-fi-de">aciertos de ' + cola.length + '</div>'
+      var msg = nota === 1 ? T('¡Perfecto! Distingues los finales sin dudar.', 'Perfect! You tell the endings apart without hesitation.') : nota >= 0.8 ? T('Muy bien: casi todo correcto.', 'Very good: almost all correct.') : nota >= 0.5 ? T('Vas bien. Repasa las explicaciones y vuelve a intentarlo.', 'You are doing well. Review the explanations and try again.') : T('Conviene repasar en qué tiempo empieza la última nota antes de volver a intentarlo.', 'Review which beat the last note starts on before trying again.');
+      cont.innerHTML = '<div class="tm-fi-card tm-fi-res"><div class="tm-fi-nota">' + aciertos + '</div><div class="tm-fi-de">' + T('aciertos de ' + cola.length, 'correct out of ' + cola.length) + '</div>'
         + '<div class="tm-fi-msg">' + msg + '</div>'
-        + '<button type="button" class="tm-fi-otra" data-a="otra">Otra ronda</button>'
-        + '<button type="button" class="tm-fi-otra tm-2" data-a="modo">Cambiar de nivel</button></div>';
+        + '<button type="button" class="tm-fi-otra" data-a="otra">' + T('Otra ronda', 'Another round') + '</button>'
+        + '<button type="button" class="tm-fi-otra tm-2" data-a="modo">' + T('Cambiar de nivel', 'Change level') + '</button></div>';
       cont.querySelector('[data-a="otra"]').addEventListener('click', function () { empezar(nivelActual); });
       cont.querySelector('[data-a="modo"]').addEventListener('click', inicio);
     }

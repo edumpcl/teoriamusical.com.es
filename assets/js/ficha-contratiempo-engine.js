@@ -14,6 +14,9 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+
   var PREGUNTAS_POR_FICHA = 10;
 
   var CSS = [
@@ -75,21 +78,21 @@
     }
 
     var semilla = 0, solucion = false;
-    var titulo = dificil ? 'Contratiempo — nivel difícil' : 'Nota a contratiempo';
+    var titulo = dificil ? T('Contratiempo — nivel difícil', 'Off-beat — hard level') : T('Nota a contratiempo', 'Off-beat note');
     var instr = dificil
-      ? 'Cada fragmento tiene 2 compases. Rodea con un círculo TODAS las notas que estén a contratiempo (puede haber varias, o ninguna), o marca la casilla «No hay contratiempo» si el fragmento no tiene ninguna.'
-      : 'Rodea con un círculo la nota que está a contratiempo, o marca la casilla «No hay contratiempo» si el fragmento no lo tiene.';
+      ? T('Cada fragmento tiene 2 compases. Rodea con un círculo TODAS las notas que estén a contratiempo (puede haber varias, o ninguna), o marca la casilla «No hay contratiempo» si el fragmento no tiene ninguna.', 'Each excerpt has 2 measures. Circle ALL the notes that are off-beat (there may be several, or none), or check the "No off-beat" box if the excerpt has none.')
+      : T('Rodea con un círculo la nota que está a contratiempo, o marca la casilla «No hay contratiempo» si el fragmento no lo tiene.', 'Circle the note that is off-beat, or check the "No off-beat" box if the excerpt has none.');
 
     cont.innerHTML = '<div class="tm-fc">'
       + '<div class="tm-fc-acciones">'
-      + '<button type="button" class="tm-fc-btn tm-fc-btn-1" data-a="generar">Generar otra ficha</button>'
-      + '<button type="button" class="tm-fc-btn tm-fc-btn-2" data-a="soluciones">Ver soluciones</button>'
-      + '<button type="button" class="tm-fc-btn tm-fc-btn-2" data-a="imprimir">Imprimir</button>'
+      + '<button type="button" class="tm-fc-btn tm-fc-btn-1" data-a="generar">' + T('Generar otra ficha', 'Generate another sheet') + '</button>'
+      + '<button type="button" class="tm-fc-btn tm-fc-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show answers') + '</button>'
+      + '<button type="button" class="tm-fc-btn tm-fc-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<p class="tm-fc-enlace"></p>'
       + '</div>'
       + '<div class="tm-fc-hoja"><div class="tm-fc-cab"><p class="tm-fc-tit">' + titulo + '</p><span class="tm-fc-ref"></span></div>'
-      + '<div class="tm-fc-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
+      + '<div class="tm-fc-datos"><span>' + T('Nombre:', 'Name:') + '</span><span>' + T('Curso:', 'Class:') + '</span><span>' + T('Fecha:', 'Date:') + '</span></div>'
       + '<p class="tm-fc-instr">' + instr + '</p>'
       + '<div class="tm-fc-cuerpo"></div></div>';
 
@@ -101,7 +104,7 @@
     function celdaHTML(frag, i) {
       var noContratiempo = frag.correctas.length === 0;
       return '<span class="tm-fc-n">' + (i + 1) + '</span><div class="tm-fc-svg"></div>'
-        + '<div class="tm-fc-chk' + (solucion && noContratiempo ? ' sol' : '') + '">' + (solucion && noContratiempo ? '☒' : '☐') + ' No hay contratiempo</div>';
+        + '<div class="tm-fc-chk' + (solucion && noContratiempo ? ' sol' : '') + '">' + (solucion && noContratiempo ? '☒' : '☐') + ' ' + T('No hay contratiempo', 'No off-beat') + '</div>';
     }
 
     /* Todos los dibujos de la hoja a la MISMA escala (la mayor que quepa a todos): los de dos compases son más anchos y,
@@ -136,7 +139,7 @@
         var ancha = dificil || s.closest('.tm-fc-celda').classList.contains('ancha');
         return ancha ? ancho - 24 : Math.floor(ancho / cols) - 24;
       });
-      elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
+      elRef.textContent = 'teoriamusical.com.es · ' + T('hoja n.º ', 'sheet no. ') + semilla;
     }
 
     function generar(semillaFija) {
@@ -145,12 +148,12 @@
       else { do { nueva = Math.floor(Math.random() * 90000 + 10000); } while (nueva === semilla); }
       semilla = nueva;
       solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show answers');
       fragmentosActuales = generarFicha(semilla, dificil);
       pintar();
       var a = cont.querySelector('.tm-fc-enlace');
       var params = '?' + (dificil ? 'hojad' : 'hoja') + '=' + semilla;
-      a.innerHTML = 'Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#' + id + '">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.';
+      a.innerHTML = T('Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#' + id + '">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.', 'Each sheet comes from a number: with <a href="' + window.location.pathname + params + '#' + id + '">this link</a> (sheet no. ' + semilla + ') you get the same one again.');
     }
 
     cont.addEventListener('click', function (ev) {
@@ -160,7 +163,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         solucion = !solucion;
-        btn.textContent = solucion ? 'Ocultar soluciones' : 'Ver soluciones';
+        btn.textContent = solucion ? T('Ocultar soluciones', 'Hide answers') : T('Ver soluciones', 'Show answers');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

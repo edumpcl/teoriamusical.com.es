@@ -16,13 +16,16 @@
 (function () {
   'use strict';
 
+  var EN = typeof document !== 'undefined' && document.documentElement.lang === 'en';
+  var TX = function (es, en) { return EN ? en : es; };
+
   function T() { return window.tmCadenciasTest; }
   function CT() { return window.tmComienzoTest; }
 
   var LOTES = [
-    [1, 4, 'Conclusivas (auténtica perfecta, auténtica imperfecta, plagal)'],
-    [2, 4, 'Suspensivas (semicadencia sobre V, sobre IV, y cadencia rota)'],
-    [3, 8, 'Mezcladas (los seis tipos)']
+    [1, 4, TX('Conclusivas (auténtica perfecta, auténtica imperfecta, plagal)', 'Conclusive (perfect authentic, imperfect authentic, plagal)')],
+    [2, 4, TX('Suspensivas (semicadencia sobre V, sobre IV, y cadencia rota)', 'Suspensive (half cadence on V, phrase ending on IV, and deceptive cadence)')],
+    [3, 8, TX('Mezcladas (los seis tipos)', 'Mixed (all six types)')]
   ];
 
   var CSS = [
@@ -83,15 +86,15 @@
 
     cont.innerHTML = '<div class="tm-cf">'
       + '<div class="tm-cf-acciones">'
-      + '<button type="button" class="tm-cf-btn tm-cf-btn-1" data-a="generar">Generar otra ficha</button>'
-      + '<button type="button" class="tm-cf-btn tm-cf-btn-2" data-a="soluciones">Ver soluciones</button>'
-      + '<button type="button" class="tm-cf-btn tm-cf-btn-2" data-a="imprimir">Imprimir</button>'
+      + '<button type="button" class="tm-cf-btn tm-cf-btn-1" data-a="generar">' + TX('Generar otra ficha', 'Generate another sheet') + '</button>'
+      + '<button type="button" class="tm-cf-btn tm-cf-btn-2" data-a="soluciones">' + TX('Ver soluciones', 'Show solutions') + '</button>'
+      + '<button type="button" class="tm-cf-btn tm-cf-btn-2" data-a="imprimir">' + TX('Imprimir', 'Print') + '</button>'
       + '</div>'
-      + '<p class="tm-cf-enlace">Cada hoja sale de un número: con el enlace se vuelve a sacar la misma.</p>'
+      + '<p class="tm-cf-enlace">' + TX('Cada hoja sale de un número: con el enlace se vuelve a sacar la misma.', 'Each sheet comes from a number: the link brings up the same one again.') + '</p>'
       + '</div>'
-      + '<div class="tm-cf-hoja"><div class="tm-cf-cab"><p class="tm-cf-tit">¿Qué cadencia es?</p><span class="tm-cf-ref"></span></div>'
-      + '<div class="tm-cf-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
-      + '<p class="tm-cf-instr">Cada pentagrama muestra los dos últimos acordes de una frase, a piano (clave de sol y de fa, a cuatro voces). Marca de qué cadencia se trata.</p>'
+      + '<div class="tm-cf-hoja"><div class="tm-cf-cab"><p class="tm-cf-tit">' + TX('¿Qué cadencia es?', 'Which cadence is it?') + '</p><span class="tm-cf-ref"></span></div>'
+      + '<div class="tm-cf-datos"><span>' + TX('Nombre:', 'Name:') + '</span><span>' + TX('Curso:', 'Class:') + '</span><span>' + TX('Fecha:', 'Date:') + '</span></div>'
+      + '<p class="tm-cf-instr">' + TX('Cada pentagrama muestra los dos últimos acordes de una frase, a piano (clave de sol y de fa, a cuatro voces). Marca de qué cadencia se trata.', 'Each staff shows the last two chords of a phrase, for piano (treble and bass clef, four voices). Mark which cadence it is.') + '</p>'
       + '<div class="tm-cf-cuerpo"></div></div>';
 
     var elRef = cont.querySelector('.tm-cf-ref');
@@ -186,7 +189,7 @@
         var K = Math.min(1, interior / Math.max.apply(null, anchos));
         svgs.forEach(function (s, i) { s.style.width = (anchos[i] * K) + 'px'; s.style.maxWidth = 'none'; });
       });
-      elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
+      elRef.textContent = 'teoriamusical.com.es · ' + TX('hoja n.º ', 'sheet no. ') + semilla;
     }
 
     function mulberry32(a) {
@@ -206,13 +209,13 @@
       else { do { nueva = Math.floor(Math.random() * 90000 + 10000); } while (nueva === semilla); }
       semilla = nueva;
       solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
+      cont.querySelector('[data-a="soluciones"]').textContent = TX('Ver soluciones', 'Show solutions');
       itemsActuales = elegirItems(semilla);
       pintar();
       window.tmFichaCadenciasDebug = function () { return { semilla: semilla, items: itemsActuales, usados: Object.keys(usados) }; };
       var a = cont.querySelector('.tm-cf-enlace');
       var params = '?hoja=' + semilla;
-      a.innerHTML = 'Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.';
+      a.innerHTML = TX('Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.', 'Each sheet comes from a number: <a href="' + window.location.pathname + params + '#generador">this link</a> (sheet no. ' + semilla + ') brings up the same one again.');
     }
 
     cont.addEventListener('click', function (ev) {
@@ -222,7 +225,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         solucion = !solucion;
-        btn.textContent = solucion ? 'Ocultar soluciones' : 'Ver soluciones';
+        btn.textContent = solucion ? TX('Ocultar soluciones', 'Hide solutions') : TX('Ver soluciones', 'Show solutions');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

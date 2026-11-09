@@ -11,10 +11,13 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+
   function D() { return window.tmCompletarCompasData; }
   function G() { return window.tmGruposVETest; }
 
-  var TIT = { 1: '1. Fácil (ritmo uniforme)', 2: '2. Medio (con algún silencio)', 3: '3. Difícil (ritmo mixto)' };
+  var TIT = { 1: T('1. Fácil (ritmo uniforme)', '1. Easy (uniform rhythm)'), 2: T('2. Medio (con algún silencio)', '2. Medium (with some rests)'), 3: T('3. Difícil (ritmo mixto)', '3. Hard (mixed rhythm)') };
   var LOTES = [[1, 6], [2, 6], [3, 6]];
 
   var CSS = [
@@ -69,15 +72,15 @@
 
     cont.innerHTML = '<div class="tm-fg">'
       + '<div class="tm-fg-acciones">'
-      + '<button type="button" class="tm-fg-btn tm-fg-btn-1" data-a="generar">Generar otra ficha</button>'
-      + '<button type="button" class="tm-fg-btn tm-fg-btn-2" data-a="soluciones">Ver soluciones</button>'
-      + '<button type="button" class="tm-fg-btn tm-fg-btn-2" data-a="imprimir">Imprimir</button>'
+      + '<button type="button" class="tm-fg-btn tm-fg-btn-1" data-a="generar">' + T('Generar otra ficha', 'Generate another sheet') + '</button>'
+      + '<button type="button" class="tm-fg-btn tm-fg-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show answers') + '</button>'
+      + '<button type="button" class="tm-fg-btn tm-fg-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<p class="tm-fg-enlace"></p>'
       + '</div>'
-      + '<div class="tm-fg-hoja"><div class="tm-fg-cab"><p class="tm-fg-tit">Grupos de valoración especial</p><span class="tm-fg-ref"></span></div>'
-      + '<div class="tm-fg-datos"><span>Nombre:</span><span>Curso:</span><span>Fecha:</span></div>'
-      + '<p class="tm-fg-instr">Cada compás tiene un grupo de valoración especial (tresillo, dosillo, cuatrillo o seisillo). Escribe en la casilla la figura sencilla a la que equivale el grupo entero.</p>'
+      + '<div class="tm-fg-hoja"><div class="tm-fg-cab"><p class="tm-fg-tit">' + T('Grupos de valoración especial', 'Tuplets') + '</p><span class="tm-fg-ref"></span></div>'
+      + '<div class="tm-fg-datos"><span>' + T('Nombre:', 'Name:') + '</span><span>' + T('Curso:', 'Class:') + '</span><span>' + T('Fecha:', 'Date:') + '</span></div>'
+      + '<p class="tm-fg-instr">' + T('Cada compás tiene un grupo de valoración especial (tresillo, dosillo, cuatrillo o seisillo). Escribe en la casilla la figura sencilla a la que equivale el grupo entero.', 'Each measure has a tuplet (triplet, duplet, quadruplet or sextuplet). Write in the box the simple note value that the whole group equals.') + '</p>'
       + '<div class="tm-fg-cuerpo"></div></div>';
 
     var elRef = cont.querySelector('.tm-fg-ref');
@@ -112,7 +115,7 @@
         var K = Math.min(1, interior / Math.max.apply(null, anchos));
         svgs.forEach(function (s, i) { s.style.width = (anchos[i] * K) + 'px'; s.style.maxWidth = 'none'; });
       });
-      elRef.textContent = 'teoriamusical.com.es · hoja n.º ' + semilla;
+      elRef.textContent = 'teoriamusical.com.es · ' + T('hoja n.º ', 'sheet no. ') + semilla;
     }
 
     function generar(semillaFija) {
@@ -121,11 +124,11 @@
       else { do { nueva = Math.floor(Math.random() * 90000 + 10000); } while (nueva === semilla); }
       semilla = nueva;
       solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = 'Ver soluciones';
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show answers');
       pintar();
       var a = cont.querySelector('.tm-fg-enlace');
       var params = '?hoja=' + semilla;
-      a.innerHTML = 'Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.';
+      a.innerHTML = T('Cada hoja sale de un número: con <a href="' + window.location.pathname + params + '#generador">este enlace</a> (hoja n.º ' + semilla + ') se vuelve a sacar la misma.', 'Each sheet comes from a number: with <a href="' + window.location.pathname + params + '#generador">this link</a> (sheet no. ' + semilla + ') you get the same one again.');
     }
 
     cont.addEventListener('click', function (ev) {
@@ -135,7 +138,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         solucion = !solucion;
-        btn.textContent = solucion ? 'Ocultar soluciones' : 'Ver soluciones';
+        btn.textContent = solucion ? T('Ocultar soluciones', 'Hide answers') : T('Ver soluciones', 'Show answers');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

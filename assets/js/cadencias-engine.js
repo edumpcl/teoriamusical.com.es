@@ -37,6 +37,9 @@
 (function () {
   'use strict';
 
+  var EN = typeof document !== 'undefined' && document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+
   var REDONDA = 'w';
   function CT() { return window.tmComienzoTest; }
 
@@ -96,12 +99,12 @@
   };
 
   var CADENCIAS = {
-    perfecta: { nombre: 'Auténtica perfecta', acordes: ['V', 'I'] },
-    imperfecta: { nombre: 'Auténtica imperfecta', acordes: ['V', 'I'] },
-    plagal: { nombre: 'Plagal', acordes: ['IV', 'I'] },
-    rota: { nombre: 'Rota (de engaño)', acordes: ['V', 'VI'] },
-    semicadenciaV: { nombre: 'Semicadencia sobre la dominante', acordes: ['I', 'V'] },
-    semicadenciaIV: { nombre: 'Semicadencia sobre la subdominante', acordes: ['I', 'IV'] }
+    perfecta: { nombre: T('Auténtica perfecta', 'Perfect authentic cadence'), acordes: ['V', 'I'] },
+    imperfecta: { nombre: T('Auténtica imperfecta', 'Imperfect authentic cadence'), acordes: ['V', 'I'] },
+    plagal: { nombre: T('Plagal', 'Plagal cadence'), acordes: ['IV', 'I'] },
+    rota: { nombre: T('Rota (de engaño)', 'Deceptive cadence'), acordes: ['V', 'VI'] },
+    semicadenciaV: { nombre: T('Semicadencia sobre la dominante', 'Half cadence (on V)'), acordes: ['I', 'V'] },
+    semicadenciaIV: { nombre: T('Semicadencia sobre la subdominante', 'Phrase ending on IV'), acordes: ['I', 'IV'] }
   };
   var ORDEN = ['perfecta', 'imperfecta', 'plagal', 'semicadenciaV', 'semicadenciaIV', 'rota'];
   var TIPOS_NIVEL = {
@@ -145,12 +148,18 @@
   /* --------------------------------------------------------- Explicación */
 
   var EXPLICA = {
-    perfecta: 'Cadencia auténtica perfecta: la dominante (V), con la sensible, resuelve en la tónica (I); los dos acordes están en estado fundamental y la voz más aguda del acorde final es la tónica. Es la conclusión más rotunda.',
-    imperfecta: 'Cadencia auténtica imperfecta: también es V–I, pero la voz más aguda del acorde final no es la tónica (aquí es la 3.ª). Concluye, pero con menos rotundidad que la perfecta.',
-    plagal: 'Cadencia plagal: la subdominante (IV) enlaza con la tónica (I). No lleva la sensible ni el tritono de la dominante, por eso suena más suave, la del «amén».',
-    rota: 'Cadencia rota (de engaño): la dominante (V), que el oído espera que resuelva en la tónica, lo hace en el VI grado. El bajo sube un tono en vez de saltar a la tónica: la frase no concluye.',
-    semicadenciaV: 'Semicadencia sobre la dominante: la frase termina en el acorde de V en vez de resolver en la tónica. Queda «en el aire», pidiendo continuación.',
-    semicadenciaIV: 'Semicadencia sobre la subdominante: la frase termina en el acorde de IV. También es suspensiva, pero más blanda que la semicadencia sobre la dominante.'
+    perfecta: T('Cadencia auténtica perfecta: la dominante (V), con la sensible, resuelve en la tónica (I); los dos acordes están en estado fundamental y la voz más aguda del acorde final es la tónica. Es la conclusión más rotunda.',
+      'Perfect authentic cadence: the dominant (V), with the leading tone, resolves to the tonic (I); both chords are in root position and the highest voice of the final chord is the tonic. It is the strongest conclusion.'),
+    imperfecta: T('Cadencia auténtica imperfecta: también es V–I, pero la voz más aguda del acorde final no es la tónica (aquí es la 3.ª). Concluye, pero con menos rotundidad que la perfecta.',
+      'Imperfect authentic cadence: it is also V–I, but the highest voice of the final chord is not the tonic (here it is the 3rd). It concludes, but less firmly than the perfect one.'),
+    plagal: T('Cadencia plagal: la subdominante (IV) enlaza con la tónica (I). No lleva la sensible ni el tritono de la dominante, por eso suena más suave, la del «amén».',
+      'Plagal cadence: the subdominant (IV) leads to the tonic (I). It has neither the leading tone nor the tritone of the dominant, so it sounds softer: the “Amen” cadence.'),
+    rota: T('Cadencia rota (de engaño): la dominante (V), que el oído espera que resuelva en la tónica, lo hace en el VI grado. El bajo sube un tono en vez de saltar a la tónica: la frase no concluye.',
+      'Deceptive cadence: the dominant (V), which the ear expects to resolve to the tonic, goes to the vi chord instead. The bass rises a whole step instead of leaping to the tonic: the phrase does not conclude.'),
+    semicadenciaV: T('Semicadencia sobre la dominante: la frase termina en el acorde de V en vez de resolver en la tónica. Queda «en el aire», pidiendo continuación.',
+      'Half cadence: the phrase ends on the V chord instead of resolving to the tonic. It is left “hanging in the air”, asking for continuation.'),
+    semicadenciaIV: T('Semicadencia sobre la subdominante: la frase termina en el acorde de IV. También es suspensiva, pero más blanda que la semicadencia sobre la dominante.',
+      'Phrase ending on IV: the phrase stops on the IV chord. It is also suspensive, but softer than a half cadence on the dominant.')
   };
   function explicar(it) { return EXPLICA[it.tipo]; }
 
@@ -158,19 +167,19 @@
     if (correcto === elegido) return '';
     var esV = { perfecta: 1, imperfecta: 1 }, esPlagal = { plagal: 1 };
     if ((esV[correcto] && esPlagal[elegido]) || (esPlagal[correcto] && esV[elegido])) {
-      return ' Mira el primer acorde: en la auténtica es la dominante (V, con la sensible, la nota que sube medio tono hasta la tónica); en la plagal es la subdominante (IV, sin sensible).';
+      return T(' Mira el primer acorde: en la auténtica es la dominante (V, con la sensible, la nota que sube medio tono hasta la tónica); en la plagal es la subdominante (IV, sin sensible).', ' Look at the first chord: in the authentic cadence it is the dominant (V, with the leading tone, the note that rises a half step to the tonic); in the plagal cadence it is the subdominant (IV, with no leading tone).');
     }
     if (esV[correcto] && esV[elegido]) {
-      return ' La diferencia entre perfecta e imperfecta está en la voz más aguda del ÚLTIMO acorde: si es la tónica, perfecta; si no, imperfecta.';
+      return T(' La diferencia entre perfecta e imperfecta está en la voz más aguda del ÚLTIMO acorde: si es la tónica, perfecta; si no, imperfecta.', ' The difference between perfect and imperfect is in the highest voice of the LAST chord: if it is the tonic, perfect; if not, imperfect.');
     }
     var esSemi = { semicadenciaV: 1, semicadenciaIV: 1 };
     if (correcto === 'rota' || elegido === 'rota') {
-      return ' En la rota el último acorde es el VI grado; en las semicadencias el último acorde es V o IV, y en las auténticas/plagal es la propia tónica (I).';
+      return T(' En la rota el último acorde es el VI grado; en las semicadencias el último acorde es V o IV, y en las auténticas/plagal es la propia tónica (I).', ' In the deceptive cadence the last chord is vi; in the half cadence and the phrase ending on IV the last chord is V or IV, and in the authentic and plagal cadences it is the tonic itself (I).');
     }
     if (esSemi[correcto] && esSemi[elegido]) {
-      return ' Mira el último acorde: si es V (con la sensible), semicadencia sobre la dominante; si es IV, sobre la subdominante.';
+      return T(' Mira el último acorde: si es V (con la sensible), semicadencia sobre la dominante; si es IV, sobre la subdominante.', ' Look at the last chord: if it is V (with the leading tone), it is a half cadence on the dominant; if it is IV, it is a phrase ending on the subdominant.');
     }
-    return ' Fíjate en el último acorde (¿es la tónica, la dominante, la subdominante o el VI grado?) y en si la dominante lleva o no la sensible.';
+    return T(' Fíjate en el último acorde (¿es la tónica, la dominante, la subdominante o el VI grado?) y en si la dominante lleva o no la sensible.', ' Look at the last chord (is it the tonic, the dominant, the subdominant or the vi chord?) and at whether the dominant has the leading tone or not.');
   }
 
   /* -------------------------------------------------------------- Dibujo */
@@ -200,7 +209,7 @@
         { clave: 'fa', compases: it.acordes.map(function (ac) { return acorde(ac.B, ac.T); }) }
       ]
     };
-    var res = window.tmNotacion.dibujarSync(div, sistema, { escala: 1.3, separacion: 0.5, margenIzq: 45, id: 'cad', alt: 'Dos acordes a cuatro voces en un pentagrama de piano' });
+    var res = window.tmNotacion.dibujarSync(div, sistema, { escala: 1.3, separacion: 0.5, margenIzq: 45, id: 'cad', alt: T('Dos acordes a cuatro voces en un pentagrama de piano', 'Two four-voice chords on a piano grand staff') });
     res.elemento.style.maxWidth = '100%';
     div.__tmInfo = { acordes: it.acordes.slice() };
   }
@@ -208,9 +217,9 @@
   /* ------------------------------------------------------------------ UI */
 
   var NIVELES = [
-    { nivel: 1, t: 'Conclusivas', d: 'Auténtica perfecta, auténtica imperfecta y plagal' },
-    { nivel: 2, t: 'Suspensivas', d: 'Semicadencia sobre la dominante, sobre la subdominante y cadencia rota' },
-    { nivel: 3, t: 'Mezcladas', d: 'Los seis tipos de cadencia, mezclados' }
+    { nivel: 1, t: T('Conclusivas', 'Conclusive'), d: T('Auténtica perfecta, auténtica imperfecta y plagal', 'Perfect authentic, imperfect authentic and plagal') },
+    { nivel: 2, t: T('Suspensivas', 'Suspensive'), d: T('Semicadencia sobre la dominante, sobre la subdominante y cadencia rota', 'Half cadence, phrase ending on the subdominant, and deceptive cadence') },
+    { nivel: 3, t: T('Mezcladas', 'Mixed'), d: T('Los seis tipos de cadencia, mezclados', 'All six cadence types, mixed') }
   ];
   var PREGUNTAS = 6;
 
@@ -262,8 +271,8 @@
   window.tmCadencias = function (id) {
     var cont0 = document.getElementById(id);
     if (cont0 && CT() && window.tmNotacion && !conVerovio()) {
-      cont0.innerHTML = '<div class="tm-cd-card"><div class="tm-cd-sub">Cargando el ejercicio…</div></div>';
-      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont0.innerHTML = '<div class="tm-cd-card"><div class="tm-cd-sub">No se ha podido cargar el ejercicio. Recarga la página.</div></div>'; });
+      cont0.innerHTML = '<div class="tm-cd-card"><div class="tm-cd-sub">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</div></div>';
+      window.tmNotacion.listo().then(function () { arrancar(id); }, function () { cont0.innerHTML = '<div class="tm-cd-card"><div class="tm-cd-sub">' + T('No se ha podido cargar el ejercicio. Recarga la página.', 'The exercise could not be loaded. Reload the page.') + '</div></div>'; });
       return;
     }
     arrancar(id);
@@ -278,8 +287,8 @@
     window.tmCadenciasDebug = function () { return cola[pos] || null; };
 
     function inicio() {
-      cont.innerHTML = '<div class="tm-cd-card"><div class="tm-cd-tit">¿Qué cadencia es?</div>'
-        + '<div class="tm-cd-sub">Verás los dos últimos acordes de una frase, escritos a piano (clave de sol y clave de fa). Identifica el tipo de cadencia.</div>'
+      cont.innerHTML = '<div class="tm-cd-card"><div class="tm-cd-tit">' + T('¿Qué cadencia es?', 'Which cadence is it?') + '</div>'
+        + '<div class="tm-cd-sub">' + T('Verás los dos últimos acordes de una frase, escritos a piano (clave de sol y clave de fa). Identifica el tipo de cadencia.', 'You will see the last two chords of a phrase, written for piano (treble and bass clef). Identify the type of cadence.') + '</div>'
         + '<div class="tm-cd-modos">' + NIVELES.map(function (m) {
           return '<button type="button" class="tm-cd-modo" data-n="' + m.nivel + '"><strong>' + m.t + '</strong><span>' + m.d + '</span></button>';
         }).join('') + '</div></div>';
@@ -298,9 +307,9 @@
     function pregunta() {
       var it = cola[pos], tipos = TIPOS_NIVEL[it.nivel];
       cont.innerHTML = '<div class="tm-cd-card">'
-        + '<div class="tm-cd-prog">Pregunta ' + (pos + 1) + ' de ' + cola.length + '</div>'
+        + '<div class="tm-cd-prog">' + T('Pregunta ' + (pos + 1) + ' de ' + cola.length, 'Question ' + (pos + 1) + ' of ' + cola.length) + '</div>'
         + '<div class="tm-cd-barra"><div style="width:' + (pos / cola.length * 100) + '%"></div></div>'
-        + '<div class="tm-cd-preg">¿Qué cadencia es?</div>'
+        + '<div class="tm-cd-preg">' + T('¿Qué cadencia es?', 'Which cadence is it?') + '</div>'
         + '<div class="tm-cd-dibujo"><div></div></div>'
         + '<div class="tm-cd-ops">' + tipos.map(function (t) {
           return '<button type="button" class="tm-cd-op" data-t="' + t + '">' + CADENCIAS[t].nombre + '</button>';
@@ -323,9 +332,9 @@
           });
           fb.hidden = false;
           fb.className = 'tm-cd-fb ' + (ok ? 'tm-ok' : 'tm-ko');
-          fb.innerHTML = '<strong>' + (ok ? '¡Correcto!' : 'No es correcto, es ' + CADENCIAS[it.tipo].nombre.toLowerCase() + '.') + '</strong> ' + explicar(it) + pista(it.tipo, elegido);
+          fb.innerHTML = '<strong>' + (ok ? T('¡Correcto!', 'Correct!') : T('No es correcto, es ' + CADENCIAS[it.tipo].nombre.toLowerCase() + '.', 'Not correct: the answer is ' + CADENCIAS[it.tipo].nombre + '.')) + '</strong> ' + explicar(it) + pista(it.tipo, elegido);
           btn.hidden = false;
-          btn.textContent = pos + 1 < cola.length ? 'Siguiente' : 'Ver resultado';
+          btn.textContent = pos + 1 < cola.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See result');
         });
       });
       btn.addEventListener('click', function () {
@@ -336,11 +345,11 @@
 
     function resultado() {
       var nota_ = aciertos / cola.length;
-      var msg = nota_ === 1 ? '¡Perfecto! Distingues las cadencias sin dudar.' : nota_ >= 0.8 ? 'Muy bien: casi todo correcto.' : nota_ >= 0.5 ? 'Vas bien. Repasa las explicaciones y vuelve a intentarlo.' : 'Conviene repasar los acordes de cada cadencia antes de volver a intentarlo.';
-      cont.innerHTML = '<div class="tm-cd-card tm-cd-res"><div class="tm-cd-nota">' + aciertos + '</div><div class="tm-cd-de">aciertos de ' + cola.length + '</div>'
+      var msg = nota_ === 1 ? T('¡Perfecto! Distingues las cadencias sin dudar.', 'Perfect! You tell the cadences apart without hesitation.') : nota_ >= 0.8 ? T('Muy bien: casi todo correcto.', 'Very good: almost everything correct.') : nota_ >= 0.5 ? T('Vas bien. Repasa las explicaciones y vuelve a intentarlo.', 'You are doing well. Review the explanations and try again.') : T('Conviene repasar los acordes de cada cadencia antes de volver a intentarlo.', 'It is worth reviewing the chords of each cadence before trying again.');
+      cont.innerHTML = '<div class="tm-cd-card tm-cd-res"><div class="tm-cd-nota">' + aciertos + '</div><div class="tm-cd-de">' + T('aciertos de ' + cola.length, 'correct out of ' + cola.length) + '</div>'
         + '<div class="tm-cd-msg">' + msg + '</div>'
-        + '<button type="button" class="tm-cd-otra" data-a="otra">Otra ronda</button>'
-        + '<button type="button" class="tm-cd-otra tm-2" data-a="modo">Cambiar de nivel</button></div>';
+        + '<button type="button" class="tm-cd-otra" data-a="otra">' + T('Otra ronda', 'Another round') + '</button>'
+        + '<button type="button" class="tm-cd-otra tm-2" data-a="modo">' + T('Cambiar de nivel', 'Change level') + '</button></div>';
       cont.querySelector('[data-a="otra"]').addEventListener('click', function () { empezar(nivelActual); });
       cont.querySelector('[data-a="modo"]').addEventListener('click', inicio);
     }
