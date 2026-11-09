@@ -16,6 +16,9 @@
 (function () {
   'use strict';
 
+  var EN = document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
+
   var LETRAS = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
   var ES = { C: 'Do', D: 'Re', E: 'Mi', F: 'Fa', G: 'Sol', A: 'La', B: 'Si' };
   var SEMIS = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
@@ -25,11 +28,12 @@
   var ORDEN_BEM = ['B', 'E', 'A', 'D', 'G', 'C', 'F'];
 
   var ROMANOS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
-  var NOMBRES = ['Tónica', 'Supertónica', 'Mediante', 'Subdominante', 'Dominante', 'Superdominante', 'Sensible'];
+  var NOMBRES = EN ? ['Tonic', 'Supertonic', 'Mediant', 'Subdominant', 'Dominant', 'Submediant', 'Leading tone']
+                   : ['Tónica', 'Supertónica', 'Mediante', 'Subdominante', 'Dominante', 'Superdominante', 'Sensible'];
   /* La Subtónica es el mismo VII grado cuando está a un tono: va aparte porque
      como opción de respuesta tiene que estar siempre visible, o su presencia
      delataría que la escala es menor natural. */
-  var TODOS_NOMBRES = NOMBRES.concat(['Subtónica']);
+  var TODOS_NOMBRES = NOMBRES.concat([T('Subtónica', 'Subtonic')]);
 
   /* Grados tonales (I, IV, V) y modales (III, VI, VII). La SUPERTÓNICA no entra
      en ninguno de los dos grupos, y por eso hace falta la tercera opción: sin
@@ -38,9 +42,13 @@
   var CLASIF_OPC = [
     { v: 'tonal',   lbl: 'Tonal' },
     { v: 'modal',   lbl: 'Modal' },
-    { v: 'ninguno', lbl: 'Ninguno de los dos' }
+    { v: 'ninguno', lbl: T('Ninguno de los dos', 'Neither') }
   ];
-  var CLASIF_TXT = { tonal: 'un grado <strong>tonal</strong>', modal: 'un grado <strong>modal</strong>', ninguno: '<strong>ni tonal ni modal</strong>' };
+  var CLASIF_TXT = {
+    tonal: T('un grado <strong>tonal</strong>', 'a <strong>tonal</strong> degree'),
+    modal: T('un grado <strong>modal</strong>', 'a <strong>modal</strong> degree'),
+    ninguno: T('<strong>ni tonal ni modal</strong>', '<strong>neither tonal nor modal</strong>')
+  };
 
   /* Tonalidades por número de alteraciones. vex = armadura (siempre la del RELATIVO MAYOR: la de la
      menor y la de Do Mayor son la misma). */
@@ -67,7 +75,7 @@
   }
 
   function nombreES(letra, acc) {
-    return ES[letra] + (acc === '#' ? '♯' : acc === 'b' ? '♭' : '');
+    return (EN ? letra : ES[letra]) + (acc === '#' ? '♯' : acc === 'b' ? '♭' : '');
   }
 
   /* El doble sostenido tiene que contar: sin él, sol♯ menor armónica (cuyo VII
@@ -107,12 +115,13 @@
       notas: notas,
       raiz: nombreES(letraRaiz, accRaiz),
       modo: modo,
-      septimo: d === 1 ? 'Sensible' : 'Subtónica',
+      septimo: d === 1 ? T('Sensible', 'Leading tone') : T('Subtónica', 'Subtonic'),
       distSeptimo: d
     };
   }
 
   function nombreTonalidad(esc) {
+    if (EN) return esc.raiz + (esc.modo === 'mayor' ? ' major' : esc.modo === 'armonica' ? ' harmonic minor' : ' natural minor');
     if (esc.modo === 'mayor') return esc.raiz + ' Mayor';
     return esc.raiz.toLowerCase() + ' menor' + (esc.modo === 'armonica' ? ' armónica' : ' natural');
   }
@@ -224,14 +233,14 @@
     function showModeScreen() {
       current = 0; score = 0;
       wrap.innerHTML = '<div class="tm-gr-card">'
-        + '<div class="tm-gr-mode-title">' + (tipo === 'grado' ? '¿Qué grado es esta nota?' : '¿Qué nota es este grado?') + '</div>'
+        + '<div class="tm-gr-mode-title">' + (tipo === 'grado' ? T('¿Qué grado es esta nota?', 'Which scale degree is this note?') : T('¿Qué nota es este grado?', 'Which note is this scale degree?')) + '</div>'
         + '<div class="tm-gr-mode-sub">' + (tipo === 'grado'
-            ? 'Se te da una tonalidad y una nota escrita: di qué grado ocupa y cómo se llama.'
-            : 'Se te da una tonalidad y un grado: di qué nota lo ocupa, con su alteración.') + '</div>'
+            ? T('Se te da una tonalidad y una nota escrita: di qué grado ocupa y cómo se llama.', 'You get a key and a written note: say which degree it is and what it is called.')
+            : T('Se te da una tonalidad y un grado: di qué nota lo ocupa, con su alteración.', 'You get a key and a degree: say which note it is, with its accidental.')) + '</div>'
         + '<div class="tm-gr-mode-btns">'
-        + '<button class="tm-gr-mode-btn" data-modo="facil"><strong>Do Mayor</strong><span>Sin armadura, para aprenderse los nombres</span></button>'
-        + '<button class="tm-gr-mode-btn" data-modo="mayores"><strong>Tonalidades mayores</strong><span>Hasta cuatro alteraciones en la armadura</span></button>'
-        + '<button class="tm-gr-mode-btn" data-modo="todas"><strong>Mayores y menores</strong><span>Incluye menor natural y armónica: sensible o subtónica</span></button>'
+        + '<button class="tm-gr-mode-btn" data-modo="facil"><strong>' + T('Do Mayor', 'C major') + '</strong><span>' + T('Sin armadura, para aprenderse los nombres', 'No key signature, to learn the names') + '</span></button>'
+        + '<button class="tm-gr-mode-btn" data-modo="mayores"><strong>' + T('Tonalidades mayores', 'Major keys') + '</strong><span>' + T('Hasta cuatro alteraciones en la armadura', 'Up to four accidentals in the key signature') + '</span></button>'
+        + '<button class="tm-gr-mode-btn" data-modo="todas"><strong>' + T('Mayores y menores', 'Major and minor') + '</strong><span>' + T('Incluye menor natural y armónica: sensible o subtónica', 'Includes natural and harmonic minor: leading tone or subtonic') + '</span></button>'
         + '</div></div>';
       wrap.querySelectorAll('.tm-gr-mode-btn').forEach(function (b) {
         b.addEventListener('click', function () {
@@ -257,7 +266,7 @@
         armadura: q.ton.tipo === '#' ? q.ton.alt : -q.ton.alt,
         compases: [[{ key: n.letra.toLowerCase() + (n.acc || '') + '/' + oct, d: 'w' }]]
       };
-      tmNotacion.dibujarSync(el, fila, { escala: 1.3, separacion: 0.5, id: id, alt: 'Pentagrama en clave de sol con la armadura de la tonalidad y una nota redonda' });
+      tmNotacion.dibujarSync(el, fila, { escala: 1.3, separacion: 0.5, id: id, alt: T('Pentagrama en clave de sol con la armadura de la tonalidad y una nota redonda', 'Treble clef staff with the key signature and a whole note') });
     }
 
     function showQuestion() {
@@ -271,32 +280,32 @@
       var cuerpo;
       if (tipo === 'grado') {
         cuerpo = '<div class="tm-gr-staff" id="' + uid + '"></div>'
-          + '<div class="tm-gr-qlabel">¿Qué grado es?</div>'
+          + '<div class="tm-gr-qlabel">' + T('¿Qué grado es?', 'Which degree?') + '</div>'
           + '<div class="tm-gr-pills">' + ROMANOS.map(function (r, i) {
               return '<div class="tm-gr-pill" data-q="grado" data-val="' + i + '">' + r + '</div>';
             }).join('') + '</div>'
-          + '<div class="tm-gr-qlabel">¿Cómo se llama?</div>'
+          + '<div class="tm-gr-qlabel">' + T('¿Cómo se llama?', 'What is it called?') + '</div>'
           + '<div class="tm-gr-pills">' + TODOS_NOMBRES.map(function (n) {
               return '<div class="tm-gr-pill" data-q="nombre" data-val="' + n + '">' + n + '</div>';
             }).join('') + '</div>'
-          + '<div class="tm-gr-qlabel">¿Tonal o modal?</div>'
+          + '<div class="tm-gr-qlabel">' + T('¿Tonal o modal?', 'Tonal or modal?') + '</div>'
           + '<div class="tm-gr-pills">' + CLASIF_OPC.map(function (c) {
               return '<div class="tm-gr-pill" data-q="clasif" data-val="' + c.v + '">' + c.lbl + '</div>';
             }).join('') + '</div>';
       } else {
         var pedido = q.porNombre
-          ? 'la <strong>' + nombreGrado(q.esc, q.grado) + '</strong>'
-          : 'el grado <strong>' + ROMANOS[q.grado] + '</strong>';
-        cuerpo = '<div class="tm-gr-pedido">¿Qué nota es ' + pedido + '?</div>'
-          + '<div class="tm-gr-qlabel">Nota</div>'
+          ? T('la <strong>' + nombreGrado(q.esc, q.grado) + '</strong>', 'the <strong>' + nombreGrado(q.esc, q.grado).toLowerCase() + '</strong>')
+          : T('el grado <strong>' + ROMANOS[q.grado] + '</strong>', 'degree <strong>' + ROMANOS[q.grado] + '</strong>');
+        cuerpo = '<div class="tm-gr-pedido">' + T('¿Qué nota es ' + pedido + '?', 'Which note is ' + pedido + '?') + '</div>'
+          + '<div class="tm-gr-qlabel">' + T('Nota', 'Note') + '</div>'
           + '<div class="tm-gr-pills">' + LETRAS.map(function (l) {
-              return '<div class="tm-gr-pill" data-q="letra" data-val="' + l + '">' + ES[l] + '</div>';
+              return '<div class="tm-gr-pill" data-q="letra" data-val="' + l + '">' + (EN ? l : ES[l]) + '</div>';
             }).join('') + '</div>'
-          + '<div class="tm-gr-qlabel">Alteración</div>'
+          + '<div class="tm-gr-qlabel">' + T('Alteración', 'Accidental') + '</div>'
           + '<div class="tm-gr-pills">' + ALTERACIONES.map(function (a) {
               return '<div class="tm-gr-pill" data-q="acc" data-val="' + a.v + '">' + a.lbl + '</div>';
             }).join('') + '</div>'
-          + '<div class="tm-gr-qlabel">¿Tonal o modal?</div>'
+          + '<div class="tm-gr-qlabel">' + T('¿Tonal o modal?', 'Tonal or modal?') + '</div>'
           + '<div class="tm-gr-pills">' + CLASIF_OPC.map(function (c) {
               return '<div class="tm-gr-pill" data-q="clasif" data-val="' + c.v + '">' + c.lbl + '</div>';
             }).join('') + '</div>'
@@ -304,12 +313,12 @@
       }
 
       wrap.innerHTML = '<div class="tm-gr-card">'
-        + '<div class="tm-gr-prog-label">Pregunta ' + (current + 1) + ' de ' + TOTAL + '</div>'
+        + '<div class="tm-gr-prog-label">' + T('Pregunta ' + (current + 1) + ' de ' + TOTAL, 'Question ' + (current + 1) + ' of ' + TOTAL) + '</div>'
         + '<div class="tm-gr-prog-bar"><div class="tm-gr-prog-fill" style="width:' + pct + '%"></div></div>'
         + '<div class="tm-gr-ton">' + nombreTonalidad(q.esc) + '</div>'
         + cuerpo
         + '<div class="tm-gr-fb"></div>'
-        + '<button class="tm-gr-btn" disabled>Comprobar</button>'
+        + '<button class="tm-gr-btn" disabled>' + T('Comprobar', 'Check') + '</button>'
         + '</div>';
 
       if (tipo === 'grado') drawStaff(uid, q);
@@ -366,24 +375,30 @@
          1–2–3–4" es lo que convierte el fallo en aprendizaje. */
       var cuenta = q.esc.notas.slice(0, q.grado + 1).map(function (x) { return nombreES(x.letra, x.acc); }).join('–');
       var numeros = []; for (var k = 1; k <= q.grado + 1; k++) numeros.push(k);
-      var expl = '<strong>' + nombreES(n.letra, n.acc) + '</strong> es el <strong>' + ROMANOS[q.grado]
-        + '</strong> grado de ' + nombreTonalidad(q.esc) + ': la <strong>' + nombreOk + '</strong>.'
-        + (q.grado > 0 ? ' Contando desde la tónica: ' + cuenta + ' → ' + numeros.join('–') + '.' : '')
-        + ' Es ' + CLASIF_TXT[clasifOk] + (clasifOk === 'ninguno'
-            ? ': los tonales son I, IV y V, y los modales III, VI y VII.' : '.');
+      var expl = T('<strong>' + nombreES(n.letra, n.acc) + '</strong> es el <strong>' + ROMANOS[q.grado]
+        + '</strong> grado de ' + nombreTonalidad(q.esc) + ': la <strong>' + nombreOk + '</strong>.',
+        '<strong>' + nombreES(n.letra, n.acc) + '</strong> is degree <strong>' + ROMANOS[q.grado]
+        + '</strong> of ' + nombreTonalidad(q.esc) + ': the <strong>' + nombreOk.toLowerCase() + '</strong>.')
+        + (q.grado > 0 ? T(' Contando desde la tónica: ', ' Counting from the tonic: ') + cuenta + ' → ' + numeros.join('–') + '.' : '')
+        + T(' Es ', ' It is ') + CLASIF_TXT[clasifOk] + (clasifOk === 'ninguno'
+            ? T(': los tonales son I, IV y V, y los modales III, VI y VII.', ': the tonal degrees are I, IV and V, and the modal degrees are III, VI and VII.') : '.');
       if (q.grado === 6) {
-        expl += ' Está a ' + (q.esc.distSeptimo === 1 ? 'un semitono' : 'un tono')
+        expl += T(' Está a ' + (q.esc.distSeptimo === 1 ? 'un semitono' : 'un tono')
           + ' de la tónica, así que se llama ' + (q.esc.distSeptimo === 1
             ? '<strong>Sensible</strong>: atrae con fuerza hacia ella.'
-            : '<strong>Subtónica</strong>: la atracción es mucho menor.');
+            : '<strong>Subtónica</strong>: la atracción es mucho menor.'),
+          ' It is a ' + (q.esc.distSeptimo === 1 ? 'half step' : 'whole step')
+          + ' below the tonic, so it is called the ' + (q.esc.distSeptimo === 1
+            ? '<strong>leading tone</strong>: it pulls strongly toward the tonic.'
+            : '<strong>subtonic</strong>: the pull is much weaker.'));
       }
       var fb = wrap.querySelector('.tm-gr-fb');
       fb.className = 'tm-gr-fb ' + (acierto ? 'tm-bien' : 'tm-mal');
-      fb.innerHTML = (acierto ? '¡Correcto! ' : 'No es. ') + expl;
+      fb.innerHTML = (acierto ? T('¡Correcto! ', 'Correct! ') : T('No es. ', 'Not quite. ')) + expl;
 
       var btn = wrap.querySelector('.tm-gr-btn');
       btn.disabled = false;
-      btn.textContent = current + 1 < TOTAL ? 'Siguiente →' : 'Ver resultado';
+      btn.textContent = current + 1 < TOTAL ? T('Siguiente →', 'Next →') : T('Ver resultado', 'See result');
       btn.replaceWith(btn.cloneNode(true));
       wrap.querySelector('.tm-gr-btn').addEventListener('click', function () {
         current++;
@@ -393,23 +408,23 @@
 
     function showResults() {
       var mal = TOTAL - score;
-      var msg = score === TOTAL ? '¡Perfecto! Te sabes los grados y sus nombres.'
-              : score >= 8 ? 'Muy bien. Casi lo tienes.'
-              : score >= 6 ? 'Vas por buen camino. Repasa los nombres del VI y el VII.'
-              : score >= 4 ? 'Necesitas repasar la tabla de nombres.'
-              : 'Empieza por el modo de Do Mayor y vuelve luego.';
+      var msg = score === TOTAL ? T('¡Perfecto! Te sabes los grados y sus nombres.', 'Perfect! You know the degrees and their names.')
+              : score >= 8 ? T('Muy bien. Casi lo tienes.', 'Very good. You almost have it.')
+              : score >= 6 ? T('Vas por buen camino. Repasa los nombres del VI y el VII.', 'You are on the right track. Review the names of VI and VII.')
+              : score >= 4 ? T('Necesitas repasar la tabla de nombres.', 'You need to review the table of names.')
+              : T('Empieza por el modo de Do Mayor y vuelve luego.', 'Start with the C major level and come back later.');
       wrap.innerHTML = '<div class="tm-gr-card tm-gr-res">'
         + '<div class="tm-gr-res-score">' + score + '/' + TOTAL + '</div>'
-        + '<div class="tm-gr-res-sub">' + score + ' bien · ' + mal + ' mal</div>'
+        + '<div class="tm-gr-res-sub">' + T(score + ' bien · ' + mal + ' mal', score + ' correct · ' + mal + ' wrong') + '</div>'
         + '<div class="tm-gr-res-msg">' + msg + '</div>'
-        + '<button class="tm-gr-btn">Intentar de nuevo</button>'
+        + '<button class="tm-gr-btn">' + T('Intentar de nuevo', 'Try again') + '</button>'
         + '</div>';
       wrap.querySelector('.tm-gr-btn').addEventListener('click', showModeScreen);
     }
 
-    wrap.innerHTML = '<div class="tm-gr-card"><div class="tm-gr-mode-sub">Cargando el ejercicio…</div></div>';
+    wrap.innerHTML = '<div class="tm-gr-card"><div class="tm-gr-mode-sub">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</div></div>';
     tmNotacion.listo().then(showModeScreen).catch(function () {
-      wrap.innerHTML = '<div class="tm-gr-card"><div class="tm-gr-mode-sub">No se ha podido cargar el ejercicio. Recarga la página.</div></div>';
+      wrap.innerHTML = '<div class="tm-gr-card"><div class="tm-gr-mode-sub">' + T('No se ha podido cargar el ejercicio. Recarga la página.', 'The exercise could not be loaded. Reload the page.') + '</div></div>';
     });
   }
 
