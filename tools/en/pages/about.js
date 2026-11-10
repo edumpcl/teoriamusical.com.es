@@ -10,7 +10,7 @@ module.exports = {
   lastmod: '2026-11-10',
   title,
   description,
-  ogImage: '/assets/img/og-pages/og-en-home.png',
+  ogImage: '/assets/img/og-pages/og-en-about.png',
   jsonld: [
     {
       '@context': 'https://schema.org', '@type': 'ProfilePage', url: SITE + path, inLanguage: 'en',
