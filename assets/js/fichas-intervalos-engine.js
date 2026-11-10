@@ -586,7 +586,7 @@
         var y = (ev.changedTouches || ev.touches) ? (ev.changedTouches || ev.touches)[0].clientY : ev.clientY;
         pr.fila = posicionDeY(div, y);
         ocultarLupa();
-        pintarPractica();
+        window.tmNotacion.trasPintar(pintarPractica);   // INP
       });
       div.addEventListener('mousemove', function (ev) {
         if (!pr.corregido) mostrarLupa(div, e, ev.clientX, ev.clientY);
@@ -848,7 +848,7 @@
             b.setAttribute('aria-pressed', b === op ? 'true' : 'false');
           });
         }
-        generar();
+        window.tmNotacion.trasPintar(generar);   // INP: dibujar tras el pintado
         return;
       }
 
@@ -861,25 +861,27 @@
         else if (g === 'esp') pr.esp = val;
         else if (g === 'dir') pr.dir = Number(val);
         else if (g === 'alt') pr.alt = Number(val);
-        pintarPractica();
+        window.tmNotacion.trasPintar(pintarPractica);
         return;
       }
 
       var btn = ev.target.closest('[data-a]');
       if (!btn) return;
       var accion = btn.getAttribute('data-a');
-      if (accion === 'generar') generar();
-      else if (accion === 'empezar') generar();
-      else if (accion === 'comprobar') comprobar();
-      else if (accion === 'siguiente') siguiente();
+      if (accion === 'generar') window.tmNotacion.trasPintar(generar);
+      else if (accion === 'empezar') window.tmNotacion.trasPintar(generar);
+      else if (accion === 'comprobar') window.tmNotacion.trasPintar(comprobar);
+      else if (accion === 'siguiente') window.tmNotacion.trasPintar(siguiente);
       else if (accion === 'soluciones') {
         estado.solucion = !estado.solucion;
         btn.textContent = estado.solucion ? T('Ocultar soluciones', 'Hide answers') : T('Ver soluciones', 'Show answers');
-        pintar();
+        window.tmNotacion.trasPintar(pintar);
       } else if (accion === 'imprimir') {
-        prepararImpresion();
-        window.print();
-        if (!('onafterprint' in window)) setTimeout(terminarImpresion, 1000);
+        window.tmNotacion.trasPintar(function () {   // INP: redibujar al A4 tras el pintado; el navegador permite print() poco después del clic
+          prepararImpresion();
+          window.print();
+          if (!('onafterprint' in window)) setTimeout(terminarImpresion, 1000);
+        });
       }
     });
 

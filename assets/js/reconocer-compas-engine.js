@@ -286,12 +286,12 @@
         }).join('') + '</div>'
         + '<button type="button" class="tm-rc-empezar">' + T('Empezar', 'Start') + '</button></div>';
       Array.prototype.forEach.call(cont.querySelectorAll('.tm-rc-grupo button'), function (b) {
-        b.addEventListener('click', function () {
+        b.addEventListener('click', window.tmNotacion.diferido(function () {
           grupo = b.getAttribute('data-v');
           Array.prototype.forEach.call(cont.querySelectorAll('.tm-rc-grupo button'), function (x) { x.setAttribute('aria-pressed', x === b); });
-        });
+        }));
       });
-      cont.querySelector('.tm-rc-empezar').addEventListener('click', empezar);
+      cont.querySelector('.tm-rc-empezar').addEventListener('click', window.tmNotacion.diferido(empezar));
     }
 
     function empezar() {
@@ -331,17 +331,17 @@
       }
       Array.prototype.forEach.call(cont.querySelectorAll('.tm-rc-fichas'), function (fila) {
         var g = fila.getAttribute('data-g');
-        fila.addEventListener('click', function (ev) {
+        fila.addEventListener('click', window.tmNotacion.diferido(function (ev) {
           var c = ev.target.closest('.tm-rc-cifra');
           if (!c || corregida) return;
           Array.prototype.forEach.call(fila.querySelectorAll('.tm-rc-cifra'), function (x) { x.classList.remove('tm-sel'); });
           c.classList.add('tm-sel');
           if (g === 'num') num = c.getAttribute('data-v'); else den = c.getAttribute('data-v');
           pintarPrevia();
-        });
+        }));
       });
 
-      btn.addEventListener('click', function () {
+      btn.addEventListener('click', window.tmNotacion.diferido(function () {
         if (!corregida) {
           if (!num || !den) return;
           corregida = true;
@@ -363,7 +363,7 @@
           pos++;
           if (pos < cola.length) pregunta(); else resultado();
         }
-      });
+      }));
       pintarPrevia();
     }
 
@@ -374,8 +374,8 @@
         + '<div class="tm-rc-msg">' + msg + '</div>'
         + '<button type="button" class="tm-rc-otra" data-a="otra">' + T('Otra ronda', 'Another round') + '</button>'
         + '<button type="button" class="tm-rc-otra tm-2" data-a="modo">' + T('Cambiar de grupo', 'Change group') + '</button></div>';
-      cont.querySelector('[data-a="otra"]').addEventListener('click', empezar);
-      cont.querySelector('[data-a="modo"]').addEventListener('click', inicio);
+      cont.querySelector('[data-a="otra"]').addEventListener('click', window.tmNotacion.diferido(empezar));
+      cont.querySelector('[data-a="modo"]').addEventListener('click', window.tmNotacion.diferido(inicio));
     }
 
     inicio();

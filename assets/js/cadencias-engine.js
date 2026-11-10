@@ -293,7 +293,7 @@
           return '<button type="button" class="tm-cd-modo" data-n="' + m.nivel + '"><strong>' + m.t + '</strong><span>' + m.d + '</span></button>';
         }).join('') + '</div></div>';
       Array.prototype.forEach.call(cont.querySelectorAll('.tm-cd-modo'), function (b) {
-        b.addEventListener('click', function () { empezar(Number(b.getAttribute('data-n'))); });
+        b.addEventListener('click', window.tmNotacion.diferido(function () { empezar(Number(b.getAttribute('data-n'))); }));
       });
     }
 
@@ -321,7 +321,7 @@
       var btn = cont.querySelector('.tm-cd-btn'), fb = cont.querySelector('.tm-cd-fb');
       var botones = Array.prototype.slice.call(cont.querySelectorAll('.tm-cd-op'));
       botones.forEach(function (b) {
-        b.addEventListener('click', function () {
+        b.addEventListener('click', window.tmNotacion.diferido(function () {
           var elegido = b.getAttribute('data-t'), ok = elegido === it.tipo;
           if (ok) aciertos++;
           botones.forEach(function (x) {
@@ -335,12 +335,12 @@
           fb.innerHTML = '<strong>' + (ok ? T('¡Correcto!', 'Correct!') : T('No es correcto, es ' + CADENCIAS[it.tipo].nombre.toLowerCase() + '.', 'Not correct: the answer is ' + CADENCIAS[it.tipo].nombre + '.')) + '</strong> ' + explicar(it) + pista(it.tipo, elegido);
           btn.hidden = false;
           btn.textContent = pos + 1 < cola.length ? T('Siguiente', 'Next') : T('Ver resultado', 'See result');
-        });
+        }));
       });
-      btn.addEventListener('click', function () {
+      btn.addEventListener('click', window.tmNotacion.diferido(function () {
         pos++;
         if (pos < cola.length) pregunta(); else resultado();
-      });
+      }));
     }
 
     function resultado() {
@@ -350,8 +350,8 @@
         + '<div class="tm-cd-msg">' + msg + '</div>'
         + '<button type="button" class="tm-cd-otra" data-a="otra">' + T('Otra ronda', 'Another round') + '</button>'
         + '<button type="button" class="tm-cd-otra tm-2" data-a="modo">' + T('Cambiar de nivel', 'Change level') + '</button></div>';
-      cont.querySelector('[data-a="otra"]').addEventListener('click', function () { empezar(nivelActual); });
-      cont.querySelector('[data-a="modo"]').addEventListener('click', inicio);
+      cont.querySelector('[data-a="otra"]').addEventListener('click', window.tmNotacion.diferido(function () { empezar(nivelActual); }));
+      cont.querySelector('[data-a="modo"]').addEventListener('click', window.tmNotacion.diferido(inicio));
     }
 
     inicio();

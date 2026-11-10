@@ -329,9 +329,9 @@
     var elCard    = document.getElementById(uid + '_card');
     var elModeTag = document.getElementById(uid + '_modetag');
 
-    document.getElementById(uid + '_easy').addEventListener('click', function () { setDiff('easy'); });
-    document.getElementById(uid + '_hard').addEventListener('click', function () { setDiff('hard'); });
-    elNxt.addEventListener('click', nextQ);
+    document.getElementById(uid + '_easy').addEventListener('click', window.tmNotacion.diferido(function () { setDiff('easy'); }));
+    document.getElementById(uid + '_hard').addEventListener('click', window.tmNotacion.diferido(function () { setDiff('hard'); }));
+    elNxt.addEventListener('click', window.tmNotacion.diferido(nextQ));
 
     function setDiff(d) {
       st.diff = d;
@@ -390,7 +390,7 @@
           var b = document.createElement('button');
           b.className = 'tm-opt';
           b.textContent = dispName(s.name);
-          b.addEventListener('click', function () { answerEasy(s.name, b); });
+          b.addEventListener('click', window.tmNotacion.diferido(function () { answerEasy(s.name, b); }));
           div.appendChild(b);
         });
         elOpts.appendChild(div);
@@ -448,7 +448,7 @@
         b.className = 'tm-hn';
         b.textContent = dispNote(n);
         b.dataset.note = n;
-        b.addEventListener('click', function () {
+        b.addEventListener('click', window.tmNotacion.diferido(function () {
           if (st.answered) return;
           selRoot = n;
           notesRow.querySelectorAll('.tm-hn').forEach(function (x) {
@@ -456,7 +456,7 @@
           });
           accsRow.querySelectorAll('.tm-ha').forEach(function (x) { x.disabled = false; });
           hint.textContent = T('Ahora elige la alteración', 'Now choose the accidental');
-        });
+        }));
         notesRow.appendChild(b);
       });
 
@@ -467,7 +467,7 @@
         b.textContent = a.label;
         b.dataset.acc = a.val;
         b.disabled = true;
-        b.addEventListener('click', function () {
+        b.addEventListener('click', window.tmNotacion.diferido(function () {
           if (st.answered) return;
           selAcc = a.val;
           accsRow.querySelectorAll('.tm-ha').forEach(function (x) {
@@ -475,7 +475,7 @@
           });
           modeRow.querySelectorAll('.tm-ha').forEach(function (x) { x.disabled = false; });
           hint.textContent = T('¿Mayor o Menor?', 'Major or minor?');
-        });
+        }));
         accsRow.appendChild(b);
       });
 
@@ -486,7 +486,7 @@
         b.textContent = T(m, m === 'Mayor' ? 'Major' : 'Minor');
         b.dataset.mode = m;
         b.disabled = true;
-        b.addEventListener('click', function () {
+        b.addEventListener('click', window.tmNotacion.diferido(function () {
           if (st.answered) return;
           selMode = m;
           modeRow.querySelectorAll('.tm-ha').forEach(function (x) {
@@ -496,7 +496,7 @@
             x.disabled = (x.dataset.grp !== m);
           });
           hint.textContent = T('Selecciona el tipo de escala', 'Choose the type of scale');
-        });
+        }));
         modeRow.appendChild(b);
       });
 
@@ -508,7 +508,7 @@
         b.dataset.grp  = 'Mayor';
         b.dataset.type = t.val;
         b.disabled = true;
-        b.addEventListener('click', function () { doSubmit(t.val, notesRow, accsRow, modeRow, typesWrap); });
+        b.addEventListener('click', window.tmNotacion.diferido(function () { doSubmit(t.val, notesRow, accsRow, modeRow, typesWrap); }));
         mayBtns.appendChild(b);
       });
 
@@ -520,7 +520,7 @@
         b.dataset.grp  = 'Menor';
         b.dataset.type = t.val;
         b.disabled = true;
-        b.addEventListener('click', function () { doSubmit(t.val, notesRow, accsRow, modeRow, typesWrap); });
+        b.addEventListener('click', window.tmNotacion.diferido(function () { doSubmit(t.val, notesRow, accsRow, modeRow, typesWrap); }));
         menBtns.appendChild(b);
       });
 

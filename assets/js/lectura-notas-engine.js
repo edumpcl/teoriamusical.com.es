@@ -156,11 +156,11 @@
         '</div></div>';
 
       wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', window.tmNotacion.diferido(function () {
           modeClave = btn.dataset.k;
           currentQ = 0; score = 0;
           startQuiz();
-        });
+        }));
       });
     }
 
@@ -182,8 +182,8 @@
           '<div id="' + uid + '_fb" class="tm-fb"></div>' +
           '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente', 'Next') + ' →</button>' +
         '</div>';
-      document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
-      document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
+      document.getElementById(uid + '_btn').addEventListener('click', window.tmNotacion.diferido(checkAnswer));
+      document.getElementById(uid + '_nxt').addEventListener('click', window.tmNotacion.diferido(nextQ));
       renderOptions();
       nextQ();
     }
@@ -214,7 +214,7 @@
         return '<button class="tm-opt" data-i="' + i + '">' + n + '</button>';
       }).join('');
       el.querySelectorAll('.tm-opt').forEach(function (btn) {
-        btn.addEventListener('click', function () { selectOpt(btn); });
+        btn.addEventListener('click', window.tmNotacion.diferido(function () { selectOpt(btn); }));
       });
     }
 
@@ -274,10 +274,10 @@
           '</div>' +
           '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Practicar otra vez', 'Practice again') + '</button>' +
         '</div>';
-      document.getElementById(uid + '_restart').addEventListener('click', function () {
+      document.getElementById(uid + '_restart').addEventListener('click', window.tmNotacion.diferido(function () {
         currentQ = 0; score = 0;
         if (lockedMode) { modeClave = lockedMode; startQuiz(); } else showModeScreen();
-      });
+      }));
     }
 
     function init() {
@@ -312,7 +312,7 @@
         '<p class="tm-iv-subtitle">' + T('Elige la clave que quieres practicar — ' + totalQ + ' preguntas', 'Choose the clef you want to practice — ' + totalQ + ' questions') + '</p>' +
         '<div class="tm-iv-modes">' + modes + '</div></div></div>';
       wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () { modeClave = btn.dataset.k; currentQ = 0; score = 0; startQuiz(); });
+        btn.addEventListener('click', window.tmNotacion.diferido(function () { modeClave = btn.dataset.k; currentQ = 0; score = 0; startQuiz(); }));
       });
     }
 
@@ -331,8 +331,8 @@
         '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente', 'Next') + ' →</button>' +
         '</div>' +
         '<div class="tm-iv-loupe" id="' + uid + '_loupe"><div class="tm-iv-loupe-staff" id="' + uid + '_lstaff"></div></div>';
-      document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
-      document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
+      document.getElementById(uid + '_btn').addEventListener('click', window.tmNotacion.diferido(checkAnswer));
+      document.getElementById(uid + '_nxt').addEventListener('click', window.tmNotacion.diferido(nextQ));
       attachInteraction();
       nextQ();
     }
@@ -463,7 +463,7 @@
     function showResults() {
       var pct = Math.round(score / totalQ * 100);
       wrap.innerHTML = '<div class="tm-card"><div class="tm-iv-score-box"><div class="tm-iv-score-num">' + score + '/' + totalQ + '</div><div class="tm-iv-score-pct">' + pct + '%</div></div><button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Practicar otra vez', 'Practice again') + '</button></div>';
-      document.getElementById(uid + '_restart').addEventListener('click', function () { currentQ = 0; score = 0; if (lockedMode) { modeClave = lockedMode; startQuiz(); } else showModeScreen(); });
+      document.getElementById(uid + '_restart').addEventListener('click', window.tmNotacion.diferido(function () { currentQ = 0; score = 0; if (lockedMode) { modeClave = lockedMode; startQuiz(); } else showModeScreen(); }));
     }
 
     function init() { currentQ = 0; score = 0; if (lockedMode) { modeClave = lockedMode; startQuiz(); } else showModeScreen(); }

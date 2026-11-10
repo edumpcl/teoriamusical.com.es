@@ -326,7 +326,7 @@
           return '<button type="button" class="tm-gv-modo" data-n="' + m.nivel + '"><strong>' + m.t + '</strong><span>' + m.d + '</span></button>';
         }).join('') + '</div></div>';
       Array.prototype.forEach.call(cont.querySelectorAll('.tm-gv-modo'), function (b) {
-        b.addEventListener('click', function () { empezar(Number(b.getAttribute('data-n'))); });
+        b.addEventListener('click', window.tmNotacion.diferido(function () { empezar(Number(b.getAttribute('data-n'))); }));
       });
     }
 
@@ -356,16 +356,16 @@
 
       var elegida = null, corregida = false;
       var btn = cont.querySelector('.tm-gv-btn');
-      cont.querySelector('.tm-gv-paleta').addEventListener('click', function (ev) {
+      cont.querySelector('.tm-gv-paleta').addEventListener('click', window.tmNotacion.diferido(function (ev) {
         var c = ev.target.closest('.tm-gv-carta');
         if (!c || corregida) return;
         Array.prototype.forEach.call(cont.querySelectorAll('.tm-gv-carta'), function (x) { x.classList.remove('tm-sel'); });
         c.classList.add('tm-sel');
         elegida = c.getAttribute('data-f');
         btn.classList.add('tm-listo');
-      });
+      }));
 
-      btn.addEventListener('click', function () {
+      btn.addEventListener('click', window.tmNotacion.diferido(function () {
         if (!corregida) {
           if (!elegida) return;
           corregida = true;
@@ -387,7 +387,7 @@
           pos++;
           if (pos < cola.length) pregunta(); else resultado();
         }
-      });
+      }));
     }
 
     function resultado() {
@@ -397,8 +397,8 @@
         + '<div class="tm-gv-msg">' + msg + '</div>'
         + '<button type="button" class="tm-gv-otra" data-a="otra">' + T('Otra ronda', 'Another round') + '</button>'
         + '<button type="button" class="tm-gv-otra tm-2" data-a="modo">' + T('Cambiar de nivel', 'Change level') + '</button></div>';
-      cont.querySelector('[data-a="otra"]').addEventListener('click', function () { empezar(nivelActual); });
-      cont.querySelector('[data-a="modo"]').addEventListener('click', inicio);
+      cont.querySelector('[data-a="otra"]').addEventListener('click', window.tmNotacion.diferido(function () { empezar(nivelActual); }));
+      cont.querySelector('[data-a="modo"]').addEventListener('click', window.tmNotacion.diferido(inicio));
     }
 
     inicio();

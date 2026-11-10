@@ -243,11 +243,11 @@
         + '<button class="tm-gr-mode-btn" data-modo="todas"><strong>' + T('Mayores y menores', 'Major and minor') + '</strong><span>' + T('Incluye menor natural y armónica: sensible o subtónica', 'Includes natural and harmonic minor: leading tone or subtonic') + '</span></button>'
         + '</div></div>';
       wrap.querySelectorAll('.tm-gr-mode-btn').forEach(function (b) {
-        b.addEventListener('click', function () {
+        b.addEventListener('click', window.tmNotacion.diferido(function () {
           modo = this.dataset.modo;
           buildQueue();
           showQuestion();
-        });
+        }));
       });
     }
 
@@ -326,17 +326,17 @@
       var btn = wrap.querySelector('.tm-gr-btn');
       var requeridos = (tipo === 'grado' ? ['grado', 'nombre'] : ['letra', 'acc']).concat(['clasif']);
       wrap.querySelectorAll('.tm-gr-pill').forEach(function (p) {
-        p.addEventListener('click', function () {
+        p.addEventListener('click', window.tmNotacion.diferido(function () {
           if (this.classList.contains('tm-disabled')) return;
           var k = this.dataset.q;
           wrap.querySelectorAll('.tm-gr-pill[data-q="' + k + '"]').forEach(function (o) { o.classList.remove('tm-sel'); });
           this.classList.add('tm-sel');
           sel[k] = this.dataset.val;
           btn.disabled = requeridos.some(function (r) { return sel[r] === null || sel[r] === undefined; });
-        });
+        }));
       });
 
-      btn.addEventListener('click', function () { comprobar(q, sel, uid); });
+      btn.addEventListener('click', window.tmNotacion.diferido(function () { comprobar(q, sel, uid); }));
     }
 
     function comprobar(q, sel, uid) {
@@ -400,10 +400,10 @@
       btn.disabled = false;
       btn.textContent = current + 1 < TOTAL ? T('Siguiente →', 'Next →') : T('Ver resultado', 'See result');
       btn.replaceWith(btn.cloneNode(true));
-      wrap.querySelector('.tm-gr-btn').addEventListener('click', function () {
+      wrap.querySelector('.tm-gr-btn').addEventListener('click', window.tmNotacion.diferido(function () {
         current++;
         if (current < TOTAL) showQuestion(); else showResults();
-      });
+      }));
     }
 
     function showResults() {
@@ -419,7 +419,7 @@
         + '<div class="tm-gr-res-msg">' + msg + '</div>'
         + '<button class="tm-gr-btn">' + T('Intentar de nuevo', 'Try again') + '</button>'
         + '</div>';
-      wrap.querySelector('.tm-gr-btn').addEventListener('click', showModeScreen);
+      wrap.querySelector('.tm-gr-btn').addEventListener('click', window.tmNotacion.diferido(showModeScreen));
     }
 
     wrap.innerHTML = '<div class="tm-gr-card"><div class="tm-gr-mode-sub">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</div></div>';

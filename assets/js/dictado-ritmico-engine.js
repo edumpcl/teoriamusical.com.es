@@ -451,17 +451,17 @@
       wrap.innerHTML = '<div class="tm-card">' + cabecera() + medio + pie + '</div>';
       if (modo !== 'leer') $('_play').addEventListener('click', function () { if (!respondido && escuchas < MAX_ESCUCHAS) { escuchas++; tocar(it.p, 0); } });
       $('_otra').addEventListener('click', function () { tocar(it.p, 0, true); });
-      $('_nxt').addEventListener('click', siguiente);
+      $('_nxt').addEventListener('click', window.tmNotacion.diferido(siguiente));
       if (modo === 'escribir') {
         cartas().forEach(function (b) {
           var f = b.dataset.f;
           if (FIG[f]) window.tmCompletarCompasData.carta(b.querySelector('.tm-dr-mini'), FIG[f].cc, !!FIG[f].s);
           else cartaBarra(b.querySelector('.tm-dr-mini'), f === '||');
-          b.addEventListener('click', function () { poner(f); });
+          b.addEventListener('click', window.tmNotacion.diferido(function () { poner(f); }));
         });
-        $('_des').addEventListener('click', function () { if (!respondido) { puestos.pop(); pintarEscrito(); } });
-        $('_bor').addEventListener('click', function () { if (!respondido) { puestos = []; pintarEscrito(); } });
-        $('_corr').addEventListener('click', corregirEscrito);
+        $('_des').addEventListener('click', window.tmNotacion.diferido(function () { if (!respondido) { puestos.pop(); pintarEscrito(); } }));
+        $('_bor').addEventListener('click', window.tmNotacion.diferido(function () { if (!respondido) { puestos = []; pintarEscrito(); } }));
+        $('_corr').addEventListener('click', window.tmNotacion.diferido(corregirEscrito));
       }
     }
     var cartas = function () { return Array.prototype.slice.call(wrap.querySelectorAll('.tm-dr-pal .tm-cc-carta')); };
@@ -496,7 +496,7 @@
       }).join('');
       var w = ancho(cont.querySelector('.tm-dr-dib'));
       ops.forEach(function (q, i) { dibujar($('_o' + i), q, w, { escala: 0.8, alt: T('Ritmo ', 'Rhythm ') + LETRAS[i] + '. ' + describir(q) }); });
-      Array.prototype.forEach.call(cont.querySelectorAll('.tm-dr-opt'), function (b) { b.addEventListener('click', function () { responderOpcion(+b.dataset.i); }); });
+      Array.prototype.forEach.call(cont.querySelectorAll('.tm-dr-opt'), function (b) { b.addEventListener('click', window.tmNotacion.diferido(function () { responderOpcion(+b.dataset.i); })); });
       $('_estado').textContent = T('Pulsa para escuchar el dictado.', 'Press to listen to the dictation.');
       actualizarPlay();
     }

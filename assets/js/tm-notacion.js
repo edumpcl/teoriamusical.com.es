@@ -199,7 +199,25 @@
     });
   }
 
+  /** INP: ejecuta `fn` DESPUÉS del siguiente pintado. Un clic que dibuja con Verovio tarda 150-500 ms en un
+   *  móvil, y el navegador no repinta hasta que acaba: Search Console lo marca (INP > 200 ms, nov-2026).
+   *  Con esto el clic responde enseguida (botón pulsado, texto cambiado) y el pentagrama llega un instante después.
+   *  Mismo truco que trasPintar() en consent.js. No usarlo con audio ni window.print(): esos deben ir en el clic. */
+  function trasPintar(fn) {
+    // Si Verovio aún se está descargando, se espera a que acabe: un clic temprano en «Generar otra ficha»
+    // dibujaba sin Verovio y fallaba («todavia no esta cargado»).
+    if (cargando && !toolkit) { cargando.then(function () { trasPintar(fn); }); return; }
+    if (typeof requestAnimationFrame !== 'function' || (typeof document !== 'undefined' && document.hidden)) return setTimeout(fn, 0);
+    requestAnimationFrame(function () { setTimeout(fn, 0); });
+  }
+  /** Envuelve un manejador para que su trabajo vaya tras el pintado (mismos argumentos y `this`).
+   *  El evento sigue sirviendo para leer ev.target, pero NO para ev.preventDefault(). */
+  function diferido(fn) {
+    return function () { var yo = this, args = arguments; trasPintar(function () { fn.apply(yo, args); }); };
+  }
+
   raiz.tmNotacion = {
+    trasPintar: trasPintar, diferido: diferido,
     listo: listo, cargado: function () { return !!toolkit; }, mei: mei,
     svg: svg, svgSync: svgSync, dibujar: dibujar, dibujarSync: dibujarSync, dibujarAlineado: dibujarAlineado, dibujarAAncho: dibujarAAncho, dibujarEscala: dibujarEscala, compases: compases, geometria: geometria, VERSION: VERSION
   };

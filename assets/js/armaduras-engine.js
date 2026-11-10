@@ -207,10 +207,10 @@
       nextQ();
     }
 
-    document.getElementById(uid + '_d_easy').addEventListener('click', function () { setDiff('easy'); });
-    document.getElementById(uid + '_d_med').addEventListener('click', function () { setDiff('med'); });
-    document.getElementById(uid + '_d_hard').addEventListener('click', function () { setDiff('hard'); });
-    elNxt.addEventListener('click', nextQ);
+    document.getElementById(uid + '_d_easy').addEventListener('click', window.tmNotacion.diferido(function () { setDiff('easy'); }));
+    document.getElementById(uid + '_d_med').addEventListener('click', window.tmNotacion.diferido(function () { setDiff('med'); }));
+    document.getElementById(uid + '_d_hard').addEventListener('click', window.tmNotacion.diferido(function () { setDiff('hard'); }));
+    elNxt.addEventListener('click', window.tmNotacion.diferido(nextQ));
 
     function updateStats() {
       elTot.textContent = st.total;
@@ -256,7 +256,7 @@
         var b = document.createElement('button');
         b.className = 'tm-opt';
         b.textContent = o.label;
-        b.addEventListener('click', function () {
+        b.addEventListener('click', window.tmNotacion.diferido(function () {
           if (st.answered) return;
           st.answered = true; st.total++;
           if (o.ok) {
@@ -279,7 +279,7 @@
           elOpts.querySelectorAll('.tm-opt').forEach(function (x) { x.disabled = true; });
           updateStats();
           elNxt.className = 'tm-nxt tm-show';
-        });
+        }));
         elOpts.appendChild(b);
       });
     }
@@ -355,18 +355,18 @@
     var elLstaff = document.getElementById(uid + '_lstaff');
     var lastLoupeKey = null;
 
-    document.getElementById(uid + '_tool_sharp').addEventListener('click', function () { setTool('#'); });
-    document.getElementById(uid + '_tool_flat').addEventListener('click', function () { setTool('b'); });
-    document.getElementById(uid + '_undo').addEventListener('click', function () {
+    document.getElementById(uid + '_tool_sharp').addEventListener('click', window.tmNotacion.diferido(function () { setTool('#'); }));
+    document.getElementById(uid + '_tool_flat').addEventListener('click', window.tmNotacion.diferido(function () { setTool('b'); }));
+    document.getElementById(uid + '_undo').addEventListener('click', window.tmNotacion.diferido(function () {
       if (st.answered) return;
       if (userDrawing.length > 0) { userDrawing.pop(); renderM(); }
-    });
-    document.getElementById(uid + '_clear').addEventListener('click', function () {
+    }));
+    document.getElementById(uid + '_clear').addEventListener('click', window.tmNotacion.diferido(function () {
       if (st.answered) return;
       userDrawing = []; renderM();
-    });
-    elSubmit.addEventListener('click', checkAnswer);
-    elNxt.addEventListener('click', nextQ);
+    }));
+    elSubmit.addEventListener('click', window.tmNotacion.diferido(checkAnswer));
+    elNxt.addEventListener('click', window.tmNotacion.diferido(nextQ));
 
     function setTool(tool) {
       if (st.answered) return;

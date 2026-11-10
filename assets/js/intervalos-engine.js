@@ -528,7 +528,7 @@
       ].join('');
 
       wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', window.tmNotacion.diferido(function() {
           var d    = DIFICULTADES[parseInt(btn.dataset.i, 10)];
           currentDiffObj   = d;
           maxAlt           = d.maxAlt;
@@ -537,7 +537,7 @@
           score            = 0;
           usedFingerprints = [];
           startQuiz();
-        });
+        }));
       });
     }
 
@@ -561,8 +561,8 @@
         '<div class="tm-iv-loupe" id="' + uid + '_loupe"><div class="tm-iv-loupe-staff" id="' + uid + '_lstaff"></div></div>'
       ].join('');
 
-      document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
-      document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
+      document.getElementById(uid + '_btn').addEventListener('click', window.tmNotacion.diferido(checkAnswer));
+      document.getElementById(uid + '_nxt').addEventListener('click', window.tmNotacion.diferido(nextQ));
 
       if (config.test === 'construir' || config.test === 'construir_semitono' || config.test === 'construir_numero') {
         var elNotDiv = document.getElementById(uid + '_not');
@@ -620,7 +620,7 @@
           if (hintEl) hintEl.textContent = T('Pulsa de nuevo para cambiar la nota', 'Tap again to change the note');
         };
 
-        elNotDiv.addEventListener('click', onConstruirStaffInteract);
+        elNotDiv.addEventListener('click', window.tmNotacion.diferido(onConstruirStaffInteract));
         elNotDiv.addEventListener('mousemove', function(e) { showLoupe(e.clientX, e.clientY); });
         elNotDiv.addEventListener('mouseleave', hideLoupe);
         elNotDiv.addEventListener('touchstart', function(e) {
@@ -793,7 +793,7 @@
         sel.construirNote = null;
         var accBtns = elCont.querySelectorAll('.tm-cs-acc-btn');
         accBtns.forEach(function(btn) {
-          btn.addEventListener('click', function() {
+          btn.addEventListener('click', window.tmNotacion.diferido(function() {
             if (answered) return;
             accBtns.forEach(function(b){ b.classList.remove('tm-sel'); });
             btn.classList.add('tm-sel');
@@ -802,11 +802,11 @@
               sel.ans = sel.construirNote.n + '_' + sel.construirNote.oct + '_' + sel.acc;
               drawConstruirPreview(sel.construirNote.vfn, sel.construirNote.oct, sel.acc);
             }
-          });
+          }));
         });
       } else {
         elCont.querySelectorAll('.tm-opt').forEach(function(btn) {
-          btn.addEventListener('click', function() { selOpt(btn.dataset.g, btn.dataset.v, btn); });
+          btn.addEventListener('click', window.tmNotacion.diferido(function() { selOpt(btn.dataset.g, btn.dataset.v, btn); }));
         });
       }
     }
@@ -1018,11 +1018,11 @@
           '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Hacer otro test', 'Take another quiz') + '</button>',
         '</div>'
       ].join('');
-      document.getElementById(uid + '_restart').addEventListener('click', function() {
+      document.getElementById(uid + '_restart').addEventListener('click', window.tmNotacion.diferido(function() {
         usedFingerprints = [];
         if (config.test === 'arm_mel' || config.test === 'asc_des' || config.test === 'con_dis' || config.test === 'semitono' || config.test === 'construir_numero') { currentQ = 0; score = 0; startQuiz(); }
         else showModeScreen();
-      });
+      }));
     }
 
     function init() {

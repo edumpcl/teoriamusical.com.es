@@ -141,15 +141,17 @@
       var btn = ev.target.closest('[data-a]');
       if (!btn) return;
       var accion = btn.getAttribute('data-a');
-      if (accion === 'generar') generar();
+      if (accion === 'generar') window.tmNotacion.trasPintar(function () { generar(); });   // INP: el clic responde y la ficha se dibuja tras el pintado
       else if (accion === 'soluciones') {
         solucion = !solucion;
         btn.textContent = solucion ? T('Ocultar soluciones', 'Hide answers') : T('Ver soluciones', 'Show answers');
-        pintar();
+        window.tmNotacion.trasPintar(pintar);
       } else if (accion === 'imprimir') {
-        prepararImpresion();
-        window.print();
-        if (!('onafterprint' in window)) setTimeout(terminarImpresion, 1000);
+        window.tmNotacion.trasPintar(function () {   // INP: redibujar al A4 tras el pintado; el navegador permite print() poco después del clic
+          prepararImpresion();
+          window.print();
+          if (!('onafterprint' in window)) setTimeout(terminarImpresion, 1000);
+        });
       }
     });
 

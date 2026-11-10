@@ -820,7 +820,7 @@
           return '<button type="button" class="tm-fg-modo" data-i="' + i + '"><strong>' + m.t + '</strong>' + (m.d ? '<span>' + m.d + '</span>' : '') + '</button>';
         }).join('') + '</div></div>';
       Array.prototype.forEach.call(cont.querySelectorAll('.tm-fg-modo'), function (b) {
-        b.addEventListener('click', function () { empezar(cfg.modos[Number(b.getAttribute('data-i'))].v); });
+        b.addEventListener('click', window.tmNotacion.diferido(function () { empezar(cfg.modos[Number(b.getAttribute('data-i'))].v); }));
       });
     }
 
@@ -891,7 +891,7 @@
       var sel = {};
       var btn = cont.querySelector('.tm-fg-btn');
       var corregida = false;
-      cont.querySelector('.tm-fg-card').addEventListener('click', function (ev) {
+      cont.querySelector('.tm-fg-card').addEventListener('click', window.tmNotacion.diferido(function (ev) {
         var op = ev.target.closest('.tm-fg-op');
         if (op && !corregida) {
           var g = op.getAttribute('data-g');
@@ -901,8 +901,8 @@
           var listo = secciones.every(function (s) { return s.g in sel; });
           btn.classList.toggle('tm-listo', listo);
         }
-      });
-      btn.addEventListener('click', function () {
+      }));
+      btn.addEventListener('click', window.tmNotacion.diferido(function () {
         if (!corregida) {
           if (!secciones.every(function (s) { return s.g in sel; })) return;
           corregida = true;
@@ -913,7 +913,7 @@
           pos++;
           if (pos < cola.length) pregunta(); else resultado();
         }
-      });
+      }));
     }
 
     function buenas(item, g) {
@@ -960,8 +960,8 @@
         + '<div class="tm-fg-msg">' + msg + '</div>'
         + '<button type="button" class="tm-fg-otra" data-a="otra">' + T('Otra ronda', 'Another round') + '</button>'
         + '<button type="button" class="tm-fg-otra tm-2" data-a="modo">' + T('Cambiar de nivel', 'Change level') + '</button></div>';
-      cont.querySelector('[data-a="otra"]').addEventListener('click', function () { empezar(opcionesModo); });
-      cont.querySelector('[data-a="modo"]').addEventListener('click', inicio);
+      cont.querySelector('[data-a="otra"]').addEventListener('click', window.tmNotacion.diferido(function () { empezar(opcionesModo); }));
+      cont.querySelector('[data-a="modo"]').addEventListener('click', window.tmNotacion.diferido(inicio));
     }
 
     inicio();

@@ -254,10 +254,10 @@
         '</div></div>'
       ].join('');
       wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', window.tmNotacion.diferido(function () {
           maxAlts = DIFICULTADES[parseInt(btn.dataset.i, 10)].maxAlts;
           currentQ = 0; score = 0; startQuiz();
-        });
+        }));
       });
     }
 
@@ -292,18 +292,18 @@
         '<div class="tm-iv-loupe" id="' + uid + '_loupe"><div class="tm-iv-loupe-staff" id="' + uid + '_lstaff"></div></div>'
       ].join('');
 
-      document.getElementById(uid + '_undo').addEventListener('click', function () {
+      document.getElementById(uid + '_undo').addEventListener('click', window.tmNotacion.diferido(function () {
         if (answered) return;
         var arr = phase === 'arm' ? placedAcc : placedNotes;
         if (arr.length) { arr.pop(); draw(); updateBtn(); }
-      });
-      document.getElementById(uid + '_clear').addEventListener('click', function () {
+      }));
+      document.getElementById(uid + '_clear').addEventListener('click', window.tmNotacion.diferido(function () {
         if (answered) return;
         if (phase === 'arm') placedAcc = []; else placedNotes = [];
         draw(); updateBtn();
-      });
-      document.getElementById(uid + '_btn').addEventListener('click', onSubmit);
-      document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
+      }));
+      document.getElementById(uid + '_btn').addEventListener('click', window.tmNotacion.diferido(onSubmit));
+      document.getElementById(uid + '_nxt').addEventListener('click', window.tmNotacion.diferido(nextQ));
       attachInteraction();
       nextQ();
     }
@@ -328,13 +328,13 @@
       /* armadura: por defecto ♯ (como en Dibujar la armadura). escala: ninguna activa → hereda */
       activeTool = phase === 'arm' ? '#' : 'inherit';
       elT.querySelectorAll('.tm-tool').forEach(function (b) {
-        b.addEventListener('click', function () {
+        b.addEventListener('click', window.tmNotacion.diferido(function () {
           if (answered) return;
           var val = phase === 'arm' ? b.dataset.tool : parseInt(b.dataset.tool, 10);
           if (phase === 'esc' && activeTool === val) activeTool = 'inherit'; // re-clic = deseleccionar
           else activeTool = val;
           syncTools(); lastLoupeKey = null;
-        });
+        }));
       });
       syncTools();
     }
@@ -604,7 +604,7 @@
         '</div>',
         '<button class="tm-nxt tm-show" id="' + uid + '_restart">' + T('Volver a empezar', 'Start over') + '</button></div>'
       ].join('');
-      document.getElementById(uid + '_restart').addEventListener('click', showModeScreen);
+      document.getElementById(uid + '_restart').addEventListener('click', window.tmNotacion.diferido(showModeScreen));
     }
 
     /* Verovio se carga bajo demanda: el motor arranca cuando ya está. */

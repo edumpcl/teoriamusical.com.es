@@ -61,8 +61,8 @@
 
 <!-- Ejercicio interactivo embebido (lectura de notas) -->
 <script src="/assets/js/tm-mei.js?v=39228839" defer></script>
-<script src="/assets/js/tm-notacion.js?v=b90e2d2c" defer></script>
-<script src="/assets/js/lectura-notas-engine.js?v=048ee0c1" defer></script>
+<script src="/assets/js/tm-notacion.js?v=e5bb258a" defer></script>
+<script src="/assets/js/lectura-notas-engine.js?v=ac40b3dc" defer></script>
 <style>.tm-embed-quiz{min-height:400px;margin:18px 0}@media(max-width:600px){.tm-embed-quiz{min-height:470px}}.tm-embed-cap{font-size:.92rem;color:#555;margin-top:10px}</style>
 <script>
 document.addEventListener("DOMContentLoaded",function(){var els=[].slice.call(document.querySelectorAll("[data-tmnotas-clave]"));if(!els.length)return;function init(el){if(el.dataset.tmInit||typeof tmNotasEngine!=="function")return;el.dataset.tmInit="1";tmNotasEngine(el.id,{clave:el.getAttribute("data-tmnotas-clave")});}if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){init(e.target);io.unobserve(e.target);}});},{rootMargin:"250px 0px"});els.forEach(function(el){io.observe(el);});}else{els.forEach(init);}});

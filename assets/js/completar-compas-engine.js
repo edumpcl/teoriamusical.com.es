@@ -498,13 +498,13 @@
           return '<button type="button" class="tm-cc-modo" data-n="' + m.nivel + '"><strong>' + m.t + '</strong><span>' + m.d + '</span></button>';
         }).join('') + '</div></div>';
       Array.prototype.forEach.call(cont.querySelectorAll('.tm-cc-grupo button'), function (b) {
-        b.addEventListener('click', function () {
+        b.addEventListener('click', window.tmNotacion.diferido(function () {
           grupo = b.getAttribute('data-v');
           Array.prototype.forEach.call(cont.querySelectorAll('.tm-cc-grupo button'), function (x) { x.setAttribute('aria-pressed', x === b); });
-        });
+        }));
       });
       Array.prototype.forEach.call(cont.querySelectorAll('.tm-cc-modo'), function (b) {
-        b.addEventListener('click', function () { nivel = Number(b.getAttribute('data-n')); empezar(); });
+        b.addEventListener('click', window.tmNotacion.diferido(function () { nivel = Number(b.getAttribute('data-n')); empezar(); }));
       });
     }
 
@@ -554,7 +554,7 @@
         if (!resp.length) dibujar(dib, it, { w: 460 });
         else dibujar(dib, it, { w: 460, respuesta: resp, parcial: true });
       }
-      cont.querySelector('.tm-cc-paleta').addEventListener('click', function (ev) {
+      cont.querySelector('.tm-cc-paleta').addEventListener('click', window.tmNotacion.diferido(function (ev) {
         var c = ev.target.closest('.tm-cc-carta');
         if (!c || corregida) return;
         var i = Number(c.getAttribute('data-i'));
@@ -571,10 +571,10 @@
           btn.classList.add('tm-listo');
         }
         escribir();
-      });
-      deshacer.addEventListener('click', function () { if (!corregida) { puestos.pop(); pintarCesta(); escribir(); } });
+      }));
+      deshacer.addEventListener('click', window.tmNotacion.diferido(function () { if (!corregida) { puestos.pop(); pintarCesta(); escribir(); } }));
 
-      btn.addEventListener('click', function () {
+      btn.addEventListener('click', window.tmNotacion.diferido(function () {
         if (!corregida) {
           if (nivel === 3 ? !puestos.length : sel === null) return;
           corregida = true;
@@ -614,7 +614,7 @@
           pos++;
           if (pos < cola.length) pregunta(); else resultado();
         }
-      });
+      }));
     }
 
     function resultado() {
@@ -624,8 +624,8 @@
         + '<div class="tm-cc-msg">' + msg + '</div>'
         + '<button type="button" class="tm-cc-otra" data-a="otra">' + T('Otra ronda', 'Another round') + '</button>'
         + '<button type="button" class="tm-cc-otra tm-2" data-a="modo">' + T('Cambiar de nivel', 'Change level') + '</button></div>';
-      cont.querySelector('[data-a="otra"]').addEventListener('click', empezar);
-      cont.querySelector('[data-a="modo"]').addEventListener('click', inicio);
+      cont.querySelector('[data-a="otra"]').addEventListener('click', window.tmNotacion.diferido(empezar));
+      cont.querySelector('[data-a="modo"]').addEventListener('click', window.tmNotacion.diferido(inicio));
     }
 
     inicio();

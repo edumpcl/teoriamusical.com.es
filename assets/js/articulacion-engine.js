@@ -159,13 +159,13 @@
         '</div>'
       ].join('');
       wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', window.tmNotacion.diferido(function () {
           modoElegido = MODOS[parseInt(btn.dataset.i, 10)].id;
           queue = buildQueue(modoElegido);
           totalQ = queue.length;
           currentQ = 0; score = 0;
           startQuiz();
-        });
+        }));
       });
     }
 
@@ -187,8 +187,8 @@
           '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente →', 'Next →') + '</button>',
         '</div>'
       ].join('');
-      document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
-      document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
+      document.getElementById(uid + '_btn').addEventListener('click', window.tmNotacion.diferido(checkAnswer));
+      document.getElementById(uid + '_nxt').addEventListener('click', window.tmNotacion.diferido(nextQ));
       nextQ();
     }
 
@@ -212,7 +212,7 @@
         }).join('');
         opciones.forEach(function (a) { dibujarMini(document.getElementById(uid + '_mini_' + a.id), a.id); });
         elOpts.querySelectorAll('.tm-opt-signo').forEach(function (btn) {
-          btn.addEventListener('click', function () { selectOpt(btn); });
+          btn.addEventListener('click', window.tmNotacion.diferido(function () { selectOpt(btn); }));
         });
       } else {
         elQ.textContent = T('¿Cómo se llama esta articulación?', 'What is this articulation called?');
@@ -225,7 +225,7 @@
           return '<button class="tm-opt" data-v="' + a.id + '">' + a.nombre + '</button>';
         }).join('');
         elOpts.querySelectorAll('.tm-opt').forEach(function (btn) {
-          btn.addEventListener('click', function () { selectOpt(btn); });
+          btn.addEventListener('click', window.tmNotacion.diferido(function () { selectOpt(btn); }));
         });
       }
     }
@@ -291,10 +291,10 @@
           '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Hacer otro test', 'Take another quiz') + '</button>',
         '</div>'
       ].join('');
-      document.getElementById(uid + '_restart').addEventListener('click', function () {
+      document.getElementById(uid + '_restart').addEventListener('click', window.tmNotacion.diferido(function () {
         currentQ = 0; score = 0;
         showModeScreen();
-      });
+      }));
     }
 
     wrap.innerHTML = '<div class="tm-card"><p class="tm-iv-subtitle">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</p></div>';
@@ -349,13 +349,13 @@
         '</div>'
       ].join('');
       wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', window.tmNotacion.diferido(function () {
           modoElegido = MODOS_DEF[parseInt(btn.dataset.i, 10)].id;
           queue = buildQueue(modoElegido);
           totalQ = queue.length;
           currentQ = 0; score = 0;
           startQuiz();
-        });
+        }));
       });
     }
 
@@ -376,8 +376,8 @@
           '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente →', 'Next →') + '</button>',
         '</div>'
       ].join('');
-      document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
-      document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
+      document.getElementById(uid + '_btn').addEventListener('click', window.tmNotacion.diferido(checkAnswer));
+      document.getElementById(uid + '_nxt').addEventListener('click', window.tmNotacion.diferido(nextQ));
       nextQ();
     }
 
@@ -403,7 +403,7 @@
         }).join('');
       }
       elOpts.querySelectorAll('.tm-opt').forEach(function (btn) {
-        btn.addEventListener('click', function () { selectOpt(btn); });
+        btn.addEventListener('click', window.tmNotacion.diferido(function () { selectOpt(btn); }));
       });
     }
 
@@ -468,10 +468,10 @@
           '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Hacer otro test', 'Take another quiz') + '</button>',
         '</div>'
       ].join('');
-      document.getElementById(uid + '_restart').addEventListener('click', function () {
+      document.getElementById(uid + '_restart').addEventListener('click', window.tmNotacion.diferido(function () {
         currentQ = 0; score = 0;
         showModeScreen();
-      });
+      }));
     }
 
     showModeScreen();

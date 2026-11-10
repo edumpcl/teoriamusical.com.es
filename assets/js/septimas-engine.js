@@ -238,11 +238,11 @@
         '</div>'
       ].join('');
       wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', window.tmNotacion.diferido(function () {
           maxAlt = DIFICULTADES[parseInt(btn.dataset.i, 10)].maxAlt;
           currentQ = 0; score = 0;
           startQuiz();
-        });
+        }));
       });
     }
 
@@ -263,8 +263,8 @@
           '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente →', 'Next →') + '</button>',
         '</div>'
       ].join('');
-      document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
-      document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
+      document.getElementById(uid + '_btn').addEventListener('click', window.tmNotacion.diferido(checkAnswer));
+      document.getElementById(uid + '_nxt').addEventListener('click', window.tmNotacion.diferido(nextQ));
       nextQ();
     }
 
@@ -294,7 +294,7 @@
       selAns = null;
       document.getElementById(uid + '_btn').classList.remove('tm-ready');
       elOpts.querySelectorAll('.tm-opt').forEach(function (btn) {
-        btn.addEventListener('click', function () { selectOpt(btn); });
+        btn.addEventListener('click', window.tmNotacion.diferido(function () { selectOpt(btn); }));
       });
     }
 
@@ -355,9 +355,9 @@
           '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Hacer otro test', 'Take another test') + '</button>',
         '</div>'
       ].join('');
-      document.getElementById(uid + '_restart').addEventListener('click', function () {
+      document.getElementById(uid + '_restart').addEventListener('click', window.tmNotacion.diferido(function () {
         currentQ = 0; score = 0; showModeScreen();
-      });
+      }));
     }
 
     window['tmSe7Debug_' + uid] = function () { return cQ; };
@@ -432,11 +432,11 @@
         '</div>'
       ].join('');
       wrap.querySelectorAll('.tm-iv-mode-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', window.tmNotacion.diferido(function () {
           maxAlt = DIFICULTADES[parseInt(btn.dataset.i, 10)].maxAlt;
           currentQ = 0; score = 0;
           startQuiz();
-        });
+        }));
       });
     }
 
@@ -480,26 +480,26 @@
       activeTool = 0; placedNotes = []; currentSvg = null; lastLoupeKey = null;
 
       wrap.querySelectorAll('.tm-tool').forEach(function (btn) {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', window.tmNotacion.diferido(function () {
           activeTool = parseInt(btn.dataset.acc, 10);
           lastLoupeKey = null;
           wrap.querySelectorAll('.tm-tool').forEach(function (b) { b.classList.remove('tm-active'); });
           btn.classList.add('tm-active');
-        });
+        }));
       });
       var nat = wrap.querySelector('.tm-tool[data-acc="0"]');
       if (nat) nat.classList.add('tm-active');
 
-      document.getElementById(uid + '_undo').addEventListener('click', function () {
+      document.getElementById(uid + '_undo').addEventListener('click', window.tmNotacion.diferido(function () {
         if (answered || !placedNotes.length) return;
         placedNotes.pop(); drawStaff(); updateBtn();
-      });
-      document.getElementById(uid + '_clear').addEventListener('click', function () {
+      }));
+      document.getElementById(uid + '_clear').addEventListener('click', window.tmNotacion.diferido(function () {
         if (answered) return;
         placedNotes = []; drawStaff(); updateBtn();
-      });
-      document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
-      document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
+      }));
+      document.getElementById(uid + '_btn').addEventListener('click', window.tmNotacion.diferido(checkAnswer));
+      document.getElementById(uid + '_nxt').addEventListener('click', window.tmNotacion.diferido(nextQ));
 
       attachInteraction();
       nextQ();
@@ -689,9 +689,9 @@
           '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Hacer otro test', 'Take another test') + '</button>',
         '</div>'
       ].join('');
-      document.getElementById(uid + '_restart').addEventListener('click', function () {
+      document.getElementById(uid + '_restart').addEventListener('click', window.tmNotacion.diferido(function () {
         currentQ = 0; score = 0; showModeScreen();
-      });
+      }));
     }
 
     window['tmSe7Debug_' + uid] = function () { return cQ; };

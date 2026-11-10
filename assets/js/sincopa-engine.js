@@ -527,10 +527,10 @@
         '</div>'
       ].join('');
       wrap.querySelectorAll('.tm-si-mode-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', window.tmNotacion.diferido(function () {
           modoDificil = btn.dataset.modo === 'dificil';
           startQuiz();
-        });
+        }));
       });
     }
 
@@ -558,8 +558,8 @@
           '<button id="' + uid + '_nxt" class="tm-nxt">' + T('Siguiente →', 'Next →') + '</button>',
         '</div>'
       ].join('');
-      document.getElementById(uid + '_btn').addEventListener('click', checkAnswer);
-      document.getElementById(uid + '_nxt').addEventListener('click', nextQ);
+      document.getElementById(uid + '_btn').addEventListener('click', window.tmNotacion.diferido(checkAnswer));
+      document.getElementById(uid + '_nxt').addEventListener('click', window.tmNotacion.diferido(nextQ));
       nextQ();
     }
 
@@ -576,7 +576,7 @@
       lanes = res.rects;
       groups = res.groups;
       lanes.forEach(function (rect) {
-        rect.addEventListener('click', function () { seleccionar(parseInt(rect.dataset.idx, 10)); });
+        rect.addEventListener('click', window.tmNotacion.diferido(function () { seleccionar(parseInt(rect.dataset.idx, 10)); }));
         rect.addEventListener('keydown', function (ev) {
           if (ev.key === 'Enter' || ev.key === ' ' || ev.key === 'Spacebar') {
             ev.preventDefault();
@@ -665,7 +665,7 @@
           '<button class="tm-submit tm-ready" id="' + uid + '_restart">' + T('Hacer otro test', 'Take another quiz') + '</button>',
         '</div>'
       ].join('');
-      document.getElementById(uid + '_restart').addEventListener('click', showModeScreen);
+      document.getElementById(uid + '_restart').addEventListener('click', window.tmNotacion.diferido(showModeScreen));
     }
 
     wrap.innerHTML = '<div class="tm-card"><p class="tm-si-mode-subtitle">' + T('Cargando el ejercicio…', 'Loading the exercise…') + '</p></div>';
