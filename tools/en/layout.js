@@ -10,7 +10,7 @@ const LEGAL = {
   cookies: { href: '/en/cookie-policy/', label: 'Cookie policy' },
   privacy: { href: '/en/privacy-policy/', label: 'Privacy policy' },
   notice:  { href: '/en/legal-notice/', label: 'Legal notice' },
-  about:   { href: '/sobre-mi/', label: 'About (in Spanish)' },
+  about:   { href: '/en/about/', label: 'About' },
 };
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');

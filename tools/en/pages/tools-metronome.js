@@ -162,7 +162,7 @@ module.exports = {
         'Tap tempo', 'Animated visual pendulum', 'Subdivisions: quarter, eighth, triplet, sixteenth, quintuplet, sextuplet, septuplet, ×8',
         'Built-in drum machine with preset patterns', 'Speed Trainer with an automatic tempo ramp', 'Per-beat accent control',
         'Sounds: temple block, claves, cowbell, classic, electronic, digital', 'Keyboard shortcuts'],
-      author: { '@type': 'Person', name: 'Eduardo Escrig Zomeño', url: 'https://www.teoriamusical.com.es/sobre-mi/' },
+      author: { '@type': 'Person', name: 'Eduardo Escrig Zomeño', url: 'https://www.teoriamusical.com.es/en/about/' },
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     },
     {

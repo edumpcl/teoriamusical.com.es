@@ -86,7 +86,7 @@ module.exports = function tunerInstrument(inst) {
         '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: `Online ${inst.name} Tuner`,
         description: inst.swDescription, url: abs, applicationCategory: 'MusicApplication', operatingSystem: 'Web', inLanguage: 'en',
         isAccessibleForFree: true, datePublished: '2026-11-05', dateModified: '2026-11-05',
-        author: { '@type': 'Person', name: 'Eduardo Escrig Zomeño', url: 'https://www.teoriamusical.com.es/sobre-mi/' },
+        author: { '@type': 'Person', name: 'Eduardo Escrig Zomeño', url: 'https://www.teoriamusical.com.es/en/about/' },
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
       },
       {

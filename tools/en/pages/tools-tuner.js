@@ -89,7 +89,7 @@ module.exports = {
         'Real-time automatic note detection with the YIN algorithm', 'Cents meter from −50¢ to +50¢', 'Adjustable A4 reference (usually 435–450 Hz; technically 390–480 Hz)',
         'Transposing instruments (clarinet, trumpet, saxophone…) with written and sounding notes', 'Reference tones for tuning by ear without a microphone',
         'Note names as letters (C D E F G A B)', 'Strobe mode and a stability history', 'Free, no installation'],
-      author: { '@type': 'Person', name: 'Eduardo Escrig Zomeño', url: 'https://www.teoriamusical.com.es/sobre-mi/' },
+      author: { '@type': 'Person', name: 'Eduardo Escrig Zomeño', url: 'https://www.teoriamusical.com.es/en/about/' },
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     },
     {

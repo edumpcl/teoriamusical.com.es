@@ -395,6 +395,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español (edición en inglés en /en/, m�
 - [Ciclismo en pista: mayor o menor](https://www.teoriamusical.com.es/juegos/auditivos/ciclismo-en-pista/juego/)
 
 
+
 ## English edition
 
 > The whole site is also available in English under https://www.teoriamusical.com.es/en/ (American English; British terms are marked "UK:"). Most English pages have a Spanish twin, linked with hreflang. Note names use letters (C D E F G A B) and the site follows the Spanish conservatory tradition where noted. Author: Eduardo Escrig Zomeño.
@@ -803,6 +804,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español (edición en inglés en /en/, m�
 
 ### Site information
 
+- [About Eduardo Escrig Zomeño | Music Theory](https://www.teoriamusical.com.es/en/about/): Eduardo Escrig Zomeño, a musicologist and music theory and percussion teacher with over 15 years of experience, and the author of this website.
 - [Cookie Policy | Music Theory](https://www.teoriamusical.com.es/en/cookie-policy/): Cookie policy of Music Theory: the types of cookies used, what they are for, and how to manage or turn them off in your browser.
 - [Legal Notice | Music Theory](https://www.teoriamusical.com.es/en/legal-notice/): Legal notice of Music Theory: who runs the site, intellectual property, and the terms of use of its content.
 - [Privacy Policy | Music Theory](https://www.teoriamusical.com.es/en/privacy-policy/): Privacy policy of Music Theory: how your personal data is collected and processed, for what purpose, and what your rights are.

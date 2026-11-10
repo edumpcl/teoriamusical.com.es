@@ -56,7 +56,7 @@ module.exports = function dictionaryPage(p) {
           '@context': 'https://schema.org', '@type': 'Article', headline: p.h1, description: p.description, inLanguage: 'en',
           mainEntityOfPage: abs, image: `${SITE}/assets/img/og-pages/og-en-${ogSlug}.png`,
           datePublished: p.datePublished || '2026-11-05', dateModified: p.dateModified || '2026-11-05',
-          author: { '@type': 'Person', name: 'Eduardo Escrig Zomeño', url: SITE + '/sobre-mi/' },
+          author: { '@type': 'Person', name: 'Eduardo Escrig Zomeño', url: SITE + '/en/about/' },
           publisher: { '@type': 'Organization', name: 'Music Theory', url: SITE + '/en/' },
         },
         {
