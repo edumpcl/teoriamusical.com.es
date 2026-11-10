@@ -7,6 +7,11 @@ Uso:
   python gsc_evolucion.py 2026-03-23 2026-04-19 2026-04-22 2026-05-19   # fechas fijas
 
 La ventana "DESPUÉS" termina 3 días atrás para absorber el retardo de GSC.
+
+Desde la edición inglesa (/en/) el informe separa tres bloques: TOTAL, ESPAÑOL (todo menos /en/) e INGLÉS
+(solo /en/). Las listas de queries, páginas y oportunidades son del ESPAÑOL, que es la referencia: la posición
+media global baja mientras las páginas inglesas empiezan a salir en posiciones bajas, y eso no es una caída del
+español. Al final hay un apartado de la edición inglesa (páginas, queries y países).
 """
 
 import sys
@@ -44,6 +49,17 @@ def q(svc, start, end, dims, limit=500, filters=None):
     return svc.searchanalytics().query(siteUrl=SITE, body=body).execute().get("rows", [])
 
 
+EN_RE = "^" + SITE.rstrip("/") + "/en/"
+
+
+def filtro(idioma):
+    """Filtro de página: 'es' = todo menos /en/, 'en' = solo /en/, None = sin filtro."""
+    if idioma is None:
+        return None
+    op = "excludingRegex" if idioma == "es" else "includingRegex"
+    return [{"filters": [{"dimension": "page", "operator": op, "expression": EN_RE}]}]
+
+
 def totals(rows):
     cl = sum(int(r["clicks"]) for r in rows)
     im = sum(int(r["impressions"]) for r in rows)
@@ -71,11 +87,9 @@ def main():
     # una dimension. GSC anonimiza las consultas de bajo volumen, asi que sumar
     # por "query" se dejaba fuera ~2/3 del trafico real (medido 2026-08-25:
     # 596 clics por query frente a 1.792 reales). Por "page" tampoco cuadra.
-    ra = q(svc, ANTES_START,   ANTES_END,   ["query"])
-    rd = q(svc, DESPUES_START, DESPUES_END, ["query"])
-
-    cla, ima, ctra, posa = totals(q(svc, ANTES_START,   ANTES_END,   []))
-    cld, imd, ctrd, posd = totals(q(svc, DESPUES_START, DESPUES_END, []))
+    ES, EN = filtro("es"), filtro("en")
+    ra = q(svc, ANTES_START,   ANTES_END,   ["query"], filters=ES)
+    rd = q(svc, DESPUES_START, DESPUES_END, ["query"], filters=ES)
 
     print()
     sep("═")
@@ -83,13 +97,17 @@ def main():
     sep("═")
     print(f"  ANTES  : {ANTES_START} → {ANTES_END}  ({VENTANA} días)")
     print(f"  DESPUÉS: {DESPUES_START} → {DESPUES_END}  ({VENTANA} días)")
-    sep()
-    print(f"  {'MÉTRICA':<20} {'ANTES':>10} {'DESPUÉS':>10} {'ΔDELTA':>10}")
-    sep()
-    print(f"  {'Clicks':<20} {cla:>10,} {cld:>10,} {delta(cla,cld):>10}")
-    print(f"  {'Impresiones':<20} {ima:>10,} {imd:>10,} {delta(ima,imd):>10}")
-    print(f"  {'CTR medio':<20} {ctra:>9.2f}% {ctrd:>9.2f}% {delta(ctra,ctrd):>10}")
-    print(f"  {'Posición media':<20} {posa:>10.1f} {posd:>10.1f} {delta(posa,posd):>10}")
+    for nombre, filt in (("TOTAL (todo el sitio)", None), ("ESPAÑOL (todo menos /en/) — la referencia", ES), ("INGLÉS (solo /en/)", EN)):
+        cla, ima, ctra, posa = totals(q(svc, ANTES_START,   ANTES_END,   [], filters=filt))
+        cld, imd, ctrd, posd = totals(q(svc, DESPUES_START, DESPUES_END, [], filters=filt))
+        sep()
+        print(f"  {nombre}")
+        print(f"  {'MÉTRICA':<20} {'ANTES':>10} {'DESPUÉS':>10} {'ΔDELTA':>10}")
+        print(f"  {'Clicks':<20} {cla:>10,} {cld:>10,} {delta(cla,cld):>10}")
+        print(f"  {'Impresiones':<20} {ima:>10,} {imd:>10,} {delta(ima,imd):>10}")
+        print(f"  {'CTR medio':<20} {ctra:>9.2f}% {ctrd:>9.2f}% {delta(ctra,ctrd):>10}")
+        print(f"  {'Posición media':<20} {posa:>10.1f} {posd:>10.1f} {delta(posa,posd):>10}")
+    print("\n  Las tablas siguientes (queries, páginas, oportunidades) son del ESPAÑOL.")
 
     # ── Top 30 queries DESPUÉS ───────────────────────────────────────────────
     sep()
@@ -104,8 +122,8 @@ def main():
         print(f"  {k:<42} {cl:>7} {im:>7} {ct:>5.1f}% {po:>6.1f}")
 
     # ── Top 30 páginas DESPUÉS ───────────────────────────────────────────────
-    pa = q(svc, ANTES_START,   ANTES_END,   ["page"])
-    pd = q(svc, DESPUES_START, DESPUES_END, ["page"])
+    pa = q(svc, ANTES_START,   ANTES_END,   ["page"], filters=ES)
+    pd = q(svc, DESPUES_START, DESPUES_END, ["page"], filters=ES)
 
     # índice ANTES por URL
     antes_idx = {r["keys"][0]: r for r in pa}
@@ -169,6 +187,32 @@ def main():
         k  = r["keys"][0][:41]
         im = int(r["impressions"]); ct = r["ctr"] * 100; po = r["position"]
         print(f"  {k:<42} {im:>7} {ct:>5.1f}% {po:>6.1f}")
+
+    # ── Edición inglesa ──────────────────────────────────────────────────────
+    sep()
+    print(f"\n  EDICIÓN INGLESA (/en/) — DESPUÉS ({DESPUES_START} → {DESPUES_END})")
+    sep()
+    pen = q(svc, DESPUES_START, DESPUES_END, ["page"], limit=1000, filters=EN)
+    paginas_con_impresiones = len(pen)
+    print(f"  Páginas inglesas con impresiones: {paginas_con_impresiones}  (de las publicadas en sitemap-en.xml)")
+    print(f"\n  TOP 15 PÁGINAS (por impresiones)")
+    print(f"  {'Página':<52} {'Clicks':>6} {'Imp':>7} {'Pos':>6}")
+    sep("─", 78)
+    for r in sorted(pen, key=lambda x: -int(x["impressions"]))[:15]:
+        url = r["keys"][0].replace(SITE, "/")[:51]
+        print(f"  {url:<52} {int(r['clicks']):>6} {int(r['impressions']):>7} {r['position']:>6.1f}")
+    qen = q(svc, DESPUES_START, DESPUES_END, ["query"], limit=1000, filters=EN)
+    print(f"\n  TOP 15 QUERIES (por impresiones)")
+    print(f"  {'Query':<52} {'Clicks':>6} {'Imp':>7} {'Pos':>6}")
+    sep("─", 78)
+    for r in sorted(qen, key=lambda x: -int(x["impressions"]))[:15]:
+        print(f"  {r['keys'][0][:51]:<52} {int(r['clicks']):>6} {int(r['impressions']):>7} {r['position']:>6.1f}")
+    cen = q(svc, DESPUES_START, DESPUES_END, ["country"], limit=10, filters=EN)
+    print(f"\n  PAÍSES (impresiones de las páginas inglesas)")
+    print(f"  {'País':<52} {'Clicks':>6} {'Imp':>7} {'Pos':>6}")
+    sep("─", 78)
+    for r in sorted(cen, key=lambda x: -int(x["impressions"]))[:10]:
+        print(f"  {r['keys'][0].upper():<52} {int(r['clicks']):>6} {int(r['impressions']):>7} {r['position']:>6.1f}")
 
     sep("═")
     print()
