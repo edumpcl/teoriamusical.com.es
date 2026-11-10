@@ -35,7 +35,7 @@ module.exports = dictionaryPage({
 <table>
   <thead><tr><th>Difficulty</th><th>What it includes</th><th>Answer time</th></tr></thead>
   <tbody>
-    <tr><td><strong>Easy</strong></td><td>Natural notes only, no sharps or flats; major, minor and perfect intervals.</td><td>12 s</td></tr>
+    <tr><td><strong>Easy</strong></td><td>Natural notes only, no sharps or flats; major, minor and perfect intervals.</td><td>16 s</td></tr>
     <tr><td><strong>Medium</strong></td><td>Simple sharps and flats; augmented and diminished intervals are added.</td><td>9 s</td></tr>
     <tr><td><strong>Hard</strong></td><td>Double accidentals (double sharp, double flat) and doubly augmented or diminished intervals.</td><td>7 s</td></tr>
   </tbody>
