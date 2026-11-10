@@ -31,6 +31,7 @@ const NAV = [
   { href: '/en/exercises/', label: 'Exercises' },
   { href: '/en/games/', label: 'Games' },
   { href: '/en/tools/', label: 'Tools', sub: [{ href: '/en/tools/metronome/', label: 'Metronome' }, { href: '/en/tools/tuner/', label: 'Tuner' }] },
+  { href: '/en/blog/', label: 'Blog' },
 ];
 
 function navHtml(active, items) {

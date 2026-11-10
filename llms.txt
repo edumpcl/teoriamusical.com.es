@@ -396,6 +396,7 @@ Autor: Eduardo Escrig Zomeño. Idioma: español (edición en inglés en /en/, m�
 
 
 
+
 ## English edition
 
 > The whole site is also available in English under https://www.teoriamusical.com.es/en/ (American English; British terms are marked "UK:"). Most English pages have a Spanish twin, linked with hreflang. Note names use letters (C D E F G A B) and the site follows the Spanish conservatory tradition where noted. Author: Eduardo Escrig Zomeño.
@@ -805,6 +806,19 @@ Autor: Eduardo Escrig Zomeño. Idioma: español (edición en inglés en /en/, m�
 ### Site information
 
 - [About Eduardo Escrig Zomeño | Music Theory](https://www.teoriamusical.com.es/en/about/): Eduardo Escrig Zomeño, a musicologist and music theory and percussion teacher with over 15 years of experience, and the author of this website.
+- [Music Theory Blog: Articles and Curiosities](https://www.teoriamusical.com.es/en/blog/): Articles on music theory and music history: chord symbols, intervals, key signatures, practicing with a metronome, harmony exercises and free resources.
+- [Free Music Theory Resources: Books, Courses, Tools](https://www.teoriamusical.com.es/en/blog/free-music-theory-resources/): Music theory textbooks, courses, sheet music and software that are really free, with their license, limits and what to know before you download.
+- [Harmony Exercise 4a: Common-Tone Chord Connections](https://www.teoriamusical.com.es/en/blog/harmony-exercise-4a-common-tone-connections/): Harmony exercise 4a: connect chords keeping the common tone and name the key. Four-part writing practice with audio and a proposed solution.
+- [Harmony Exercise 4b: Chords Keeping the Common Tone](https://www.teoriamusical.com.es/en/blog/harmony-exercise-4b-common-tone-connections/): Harmony exercise 4b: harmonize seven bass lines keeping the common tone between chords. Second exercise of the series, with audio and solution.
+- [Harmony Exercise 4c: Common-Tone Connections in Keys](https://www.teoriamusical.com.es/en/blog/harmony-exercise-4c-common-tone-connections-in-different-keys/): Harmony exercise 4c: harmonize longer bass lines in several keys and meters keeping the common tone. Third exercise of the series, with audio.
+- [Harmony Exercise 5a: Connections Without Common Tone](https://www.teoriamusical.com.es/en/blog/harmony-exercise-5a-connections-without-common-tone/): Harmony exercise 5a: connect chords without keeping a common tone when the bass moves by a 3rd or 4th. With audio and a proposed solution.
+- [Harmony Exercise 5b: Chords Without Common Tone, Bass](https://www.teoriamusical.com.es/en/blog/harmony-exercise-5b-connections-without-common-tone/): Harmony exercise 5b: harmonize four bass lines without keeping common tones when the bass moves by a 3rd or 4th. Audio and proposed solution.
+- [Harmony Exercises: Four-Part Writing Practice](https://www.teoriamusical.com.es/en/blog/harmony-exercises/): Step-by-step harmony exercises, from basic common-tone connections to more demanding ones. With audio and commented solutions.
+- [How to Calculate Intervals Step by Step (With Examples)](https://www.teoriamusical.com.es/en/blog/how-to-calculate-intervals-step-by-step/): A 2-step method to name any musical interval: count the number, then find the quality (major, minor, perfect…). With a half-step chart and examples.
+- [How to Memorize Key Signatures and Scales: 5 Tricks](https://www.teoriamusical.com.es/en/blog/how-to-memorize-scales-and-key-signatures/): Five tricks to memorize key signatures: order of sharps and flats, finding the key at a glance, relative minors, the circle of fifths and the major scale.
+- [How to Read Chord Symbols (C, Am, G7, Cmaj7…)](https://www.teoriamusical.com.es/en/blog/how-to-read-chord-symbols/): Learn to read chord symbols and lead sheets: letters A–G, major and minor, seventh chords, sus2/sus4, slash chords (C/G) and a summary chart.
+- [How to Practice With a Metronome: Method & Exercises](https://www.teoriamusical.com.es/en/blog/how-to-use-a-metronome-to-practice/): Learn to practice with a metronome: raise the tempo gradually, then work through staff exercises (one scale in six rhythms and a subdivision pyramid).
+- [Ut Queant Laxis: Origin of the Note Names Do Re Mi](https://www.teoriamusical.com.es/en/blog/origin-of-the-note-names-hymn-to-st-john/): How the medieval hymn Ut queant laxis gave us the syllables ut, re, mi, fa, sol, la, how Guido d’Arezzo used it, and how ut became do and si appeared.
 - [Cookie Policy | Music Theory](https://www.teoriamusical.com.es/en/cookie-policy/): Cookie policy of Music Theory: the types of cookies used, what they are for, and how to manage or turn them off in your browser.
 - [Legal Notice | Music Theory](https://www.teoriamusical.com.es/en/legal-notice/): Legal notice of Music Theory: who runs the site, intellectual property, and the terms of use of its content.
 - [Privacy Policy | Music Theory](https://www.teoriamusical.com.es/en/privacy-policy/): Privacy policy of Music Theory: how your personal data is collected and processed, for what purpose, and what your rights are.

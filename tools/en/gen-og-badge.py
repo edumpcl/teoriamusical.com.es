@@ -35,6 +35,7 @@ F_DESC, F_BRAND, F_TAG = font('georgia.ttf', 30), font('georgia.ttf', 22), font(
 SYMBOL_MAP = {'♯': '#', '♭': 'b', '↔': ' / ', '→': ' to ', '–': '-', '’': "'", '“': '"', '”': '"'}  # Georgia lacks these glyphs
 FIXED = ('og-en-home', 'og-en-tools', 'og-en-metronome', 'og-en-tuner')
 TAGS = [('en/music-dictionary', 'MUSIC DICTIONARY'), ('en/exercises', 'INTERACTIVE EXERCISES'), ('en/games', 'MUSIC GAMES'),
+        ('en/blog', 'BLOG'),
         ('en/tools', 'TOOLS'), ('en/about', 'ABOUT')]
 
 
