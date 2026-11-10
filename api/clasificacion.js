@@ -144,7 +144,8 @@ const JUGADOR_RE = /^[a-f0-9]{24}$/;
    compara sin tildes y deshaciendo los trucos típicos (0->o, 1->i, 3->e, 4->a, 5->s). */
 const VETADAS = ['puta', 'puto', 'polla', 'coño', 'joder', 'mierda', 'cabron', 'gilipollas', 'subnormal',
   'maricon', 'zorra', 'follar', 'chocho', 'hostia', 'idiota', 'imbecil', 'retrasado', 'culito',
-  'nazi', 'hitler', 'fuck', 'shit', 'bitch', 'pussy', 'nigga', 'nigger', 'porno'];
+  'nazi', 'hitler', 'fuck', 'shit', 'bitch', 'pussy', 'nigga', 'nigger', 'porno',
+  'cunt', 'whore', 'asshole', 'bastard', 'retard', 'faggot', 'wanker', 'dickhead', 'rapist', 'kkk'];
 function limpiarNombre(bruto) {
   const n = String(bruto || '').replace(/\s+/g, ' ').trim().slice(0, 14);
   if (!n || !/^[\p{L}\p{N} ._-]+$/u.test(n)) return null;

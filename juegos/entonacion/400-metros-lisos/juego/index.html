@@ -197,7 +197,7 @@ h3{margin:0;font:400 20px var(--display)}
           <label class="pill"><input type="radio" name="gru" value="con_saltos"><span>Con saltos</span></label>
           <label class="pill"><input type="radio" name="gru" value="todas"><span>Todas</span></label>
         </fieldset>
-        <p class="muted">Sencillas: grados conjuntos y terceras (4-5 notas). Con saltos: añade saltos de 4ª y 5ª (5-6 notas). Todas: añade también saltos de 6ª.</p>
+        <p class="muted">Sencillas: grados conjuntos y terceras (4-5 notas). Con saltos: añade el arpegio de tónica y un salto de 5ª (5-6 notas). Todas: añade también saltos de 4ª y 6ª.</p>
         <button class="btn" id="btnStart">¡A correr!</button>
         <p class="err" id="micErr" hidden></p>
         </div>
@@ -271,7 +271,7 @@ h3{margin:0;font:400 20px var(--display)}
     de la tabla. Con las 19 notas perfectas de la melodía más corta (las 4 formas sencillas, de 4, 5, 5 y 5 notas) se cantan
     en 21,5 s. No es comparable con los 400 m reales (43,03 s, Wayde van Niekerk, 2016): la marca de 23,2 s es una referencia
     propia de este juego, cantando, no un récord de atletismo. Tropezar en una nota añade penalización.
-    La clasificación local se guarda en este dispositivo; a la mundial solo van los carreras que publicas: tu apodo, tu músico y tu marca (<a class="link" href="/politica-de-privacidad/#juegos" target="_top">más información</a>).
+    La clasificación local se guarda en este dispositivo; a la mundial solo van los datos que publicas: tu apodo, tu músico y tu marca (<a class="link" href="/politica-de-privacidad/#juegos" target="_top">más información</a>).
     <button class="link" id="btnClear" type="button">Borrar clasificación</button>
   </footer>
 </div>
@@ -359,7 +359,7 @@ const ESCALAS = [
 ];
 const hzOf = st => 261.63 * Math.pow(2, st / 12);
 /* FORMAS: melodías cortas reales (grados de la escala, 1 = tónica), agrupadas en 3 niveles de dificultad.
-   A = grados conjuntos + 3ª como máximo salto. B = añade saltos de 4ª y 5ª. C = añade también saltos de 6ª. */
+   A = grados conjuntos + 3ª como máximo salto. B = añade el arpegio de tónica y un salto de 5ª. C = añade también saltos de 4ª y 6ª. */
 const FORMAS = [
   { id: 1, g: 'A', pat: [1, 2, 3, 2, 1] },
   { id: 2, g: 'A', pat: [1, 2, 1, 3, 1] },

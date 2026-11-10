@@ -207,7 +207,7 @@ h3{margin:0;font:400 20px var(--display)}
 
       <!-- ESCUCHAR -->
       <section class="view" id="v-listen" hidden>
-        <h2>Escucha los obstáculos</h2>
+        <h2>Mira los obstáculos</h2>
         <div class="speaker" id="speaker" aria-hidden="true">♪</div>
         <div class="chordname" id="chordName"></div>
         <div class="steps" id="preview" aria-hidden="true"></div>
@@ -231,7 +231,7 @@ h3{margin:0;font:400 20px var(--display)}
       <!-- SPRINT FINAL -->
       <section class="view" id="v-flight" hidden>
         <h2>¡Último tramo!</h2>
-        <p>Cuanto menos tiempo hayas tardado en superar cada valla, mejor marca harás.</p>
+        <p>Cuanto menos tiempo hayas tardado en superar cada obstáculo, mejor marca harás.</p>
       </section>
 
       <!-- RESULTADO -->
@@ -266,7 +266,7 @@ h3{margin:0;font:400 20px var(--display)}
     A diferencia de los 3000 m obstáculos reales (28 vallas y 7 rías, 4 y 1 en cada vuelta; una prueba de resistencia de varios minutos), aquí cada
     obstáculo dura solo unos segundos cantados: la marca de 19,1 s es una referencia de este juego, no un récord real. Tropezar en un
     obstáculo añade penalización.
-    La clasificación local se guarda en este dispositivo; a la mundial solo van los carreras que publicas: tu apodo, tu músico y tu marca (<a class="link" href="/politica-de-privacidad/#juegos" target="_top">más información</a>).
+    La clasificación local se guarda en este dispositivo; a la mundial solo van los datos que publicas: tu apodo, tu músico y tu marca (<a class="link" href="/politica-de-privacidad/#juegos" target="_top">más información</a>).
     <button class="link" id="btnClear" type="button">Borrar clasificación</button>
   </footer>
 </div>
@@ -1220,7 +1220,7 @@ function finishRound() {
   const nivel = list.filter(e => e.dif === rankDif());
   const pos = nivel.slice().sort(cmpRank).findIndex(e => e.id === id) + 1;
   let title, text;
-  if (S.nulo) { title = '¡Descalificado!'; text = 'Has tropezado en los ' + NV + ' obstáculos. Escucha la carrera otra vez y prueba de nuevo.'; }
+  if (S.nulo) { title = '¡Descalificado!'; text = 'Has tropezado en los ' + NV + ' obstáculos. Revisa los obstáculos y prueba de nuevo.'; }
   else if (t <= REC) { title = '¡Marca de referencia superada!'; text = 'Carrera perfecta: ni una duda en ningún obstáculo, ni siquiera en la ría.'; }
   else if (t <= UMBRAL_ESPECTACULAR) { title = '¡Espectacular!'; text = 'Casi sin dudar en ningún obstáculo. Muy pocos corren así una carrera tan larga.'; }
   else if (t <= UMBRAL_GRAN_CARRERA) { title = '¡Gran carrera!'; text = 'Ritmo sólido, con algún obstáculo que te ha costado un poco más.'; }
@@ -1229,7 +1229,7 @@ function finishRound() {
   $('#resWho').textContent = (S.nombre || 'Corredor/a') + ' · ' + m.n;
   $('#resDist').textContent = S.nulo ? '—' : fmt1(t);
   $('#resTitle').textContent = title; $('#resText').textContent = text;
-  $('#resNote').textContent = 'Intervalos: ' + S.gru.replace(/_/g, ' y ') + '. Dificultad: ' + S.dif + '.';
+  $('#resNote').textContent = 'Intervalos: ' + ({ segundas_terceras: 'segundas y terceras', cuartas_quintas: 'cuartas y quintas', sextas_septimas: 'sextas y séptimas', todos: 'todos' }[S.gru] || S.gru) + '. Dificultad: ' + ({ facil: 'fácil', normal: 'normal', maestro: 'maestro' }[S.dif] || S.dif) + '.';
   const brk = $('#resBrk'); brk.replaceChildren();
   S.obstaculos.forEach((o, i) => {
     const li = document.createElement('li');

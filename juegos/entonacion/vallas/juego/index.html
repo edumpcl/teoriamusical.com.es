@@ -265,7 +265,7 @@ h3{margin:0;font:400 20px var(--display)}
   <footer class="foot">
     Superar cada valla rápido y sin dudar baja tu tiempo: con las ocho vallas perfectas se corre en 12,3 s
     (el récord del mundo de 110 m vallas es 12,80 s, de Aries Merritt en 2012). Tropezar en una valla añade penalización.
-    La clasificación local se guarda en este dispositivo; a la mundial solo van los carreras que publicas: tu apodo, tu músico y tu marca (<a class="link" href="/politica-de-privacidad/#juegos" target="_top">más información</a>).
+    La clasificación local se guarda en este dispositivo; a la mundial solo van los datos que publicas: tu apodo, tu músico y tu marca (<a class="link" href="/politica-de-privacidad/#juegos" target="_top">más información</a>).
     <button class="link" id="btnClear" type="button">Borrar clasificación</button>
   </footer>
 </div>
@@ -1410,7 +1410,7 @@ function drawScene(c, tm) {
   // panel del récord
   rrect(c, W - 190, 18, 174, 46, 10); paint(c, '#fff', 2.4);
   c.fillStyle = '#c93a2d'; c.font = `800 13px ${F_BODY}`; c.textAlign = 'center'; c.textBaseline = 'middle';
-  c.fillText('RÉCORD 12,80 s', W - 103, 32); c.fillStyle = INK; c.font = `800 12px ${F_BODY}`; c.fillText('110 m vallas (A. Merritt, 2012)', W - 103, 50);
+  c.fillText('RÉCORD ' + REC.toFixed(2).replace('.', ',') + ' s', W - 103, 32); c.fillStyle = INK; c.font = `800 12px ${F_BODY}`; c.fillText('110 m vallas (A. Merritt, 2012)', W - 103, 50);
 }
 /* La valla delante del corredor: se tumba cuando se tropieza y vuelve a ponerse de pie con la siguiente. */
 function drawHurdle(c, x, topple) {
