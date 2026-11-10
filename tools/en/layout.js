@@ -29,6 +29,7 @@ const NAV = [
   // { href: '/en/games/', label: 'Games' },
   { href: '/en/music-dictionary/', label: 'Music Dictionary' },
   { href: '/en/exercises/', label: 'Exercises' },
+  { href: '/en/games/', label: 'Games' },
   { href: '/en/tools/', label: 'Tools', sub: [{ href: '/en/tools/metronome/', label: 'Metronome' }, { href: '/en/tools/tuner/', label: 'Tuner' }] },
 ];
 

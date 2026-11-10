@@ -170,6 +170,15 @@ module.exports = dictionaryPage({
     </div>
 
     <div class="ej-card">
+      <div class="ej-card-icon" style="background:#14213d">
+        <svg fill="white" width="30" height="30" viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/></svg>
+      </div>
+      <h2>Singing Games</h2>
+      <p>Sing a note or a chord and the microphone checks whether you are in tune: the better your pitch, the farther your musician jumps.</p>
+      <a href="/juegos/entonacion/" class="ej-btn" style="background: #14213d;">Go to the Games</a>
+    </div>
+
+    <div class="ej-card">
       
       <h2>Music Dictionary</h2>
       <p>The full glossary of music theory terms, to look up any concept before you start the exercises.</p>
