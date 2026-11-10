@@ -17,39 +17,41 @@
  * semillas de estas fichas.
  */
 const path = require('path');
+const EN = process.argv.includes('--lang=en');   // edicion inglesa: textos en ingles, salida en assets/img/en/...
+const TL = (es, en) => (EN ? en : es);
 const fs = require('fs');
 
 const ROOT = path.join(__dirname, '..');
 const { cargarFicha } = require('./lib-ficha-verovio.js');
 const ENGINE = 'assets/js/figuras-engine.js';
 /* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
-const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/figuras/fichas');
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/' + (EN ? 'en/' : '') + 'figuras/fichas');
 
 const FICHAS = {
   identificar: {
-    titulo: 'Identificar figuras y silencios', cols: 4, ancho: 96,
+    titulo: TL('Identificar figuras y silencios', 'Identify notes and rests'), cols: 4, ancho: 96,
     lotes: [['identificar', { modo: 'mezcla', n: 24 }, 7101]],
-    instr: 'Escribe debajo de cada símbolo qué es: la figura o el silencio, y si lleva puntillo o doble puntillo.',
+    instr: TL('Escribe debajo de cada símbolo qué es: la figura o el silencio, y si lleva puntillo o doble puntillo.', 'Write under each symbol what it is: the note or the rest, and whether it has a dot or a double dot.'),
   },
   valor: {
-    titulo: 'El valor de las figuras en el compás', cols: 3, ancho: 150,
+    titulo: TL('El valor de las figuras en el compás', 'Note value in each time signature'), cols: 3, ancho: 150,
     lotes: [['valor', { grupo: 'simples', n: 9 }, 7201], ['valor', { grupo: 'compuestos', n: 9 }, 7202]],
-    instr: 'Escribe cuánto vale cada figura o silencio en el compás indicado, en tiempos. En los compases compuestos el tiempo es la negra con puntillo: usa fracciones (en 6/8 la corchea vale ⅓ de tiempo).',
+    instr: TL('Escribe cuánto vale cada figura o silencio en el compás indicado, en tiempos. En los compases compuestos el tiempo es la negra con puntillo: usa fracciones (en 6/8 la corchea vale ⅓ de tiempo).', 'Write how much each note or rest is worth in the given time signature, in beats. In compound time signatures the beat is the dotted quarter note: use fractions (in 6/8 the eighth note is worth ⅓ of a beat).'),
   },
   equivalencias: {
-    titulo: 'Equivalencias entre figuras', cols: 2, ancho: 96,
+    titulo: TL('Equivalencias entre figuras', 'Note value equivalences'), cols: 2, ancho: 96,
     lotes: [['equivalencias', { clase: 'cuantas', n: 9 }, 7301], ['equivalencias', { clase: 'que', n: 9 }, 7302]],
-    instr: 'Responde a cada pregunta. Las equivalencias entre figuras no dependen del compás.',
+    instr: TL('Responde a cada pregunta. Las equivalencias entre figuras no dependen del compás.', 'Answer each question. Equivalences between note values do not depend on the time signature.'),
   },
   sumar: {
-    titulo: 'Sumar las figuras de un compás', cols: 2, ancho: 330,
+    titulo: TL('Sumar las figuras de un compás', 'Add up the notes in a measure'), cols: 2, ancho: 330,
     lotes: [['sumar', { grupo: 'simples', n: 6 }, 7401], ['sumar', { grupo: 'compuestos', n: 6 }, 7402]],
-    instr: 'Suma lo que valen las figuras y los silencios de cada fragmento en su compás y escribe el resultado en tiempos. Los silencios también cuentan.',
+    instr: TL('Suma lo que valen las figuras y los silencios de cada fragmento en su compás y escribe el resultado en tiempos. Los silencios también cuentan.', 'Add up what the notes and rests of each excerpt are worth in its time signature and write the result in beats. Rests count too.'),
   },
   ligaduras: {
-    titulo: 'Ligadura de unión o de expresión', cols: 2, ancho: 300,
+    titulo: TL('Ligadura de unión o de expresión', 'Tie or slur'), cols: 2, ancho: 300,
     lotes: [['ligaduras', { grupo: 'simples', n: 6 }, 7501], ['ligaduras', { grupo: 'compuestos', n: 6 }, 7502]],
-    instr: 'Escribe si cada ligadura es de unión o de expresión y cuánto dura la primera nota que abarca, en tiempos. La de unión suma las duraciones; la de expresión no.',
+    instr: TL('Escribe si cada ligadura es de unión o de expresión y cuánto dura la primera nota que abarca, en tiempos. La de unión suma las duraciones; la de expresión no.', 'Write whether each curved line is a tie or a slur and how long the first note it covers lasts, in beats. A tie adds the durations; a slur does not.'),
   },
 };
 
@@ -59,6 +61,10 @@ if (require.main !== module) return;
 const { chromium } = require('playwright');
 const sharp = require('sharp');
 const LOGO_DATA_URI = 'data:image/png;base64,' + fs.readFileSync(path.join(ROOT, 'assets/img/2026/04/bach_favicon.png')).toString('base64');
+
+const L = EN
+  ? { vale: 'Worth:', resp: 'Answer:', suman: 'Total:', lig: 'Tie or slur:', dura: 'The 1st note lasts:', union: 'tie', expr: 'slur', en: true }
+  : { vale: 'Vale:', resp: 'Respuesta:', suman: 'Suman:', lig: 'Ligadura de:', dura: 'La 1ª nota dura:', union: 'unión', expr: 'expresión', en: false };
 
 const CSS = `
   @page { size: A4; margin: 0; }
@@ -98,26 +104,26 @@ const ALTO = { identificar: 80, valor: 80, equivalencias: 60, sumar: 92, ligadur
 
 function html(id, cfg, solucion) {
   const alto = '';
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}${alto}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}${alto}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE RITMO</div>
-        <h1>${cfg.titulo}${solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">TEORIAMUSICAL.COM.ES &middot; ${TL('FICHA DE RITMO', 'RHYTHM WORKSHEET')}</div>
+        <h1>${cfg.titulo}${solucion ? '<span class="sol-tag">' + TL('SOLUCIONES', 'ANSWERS') + '</span>' : ''}</h1>
       </div>
       <img class="logo" src="${LOGO_DATA_URI}" width="34" height="35" alt="">
     </div>
     <p class="instr">${cfg.instr}</p>
-    ${solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    ${solucion ? '' : '<div class="datos"><span><b>' + TL('Nombre:', 'Name:') + '</b></span><span><b>' + TL('Curso:', 'Class:') + '</b></span><span><b>' + TL('Fecha:', 'Date:') + '</b></span></div>'}
   </div>
   <div class="rejilla" style="grid-template-columns:repeat(${cfg.cols},1fr)"></div>
-  <div class="pie"><span>Figuras y ritmo &middot; ${cfg.titulo.toLowerCase()}${solucion ? ' &middot; soluciones' : ''}</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${TL('Figuras y ritmo', 'Note values and rhythm')} &middot; ${cfg.titulo.toLowerCase()}${solucion ? ' &middot; ' + TL('soluciones', 'answers') : ''}</span><span>teoriamusical.com.es</span></div>
 </div></body></html>`;
 }
 
 /* Se ejecuta dentro de la página, con el motor ya cargado. */
-function montar({ id, cfg, solucion, alto }) {
+function montar({ id, cfg, solucion, alto, L }) {
   const T = window.tmFiguras;
   const rej = document.querySelector('.rejilla');
   const items = [];
@@ -130,15 +136,16 @@ function montar({ id, cfg, solucion, alto }) {
     if (id === 'identificar') {
       h += '<div class="svg"></div><p class="linea">' + hueco(T.nombre(it.sim)) + '</p>';
     } else if (id === 'valor') {
-      h += '<div class="svg"></div><p class="linea"><b>Vale:</b>' + hueco(T.enTiempos(it.correcta, true)) + '</p>';
+      h += '<div class="svg"></div><p class="linea"><b>' + L.vale + '</b>' + hueco(T.enTiempos(it.correcta, true)) + '</p>';
     } else if (id === 'equivalencias') {
-      const resp = it.clase === 'cuantas' ? String(it.correcta) : 'una ' + T.frase(it.correcta);
-      h += '<div class="fila"><div class="svg"></div><p class="pide">' + T.enunciado(it, true) + '</p></div><p class="linea"><b>Respuesta:</b>' + hueco(resp) + '</p>';
+      const fr = it.clase === 'cuantas' ? '' : T.frase(it.correcta);
+      const resp = it.clase === 'cuantas' ? String(it.correcta) : (L.en ? (/^[aeiou]/i.test(fr) ? 'an ' : 'a ') : 'una ') + fr;
+      h += '<div class="fila"><div class="svg"></div><p class="pide">' + T.enunciado(it, true) + '</p></div><p class="linea"><b>' + L.resp + '</b>' + hueco(resp) + '</p>';
     } else if (id === 'sumar') {
-      h += '<div class="svg"></div><p class="linea"><b>Suman:</b>' + hueco(T.enTiempos(it.correcta, true)) + '</p>';
+      h += '<div class="svg"></div><p class="linea"><b>' + L.suman + '</b>' + hueco(T.enTiempos(it.correcta, true)) + '</p>';
     } else {
-      h += '<div class="svg"></div><p class="linea"><b>Ligadura de:</b>' + hueco(it.clase === 'union' ? 'unión' : 'expresión') + '</p>'
-        + '<p class="linea"><b>La 1ª nota dura:</b>' + hueco(T.enTiempos(it.correcta, true)) + '</p>';
+      h += '<div class="svg"></div><p class="linea"><b>' + L.lig + '</b>' + hueco(it.clase === 'union' ? L.union : L.expr) + '</p>'
+        + '<p class="linea"><b>' + L.dura + '</b>' + hueco(T.enTiempos(it.correcta, true)) + '</p>';
     }
     c.innerHTML = h;
     rej.appendChild(c);
@@ -163,7 +170,7 @@ function montar({ id, cfg, solucion, alto }) {
       await page.setViewportSize({ width: 850, height: 1200 });
       await cargarFicha(page, html(id, cfg, solucion), [ENGINE]);
       await page.evaluate(() => document.fonts.ready);
-      const n = await page.evaluate(montar, { id, cfg, solucion, alto: ALTO[id] });
+      const n = await page.evaluate(montar, { id, cfg, solucion, alto: ALTO[id], L });
       await page.evaluate(() => document.fonts.ready);
 
       const nombre = `ficha-${id}${solucion ? '-soluciones' : ''}`;

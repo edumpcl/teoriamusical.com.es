@@ -27,8 +27,11 @@ const sharp = require('sharp');
 
 const ROOT = path.join(__dirname, '..');
 const { cargarFicha } = require('./lib-ficha-verovio.js');
+/* --lang=en (o TM_LANG=en): edición inglesa; escribe en assets/img/en/... con las mismas rutas y nombres. Sin la opción, la salida es la de siempre. */
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const T = (es, en) => (EN ? en : es);
 /* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
-const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/intervalos/fichas');
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, EN ? 'assets/img/en/intervalos/fichas' : 'assets/img/intervalos/fichas');
 
 /* ---------------------------------------------------------------- teoria */
 
@@ -52,6 +55,12 @@ const CALIDADES = {
 const ORDINAL = { 2: 'segunda', 3: 'tercera', 4: 'cuarta', 5: 'quinta', 6: 'sexta', 7: 'septima', 8: 'octava' };
 const ORDINAL_ACC = { 2: 'segunda', 3: 'tercera', 4: 'cuarta', 5: 'quinta', 6: 'sexta', 7: 'séptima', 8: 'octava' };
 const NOMBRE_CAL = { M: 'Mayor', m: 'menor', J: 'justa', A: 'aumentada', d: 'disminuida' };
+/* Inglés: los mismos nombres que fichas-intervalos-engine.js (calidad primero: «Major 3rd», «M3», «P5») */
+const NOMBRE_CAL_EN = { M: 'Major', m: 'minor', J: 'Perfect', A: 'Augmented', d: 'Diminished' };
+const ABREV_EN = { M: 'M', m: 'm', J: 'P', A: 'A', d: 'd' };
+const ORD_EN = { 2: '2nd', 3: '3rd', 4: '4th', 5: '5th', 6: '6th', 7: '7th', 8: '8th' };
+const nombreCal = q => (EN ? NOMBRE_CAL_EN : NOMBRE_CAL)[q];
+const nombreLargoEn = (num, q) => NOMBRE_CAL_EN[q] + ' ' + (num === 8 ? 'octave' : ORD_EN[num]);
 
 /* Rango: la3 (57) .. la5 (81). Como mucho dos lineas adicionales en clave de sol. */
 const MIN_MIDI = 57;
@@ -113,6 +122,7 @@ function enumerarIntervalos(num) {
               dir,
               etiqueta: num + 'ª ' + cal.q,
               etiquetaLarga: num + 'ª ' + NOMBRE_CAL[cal.q],
+              corta: EN ? ABREV_EN[cal.q] + num : num + 'ª ' + cal.q,   // lo que imprime la ficha de soluciones
             };
             if (a1 === 0 && n2.alt === 0) nat.push(ej);
             else alt[cal.q].push(ej);
@@ -247,22 +257,22 @@ const CSS = `
 
 function construirHtml(cfg) {
   const sistemas = cfg.sistemas.map((_, i) => `<div class="sistema"><div id="s${i}"></div></div>`).join('');
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE INTERVALOS</div>
-        <h1>${cfg.titulo}${cfg.solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">${EN ? 'TEORIAMUSICAL.COM.ES/EN &middot; INTERVALS WORKSHEET' : 'TEORIAMUSICAL.COM.ES &middot; FICHA DE INTERVALOS'}</div>
+        <h1>${cfg.titulo}${cfg.solucion ? `<span class="sol-tag">${T('SOLUCIONES', 'ANSWERS')}</span>` : ''}</h1>
       </div>
       <img class="logo" src="${LOGO_DATA_URI}" width="34" height="35" alt="">
     </div>
     <p class="instr">${cfg.instrucciones}</p>
     <p class="leyenda">${cfg.leyenda}</p>
-    ${cfg.solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    ${cfg.solucion ? '' : `<div class="datos"><span><b>${T('Nombre:', 'Name:')}</b></span><span><b>${T('Curso:', 'Class:')}</b></span><span><b>${T('Fecha:', 'Date:')}</b></span></div>`}
   </div>
   <div class="sistemas">${sistemas}</div>
-  <div class="pie"><span>${cfg.pie}</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${cfg.pie}</span><span>teoriamusical.com.es${EN ? '/en' : ''}</span></div>
 </div>
 </body></html>`;
 }
@@ -284,9 +294,25 @@ async function generarFicha(browser, opts) {
   const rotulo = unica ? ORDINAL_ACC[num] : `${nums[0]}ª a ${ultimo}ª`;
   const slug = unica ? ORDINAL[num] : `${nums[0]}a-a-${ultimo}a`;
 
-  const titulo = (esAnalizar ? 'Analizar intervalos de ' : 'Escribir intervalos de ') + rotulo;
-  const ejemplo = unica ? `${num}ª M` : `${nums[0]}ª M`;
-  const instrucciones = esAnalizar
+  let titulo, instrucciones, leyenda, pie;
+  if (EN) {
+    const ord = n => (n === 8 ? 'octave' : ORD_EN[n]);
+    const plural = n => (n === 8 ? 'octaves' : ORD_EN[n] + 's');
+    const rotuloEn = unica ? ord(num) : `${ORD_EN[nums[0]]} to ${ORD_EN[ultimo]}`;
+    titulo = unica ? `${esAnalizar ? 'Identify' : 'Write'} ${ord(num)} intervals` : `${esAnalizar ? 'Identify' : 'Write'} intervals: ${rotuloEn}`;
+    const ejemploEn = unica ? ([4, 5, 8].includes(num) ? 'P' : 'M') + num : 'M' + nums[0];   // la 4ª, 5ª y 8ª no son Mayores
+    instrucciones = esAnalizar
+      ? `All the intervals are <b>melodic</b>${unica ? ` <b>${plural(num)}</b>` : `, <b>mixed from ${rotuloEn}</b>`}, in treble clef. Under each one, write <b>which interval it is and whether it ascends or descends</b>, like this: ${ejemploEn} &uarr; / ${ejemploEn} &darr;.`
+      : `Write the <b>second note</b> of each melodic interval${unica ? `: all are <b>${plural(num)}</b>` : `, <b>mixed from ${rotuloEn}</b>`}, in treble clef. The arrow shows whether it ascends (&uarr;) or descends (&darr;). Do not forget the accidental when it is needed.`;
+    const tiposEn = unica
+      ? CALIDADES[num].slice().sort((x, y) => x.s - y.s).map(c => `${ABREV_EN[c.q]}${num} = ${nombreLargoEn(num, c.q)}`).join(' &middot; ')
+      : 'M = Major &middot; m = minor &middot; P = Perfect &middot; A = Augmented &middot; d = Diminished';
+    leyenda = `${tiposEn} &middot; &uarr; ascending &middot; &darr; descending. The first exercises use natural notes; then sharps and flats appear.`;
+    pie = `Intervals: ${rotuloEn} &middot; ${esAnalizar ? 'identify' : 'write'}` + (solucion ? ' &middot; answers' : '') + ` &middot; ${ejercicios.length} exercises`;
+  } else {
+  titulo = (esAnalizar ? 'Analizar intervalos de ' : 'Escribir intervalos de ') + rotulo;
+  const ejemplo = unica ? `${num}ª ${[4, 5, 8].includes(num) ? 'J' : 'M'}` : `${nums[0]}ª M`;   // la 4ª, 5ª y 8ª son Justas, no Mayores
+  instrucciones = esAnalizar
     ? `Todos los intervalos son <b>mel&oacute;dicos</b>${unica ? ` y de <b>${rotulo}</b>` : `, <b>mezclados de ${rotulo}</b>`}, en clave de sol. Escribe debajo de cada uno <b>qu&eacute; intervalo es y si es ascendente o descendente</b>, as&iacute;: ${ejemplo} &uarr; / ${ejemplo} &darr;.`
     : `Escribe la <b>segunda nota</b> de cada intervalo mel&oacute;dico${unica ? ` de <b>${rotulo}</b>` : `, <b>mezclados de ${rotulo}</b>`}, en clave de sol. La flecha indica si es ascendente (&uarr;) o descendente (&darr;). No olvides la alteraci&oacute;n cuando haga falta.`;
   // En las acumulativas la lista de especies por numero seria kilometrica: se
@@ -295,10 +321,11 @@ async function generarFicha(browser, opts) {
     ? CALIDADES[num].slice().sort((x, y) => x.s - y.s)          // de la más pequeña a la más grande
         .map(c => `${num}ª ${c.q} = ${num}ª ${NOMBRE_CAL[c.q]}`).join(' &middot; ')
     : 'M = Mayor &middot; m = menor &middot; J = justa &middot; A = aumentada &middot; d = disminuida';
-  const leyenda = `${tipos} &middot; &uarr; ascendente &middot; &darr; descendente. `
+  leyenda = `${tipos} &middot; &uarr; ascendente &middot; &darr; descendente. `
     + `Los primeros ejercicios son de notas naturales; despu&eacute;s aparecen sostenidos y bemoles.`;
-  const pie = `Intervalos de ${rotulo} &middot; ${esAnalizar ? 'analizar' : 'escribir'}`
+  pie = `Intervalos de ${rotulo} &middot; ${esAnalizar ? 'analizar' : 'escribir'}`
     + (solucion ? ' &middot; soluciones' : '') + ` &middot; ${ejercicios.length} ejercicios`;
+  }
 
   // Con --png la captura va a 3x: a 1x el texto sale emborronado y parece mas
   // grueso de lo que es, y no se puede juzgar la tipografia de la ficha.

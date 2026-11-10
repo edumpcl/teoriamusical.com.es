@@ -10,6 +10,14 @@
 (function () {
   'use strict';
 
+  // Inglés: la misma página sirve a <html lang="en"> (el español queda intacto).
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  // Nombre de nota en español -> letras (solo se muestra así en inglés; la lógica sigue con los nombres españoles).
+  const NOTE_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  const nm = s => EN ? String(s).replace(/Sol|Do|Re|Mi|Fa|La|Si/g, m => NOTE_EN[m]) : s;
+  const ordEn = n => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th');
+
   // Coordenadas sobre la FOTO (viewBox 651×649)
   var SVG_W = 651, SVG_H = 649;
   var PAL = { x: 341, y: 361, r: 34 };   // palometa (llave rotativa)
@@ -38,7 +46,7 @@
   NOTES.forEach(function (o) { BY[o.n] = o; });
 
   var ORD = ['3.º','4.º','5.º','6.º','7.º','8.º','9.º','10.º'];
-  function ordinal(h) { return ORD[h - 3] || (h + '.º'); }
+  function ordinal(h) { return EN ? ordEn(h) : (ORD[h - 3] || (h + '.º')); }
 
   var CSS = [
     '.tm-co-wrap{margin:18px 0;}',
@@ -94,7 +102,7 @@
     var uid = containerId;
 
     var btns = NOTES.map(function (o) {
-      return '<button class="tm-co-btn s-' + o.s + '" data-n="' + o.n + '">' + o.lbl + '</button>';
+      return '<button class="tm-co-btn s-' + o.s + '" data-n="' + o.n + '">' + nm(o.lbl) + '</button>';
     }).join('');
 
     var svgInner =
@@ -106,25 +114,25 @@
         '<circle class="p-ring" cx="' + PAL.x + '" cy="' + PAL.y + '" r="' + PAL.r + '"/>' +
         '<line class="p-lever" x1="' + PAL.x + '" y1="' + PAL.y + '" x2="' + PAL.x + '" y2="' + (PAL.y - PAL.r + 4) + '"/>' +
         '<rect class="p-tagbg" x="' + (PAL.x - 46) + '" y="' + (PAL.y + PAL.r + 6) + '" width="92" height="27" rx="6"/>' +
-        '<text class="p-tag" x="' + PAL.x + '" y="' + (PAL.y + PAL.r + 25) + '">en do</text>' +
+        '<text class="p-tag" x="' + PAL.x + '" y="' + (PAL.y + PAL.r + 25) + '">' + T('en do', 'in C') + '</text>' +
       '</g>';
 
     wrap.innerHTML =
       '<div class="tm-co-wrap">' +
-        '<div class="tm-co-readout" id="' + uid + '_ro"><span class="tm-co-hint">Elige una nota y verás qué armónico es y dónde va la palometa</span></div>' +
+        '<div class="tm-co-readout" id="' + uid + '_ro"><span class="tm-co-hint">' + T('Elige una nota y verás qué armónico es y dónde va la palometa', 'Choose a note and you will see which harmonic it is and where the palometa goes') + '</span></div>' +
         '<div class="tm-co-diagram">' +
           '<div class="tm-co-photo">' +
             '<picture><source type="image/webp" srcset="/assets/img/corneta/instrumento.webp">' +
-            '<img class="tm-co-img" src="/assets/img/corneta/instrumento.jpg" width="651" height="649" loading="lazy" alt="Corneta española de llave o palometa, con la campana abajo a la derecha, el tudel arriba y la palometa con su bomba en el centro"></picture>' +
-            '<svg class="tm-co-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagrama de la corneta sobre una fotografía real: la palometa gira entre la posición de do y la horizontal, y se ilumina la bomba cuando el aire pasa por ella">' +
+            '<img class="tm-co-img" src="/assets/img/corneta/instrumento.jpg" width="651" height="649" loading="lazy" alt="' + T('Corneta española de llave o palometa, con la campana abajo a la derecha, el tudel arriba y la palometa con su bomba en el centro', 'Spanish corneta with a palometa: bell at the lower right, tuning slide above and the palometa with its bomba in the center') + '"></picture>' +
+            '<svg class="tm-co-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="' + T('Diagrama de la corneta sobre una fotografía real: la palometa gira entre la posición de do y la horizontal, y se ilumina la bomba cuando el aire pasa por ella', 'Corneta diagram over a real photograph: the palometa turns between the C position and the horizontal, and the bomba lights up when the air goes through it') + '">' +
               svgInner +
             '</svg>' +
           '</div>' +
           '<div class="tm-co-legend">' +
-            '<span><span class="tm-co-sw" style="background:#ff9500"></span><b>Palometa</b>: vertical = do · girada = Re♭</span>' +
-            '<span><span class="tm-co-sw" style="background:#4da3ff"></span><b>Bomba</b>: se ilumina si el aire pasa por ella</span>' +
+            '<span><span class="tm-co-sw" style="background:#ff9500"></span><b>Palometa</b>: ' + T('vertical = do · girada = Re♭', 'vertical = C · turned = D♭') + '</span>' +
+            '<span><span class="tm-co-sw" style="background:#4da3ff"></span><b>Bomba</b>: ' + T('se ilumina si el aire pasa por ella', 'lights up if the air goes through it') + '</span>' +
           '</div>' +
-          '<p class="tm-co-credit">Foto: 123yo123 vía <a href="https://commons.wikimedia.org/wiki/File:Corneta_DO-RE.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0</p>' +
+          '<p class="tm-co-credit">' + T('Foto', 'Photo') + ': 123yo123 ' + T('vía', 'via') + ' <a href="https://commons.wikimedia.org/wiki/File:Corneta_DO-RE.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0</p>' +
         '</div>' +
         '<div class="tm-co-btns">' + btns + '</div>' +
       '</div>';
@@ -149,16 +157,16 @@
       pal.classList.toggle('girada', girada);
       bomba.classList.toggle('on', !girada);   // en Do el aire recorre la bomba (más tubo = nota más grave); girada se la salta
       var tag = pal.querySelector('.p-tag');
-      if (tag) tag.textContent = girada ? 'girada' : 'en do';
+      if (tag) tag.textContent = girada ? T('girada', 'turned') : T('en do', 'in C');
 
       ro.innerHTML =
         '<div class="tm-co-staff" id="' + uid + '_staff"></div>' +
-        '<div class="tm-co-noterow"><span class="tm-co-intl">' + o.lbl + '</span></div>' +
+        '<div class="tm-co-noterow"><span class="tm-co-intl">' + nm(o.lbl) + '</span></div>' +
         '<div class="tm-co-serie">' + (girada
-            ? 'Palometa <strong>girada</strong> · serie de Re♭'
-            : 'Palometa <strong>en do</strong> · serie de Do') + '</div>' +
-        '<div class="tm-co-armline">' + ordinal(o.h) + ' armónico' + (girada ? ' de Re♭' : ' de Do') + '</div>' +
-        (o.calante ? '<div class="tm-co-warn">⚠ El 7.º armónico suena <strong>calante</strong> por física de la serie: apenas se usa.</div>' : '');
+            ? T('Palometa <strong>girada</strong> · serie de Re♭', 'Palometa <strong>turned</strong> · D♭ series')
+            : T('Palometa <strong>en do</strong> · serie de Do', 'Palometa <strong>in C</strong> · C series')) + '</div>' +
+        '<div class="tm-co-armline">' + ordinal(o.h) + T(' armónico', ' harmonic') + (girada ? T(' de Re♭', ' of D♭') : T(' de Do', ' of C')) + '</div>' +
+        (o.calante ? '<div class="tm-co-warn">' + T('⚠ El 7.º armónico suena <strong>calante</strong> por física de la serie: apenas se usa.', '⚠ The 7th harmonic sounds <strong>flat</strong> because of the physics of the series: it is hardly used.') + '</div>' : '');
       renderStaff(o);
     }
 

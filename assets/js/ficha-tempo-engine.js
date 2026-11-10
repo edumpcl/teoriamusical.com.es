@@ -107,7 +107,7 @@
     cont.innerHTML = '<div class="tm-ft">'
       + '<div class="tm-ft-acciones">'
       + '<button type="button" class="tm-ft-btn tm-ft-btn-1" data-a="generar">' + T('Generar otra ficha', 'Generate another sheet') + '</button>'
-      + '<button type="button" class="tm-ft-btn tm-ft-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show solutions') + '</button>'
+      + '<button type="button" class="tm-ft-btn tm-ft-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show answers') + '</button>'
       + '<button type="button" class="tm-ft-btn tm-ft-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<p class="tm-ft-enlace"></p>'
@@ -159,7 +159,7 @@
       else { do { nueva = Math.floor(Math.random() * 90000 + 10000); } while (nueva === semilla); }
       semilla = nueva;
       solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show solutions');
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show answers');
       pintar();
       var a = cont.querySelector('.tm-ft-enlace');
       var params = '?hoja=' + semilla;
@@ -173,7 +173,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         solucion = !solucion;
-        btn.textContent = solucion ? T('Ocultar soluciones', 'Hide solutions') : T('Ver soluciones', 'Show solutions');
+        btn.textContent = solucion ? T('Ocultar soluciones', 'Hide answers') : T('Ver soluciones', 'Show answers');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

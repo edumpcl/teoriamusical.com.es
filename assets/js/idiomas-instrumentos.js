@@ -8,6 +8,11 @@
 (function () {
   'use strict';
 
+  /* Página inglesa: <html lang="en"> (el español queda igual). Solo cambian los textos del
+     contador: los nombres de los instrumentos de la tabla no se traducen. */
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+
   function plano(s) {
     return s.toLowerCase()
             .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -51,15 +56,20 @@
       });
 
       if (q === '') {
-        cuenta.textContent = total + ' instrumentos en la tabla. Escribe en la casilla para filtrar.';
+        cuenta.textContent = T(total + ' instrumentos en la tabla. Escribe en la casilla para filtrar.',
+                               total + ' instruments in the table. Type in the box to filter.');
         cuenta.classList.remove('tm-idi-nada');
       } else if (vistas === 0) {
-        cuenta.textContent = 'Ningún instrumento contiene «' + campo.value.trim() + '». Prueba con menos letras: ' +
-                             'buscar «pos» encuentra Posaune, y «clar» encuentra todos los clarinetes.';
+        cuenta.textContent = T('Ningún instrumento contiene «' + campo.value.trim() + '». Prueba con menos letras: ' +
+                               'buscar «pos» encuentra Posaune, y «clar» encuentra todos los clarinetes.',
+                               'No instrument contains “' + campo.value.trim() + '”. Try fewer letters: ' +
+                               'searching “pos” finds Posaune, and “clar” finds all the clarinets.');
         cuenta.classList.add('tm-idi-nada');
       } else {
-        cuenta.textContent = vistas + (vistas === 1 ? ' instrumento' : ' instrumentos') +
-                             ' con «' + campo.value.trim() + '»';
+        cuenta.textContent = T(vistas + (vistas === 1 ? ' instrumento' : ' instrumentos') +
+                               ' con «' + campo.value.trim() + '»',
+                               vistas + (vistas === 1 ? ' instrument' : ' instruments') +
+                               ' with “' + campo.value.trim() + '”');
         cuenta.classList.remove('tm-idi-nada');
       }
     }

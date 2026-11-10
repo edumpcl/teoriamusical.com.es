@@ -7,14 +7,24 @@
 (function () {
   'use strict';
 
-  var NOMBRES = ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+
+  var NOMBRES = EN ? ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B']
+                   : ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
   var NEGRA = [false, true, false, true, false, false, true, false, true, false, true, false];
-  var SUB = { 4: '₄', 5: '₅' };
+  var SUB = EN ? { 4: '4', 5: '5' } : { 4: '₄', 5: '₅' };
   var MIDI0 = 60, N_TECLAS = 24;                  // Do4 (60) … Si5 (83)
   var BLANCA_W = 40, BLANCA_H = 150, NEGRA_W = 24, NEGRA_H = 94, MARGEN = 4;
-  var INTERVALOS = ['unísono (la misma tecla)', '2ª menor', '2ª mayor', '3ª menor', '3ª mayor', '4ª justa', 'tritono (4ª aumentada o 5ª disminuida)',
-    '5ª justa', '6ª menor', '6ª mayor', '7ª menor', '7ª mayor', 'octava'];
-  var EJEMPLOS = [
+  var INTERVALOS = EN
+    ? ['Perfect unison (the same key)', 'minor 2nd', 'Major 2nd', 'minor 3rd', 'Major 3rd', 'Perfect 4th', 'tritone (Augmented 4th or Diminished 5th)',
+      'Perfect 5th', 'minor 6th', 'Major 6th', 'minor 7th', 'Major 7th', 'Perfect octave']
+    : ['unísono (la misma tecla)', '2ª menor', '2ª mayor', '3ª menor', '3ª mayor', '4ª justa', 'tritono (4ª aumentada o 5ª disminuida)',
+      '5ª justa', '6ª menor', '6ª mayor', '7ª menor', '7ª mayor', 'octava'];
+  var EJEMPLOS = EN ? [
+    { txt: 'E → F', a: 64, b: 65 }, { txt: 'B → C', a: 71, b: 72 }, { txt: 'C → D', a: 60, b: 62 },
+    { txt: 'C → E', a: 60, b: 64 }, { txt: 'C → C (octave)', a: 60, b: 72 }
+  ] : [
     { txt: 'Mi → Fa', a: 64, b: 65 }, { txt: 'Si → Do', a: 71, b: 72 }, { txt: 'Do → Re', a: 60, b: 62 },
     { txt: 'Do → Mi', a: 60, b: 64 }, { txt: 'Do → Do (octava)', a: 60, b: 72 }
   ];
@@ -27,6 +37,12 @@
   /* «4 semitonos = 2 tonos», «3 semitonos = 1 tono y 1 semitono», «1 semitono». */
   function texto(n) {
     var t = Math.floor(n / 2), s = n % 2;
+    if (EN) {
+      var hs = n + (n === 1 ? ' half step' : ' half steps');
+      if (n === 0) return 'no distance (the same note)';
+      if (n === 1) return hs;
+      return hs + ' = ' + (t ? t + (t === 1 ? ' whole step' : ' whole steps') : '') + (t && s ? ' and ' : '') + (s ? '1 half step' : '');
+    }
     var semis = n + (n === 1 ? ' semitono' : ' semitonos');
     if (n === 0) return 'ninguna distancia (la misma nota)';
     if (n === 1) return semis;
@@ -100,12 +116,12 @@
 
     wrap.innerHTML =
       '<div class="tm-ts-wrap">' +
-        '<div class="tm-ts-ej" role="group" aria-label="Ejemplos">' +
+        '<div class="tm-ts-ej" role="group" aria-label="' + T('Ejemplos', 'Examples') + '">' +
           EJEMPLOS.map(function (e, n) { return '<button type="button" class="tm-ts-bt" data-ej="' + n + '">' + e.txt + '</button>'; }).join('') +
         '</div>' +
         '<div class="tm-ts-panel">' +
-          '<div class="tm-ts-sc"><svg class="tm-ts-svg" viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="Teclado de dos octavas, de Do₄ a Si₅">' + blancasSvg + negrasSvg + '</svg></div>' +
-          '<p class="tm-ts-hint">Desliza el teclado hacia los lados para ver todas las teclas.</p>' +
+          '<div class="tm-ts-sc"><svg class="tm-ts-svg" viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="' + T('Teclado de dos octavas, de Do₄ a Si₅', 'Two-octave keyboard, from C4 to B5') + '">' + blancasSvg + negrasSvg + '</svg></div>' +
+          '<p class="tm-ts-hint">' + T('Desliza el teclado hacia los lados para ver todas las teclas.', 'Swipe the keyboard sideways to see all the keys.') + '</p>' +
           '<div class="tm-ts-res" aria-live="polite"></div>' +
         '</div>' +
       '</div>';
@@ -125,9 +141,9 @@
 
     function pintar() {
       limpiar();
-      if (A === null) { res.innerHTML = '<div class="ay">Pulsa una tecla para empezar y otra para medir la distancia.</div>'; return; }
+      if (A === null) { res.innerHTML = '<div class="ay">' + T('Pulsa una tecla para empezar y otra para medir la distancia.', 'Click a key to start and another one to measure the distance.') + '</div>'; return; }
       porMidi[A].classList.add('a');
-      if (B === null) { res.innerHTML = '<div class="gr">' + nombre(A) + '</div><div class="ay">Ahora pulsa otra tecla.</div>'; return; }
+      if (B === null) { res.innerHTML = '<div class="gr">' + nombre(A) + '</div><div class="ay">' + T('Ahora pulsa otra tecla.', 'Now click another key.') + '</div>'; return; }
       var n = Math.abs(B - A), paso = B > A ? 1 : -1;
       porMidi[B].classList.add('z');
       // cada tecla entre las dos, con su número de paso
@@ -137,9 +153,9 @@
         var cx = t.x + t.w / 2, cy = t.negra ? NEGRA_H - 22 : BLANCA_H - 38;
         g.querySelector('[data-paso]').innerHTML = '<circle class="tm-ts-bola" cx="' + cx + '" cy="' + cy + '" r="10"/><text class="tm-ts-num" x="' + cx + '" y="' + (cy + 4.5) + '" fill="#6b5010">' + k + '</text>';
       }
-      var int = n <= 12 ? INTERVALOS[n] : 'más de una octava';
+      var int = n <= 12 ? INTERVALOS[n] : T('más de una octava', 'more than an octave');
       res.innerHTML = '<div class="gr">' + nombre(A) + ' → ' + nombre(B) + ': ' + texto(n) + '</div>' +
-        '<div class="pe">' + (n === 0 ? int : 'Intervalo: ' + int) + (n && B < A ? ' (descendente)' : '') + '</div>';
+        '<div class="pe">' + (n === 0 ? int : T('Intervalo: ', 'Interval: ') + int) + (n && B < A ? T(' (descendente)', ' (descending)') : '') + '</div>';
     }
 
     function elegir(midi) {

@@ -4,6 +4,7 @@
  *
  *   node tools/generate-fichas-dinamica.js            -> ficha + soluciones + preview
  *   node tools/generate-fichas-dinamica.js --png=DIR  -> además, captura de cada hoja
+ *   node tools/generate-fichas-dinamica.js --lang=en  -> versión inglesa en assets/img/en/dinamica/fichas
  *
  * Dos partes, las mismas que /ejercicios/dinamica/:
  *   1. Unir cada matiz o término con su significado (se escribe la letra).
@@ -15,10 +16,12 @@ const fs = require('fs');
 const vm = require('vm');
 
 const ROOT = path.join(__dirname, '..');
-const OUT_DIR = path.join(ROOT, 'assets/img/dinamica/fichas');
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const T = (es, en) => (EN ? en : es);
+const OUT_DIR = path.join(ROOT, 'assets/img', EN ? 'en/' : '', 'dinamica/fichas');
 const SEMILLA = 9301;
 
-const caja = { window: {} };
+const caja = { window: {}, document: EN ? { documentElement: { lang: 'en' } } : undefined };
 vm.createContext(caja);
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'assets/js/dinamica-ejercicios.js'), 'utf8'), caja);
 const MOTOR = caja.window.tmDinamicaEjercicios;
@@ -95,21 +98,21 @@ function html(solucion) {
   const u = unir();
   const series = MOTOR.generar('ordenar', { sentido: 'mezcla', cuantos: 4, n: 6 }, SEMILLA + 10);
   const hueco = v => (solucion ? `<span class="hueco val">${v}</span>` : '<span class="hueco"></span>');
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE DINÁMICA</div>
-        <h1>Dinámica y matices${solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">TEORIAMUSICAL.COM.ES &middot; ${T('FICHA DE DINÁMICA', 'DYNAMICS WORKSHEET')}</div>
+        <h1>${T('Dinámica y matices', 'Dynamics and markings')}${solucion ? `<span class="sol-tag">${T('SOLUCIONES', 'ANSWERS')}</span>` : ''}</h1>
       </div>
       <img class="logo" src="${LOGO}" width="34" height="35" alt="">
     </div>
-    <p class="instr">Primera parte: escribe al lado de cada matiz o término la letra de su significado. Segunda parte: numera cada serie según el orden que se pide.</p>
-    ${solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    <p class="instr">${T('Primera parte: escribe al lado de cada matiz o término la letra de su significado. Segunda parte: numera cada serie según el orden que se pide.', 'Part one: next to each marking or term, write the letter of its meaning. Part two: number each series in the order requested.')}</p>
+    ${solucion ? '' : `<div class="datos"><span><b>${T('Nombre:', 'Name:')}</b></span><span><b>${T('Curso:', 'Class:')}</b></span><span><b>${T('Fecha:', 'Date:')}</b></span></div>`}
   </div>
 
-  <h2>1. Cada matiz o término con su significado</h2>
+  <h2>${T('1. Cada matiz o término con su significado', '1. Match each marking or term with its meaning')}</h2>
   <div class="cols">
     <ul class="lista">
       ${u.items.map(x => `<li><span class="num">${x.n}.</span> ${x.signo ? `<span class="signo">${x.etiqueta}</span>` : `<strong>${x.etiqueta}</strong>`} ${hueco(x.letra)}</li>`).join('\n      ')}
@@ -119,17 +122,17 @@ function html(solucion) {
     </ul>
   </div>
 
-  <h2>2. Ordena los matices</h2>
+  <h2>${T('2. Ordena los matices', '2. Order the dynamic markings')}</h2>
   <div class="series">
     ${series.map((s, i) => {
       const orden = {};
       s.solucion.forEach((x, k) => { orden[x] = k + 1; });
-      return `<div class="serie"><p>${i + 1}. De más ${s.sentido === 'suave-fuerte' ? 'suave a más fuerte' : 'fuerte a más suave'}:</p>
+      return `<div class="serie"><p>${i + 1}${T('. De más ', '. From ')}${s.sentido === 'suave-fuerte' ? T('suave a más fuerte', 'softest to loudest') : T('fuerte a más suave', 'loudest to softest')}:</p>
       <div class="fichas">${s.fichas.map(x => `<span class="ficha"><span class="caja${solucion ? ' val' : ''}">${solucion ? orden[x] : ''}</span><span class="signo">${x}</span></span>`).join('')}</div></div>`;
     }).join('\n    ')}
   </div>
 
-  <div class="pie"><span>Dinámica y matices${solucion ? ' &middot; soluciones' : ''} &middot; teoriamusical.com.es/ejercicios/dinamica/</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${T('Dinámica y matices', 'Dynamics and markings')}${solucion ? T(' &middot; soluciones', ' &middot; answers') : ''} &middot; teoriamusical.com.es/${EN ? 'en/exercises' : 'ejercicios'}/${EN ? 'dynamics' : 'dinamica'}/</span><span>teoriamusical.com.es</span></div>
 </div></body></html>`;
 }
 

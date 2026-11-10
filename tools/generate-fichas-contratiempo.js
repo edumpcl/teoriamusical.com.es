@@ -12,13 +12,15 @@
  * contratiempo». En soluciones, la nota sale en rojo.
  */
 const path = require('path');
+const EN = process.argv.includes('--lang=en');   // edicion inglesa: textos en ingles, salida en assets/img/en/...
+const TL = (es, en) => (EN ? en : es);
 const fs = require('fs');
 
 const ROOT = path.join(__dirname, '..');
 const ENGINE = 'assets/js/contratiempo-engine.js';
 const { cargarFicha, escalarUniforme } = require('./lib-ficha-verovio.js');
 /* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
-const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/compases/fichas');
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/' + (EN ? 'en/' : '') + 'compases/fichas');
 
 const SEMILLA = 8200;
 const N_FRAGMENTOS = 17;
@@ -55,25 +57,25 @@ const CSS = `
 `;
 
 function html(solucion) {
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE COMPASES</div>
-        <h1>Nota a contratiempo${solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">TEORIAMUSICAL.COM.ES &middot; ${TL('FICHA DE COMPASES', 'TIME SIGNATURES WORKSHEET')}</div>
+        <h1>${TL(`Nota a contratiempo`, `Off-beat note`)}${solucion ? '<span class="sol-tag">' + TL('SOLUCIONES', 'ANSWERS') + '</span>' : ''}</h1>
       </div>
       <img class="logo" src="${LOGO}" width="34" height="35" alt="">
     </div>
-    <p class="instr">Rodea con un círculo la nota que está a contratiempo (la que ataca en una parte débil mientras la parte fuerte anterior está en silencio, sin ligadura). Si el fragmento no tiene ninguna, marca la casilla «No hay contratiempo».</p>
-    ${solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    <p class="instr">${TL(`Rodea con un círculo la nota que está a contratiempo (la que ataca en una parte débil mientras la parte fuerte anterior está en silencio, sin ligadura). Si el fragmento no tiene ninguna, marca la casilla «No hay contratiempo».`, `Circle the note that is off-beat (the one that is attacked on a weak part while the preceding strong part is a rest, with no tie). If the excerpt has none, check the “No off-beat” box.`)}</p>
+    ${solucion ? '' : '<div class="datos"><span><b>' + TL('Nombre:', 'Name:') + '</b></span><span><b>' + TL('Curso:', 'Class:') + '</b></span><span><b>' + TL('Fecha:', 'Date:') + '</b></span></div>'}
   </div>
   <div id="cuerpo" class="rejilla"></div>
-  <div class="pie"><span>Compases &middot; contratiempo${solucion ? ' &middot; soluciones' : ''} &middot; teoriamusical.com.es/ejercicios/compases/contratiempo/</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${TL('Compases', 'Time signatures')} &middot; ${TL('contratiempo', 'off-beat notes')}${solucion ? ' &middot; ' + TL('soluciones', 'answers') : ''} &middot; ${TL('teoriamusical.com.es/ejercicios/compases/contratiempo/', 'teoriamusical.com.es/en/exercises/rhythm/time-signatures/off-beat-notes/')}</span><span>teoriamusical.com.es</span></div>
 </div></body></html>`;
 }
 
-function montar({ SEMILLA, N_FRAGMENTOS, solucion }) {
+function montar({ SEMILLA, N_FRAGMENTOS, solucion, CHK }) {
   const rng = window.tmContratiempoMulberry32(SEMILLA);
   const cuerpo = document.getElementById('cuerpo');
   for (let i = 0; i < N_FRAGMENTOS; i++) {
@@ -83,7 +85,7 @@ function montar({ SEMILLA, N_FRAGMENTOS, solucion }) {
     c.className = 'celda' + (dosCompases ? ' ancha' : '');
     const noContratiempo = frag.correctas.length === 0;
     c.innerHTML = `<span class="num">${i + 1}</span><div class="svg"></div>
-      <div class="chk${solucion && noContratiempo ? ' sol' : ''}">${solucion && noContratiempo ? '☒' : '☐'} No hay contratiempo</div>`;
+      <div class="chk${solucion && noContratiempo ? ' sol' : ''}">${solucion && noContratiempo ? '☒' : '☐'} ${CHK}</div>`;
     cuerpo.appendChild(c);
     window.tmContratiempoDibujarImpresion(c.querySelector('.svg'), frag, solucion);
   }
@@ -99,7 +101,7 @@ function montar({ SEMILLA, N_FRAGMENTOS, solucion }) {
     const page = await browser.newPage({ deviceScaleFactor: 3 });
     await page.setViewportSize({ width: 850, height: 1200 });
     await cargarFicha(page, html(solucion), [ENGINE]);
-    const n = await page.evaluate(montar, { SEMILLA, N_FRAGMENTOS, solucion });
+    const n = await page.evaluate(montar, { SEMILLA, N_FRAGMENTOS, solucion, CHK: TL('No hay contratiempo', 'No off-beat') });
     await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 14, 0.5)");
     const nombre = 'ficha-contratiempo' + (solucion ? '-soluciones' : '');
     const pdfPath = path.join(OUT_DIR, nombre + '.pdf');

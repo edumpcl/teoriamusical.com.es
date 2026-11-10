@@ -14,6 +14,12 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  // Nombres de nota (Do Re Mi...) -> letras (C D E...) en la edicion inglesa
+  const NOTA_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  function enNote(s) { return EN ? s.replace(/Sol|Do|Re|Mi|Fa|La|Si/g, function (x) { return NOTA_EN[x]; }) : s; }
+
   // Elementos que se ENCIENDEN (data-k). El resto del dibujo es decorativo.
   // Diagrama vertical fiel a la silueta real: tudel y campana arriba, culata
   // (junta doble, la pieza más gruesa) abajo. Mano izquierda en la junta del
@@ -52,13 +58,13 @@
 
   // Nombres para el desglose de la digitación en el marcador
   var NAMES = {
-    W: 'll. de piano', HD: 'll. aguda de Re', HC: 'll. aguda de Do', HA: 'll. aguda de La',
-    LD: 'Re grave', LC: 'Do grave', LB: 'Si grave', LBB: 'Si♭ grave', CS: 'Do♯ (pulgar)',
-    BB: 'Si♭ (pulgar dcho.)', LE: 'Mi grave', FS: 'Fa♯ (pulgar dcho.)',
-    H1: 'agujero 1', H1h: '½ agujero 1', H2: 'agujero 2', H3: 'agujero 3',
-    H4: 'agujero 4', H5: 'agujero 5', G6: 'plato 6 (Sol)',
-    TRC: 'trino de Do♯', EBR: 'Mi♭ resonancia', LCS: 'Do♯ grave (meñique)',
-    FK: 'll. de Fa', AB: 'Sol♯ (meñique)'
+    W: T('ll. de piano', 'whisper key'), HD: T('ll. aguda de Re', 'high D key'), HC: T('ll. aguda de Do', 'high C key'), HA: T('ll. aguda de La', 'high A key'),
+    LD: T('Re grave', 'low D'), LC: T('Do grave', 'low C'), LB: T('Si grave', 'low B'), LBB: T('Si♭ grave', 'low B♭'), CS: T('Do♯ (pulgar)', 'C♯ (thumb)'),
+    BB: T('Si♭ (pulgar dcho.)', 'B♭ (right thumb)'), LE: T('Mi grave', 'low E'), FS: T('Fa♯ (pulgar dcho.)', 'F♯ (right thumb)'),
+    H1: T('agujero 1', 'hole 1'), H1h: T('½ agujero 1', '½ hole 1'), H2: T('agujero 2', 'hole 2'), H3: T('agujero 3', 'hole 3'),
+    H4: T('agujero 4', 'hole 4'), H5: T('agujero 5', 'hole 5'), G6: T('plato 6 (Sol)', 'plate 6 (G)'),
+    TRC: T('trino de Do♯', 'C♯ trill'), EBR: T('Mi♭ resonancia', 'E♭ resonance'), LCS: T('Do♯ grave (meñique)', 'low C♯ (little finger)'),
+    FK: T('ll. de Fa', 'F key'), AB: T('Sol♯ (meñique)', 'G♯ (little finger)')
   };
 
   // Digitaciones estándar (carta Fox), Si♭1–Mi♭5.
@@ -121,15 +127,15 @@
   function label(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
     if (!m) return n;
-    return m[1] + (m[2] ? '♯' : '') + SUB[m[3]];
+    return enNote(m[1]) + (m[2] ? '♯' : '') + SUB[m[3]];
   }
   // Registros como en la página: grave Si♭1–Sol2, medio –Sol3, agudo –Sol4, sobreagudo –Mi♭5.
   function registro(n) {
     var i = ORDEN.indexOf(n);
-    if (i >= 0 && i <= ORDEN.indexOf('Sol2')) return 'Registro grave';
-    if (i <= ORDEN.indexOf('Sol3')) return 'Registro medio';
-    if (i <= ORDEN.indexOf('Sol4')) return 'Registro agudo';
-    return 'Registro sobreagudo';
+    if (i >= 0 && i <= ORDEN.indexOf('Sol2')) return T('Registro grave', 'Low register');
+    if (i <= ORDEN.indexOf('Sol3')) return T('Registro medio', 'Middle register');
+    if (i <= ORDEN.indexOf('Sol4')) return T('Registro agudo', 'High register');
+    return T('Registro sobreagudo', 'Very high register');
   }
   // Clave real de lectura según el registro (evita líneas adicionales)
   function claveDe(n) {
@@ -139,6 +145,7 @@
     return 'treble';
   }
   var CLAVE_ES = { bass: 'fa en 4ª', tenor: 'do en 4ª', treble: 'sol' };
+  var CLAVE_EN = { bass: 'bass clef', tenor: 'tenor clef', treble: 'treble clef' };
 
   var LETTER = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
   var AUDIO_BASE = '/assets/audio/fagot/';
@@ -235,34 +242,34 @@
     '<path d="M280 605 C293 604 301 613 298 623 C296 630 287 633 279 629 C283 624 285 618 283 612 C282 609 281 607 280 605 Z" fill="#2a2a2a" stroke="#151515" stroke-width="1"/>' +
     '<circle cx="281" cy="606" r="2" fill="#9a9ca3"/>' +
     // etiquetas
-    '<text class="tm-fg-klab" x="220" y="16">Campana</text>' +
-    '<text class="tm-fg-klab" x="85" y="188">Caña</text>' +
-    '<text class="tm-fg-klab" x="85" y="200">y tudel</text>' +
-    '<text class="tm-fg-klab" x="305" y="585">Culata</text>' +
-    '<text class="tm-fg-klab2" x="292" y="646">Muletilla</text>' +
-    '<text class="tm-fg-grp" x="255" y="332">Pulgar izquierdo</text>' +
-    '<text class="tm-fg-grp" x="258" y="530">Pulgar derecho</text>' +
-    '<text class="tm-fg-klab2" x="279" y="343">piano</text>' +
-    '<text class="tm-fg-klab2" x="279" y="364">Re</text>' +
-    '<text class="tm-fg-klab2" x="279" y="385">Do</text>' +
-    '<text class="tm-fg-klab2" x="279" y="406">La</text>' +
-    '<text class="tm-fg-klab2" x="279" y="427">Re</text>' +
-    '<text class="tm-fg-klab2" x="279" y="448">Do</text>' +
-    '<text class="tm-fg-klab2" x="279" y="469">Si</text>' +
-    '<text class="tm-fg-klab2" x="279" y="490">Si♭</text>' +
-    '<text class="tm-fg-klab2" x="279" y="511">Do♯</text>' +
-    '<text class="tm-fg-klab2" x="282" y="543">Si♭</text>' +
-    '<text class="tm-fg-klab2" x="282" y="578">Mi</text>' +
-    '<text class="tm-fg-klab2" x="282" y="613">Fa♯</text>' +
+    '<text class="tm-fg-klab" x="220" y="16">' + T('Campana', 'Bell') + '</text>' +
+    '<text class="tm-fg-klab" x="85" y="188">' + T('Caña', 'Reed') + '</text>' +
+    '<text class="tm-fg-klab" x="85" y="200">' + T('y tudel', 'and bocal') + '</text>' +
+    '<text class="tm-fg-klab" x="305" y="585">' + T('Culata', 'Boot joint') + '</text>' +
+    '<text class="tm-fg-klab2" x="292" y="646">' + T('Muletilla', 'Hand rest') + '</text>' +
+    '<text class="tm-fg-grp" x="255" y="332">' + T('Pulgar izquierdo', 'Left thumb') + '</text>' +
+    '<text class="tm-fg-grp" x="258" y="530">' + T('Pulgar derecho', 'Right thumb') + '</text>' +
+    '<text class="tm-fg-klab2" x="279" y="343">' + T('piano', 'whisper') + '</text>' +
+    '<text class="tm-fg-klab2" x="279" y="364">' + T('Re', 'D') + '</text>' +
+    '<text class="tm-fg-klab2" x="279" y="385">' + T('Do', 'C') + '</text>' +
+    '<text class="tm-fg-klab2" x="279" y="406">' + T('La', 'A') + '</text>' +
+    '<text class="tm-fg-klab2" x="279" y="427">' + T('Re', 'D') + '</text>' +
+    '<text class="tm-fg-klab2" x="279" y="448">' + T('Do', 'C') + '</text>' +
+    '<text class="tm-fg-klab2" x="279" y="469">' + T('Si', 'B') + '</text>' +
+    '<text class="tm-fg-klab2" x="279" y="490">' + T('Si♭', 'B♭') + '</text>' +
+    '<text class="tm-fg-klab2" x="279" y="511">' + T('Do♯', 'C♯') + '</text>' +
+    '<text class="tm-fg-klab2" x="282" y="543">' + T('Si♭', 'B♭') + '</text>' +
+    '<text class="tm-fg-klab2" x="282" y="578">' + T('Mi', 'E') + '</text>' +
+    '<text class="tm-fg-klab2" x="282" y="613">' + T('Fa♯', 'F♯') + '</text>' +
     '<text class="tm-fg-klab" style="fill:#e8dcc0" x="238" y="359">1</text><text class="tm-fg-klab" style="fill:#e8dcc0" x="238" y="394">2</text><text class="tm-fg-klab" style="fill:#e8dcc0" x="238" y="429">3</text>' +
     '<text class="tm-fg-klab" style="fill:#e8dcc0" x="238" y="549">4</text><text class="tm-fg-klab" style="fill:#e8dcc0" x="238" y="579">5</text><text class="tm-fg-klab" style="fill:#e8dcc0" x="238" y="609">6</text>' +
-    '<text class="tm-fg-klab" x="170" y="525">tr</text>' +
-    '<text class="tm-fg-grp" x="140" y="390">Mano</text>' +
-    '<text class="tm-fg-grp" x="140" y="403">izquierda</text>' +
-    '<text class="tm-fg-grp" x="140" y="573">Mano</text>' +
-    '<text class="tm-fg-grp" x="140" y="586">derecha</text>' +
-    '<text class="tm-fg-klab" x="160" y="500">Meñique izq.</text>' +
-    '<text class="tm-fg-klab" x="150" y="650">Meñique dcho.</text>';
+    '<text class="tm-fg-klab" x="170" y="525">' + T('tr', 'tr') + '</text>' +
+    '<text class="tm-fg-grp" x="140" y="390">' + T('Mano', 'Left') + '</text>' +
+    '<text class="tm-fg-grp" x="140" y="403">' + T('izquierda', 'hand') + '</text>' +
+    '<text class="tm-fg-grp" x="140" y="573">' + T('Mano', 'Right') + '</text>' +
+    '<text class="tm-fg-grp" x="140" y="586">' + T('derecha', 'hand') + '</text>' +
+    '<text class="tm-fg-klab" x="160" y="500">' + T('Meñique izq.', 'Left pinky') + '</text>' +
+    '<text class="tm-fg-klab" x="150" y="650">' + T('Meñique dcho.', 'Right pinky') + '</text>';
 
   function keyShape(k) {
     if (k.sh === 'half') {
@@ -313,8 +320,8 @@
 
     wrap.innerHTML =
       '<div class="tm-fg-wrap">' +
-        '<div class="tm-fg-readout" id="' + uid + '_ro"><span class="tm-fg-hint">Elige una nota para ver su digitación</span></div>' +
-        '<div class="tm-fg-diagram"><svg class="tm-fg-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" role="img" aria-label="Diagrama de digitación del fagot: instrumento vertical con la campana arriba, el tudel y la caña saliendo hacia el lateral y la culata (la parte más gruesa) abajo; las llaves pulsadas se muestran en dorado">' +
+        '<div class="tm-fg-readout" id="' + uid + '_ro"><span class="tm-fg-hint">' + T('Elige una nota para ver su digitación', 'Choose a note to see its fingering') + '</span></div>' +
+        '<div class="tm-fg-diagram"><svg class="tm-fg-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" role="img" aria-label="' + T('Diagrama de digitación del fagot: instrumento vertical con la campana arriba, el tudel y la caña saliendo hacia el lateral y la culata (la parte más gruesa) abajo; las llaves pulsadas se muestran en dorado', 'Bassoon fingering diagram: vertical instrument with the bell at the top, the bocal and reed going off to the side and the boot joint (the thickest part) at the bottom; the keys that are pressed are shown in gold') + '">' +
           DECO + keysSvg +
         '</svg></div>' +
         '<div class="tm-fg-btns">' + btns + '</div>' +
@@ -355,9 +362,9 @@
       });
       ro.innerHTML =
         '<div class="tm-fg-staff" id="' + uid + '_staff"></div>' +
-        '<div class="tm-fg-noterow"><span class="tm-fg-intl">' + label(n) + (FLAT[n] ? ' (' + FLAT[n] + ')' : '') + '</span>' +
-        '<button class="tm-fg-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
-        '<div class="tm-fg-reg">' + intl(n) + ' · ' + registro(n) + ' · clave de ' + CLAVE_ES[claveDe(n)] + '</div>' +
+        '<div class="tm-fg-noterow"><span class="tm-fg-intl">' + label(n) + (FLAT[n] ? ' (' + enNote(FLAT[n]) + ')' : '') + '</span>' +
+        '<button class="tm-fg-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
+        '<div class="tm-fg-reg">' + intl(n) + ' · ' + registro(n) + T(' · clave de ' + CLAVE_ES[claveDe(n)], ' · ' + CLAVE_EN[claveDe(n)]) + '</div>' +
         '<div class="tm-fg-keysline">' + (nombres.length ? nombres.join(' · ') : '—') + '</div>';
       renderStaff(n);
       var pb = ro.querySelector('.tm-fg-play');

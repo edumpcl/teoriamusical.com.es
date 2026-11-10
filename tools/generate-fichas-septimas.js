@@ -37,41 +37,44 @@ const sharp = require('sharp');
 const ROOT = path.join(__dirname, '..');
 const { cargarFicha, escalarUniforme } = require('./lib-ficha-verovio.js');
 /* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
-const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/acordes/fichas-septimas');
+/* --lang=en (o TM_LANG=en): edicion inglesa; escribe en assets/img/en/... y traduce los textos. Sin la opcion, la salida es identica a la de siempre. */
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const T = (es, en) => (EN ? en : es);
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img', EN ? 'en' : '', 'acordes/fichas-septimas');
 
 /* ---------------------------------------------------------------- teoria */
 
 const LETRAS = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
 const SEMI = [0, 2, 4, 5, 7, 9, 11];
-const ES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
+const ES = EN ? ['C', 'D', 'E', 'F', 'G', 'A', 'B'] : ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si'];
 const ACC_TXT = { '-2': '♭♭', '-1': '♭', '0': '', '1': '♯', '2': '♯♯' };
 const ACC_VF = { '-2': 'bb', '-1': 'b', '0': '', '1': '#', '2': '##' };
 
 /* Mismos 3 tipos y los mismos nombres que el motor en pantalla
    (assets/js/septimas-engine.js). El verificador comprueba que no divergen. */
 const TIPOS = [
-  { id: 'dominante', t3: 4, t5: 7, t7: 10, nombre: 'Séptima de Dominante', corto: '7' },
-  { id: 'sensible', t3: 3, t5: 6, t7: 10, nombre: 'Séptima de Sensible', corto: 'ø7' },
-  { id: 'disminuida', t3: 3, t5: 6, t7: 9, nombre: 'Séptima Disminuida', corto: '°7' },
+  { id: 'dominante', t3: 4, t5: 7, t7: 10, nombre: T('Séptima de Dominante', 'Dominant seventh'), corto: '7' },
+  { id: 'sensible', t3: 3, t5: 6, t7: 10, nombre: T('Séptima de Sensible', 'Leading-tone seventh'), corto: 'ø7' },
+  { id: 'disminuida', t3: 3, t5: 6, t7: 9, nombre: T('Séptima Disminuida', 'Diminished seventh'), corto: '°7' },
 ];
 
 const POSICIONES = [
-  { id: 'fundamental', inv: 0, archivo: 'fundamental', titulo: 'en posición fundamental' },
-  { id: '1a', inv: 1, archivo: 'primera-inversion', titulo: 'en 1ª inversión' },
-  { id: '2a', inv: 2, archivo: 'segunda-inversion', titulo: 'en 2ª inversión' },
-  { id: '3a', inv: 3, archivo: 'tercera-inversion', titulo: 'en 3ª inversión' },
-  { id: 'todas', inv: null, archivo: 'todas-las-posiciones', titulo: 'en las cuatro posiciones' },
+  { id: 'fundamental', inv: 0, archivo: 'fundamental', titulo: T('en posición fundamental', 'in root position') },
+  { id: '1a', inv: 1, archivo: 'primera-inversion', titulo: T('en 1ª inversión', 'in first inversion') },
+  { id: '2a', inv: 2, archivo: 'segunda-inversion', titulo: T('en 2ª inversión', 'in second inversion') },
+  { id: '3a', inv: 3, archivo: 'tercera-inversion', titulo: T('en 3ª inversión', 'in third inversion') },
+  { id: 'todas', inv: null, archivo: 'todas-las-posiciones', titulo: T('en las cuatro posiciones', 'in all four positions') },
 ];
-const INV_NOMBRE = ['Fundamental', '1ª inversión', '2ª inversión', '3ª inversión'];
-const INV_CORTO = ['fund.', '1ª inv.', '2ª inv.', '3ª inv.'];
+const INV_NOMBRE = EN ? ['Root position', 'First inversion', 'Second inversion', 'Third inversion'] : ['Fundamental', '1ª inversión', '2ª inversión', '3ª inversión'];
+const INV_CORTO = EN ? ['root', '1st inv.', '2nd inv.', '3rd inv.'] : ['fund.', '1ª inv.', '2ª inv.', '3ª inv.'];
 
 /* Para "escribir": una familia por tipo (posiciones siempre mezcladas) y una
    quinta que también mezcla el tipo. */
 const TIPO_FAMILIAS = [
-  { tipoId: 'dominante', archivo: 'dominante', titulo: 'de la séptima de dominante' },
-  { tipoId: 'sensible', archivo: 'sensible', titulo: 'de la séptima de sensible' },
-  { tipoId: 'disminuida', archivo: 'disminuida', titulo: 'de la séptima disminuida' },
-  { tipoId: null, archivo: 'mezcladas', titulo: 'de acordes de séptima mezclados' },
+  { tipoId: 'dominante', archivo: 'dominante', titulo: T('de la séptima de dominante', 'of the dominant seventh') },
+  { tipoId: 'sensible', archivo: 'sensible', titulo: T('de la séptima de sensible', 'of the leading-tone seventh') },
+  { tipoId: 'disminuida', archivo: 'disminuida', titulo: T('de la séptima disminuida', 'of the diminished seventh') },
+  { tipoId: null, archivo: 'mezcladas', titulo: T('de acordes de séptima mezclados', 'of mixed seventh chords') },
 ];
 
 const CLAVES = { sol: 'treble', fa: 'bass' };
@@ -250,16 +253,25 @@ const CSS = `
 
 function textosAnalizar(pos) {
   const mixta = pos.inv === null;
-  const tipos = 'Séptima de Dominante (7), Séptima de Sensible (ø7) o Séptima Disminuida (°7)';
+  const tipos = T('Séptima de Dominante (7), Séptima de Sensible (ø7) o Séptima Disminuida (°7)', 'dominant seventh (7), leading-tone (half-diminished) seventh (ø7) or diminished seventh (°7)');
   return {
-    titulo: 'Analizar acordes de séptima ' + pos.titulo,
-    instrucciones: mixta
+    titulo: T('Analizar acordes de séptima ', 'Analyze seventh chords ') + pos.titulo,
+    instrucciones: EN
+      ? (mixta
+        ? `Write under each chord its <b>type</b> —${tipos}— and its <b>position</b>: root position, first, second or third inversion. Look at the clef first.`
+        : `All the chords are ${pos.titulo}. Write under each one its <b>type</b>: ${tipos}. Look at the clef first.`)
+      : (mixta
       ? `Escribe debajo de cada acorde su <b>tipo</b> —${tipos}— y su <b>posición</b>: fundamental, 1ª, 2ª o 3ª inversión. Fíjate primero en la clave.`
-      : `Todos los acordes están ${pos.titulo}. Escribe debajo de cada uno su <b>tipo</b>: ${tipos}. Fíjate primero en la clave.`,
+      : `Todos los acordes están ${pos.titulo}. Escribe debajo de cada uno su <b>tipo</b>: ${tipos}. Fíjate primero en la clave.`),
   };
 }
 
-const DADA = {
+const DADA = EN ? {
+  0: 'the given note is the <b>root</b>: add the 3rd, the 5th and the 7th above it',
+  1: 'the given note is the <b>3rd</b>: add the 5th, the 7th and the root above it',
+  2: 'the given note is the <b>5th</b>: add the 7th, the root and the 3rd above it',
+  3: 'the given note is the <b>7th</b>: add the root, the 3rd and the 5th above it',
+} : {
   0: 'la nota dada es la <b>fundamental</b>: añade la 3ª, la 5ª y la 7ª por encima',
   1: 'la nota dada es la <b>3ª</b>: añade la 5ª, la 7ª y la fundamental por encima',
   2: 'la nota dada es la <b>5ª</b>: añade la 7ª, la fundamental y la 3ª por encima',
@@ -269,8 +281,11 @@ const DADA = {
 function textosEscribir(fam) {
   const mezclada = fam.tipoId === null;
   return {
-    titulo: 'Escribir acordes ' + fam.titulo,
-    instrucciones: 'Cada pentagrama trae la <b>nota más grave</b> del acorde. Añade las otras tres para formar el acorde indicado en la posición que se pide (' + Object.values(DADA).map(t => t.replace(/<b>|<\/b>/g, '')).join('; ') + ').'
+    titulo: T('Escribir acordes ', 'Write chords ') + fam.titulo,
+    instrucciones: EN
+      ? 'Each staff gives the <b>lowest note</b> of the chord. Add the other three to form the chord indicated, in the position asked for (' + Object.values(DADA).map(t => t.replace(/<b>|<\/b>/g, '')).join('; ') + ').'
+        + (mezclada ? ' The type changes in each exercise: it is shown next to the note.' : '')
+      : 'Cada pentagrama trae la <b>nota más grave</b> del acorde. Añade las otras tres para formar el acorde indicado en la posición que se pide (' + Object.values(DADA).map(t => t.replace(/<b>|<\/b>/g, '')).join('; ') + ').'
       + (mezclada ? ' El tipo cambia en cada ejercicio: se indica junto a la nota.' : ''),
   };
 }
@@ -280,8 +295,8 @@ function construirHtmlAnalizar(cfg) {
   const celdas = cfg.ejercicios.map((e, i) => {
     const hueco = v => (cfg.solucion ? `<span class="val">${v}</span>` : '<span></span>');
     return `<div class="celda"><span class="num">${i + 1}</span><div id="c${i}"></div>`
-      + `<p class="linea"><b>Tipo:</b>${hueco(e.tipo.nombre)}</p>`
-      + (mixta ? `<p class="linea"><b>Posición:</b>${hueco(INV_NOMBRE[e.inv])}</p>` : '')
+      + `<p class="linea"><b>${T('Tipo:', 'Type:')}</b>${hueco(e.tipo.nombre)}</p>`
+      + (mixta ? `<p class="linea"><b>${T('Posición:', 'Position:')}</b>${hueco(INV_NOMBRE[e.inv])}</p>` : '')
       + '</div>';
   }).join('');
   return htmlBase({ ...cfg, celdas });
@@ -298,19 +313,19 @@ function construirHtmlEscribir(cfg) {
 }
 
 function htmlBase(cfg) {
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE ACORDES DE S&Eacute;PTIMA</div>
-        <h1>${cfg.titulo}${cfg.solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">TEORIAMUSICAL.COM.ES &middot; ${T('FICHA DE ACORDES DE S&Eacute;PTIMA', 'SEVENTH CHORD WORKSHEET')}</div>
+        <h1>${cfg.titulo}${cfg.solucion ? `<span class="sol-tag">${T('SOLUCIONES', 'ANSWERS')}</span>` : ''}</h1>
       </div>
       <img class="logo" src="${LOGO_DATA_URI}" width="34" height="35" alt="">
     </div>
     <p class="instr">${cfg.instrucciones}</p>
-    <p class="leyenda">De menos a más: notas naturales en clave de sol, después sostenidos, bemoles y clave de fa, y al final dobles alteraciones.</p>
-    ${cfg.solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    <p class="leyenda">${T('De menos a más: notas naturales en clave de sol, después sostenidos, bemoles y clave de fa, y al final dobles alteraciones.', 'From easier to harder: natural notes in treble clef, then sharps, flats and bass clef, and finally double accidentals.')}</p>
+    ${cfg.solucion ? '' : `<div class="datos"><span><b>${T('Nombre:', 'Name:')}</b></span><span><b>${T('Curso:', 'Class:')}</b></span><span><b>${T('Fecha:', 'Date:')}</b></span></div>`}
   </div>
   <div class="rejilla">${cfg.celdas}</div>
   <div class="pie"><span>${cfg.pie}</span><span>teoriamusical.com.es</span></div>
@@ -382,7 +397,7 @@ if (require.main !== module) return;
     const { titulo, instrucciones } = textosEscribir(fam);
     const ejercicios = generarEjercicios(TOTAL, semilla(fam.archivo, 'escribir'), tiposIds, [0, 1, 2, 3]);
     for (const solucion of [false, true]) {
-      const pie = `Séptimas ${fam.titulo} &middot; escribir` + (solucion ? ' &middot; soluciones' : '') + ` &middot; ${ejercicios.length} ejercicios`;
+      const pie = T('Séptimas ', 'Seventh chords ') + `${fam.titulo} &middot; ${T('escribir', 'write')}` + (solucion ? T(' &middot; soluciones', ' &middot; answers') : '') + ` &middot; ${ejercicios.length} ${T('ejercicios', 'exercises')}`;
       const r = await generarFicha(browser, { modo: 'escribir', fam, solucion, ejercicios, png, titulo, instrucciones, pie, archivo: fam.archivo, htmlFn: construirHtmlEscribir });
       const problemas = [];
       if (r.paginas !== 1) problemas.push(`ocupa ${r.paginas} páginas (sobran ${r.sobra}px)`);
@@ -398,7 +413,7 @@ if (require.main !== module) return;
     const { titulo, instrucciones } = textosAnalizar(pos);
     const ejercicios = generarEjercicios(TOTAL, semilla(pos.archivo, 'analizar'), TIPOS.map(t => t.id), invs);
     for (const solucion of [false, true]) {
-      const pie = `Séptimas ${pos.titulo} &middot; analizar` + (solucion ? ' &middot; soluciones' : '') + ` &middot; ${ejercicios.length} ejercicios`;
+      const pie = T('Séptimas ', 'Seventh chords ') + `${pos.titulo} &middot; ${T('analizar', 'analyze')}` + (solucion ? T(' &middot; soluciones', ' &middot; answers') : '') + ` &middot; ${ejercicios.length} ${T('ejercicios', 'exercises')}`;
       const r = await generarFicha(browser, { modo: 'analizar', pos, solucion, ejercicios, png, titulo, instrucciones, pie, archivo: pos.archivo, htmlFn: construirHtmlAnalizar });
       const problemas = [];
       if (r.paginas !== 1) problemas.push(`ocupa ${r.paginas} páginas (sobran ${r.sobra}px)`);

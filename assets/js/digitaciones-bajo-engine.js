@@ -8,10 +8,13 @@
    Uso: <div id="x"></div><script>tmBajoEngine('x');</script> */
 (function () {
   'use strict';
+  var EN = document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
 
   // Cuerdas al aire (MIDI real), i=0 -> 4ª (Mi grave) ... i=3 -> 1ª (Sol agudo)
   var OPEN = [28, 33, 38, 43];
-  var CUERDA_NOM = ['4ª (Mi)', '3ª (La)', '2ª (Re)', '1ª (Sol)'];
+  var CUERDA_NOM = EN ? ['4th (E)', '3rd (A)', '2nd (D)', '1st (G)'] :
+    ['4ª (Mi)', '3ª (La)', '2ª (Re)', '1ª (Sol)'];
   var NFRETS = 12;
 
   // --- Calibración de la FOTO del mástil, EN HORIZONTAL (viewBox 1470 x 350) ---
@@ -30,8 +33,10 @@
   }
 
   // --- Nombres de nota ---
-  var SHARP = ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
-  var FLAT  = ['Do', 'Re♭', 'Re', 'Mi♭', 'Mi', 'Fa', 'Sol♭', 'Sol', 'La♭', 'La', 'Si♭', 'Si'];
+  var SHARP = EN ? ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'] :
+    ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
+  var FLAT  = EN ? ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'G♭', 'G', 'A♭', 'A', 'B♭', 'B'] :
+    ['Do', 'Re♭', 'Re', 'Mi♭', 'Mi', 'Fa', 'Sol♭', 'Sol', 'La♭', 'La', 'Si♭', 'Si'];
   var SUB = { '0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄', '5': '₅', '6': '₆', '7': '₇' };
   function sub(o) { return String(o).split('').map(function (c) { return SUB[c] || c; }).join(''); }
   function pc(m) { return ((m % 12) + 12) % 12; }
@@ -105,7 +110,7 @@
   function drawnMarkX(n) { return n === 0 ? DNUTX - 18 : DNUTX + (DEND - DNUTX) * markT(n); }
   function buildDrawn() {
     var by = DTOP - 10, bh = (DBOT - DTOP) + 20, mid = (DTOP + DBOT) / 2;
-    var s = '<svg class="tm-bj-drawn" viewBox="0 0 ' + DW + ' ' + DH + '" role="img" aria-label="Diapasón del bajo dibujado en posición de tocar: la cejuela a la izquierda y las cuatro cuerdas (4ª Mi grave arriba, 1ª Sol aguda abajo)">';
+    var s = '<svg class="tm-bj-drawn" viewBox="0 0 ' + DW + ' ' + DH + '" role="img" aria-label="' + T('Diapasón del bajo dibujado en posición de tocar: la cejuela a la izquierda y las cuatro cuerdas (4ª Mi grave arriba, 1ª Sol aguda abajo)', 'Drawn bass guitar fretboard in playing position: the nut on the left and the four strings (4th low E at the top, 1st high G at the bottom)') + '">';
     s += '<rect x="' + DNUTX + '" y="' + by + '" width="' + (DEND - DNUTX) + '" height="' + bh + '" fill="#5a3a24"/>';
     // cejuela
     s += '<rect x="' + (DNUTX - 6) + '" y="' + by + '" width="6" height="' + bh + '" fill="#f5efe0"/>';
@@ -133,13 +138,13 @@
     }
     wrap.innerHTML =
       '<div class="tm-bj-wrap">' +
-        '<div class="tm-bj-readout" id="' + uid + '_ro"><span class="tm-bj-hint">Elige una nota para verla en el mástil, en tablatura y en el pentagrama</span></div>' +
+        '<div class="tm-bj-readout" id="' + uid + '_ro"><span class="tm-bj-hint">' + T('Elige una nota para verla en el mástil, en tablatura y en el pentagrama', 'Pick a note to see it on the fretboard, in tablature and on the staff') + '</span></div>' +
         '<div class="tm-bj-diagrams">' +
           '<div class="tm-bj-col"><div class="tm-bj-photo-wrap">' +
-            '<picture><source type="image/webp" srcset="/assets/img/bajo/mastil.webp"><img class="tm-bj-photo" src="/assets/img/bajo/mastil.jpg" alt="Mástil de un bajo eléctrico en posición de tocar, foto real"></picture>' +
+            '<picture><source type="image/webp" srcset="/assets/img/bajo/mastil.webp"><img class="tm-bj-photo" src="/assets/img/bajo/mastil.jpg" alt="' + T('Mástil de un bajo eléctrico en posición de tocar, foto real', 'Neck of an electric bass in playing position, real photo') + '"></picture>' +
             '<svg class="tm-bj-photo-ov" viewBox="0 0 ' + IMG_W + ' ' + IMG_H + '" preserveAspectRatio="xMidYMid meet" style="position:absolute;left:0;top:0;width:100%;height:100%;"><g class="tm-bj-pmarks"></g></svg>' +
-          '</div><div class="tm-bj-cap">Foto real</div></div>' +
-          '<div class="tm-bj-col">' + buildDrawn() + '<div class="tm-bj-cap">Diapasón</div></div>' +
+          '</div><div class="tm-bj-cap">' + T('Foto real', 'Real photo') + '</div></div>' +
+          '<div class="tm-bj-col">' + buildDrawn() + '<div class="tm-bj-cap">' + T('Diapasón', 'Fretboard') + '</div></div>' +
         '</div>' +
         '<div class="tm-bj-tabwrap"><div class="tm-bj-tab" id="' + uid + '_tab"></div></div>' +
         '<div class="tm-bj-btns">' + btns + '</div>' +
@@ -199,13 +204,13 @@
       });
       dov.innerHTML = ds;
       // lista de posiciones legible
-      var human = pos.map(function (p) { return p.fret === 0 ? (CUERDA_NOM[p.i] + ' al aire') : (CUERDA_NOM[p.i] + ' traste ' + p.fret); }).join(' · ');
+      var human = pos.map(function (p) { return p.fret === 0 ? (CUERDA_NOM[p.i] + T(' al aire', ' open')) : (CUERDA_NOM[p.i] + T(' traste ', ' fret ') + p.fret); }).join(' · ');
       ro.innerHTML =
         '<div class="tm-bj-staff" id="' + uid + '_staff"></div>' +
         '<div class="tm-bj-noterow"><span class="tm-bj-name">' + nameFull(m) + '</span>' +
-        '<button class="tm-bj-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
+        '<button class="tm-bj-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
         '<div class="tm-bj-sub">' + human + '</div>' +
-        '<div class="tm-bj-sub">Se escribe una 8ª más arriba de lo que suena (clave de fa).</div>';
+        '<div class="tm-bj-sub">' + T('Se escribe una 8ª más arriba de lo que suena (clave de fa).', 'Written an octave higher than it sounds (bass clef).') + '</div>';
       tab.textContent = tabLines(pos);
       renderStaff(m);
       var pb = ro.querySelector('.tm-bj-play'); if (pb) pb.addEventListener('click', function () { play(m); });

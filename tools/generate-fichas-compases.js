@@ -15,12 +15,15 @@
  */
 const { chromium } = require('playwright');
 const path = require('path');
+const EN = process.argv.includes('--lang=en');   // edicion inglesa: textos en ingles, salida en assets/img/en/...
+const TL = (es, en) => (EN ? en : es);
 const fs = require('fs');
 const sharp = require('sharp');
 
 const ROOT = path.join(__dirname, '..');
 const ENGINE = path.join(ROOT, 'assets/js/compases-engine.js');
-const OUT_DIR = path.join(ROOT, 'assets/img/compases/fichas');
+/* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/' + (EN ? 'en/' : '') + 'compases/fichas');
 const LOGO = path.join(ROOT, 'assets/img/2026/04/bach_favicon.png');
 const LOGO_DATA_URI = 'data:image/png;base64,' + fs.readFileSync(LOGO).toString('base64');
 
@@ -37,8 +40,21 @@ const FASES = [
   ['2/8', '4/8', '2/1', '6/2', '9/4', '12/4', '3/16', '4/16', '6/16', '9/16', '12/16'],
 ];
 
-const NOMBRE_SUBDIV = { b: 'Binaria', t: 'Ternaria' };
-const NOMBRE_TIPO = { s: 'Simple', c: 'Compuesto' };
+const NOMBRE_SUBDIV = { b: TL('Binaria', 'Binary'), t: TL('Ternaria', 'Ternary') };
+const NOMBRE_TIPO = { s: TL('Simple', 'Simple'), c: TL('Compuesto', 'Compound') };
+
+/* Textos de la hoja (en la edicion inglesa, los mismos que el test en pantalla). */
+const L = {
+  marca: TL('FICHA DE COMPASES', 'TIME SIGNATURES WORKSHEET'),
+  titulo: TL('Analizar compases', 'Analyze time signatures'),
+  sol: TL('SOLUCIONES', 'ANSWERS'),
+  instr: TL('Completa la tabla para cada cifra de compás: si es <b>simple o compuesto</b>, cuántos <b>tiempos</b> tiene, cómo es su <b>subdivisión</b> y qué figura es la <b>unidad de tiempo</b>, la <b>de subdivisión</b> y la <b>de compás</b>.', 'Complete the table for each time signature: <b>simple or compound</b>, number of <b>beats</b>, type of <b>subdivision</b>, and the <b>beat</b>, <b>subdivision</b> and <b>measure</b> units.'),
+  leyenda: TL('Recuerda: en los compases compuestos el numerador se divide entre tres para saber los tiempos, y la unidad de tiempo lleva puntillo. Las unidades se escriben con la figura, no con su nombre.', 'Remember: in compound time signatures the numerator is divided by three to get the beats, and the beat unit is dotted. Units are drawn as notes.'),
+  nombre: TL('Nombre:', 'Name:'), curso: TL('Curso:', 'Class:'), fecha: TL('Fecha:', 'Date:'),
+  th: [TL('Compás', 'Time sig.'), TL('Tipo', 'Type'), TL('Tiempos', 'Beats'), TL('Subdivisión', 'Subdivision'), TL('U. de tiempo', 'Beat unit'), TL('U. de subdivisión', 'Subdiv. unit'), TL('U. de compás', 'Measure unit')],
+  pie: TL('Compases', 'Time signatures') + ' &middot; ' + TL('analizar', 'analyze'),
+  pieSol: TL('soluciones', 'answers'), pieEj: TL('ejercicios', 'exercises')
+};
 
 function mulberry32(a) {
   return function () {
@@ -111,6 +127,7 @@ const CSS = FUENTE + `
   .fig .liga { font-size: 11pt; color: #c0392b; margin: 0 2px; }
   .pie { margin-top: 8px; border-top: 1px solid #ddd; padding-top: 4px;
          font-size: 8pt; color: #888; display: flex; justify-content: space-between; }
+  ${EN ? 'th { white-space: nowrap; } col.c-sig { width: 10%; } col.c-subdiv { width: 12%; }' : ''}
   .sol-tag { display: inline-block; background: #c0392b; color: #fff; font-size: 8.5pt;
              font-weight: bold; padding: 1px 7px; border-radius: 3px; vertical-align: middle; margin-left: 8px; }
 `;
@@ -121,13 +138,13 @@ async function generar(browser, opts) {
      lineas y el texto salen mas gruesos de lo que son en el PDF. */
   const page = await browser.newPage({ deviceScaleFactor: 3 });
   await page.setViewportSize({ width: 850, height: 1200 });
-  await page.setContent('<div id="raiz"></div>');
+  await page.setContent('<!DOCTYPE html><html lang="' + (EN ? 'en' : 'es') + '"><body><div id="raiz"></div></body></html>');
   await page.addScriptTag({ path: ENGINE });
 
   const compases = await page.evaluate(() => window.tmCompasesData);
   const ejercicios = elegir(compases, 20, 7301);
 
-  const html = await page.evaluate(({ ejercicios, solucion, css, logo, nombreTipo, nombreSubdiv }) => {
+  const html = await page.evaluate(({ ejercicios, solucion, css, logo, nombreTipo, nombreSubdiv, L }) => {
     const fig = id => (id ? window.tmNotaSVG(id) : '');
     const celda = contenido => `<td>${solucion ? contenido : ''}</td>`;
 
@@ -153,26 +170,26 @@ async function generar(browser, opts) {
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE COMPASES</div>
-        <h1>Analizar compases${solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">TEORIAMUSICAL.COM.ES &middot; ${L.marca}</div>
+        <h1>${L.titulo}${solucion ? '<span class="sol-tag">' + L.sol + '</span>' : ''}</h1>
       </div>
       <img class="logo" src="${logo}" width="34" height="35" alt="">
     </div>
-    <p class="instr">Completa la tabla para cada cifra de compás: si es <b>simple o compuesto</b>, cuántos <b>tiempos</b> tiene, cómo es su <b>subdivisión</b> y qué figura es la <b>unidad de tiempo</b>, la <b>de subdivisión</b> y la <b>de compás</b>.</p>
-    <p class="leyenda">Recuerda: en los compases compuestos el numerador se divide entre tres para saber los tiempos, y la unidad de tiempo lleva puntillo. Las unidades se escriben con la figura, no con su nombre.</p>
-    ${solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    <p class="instr">${L.instr}</p>
+    <p class="leyenda">${L.leyenda}</p>
+    ${solucion ? '' : '<div class="datos"><span><b>' + L.nombre + '</b></span><span><b>' + L.curso + '</b></span><span><b>' + L.fecha + '</b></span></div>'}
   </div>
   <table>
     <colgroup><col class="c-num"><col class="c-sig"><col class="c-tipo"><col class="c-tiempos"><col class="c-subdiv"><col><col><col></colgroup>
     <thead><tr>
-      <th></th><th>Compás</th><th>Tipo</th><th>Tiempos</th><th>Subdivisión</th>
-      <th>U. de tiempo</th><th>U. de subdivisión</th><th>U. de compás</th>
+      <th></th><th>${L.th[0]}</th><th>${L.th[1]}</th><th>${L.th[2]}</th><th>${L.th[3]}</th>
+      <th>${L.th[4]}</th><th>${L.th[5]}</th><th>${L.th[6]}</th>
     </tr></thead>
     <tbody>${filas}</tbody>
   </table>
-  <div class="pie"><span>Compases &middot; analizar${solucion ? ' &middot; soluciones' : ''} &middot; ${ejercicios.length} ejercicios</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${L.pie}${solucion ? ' &middot; ' + L.pieSol : ''} &middot; ${ejercicios.length} ${L.pieEj}</span><span>teoriamusical.com.es</span></div>
 </div>`;
-  }, { ejercicios, solucion: !!solucion, css: CSS, logo: LOGO_DATA_URI, nombreTipo: NOMBRE_TIPO, nombreSubdiv: NOMBRE_SUBDIV });
+  }, { ejercicios, solucion: !!solucion, css: CSS, logo: LOGO_DATA_URI, nombreTipo: NOMBRE_TIPO, nombreSubdiv: NOMBRE_SUBDIV, L });
 
   await page.setContent(html);
   await page.evaluate(() => document.fonts.load('36px Leland').then(() => document.fonts.ready));

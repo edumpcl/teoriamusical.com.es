@@ -10,6 +10,14 @@
 (function () {
   'use strict';
 
+  // Inglés: la misma página sirve a <html lang="en"> (el español queda intacto).
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  // Nombre de nota en español -> letras (solo se muestra así en inglés; la lógica sigue con los nombres españoles).
+  const NOTE_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  const nm = s => EN ? String(s).replace(/Sol|Do|Re|Mi|Fa|La|Si/g, m => NOTE_EN[m]) : s;
+  const ordEn = n => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th');
+
   // Rotores sobre la FOTO (viewBox 1000×642). T = válvula del pulgar (cambio Fa/Si♭).
   // Coordenadas marcadas por el usuario sobre la foto (herramienta de clic).
   // De ARRIBA a abajo los rotores son: 1, 2, 3, 4 (4 = pulgar/cambio, la de abajo).
@@ -46,15 +54,15 @@
   function comboText(valves, thumb) {
     if (valves === null) return null;
     var parts = [];
-    if (thumb) parts.push('pulgar');
+    if (thumb) parts.push(T('pulgar', 'thumb'));
     if (valves.length) parts.push(valves.map(function (v) { return v.slice(1); }).join('·'));
-    return parts.length ? parts.join(' + ') : 'al aire';
+    return parts.length ? parts.join(' + ') : T('al aire', 'open');
   }
 
   var SUB = { '2': '₂', '3': '₃', '4': '₄', '5': '₅', '6': '₆' };
   function label(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
-    return m ? m[1] + (m[2] ? '♯' : '') + SUB[m[3]] : n;
+    return m ? nm(m[1] + (m[2] ? '♯' : '') + SUB[m[3]]) : n;
   }
   var LETTER = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
   var ES = ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
@@ -67,14 +75,14 @@
   // La trompa en Fa suena una 5ª justa (7 semitonos) por debajo de lo escrito.
   function suena(n) {
     var midi = midiOf(n) - 7;
-    return ES[((midi % 12) + 12) % 12] + (SUB[String(Math.floor(midi / 12) - 1)] || ('' + (Math.floor(midi / 12) - 1)));
+    return nm(ES[((midi % 12) + 12) % 12] + (SUB[String(Math.floor(midi / 12) - 1)] || ('' + (Math.floor(midi / 12) - 1))));
   }
   function registro(n) {
     var i = ORDEN.indexOf(n);
-    if (i <= ORDEN.indexOf('Si2')) return 'Registro grave';
-    if (i <= ORDEN.indexOf('Si3')) return 'Registro medio-grave';
-    if (i <= ORDEN.indexOf('Si4')) return 'Registro medio';
-    return 'Registro agudo';
+    if (i <= ORDEN.indexOf('Si2')) return T('Registro grave', 'Low register');
+    if (i <= ORDEN.indexOf('Si3')) return T('Registro medio-grave', 'Low-middle register');
+    if (i <= ORDEN.indexOf('Si4')) return T('Registro medio', 'Middle register');
+    return T('Registro agudo', 'High register');
   }
   function sampleFile(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
@@ -146,9 +154,9 @@
       '<div class="tm-tp-side-lbl">' + title + ' <span>' + sub + '</span></div>' +
       '<div class="tm-tp-photo" id="' + uid + '_' + side + '">' +
         '<picture><source type="image/webp" srcset="/assets/img/trompa/instrumento.webp">' +
-        '<img class="tm-tp-img" src="/assets/img/trompa/instrumento.jpg" width="1000" height="642" loading="lazy" alt="Trompa doble en Fa/Si bemol con la campana a la izquierda y las cuatro válvulas de rotor a la derecha"></picture>' +
-        '<svg class="tm-tp-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagrama de válvulas de la trompa (' + title + '): se iluminan los rotores que se pulsan">' + rotorsSvg() + '</svg>' +
-        '<div class="tm-tp-na">Esta nota no se toca por este lado</div>' +
+        '<img class="tm-tp-img" src="/assets/img/trompa/instrumento.jpg" width="1000" height="642" loading="lazy" alt="' + T('Trompa doble en Fa/Si bemol con la campana a la izquierda y las cuatro válvulas de rotor a la derecha', 'Double horn in F/B-flat with the bell on the left and the four rotary valves on the right') + '"></picture>' +
+        '<svg class="tm-tp-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="' + T('Diagrama de válvulas de la trompa (' + title + '): se iluminan los rotores que se pulsan', 'Horn valve diagram (' + title + '): the rotary valves that are pressed light up') + '">' + rotorsSvg() + '</svg>' +
+        '<div class="tm-tp-na">' + T('Esta nota no se toca por este lado', 'This note is not played on this side') + '</div>' +
       '</div></div>';
   }
 
@@ -164,12 +172,12 @@
 
     wrap.innerHTML =
       '<div class="tm-tp-wrap">' +
-        '<div class="tm-tp-readout" id="' + uid + '_ro"><span class="tm-tp-hint">Elige una nota para ver su digitación</span></div>' +
+        '<div class="tm-tp-readout" id="' + uid + '_ro"><span class="tm-tp-hint">' + T('Elige una nota para ver su digitación', 'Choose a note to see its fingering') + '</span></div>' +
         '<div class="tm-tp-diagram">' +
-          sideBlock(uid, 'fa', 'Digitación en Fa', 'pulgar pulsado') +
-          sideBlock(uid, 'sib', 'Digitación en Si♭', 'pulgar suelto') +
+          sideBlock(uid, 'fa', T('Digitación en Fa', 'F fingering'), T('pulgar pulsado', 'thumb pressed')) +
+          sideBlock(uid, 'sib', T('Digitación en Si♭', 'B♭ fingering'), T('pulgar suelto', 'thumb released')) +
         '</div>' +
-        '<p class="tm-tp-credit">Foto: Yamaha Corporation vía <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Horn_YHR-667V.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0 · Audio: banco <a href="https://member.keymusician.com/Member/FluidR3_GM/index.html" target="_blank" rel="nofollow noopener">FluidR3 GM</a> de Frank Wen, en la adaptación <em>MuseScore_General</em> de S. Christian Collins (licencia MIT)</p>' +
+        '<p class="tm-tp-credit">' + T('Foto', 'Photo') + ': Yamaha Corporation ' + T('vía', 'via') + ' <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Horn_YHR-667V.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0 · Audio: ' + T('banco', 'bank') + ' <a href="https://member.keymusician.com/Member/FluidR3_GM/index.html" target="_blank" rel="nofollow noopener">FluidR3 GM</a> ' + T('de Frank Wen, en la adaptación', 'by Frank Wen, in the') + ' <em>MuseScore_General</em> ' + T('de S. Christian Collins (licencia MIT)', 'adaptation by S. Christian Collins (MIT license)') + '</p>' +
         '<div class="tm-tp-btns">' + btns + '</div>' +
       '</div>';
 
@@ -218,13 +226,13 @@
 
       var faTxt = comboText(fa, true), sibTxt = comboText(sib, false);
       var playBtn = SIN_AUDIO[n]
-        ? '<span class="tm-tp-play" title="Sonido pendiente de grabar" style="background:#c9bfa3;cursor:default">·</span>'
-        : '<button class="tm-tp-play" type="button" aria-label="Reproducir la nota">▶</button>';
+        ? '<span class="tm-tp-play" title="' + T('Sonido pendiente de grabar', 'Sound not yet recorded') + '" style="background:#c9bfa3;cursor:default">·</span>'
+        : '<button class="tm-tp-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button>';
       ro.innerHTML =
         '<div class="tm-tp-staff" id="' + uid + '_staff"></div>' +
         '<div class="tm-tp-noterow"><span class="tm-tp-intl">' + label(n) + '</span>' + playBtn + '</div>' +
-        '<div class="tm-tp-reg">' + registro(n) + ' · suena ' + suena(n) + (SIN_AUDIO[n] ? ' · <em>sonido pendiente</em>' : '') + '</div>' +
-        '<div class="tm-tp-fings"><b>Fa</b> (pulgar ↓): ' + (faTxt || '—') + ' &nbsp;·&nbsp; <b>Si♭</b> (pulgar ↑): ' + (sibTxt || '—') + '</div>';
+        '<div class="tm-tp-reg">' + registro(n) + T(' · suena ', ' · sounds ') + suena(n) + (SIN_AUDIO[n] ? ' · <em>' + T('sonido pendiente', 'sound pending') + '</em>' : '') + '</div>' +
+        '<div class="tm-tp-fings"><b>' + T('Fa', 'F') + '</b> (' + T('pulgar', 'thumb') + ' ↓): ' + (faTxt || '—') + ' &nbsp;·&nbsp; <b>' + T('Si♭', 'B♭') + '</b> (' + T('pulgar', 'thumb') + ' ↑): ' + (sibTxt || '—') + '</div>';
       renderStaff(n);
       var pb = ro.querySelector('button.tm-tp-play');
       if (pb) pb.addEventListener('click', function () { play(n); });

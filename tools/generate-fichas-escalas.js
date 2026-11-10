@@ -34,8 +34,11 @@ const sharp = require('sharp');
 
 const ROOT = path.join(__dirname, '..');
 const { cargarFicha } = require('./lib-ficha-verovio.js');
+/* --lang=en (o TM_LANG=en): edición inglesa; escribe en assets/img/en/... con las mismas rutas y nombres. Sin la opción, la salida es la de siempre. */
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const T = (es, en) => (EN ? en : es);
 /* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
-const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/escalas/fichas');
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, EN ? 'assets/img/en/escalas/fichas' : 'assets/img/escalas/fichas');
 
 /* ---------------------------------------------------------------- teoria */
 
@@ -158,6 +161,25 @@ function nombreEscala(tipo, ton) {
   return (tipo.familia === 'menor' ? t.toLowerCase() : t) + ' ' + tipo.nombre;
 }
 
+/* Textos en inglés (los mismos que fichas-escalas-engine.js) */
+const TIPOS_EN = {
+  'mayor': { nombre: 'major', titulo: 'natural major scales' },
+  'mixta-principal': { nombre: 'harmonic major', titulo: 'harmonic major scales' },
+  'mixta-secundaria': { nombre: 'melodic major', titulo: 'melodic major scales' },
+  'mixolidia': { nombre: 'Mixolydian', titulo: 'Mixolydian scales' },
+  'menor-natural': { nombre: 'natural minor', titulo: 'natural minor scales' },
+  'menor-armonica': { nombre: 'harmonic minor', titulo: 'harmonic minor scales' },
+  'menor-melodica': { nombre: 'melodic minor', titulo: 'melodic minor scales' },
+  'menor-dorica': { nombre: 'Dorian', titulo: 'Dorian scales' },
+};
+const NOTA_EN = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+/* Nombre que se imprime: 'do♯ menor armónica' -> 'C♯ harmonic minor' (en inglés la tónica va siempre en mayúscula) */
+function mostrarNombre(e) {
+  if (!EN) return e.nombre;
+  const m = /^(Do|Re|Mi|Fa|Sol|La|Si|do|re|mi|fa|sol|la|si)([♯♭]?)/.exec(e.nombre);
+  return NOTA_EN[ES.findIndex(x => x.toLowerCase() === m[1].toLowerCase())] + m[2] + ' ' + TIPOS_EN[e.tipo.id].nombre;
+}
+
 function semilla(familia, modo) {
   return 6100 + Object.keys(FAMILIAS).indexOf(familia) * 10 + MODOS.indexOf(modo);
 }
@@ -272,6 +294,31 @@ const CSS = `
 function textos(familia, modo) {
   const fam = FAMILIAS[familia];
   const tipos = TIPOS.filter(t => fam.tipos.indexOf(t.id) >= 0);
+  if (EN) {
+    const ids = tipos.map(t => t.id).join();
+    const cuales = tipos.length === 1 ? TIPOS_EN[tipos[0].id].titulo
+      : ids === TIPOS.map(t => t.id).join() ? 'major and minor scales'
+        : ids === ['mayor', 'mixta-principal', 'mixta-secundaria', 'mixolidia'].join() ? 'major scales'
+          : ids === ['menor-natural', 'menor-armonica', 'menor-melodica', 'menor-dorica'].join() ? 'minor scales' : 'scales';
+    const nombres = tipos.map(t => TIPOS_EN[t.id].nombre);
+    const lista = nombres.length > 1 ? nombres.slice(0, -1).join(', ') + ' and ' + nombres[nombres.length - 1] : nombres[0];
+    const melodicaEn = tipos.some(t => t.melodica) ? ' The melodic minor is written ascending and descending: 15 notes.' : '';
+    const tituloEn = { identificar: 'Identify ', escribir: 'Write ', 'escribir-con-armadura': 'Write ' }[modo] + cuales + (modo === 'escribir-con-armadura' ? ' with a key signature' : '');
+    if (modo === 'identificar') {
+      const que = tipos.length === 1
+        ? `All are ${cuales}: write each one’s name below it, with the tonic.`
+        : `Write each scale’s name below it: the tonic and the type (${lista}).`;
+      return { titulo: tituloEn, instrucciones: `${que} Some have a key signature and others have the accidentals written before each note. Look at the clef first.` };
+    }
+    if (modo === 'escribir') {
+      return { titulo: tituloEn, instrucciones: `On each staff, write the scale indicated, ascending from the tonic, without a key signature: each accidental before its note.${melodicaEn}` };
+    }
+    const fams = new Set(tipos.map(t => t.familia));
+    const reglaEn = fams.size === 2
+      ? 'The major, harmonic major, melodic major and Mixolydian scales use the key signature of their major key; the minor and Dorian scales, that of their minor key.'
+      : fams.has('menor') ? 'All use the key signature of their minor key.' : 'All use the key signature of their major key.';
+    return { titulo: tituloEn, instrucciones: `First write the key signature, then the scale, ascending from the tonic. Write only the accidentals that are not in the key signature. ${reglaEn}${melodicaEn}` };
+  }
   const hayMelodica = tipos.some(t => t.melodica);
   const melodica = hayMelodica ? ' La menor melódica se escribe subiendo y bajando: 15 notas.' : '';
   const titulo = { identificar: 'Identificar ', escribir: 'Escribir ', 'escribir-con-armadura': 'Escribir con armadura ' }[modo] + fam.titulo;
@@ -304,27 +351,27 @@ function textos(familia, modo) {
 function construirHtml(cfg) {
   const filas = cfg.ejercicios.map((e, i) => {
     if (cfg.modo === 'identificar') {
-      const resp = cfg.solucion ? `<span class="val">${e.nombre}</span>` : '<span></span>';
-      return `<div class="fila"><span class="num">${i + 1}</span><div id="c${i}"></div><p class="linea"><b>Escala:</b>${resp}</p></div>`;
+      const resp = cfg.solucion ? `<span class="val">${mostrarNombre(e)}</span>` : '<span></span>';
+      return `<div class="fila"><span class="num">${i + 1}</span><div id="c${i}"></div><p class="linea"><b>${T('Escala:', 'Scale:')}</b>${resp}</p></div>`;
     }
-    return `<div class="fila"><span class="num">${i + 1}</span><p class="pide"><b>${e.nombre}</b></p><div id="c${i}"></div></div>`;
+    return `<div class="fila"><span class="num">${i + 1}</span><p class="pide"><b>${mostrarNombre(e)}</b></p><div id="c${i}"></div></div>`;
   }).join('');
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE ESCALAS</div>
-        <h1>${cfg.titulo}${cfg.solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">${EN ? 'TEORIAMUSICAL.COM.ES/EN &middot; SCALES WORKSHEET' : 'TEORIAMUSICAL.COM.ES &middot; FICHA DE ESCALAS'}</div>
+        <h1>${cfg.titulo}${cfg.solucion ? `<span class="sol-tag">${T('SOLUCIONES', 'ANSWERS')}</span>` : ''}</h1>
       </div>
       <img class="logo" src="${LOGO_DATA_URI}" width="34" height="35" alt="">
     </div>
     <p class="instr">${cfg.instrucciones}</p>
-    <p class="leyenda">De menos a más: armaduras con pocas alteraciones en clave de sol, y después más alteraciones y la clave de fa.</p>
-    ${cfg.solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    <p class="leyenda">${T('De menos a más: armaduras con pocas alteraciones en clave de sol, y después más alteraciones y la clave de fa.', 'From easier to harder: key signatures with few accidentals in treble clef, then more accidentals and the bass clef.')}</p>
+    ${cfg.solucion ? '' : `<div class="datos"><span><b>${T('Nombre:', 'Name:')}</b></span><span><b>${T('Curso:', 'Class:')}</b></span><span><b>${T('Fecha:', 'Date:')}</b></span></div>`}
   </div>
   ${filas}
-  <div class="pie"><span>${cfg.pie}</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${cfg.pie}</span><span>teoriamusical.com.es${EN ? '/en' : ''}</span></div>
 </div>
 </body></html>`;
 }
@@ -339,7 +386,7 @@ const PENTA = { w: 860, h: 104, y: 2, arriba: 3 };
 async function generarFicha(browser, opts) {
   const { familia, modo, solucion, ejercicios, png } = opts;
   const { titulo, instrucciones } = textos(familia, modo);
-  const pie = `Escalas &middot; ${titulo.toLowerCase()}` + (solucion ? ' &middot; soluciones' : '') + ` &middot; ${ejercicios.length} ejercicios`;
+  const pie = `${T('Escalas', 'Scales')} &middot; ${titulo.toLowerCase()}` + (solucion ? T(' &middot; soluciones', ' &middot; answers') : '') + ` &middot; ${ejercicios.length} ${T('ejercicios', 'exercises')}`;
 
   const page = await browser.newPage({ deviceScaleFactor: 3 });
   await page.setViewportSize({ width: 850, height: 1200 });

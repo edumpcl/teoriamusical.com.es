@@ -8,10 +8,13 @@
    Uso: <div id="x"></div><script>tmGuitarraEngine('x');</script> */
 (function () {
   'use strict';
+  var EN = document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
 
   // Cuerdas al aire (MIDI real), i=0 -> 6ª (Mi grave) ... i=5 -> 1ª (Mi agudo)
   var OPEN = [40, 45, 50, 55, 59, 64];
-  var CUERDA_NOM = ['6ª (Mi)', '5ª (La)', '4ª (Re)', '3ª (Sol)', '2ª (Si)', '1ª (Mi)'];
+  var CUERDA_NOM = EN ? ['6th (E)', '5th (A)', '4th (D)', '3rd (G)', '2nd (B)', '1st (E)'] :
+    ['6ª (Mi)', '5ª (La)', '4ª (Re)', '3ª (Sol)', '2ª (Si)', '1ª (Mi)'];
   var NFRETS = 12;
 
   // --- Calibración de la FOTO del mástil, EN HORIZONTAL (viewBox 1190 x 430) ---
@@ -30,8 +33,10 @@
   }
 
   // --- Nombres de nota ---
-  var SHARP = ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
-  var FLAT  = ['Do', 'Re♭', 'Re', 'Mi♭', 'Mi', 'Fa', 'Sol♭', 'Sol', 'La♭', 'La', 'Si♭', 'Si'];
+  var SHARP = EN ? ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'] :
+    ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
+  var FLAT  = EN ? ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'G♭', 'G', 'A♭', 'A', 'B♭', 'B'] :
+    ['Do', 'Re♭', 'Re', 'Mi♭', 'Mi', 'Fa', 'Sol♭', 'Sol', 'La♭', 'La', 'Si♭', 'Si'];
   var SUB = { '0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄', '5': '₅', '6': '₆', '7': '₇' };
   function sub(o) { return String(o).split('').map(function (c) { return SUB[c] || c; }).join(''); }
   function pc(m) { return ((m % 12) + 12) % 12; }
@@ -105,7 +110,7 @@
   function drawnMarkX(n) { return n === 0 ? DNUTX - 18 : DNUTX + (DEND - DNUTX) * markT(n); }
   function buildDrawn() {
     var by = DTOP - 8, bh = (DBOT - DTOP) + 16, mid = (DTOP + DBOT) / 2;
-    var s = '<svg class="tm-gt-drawn" viewBox="0 0 ' + DW + ' ' + DH + '" role="img" aria-label="Diapasón de la guitarra dibujado en posición de tocar: la cejuela a la izquierda y las seis cuerdas (6ª Mi grave arriba, 1ª Mi aguda abajo)">';
+    var s = '<svg class="tm-gt-drawn" viewBox="0 0 ' + DW + ' ' + DH + '" role="img" aria-label="' + T('Diapasón de la guitarra dibujado en posición de tocar: la cejuela a la izquierda y las seis cuerdas (6ª Mi grave arriba, 1ª Mi aguda abajo)', 'Drawn guitar fretboard in playing position: the nut on the left and the six strings (6th low E at the top, 1st high E at the bottom)') + '">';
     s += '<rect x="' + DNUTX + '" y="' + by + '" width="' + (DEND - DNUTX) + '" height="' + bh + '" fill="#5a3a24"/>';
     // cejuela
     s += '<rect x="' + (DNUTX - 6) + '" y="' + by + '" width="6" height="' + bh + '" fill="#f5efe0"/>';
@@ -133,13 +138,13 @@
     }
     wrap.innerHTML =
       '<div class="tm-gt-wrap">' +
-        '<div class="tm-gt-readout" id="' + uid + '_ro"><span class="tm-gt-hint">Elige una nota para verla en el mástil, en tablatura y en el pentagrama</span></div>' +
+        '<div class="tm-gt-readout" id="' + uid + '_ro"><span class="tm-gt-hint">' + T('Elige una nota para verla en el mástil, en tablatura y en el pentagrama', 'Pick a note to see it on the fretboard, in tablature and on the staff') + '</span></div>' +
         '<div class="tm-gt-diagrams">' +
           '<div class="tm-gt-col"><div class="tm-gt-photo-wrap">' +
-            '<picture><source type="image/webp" srcset="/assets/img/guitarra/mastil.webp"><img class="tm-gt-photo" src="/assets/img/guitarra/mastil.jpg" alt="Mástil de una guitarra clásica en posición de tocar, foto real"></picture>' +
+            '<picture><source type="image/webp" srcset="/assets/img/guitarra/mastil.webp"><img class="tm-gt-photo" src="/assets/img/guitarra/mastil.jpg" alt="' + T('Mástil de una guitarra clásica en posición de tocar, foto real', 'Neck of a classical guitar in playing position, real photo') + '"></picture>' +
             '<svg class="tm-gt-photo-ov" viewBox="0 0 ' + IMG_W + ' ' + IMG_H + '" preserveAspectRatio="xMidYMid meet" style="position:absolute;left:0;top:0;width:100%;height:100%;"><g class="tm-gt-pmarks"></g></svg>' +
-          '</div><div class="tm-gt-cap">Foto real</div></div>' +
-          '<div class="tm-gt-col">' + buildDrawn() + '<div class="tm-gt-cap">Diapasón</div></div>' +
+          '</div><div class="tm-gt-cap">' + T('Foto real', 'Real photo') + '</div></div>' +
+          '<div class="tm-gt-col">' + buildDrawn() + '<div class="tm-gt-cap">' + T('Diapasón', 'Fretboard') + '</div></div>' +
         '</div>' +
         '<div class="tm-gt-tabwrap"><div class="tm-gt-tab" id="' + uid + '_tab"></div></div>' +
         '<div class="tm-gt-btns">' + btns + '</div>' +
@@ -199,13 +204,13 @@
       });
       dov.innerHTML = ds;
       // lista de posiciones legible
-      var human = pos.map(function (p) { return p.fret === 0 ? (CUERDA_NOM[p.i] + ' al aire') : (CUERDA_NOM[p.i] + ' traste ' + p.fret); }).join(' · ');
+      var human = pos.map(function (p) { return p.fret === 0 ? (CUERDA_NOM[p.i] + T(' al aire', ' open')) : (CUERDA_NOM[p.i] + T(' traste ', ' fret ') + p.fret); }).join(' · ');
       ro.innerHTML =
         '<div class="tm-gt-staff" id="' + uid + '_staff"></div>' +
         '<div class="tm-gt-noterow"><span class="tm-gt-name">' + nameFull(m) + '</span>' +
-        '<button class="tm-gt-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
+        '<button class="tm-gt-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
         '<div class="tm-gt-sub">' + human + '</div>' +
-        '<div class="tm-gt-sub">Se escribe una 8ª más arriba de lo que suena (clave de sol).</div>';
+        '<div class="tm-gt-sub">' + T('Se escribe una 8ª más arriba de lo que suena (clave de sol).', 'Written an octave higher than it sounds (treble clef).') + '</div>';
       tab.textContent = tabLines(pos);
       renderStaff(m);
       var pb = ro.querySelector('.tm-gt-play'); if (pb) pb.addEventListener('click', function () { play(m); });

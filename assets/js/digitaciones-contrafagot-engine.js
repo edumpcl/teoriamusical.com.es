@@ -15,6 +15,12 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  // Nombres de nota (Do Re Mi...) -> letras (C D E...) en la edicion inglesa
+  const NOTA_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  function enNote(s) { return EN ? s.replace(/Sol|Do|Re|Mi|Fa|La|Si/g, function (x) { return NOTA_EN[x]; }) : s; }
+
   // Elementos que se ENCIENDEN (data-k). El resto del dibujo es decorativo.
   var KEYS = [
     // Pulgar izquierdo (lado derecho del tubo principal)
@@ -47,13 +53,13 @@
 
   // Nombres para el desglose de la digitación en el marcador
   var NAMES = {
-    V1: '1ª ll. de venteo', V2: '2ª ll. de venteo',
-    LD: 'Re grave', LC: 'Do grave', LB: 'Si grave', LBB: 'Si♭ grave', CS: 'Do♯ (pulgar)',
-    BB: 'Si♭ (pulgar dcho.)', LE: 'Mi grave', FS: 'Fa♯ (pulgar dcho.)',
-    H1: 'agujero 1', H2: 'agujero 2', H3: 'agujero 3',
-    H4: 'agujero 4', H5: 'agujero 5', G6: 'plato 6 (Sol)',
-    MH: 'll. de medio agujero', EBR: 'Mi♭ (meñique izq.)', LCS: 'Do♯ grave (meñique)',
-    FK: 'll. de Fa', AB: 'Sol♯ (meñique)'
+    V1: T('1ª ll. de venteo', '1st vent key'), V2: T('2ª ll. de venteo', '2nd vent key'),
+    LD: T('Re grave', 'low D'), LC: T('Do grave', 'low C'), LB: T('Si grave', 'low B'), LBB: T('Si♭ grave', 'low B♭'), CS: T('Do♯ (pulgar)', 'C♯ (thumb)'),
+    BB: T('Si♭ (pulgar dcho.)', 'B♭ (right thumb)'), LE: T('Mi grave', 'low E'), FS: T('Fa♯ (pulgar dcho.)', 'F♯ (right thumb)'),
+    H1: T('agujero 1', 'hole 1'), H2: T('agujero 2', 'hole 2'), H3: T('agujero 3', 'hole 3'),
+    H4: T('agujero 4', 'hole 4'), H5: T('agujero 5', 'hole 5'), G6: T('plato 6 (Sol)', 'plate 6 (G)'),
+    MH: T('ll. de medio agujero', 'half-hole key'), EBR: T('Mi♭ (meñique izq.)', 'E♭ (left little finger)'), LCS: T('Do♯ grave (meñique)', 'low C♯ (little finger)'),
+    FK: T('ll. de Fa', 'F key'), AB: T('Sol♯ (meñique)', 'G♯ (little finger)')
   };
 
   // Digitaciones estándar (carta Grimmer/Fox), Si♭1–Re5 escritos.
@@ -115,21 +121,21 @@
   function label(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
     if (!m) return n;
-    return m[1] + (m[2] ? '♯' : '') + SUB[m[3]];
+    return enNote(m[1]) + (m[2] ? '♯' : '') + SUB[m[3]];
   }
   // Nota real: una octava por debajo de la escrita
   function suenaLabel(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
     if (!m) return n;
-    return m[1] + (m[2] ? '♯' : '') + SUB[String(parseInt(m[3], 10) - 1)];
+    return enNote(m[1]) + (m[2] ? '♯' : '') + SUB[String(parseInt(m[3], 10) - 1)];
   }
   // Registros: grave Si♭1–Sol2, medio –Fa3, agudo –Sol4, sobreagudo –Re5.
   function registro(n) {
     var i = ORDEN.indexOf(n);
-    if (i >= 0 && i <= ORDEN.indexOf('Sol2')) return 'Registro grave';
-    if (i <= ORDEN.indexOf('Fa3')) return 'Registro medio';
-    if (i <= ORDEN.indexOf('Sol4')) return 'Registro agudo';
-    return 'Registro sobreagudo';
+    if (i >= 0 && i <= ORDEN.indexOf('Sol2')) return T('Registro grave', 'Low register');
+    if (i <= ORDEN.indexOf('Fa3')) return T('Registro medio', 'Middle register');
+    if (i <= ORDEN.indexOf('Sol4')) return T('Registro agudo', 'High register');
+    return T('Registro sobreagudo', 'Very high register');
   }
   // Clave real de lectura según el registro (evita líneas adicionales)
   function claveDe(n) {
@@ -139,6 +145,7 @@
     return 'treble';
   }
   var CLAVE_ES = { bass: 'fa en 4ª', tenor: 'do en 4ª', treble: 'sol' };
+  var CLAVE_EN = { bass: 'bass clef', tenor: 'tenor clef', treble: 'treble clef' };
 
   var LETTER = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
   var AUDIO_BASE = '/assets/audio/contrafagot/';
@@ -239,34 +246,34 @@
     '<path d="M280 605 C293 604 301 613 298 623 C296 630 287 633 279 629 C283 624 285 618 283 612 C282 609 281 607 280 605 Z" fill="#2a2a2a" stroke="#151515" stroke-width="1"/>' +
     '<circle cx="281" cy="606" r="2" fill="#9a9ca3"/>' +
     // etiquetas
-    '<text class="tm-cf-klab" x="220" y="16">Campana</text>' +
-    '<text class="tm-cf-klab" x="72" y="88">Caña</text>' +
-    '<text class="tm-cf-klab" x="72" y="100">y tudel</text>' +
-    '<text class="tm-cf-klab" x="305" y="585">Culata</text>' +
-    '<text class="tm-cf-klab2" x="292" y="646">Muletilla</text>' +
-    '<text class="tm-cf-grp" x="255" y="332">Pulgar izquierdo</text>' +
-    '<text class="tm-cf-grp" x="258" y="530">Pulgar derecho</text>' +
-    '<text class="tm-cf-klab2" x="279" y="343">vent. 1</text>' +
-    '<text class="tm-cf-klab2" x="279" y="364">vent. 2</text>' +
-    '<text class="tm-cf-klab2" x="279" y="427">Re</text>' +
-    '<text class="tm-cf-klab2" x="279" y="448">Do</text>' +
-    '<text class="tm-cf-klab2" x="279" y="469">Si</text>' +
-    '<text class="tm-cf-klab2" x="279" y="490">Si♭</text>' +
-    '<text class="tm-cf-klab2" x="279" y="511">Do♯</text>' +
-    '<text class="tm-cf-klab2" x="282" y="543">Si♭</text>' +
-    '<text class="tm-cf-klab2" x="282" y="578">Mi</text>' +
-    '<text class="tm-cf-klab2" x="282" y="613">Fa♯</text>' +
+    '<text class="tm-cf-klab" x="220" y="16">' + T('Campana', 'Bell') + '</text>' +
+    '<text class="tm-cf-klab" x="72" y="88">' + T('Caña', 'Reed') + '</text>' +
+    '<text class="tm-cf-klab" x="72" y="100">' + T('y tudel', 'and bocal') + '</text>' +
+    '<text class="tm-cf-klab" x="305" y="585">' + T('Culata', 'Boot joint') + '</text>' +
+    '<text class="tm-cf-klab2" x="292" y="646">' + T('Muletilla', 'Hand rest') + '</text>' +
+    '<text class="tm-cf-grp" x="255" y="332">' + T('Pulgar izquierdo', 'Left thumb') + '</text>' +
+    '<text class="tm-cf-grp" x="258" y="530">' + T('Pulgar derecho', 'Right thumb') + '</text>' +
+    '<text class="tm-cf-klab2" x="279" y="343">' + T('vent. 1', 'vent 1') + '</text>' +
+    '<text class="tm-cf-klab2" x="279" y="364">' + T('vent. 2', 'vent 2') + '</text>' +
+    '<text class="tm-cf-klab2" x="279" y="427">' + T('Re', 'D') + '</text>' +
+    '<text class="tm-cf-klab2" x="279" y="448">' + T('Do', 'C') + '</text>' +
+    '<text class="tm-cf-klab2" x="279" y="469">' + T('Si', 'B') + '</text>' +
+    '<text class="tm-cf-klab2" x="279" y="490">' + T('Si♭', 'B♭') + '</text>' +
+    '<text class="tm-cf-klab2" x="279" y="511">' + T('Do♯', 'C♯') + '</text>' +
+    '<text class="tm-cf-klab2" x="282" y="543">' + T('Si♭', 'B♭') + '</text>' +
+    '<text class="tm-cf-klab2" x="282" y="578">' + T('Mi', 'E') + '</text>' +
+    '<text class="tm-cf-klab2" x="282" y="613">' + T('Fa♯', 'F♯') + '</text>' +
     '<text class="tm-cf-klab" style="fill:#e8dcc0" x="238" y="359">1</text><text class="tm-cf-klab" style="fill:#e8dcc0" x="238" y="394">2</text><text class="tm-cf-klab" style="fill:#e8dcc0" x="238" y="429">3</text>' +
     '<text class="tm-cf-klab" style="fill:#e8dcc0" x="238" y="549">4</text><text class="tm-cf-klab" style="fill:#e8dcc0" x="238" y="579">5</text><text class="tm-cf-klab" style="fill:#e8dcc0" x="238" y="609">6</text>' +
-    '<text class="tm-cf-klab2" x="124" y="428">½ agujero</text>' +
-    '<text class="tm-cf-grp" x="112" y="390">Mano</text>' +
-    '<text class="tm-cf-grp" x="112" y="403">izquierda</text>' +
-    '<text class="tm-cf-grp" x="112" y="573">Mano</text>' +
-    '<text class="tm-cf-grp" x="112" y="586">derecha</text>' +
-    '<text class="tm-cf-klab" x="114" y="466">Meñique</text>' +
-    '<text class="tm-cf-klab" x="114" y="478">izq.</text>' +
-    '<text class="tm-cf-klab" x="112" y="620">Meñique</text>' +
-    '<text class="tm-cf-klab" x="112" y="632">dcho.</text>';
+    '<text class="tm-cf-klab2" x="124" y="428">' + T('½ agujero', '½ hole') + '</text>' +
+    '<text class="tm-cf-grp" x="112" y="390">' + T('Mano', 'Left') + '</text>' +
+    '<text class="tm-cf-grp" x="112" y="403">' + T('izquierda', 'hand') + '</text>' +
+    '<text class="tm-cf-grp" x="112" y="573">' + T('Mano', 'Right') + '</text>' +
+    '<text class="tm-cf-grp" x="112" y="586">' + T('derecha', 'hand') + '</text>' +
+    '<text class="tm-cf-klab" x="114" y="466">' + T('Meñique', 'Left') + '</text>' +
+    '<text class="tm-cf-klab" x="114" y="478">' + T('izq.', 'pinky') + '</text>' +
+    '<text class="tm-cf-klab" x="112" y="620">' + T('Meñique', 'Right') + '</text>' +
+    '<text class="tm-cf-klab" x="112" y="632">' + T('dcho.', 'pinky') + '</text>';
 
   function keyShape(k) {
     var open = '<g class="tm-cf-key" data-k="' + k.id + '">', close = '</g>';
@@ -309,8 +316,8 @@
 
     wrap.innerHTML =
       '<div class="tm-cf-wrap">' +
-        '<div class="tm-cf-readout" id="' + uid + '_ro"><span class="tm-cf-hint">Elige una nota para ver su digitación</span></div>' +
-        '<div class="tm-cf-diagram"><svg class="tm-cf-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" role="img" aria-label="Diagrama de digitación del contrafagot: esquema vertical simplificado con dos tubos paralelos, la campana arriba, el tudel largo con la caña saliendo hacia el lateral y la culata abajo; las llaves pulsadas se muestran en dorado">' +
+        '<div class="tm-cf-readout" id="' + uid + '_ro"><span class="tm-cf-hint">' + T('Elige una nota para ver su digitación', 'Choose a note to see its fingering') + '</span></div>' +
+        '<div class="tm-cf-diagram"><svg class="tm-cf-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" role="img" aria-label="' + T('Diagrama de digitación del contrafagot: esquema vertical simplificado con dos tubos paralelos, la campana arriba, el tudel largo con la caña saliendo hacia el lateral y la culata abajo; las llaves pulsadas se muestran en dorado', 'Contrabassoon fingering diagram: simplified vertical outline with two parallel tubes, the bell at the top, the long bocal with the reed going off to the side and the boot joint at the bottom; the keys that are pressed are shown in gold') + '">' +
           DECO + keysSvg +
         '</svg></div>' +
         '<div class="tm-cf-btns">' + btns + '</div>' +
@@ -351,9 +358,9 @@
       });
       ro.innerHTML =
         '<div class="tm-cf-staff" id="' + uid + '_staff"></div>' +
-        '<div class="tm-cf-noterow"><span class="tm-cf-intl">' + label(n) + (FLAT[n] ? ' (' + FLAT[n] + ')' : '') + '</span>' +
-        '<button class="tm-cf-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
-        '<div class="tm-cf-reg">' + intl(n) + ' · suena ' + suenaLabel(n) + ' (octava abajo) · ' + registro(n) + ' · clave de ' + CLAVE_ES[claveDe(n)] + '</div>' +
+        '<div class="tm-cf-noterow"><span class="tm-cf-intl">' + label(n) + (FLAT[n] ? ' (' + enNote(FLAT[n]) + ')' : '') + '</span>' +
+        '<button class="tm-cf-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
+        '<div class="tm-cf-reg">' + intl(n) + T(' · suena ', ' · sounds ') + suenaLabel(n) + T(' (octava abajo) · ', ' (octave lower) · ') + registro(n) + T(' · clave de ' + CLAVE_ES[claveDe(n)], ' · ' + CLAVE_EN[claveDe(n)]) + '</div>' +
         '<div class="tm-cf-keysline">' + (nombres.length ? nombres.join(' · ') : '—') + '</div>';
       renderStaff(n);
       var pb = ro.querySelector('.tm-cf-play');

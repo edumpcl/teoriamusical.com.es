@@ -17,7 +17,49 @@ const path = require('path');
 const G = require('./gen-escalas-verovio.js');
 const { RAIZ, ESPACIO, PX_POR_UNIDAD, OPCIONES, hash, escAttr, preparar, NOMBRE, LETRA_DE, LETRAS, GLIFO } = G;
 
-const SALIDA = 'assets/img/notacion';
+/* Edicion inglesa: `--lang=en` (o TM_LANG=en) escribe en assets/img/en/notacion SOLO las imagenes que llevan rotulos de texto
+   (intervalos y calidades), con rotulos y <title> en ingles. La imagen se genera y se verifica exactamente igual que la espanola
+   (contra el alt espanol de la pagina) y solo al escribir se traducen los textos; sin la opcion la salida es identica. */
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const SALIDA = EN ? 'assets/img/en/notacion' : 'assets/img/notacion';
+const ORD_EN = { 1: '1st', 2: '2nd', 3: '3rd' };
+const ordEn = (n) => ORD_EN[n] || n + 'th';
+const CAL_EN = { Mayor: 'Major', menor: 'Minor', Justa: 'Perfect', Aumentada: 'Augmented', Disminuida: 'Diminished' };
+const NUM_PALABRA_EN = { unisono: 'unison', segunda: 'second', tercera: 'third', cuarta: 'fourth', quinta: 'fifth', sexta: 'sixth', septima: 'seventh', octava: 'octave' };
+const ACORDE_EN = { dominante: 'dominant seventh chord', sensible: 'leading-tone seventh chord', disminuida: 'diminished seventh chord' };
+const INV_EN = { 1: 'first', 2: 'second', 3: 'third' };
+const FIJAS_EN = {
+  'Reducción de 12ª Justa a 5ª Justa': 'Reduction of a perfect 12th to a perfect 5th',
+  'Diferencia entre semitono cromático y diatónico: Do–Do sostenido (mismo nombre, cromático) frente a Do–Re bemol (distinto nombre, diatónico), el mismo sonido escrito de dos formas': 'Difference between a chromatic and a diatonic half step: C–C sharp (same letter name, chromatic) versus C–D flat (different letter names, diatonic), the same sound written two ways',
+  'Inversión de intervalo compuesto: la segunda nota baja tres octavas (22ª)': 'Inversion of a compound interval: the second note moves down three octaves (22nd)',
+  'Segundo ejemplo de inversión de intervalo compuesto': 'Second example of the inversion of a compound interval',
+  'Inversión de intervalo simple: la segunda nota baja una octava': 'Inversion of a simple interval: the second note moves down one octave',
+  'Segundo ejemplo de inversión de intervalo simple': 'Second example of the inversion of a simple interval',
+};
+/** «6ª Mayor» -> «Major 6th». */
+function rotuloEn(t) {
+  if (t === '−8ª') return '−1 octave';
+  const fijo = { 'Cromático': 'Chromatic', 'Diatónico': 'Diatonic', Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' }[t];
+  if (fijo) return fijo;
+  const m = /^(\d+)ª (Mayor|menor|Justa|Aumentada|Disminuida)$/.exec(t);
+  if (!m) throw new Error('rotulo sin traduccion al ingles: ' + t);
+  return CAL_EN[m[2]] + ' ' + ordEn(Number(m[1]));
+}
+/** alt espanol -> ingles (patrones de las paginas de acordes de septima y de inversion de intervalos). */
+function altEn(alt) {
+  if (FIJAS_EN[alt]) return FIJAS_EN[alt];
+  const m = /^(Unísono|Segunda|Tercera|Cuarta|Quinta|Sexta|Séptima) (mayor|menor|justa|aumentada|disminuida)(?: en la (\d)ª inversión)? del acorde de séptima (?:de )?(dominante|sensible|disminuida)$/.exec(alt);
+  if (!m) throw new Error('alt sin traduccion al ingles: ' + alt);
+  const num = NUM_PALABRA_EN[m[1].toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')];
+  const cal = { mayor: 'Major', menor: 'Minor', justa: 'Perfect', aumentada: 'Augmented', disminuida: 'Diminished' }[m[2]];
+  return `${cal} ${num}${m[3] ? ' in the ' + INV_EN[m[3]] + ' inversion' : ''} of the ${ACORDE_EN[m[4]]}`;
+}
+/** Traduce los <text> de rotulo y el <title> del SVG ya preparado. */
+function traducirSvg(svg, altEs) {
+  return svg
+    .replace(/(<text[^>]*>)([^<]*)(<\/text>)/g, (x, a, t, c) => a + rotuloEn(t) + c)
+    .replace(/<title>[^<]*<\/title>/, () => '<title>' + escAttr(altEn(altEs)) + '</title>');
+}
 const PC = { c: 0, d: 2, e: 4, f: 5, g: 7, a: 9, b: 11 };
 const ALT_MEI = { '-2': 'ff', '-1': 'f', 0: 'n', 1: 's', 2: 'x' };
 const MEI_ALT = { ff: -2, f: -1, n: 0, s: 1, x: 2 };
@@ -574,6 +616,7 @@ async function main() {
   for (const im of imgs) {
     const spec = preparaSpec(im.spec);
     const clave = spec.slug;
+    if (EN && !(spec.etiquetas || []).some((et) => !/^[\d+♭♯♮]*$/.test(et.texto) && !spec.cifrado)) continue;   // en ingles solo las que llevan texto
     if (hechos.has(clave)) { im.hecho = hechos.get(clave); continue; }
     try {
       const compasesAlt = conAlteraciones(spec.compases);
@@ -604,7 +647,7 @@ async function main() {
       e.push(...verificarSVG(svg, spec, planas, compasesAlt, cabs));
       const listo = preparar(svg, im.alt);
       if (e.length) throw new Error(e.join('\n   - '));
-      fs.writeFileSync(path.join(RAIZ, SALIDA, cfg.datos, clave + '.svg'), listo.svg);
+      fs.writeFileSync(path.join(RAIZ, SALIDA, cfg.datos, clave + '.svg'), EN ? traducirSvg(listo.svg, im.alt) : listo.svg);
       const hecho = { clave, w: listo.w, h: listo.h };
       hechos.set(clave, hecho); im.hecho = hecho;
       console.log(`✓ ${clave.padEnd(34)} ${String(listo.svg.length).padStart(5)} B · ${listo.w}×${listo.h}  ${compasesAlt.map((c) => c.map((ev) => ev.notas.map((n) => nombre(n) + n.octava).join('+')).join(' ')).join(' | ')}`);
@@ -615,6 +658,7 @@ async function main() {
   }
   if (fallos) { console.log(`\n${fallos} imagen(es) no pasan la verificacion: no se toca la pagina`); process.exit(1); }
 
+  if (poner && EN) { console.log('--poner no se usa con --lang=en: las paginas inglesas las monta tools/en/build.js'); process.exit(1); }
   if (poner && cfg.pagina) {
     for (const im of imgs) {
       const h = im.hecho;

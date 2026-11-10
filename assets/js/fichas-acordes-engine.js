@@ -310,7 +310,7 @@
           + MAX_EJERCICIOS + '" step="1" value="' + estado.total + '" aria-label="' + T('Número de acordes', 'Number of chords') + '"></label></div>'))
       + '<div class="tm-fa-acciones">'
       + '<button type="button" class="tm-fa-btn tm-fa-btn-1" data-a="generar">' + T('Generar ficha nueva', 'Generate new sheet') + '</button>'
-      + '<button type="button" class="tm-fa-btn tm-fa-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show solutions') + '</button>'
+      + '<button type="button" class="tm-fa-btn tm-fa-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show answers') + '</button>'
       + '<button type="button" class="tm-fa-btn tm-fa-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<div class="tm-fa-aviso" hidden></div>'
@@ -398,7 +398,7 @@
       }
       estado.semilla = semilla || Math.floor(Math.random() * 90000 + 10000);
       estado.solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show solutions');
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show answers');
 
       ejercicios = generarHoja(estado);
       if (!ejercicios.length) {
@@ -470,7 +470,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         estado.solucion = !estado.solucion;
-        btn.textContent = estado.solucion ? T('Ocultar soluciones', 'Hide solutions') : T('Ver soluciones', 'Show solutions');
+        btn.textContent = estado.solucion ? T('Ocultar soluciones', 'Hide answers') : T('Ver soluciones', 'Show answers');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

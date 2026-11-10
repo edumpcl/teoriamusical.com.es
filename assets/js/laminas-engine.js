@@ -7,8 +7,14 @@
 (function () {
   'use strict';
 
-  var ES = ['Do', 'Do♯', 'Re', 'Mi♭', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'Si♭', 'Si'];
-  var SUB = ['₀', '₁', '₂', '₃', '₄', '₅', '₆', '₇', '₈', '₉'];
+  /* Página inglesa: <html lang="en"> (el español queda igual). Notas con letras y cifras normales. */
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+
+  var ES = T(['Do', 'Do♯', 'Re', 'Mi♭', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'Si♭', 'Si'],
+             ['C', 'C♯', 'D', 'E♭', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'B♭', 'B']);
+  var SUB = T(['₀', '₁', '₂', '₃', '₄', '₅', '₆', '₇', '₈', '₉'],
+              ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']);
   var NEGRA = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0];
   var LETRA = ['C', 'Cs', 'D', 'Ds', 'E', 'F', 'Fs', 'G', 'Gs', 'A', 'As', 'B'];
 
@@ -130,7 +136,7 @@
                imagen + marcas + '</svg>';
       }
 
-      var alt = cfg.alt || ('Foto del ' + (cfg.nombre || 'instrumento'));
+      var alt = cfg.alt || T('Foto del ' + (cfg.nombre || 'instrumento'), 'Photo of the ' + (cfg.nombre || 'instrument'));
       /* que la foto no empuje los botones fuera de la pantalla */
       var ALTO_MAX = 380;
       var tope = Math.round(ALTO_MAX * cfg.foto.w / cfg.foto.h);
@@ -139,7 +145,7 @@
       if (cfg.foto.ventanas && cfg.foto.ventanas.length) {
         foto += '<div class="tm-lm-partes">' +
                 cfg.foto.ventanas.map(function (v, i) {
-                  return vista(v[0], v[1], alt + ' (parte ' + (i + 1) + ')', ' data-tramo="' + i + '"');
+                  return vista(v[0], v[1], alt + T(' (parte ', ' (part ') + (i + 1) + ')', ' data-tramo="' + i + '"');
                 }).join('') + '</div>' +
                 (cfg.foto.ventanas.length > 1
                   ? '<div class="tm-lm-tramo" id="' + containerId + '_tr"></div>' : '');
@@ -180,7 +186,7 @@
     var octs = [];
     for (var o = octava(lo); o <= octava(hi); o++) octs.push(o);
     var octBtns = octs.map(function (o) {
-      return '<button class="tm-lm-btn" type="button" data-oct="' + o + '">Octava ' + (SUB[o] || o) + '</button>';
+      return '<button class="tm-lm-btn" type="button" data-oct="' + o + '">' + T('Octava ', 'Octave ') + (SUB[o] || o) + '</button>';
     }).join('');
     var notaBtns = ES.map(function (n, i) {
       return '<button class="tm-lm-btn" type="button" data-pc="' + i + '">' + n + '</button>';
@@ -193,12 +199,12 @@
         (dibujarTeclado
           ? '<div class="tm-lm-teclado">' +
               '<svg class="tm-lm-svg" viewBox="0 0 ' + tec.ancho + ' ' + tec.alto + '" ' +
-                'role="img" aria-label="Teclado de láminas del ' + (cfg.nombre || 'instrumento') + '">' +
+                'role="img" aria-label="' + T('Teclado de láminas del ', 'Bar layout of the ') + (cfg.nombre || T('instrumento', 'instrument')) + '">' +
                 tec.svg + '</svg>' +
             '</div>'
           : '') +
-        '<div class="tm-lm-cap">De ' + nombre(lo) + ' a ' + nombre(hi) + ', ' +
-          (trans ? 'tal como se <strong>escribe</strong>' : 'tal como suena') + '</div>' +
+        '<div class="tm-lm-cap">' + T('De ' + nombre(lo) + ' a ' + nombre(hi) + ', ', 'From ' + nombre(lo) + ' to ' + nombre(hi) + ', ') +
+          (trans ? T('tal como se <strong>escribe</strong>', 'as <strong>written</strong>') : T('tal como suena', 'as it sounds')) + '</div>' +
         '<div class="tm-lm-oct">' + octBtns + '</div>' +
         '<div class="tm-lm-notas">' + notaBtns + '</div>' +
       '</div>';
@@ -229,8 +235,10 @@
           s.classList.toggle('act', +s.getAttribute('data-tramo') === t);
         });
         if (varios && tramoEl) {
-          tramoEl.textContent = 'Tramo ' + (t + 1) + ' de ' + cfg.foto.ventanas.length +
-            ': el trozo de la foto donde está la lámina encendida';
+          tramoEl.textContent = T('Tramo ' + (t + 1) + ' de ' + cfg.foto.ventanas.length +
+            ': el trozo de la foto donde está la lámina encendida',
+            'Section ' + (t + 1) + ' of ' + cfg.foto.ventanas.length +
+            ': the part of the photo where the lit bar is');
         }
       }
       wrap.querySelectorAll('[data-oct]').forEach(function (b) {
@@ -244,22 +252,26 @@
       });
 
       var son = actual + trans;
-      var salto = trans === 12 ? 'una octava más agudo' : (trans === 24 ? 'dos octavas más agudo' : null);
+      var salto = trans === 12 ? T('una octava más agudo', 'one octave higher') : (trans === 24 ? T('dos octavas más agudo', 'two octaves higher') : null);
       ro.innerHTML =
         '<div class="tm-lm-par">' +
-          '<div class="tm-lm-caja"><span class="tm-lm-et">Escrito</span>' +
+          '<div class="tm-lm-caja"><span class="tm-lm-et">' + T('Escrito', 'Written') + '</span>' +
             '<span class="tm-lm-nota">' + nombre(actual) + '</span></div>' +
           (trans ? '<span class="tm-lm-flecha">→</span>' +
-            '<div class="tm-lm-caja"><span class="tm-lm-et">Suena</span>' +
+            '<div class="tm-lm-caja"><span class="tm-lm-et">' + T('Suena', 'Sounds') + '</span>' +
               '<span class="tm-lm-nota suena">' + nombre(son) + '</span></div>' : '') +
-          '<button class="tm-lm-play" type="button" aria-label="Escuchar la nota">▶</button>' +
+          '<button class="tm-lm-play" type="button" aria-label="' + T('Escuchar la nota', 'Listen to the note') + '">▶</button>' +
         '</div>' +
         '<div class="tm-lm-pie">' +
-          (salto ? 'En el pentagrama pone <strong>' + nombre(actual) + '</strong>, pero ' + (cfg.pieza || 'la lámina') +
-                   ' que golpeas suena <strong>' + nombre(son) + '</strong>: ' + salto + '.'
-                 : (cfg.igual ||
+          (salto ? T('En el pentagrama pone <strong>' + nombre(actual) + '</strong>, pero ' + (cfg.pieza || 'la lámina') +
+                     ' que golpeas suena <strong>' + nombre(son) + '</strong>: ' + salto + '.',
+                     'On the staff it says <strong>' + nombre(actual) + '</strong>, but ' + (cfg.pieza || 'the bar') +
+                     ' you strike sounds <strong>' + nombre(son) + '</strong>: ' + salto + '.')
+                 : (cfg.igual || T(
                     (cfg.art || 'El') + ' ' + (cfg.nombre || 'instrumento') +
-                    ' <strong>suena donde está escrito</strong>: la lámina de {n} da un {n}.'
+                    ' <strong>suena donde está escrito</strong>: la lámina de {n} da un {n}.',
+                    'The ' + (cfg.nombre || 'instrument') +
+                    ' <strong>sounds where it is written</strong>: the bar for {n} sounds {n}.')
                    ).replace(/\{n\}/g, nombre(actual))) +
         '</div>';
       var pb = ro.querySelector('.tm-lm-play');

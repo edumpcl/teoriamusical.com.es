@@ -25,7 +25,16 @@ const path = require('path');
 const G = require('./gen-escalas-verovio.js');
 const { RAIZ, ESPACIO, OPCIONES, hash, preparar, escAttr } = G;
 
-const SALIDA = 'assets/img/notacion';
+/* Edicion inglesa: `--lang=en` (o TM_LANG=en) escribe en assets/img/en/notacion SOLO las imagenes con rotulos de texto, con rotulos
+   y <title> en ingles (tools/notacion/textos-en.js). Se generan y verifican igual que las espanolas y solo al escribir se
+   traducen los textos. Sin la opcion la salida es identica. Con --lang=en no se admite --poner. */
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const TEXTOS_EN = EN ? require('./notacion/textos-en.js') : null;
+const SALIDA = EN ? 'assets/img/en/notacion' : 'assets/img/notacion';
+const escribir = (spec, slug, svg) => {
+  if (EN) { if (!TEXTOS_EN.SLUGS.has(slug)) return; svg = TEXTOS_EN.traducir(slug, svg); }
+  fs.writeFileSync(path.join(RAIZ, SALIDA, carpetaDe(spec), slug + '.svg'), svg);
+};
 const carpetaDe = (spec) => spec.carpeta || 'compases';   // assets/img/notacion/<carpeta>/<slug>.svg
 const aFilas = (s) => (s.filas ? s : { ...s, tipo: 'cifra', filas: [{ num: s.num, den: s.den, simbolo: s.corte ? 'cut' : null, compases: s.compases }] });
 const DATOS = [...require('./notacion/datos/compases-cifra.js'), ...require('./notacion/datos/compases-rotulados.js'), ...require('./notacion/datos/ritmo-figuras.js'), ...require('./notacion/datos/ritmo-grupos.js'), ...require('./notacion/datos/ritmo-signos.js'), ...require('./notacion/datos/ritmo-ornamentos.js'), ...require('./notacion/datos/ritmo-repeticion.js'), ...require('./notacion/datos/ritmo-frase.js'), ...require('./notacion/datos/tesituras.js'), ...require('./notacion/datos/claves.js'), ...require('./notacion/datos/grados.js'), ...require('./notacion/datos/intervalos-blog.js'), ...require('./notacion/datos/blog-notacion.js')].map(aFilas);
@@ -1386,7 +1395,7 @@ async function main() {
         const r = construir(tk, im.spec, im.alt, im.melodia, null, false, im.leyenda);
         if (r.errores.length) throw new Error(r.errores.join('\n   - '));
         if (!hechos.has(slug)) {
-          fs.writeFileSync(path.join(RAIZ, SALIDA, carpetaDe(im.spec), slug + '.svg'), r.listo.svg);
+          escribir(im.spec, slug, r.listo.svg);
           hechos.set(slug, { slug, carpeta: carpetaDe(im.spec), w: r.listo.w, h: r.listo.h });
           im.spec.medidasFinales = r.medidas;
           // version para movil (spec.movil = n.º de columnas de la rejilla): otra imagen, verificada igual, que la pagina elige con <picture>
@@ -1394,7 +1403,7 @@ async function main() {
             const copia = { ...im.spec, slug: slug + '-movil', columnas: im.spec.movil, movil: undefined };
             const r2 = construir(tk, copia, im.alt, im.melodia, null, false, im.leyenda);
             if (r2.errores.length) throw new Error('(version movil) ' + r2.errores.join('\n   - '));
-            fs.writeFileSync(path.join(RAIZ, SALIDA, carpetaDe(im.spec), slug + '-movil.svg'), r2.listo.svg);
+            escribir(im.spec, slug + '-movil', r2.listo.svg);
             hechos.set(slug + '-movil', { slug: slug + '-movil', carpeta: carpetaDe(im.spec), w: r2.listo.w, h: r2.listo.h });
             console.log(`✓ ${(slug + '-movil').padEnd(32)} ${String(r2.listo.svg.length).padStart(5)} B · ${r2.listo.w}×${r2.listo.h}  (para movil, ${im.spec.movil} columnas)`);
           }
@@ -1430,6 +1439,7 @@ async function main() {
   }
   if (fallos) { console.log(`${fallos} no pasan la verificacion: no se toca ninguna pagina`); process.exit(1); }
 
+  if (poner && EN) { console.log('--poner no se usa con --lang=en'); process.exit(1); }
   if (poner) {
     for (const p of paginas) {
       let html = p.html;

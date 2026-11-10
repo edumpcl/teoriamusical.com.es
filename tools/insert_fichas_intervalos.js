@@ -68,7 +68,7 @@ ${MARCA_INI}
 <p>Las mismas dos destrezas, en papel: una hoja para <strong>analizar</strong> ${PLURAL_ACC[num]} escritas y otra para <strong>escribirlas</strong>. Cada una trae <strong>${TOTAL.analizar} intervalos melódicos de ${ORD_ACC[num]}</strong> en clave de sol repartidos en siete pentagramas, empezando por notas naturales y ascendentes —las ${PLURAL_ACC[num]} ${NATURALES[num]} que salen de la escala natural— y terminando con sostenidos y bemoles y las direcciones mezcladas. Ningún ejercicio repite las mismas dos notas.</p>
 
 <h3>Analizar ${PLURAL_ACC[num]}</h3>
-<p>Debajo de cada intervalo hay una línea para escribir <strong>qué tipo de ${ORD_ACC[num]} es y si es ascendente o descendente</strong> (${num}ª M ↑, ${num}ª m ↓…).</p>
+<p>Debajo de cada intervalo hay una línea para escribir <strong>qué tipo de ${ORD_ACC[num]} es y si es ascendente o descendente</strong> (${[4, 5, 8].includes(num) ? `${num}ª J ↑, ${num}ª A ↓` : `${num}ª M ↑, ${num}ª m ↓`}…).</p>
 ${ficha('analizar', num)}
 
 <h3>Escribir ${PLURAL_ACC[num]}</h3>

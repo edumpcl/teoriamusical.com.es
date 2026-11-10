@@ -5,6 +5,7 @@
  *
  *   node tools/generate-fichas-cadencias.js            -> ficha + soluciones + preview
  *   node tools/generate-fichas-cadencias.js --png=DIR  -> además, captura de cada hoja
+ *   node tools/generate-fichas-cadencias.js --lang=en  -> versión inglesa en assets/img/en/cadencias/fichas
  *
  * Dieciséis cadencias (dos últimos acordes, a piano en clave de sol y de fa):
  * cuatro conclusivas, cuatro suspensivas y ocho mezcladas (el doble en el
@@ -26,7 +27,9 @@ const ENGINE2 = 'assets/js/tipo-de-comienzo-engine.js';
 const ENGINE3 = 'assets/js/cadencias-engine.js';
 const { cargarFicha, escalarUniforme } = require('./lib-ficha-verovio.js');
 /* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
-const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/cadencias/fichas');
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const T = (es, en) => (EN ? en : es);
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img', EN ? 'en/' : '', 'cadencias/fichas');
 
 /* Los lotes de la ficha: nivel, cuántos, semilla. */
 const LOTES = [
@@ -71,27 +74,27 @@ const CSS = `
 `;
 
 const TIT = {
-  1: '1. Conclusivas (auténtica perfecta, auténtica imperfecta, plagal)',
-  2: '2. Suspensivas (semicadencia sobre V, sobre IV, y cadencia rota)',
-  3: '3. Mezcladas (los seis tipos)'
+  1: T('1. Conclusivas (auténtica perfecta, auténtica imperfecta, plagal)', '1. Conclusive (perfect authentic, imperfect authentic, plagal)'),
+  2: T('2. Suspensivas (semicadencia sobre V, sobre IV, y cadencia rota)', '2. Suspensive (half cadence on V, phrase ending on IV, and deceptive cadence)'),
+  3: T('3. Mezcladas (los seis tipos)', '3. Mixed (all six types)')
 };
 
 function html(solucion) {
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE ARMONÍA</div>
-        <h1>¿Qué cadencia es?${solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">TEORIAMUSICAL.COM.ES &middot; ${T('FICHA DE ARMONÍA', 'HARMONY WORKSHEET')}</div>
+        <h1>${T('¿Qué cadencia es?', 'Which cadence is it?')}${solucion ? `<span class="sol-tag">${T('SOLUCIONES', 'ANSWERS')}</span>` : ''}</h1>
       </div>
       <img class="logo" src="${LOGO}" width="34" height="35" alt="">
     </div>
-    <p class="instr">Cada pentagrama muestra los dos últimos acordes de una frase, a piano (clave de sol y de fa, a cuatro voces). Marca de qué cadencia se trata.</p>
-    ${solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    <p class="instr">${T('Cada pentagrama muestra los dos últimos acordes de una frase, a piano (clave de sol y de fa, a cuatro voces). Marca de qué cadencia se trata.', 'Each staff shows the last two chords of a phrase, for piano (treble and bass clef, four voices). Mark which cadence it is.')}</p>
+    ${solucion ? '' : `<div class="datos"><span><b>${T('Nombre:', 'Name:')}</b></span><span><b>${T('Curso:', 'Class:')}</b></span><span><b>${T('Fecha:', 'Date:')}</b></span></div>`}
   </div>
   <div id="cuerpo"></div>
-  <div class="pie"><span>Cadencias musicales${solucion ? ' &middot; soluciones' : ''} &middot; teoriamusical.com.es/ejercicios/cadencias/</span></div>
+  <div class="pie"><span>${T('Cadencias musicales', 'Musical cadences')}${solucion ? T(' &middot; soluciones', ' &middot; answers') : ''} &middot; teoriamusical.com.es/${EN ? 'en/exercises' : 'ejercicios'}/${EN ? 'cadences' : 'cadencias'}/</span></div>
 </div></body></html>`;
 }
 

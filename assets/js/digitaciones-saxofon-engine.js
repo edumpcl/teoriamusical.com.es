@@ -11,6 +11,12 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  // Nombres de nota (Do Re Mi...) -> letras (C D E...) en la edicion inglesa
+  const NOTA_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  function enNote(s) { return EN ? s.replace(/Sol|Do|Re|Mi|Fa|La|Si/g, function (x) { return NOTA_EN[x]; }) : s; }
+
   // Coordenadas sobre la FOTO de cada instrumento (viewBox = píxeles de la imagen).
   // Vista FRONTAL: la mano IZQUIERDA del intérprete aparece a la DERECHA de la imagen
   // (palmas y racimo del meñique izquierdo) y la derecha, a la izquierda (laterales,
@@ -24,8 +30,8 @@
   var FOTOS = {
     alto: {
       img: 'digitacion-frente', w: 500, h: 1140, rp: 12, rs: 8,
-      alt: 'Saxofón alto visto de frente, con la boquilla arriba y la campana abajo a la derecha; las llaves que se pulsan se iluminan en dorado',
-      credito: 'saxofón alto Yamaha YAS-62',
+      alt: T('Saxofón alto visto de frente, con la boquilla arriba y la campana abajo a la derecha; las llaves que se pulsan se iluminan en dorado', 'Alto saxophone seen from the front, with the mouthpiece at the top and the bell at the bottom right; the keys that are pressed light up in gold'),
+      credito: T('saxofón alto Yamaha YAS-62', 'Yamaha YAS-62 alto saxophone'),
       commons: 'https://commons.wikimedia.org/wiki/File:Yamaha_Saxophone_YAS-62.tif',
       k: { L1:[270,420], BIS:[272,447], L2:[273,474], L3:[291,500],
            P1:[313,397], P2:[326,437], P3:[311,462],
@@ -40,8 +46,8 @@
       // Calibrado a mano: no se pudo derivar del alto porque su espaciado crece hacia
       // abajo (47/57/68 px entre perlas, frente a 26/28/25 en el alto).
       img: 'digitacion-frente-soprano', w: 500, h: 1450, rp: 26, rs: 17,
-      alt: 'Saxofón soprano recto visto de frente, ampliado a la zona de llaves; las llaves que se pulsan se iluminan en dorado',
-      credito: 'saxofón soprano Yamaha YSS-875 EX',
+      alt: T('Saxofón soprano recto visto de frente, ampliado a la zona de llaves; las llaves que se pulsan se iluminan en dorado', 'Straight soprano saxophone seen from the front, enlarged to the key area; the keys that are pressed light up in gold'),
+      credito: T('saxofón soprano Yamaha YSS-875 EX', 'Yamaha YSS-875 EX soprano saxophone'),
       commons: 'https://commons.wikimedia.org/wiki/File:Yamaha_Saxophone_YSS-875_EX.jpg',
       k: { L1:[274,267], BIS:[276,326], L2:[287,397], L3:[329,481],
            P1:[395,263], P2:[422,324], P3:[396,392],
@@ -52,8 +58,8 @@
     },
     tenor: {
       img: 'digitacion-frente-tenor', w: 500, h: 1062, rp: 9, rs: 6,
-      alt: 'Saxofón tenor visto de frente, con la boquilla arriba y la campana abajo a la derecha; las llaves que se pulsan se iluminan en dorado',
-      credito: 'saxofón tenor Yamaha YTS-62',
+      alt: T('Saxofón tenor visto de frente, con la boquilla arriba y la campana abajo a la derecha; las llaves que se pulsan se iluminan en dorado', 'Tenor saxophone seen from the front, with the mouthpiece at the top and the bell at the bottom right; the keys that are pressed light up in gold'),
+      credito: T('saxofón tenor Yamaha YTS-62', 'Yamaha YTS-62 tenor saxophone'),
       commons: 'https://commons.wikimedia.org/wiki/File:Yamaha_Saxophone_YTS-62.tif',
       k: { L1:[280,382], BIS:[280,403], L2:[279,425], L3:[292,446],
            P1:[315,366], P2:[323,399], P3:[310,417],
@@ -68,13 +74,13 @@
                  'SE','SC','SBB','SFS','R4','R5','R6','TEB','TC'];
 
   var NAMES = {
-    OCT: 'llave de octava',
-    P1: 'palma Re', P2: 'palma Mi♭', P3: 'palma Fa',
-    L1: 'agujero 1', BIS: 'llave bis (Si♭)', L2: 'agujero 2', L3: 'agujero 3',
-    SE: 'lateral Mi', SBB: 'lateral Si♭', SC: 'lateral Do', SFS: 'Fa♯ agudo',
-    GS: 'Sol♯ (meñique izq.)', LCS: 'Do♯ grave', LB: 'Si grave', LBB: 'Si♭ grave',
-    R4: 'agujero 4', R5: 'agujero 5', R6: 'agujero 6',
-    TEB: 'Mi♭ grave', TC: 'Do grave'
+    OCT: T('llave de octava', 'octave key'),
+    P1: T('palma Re', 'palm D'), P2: T('palma Mi♭', 'palm E♭'), P3: T('palma Fa', 'palm F'),
+    L1: T('agujero 1', 'hole 1'), BIS: T('llave bis (Si♭)', 'bis key (B♭)'), L2: T('agujero 2', 'hole 2'), L3: T('agujero 3', 'hole 3'),
+    SE: T('lateral Mi', 'side E'), SBB: T('lateral Si♭', 'side B♭'), SC: T('lateral Do', 'side C'), SFS: T('Fa♯ agudo', 'high F♯'),
+    GS: T('Sol♯ (meñique izq.)', 'G♯ (left little finger)'), LCS: T('Do♯ grave', 'low C♯'), LB: T('Si grave', 'low B'), LBB: T('Si♭ grave', 'low B♭'),
+    R4: T('agujero 4', 'hole 4'), R5: T('agujero 5', 'hole 5'), R6: T('agujero 6', 'hole 6'),
+    TEB: T('Mi♭ grave', 'low E♭'), TC: T('Do grave', 'low C')
   };
 
   // Digitaciones estándar (carta Yamaha FC-SX), Si♭3–Fa♯6 escritos.
@@ -134,14 +140,14 @@
   // `audio` = banco de muestras; `dsp` = semitonos que hay que desplazar ese banco para
   // que suene la altura real del miembro (0 si el banco ya es suyo).
   var MIEMBROS = {
-    soprano:  { et: 'Soprano en Si♭',   st: 2,  foto: 'soprano', audio: 'soprano', dsp: 0, propio: true },
-    alto:     { et: 'Alto en Mi♭',      st: 9,  foto: 'alto',  audio: 'alto',  dsp: 0,   propio: true },
-    tenor:    { et: 'Tenor en Si♭',     st: 14, foto: 'tenor', audio: 'tenor', dsp: 0,   propio: true },
+    soprano:  { et: T('Soprano en Si♭', 'Soprano in B♭'),   st: 2,  foto: 'soprano', audio: 'soprano', dsp: 0, propio: true },
+    alto:     { et: T('Alto en Mi♭', 'Alto in E♭'),      st: 9,  foto: 'alto',  audio: 'alto',  dsp: 0,   propio: true },
+    tenor:    { et: T('Tenor en Si♭', 'Tenor in B♭'),     st: 14, foto: 'tenor', audio: 'tenor', dsp: 0,   propio: true },
     // El barítono no tiene banco libre (buscado: VCSL, Philharmonia, Iowa, VSCO2 CE,
     // FreePats, Karoryfer, Musical Artifacts, Freesound). Se deriva del TENOR y no del
     // alto: son 7 semitonos de estiramiento en vez de 12, y el tenor está más cerca en
     // tamaño y timbre. Sigue siendo prestado y así se avisa.
-    baritono: { et: 'Barítono en Mi♭', st: 21, foto: 'alto',  audio: 'tenor', dsp: -7,  propio: false }
+    baritono: { et: T('Barítono en Mi♭', 'Baritone in E♭'), st: 21, foto: 'alto',  audio: 'tenor', dsp: -7,  propio: false }
   };
   var ORDEN_MIEMBROS = ['soprano', 'alto', 'tenor', 'baritono'];
 
@@ -152,7 +158,7 @@
   function label(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
     if (!m) return n;
-    return m[1] + (m[2] ? '♯' : '') + SUB[m[3]];
+    return enNote(m[1]) + (m[2] ? '♯' : '') + SUB[m[3]];
   }
   function toMidi(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
@@ -166,13 +172,13 @@
     var oct = Math.floor(midi / 12) - 1;
     var nm = ES_FLAT[pc];
     var base = nm.replace('♭', '');
-    return base + (nm.indexOf('♭') >= 0 ? '♭' : '') + (SUB[String(oct)] || ('' + oct));
+    return enNote(base) + (nm.indexOf('♭') >= 0 ? '♭' : '') + (SUB[String(oct)] || ('' + oct));
   }
   function registro(n) {
     var i = ORDEN.indexOf(n);
-    if (i >= 0 && i <= ORDEN.indexOf('Do#5')) return 'Registro grave';
-    if (i <= ORDEN.indexOf('Do#6')) return 'Registro agudo (con octava)';
-    return 'Registro sobreagudo';
+    if (i >= 0 && i <= ORDEN.indexOf('Do#5')) return T('Registro grave', 'Low register');
+    if (i <= ORDEN.indexOf('Do#6')) return T('Registro agudo (con octava)', 'High register (with octave key)');
+    return T('Registro sobreagudo', 'Very high register');
   }
 
   var BANCOS = {
@@ -270,7 +276,7 @@
   // La llave de OCTAVA no se ve de frente: la acciona el pulgar izquierdo por detrás,
   // apoyado en su gatillo. Se dibuja como panel aparte y se ilumina igual (data-k="OCT").
   function buildBack() {
-    return '<svg class="tm-sx-backsvg" viewBox="0 0 120 210" role="img" aria-label="Pulgar izquierdo del saxofón, por detrás: el gatillo de la llave de octava se ilumina cuando hay que pulsarlo">' +
+    return '<svg class="tm-sx-backsvg" viewBox="0 0 120 210" role="img" aria-label="' + T('Pulgar izquierdo del saxofón, por detrás: el gatillo de la llave de octava se ilumina cuando hay que pulsarlo', 'Left thumb of the saxophone, from behind: the octave key touch piece lights up when it has to be pressed') + '">' +
       '<defs>' +
         '<linearGradient id="tmSxMet" x1="0" y1="0" x2="1" y2="0">' +
           '<stop offset="0" stop-color="#c9ccd3"/><stop offset=".45" stop-color="#f2f3f6"/><stop offset="1" stop-color="#9fa3ab"/>' +
@@ -320,13 +326,13 @@
     wrap.innerHTML =
       '<div class="tm-sx-wrap">' +
         '<div class="tm-sx-sel">' + selBtns + '</div>' +
-        '<div class="tm-sx-readout" id="' + uid + '_ro"><span class="tm-sx-hint">Elige un saxofón y una nota para ver su digitación</span></div>' +
+        '<div class="tm-sx-readout" id="' + uid + '_ro"><span class="tm-sx-hint">' + T('Elige un saxofón y una nota para ver su digitación', 'Choose a saxophone and a note to see its fingering') + '</span></div>' +
         '<div class="tm-sx-diagram">' +
           '<div class="tm-sx-photos">' +
             '<div class="tm-sx-photo tm-sx-front" id="' + uid + '_foto"></div>' +
             '<div class="tm-sx-back">' +
               buildBack() +
-              '<p class="tm-sx-backcap"><strong>Por detrás</strong><br>el <strong>pulgar izquierdo</strong> descansa en su apoyo y empuja el gatillo de la <strong>llave de octava</strong>.</p>' +
+              '<p class="tm-sx-backcap">' + T('<strong>Por detrás</strong><br>el <strong>pulgar izquierdo</strong> descansa en su apoyo y empuja el gatillo de la <strong>llave de octava</strong>.', '<strong>From behind</strong><br>the <strong>left thumb</strong> rests on its support and pushes the touch piece of the <strong>octave key</strong>.') + '</p>' +
             '</div>' +
           '</div>' +
           '<p class="tm-sx-credit" id="' + uid + '_credito"></p>' +
@@ -344,10 +350,10 @@
       document.getElementById(uid + '_foto').innerHTML =
         '<picture><source type="image/webp" srcset="/assets/img/saxofon/' + cfg.img + '.webp">' +
         '<img class="tm-sx-img" src="/assets/img/saxofon/' + cfg.img + '.jpg" width="' + cfg.w + '" height="' + cfg.h + '" loading="lazy" alt="' + cfg.alt + '"></picture>' +
-        '<svg class="tm-sx-svg" viewBox="0 0 ' + cfg.w + ' ' + cfg.h + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Digitación del saxofón sobre una fotografía real (vista frontal)">' + keysSvgDe(cfg) + '</svg>';
+        '<svg class="tm-sx-svg" viewBox="0 0 ' + cfg.w + ' ' + cfg.h + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="' + T('Digitación del saxofón sobre una fotografía real (vista frontal)', 'Saxophone fingering on a real photograph (front view)') + '">' + keysSvgDe(cfg) + '</svg>';
       document.getElementById(uid + '_credito').innerHTML =
-        (m.propio ? '' : 'Los cuatro saxofones se digitan igual, así que el diagrama muestra la foto de un <strong>alto</strong>. ') +
-        'Foto: ' + cfg.credito + ', Yamaha Corporation vía <a href="' + cfg.commons + '" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Llave de octava: diagrama propio.';
+        (m.propio ? '' : T('Los cuatro saxofones se digitan igual, así que el diagrama muestra la foto de un <strong>alto</strong>. ', 'All four saxophones are fingered the same way, so the diagram shows the photo of an <strong>alto</strong>. ')) +
+        T('Foto: ', 'Photo: ') + cfg.credito + T(', Yamaha Corporation vía <a href="', ', Yamaha Corporation via <a href="') + cfg.commons + '" target="_blank" rel="noopener">Wikimedia Commons</a>' + T(', CC BY-SA 4.0. Llave de octava: diagrama propio.', ', CC BY-SA 4.0. Octave key: own diagram.');
     }
     pintaFoto();
 
@@ -393,11 +399,11 @@
       var bancoPropio = donante === miembro;
       ro.innerHTML =
         '<div class="tm-sx-staff" id="' + uid + '_staff"></div>' +
-        '<div class="tm-sx-noterow"><span class="tm-sx-intl">' + label(n) + (FLAT[n] ? ' (' + FLAT[n] + ')' : '') + '</span>' +
-        '<button class="tm-sx-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
-        '<div class="tm-sx-reg">' + intl(n) + ' · en el ' + MIEMBROS[miembro].et.toLowerCase() + ' suena ' + real +
-        '<br>' + registro(n) + (bancoPropio ? '' : ' · timbre derivado del saxo ' + donante) + '</div>' +
-        '<div class="tm-sx-keysline">' + (nombres.length ? nombres.join(' · ') : 'todas las llaves abiertas') + '</div>';
+        '<div class="tm-sx-noterow"><span class="tm-sx-intl">' + label(n) + (FLAT[n] ? ' (' + enNote(FLAT[n]) + ')' : '') + '</span>' +
+        '<button class="tm-sx-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
+        '<div class="tm-sx-reg">' + intl(n) + T(' · en el ' + MIEMBROS[miembro].et.toLowerCase() + ' suena ', ' · on the ' + MIEMBROS[miembro].et.replace(/^\w+/, function (w) { return w.toLowerCase(); }) + ' it sounds ') + real +
+        '<br>' + registro(n) + (bancoPropio ? '' : T(' · timbre derivado del saxo ' + donante, ' · tone derived from the ' + donante + ' sax')) + '</div>' +
+        '<div class="tm-sx-keysline">' + (nombres.length ? nombres.join(' · ') : T('todas las llaves abiertas', 'all keys open')) + '</div>';
       renderStaff(n);
       var pb = ro.querySelector('.tm-sx-play');
       if (pb) pb.addEventListener('click', function () { play(n); });

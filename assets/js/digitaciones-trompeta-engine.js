@@ -9,6 +9,14 @@
 (function () {
   'use strict';
 
+  // Inglés: la misma página sirve a <html lang="en"> (el español queda intacto).
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  // Nombre de nota en español -> letras (solo se muestra así en inglés; la lógica sigue con los nombres españoles).
+  const NOTE_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  const nm = s => EN ? String(s).replace(/Sol|Do|Re|Mi|Fa|La|Si/g, m => NOTE_EN[m]) : s;
+  const ordEn = n => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th');
+
   // Los 3 pistones se ENCIENDEN sobre la FOTO real. Coordenadas en el sistema
   // del viewBox de la imagen (1800×982): x/y = botón (perilla plateada), cx =
   // borde izq. del cuerpo del pistón (casing) que también se ilumina.
@@ -71,17 +79,17 @@
   function label(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
     if (!m) return n;
-    return m[1] + (m[2] ? '♯' : '') + SUB[m[3]];
+    return nm(m[1] + (m[2] ? '♯' : '') + SUB[m[3]]);
   }
   function registro(n) {
     var i = ORDEN.indexOf(n);
-    if (i >= 0 && i <= ORDEN.indexOf('Si3')) return 'Registro grave';
-    if (i <= ORDEN.indexOf('Si4')) return 'Registro medio';
-    return 'Registro agudo';
+    if (i >= 0 && i <= ORDEN.indexOf('Si3')) return T('Registro grave', 'Low register');
+    if (i <= ORDEN.indexOf('Si4')) return T('Registro medio', 'Middle register');
+    return T('Registro agudo', 'High register');
   }
   // combinación de pistones como texto: "1·2·3" o "al aire"
   function combo(data) {
-    if (!data || !data.keys.length) return 'al aire (sin pistones)';
+    if (!data || !data.keys.length) return T('al aire (sin pistones)', 'open (no valves)');
     return data.keys.map(function (k) { return k.slice(1); }).join('·');
   }
 
@@ -96,7 +104,7 @@
   // La trompeta en Si♭ suena un tono (2 semitonos) por debajo de lo escrito
   function suena(n) {
     var midi = midiOf(n) - 2;
-    return ES_FLAT[midi % 12] + SUB[String(Math.floor(midi / 12) - 1)];
+    return nm(ES_FLAT[midi % 12] + SUB[String(Math.floor(midi / 12) - 1)]);
   }
   var AUDIO_BASE = '/assets/audio/trompeta/';
   function sampleFile(n) {
@@ -172,16 +180,16 @@
 
     wrap.innerHTML =
       '<div class="tm-tr-wrap">' +
-        '<div class="tm-tr-readout" id="' + uid + '_ro"><span class="tm-tr-hint">Elige una nota para ver su digitación</span></div>' +
+        '<div class="tm-tr-readout" id="' + uid + '_ro"><span class="tm-tr-hint">' + T('Elige una nota para ver su digitación', 'Choose a note to see its fingering') + '</span></div>' +
         '<div class="tm-tr-diagram">' +
           '<div class="tm-tr-photo">' +
             '<picture><source type="image/webp" srcset="/assets/img/trompeta/pistones.webp">' +
-            '<img class="tm-tr-img" src="/assets/img/trompeta/pistones.jpg" width="1800" height="982" loading="lazy" alt="Trompeta en Si bemol con la boquilla a la izquierda, los tres pistones en el centro y la campana a la derecha"></picture>' +
-            '<svg class="tm-tr-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagrama de digitación de la trompeta sobre una fotografía real: los pistones que se pulsan se iluminan en dorado">' +
+            '<img class="tm-tr-img" src="/assets/img/trompeta/pistones.jpg" width="1800" height="982" loading="lazy" alt="' + T('Trompeta en Si bemol con la boquilla a la izquierda, los tres pistones en el centro y la campana a la derecha', 'B-flat trumpet with the mouthpiece on the left, the three valves in the center and the bell on the right') + '"></picture>' +
+            '<svg class="tm-tr-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="' + T('Diagrama de digitación de la trompeta sobre una fotografía real: los pistones que se pulsan se iluminan en dorado', 'Trumpet fingering diagram over a real photograph: the valves that are pressed light up in gold') + '">' +
               keysSvg +
             '</svg>' +
           '</div>' +
-          '<p class="tm-tr-credit">Foto: Yamaha Corporation vía <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Trumpet_YTR-8335LA_crop.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0</p>' +
+          '<p class="tm-tr-credit">' + T('Foto', 'Photo') + ': Yamaha Corporation ' + T('vía', 'via') + ' <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Trumpet_YTR-8335LA_crop.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0</p>' +
         '</div>' +
         '<div class="tm-tr-btns">' + btns + '</div>' +
       '</div>';
@@ -222,10 +230,10 @@
       });
       ro.innerHTML =
         '<div class="tm-tr-staff" id="' + uid + '_staff"></div>' +
-        '<div class="tm-tr-noterow"><span class="tm-tr-intl">' + label(n) + (FLAT[n] ? ' (' + FLAT[n] + ')' : '') + '</span>' +
-        '<button class="tm-tr-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
-        '<div class="tm-tr-reg">' + intl(n) + ' · ' + registro(n) + ' · suena ' + suena(n) + '</div>' +
-        '<div class="tm-tr-keysline">Pistones: ' + combo(data) + '</div>';
+        '<div class="tm-tr-noterow"><span class="tm-tr-intl">' + label(n) + (FLAT[n] ? ' (' + nm(FLAT[n]) + ')' : '') + '</span>' +
+        '<button class="tm-tr-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
+        '<div class="tm-tr-reg">' + intl(n) + ' · ' + registro(n) + T(' · suena ', ' · sounds ') + suena(n) + '</div>' +
+        '<div class="tm-tr-keysline">' + T('Pistones: ', 'Valves: ') + combo(data) + '</div>';
       renderStaff(n);
       var pb = ro.querySelector('.tm-tr-play');
       if (pb) pb.addEventListener('click', function () { play(n); });

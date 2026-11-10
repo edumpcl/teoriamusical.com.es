@@ -22,6 +22,9 @@ const path = require('path');
 const G = require('./gen-escalas-verovio.js');
 const M = require('../assets/js/tm-mei.js');
 const { RAIZ, OPCIONES, hash, preparar, escAttr } = G;
+/* Edicion inglesa: `--lang=en` (o TM_LANG=en) genera SOLO las ondas de intensidad (la unica figura con texto) en
+   assets/img/en/cualidades, con rotulos y alt en ingles. Sin la opcion la salida es la de siempre. */
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
 
 /* ---------- duración ---------- */
 const DURACIONES = [['w', 'redonda', 'E0A2'], ['h', 'blanca', 'E0A3'], ['q', 'negra', 'E0A4'], ['8', 'corchea', 'E0A4']];
@@ -54,7 +57,9 @@ function verificarDuracion(fila, mei, svg, esperado, alt) {
 
 /* ---------- ondas de intensidad ---------- */
 const ONDAS = { w: 600, ciclos: 5, A1: 14, A2: 46, y1: 40, y2: 120, x0: 20, x1: 580 };
-const ALT_ONDAS = 'Dos ondas de la misma frecuencia: la de arriba, de poca amplitud, representa un sonido suave; la de abajo, de mucha amplitud, un sonido fuerte.';
+const ALT_ONDAS = EN ? 'Two waves of the same frequency: the upper one, with low amplitude, represents a soft sound; the lower one, with high amplitude, a loud sound.' : 'Dos ondas de la misma frecuencia: la de arriba, de poca amplitud, representa un sonido suave; la de abajo, de mucha amplitud, un sonido fuerte.';
+const ROT_ONDAS = EN ? ['Low amplitude: soft sound', 'High amplitude: loud sound'] : ['Poca amplitud: suena suave', 'Mucha amplitud: suena fuerte'];
+const [PALABRA_POCA, PALABRA_MUCHA] = EN ? ['low amplitude', 'high amplitude'] : ['poca amplitud', 'mucha amplitud'];
 
 function curva(cy, A, ciclos, x0, x1) {
   const pts = [];
@@ -74,8 +79,8 @@ function svgOndas(o) {
     + `<line x1="${o.x0}" y1="${o.y2}" x2="${o.x1}" y2="${o.y2}" stroke="#c9bfa4" stroke-width="1"/>`
     + `<polyline class="onda-suave" fill="none" stroke="#8b6914" stroke-width="2.4" stroke-linejoin="round" points="${curva(o.y1, o.A1, o.ciclos, o.x0, o.x1)}"/>`
     + `<polyline class="onda-fuerte" fill="none" stroke="#8b6914" stroke-width="2.4" stroke-linejoin="round" points="${curva(o.y2, o.A2, o.ciclos, o.x0, o.x1)}"/>`
-    + `<text x="${o.x0}" y="14" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1a1a1a">Poca amplitud: suena suave</text>`
-    + `<text x="${o.x0}" y="${o.y2 - o.A2 - 8}" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1a1a1a">Mucha amplitud: suena fuerte</text>`
+    + `<text x="${o.x0}" y="14" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1a1a1a">${ROT_ONDAS[0]}</text>`
+    + `<text x="${o.x0}" y="${o.y2 - o.A2 - 8}" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1a1a1a">${ROT_ONDAS[1]}</text>`
     + '</svg>\n';
 }
 
@@ -98,8 +103,8 @@ function verificarOndas(svg, alt, esperado) {
   const prop = info[1].amp / info[0].amp;
   if (Math.abs(prop - esperado.A2 / esperado.A1) > 0.1) err.push(`la proporción de amplitudes es ${prop.toFixed(2)} y tenía que ser ${(esperado.A2 / esperado.A1).toFixed(2)}`);
   if (!(info[0].amp < info[1].amp)) err.push('la onda «suave» no es la de menor amplitud');
-  if (!/poca amplitud/.test(alt) || !/mucha amplitud/.test(alt)) err.push('el alt no dice poca y mucha amplitud');
-  if (alt.indexOf('poca') > alt.indexOf('mucha')) err.push('el alt nombra las ondas en otro orden');
+  if (!alt.includes(PALABRA_POCA) || !alt.includes(PALABRA_MUCHA)) err.push('el alt no dice poca y mucha amplitud');
+  if (alt.indexOf(PALABRA_POCA) > alt.indexOf(PALABRA_MUCHA)) err.push('el alt nombra las ondas en otro orden');
   return err;
 }
 
@@ -124,7 +129,7 @@ function verificarOndas(svg, alt, esperado) {
       ['duración: el alt nombra otro orden', () => { const d = dibujaDuracion(DURACIONES.map((x) => x[0])); return verificarDuracion(d.fila, d.mei, d.svg, esperadoDuracion, ALT_DURACION.replace('redonda, blanca', 'blanca, redonda')); }],
       ['ondas: misma amplitud', () => verificarOndas(svgOndas({ ...ONDAS, A2: ONDAS.A1 }), ALT_ONDAS, ONDAS)],
       ['ondas: frecuencia distinta', () => { const s = svgOndas(ONDAS).replace(/(<polyline class="onda-fuerte"[^>]*points=")[^"]*"/, (m, a) => a + curva(ONDAS.y2, ONDAS.A2, 8, ONDAS.x0, ONDAS.x1) + '"'); return verificarOndas(s, ALT_ONDAS, ONDAS); }],
-      ['ondas: el alt dice otra cosa', () => verificarOndas(svgOndas(ONDAS), ALT_ONDAS.replace('poca amplitud', 'mucha amplitud'), ONDAS)],
+      ['ondas: el alt dice otra cosa', () => verificarOndas(svgOndas(ONDAS), ALT_ONDAS.replace(PALABRA_POCA, PALABRA_MUCHA), ONDAS)],
     ];
     let mal = 0;
     for (const [nombre, f] of pruebas) {
@@ -137,10 +142,10 @@ function verificarOndas(svg, alt, esperado) {
   }
 
   let fallos = 0;
-  // duración
+  // duración (sin texto en la imagen: en la edicion inglesa se reutiliza la espanola)
   const d = dibujaDuracion(DURACIONES.map((x) => x[0]));
   const e1 = verificarDuracion(d.fila, d.mei, d.svg, esperadoDuracion, ALT_DURACION);
-  if (e1.length) { fallos++; console.log('  ✗ duracion: ' + e1.join('; ')); }
+  if (EN) { /* nada */ } else if (e1.length) { fallos++; console.log('  ✗ duracion: ' + e1.join('; ')); }
   else {
     const listo = preparar(d.svg, ALT_DURACION);
     fs.mkdirSync(path.join(RAIZ, 'assets/img/notacion/cualidades'), { recursive: true });
@@ -152,8 +157,9 @@ function verificarOndas(svg, alt, esperado) {
   const e2 = verificarOndas(svg, ALT_ONDAS, ONDAS);
   if (e2.length) { fallos++; console.log('  ✗ intensidad-ondas: ' + e2.join('; ')); }
   else {
-    fs.mkdirSync(path.join(RAIZ, 'assets/img/cualidades'), { recursive: true });
-    fs.writeFileSync(path.join(RAIZ, 'assets/img/cualidades/intensidad-ondas.svg'), svg);
+    const dirOndas = EN ? 'assets/img/en/cualidades' : 'assets/img/cualidades';
+    fs.mkdirSync(path.join(RAIZ, dirOndas), { recursive: true });
+    fs.writeFileSync(path.join(RAIZ, dirOndas, 'intensidad-ondas.svg'), svg);
     console.log(`  ✓ intensidad-ondas  ${ONDAS.w}×170px · ${(svg.length / 1024).toFixed(1)} KB`);
   }
   process.exit(fallos ? 1 : 0);

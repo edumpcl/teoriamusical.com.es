@@ -4,6 +4,7 @@
  *
  *   node tools/generate-fichas-armaduras.js            -> las fichas + soluciones
  *   node tools/generate-fichas-armaduras.js --png      -> + vista previa (a 3x)
+ *   node tools/generate-fichas-armaduras.js --lang=en  -> versión inglesa en assets/img/en/tonalidades/fichas
  *
  * Genera:
  *   ficha-identificar-armaduras.pdf   (+ -soluciones.pdf)
@@ -24,7 +25,16 @@ const sharp = require('sharp');
 const ROOT = path.join(__dirname, '..');
 const { cargarFicha } = require('./lib-ficha-verovio.js');
 /* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
-const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/tonalidades/fichas');
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const T = (es, en) => (EN ? en : es);
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img', EN ? 'en/' : '', 'tonalidades/fichas');
+
+/* Nombre de una tonalidad en inglés: «sol♯ menor» -> «G♯ minor», «Si♭ Mayor» -> «B♭ major». */
+const LETRA_EN = { do: 'C', re: 'D', mi: 'E', fa: 'F', sol: 'G', la: 'A', si: 'B' };
+function nombreEn(es) {
+  const m = es.match(/^(do|re|mi|fa|sol|la|si)([♯♭]?) (Mayor|menor)$/i);
+  return LETRA_EN[m[1].toLowerCase()] + m[2] + (m[3] === 'Mayor' ? ' major' : ' minor');
+}
 
 /* ---------------------------------------------------------------- teoria */
 
@@ -184,31 +194,31 @@ const CSS = `
 
 function construirHtml(cfg) {
   const celdas = cfg.ejercicios.map((e, i) => {
-    const nombre = e.pide === 'mayor' ? e.armadura.mayor : e.armadura.menor;
+    const nombre = EN ? nombreEn(e.pide === 'mayor' ? e.armadura.mayor : e.armadura.menor) : (e.pide === 'mayor' ? e.armadura.mayor : e.armadura.menor);
 
     // En "identificar" la etiqueta va pegada a la línea de respuesta ("Mayor: ___"),
     // no suelta sobre el pentagrama: así se ve de qué ejercicio es cada hueco.
     if (cfg.modo === 'identificar') {
       const respuesta = cfg.solucion ? `<span class="val">${nombre}</span>` : '<span></span>';
       return `<div class="celda"><span class="num">${i + 1}</span><div id="c${i}"></div>`
-        + `<p class="linea"><b>${e.pide === 'mayor' ? 'Mayor' : 'menor'}:</b>${respuesta}</p></div>`;
+        + `<p class="linea"><b>${e.pide === 'mayor' ? T('Mayor', 'Major') : T('menor', 'minor')}:</b>${respuesta}</p></div>`;
     }
     return `<div class="celda"><span class="num">${i + 1}</span><p class="pide"><b>${nombre}</b></p><div id="c${i}"></div></div>`;
   }).join('');
 
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE ARMADURAS</div>
-        <h1>${cfg.titulo}${cfg.solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">TEORIAMUSICAL.COM.ES &middot; ${T('FICHA DE ARMADURAS', 'KEY SIGNATURES WORKSHEET')}</div>
+        <h1>${cfg.titulo}${cfg.solucion ? `<span class="sol-tag">${T('SOLUCIONES', 'ANSWERS')}</span>` : ''}</h1>
       </div>
       <img class="logo" src="${LOGO_DATA_URI}" width="34" height="35" alt="">
     </div>
     <p class="instr">${cfg.instrucciones}</p>
     <p class="leyenda">${cfg.leyenda}</p>
-    ${cfg.solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    ${cfg.solucion ? '' : `<div class="datos"><span><b>${T('Nombre:', 'Name:')}</b></span><span><b>${T('Curso:', 'Class:')}</b></span><span><b>${T('Fecha:', 'Date:')}</b></span></div>`}
   </div>
   <div class="rejilla">${celdas}</div>
   <div class="pie"><span>${cfg.pie}</span><span>teoriamusical.com.es</span></div>
@@ -222,14 +232,16 @@ async function generarFicha(browser, opts) {
   const { modo, solucion, ejercicios, png } = opts;
   const esIdentificar = modo === 'identificar';
 
-  const titulo = esIdentificar ? 'Identificar armaduras' : 'Escribir armaduras';
+  const titulo = esIdentificar ? T('Identificar armaduras', 'Identify key signatures') : T('Escribir armaduras', 'Write key signatures');
   const instrucciones = esIdentificar
-    ? 'Debajo de cada armadura, escribe la tonalidad que te piden: <b>Mayor</b> o <b>menor</b>. Fíjate primero en la clave, que no todas son de sol.'
-    : 'Dibuja en cada pentagrama la <b>armadura</b> de la tonalidad indicada, con las alteraciones en su orden y en su sitio. Fíjate en la clave.';
-  const leyenda = 'Las primeras armaduras llevan pocas alteraciones y están en clave de sol; '
-    + 'después aumentan las alteraciones y aparece la clave de fa.';
-  const pie = `Armaduras &middot; ${esIdentificar ? 'identificar' : 'escribir'}`
-    + (solucion ? ' &middot; soluciones' : '') + ` &middot; ${ejercicios.length} ejercicios`;
+    ? T('Debajo de cada armadura, escribe la tonalidad que te piden: <b>Mayor</b> o <b>menor</b>. Fíjate primero en la clave, que no todas son de sol.',
+        'Under each key signature, write the key you are asked for: <b>major</b> or <b>minor</b>. Look at the clef first: not all of them are treble clef.')
+    : T('Dibuja en cada pentagrama la <b>armadura</b> de la tonalidad indicada, con las alteraciones en su orden y en su sitio. Fíjate en la clave.',
+        'On each staff, draw the <b>key signature</b> of the key indicated, with the accidentals in their order and in their place. Look at the clef.');
+  const leyenda = T('Las primeras armaduras llevan pocas alteraciones y están en clave de sol; después aumentan las alteraciones y aparece la clave de fa.',
+    'The first key signatures have few accidentals and are in treble clef; then the accidentals increase and the bass clef appears.');
+  const pie = T(`Armaduras &middot; ${esIdentificar ? 'identificar' : 'escribir'}`, `Key signatures &middot; ${esIdentificar ? 'identify' : 'write'}`)
+    + (solucion ? T(' &middot; soluciones', ' &middot; answers') : '') + T(` &middot; ${ejercicios.length} ejercicios`, ` &middot; ${ejercicios.length} exercises`);
 
   const page = await browser.newPage({ deviceScaleFactor: png ? 3 : 1 });
   await page.setViewportSize({ width: 850, height: 1200 });

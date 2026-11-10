@@ -15,7 +15,13 @@
 const fs = require('fs');
 const path = require('path');
 const RAIZ = path.join(__dirname, '..');
-const SALIDA = 'assets/img/efectos';
+/* Edicion inglesa: `--lang=en` (o TM_LANG=en) escribe en assets/img/en/efectos con rotulos y alt en ingles (misma geometria);
+   sin la opcion la salida espanola es identica a la de siempre. */
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const SALIDA = EN ? 'assets/img/en/efectos' : 'assets/img/efectos';
+const T = EN
+  ? { nota: 'note', seg1: '1 second', seg32: '3.2 seconds', mi: 'E', do: 'C', sin: 'No vibrato', veces: 'times per second', dec: '.' }
+  : { nota: 'nota', seg1: '1 segundo', seg32: '3,2 segundos', mi: 'Mi', do: 'Do', sin: 'Sin vibrato', veces: 'veces por segundo', dec: ',' };
 
 const W = 480, PH = 104, TOP = 26, ML = 52, MR = 14, PLOT_H = 58;
 const f1 = (n) => Number(n.toFixed(1));
@@ -23,22 +29,22 @@ const FUENTE = 'font-family="Arial, Helvetica, sans-serif"';
 
 /* ---------------------------------------------------------------- vibrato */
 const VIBRATOS = [
-  { id: 'sin', titulo: 'Sin vibrato', vel: 0, prof: 0 },
-  { id: 'normal', titulo: 'Vibrato medio: 5,5 veces por segundo, ±25 cents', vel: 5.5, prof: 25 },
-  { id: 'rapido', titulo: 'Rápido y estrecho: 7 veces por segundo, ±12 cents', vel: 7, prof: 12 },
-  { id: 'lento', titulo: 'Lento y muy ancho: 4 veces por segundo, ±50 cents', vel: 4, prof: 50 },
+  { id: 'sin', titulo: T.sin, vel: 0, prof: 0 },
+  { id: 'normal', titulo: EN ? 'Medium vibrato: 5.5 times per second, ±25 cents' : 'Vibrato medio: 5,5 veces por segundo, ±25 cents', vel: 5.5, prof: 25 },
+  { id: 'rapido', titulo: EN ? 'Fast and narrow: 7 times per second, ±12 cents' : 'Rápido y estrecho: 7 veces por segundo, ±12 cents', vel: 7, prof: 12 },
+  { id: 'lento', titulo: EN ? 'Slow and very wide: 4 times per second, ±50 cents' : 'Lento y muy ancho: 4 veces por segundo, ±50 cents', vel: 4, prof: 50 },
 ];
-const ALT_VIBRATO = 'Cuatro gráficas de la altura de una nota durante un segundo: sin vibrato, una línea recta; vibrato medio, 5,5 oscilaciones por segundo de ±25 cents; vibrato rápido y estrecho, 7 por segundo de ±12 cents; y vibrato lento y muy ancho, 4 por segundo de ±50 cents.';
+const ALT_VIBRATO = EN ? 'Four graphs of the pitch of a note over one second: no vibrato, a straight line; medium vibrato, 5.5 oscillations per second of ±25 cents; fast and narrow vibrato, 7 per second of ±12 cents; and slow, very wide vibrato, 4 per second of ±50 cents.' : 'Cuatro gráficas de la altura de una nota durante un segundo: sin vibrato, una línea recta; vibrato medio, 5,5 oscilaciones por segundo de ±25 cents; vibrato rápido y estrecho, 7 por segundo de ±12 cents; y vibrato lento y muy ancho, 4 por segundo de ±50 cents.';
 const ESC_V = PLOT_H / 2 / 60;      // px por cent: el eje va de −60 a +60 cents
 
 /* ---------------------------------------------------------------- portamento */
 const T_TOTAL = 3.2, DO_MI = 400;
 const PORTAMENTOS = [
-  { id: 'salto', titulo: 'Salto directo, sin deslizar', tipo: 'salto', t0: 0.5, dur: 0.01 },
-  { id: 'porta', titulo: 'Portamento: 0,3 s, curva suave', tipo: 'suave', t0: 0.6, dur: 0.3 },
-  { id: 'gliss', titulo: 'Glissando: 2 s, velocidad constante', tipo: 'recta', t0: 0.5, dur: 2 },
+  { id: 'salto', titulo: EN ? 'Direct jump, no sliding' : 'Salto directo, sin deslizar', tipo: 'salto', t0: 0.5, dur: 0.01 },
+  { id: 'porta', titulo: EN ? 'Portamento: 0.3 s, smooth curve' : 'Portamento: 0,3 s, curva suave', tipo: 'suave', t0: 0.6, dur: 0.3 },
+  { id: 'gliss', titulo: EN ? 'Glissando: 2 s, constant speed' : 'Glissando: 2 s, velocidad constante', tipo: 'recta', t0: 0.5, dur: 2 },
 ];
-const ALT_PORTAMENTO = 'Tres gráficas de la altura al pasar de Do a Mi: un salto directo, sin deslizar; un portamento de 0,3 segundos con curva suave, que sale despacio, acelera y frena al llegar; y un glissando de 2 segundos a velocidad constante, una línea recta.';
+const ALT_PORTAMENTO = EN ? 'Three graphs of the pitch when moving from C to E: a direct jump, with no sliding; a portamento of 0.3 seconds with a smooth curve, which starts slowly, speeds up and slows down on arrival; and a glissando of 2 seconds at constant speed, a straight line.' : 'Tres gráficas de la altura al pasar de Do a Mi: un salto directo, sin deslizar; un portamento de 0,3 segundos con curva suave, que sale despacio, acelera y frena al llegar; y un glissando de 2 segundos a velocidad constante, una línea recta.';
 const ESC_P = PLOT_H / DO_MI;
 
 const fraccion = (c, t) => (c.tipo === 'suave' ? (1 - Math.cos(Math.PI * Math.min(1, Math.max(0, (t - c.t0) / c.dur)))) / 2 : Math.min(1, Math.max(0, (t - c.t0) / c.dur)));
@@ -59,7 +65,7 @@ function construyeVibrato(casos) {
   const partes = casos.map((c, i) => {
     const cy = TOP + PLOT_H / 2, pts = [];
     for (let k = 0; k <= 240; k++) { const t = k / 240; pts.push([f1(ML + t * (W - MR - ML)), f1(cy - c.prof * Math.sin(2 * Math.PI * c.vel * t) * ESC_V)]); }
-    return panel(i, c.titulo, ejes('+60 ¢', '−60 ¢', 'nota', '1 segundo') + trazo(c.id, pts));
+    return panel(i, c.titulo, ejes('+60 ¢', '−60 ¢', T.nota, T.seg1) + trazo(c.id, pts));
   });
   return envuelve(casos, partes, ALT_VIBRATO);
 }
@@ -68,7 +74,7 @@ function construyePortamento(casos) {
   const partes = casos.map((c, i) => {
     const pts = [];
     for (let k = 0; k <= 320; k++) { const t = k * 0.01; pts.push([f1(ML + (t / T_TOTAL) * (W - MR - ML)), f1(TOP + PLOT_H - DO_MI * fraccion(c, t) * ESC_P)]); }
-    return panel(i, c.titulo, ejes('Mi', 'Do', '', '3,2 segundos') + trazo(c.id, pts));
+    return panel(i, c.titulo, ejes(T.mi, T.do, '', T.seg32) + trazo(c.id, pts));
   });
   return envuelve(casos, partes, ALT_PORTAMENTO);
 }
@@ -88,7 +94,7 @@ function verificaVibrato(svg, casos, alt) {
       if (Math.abs(picos - c.vel) > 1) err.push(`${c.id}: la curva oscila ${picos} veces en el segundo y la cifra dice ${c.vel}`);
     }
     const rot = new RegExp(`<g id="g-${casos.indexOf(c)}"[^>]*>\\s*<text[^>]*>([^<]*)</text>`).exec(svg);
-    const esperado = c.prof === 0 ? 'Sin vibrato' : `${String(c.vel).replace('.', ',')} veces por segundo, ±${c.prof} cents`;
+    const esperado = c.prof === 0 ? T.sin : `${String(c.vel).replace('.', T.dec)} ${T.veces}, ±${c.prof} cents`;
     if (!rot || !rot[1].includes(esperado)) err.push(`${c.id}: el rótulo «${rot && rot[1]}» no dice «${esperado}»`);
     if (c.prof > 0 && !alt.includes(`±${c.prof} cents`)) err.push(`${c.id}: el texto alternativo no recoge ±${c.prof} cents`);
   });
@@ -114,7 +120,7 @@ function verificaPortamento(svg, casos, alt) {
     const rot = new RegExp(`<g id="g-${i}"[^>]*>\\s*<text[^>]*>([^<]*)</text>`).exec(svg);
     if (!rot || rot[1] !== c.titulo) err.push(`${c.id}: el rótulo no es «${c.titulo}»`);
   });
-  if (!/0,3 segundos/.test(alt) || !/2 segundos/.test(alt) || !/curva suave/.test(alt) || !/línea recta/.test(alt)) err.push('el texto alternativo no recoge los tres casos');
+  if (!(EN ? /0\.3 seconds/.test(alt) && /2 seconds/.test(alt) && /smooth curve/.test(alt) && /straight line/.test(alt) : /0,3 segundos/.test(alt) && /2 segundos/.test(alt) && /curva suave/.test(alt) && /línea recta/.test(alt))) err.push('el texto alternativo no recoge los tres casos');
   return err;
 }
 

@@ -21,10 +21,16 @@
  */
 const { chromium } = require('playwright');
 const path = require('path');
+const sharp = require('sharp');
+
+/* --lang=en (o TM_LANG=en): edición inglesa; escribe en assets/img/en/claves con los mismos nombres (y la miniatura preview-ficha-clave-de-<x>.png/.webp).
+   Sin la opción, la salida es la de siempre. */
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const T = (es, en) => (EN ? en : es);
 
 const CLAVES = {
   sol: {
-    nombre: 'Sol', refDesdeAbajo: 1, minY: -4.45, maxY: 2.92, ancho: 2.5,
+    nombre: 'Sol', nombreEn: 'treble', refDesdeAbajo: 1, minY: -4.45, maxY: 2.92, ancho: 2.5,
     d: [
       'M 0.32 2.42', 'C 0.62 2.92, 1.32 2.78, 1.03 1.95',
       'C 1.07 1.10, 1.14 0.30, 1.17 -0.55',
@@ -40,9 +46,12 @@ const CLAVES = {
          + 'vuelta por arriba hacia la <b>derecha</b>; baja en arco hacia la '
          + '<b>izquierda</b> haciendo la barriga; y termina cerrando el bucle '
          + 'alrededor de la <b>2ª línea</b> (la segunda contando desde abajo).',
+    pasosEn: 'start at the bottom, with the little tail; go up across the whole staff; loop over the top to the <b>right</b>; '
+           + 'come down in an arc to the <b>left</b>, making the belly; and finish by closing the loop '
+           + 'around the <b>2nd line</b> (the second one counting from the bottom).',
   },
   fa: {
-    nombre: 'Fa', refDesdeAbajo: 3, minY: -0.75, maxY: 3.00, ancho: 2.35,
+    nombre: 'Fa', nombreEn: 'bass', refDesdeAbajo: 3, minY: -0.75, maxY: 3.00, ancho: 2.35,
     d: [
       'M 0.10 0.42',
       'C 0.05 -0.30, 0.70 -0.72, 1.20 -0.42',
@@ -55,9 +64,12 @@ const CLAVES = {
          + 'coma grande; y coloca los <b>dos puntos</b> a la derecha, uno encima '
          + 'y otro debajo de la 4ª línea. Los dos puntos son los que dicen dónde '
          + 'está el Fa: si los pones en otra línea, ya no es una clave de Fa en 4ª.',
+    pasosEn: 'start with the big dot on the <b>4th line</b>; go up and curve to the right; come down in an arc to near the '
+           + '1st line, like a big comma; and place the <b>two dots</b> to the right, one above and one below the 4th line. '
+           + 'The two dots are what tell you where F is: if you put them on another line, it is no longer an F clef on the 4th line.',
   },
   do: {
-    nombre: 'Do', refDesdeAbajo: 2, minY: -2.15, maxY: 2.15, ancho: 2.15,
+    nombre: 'Do', nombreEn: 'C', refDesdeAbajo: 2, minY: -2.15, maxY: 2.15, ancho: 2.15,
     d: [
       'M 0.12 -2.02 L 0.12 2.02',
       'M 0.44 -2.02 L 0.44 2.02',
@@ -72,20 +84,23 @@ const CLAVES = {
          + 'a la derecha y vuelve al centro; y por último la de abajo, igual pero '
          + 'del revés. Las dos curvas tienen que juntarse <b>sobre la 3ª línea</b>: '
          + 'ese punto es el que dice dónde está el Do.',
+    pasosEn: 'first draw the <b>two vertical bars</b> on the left, from the top to the bottom of the staff; then the upper curve, '
+           + 'which opens to the right and comes back to the center; and finally the lower one, the same but upside down. '
+           + 'The two curves must meet <b>on the 3rd line</b>: that point is what tells you where C is.',
   },
 };
 
 // 'dash' en PIXELES de la ficha; se normaliza dividiendo por la escala, porque
 // stroke-dasharray se expresa en coordenadas del trazo (que va escalado).
 const FILAS = [
-  { etiqueta: '1. Mira el modelo',               n: 5, solido: true },
-  { etiqueta: '2. Repasa los puntos',            n: 5, dash: [2.2, 1.6] },
-  { etiqueta: '3. Repasa los puntos otra vez',   n: 5, dash: [2.2, 1.6] },
-  { etiqueta: '4. Puntos más sueltos',           n: 5, dash: [1.8, 3.0] },
-  { etiqueta: '5. Puntos más sueltos otra vez',  n: 5, dash: [1.8, 3.0] },
-  { etiqueta: '6. Ya casi sin ayuda',            n: 5, dash: [1.4, 5.2] },
-  { etiqueta: '7. Solo el punto de referencia',  n: 5, punto: true },
-  { etiqueta: '8. Dibújala tú',                  n: 5 },
+  { etiqueta: T('1. Mira el modelo', '1. Look at the model'),               n: 5, solido: true },
+  { etiqueta: T('2. Repasa los puntos', '2. Trace the dots'),            n: 5, dash: [2.2, 1.6] },
+  { etiqueta: T('3. Repasa los puntos otra vez', '3. Trace the dots again'),   n: 5, dash: [2.2, 1.6] },
+  { etiqueta: T('4. Puntos más sueltos', '4. Looser dots'),           n: 5, dash: [1.8, 3.0] },
+  { etiqueta: T('5. Puntos más sueltos otra vez', '5. Looser dots again'),  n: 5, dash: [1.8, 3.0] },
+  { etiqueta: T('6. Ya casi sin ayuda', '6. Almost without help'),            n: 5, dash: [1.4, 5.2] },
+  { etiqueta: T('7. Solo el punto de referencia', '7. Only the reference dot'),  n: 5, punto: true },
+  { etiqueta: T('8. Dibújala tú', '8. Draw it yourself'),                  n: 5 },
 ];
 
 (async () => {
@@ -131,8 +146,17 @@ const FILAS = [
     console.log(`clave de ${CLAVES[c].nombre}: ${filas.length} filas, ${alto}px de ${altoUtil}px ` +
                 (cabe ? '-> CABE EN 1 HOJA' : '-> SE PARTE EN 2 HOJAS'));
 
-    const salida = path.join(__dirname, '..', 'assets', 'img', 'claves',
+    const salida = path.join(__dirname, '..', 'assets', 'img', EN ? 'en' : '', 'claves',
                              `ficha-dibujar-clave-de-${c}.pdf`);
+    if (EN) {
+      // miniatura de la web: la cabecera y las dos primeras filas, a 600 px de ancho
+      await page.setViewportSize({ width: 703, height: 1100 });
+      const buf = await page.screenshot({ fullPage: true });
+      const base = sharp(buf).extract({ left: 0, top: 0, width: 703, height: 298 }).resize({ width: 600 });
+      const nom = path.join(path.dirname(salida), `preview-ficha-clave-de-${c}`);
+      await base.clone().png({ compressionLevel: 9 }).toFile(nom + '.png');
+      await base.clone().webp({ quality: 82 }).toFile(nom + '.webp');
+    }
     await page.pdf({ path: salida, format: 'A4', printBackground: true,
                      margin: { top: '12mm', bottom: '10mm', left: '12mm', right: '12mm' } });
     if (png) {
@@ -191,7 +215,7 @@ function construirFicha(cfg, filas) {
     </div>`;
   };
 
-  return `<!doctype html><html lang="es"><head><meta charset="utf-8"><style>
+  return `<!doctype html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>
     @page { size: A4 portrait; }
     body { font-family: Arial, Helvetica, sans-serif; color:#1a1a1a; margin:0; }
     h1 { font-size: 19px; margin:0 0 2px; }
@@ -204,14 +228,20 @@ function construirFicha(cfg, filas) {
     .pie { margin-top:6px; font-size:10px; color:#666; text-align:center;
            border-top:1px solid #ddd; padding-top:5px; }
   </style></head><body>
-    <h1>Aprende a dibujar la clave de ${cfg.nombre}</h1>
+    ${EN ? `<h1>Learn to draw the ${cfg.nombreEn} clef</h1>
+    <p class="sub">Printable worksheet · teoriamusical.com.es/en</p>
+    <div class="pasos">
+      <b>How to draw it:</b> ${cfg.pasosEn}<br>
+      <b>Draw it with a thin line, without lifting the pencil.</b> In printed scores
+      the clef looks thicker because it is engraved, but by hand it is done this way.
+    </div>` : `<h1>Aprende a dibujar la clave de ${cfg.nombre}</h1>
     <p class="sub">Ficha para imprimir · teoriamusical.com.es</p>
     <div class="pasos">
       <b>Cómo se dibuja:</b> ${cfg.pasos}<br>
       <b>Se dibuja con una línea fina, sin levantar el lápiz.</b> En las partituras
       la clave se ve más gruesa porque está impresa, pero a mano se hace así.
-    </div>
+    </div>`}
     ${(filas || FILAS).map(fila).join('')}
-    <div class="pie">teoriamusical.com.es — puedes imprimir y fotocopiar esta ficha libremente para uso en el aula o en casa.</div>
+    <div class="pie">${T('teoriamusical.com.es — puedes imprimir y fotocopiar esta ficha libremente para uso en el aula o en casa.', 'teoriamusical.com.es/en — you may print and photocopy this worksheet freely for use in the classroom or at home.')}</div>
   </body></html>`;
 }

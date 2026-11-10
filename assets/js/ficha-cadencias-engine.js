@@ -87,7 +87,7 @@
     cont.innerHTML = '<div class="tm-cf">'
       + '<div class="tm-cf-acciones">'
       + '<button type="button" class="tm-cf-btn tm-cf-btn-1" data-a="generar">' + TX('Generar otra ficha', 'Generate another sheet') + '</button>'
-      + '<button type="button" class="tm-cf-btn tm-cf-btn-2" data-a="soluciones">' + TX('Ver soluciones', 'Show solutions') + '</button>'
+      + '<button type="button" class="tm-cf-btn tm-cf-btn-2" data-a="soluciones">' + TX('Ver soluciones', 'Show answers') + '</button>'
       + '<button type="button" class="tm-cf-btn tm-cf-btn-2" data-a="imprimir">' + TX('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<p class="tm-cf-enlace">' + TX('Cada hoja sale de un número: con el enlace se vuelve a sacar la misma.', 'Each sheet comes from a number: the link brings up the same one again.') + '</p>'
@@ -209,7 +209,7 @@
       else { do { nueva = Math.floor(Math.random() * 90000 + 10000); } while (nueva === semilla); }
       semilla = nueva;
       solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = TX('Ver soluciones', 'Show solutions');
+      cont.querySelector('[data-a="soluciones"]').textContent = TX('Ver soluciones', 'Show answers');
       itemsActuales = elegirItems(semilla);
       pintar();
       window.tmFichaCadenciasDebug = function () { return { semilla: semilla, items: itemsActuales, usados: Object.keys(usados) }; };
@@ -225,7 +225,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         solucion = !solucion;
-        btn.textContent = solucion ? TX('Ocultar soluciones', 'Hide solutions') : TX('Ver soluciones', 'Show solutions');
+        btn.textContent = solucion ? TX('Ocultar soluciones', 'Hide answers') : TX('Ver soluciones', 'Show answers');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

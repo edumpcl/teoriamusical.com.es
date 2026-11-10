@@ -10,7 +10,9 @@ const { chromium } = require('playwright');
 const path = require('path');
 const fs = require('fs');
 
-const OUTPUT_DIR = path.join(__dirname, 'assets/img/intervalos');
+// --lang=en (o TM_LANG=en): version inglesa en assets/img/en/intervalos/ (sin la opcion, sale el espanol de siempre).
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const OUTPUT_DIR = path.join(__dirname, EN ? 'assets/img/en/intervalos' : 'assets/img/intervalos');
 const STAFF_DIR = path.join(__dirname, 'assets/img/notacion/intervalos');
 fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 // Incrusta los PNG del pentagrama como data URI (Chromium bloquea file:// en setContent).
@@ -39,10 +41,29 @@ const ROWS = [
   ['8ª', 'Justa', '12', "Do – Do'", 'ejemplo-do-do8'],
 ];
 
-const rowsHtml = ROWS.map(([a, b, c, d, img], i) =>
+const ROWS_EN = [
+  ['Perfect unison', '', '0', 'C – C', 'ejemplo-do-do'],
+  ['Minor 2nd', '', '1', 'C – D♭', 'ejemplo-do-reb'],
+  ['Major 2nd', '', '2', 'C – D', 'ejemplo-do-re'],
+  ['Minor 3rd', '', '3', 'C – E♭', 'ejemplo-do-mib'],
+  ['Major 3rd', '', '4', 'C – E', 'ejemplo-do-mi'],
+  ['Perfect 4th', '', '5', 'C – F', 'ejemplo-do-fa'],
+  ['Augmented 4th / Tritone', '', '6', 'C – F♯', 'ejemplo-do-fas'],
+  ['Perfect 5th', '', '7', 'C – G', 'ejemplo-do-sol'],
+  ['Minor 6th', '', '8', 'C – A♭', 'ejemplo-do-lab'],
+  ['Major 6th', '', '9', 'C – A', 'ejemplo-do-la'],
+  ['Minor 7th', '', '10', 'C – B♭', 'ejemplo-do-sib'],
+  ['Major 7th', '', '11', 'C – B', 'ejemplo-do-si'],
+  ['Perfect octave', '', '12', "C – C'", 'ejemplo-do-do8'],
+];
+const TXT = EN
+  ? { title: 'Table of musical intervals', sub: 'Interval, distance in half steps and example from <strong>C</strong>', h: ['Interval', 'Half steps', 'Example from C', 'On the staff'] }
+  : { title: 'Tabla de intervalos musicales', sub: 'Calificación, distancia en semitonos y ejemplo desde <strong>Do</strong>', h: ['Intervalo', 'Calificación', 'Semitonos', 'Ejemplo desde Do', 'En el pentagrama'] };
+
+const rowsHtml = (EN ? ROWS_EN : ROWS).map(([a, b, c, d, img], i) =>
   `<tr class="${i % 2 ? 'odd' : 'even'}">
      <td class="c-int">${a}</td>
-     <td>${b}</td>
+     ${EN ? '' : `<td>${b}</td>`}
      <td class="c-num">${c}</td>
      <td class="c-ex">${d}</td>
      <td class="c-staff"><img src="${dataUri(img)}" alt=""></td>
@@ -84,14 +105,14 @@ const HTML = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
 </style></head><body>
   <div class="card" id="card">
     <div class="head">
-      <h1>Tabla de intervalos musicales</h1>
-      <p>Calificación, distancia en semitonos y ejemplo desde <strong>Do</strong></p>
+      <h1>${TXT.title}</h1>
+      <p>${TXT.sub}</p>
     </div>
     <div class="tbl">
     <table>
-      <thead><tr><th class="c-int">Intervalo</th><th>Calificación</th>
-        <th class="c-num">Semitonos</th><th>Ejemplo desde Do</th>
-        <th class="c-staff">En el pentagrama</th></tr></thead>
+      <thead>${EN
+        ? `<tr><th class="c-int">${TXT.h[0]}</th><th class="c-num">${TXT.h[1]}</th><th>${TXT.h[2]}</th><th class="c-staff">${TXT.h[3]}</th></tr>`
+        : `<tr><th class="c-int">${TXT.h[0]}</th><th>${TXT.h[1]}</th><th class="c-num">${TXT.h[2]}</th><th>${TXT.h[3]}</th><th class="c-staff">${TXT.h[4]}</th></tr>`}</thead>
       <tbody>${rowsHtml}</tbody>
     </table>
     </div>

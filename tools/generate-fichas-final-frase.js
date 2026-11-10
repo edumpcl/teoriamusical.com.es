@@ -14,6 +14,8 @@
  * tools/verificar-final-frase.js.
  */
 const path = require('path');
+const EN = process.argv.includes('--lang=en');   // edicion inglesa: textos en ingles, salida en assets/img/en/...
+const TL = (es, en) => (EN ? en : es);
 const fs = require('fs');
 
 const ROOT = path.join(__dirname, '..');
@@ -22,7 +24,7 @@ const ENGINE2 = 'assets/js/tipo-de-comienzo-engine.js';
 const ENGINE3 = 'assets/js/tipo-de-final-engine.js';
 const { cargarFicha, escalarUniforme } = require('./lib-ficha-verovio.js');
 /* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
-const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/final/fichas');
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/' + (EN ? 'en/' : '') + 'final/fichas');
 
 /* Los lotes de la ficha: nivel, cuántos, semilla. */
 const LOTES = [
@@ -65,24 +67,24 @@ const CSS = `
   .sol-tag { display: inline-block; background: #c0392b; color: #fff; font-size: 8.5pt; font-weight: bold; padding: 1px 7px; border-radius: 3px; vertical-align: middle; margin-left: 8px; }
 `;
 
-const TIT = { 1: '1. Fácil (compases simples; la última nota llega hasta el final del compás)', 2: '2. Medio (simples y compuestos; silencios tras la última nota y último compás incompleto)', 3: '3. Difícil (contratiempos, figuras pequeñas y silencios antes de la última nota)' };
+const TIT = { 1: TL('1. Fácil (compases simples; la última nota llega hasta el final del compás)', '1. Easy (simple meters; the last note lasts until the end of the measure)'), 2: TL('2. Medio (simples y compuestos; silencios tras la última nota y último compás incompleto)', '2. Medium (simple and compound; rests after the last note and an incomplete last measure)'), 3: TL('3. Difícil (contratiempos, figuras pequeñas y silencios antes de la última nota)', '3. Hard (off-beats, small note values and rests before the last note)') };
 
 function html(solucion) {
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE LA FRASE MUSICAL</div>
-        <h1>¿Cómo termina la melodía?${solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">TEORIAMUSICAL.COM.ES &middot; ${TL('FICHA DE LA FRASE MUSICAL', 'MUSICAL PHRASE WORKSHEET')}</div>
+        <h1>${TL('¿Cómo termina la melodía?', 'How does the melody end?')}${solucion ? '<span class="sol-tag">' + TL('SOLUCIONES', 'ANSWERS') + '</span>' : ''}</h1>
       </div>
       <img class="logo" src="${LOGO}" width="34" height="35" alt="">
     </div>
-    <p class="instr">Marca cómo termina cada melodía. Fíjate en <b>en qué tiempo empieza la última nota</b> del último compás, no en cuánto dura ni en los silencios que haya detrás. <b>Tiempo fuerte (íctico):</b> empieza en el tiempo 1. <b>Tiempo débil (posíctico):</b> empieza en cualquier otro punto del compás. El último compás puede estar incompleto: su tiempo fuerte sigue siendo el primero.</p>
-    ${solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    <p class="instr">${TL(`Marca cómo termina cada melodía. Fíjate en <b>en qué tiempo empieza la última nota</b> del último compás, no en cuánto dura ni en los silencios que haya detrás. <b>Tiempo fuerte (íctico):</b> empieza en el tiempo 1. <b>Tiempo débil (posíctico):</b> empieza en cualquier otro punto del compás. El último compás puede estar incompleto: su tiempo fuerte sigue siendo el primero.`, `Mark how each melody ends. Look at <b>which beat the last note starts on</b> in the last measure, not at how long it lasts or at any rests after it. <b>Strong beat (ictic):</b> it starts on beat 1. <b>Weak beat (post-ictic):</b> it starts at any other point of the measure. The last measure may be incomplete: its strong beat is still the first one.`)}</p>
+    ${solucion ? '' : '<div class="datos"><span><b>' + TL('Nombre:', 'Name:') + '</b></span><span><b>' + TL('Curso:', 'Class:') + '</b></span><span><b>' + TL('Fecha:', 'Date:') + '</b></span></div>'}
   </div>
   <div id="cuerpo"></div>
-  <div class="pie"><span>Final de frase en tiempo fuerte y débil${solucion ? ' &middot; soluciones' : ''} &middot; teoriamusical.com.es/ejercicios/final-tiempo-fuerte-y-debil/</span></div>
+  <div class="pie"><span>${TL('Final de frase en tiempo fuerte y débil', 'Phrase endings on a strong or weak beat')}${solucion ? ' &middot; ' + TL('soluciones', 'answers') : ''} &middot; ${TL('teoriamusical.com.es/ejercicios/final-tiempo-fuerte-y-debil/', 'teoriamusical.com.es/en/exercises/rhythm/phrase-endings/')}</span></div>
 </div></body></html>`;
 }
 

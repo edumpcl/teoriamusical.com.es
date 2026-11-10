@@ -16,6 +16,8 @@
  * ligado) sale en rojo, y la casilla se marca en rojo cuando no hay síncopa.
  */
 const path = require('path');
+const EN = process.argv.includes('--lang=en');   // edicion inglesa: textos en ingles, salida en assets/img/en/...
+const TL = (es, en) => (EN ? en : es);
 const fs = require('fs');
 
 const ROOT = path.join(__dirname, '..');
@@ -24,7 +26,7 @@ const ROOT = path.join(__dirname, '..');
 const ENGINE = 'assets/js/sincopa-engine.js';
 const { cargarFicha, escalarUniforme } = require('./lib-ficha-verovio.js');
 /* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
-const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/compases/fichas');
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/' + (EN ? 'en/' : '') + 'compases/fichas');
 
 /* Semilla fija + cuántos fragmentos trae la ficha. El verificador reutiliza esto. */
 const SEMILLA = 7000;
@@ -62,26 +64,26 @@ const CSS = `
 `;
 
 function html(solucion) {
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE COMPASES</div>
-        <h1>Síncopa${solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">TEORIAMUSICAL.COM.ES &middot; ${TL('FICHA DE COMPASES', 'TIME SIGNATURES WORKSHEET')}</div>
+        <h1>${TL(`Síncopa`, `Syncopation`)}${solucion ? '<span class="sol-tag">' + TL('SOLUCIONES', 'ANSWERS') + '</span>' : ''}</h1>
       </div>
       <img class="logo" src="${LOGO}" width="34" height="35" alt="">
     </div>
-    <p class="instr">Rodea con un círculo la nota donde crees que empieza la síncopa (la que ataca en tiempo o parte débil y se liga al tiempo fuerte siguiente). Si el fragmento no tiene ninguna síncopa, marca la casilla «No hay síncopa».</p>
-    ${solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    <p class="instr">${TL(`Rodea con un círculo la nota donde crees que empieza la síncopa (la que ataca en tiempo o parte débil y se liga al tiempo fuerte siguiente). Si el fragmento no tiene ninguna síncopa, marca la casilla «No hay síncopa».`, `Circle the note where you think the syncopation starts (the one that is attacked on a weak beat or weak part and tied to the next strong beat). If the excerpt has no syncopation, check the “No syncopation” box.`)}</p>
+    ${solucion ? '' : '<div class="datos"><span><b>' + TL('Nombre:', 'Name:') + '</b></span><span><b>' + TL('Curso:', 'Class:') + '</b></span><span><b>' + TL('Fecha:', 'Date:') + '</b></span></div>'}
   </div>
   <div id="cuerpo" class="rejilla"></div>
-  <div class="pie"><span>Compases &middot; síncopa${solucion ? ' &middot; soluciones' : ''} &middot; teoriamusical.com.es/ejercicios/compases/sincopa/</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${TL('Compases', 'Time signatures')} &middot; ${TL('síncopa', 'syncopation')}${solucion ? ' &middot; ' + TL('soluciones', 'answers') : ''} &middot; ${TL('teoriamusical.com.es/ejercicios/compases/sincopa/', 'teoriamusical.com.es/en/exercises/rhythm/time-signatures/syncopation/')}</span><span>teoriamusical.com.es</span></div>
 </div></body></html>`;
 }
 
 /* Dentro de la página, con el motor cargado. */
-function montar({ SEMILLA, N_FRAGMENTOS, solucion }) {
+function montar({ SEMILLA, N_FRAGMENTOS, solucion, CHK }) {
   const rng = window.tmSincopaMulberry32(SEMILLA);
   const cuerpo = document.getElementById('cuerpo');
   for (let i = 0; i < N_FRAGMENTOS; i++) {
@@ -91,7 +93,7 @@ function montar({ SEMILLA, N_FRAGMENTOS, solucion }) {
     c.className = 'celda' + (dosCompases ? ' ancha' : '');
     const noSincopa = frag.correctas.length === 0;
     c.innerHTML = `<span class="num">${i + 1}</span><div class="svg"></div>
-      <div class="chk${solucion && noSincopa ? ' sol' : ''}">${solucion && noSincopa ? '☒' : '☐'} No hay síncopa</div>`;
+      <div class="chk${solucion && noSincopa ? ' sol' : ''}">${solucion && noSincopa ? '☒' : '☐'} ${CHK}</div>`;
     cuerpo.appendChild(c);
     window.tmSincopaDibujarImpresion(c.querySelector('.svg'), frag, solucion);
   }
@@ -107,7 +109,7 @@ function montar({ SEMILLA, N_FRAGMENTOS, solucion }) {
     const page = await browser.newPage({ deviceScaleFactor: 3 });
     await page.setViewportSize({ width: 850, height: 1200 });
     await cargarFicha(page, html(solucion), [ENGINE]);
-    const n = await page.evaluate(montar, { SEMILLA, N_FRAGMENTOS, solucion });
+    const n = await page.evaluate(montar, { SEMILLA, N_FRAGMENTOS, solucion, CHK: TL('No hay síncopa', 'No syncopation') });
     await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 14, 0.5)");
     const nombre = 'ficha-sincopa' + (solucion ? '-soluciones' : '');
     const pdfPath = path.join(OUT_DIR, nombre + '.pdf');

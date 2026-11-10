@@ -10,7 +10,9 @@ const path = require('path');
 const fs = require('fs');
 
 const VEXFLOW_PATH = path.join(__dirname, 'node_modules/vexflow/build/cjs/vexflow.js');
-const OUT_DIR = path.join(__dirname, 'assets/img/tonalidades');
+// --lang=en (o TM_LANG=en): version inglesa en assets/img/en/tonalidades/ (sin la opcion, sale el espanol de siempre).
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const OUT_DIR = EN ? path.join(__dirname, 'assets/img/en/tonalidades') : path.join(__dirname, 'assets/img/tonalidades');
 fs.mkdirSync(OUT_DIR, { recursive: true });
 
 const BACH_PATH = path.join(__dirname, 'assets/img/2026/04/bach_favicon.png');
@@ -32,6 +34,27 @@ const POS = [
   { maj: 'Si♭ M',       min: 'sol m',         specs: ['Bb'] },
   { maj: 'Fa M',        min: 're m',          specs: ['F'] },
 ];
+
+if (EN) {
+  const EN_POS = [
+    { maj: 'C major', min: 'A minor' },
+    { maj: 'G major', min: 'E minor' },
+    { maj: 'D major', min: 'B minor' },
+    { maj: 'A major', min: 'F♯ minor' },
+    { maj: 'E major', min: 'C♯ minor' },
+    { maj: 'B / C♭ major', min: 'G♯ / A♭<br>minor' },
+    { maj: 'F♯ / G♭ major', min: 'D♯ / E♭<br>minor' },
+    { maj: 'D♭ / C♯ major', min: 'B♭ / A♯<br>minor' },
+    { maj: 'A♭ major', min: 'F minor' },
+    { maj: 'E♭ major', min: 'C minor' },
+    { maj: 'B♭ major', min: 'G minor' },
+    { maj: 'F major', min: 'D minor' },
+  ];
+  EN_POS.forEach((e, i) => { POS[i].maj = e.maj; POS[i].min = e.min; });
+}
+const TXT = EN
+  ? { title: 'Circle of Fifths', sub: 'Major keys · their relative minors · their key signatures', fl: '↺ flats', sh: 'sharps ↻' }
+  : { title: 'Círculo de Quintas', sub: 'Tonalidades mayores · sus relativas menores · sus armaduras', fl: '↺ bemoles', sh: 'sostenidos ↻' };
 
 const W = 2260, H = 2340;
 const RENDER = `
@@ -104,7 +127,7 @@ function build(def) {
   def.forEach(function (p, i) {
     const a = (-90 + i*30) * Math.PI/180;
     const dual = p.specs.length > 1;
-    const rMaj = dual ? R_MAJ + 40 : R_MAJ;   // en las enarmonicas el nombre va mas afuera (la pareja ocupa mas)
+    const rMaj = dual ? R_MAJ + 40 : R_MAJ + (${EN} && (i === 3 || i === 9) ? 60 : 0);   // en ingles el nombre es mas largo: a izquierda/derecha se aparta del pentagrama   // en las enarmonicas el nombre va mas afuera (la pareja ocupa mas)
     label(p.maj, 'maj', cx + rMaj*Math.cos(a), cy + rMaj*Math.sin(a));
     label(p.min, 'min', cx + R_MIN*Math.cos(a), cy + R_MIN*Math.sin(a));
     const px = cx + R_STAFF*Math.cos(a), py = cy + R_STAFF*Math.sin(a);
@@ -117,10 +140,10 @@ function build(def) {
     }
   });
 
-  label('Círculo de Quintas', 'title', cx, 120);
-  label('Tonalidades mayores · sus relativas menores · sus armaduras', 'subtitle', cx, 198);
-  label('↺ bemoles', 'side', cx - 690, 320);
-  label('sostenidos ↻', 'side', cx + 690, 320);
+  label('${TXT.title}', 'title', cx, 120);
+  label('${TXT.sub}', 'subtitle', cx, 198);
+  label('${TXT.fl}', 'side', cx - 690, 320);
+  label('${TXT.sh}', 'side', cx + 690, 320);
 
   const c = document.createElement('div'); c.className = 'brandc';
   const img = document.createElement('img'); img.src = '${bachB64}'; img.className = 'bach';

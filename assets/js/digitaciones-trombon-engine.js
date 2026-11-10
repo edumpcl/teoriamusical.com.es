@@ -10,6 +10,14 @@
 (function () {
   'use strict';
 
+  // Inglés: la misma página sirve a <html lang="en"> (el español queda intacto).
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  // Nombre de nota en español -> letras (solo se muestra así en inglés; la lógica sigue con los nombres españoles).
+  const NOTE_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  const nm = s => EN ? String(s).replace(/Sol|Do|Re|Mi|Fa|La|Si/g, m => NOTE_EN[m]) : s;
+  const ordEn = n => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th');
+
   var MP_X = 68;           // x FIJA de la boquilla (nunca se mueve: siempre en los labios)
   var SLIDE_X0 = 105;      // x FIJA donde arranca la vara (tras la boquilla)
   var SOCKET_X = 330;      // x fija donde empieza el cuerpo fijo (vara de afinación + campana)
@@ -47,6 +55,7 @@
   // Fundamental (nota al aire, 1er armónico) de cada una de las 7 posiciones
   var FUND = { 1: 'Si♭', 2: 'La', 3: 'La♭', 4: 'Sol', 5: 'Fa♯', 6: 'Fa', 7: 'Mi' };
   var ORDINAL = { 1: '1ª', 2: '2ª', 3: '3ª', 4: '4ª', 5: '5ª', 6: '6ª', 7: '7ª' };
+  if (EN) ORDINAL = { 1: '1st', 2: '2nd', 3: '3rd', 4: '4th', 5: '5th', 6: '6th', 7: '7th' };
 
   var SUB = { '2': '₂', '3': '₃', '4': '₄' };
   var FLAT = {
@@ -57,13 +66,13 @@
   function label(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
     if (!m) return n;
-    return m[1] + (m[2] ? '♯' : '') + SUB[m[3]];
+    return nm(m[1] + (m[2] ? '♯' : '') + SUB[m[3]]);
   }
   function registro(n) {
     var i = ORDEN.indexOf(n);
-    if (i >= 0 && i <= ORDEN.indexOf('Si2')) return 'Registro grave';
-    if (i <= ORDEN.indexOf('Si3')) return 'Registro medio';
-    return 'Registro agudo';
+    if (i >= 0 && i <= ORDEN.indexOf('Si2')) return T('Registro grave', 'Low register');
+    if (i <= ORDEN.indexOf('Si3')) return T('Registro medio', 'Middle register');
+    return T('Registro agudo', 'High register');
   }
 
   var LETTER = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
@@ -147,10 +156,10 @@
     '<path d="M574 138 C620 122 658 122 676 130 L676 176 C658 184 620 184 574 168 C584 158 584 148 574 138 Z" fill="url(#tmTbBrass)" stroke="#7a5a08" stroke-width="1.2"/>' +
     '<ellipse cx="677" cy="153" rx="7" ry="24" fill="#c8960f" stroke="#7a5a08" stroke-width="1"/>' +
     // etiquetas
-    '<text class="tm-tb-klab" x="68" y="100">Boquilla</text>' +
-    '<text class="tm-tb-klab" x="677" y="115">Campana</text>' +
-    '<text class="tm-tb-klab" x="378" y="30">Vara de afinación</text>' +
-    '<text class="tm-tb-klab" x="217" y="165">Posición de la vara</text>';
+    '<text class="tm-tb-klab" x="68" y="100">' + T('Boquilla', 'Mouthpiece') + '</text>' +
+    '<text class="tm-tb-klab" x="677" y="115">' + T('Campana', 'Bell') + '</text>' +
+    '<text class="tm-tb-klab" x="378" y="30">' + T('Vara de afinación', 'Tuning slide') + '</text>' +
+    '<text class="tm-tb-klab" x="217" y="165">' + T('Posición de la vara', 'Slide position') + '</text>';
 
   function ruler() {
     var out = '';
@@ -175,8 +184,8 @@
 
     wrap.innerHTML =
       '<div class="tm-tb-wrap">' +
-        '<div class="tm-tb-readout" id="' + uid + '_ro"><span class="tm-tb-hint">Elige una nota para ver su posición de vara</span></div>' +
-        '<div class="tm-tb-diagram"><svg class="tm-tb-svg" id="' + uid + '_svg" viewBox="0 0 700 220" role="img" aria-label="Diagrama de digitación del trombón: la boquilla está fija a la izquierda, siempre en los labios, y la vara (dos tubos con una U de agarre en la punta) se extiende desde la boquilla hacia la campana fija de la derecha según la posición; una regla debajo señala la posición activa">' +
+        '<div class="tm-tb-readout" id="' + uid + '_ro"><span class="tm-tb-hint">' + T('Elige una nota para ver su posición de vara', 'Choose a note to see its slide position') + '</span></div>' +
+        '<div class="tm-tb-diagram"><svg class="tm-tb-svg" id="' + uid + '_svg" viewBox="0 0 700 220" role="img" aria-label="' + T('Diagrama de digitación del trombón: la boquilla está fija a la izquierda, siempre en los labios, y la vara (dos tubos con una U de agarre en la punta) se extiende desde la boquilla hacia la campana fija de la derecha según la posición; una regla debajo señala la posición activa', 'Trombone fingering diagram: the mouthpiece is fixed on the left, always at the lips, and the slide (two tubes with a U-shaped grip at the tip) extends from the mouthpiece toward the fixed bell on the right depending on the position; a ruler below marks the active position') + '">' +
           DECO_FIXED +
           '<g id="' + uid + '_slide">' +
             '<line id="' + uid + '_tubeTop" x1="' + SLIDE_X0 + '" y1="' + SLIDE_Y1 + '" x2="' + SLIDE_X0 + '" y2="' + SLIDE_Y1 + '" stroke="url(#tmTbBrass)" stroke-width="8" stroke-linecap="round"/>' +
@@ -231,10 +240,10 @@
       if (data) setSlide(data.pos);
       ro.innerHTML =
         '<div class="tm-tb-staff" id="' + uid + '_staff"></div>' +
-        '<div class="tm-tb-noterow"><span class="tm-tb-intl">' + label(n) + (FLAT[n] ? ' (' + FLAT[n] + ')' : '') + '</span>' +
-        '<button class="tm-tb-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
+        '<div class="tm-tb-noterow"><span class="tm-tb-intl">' + label(n) + (FLAT[n] ? ' (' + nm(FLAT[n]) + ')' : '') + '</span>' +
+        '<button class="tm-tb-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
         '<div class="tm-tb-reg">' + intl(n) + ' · ' + registro(n) + '</div>' +
-        '<div class="tm-tb-keysline">' + (data ? ORDINAL[data.pos] + ' posición · armónico ' + data.harm + 'º sobre el ' + FUND[data.pos] : '') + '</div>';
+        '<div class="tm-tb-keysline">' + (data ? (EN ? ORDINAL[data.pos] + ' position · ' + ordEn(data.harm) + ' harmonic above ' + nm(FUND[data.pos]) : ORDINAL[data.pos] + ' posición · armónico ' + data.harm + 'º sobre el ' + FUND[data.pos]) : '') + '</div>';
       renderStaff(n);
       var pb = ro.querySelector('.tm-tb-play');
       if (pb) pb.addEventListener('click', function () { play(n); });

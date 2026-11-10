@@ -23,15 +23,18 @@ const path = require('path');
 const fs = require('fs');
 
 const ROOT = path.join(__dirname, '..');
-const OUT_DIR = path.join(ROOT, 'assets/img/guitarra/fichas');
+/* --lang=en (o TM_LANG=en): edicion inglesa; escribe en assets/img/en/... y traduce los textos. Sin la opcion, la salida es identica a la de siempre. */
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const T = (es, en) => (EN ? en : es);
+const OUT_DIR = path.join(ROOT, 'assets/img', EN ? 'en' : '', 'guitarra/fichas');
 const MOTOR = path.join(ROOT, 'assets/js/digitaciones-guitarra-engine.js');
 
 /* Cuerdas al aire en MIDI real: 6.ª (Mi grave) -> 1.ª (Mi agudo). */
 const OPEN = [40, 45, 50, 55, 59, 64];
-const CUERDAS = ['6.ª', '5.ª', '4.ª', '3.ª', '2.ª', '1.ª'];
+const CUERDAS = EN ? ['6th', '5th', '4th', '3rd', '2nd', '1st'] : ['6.ª', '5.ª', '4.ª', '3.ª', '2.ª', '1.ª'];
 const NFRETS = 12;
-const SHARP = ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
-const FLAT = ['Do', 'Re♭', 'Re', 'Mi♭', 'Mi', 'Fa', 'Sol♭', 'Sol', 'La♭', 'La', 'Si♭', 'Si'];
+const SHARP = EN ? ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'] : ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
+const FLAT = EN ? ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'G♭', 'G', 'A♭', 'A', 'B♭', 'B'] : ['Do', 'Re♭', 'Re', 'Mi♭', 'Mi', 'Fa', 'Sol♭', 'Sol', 'La♭', 'La', 'Si♭', 'Si'];
 const SUB = { 0: '₀', 1: '₁', 2: '₂', 3: '₃', 4: '₄', 5: '₅', 6: '₆', 7: '₇' };
 /* Trastes con marcador en el mástil; el 12 lleva dos. */
 const PUNTO = new Set([3, 5, 7, 9]);
@@ -100,7 +103,7 @@ function rejilla(rellenar) {
   for (let n = 1; n <= NFRETS; n++) cols.push('<col>');
   cols.push('</colgroup>');
   const hueco = '<div class="marcas"></div>';
-  const cab = [`<thead><tr><th>Cuerda${hueco}</th><th class="aire">Al aire${hueco}</th>`];
+  const cab = [`<thead><tr><th>${T('Cuerda', 'String')}${hueco}</th><th class="aire">${T('Al aire', 'Open')}${hueco}</th>`];
   for (let n = 1; n <= NFRETS; n++) {
     const cls = n === 12 ? ' class="oct"' : '';
     const marca = `<div class="marcas">${PUNTO.has(n) ? '•' : (n === 12 ? '• •' : '')}</div>`;
@@ -111,7 +114,7 @@ function rejilla(rellenar) {
   const filas = [];
   for (let i = 0; i < 6; i++) {           // 6.ª arriba, como la foto del mástil
     const [raiz] = nombre(OPEN[i]);
-    filas.push(`<tr><th class="cuerda">${CUERDAS[i]}<small>al aire: ${raiz}</small></th>`);
+    filas.push(`<tr><th class="cuerda">${CUERDAS[i]}<small>${T('al aire', 'open')}: ${raiz}</small></th>`);
     for (let n = 0; n <= NFRETS; n++) {
       const [alt, bem] = nombre(OPEN[i] + n);
       const cls = ['nota'];
@@ -130,34 +133,41 @@ function rejilla(rellenar) {
 }
 
 function html(rellenar) {
-  const titulo = rellenar ? 'El mástil de la guitarra: complétalo' : 'El mástil de la guitarra';
-  const instr = rellenar
+  const titulo = rellenar ? T('El mástil de la guitarra: complétalo', 'The guitar fretboard: fill it in') : T('El mástil de la guitarra', 'The guitar fretboard');
+  const instr = EN ? (rellenar
+    ? 'Write the note in each box. The open strings are given: from there, <b>each fret goes up one half step</b>. When you reach fret 12 you should be back at the open-string note, an octave higher; if it does not fit, check that row.'
+    : 'All the notes on the six strings in the first twelve frets. It is read like the guitar in playing position: the 6th string (the thickest and lowest) at the top and the 1st at the bottom.')
+    : rellenar
     ? 'Escribe la nota de cada casilla. Te damos las cuerdas al aire: a partir de ahí, <b>cada traste sube un semitono</b>. Cuando llegues al traste 12 deberías haber vuelto a la nota de la cuerda al aire, una octava más aguda; si no te cuadra, revisa esa fila.'
     : 'Todas las notas de las seis cuerdas en los doce primeros trastes. Se lee como la guitarra en posición de tocar: la 6.ª cuerda (la más gruesa y grave) arriba y la 1.ª abajo.';
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORÍA MUSICAL</div>
-        <h1>${titulo}${rellenar ? '' : '<span class="sol-tag">referencia</span>'}</h1>
+        <div class="marca">${T('TEORÍA MUSICAL', 'MUSIC THEORY')}</div>
+        <h1>${titulo}${rellenar ? '' : `<span class="sol-tag">${T('referencia', 'reference')}</span>`}</h1>
         <p class="instr">${instr}</p>
       </div>
       <img class="logo" src="${LOGO}" alt="">
     </div>
-    ${rellenar ? '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>' : ''}
+    ${rellenar ? `<div class="datos"><span><b>${T('Nombre:', 'Name:')}</b></span><span><b>${T('Curso:', 'Class:')}</b></span><span><b>${T('Fecha:', 'Date:')}</b></span></div>` : ''}
   </div>
 
   ${rejilla(rellenar)}
 
-  <div class="leyenda">
+  <div class="leyenda">${EN ? `
+    <p><b>Each fret, a half step.</b> That is why at <b>fret 12</b> the open-string note comes back an octave higher: the fretboard "repeats" there, and that column is set apart.</p>
+    <p><b>The dots</b> (frets 3, 5, 7, 9 and the double one at 12) are the fretboard markers, the ones that help you find your place without looking.</p>
+    <p><b>F♯ and G♭ are the same note</b>, only the way it is written changes. That is why the altered boxes carry both names.</p>
+    <p><b>The subscripts are the octave:</b> the E₂ of the sixth string sounds two octaves below the E₄ of the first. Note: this is what <i>sounds</i>; in the score the guitar is written an octave higher.</p>` : `
     <p><b>Cada traste, un semitono.</b> Por eso en el <b>traste 12</b> vuelve la nota de la cuerda al aire una octava más aguda: ahí el mástil «se repite», y por eso esa columna va separada.</p>
     <p><b>Los puntos</b> (trastes 3, 5, 7, 9 y el doble del 12) son los marcadores del mástil, los que sirven para orientarse sin mirar.</p>
     <p><b>Fa♯ y Sol♭ son la misma nota</b>, solo cambia cómo se escribe. Por eso las casillas alteradas llevan los dos nombres.</p>
-    <p><b>Los subíndices son la octava:</b> el Mi₂ de la sexta cuerda suena dos octavas por debajo del Mi₄ de la primera. Ojo: esto es lo que <i>suena</i>; en la partitura la guitarra se escribe una octava más aguda.</p>
+    <p><b>Los subíndices son la octava:</b> el Mi₂ de la sexta cuerda suena dos octavas por debajo del Mi₄ de la primera. Ojo: esto es lo que <i>suena</i>; en la partitura la guitarra se escribe una octava más aguda.</p>`}
   </div>
 
-  <div class="pie"><span>El mástil de la guitarra${rellenar ? ' &middot; para completar' : ''} &middot; teoriamusical.com.es/diccionario-musical/notas-de-la-guitarra/</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${T('El mástil de la guitarra', 'The guitar fretboard')}${rellenar ? T(' &middot; para completar', ' &middot; to complete') : ''} &middot; teoriamusical.com.es/${EN ? "en/music-dictionary/instruments/guitar-notes/" : "diccionario-musical/notas-de-la-guitarra/"}</span><span>teoriamusical.com.es</span></div>
 </div></body></html>`;
 }
 

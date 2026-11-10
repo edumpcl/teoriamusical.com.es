@@ -19,18 +19,24 @@ const fs = require('fs');
 const path = require('path');
 
 const RAIZ = path.join(__dirname, '..');
-const DIR = path.join(RAIZ, 'assets/img/notacion/claves');
+/* Edicion inglesa: `--lang=en` (o TM_LANG=en) lee el pentagrama ingles (assets/img/en/notacion/claves/notas-clave-fa.svg, que saca
+   gen-compases-verovio.js --lang=en) y escribe svg, png y webp en assets/img/en/notacion/claves con rotulos en ingles. */
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const DIR = path.join(RAIZ, EN ? 'assets/img/en/notacion/claves' : 'assets/img/notacion/claves');
 const ORIGEN = path.join(DIR, 'notas-clave-fa.svg');
 const SALIDA = path.join(DIR, 'notas-clave-fa-piano.svg');
 
-const NOMBRES = ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
+const NOMBRES = EN ? ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'] : ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
+const TIT = EN ? 'Notes in the bass clef' : 'Notas en clave de Fa';
+const DOC = EN ? 'Middle C' : 'Do central';
+const RANGO = EN ? 'G₂ to A₃' : 'Sol₂ al La₃';
 const BLANCA = [0, 2, 4, 5, 7, 9, 11];
 const nombre = (m) => NOMBRES[m % 12];
 const ILUMINADAS = [43, 45, 47, 48, 50, 52, 53, 55, 57];   // las nueve notas de la clave de Fa en 4.ª, de la 1.ª línea al espacio de encima de la 5.ª
 const DESDE = 43, HASTA = 60;                               // Sol₂ … Do₄ (Do central)
 
 const W = 720, H = 430, KW = 56, X0 = 52, KY = 282, KH = 92, BW = 34, BH = 58;
-const ALT = 'Notas en clave de Fa: pentagrama con las nueve notas de la clave (Sol, La, Si, Do, Re, Mi, Fa, Sol, La) y, debajo, las mismas notas iluminadas en el teclado del piano, del Sol₂ al La₃, con el Do central señalado a la derecha.';
+const ALT = EN ? 'Notes in the bass clef: a staff with the nine notes of the clef (G, A, B, C, D, E, F, G, A) and, below, the same notes lit up on the piano keyboard, from G₂ to A₃, with Middle C marked on the right.' : 'Notas en clave de Fa: pentagrama con las nueve notas de la clave (Sol, La, Si, Do, Re, Mi, Fa, Sol, La) y, debajo, las mismas notas iluminadas en el teclado del piano, del Sol₂ al La₃, con el Do central señalado a la derecha.';
 
 function modelo(sab = {}) {
   const ilum = sab.iluminadas || ILUMINADAS;
@@ -60,8 +66,8 @@ function dibuja(mod) {
     teclas += `<rect data-midi="${m}" data-negra="1" x="${cx - BW / 2}" y="${KY}" width="${BW}" height="${BH}" rx="3" fill="#1a1a1a"/>`;
   });
   const dc = x(60);
-  const marca = `<path data-do-central="60" d="M${dc + KW / 2} ${KY + KH + 6} l-8 12 h16 z" fill="#1a1a1a"/><text x="${dc + KW / 2 - 14}" y="${KY + KH + 30}" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#1a1a1a">Do central</text>`;
-  return `<svg id="tm-clave-fa-piano" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" xmlns="http://www.w3.org/2000/svg"><title>${ALT}</title><rect width="${W}" height="${H}" fill="#ffffff"/><text x="${W / 2}" y="44" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#1a1a1a">Notas en clave de Fa</text>${pent}${teclas}${marca}</svg>`;
+  const marca = `<path data-do-central="60" d="M${dc + KW / 2} ${KY + KH + 6} l-8 12 h16 z" fill="#1a1a1a"/><text x="${dc + KW / 2 - 14}" y="${KY + KH + 30}" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#1a1a1a">${DOC}</text>`;
+  return `<svg id="tm-clave-fa-piano" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" xmlns="http://www.w3.org/2000/svg"><title>${ALT}</title><rect width="${W}" height="${H}" fill="#ffffff"/><text x="${W / 2}" y="44" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#1a1a1a">${TIT}</text>${pent}${teclas}${marca}</svg>`;
 }
 
 function verificar(svg, alt = ALT) {
@@ -95,8 +101,8 @@ function verificar(svg, alt = ALT) {
   const xmarca = /<path data-do-central="60" d="M([\d.]+) /.exec(svg);
   const c4 = blancas.find((b) => b.midi === 60);
   if (!xmarca || !c4 || Math.abs(+xmarca[1] - (c4.x + KW / 2)) > 0.5) err.push('la marca del Do central no está sobre la tecla del Do₄');
-  if (!/Notas en clave de Fa<\/text>/.test(svg)) err.push('falta el título escrito dentro de la imagen');
-  for (const p of ['Notas en clave de Fa', 'Sol₂ al La₃', 'Do central']) if (!alt.includes(p)) err.push(`el alt no dice «${p}»`);
+  if (!svg.includes('>' + TIT + '</text>')) err.push('falta el título escrito dentro de la imagen');
+  for (const p of [TIT, RANGO, DOC]) if (!alt.includes(p)) err.push(`el alt no dice «${p}»`);
   return err;
 }
 
@@ -115,9 +121,9 @@ function verificar(svg, alt = ALT) {
       if (!e.length) mal++;
     }
     const limpio = dibuja(modelo());
-    const sinTitulo = verificar(limpio.replace('>Notas en clave de Fa</text>', '></text>'));
+    const sinTitulo = verificar(limpio.replace('>' + TIT + '</text>', '></text>'));
     console.log(`  ${sinTitulo.length ? '✓ detectado' : '✗ NO SE DETECTA'}: título borrado${sinTitulo.length ? ' → ' + sinTitulo[0] : ''}`); if (!sinTitulo.length) mal++;
-    const altMal = verificar(limpio, ALT.replace('Do central', 'Do'));
+    const altMal = verificar(limpio, ALT.replace(DOC, 'Do'));
     console.log(`  ${altMal.length ? '✓ detectado' : '✗ NO SE DETECTA'}: alt sin el Do central${altMal.length ? ' → ' + altMal[0] : ''}`); if (!altMal.length) mal++;
     const negraMal = verificar(limpio.replace('data-midi="46" data-negra="1" x="', 'data-midi="46" data-negra="1" x="-'));
     console.log(`  ${negraMal.length ? '✓ detectado' : '✗ NO SE DETECTA'}: una negra fuera de sitio${negraMal.length ? ' → ' + negraMal[0] : ''}`); if (!negraMal.length) mal++;
@@ -137,4 +143,8 @@ function verificar(svg, alt = ALT) {
   await pg.locator('svg#tm-clave-fa-piano').screenshot({ path: path.join(DIR, 'notas-clave-fa-piano.png') });
   await b.close();
   console.log('  ✓ notas-clave-fa-piano.png (1440×800)');
+  if (EN) {   // el webp que acompana al png en la edicion espanola
+    await require('sharp')(path.join(DIR, 'notas-clave-fa-piano.png')).webp({ quality: 85 }).toFile(path.join(DIR, 'notas-clave-fa-piano.webp'));
+    console.log('  ✓ notas-clave-fa-piano.webp');
+  }
 })().catch((e) => { console.error(e); process.exit(1); });

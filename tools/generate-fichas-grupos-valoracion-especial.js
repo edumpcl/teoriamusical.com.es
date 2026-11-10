@@ -14,6 +14,8 @@
  * explicar). La teoría se audita con tools/verificar-grupos-valoracion-especial.js.
  */
 const path = require('path');
+const EN = process.argv.includes('--lang=en');   // edicion inglesa: textos en ingles, salida en assets/img/en/...
+const TL = (es, en) => (EN ? en : es);
 const fs = require('fs');
 
 const ROOT = path.join(__dirname, '..');
@@ -21,7 +23,7 @@ const ENGINE1 = 'assets/js/completar-compas-engine.js';
 const ENGINE2 = 'assets/js/grupos-valoracion-especial-engine.js';
 const { cargarFicha, escalarUniforme } = require('./lib-ficha-verovio.js');
 /* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
-const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/compases/fichas');
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/' + (EN ? 'en/' : '') + 'compases/fichas');
 
 /* Los lotes de la ficha: nivel, cuántos, semilla. El verificador los reutiliza. */
 const LOTES = [
@@ -61,24 +63,24 @@ const CSS = `
   .sol-tag { display: inline-block; background: #c0392b; color: #fff; font-size: 8.5pt; font-weight: bold; padding: 1px 7px; border-radius: 3px; vertical-align: middle; margin-left: 8px; }
 `;
 
-const TIT = { 1: '1. Fácil (ritmo uniforme)', 2: '2. Medio (con algún silencio)', 3: '3. Difícil (ritmo mixto)' };
+const TIT = { 1: TL('1. Fácil (ritmo uniforme)', '1. Easy (uniform rhythm)'), 2: TL('2. Medio (con algún silencio)', '2. Medium (with some rests)'), 3: TL('3. Difícil (ritmo mixto)', '3. Hard (mixed rhythm)') };
 
 function html(solucion) {
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE COMPASES</div>
-        <h1>Grupos de valoración especial${solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">TEORIAMUSICAL.COM.ES &middot; ${TL('FICHA DE COMPASES', 'TIME SIGNATURES WORKSHEET')}</div>
+        <h1>${TL('Grupos de valoración especial', 'Tuplets')}${solucion ? '<span class="sol-tag">' + TL('SOLUCIONES', 'ANSWERS') + '</span>' : ''}</h1>
       </div>
       <img class="logo" src="${LOGO}" width="34" height="35" alt="">
     </div>
-    <p class="instr">Cada compás tiene un grupo de valoración especial (tresillo, dosillo, cuatrillo o seisillo). Escribe en la casilla la figura sencilla a la que equivale el grupo entero.</p>
-    ${solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    <p class="instr">${TL(`Cada compás tiene un grupo de valoración especial (tresillo, dosillo, cuatrillo o seisillo). Escribe en la casilla la figura sencilla a la que equivale el grupo entero.`, `Each measure has a tuplet (triplet, duplet, quadruplet or sextuplet). Write in the box the simple note value that the whole group equals.`)}</p>
+    ${solucion ? '' : '<div class="datos"><span><b>' + TL('Nombre:', 'Name:') + '</b></span><span><b>' + TL('Curso:', 'Class:') + '</b></span><span><b>' + TL('Fecha:', 'Date:') + '</b></span></div>'}
   </div>
   <div id="cuerpo"></div>
-  <div class="pie"><span>Compases &middot; grupos de valoración especial${solucion ? ' &middot; soluciones' : ''} &middot; teoriamusical.com.es/ejercicios/</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${TL('Compases', 'Time signatures')} &middot; ${TL('grupos de valoración especial', 'tuplets')}${solucion ? ' &middot; ' + TL('soluciones', 'answers') : ''} &middot; ${TL('teoriamusical.com.es/ejercicios/', 'teoriamusical.com.es/en/exercises/rhythm/tuplets/')}</span><span>teoriamusical.com.es</span></div>
 </div></body></html>`;
 }
 

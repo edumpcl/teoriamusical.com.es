@@ -8,6 +8,12 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  // nombre de nota mostrado: en inglés, letras (Do→C, Si♭→B♭)
+  var LETRA = { 'Do': 'C', 'Re': 'D', 'Mi': 'E', 'Fa': 'F', 'Sol': 'G', 'La': 'A', 'Si': 'B' };
+  function nom(h) { return EN ? LETRA[h.es.replace(/[♯♭]/, '')] + h.es.replace(/[^♯♭]/g, '') : h.es; }
+
   var F1 = 65.40639; // Do₂
   // Datos de cada armónico: nota (VexFlow key + acc), nombre ES, clave, midi de la
   // nota más cercana del temperamento igual (para calcular los cents).
@@ -37,7 +43,15 @@
     h.det = Math.abs(h.cents) >= 30;
   });
   // interpretación de cada armónico (razón con el fundamental)
-  var INFO = {
+  var INFO_EN = {
+    1: 'the fundamental', 2: 'a perfect octave', 3: 'an octave + a Perfect 5th (12th)',
+    4: 'two octaves (15th)', 5: 'two octaves + a Major 3rd', 6: 'two octaves + a Perfect 5th',
+    7: 'two octaves + a “natural” minor 7th', 8: 'three octaves', 9: 'three octaves + a Major 2nd',
+    10: 'three octaves + a Major 3rd', 11: 'three octaves + an Augmented 4th', 12: 'three octaves + a Perfect 5th',
+    13: 'three octaves + a minor 6th', 14: 'three octaves + a minor 7th', 15: 'three octaves + a Major 7th',
+    16: 'four octaves'
+  };
+  var INFO_ES = {
     1: 'el fundamental', 2: 'una 8ª justa', 3: 'una 8ª + 5ª justa (12ª)',
     4: 'dos 8ª (15ª)', 5: 'dos 8ª + 3ª mayor', 6: 'dos 8ª + 5ª justa',
     7: 'dos 8ª + 7ª menor «natural»', 8: 'tres 8ª', 9: 'tres 8ª + 2ª mayor',
@@ -45,6 +59,7 @@
     13: 'tres 8ª + 6ª menor', 14: 'tres 8ª + 7ª menor', 15: 'tres 8ª + 7ª mayor',
     16: 'cuatro 8ª'
   };
+  var INFO = EN ? INFO_EN : INFO_ES;
 
   var CSS = [
     '.tm-ha-wrap{margin:18px 0;}',
@@ -140,7 +155,7 @@
       var el = document.getElementById(uid + '_staff');
       if (!el) return;
       // SVG generado al construir con Verovio (tools/gen-pentagramas-verovio.js serie-armonica-explorador)
-      el.innerHTML = '<img src="/assets/img/notacion/serie-armonica/armonico-' + h.n + '.svg" alt="Armónico ' + h.n + ': ' + h.es + ' en el pentagrama" width="130" style="width:130px;max-width:100%;height:auto">';
+      el.innerHTML = '<img src="/assets/img/notacion/serie-armonica/armonico-' + h.n + '.svg" alt="' + T('Armónico ' + h.n + ': ' + h.es + ' en el pentagrama', 'Harmonic ' + h.n + ': ' + nom(h) + ' on the staff') + '"width="130" style="width:130px;max-width:100%;height:auto">';
     }
 
     function noteName(h) { return h.es + (h.n === 1 ? '₂' : '') ; }
@@ -154,11 +169,11 @@
       var centsTxt = h.cents === 0 ? '' : (h.cents > 0 ? '+' + h.cents : '' + h.cents) + ' cents';
       var ro = document.getElementById(uid + '_ro');
       ro.innerHTML =
-        '<div class="tm-ha-big"><span class="tm-ha-num">Armónico ' + h.n + '</span> · ' + h.es + '</div>' +
+        '<div class="tm-ha-big"><span class="tm-ha-num">' + T('Armónico ', 'Harmonic ') + h.n + '</span> · ' + nom(h) + '</div>' +
         stringSvg(h.n) +
-        '<div class="tm-ha-sub">' + h.freq.toFixed(1) + ' Hz · razón ' + h.n + ':1 · ' + INFO[h.n] + ' sobre el Do₂</div>' +
+        '<div class="tm-ha-sub">' + h.freq.toFixed(1) + ' Hz · ' + T('razón ', 'ratio ') + h.n + ':1 · ' + INFO[h.n] + T(' sobre el Do₂', ' above C2') + '</div>' +
         '<div class="tm-ha-tune ' + (just ? 'just' : 'off') + '">' +
-          (just ? 'Afinación justa' : 'Se sale del temperamento igual: ' + centsTxt) + '</div>';
+          (just ? T('Afinación justa', 'In tune') : T('Se sale del temperamento igual: ', 'Outside equal temperament: ') + centsTxt) + '</div>';
       var staffHost = document.getElementById(uid + '_staff');
       if (!staffHost) {
         var left = document.getElementById(uid + '_left');
@@ -171,9 +186,9 @@
     var cells = HARM.map(function (h) {
       var just = Math.abs(h.cents) <= 2;
       var cc = h.cents === 0 ? '&nbsp;' : (h.cents > 0 ? '+' + h.cents : '' + h.cents);
-      return '<button class="tm-ha-cell' + (just ? ' just' : '') + '" data-n="' + h.n + '" type="button" aria-label="Armónico ' + h.n + ', ' + h.es + '">' +
+      return '<button class="tm-ha-cell' + (just ? ' just' : '') + '" data-n="' + h.n + '" type="button" aria-label="' + T('Armónico ' + h.n + ', ' + h.es, 'Harmonic ' + h.n + ', ' + nom(h)) + '">' +
         '<div class="tm-ha-cn">' + h.n + '</div>' +
-        '<div class="tm-ha-cnote">' + h.es + '</div>' +
+        '<div class="tm-ha-cnote">' + nom(h) + '</div>' +
         '<div class="tm-ha-cc">' + cc + '</div></button>';
     }).join('');
 
@@ -181,13 +196,13 @@
       '<div class="tm-ha-wrap">' +
         '<div class="tm-ha-top">' +
           '<div id="' + uid + '_left"><div class="tm-ha-staff" id="' + uid + '_staff"></div></div>' +
-          '<div class="tm-ha-info" id="' + uid + '_ro"><span class="tm-ha-hint">Pulsa un armónico para verlo y oírlo</span></div>' +
+          '<div class="tm-ha-info" id="' + uid + '_ro"><span class="tm-ha-hint">' + T('Pulsa un armónico para verlo y oírlo', 'Click a harmonic to see and hear it') + '</span></div>' +
         '</div>' +
         '<div class="tm-ha-grid">' + cells + '</div>' +
-        '<div class="tm-ha-note-lbl">Fundamental: Do₂ (65,4 Hz). Los números son el orden del armónico; debajo, la nota y su desviación en cents.</div>' +
+        '<div class="tm-ha-note-lbl">' + T('Fundamental: Do₂ (65,4 Hz). Los números son el orden del armónico; debajo, la nota y su desviación en cents.', 'Fundamental: C2 (65.4 Hz). The numbers are the harmonic number; below, the note and its deviation in cents.') + '</div>' +
         '<div class="tm-ha-ctrls">' +
-          '<button class="tm-ha-btn" id="' + uid + '_series" type="button">▶ Sonar la serie</button>' +
-          '<button class="tm-ha-btn sec" id="' + uid + '_chord" type="button">♫ Todos a la vez (el timbre)</button>' +
+          '<button class="tm-ha-btn" id="' + uid + '_series" type="button">' + T('▶ Sonar la serie', '▶ Play the series') + '</button>' +
+          '<button class="tm-ha-btn sec" id="' + uid + '_chord" type="button">' + T('♫ Todos a la vez (el timbre)', '♫ All at once (the timbre)') + '</button>' +
         '</div>' +
       '</div>';
 

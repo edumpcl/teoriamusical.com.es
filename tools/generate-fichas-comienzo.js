@@ -13,6 +13,8 @@
  * (generarLote/dibujar). Se audita con tools/verificar-comienzo.js.
  */
 const path = require('path');
+const EN = process.argv.includes('--lang=en');   // edicion inglesa: textos en ingles, salida en assets/img/en/...
+const TL = (es, en) => (EN ? en : es);
 const fs = require('fs');
 
 const ROOT = path.join(__dirname, '..');
@@ -20,7 +22,7 @@ const ENGINE1 = 'assets/js/completar-compas-engine.js';
 const ENGINE2 = 'assets/js/tipo-de-comienzo-engine.js';
 const { cargarFicha, escalarUniforme } = require('./lib-ficha-verovio.js');
 /* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
-const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/comienzo/fichas');
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/' + (EN ? 'en/' : '') + 'comienzo/fichas');
 
 /* Los lotes de la ficha: nivel, cuántos, semilla. */
 const LOTES = [
@@ -63,24 +65,24 @@ const CSS = `
   .sol-tag { display: inline-block; background: #c0392b; color: #fff; font-size: 8.5pt; font-weight: bold; padding: 1px 7px; border-radius: 3px; vertical-align: middle; margin-left: 8px; }
 `;
 
-const TIT = { 1: '1. Fácil (compases simples; silencio o anacrusa de un tiempo entero)', 2: '2. Medio (simples y compuestos; el silencio inicial puede no estar escrito)', 3: '3. Difícil (figuras muy pequeñas y silencios que despistan)' };
+const TIT = { 1: TL('1. Fácil (compases simples; silencio o anacrusa de un tiempo entero)', '1. Easy (simple meters; a rest or pickup of one whole beat)'), 2: TL('2. Medio (simples y compuestos; el silencio inicial puede no estar escrito)', '2. Medium (simple and compound; the initial rest may not be written)'), 3: TL('3. Difícil (figuras muy pequeñas y silencios que despistan)', '3. Hard (very small note values and rests that mislead)') };
 
 function html(solucion) {
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE LA FRASE MUSICAL</div>
-        <h1>¿Cómo empieza la melodía?${solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">TEORIAMUSICAL.COM.ES &middot; ${TL('FICHA DE LA FRASE MUSICAL', 'MUSICAL PHRASE WORKSHEET')}</div>
+        <h1>${TL('¿Cómo empieza la melodía?', 'How does the melody begin?')}${solucion ? '<span class="sol-tag">' + TL('SOLUCIONES', 'ANSWERS') + '</span>' : ''}</h1>
       </div>
       <img class="logo" src="${LOGO}" width="34" height="35" alt="">
     </div>
-    <p class="instr">Marca el tipo de comienzo de cada melodía. Lo que decide es <b>cuándo entra la música</b> dentro del compás. <b>Tético:</b> en el tiempo 1. <b>Acéfalo:</b> después del tiempo fuerte pero antes de la mitad del compás (el silencio inicial puede estar escrito o no). <b>Anacrúsico:</b> en la mitad del compás o después, justo antes del tiempo fuerte.</p>
-    ${solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    <p class="instr">${TL(`Marca el tipo de comienzo de cada melodía. Lo que decide es <b>cuándo entra la música</b> dentro del compás. <b>Tético:</b> en el tiempo 1. <b>Acéfalo:</b> después del tiempo fuerte pero antes de la mitad del compás (el silencio inicial puede estar escrito o no). <b>Anacrúsico:</b> en la mitad del compás o después, justo antes del tiempo fuerte.`, `Mark the type of beginning of each melody. What decides it is <b>when the music enters</b> within the measure. <b>Thetic:</b> on beat 1. <b>Acephalous:</b> after the strong beat but before the middle of the measure (the initial rest may or may not be written). <b>Anacrusic (pickup):</b> at the middle of the measure or later, just before the strong beat.`)}</p>
+    ${solucion ? '' : '<div class="datos"><span><b>' + TL('Nombre:', 'Name:') + '</b></span><span><b>' + TL('Curso:', 'Class:') + '</b></span><span><b>' + TL('Fecha:', 'Date:') + '</b></span></div>'}
   </div>
   <div id="cuerpo"></div>
-  <div class="pie"><span>Comienzo tético, anacrúsico y acéfalo${solucion ? ' &middot; soluciones' : ''} &middot; teoriamusical.com.es/ejercicios/comienzo-tetico-anacrusico-acefalo/</span></div>
+  <div class="pie"><span>${TL('Comienzo tético, anacrúsico y acéfalo', 'Thetic, anacrusic and acephalous beginnings')}${solucion ? ' &middot; ' + TL('soluciones', 'answers') : ''} &middot; ${TL('teoriamusical.com.es/ejercicios/comienzo-tetico-anacrusico-acefalo/', 'teoriamusical.com.es/en/exercises/rhythm/phrase-beginnings/')}</span></div>
 </div></body></html>`;
 }
 

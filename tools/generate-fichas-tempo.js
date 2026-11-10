@@ -4,6 +4,7 @@
  *
  *   node tools/generate-fichas-tempo.js            -> ficha + soluciones + preview
  *   node tools/generate-fichas-tempo.js --png=DIR  -> además, captura de cada hoja
+ *   node tools/generate-fichas-tempo.js --lang=en  -> versión inglesa en assets/img/en/tempo/fichas
  *
  * Dos partes, las mismas que los ejercicios de /ejercicios/tempo/:
  *   1. Unir cada término con su significado (se escribe la letra).
@@ -18,12 +19,14 @@ const fs = require('fs');
 const vm = require('vm');
 
 const ROOT = path.join(__dirname, '..');
-const OUT_DIR = path.join(ROOT, 'assets/img/tempo/fichas');
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const T = (es, en) => (EN ? en : es);
+const OUT_DIR = path.join(ROOT, 'assets/img', EN ? 'en/' : '', 'tempo/fichas');
 const SEMILLA_UNIR = 9101;
 const SEMILLA_ORDEN = 9202;
 
 /* El motor es un IIFE de navegador: se carga con un window de mentira. */
-const caja = { window: {}, document: undefined };
+const caja = { window: {}, document: EN ? { documentElement: { lang: 'en' } } : undefined };
 caja.self = caja;
 vm.createContext(caja);
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'assets/js/tempo-ejercicios.js'), 'utf8'), caja);
@@ -60,8 +63,8 @@ function unir() {
 }
 
 const FICHA = {
-  titulo: 'Tempo y agógica',
-  instr: 'Primera parte: escribe al lado de cada término la letra de su significado. Segunda parte: numera cada serie según el orden que se pide.',
+  titulo: T('Tempo y agógica', 'Tempo and agogics'),
+  instr: T('Primera parte: escribe al lado de cada término la letra de su significado. Segunda parte: numera cada serie según el orden que se pide.', 'Part one: next to each term, write the letter of its meaning. Part two: number each series in the order requested.'),
 };
 
 module.exports = { unir, SEMILLA_ORDEN };
@@ -109,21 +112,21 @@ function html(solucion) {
   const u = unir();
   const series = MOTOR.generar('ordenar', { sentido: 'mezcla', cuantos: 4, n: 6 }, SEMILLA_ORDEN);
   const hueco = v => (solucion ? `<span class="hueco val">${v}</span>` : '<span class="hueco"></span>');
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE TEMPO</div>
-        <h1>${FICHA.titulo}${solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">TEORIAMUSICAL.COM.ES &middot; ${T('FICHA DE TEMPO', 'TEMPO WORKSHEET')}</div>
+        <h1>${FICHA.titulo}${solucion ? `<span class="sol-tag">${T('SOLUCIONES', 'ANSWERS')}</span>` : ''}</h1>
       </div>
       <img class="logo" src="${LOGO}" width="34" height="35" alt="">
     </div>
     <p class="instr">${FICHA.instr}</p>
-    ${solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    ${solucion ? '' : `<div class="datos"><span><b>${T('Nombre:', 'Name:')}</b></span><span><b>${T('Curso:', 'Class:')}</b></span><span><b>${T('Fecha:', 'Date:')}</b></span></div>`}
   </div>
 
-  <h2>1. Cada término con su significado</h2>
+  <h2>${T('1. Cada término con su significado', '1. Match each term with its meaning')}</h2>
   <div class="cols">
     <ul class="lista">
       ${u.terminos.map(x => `<li><span class="num">${x.n}.</span> <strong>${x.t}</strong> ${hueco(x.letra)}</li>`).join('\n      ')}
@@ -133,17 +136,17 @@ function html(solucion) {
     </ul>
   </div>
 
-  <h2>2. Ordena las velocidades</h2>
+  <h2>${T('2. Ordena las velocidades', '2. Order the speeds')}</h2>
   <div class="series">
     ${series.map((s, i) => {
       const orden = {};
       s.solucion.forEach((t, k) => { orden[t] = k + 1; });
-      return `<div class="serie"><p>${i + 1}. De más ${s.sentido === 'lento-rapido' ? 'lento a más rápido' : 'rápido a más lento'}:</p>
+      return `<div class="serie"><p>${i + 1}${T('. De más ', '. From ')}${s.sentido === 'lento-rapido' ? T('lento a más rápido', 'slowest to fastest') : T('rápido a más lento', 'fastest to slowest')}:</p>
       <div class="fichas">${s.fichas.map(t => `<span class="ficha"><span class="caja${solucion ? ' val' : ''}">${solucion ? orden[t] : ''}</span>${t}</span>`).join('')}</div></div>`;
     }).join('\n    ')}
   </div>
 
-  <div class="pie"><span>Tempo y agógica${solucion ? ' &middot; soluciones' : ''} &middot; teoriamusical.com.es/ejercicios/tempo/</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${T('Tempo y agógica', 'Tempo and agogics')}${solucion ? T(' &middot; soluciones', ' &middot; answers') : ''} &middot; teoriamusical.com.es/${EN ? 'en/exercises' : 'ejercicios'}/tempo/</span><span>teoriamusical.com.es</span></div>
 </div></body></html>`;
 }
 
@@ -156,7 +159,7 @@ function html(solucion) {
     const page = await browser.newPage({ deviceScaleFactor: 3 });
     await page.setViewportSize({ width: 850, height: 1200 });
     await page.setContent(html(solucion));
-    const nombre = 'ficha-tempo' + (solucion ? '-soluciones' : '');
+    const nombre = 'ficha-tempo' + (solucion ? '-soluciones' : '');  // mismo nombre en inglés (carpeta assets/img/en)
     const pdfPath = path.join(OUT_DIR, nombre + '.pdf');
     const sobra = await page.evaluate(() => Math.round(document.querySelector('.hoja').scrollHeight - 297 / 25.4 * 96));
     await page.pdf({ path: pdfPath, format: 'A4', printBackground: true, margin: { top: '0', bottom: '0', left: '0', right: '0' } });

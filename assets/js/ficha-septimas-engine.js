@@ -181,7 +181,7 @@
     cont.innerHTML = '<div class="tm-fs">'
       + '<div class="tm-fs-acciones">'
       + '<button type="button" class="tm-fs-btn tm-fs-btn-1" data-a="generar">' + T('Generar otra ficha', 'Generate another sheet') + '</button>'
-      + '<button type="button" class="tm-fs-btn tm-fs-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show solutions') + '</button>'
+      + '<button type="button" class="tm-fs-btn tm-fs-btn-2" data-a="soluciones">' + T('Ver soluciones', 'Show answers') + '</button>'
       + '<button type="button" class="tm-fs-btn tm-fs-btn-2" data-a="imprimir">' + T('Imprimir', 'Print') + '</button>'
       + '</div>'
       + '<p class="tm-fs-enlace"></p>'
@@ -297,7 +297,7 @@
       else { do { nueva = Math.floor(Math.random() * 90000 + 10000); } while (nueva === semilla); }
       semilla = nueva;
       solucion = false;
-      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show solutions');
+      cont.querySelector('[data-a="soluciones"]').textContent = T('Ver soluciones', 'Show answers');
       itemsActuales = elegirItems(semilla);
       pintar();
       var a = cont.querySelector('.tm-fs-enlace');
@@ -312,7 +312,7 @@
       if (accion === 'generar') generar();
       else if (accion === 'soluciones') {
         solucion = !solucion;
-        btn.textContent = solucion ? T('Ocultar soluciones', 'Hide solutions') : T('Ver soluciones', 'Show solutions');
+        btn.textContent = solucion ? T('Ocultar soluciones', 'Hide answers') : T('Ver soluciones', 'Show answers');
         pintar();
       } else if (accion === 'imprimir') {
         prepararImpresion();

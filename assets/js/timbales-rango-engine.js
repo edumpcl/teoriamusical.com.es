@@ -8,6 +8,10 @@
 (function () {
   'use strict';
 
+  /* Página inglesa: <html lang="en"> (el español queda igual). Notas con letras y cifras normales. */
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+
   /* Cada timbal cubre 7 semitonos (una quinta justa) y solapa con el siguiente, de modo
      que los cinco recorren Re2–Do4 sin huecos. lo/hi = nota MIDI mínima y máxima.
      `el` = elipse del parche en la foto (coordenadas del viewBox, medidas sobre la
@@ -15,13 +19,13 @@
   var TIMBALES = [
     { nom: 'Piccolo',    pulg: '20″', cm: '51 cm', lo: 53, hi: 60,   // Fa3 – Do4
       el: { cx: 836.5, cy: 77,    rx: 93.5,  ry: 12   } },
-    { nom: 'Pequeño',    pulg: '23″', cm: '58 cm', lo: 50, hi: 57,   // Re3 – La3
+    { nom: T('Pequeño', 'Small'),    pulg: '23″', cm: '58 cm', lo: 50, hi: 57,   // Re3 – La3
       el: { cx: 689.5, cy: 33.5,  rx: 90.5,  ry: 10.5 } },
-    { nom: 'Mediano',    pulg: '26″', cm: '66 cm', lo: 46, hi: 53,   // Si♭2 – Fa3
+    { nom: T('Mediano', 'Medium'),    pulg: '26″', cm: '66 cm', lo: 46, hi: 53,   // Si♭2 – Fa3
       el: { cx: 480,   cy: 19.5,  rx: 91,    ry: 12.5 } },
-    { nom: 'Grande',     pulg: '29″', cm: '74 cm', lo: 41, hi: 48,   // Fa2 – Do3
+    { nom: T('Grande', 'Large'),     pulg: '29″', cm: '74 cm', lo: 41, hi: 48,   // Fa2 – Do3
       el: { cx: 296.5, cy: 60.5,  rx: 106.5, ry: 17.5 } },
-    { nom: 'Contrabajo', pulg: '32″', cm: '81 cm', lo: 38, hi: 45,   // Re2 – La2
+    { nom: T('Contrabajo', 'Extra large'), pulg: '32″', cm: '81 cm', lo: 38, hi: 45,   // Re2 – La2
       el: { cx: 160,   cy: 139,   rx: 132,   ry: 25   } }
   ];
   /* Re2 = MIDI 38 = 73,4 Hz. Los timbales son GRAVES: el error facil es escribir estos
@@ -37,8 +41,9 @@
   var LETRA = ['C', 'Cs', 'D', 'Ds', 'E', 'F', 'Fs', 'G', 'Gs', 'A', 'As', 'B'];
   function fichero(m) { return LETRA[m % 12] + (Math.floor(m / 12) - 1); }
 
-  var ES = ['Do', 'Do♯', 'Re', 'Mi♭', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'Si♭', 'Si'];
-  var SUB = { '2': '₂', '3': '₃', '4': '₄' };
+  var ES = T(['Do', 'Do♯', 'Re', 'Mi♭', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'Si♭', 'Si'],
+             ['C', 'C♯', 'D', 'E♭', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'B♭', 'B']);
+  var SUB = T({ '2': '₂', '3': '₃', '4': '₄' }, {});
   function nombre(m) {
     var oct = Math.floor(m / 12) - 1;
     return ES[((m % 12) + 12) % 12] + (SUB[String(oct)] || oct);
@@ -53,19 +58,27 @@
     if (m >= t.hi - 1) return 'tenso';
     return 'optima';
   }
-  var ETIQUETA = {
+  var ETIQUETA = T({
     optima: 'zona óptima',
     flojo:  'cerca de su grave: pierde definición',
     tenso:  'cerca de su agudo: suena estrangulado'
-  };
-  var CHIP = { optima: 'zona óptima', flojo: 'zona floja', tenso: 'zona tensa' };
-  var CORTA = { flojo: 'cerca de su grave', tenso: 'cerca de su agudo' };
+  }, {
+    optima: 'best zone',
+    flojo:  'near its low end, where it loses definition',
+    tenso:  'near its high end, where it sounds choked'
+  });
+  var CHIP = T({ optima: 'zona óptima', flojo: 'zona floja', tenso: 'zona tensa' },
+               { optima: 'best zone', flojo: 'slack zone', tenso: 'tight zone' });
+  var CORTA = T({ flojo: 'cerca de su grave', tenso: 'cerca de su agudo' },
+                { flojo: 'near its low end', tenso: 'near its high end' });
+  /* nombre del timbal dentro de una frase: 'piccolo' / 'piccolo timpano' */
+  function nm(t) { return T(t.nom.toLowerCase(), t.nom.toLowerCase() + ' timpano'); }
 
   /* 'en el piccolo (cerca de su grave) y en el mediano (cerca de su agudo)':
      con parentesis, porque encadenar comas dentro de cada elemento se lee fatal */
   function lista(cs) {
-    var p = cs.map(function (c) { return 'en el ' + c.t.nom.toLowerCase() + ' (' + CORTA[c.z] + ')'; });
-    return p.length < 2 ? p[0] : p.slice(0, -1).join(', ') + ' y ' + p[p.length - 1];
+    var p = cs.map(function (c) { return T('en el ', 'on the ') + nm(c.t) + ' (' + CORTA[c.z] + ')'; });
+    return p.length < 2 ? p[0] : p.slice(0, -1).join(', ') + T(' y ', ' and ') + p[p.length - 1];
   }
 
   var CSS = [
@@ -134,12 +147,13 @@
     wrap.innerHTML =
       '<div class="tm-tb-wrap">' +
         '<div class="tm-tb-readout" id="' + uid + '_ro">' +
-          '<span class="tm-tb-hint">Elige una nota y te digo en qué timbal va</span></div>' +
+          '<span class="tm-tb-hint">' + T('Elige una nota y te digo en qué timbal va', 'Pick a note and I will tell you which timpano it goes on') + '</span></div>' +
         '<figure class="tm-tb-foto">' +
           '<picture>' +
             '<source srcset="' + FOTO.base + '.webp" type="image/webp">' +
             '<img src="' + FOTO.base + '.jpg" width="' + FOTO.w + '" height="' + FOTO.h + '" ' +
-              'alt="Juego de cinco timbales de concierto en semicírculo, del mayor (32 pulgadas) a la izquierda al menor (20 pulgadas) a la derecha">' +
+              'alt="' + T('Juego de cinco timbales de concierto en semicírculo, del mayor (32 pulgadas) a la izquierda al menor (20 pulgadas) a la derecha',
+                        'Set of five concert timpani in a semicircle, from the largest (32 inches) on the left to the smallest (20 inches) on the right') + '">' +
           '</picture>' +
           '<svg class="tm-tb-svg" viewBox="0 0 ' + FOTO.w + ' ' + FOTO.h + '" ' +
             'preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">' + parches + '</svg>' +
@@ -195,31 +209,36 @@
 
       var texto;
       if (!cabe.length) {
-        texto = 'Ningún timbal del juego llega a esta nota.';
-        det.innerHTML = '<div class="tm-tb-vacio">Fuera del registro de los cinco timbales.</div>';
+        texto = T('Ningún timbal del juego llega a esta nota.', 'None of the timpani in the set reaches this note.');
+        det.innerHTML = '<div class="tm-tb-vacio">' + T('Fuera del registro de los cinco timbales.', 'Outside the range of the five timpani.') + '</div>';
       } else {
         var buenos = cabe.filter(function (c) { return c.z === 'optima'; });
         if (buenos.length) {
-          texto = 'Va en el <strong>' + buenos[0].t.nom.toLowerCase() + '</strong> (' + buenos[0].t.pulg + '), en su ' +
-                  ETIQUETA.optima + '.';
+          texto = T('Va en el <strong>' + buenos[0].t.nom.toLowerCase() + '</strong> (' + buenos[0].t.pulg + '), en su ' +
+                    ETIQUETA.optima + '.',
+                    'It goes on the <strong>' + nm(buenos[0].t) + '</strong> (' + buenos[0].t.pulg + '), in its ' +
+                    ETIQUETA.optima + '.');
           if (buenos.length > 1) {
-            texto += ' También queda bien en el ' + buenos[1].t.nom.toLowerCase() + ' (' + buenos[1].t.pulg + ').';
+            texto += T(' También queda bien en el ' + buenos[1].t.nom.toLowerCase() + ' (' + buenos[1].t.pulg + ').',
+                       ' It also sounds good on the ' + nm(buenos[1].t) + ' (' + buenos[1].t.pulg + ').');
           }
           var malos = cabe.filter(function (c) { return c.z !== 'optima'; });
           if (malos.length) {
-            texto += ' Entra además ' + lista(malos) + '.';
+            texto += T(' Entra además ', ' It also fits ') + lista(malos) + '.';
           }
         } else if (cabe.length === 1) {
-          texto = 'Solo entra en el <strong>' + cabe[0].t.nom.toLowerCase() + '</strong> (' + cabe[0].t.pulg + '), y ' +
-                  ETIQUETA[cabe[0].z] + '.';
+          texto = T('Solo entra en el <strong>' + cabe[0].t.nom.toLowerCase() + '</strong> (' + cabe[0].t.pulg + '), y ' +
+                    ETIQUETA[cabe[0].z] + '.',
+                    'It only fits on the <strong>' + nm(cabe[0].t) + '</strong> (' + cabe[0].t.pulg + '), ' +
+                    ETIQUETA[cabe[0].z] + '.');
         } else {
-          texto = 'Ningún timbal la deja en su zona buena: entra ' + lista(cabe) + '.';
+          texto = T('Ningún timbal la deja en su zona buena: entra ', 'No timpano leaves it in its best zone: it fits ') + lista(cabe) + '.';
         }
         det.innerHTML = cabe.map(function (c, k) { return ficha(c.t, c.z, m, k > 0); }).join('');
       }
 
       ro.innerHTML = '<div class="tm-tb-notarow"><span class="tm-tb-nota">' + nombre(m) + '</span>' +
-                       '<button class="tm-tb-play" type="button" aria-label="Escuchar la nota">▶</button></div>' +
+                       '<button class="tm-tb-play" type="button" aria-label="' + T('Escuchar la nota', 'Listen to the note') + '">▶</button></div>' +
                      '<div class="tm-tb-veredicto">' + texto + '</div>';
       var pb = ro.querySelector('.tm-tb-play');
       if (pb) pb.addEventListener('click', function () { suena(m); });

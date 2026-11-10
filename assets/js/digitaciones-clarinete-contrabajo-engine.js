@@ -6,6 +6,12 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  // Nombres de nota (Do Re Mi...) -> letras (C D E...) en la edicion inglesa
+  const NOTA_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  function enNote(s) { return EN ? s.replace(/Sol|Do|Re|Mi|Fa|La|Si/g, function (x) { return NOTA_EN[x]; }) : s; }
+
   // ── FRENTE: foto real del contrabajo (Selmer), marcadores calibrados (viewBox 210×980) ──
   var FRONT_W = 210, FRONT_H = 980;
   var FRONT_KEYS = [
@@ -51,14 +57,15 @@
       '<rect class="tm-cc-pk-hl" x="' + (-hw + 5) + '" y="' + (-hh + 3) + '" width="' + (s.w - 10) + '" height="' + (s.h * 0.28).toFixed(1) + '" rx="' + (s.h * 0.14).toFixed(1) + '"/>' +
       '</g>';
   }
+  var PKLAB = { 'meñique izquierdo': 'left little finger', 'meñique derecho': 'right little finger' };
   function buildPinkySvg(list, vb, label) {
     return '<div class="tm-cc-pkcluster">' +
-      '<svg class="tm-cc-pksvg" viewBox="' + vb + '" role="img" aria-label="Espátulas del ' + label + '; la que se pulsa se ilumina en dorado">' +
+      '<svg class="tm-cc-pksvg" viewBox="' + vb + '" role="img" aria-label="' + T('Espátulas del ' + label + '; la que se pulsa se ilumina en dorado', 'Keys of the ' + PKLAB[label] + '; the one that is pressed lights up in gold') + '">' +
       pkGrad() + list.map(pkSpat).join('') + '</svg>' +
-      '<p class="tm-cc-pkcap">' + label + '</p></div>';
+      '<p class="tm-cc-pkcap">' + T(label, PKLAB[label]) + '</p></div>';
   }
   function buildBack() {
-    return '<svg class="tm-cc-backsvg" viewBox="46 104 112 158" role="img" aria-label="Parte de atrás del clarinete contrabajo (diagrama): la llave de registro (arriba) y el agujero del pulgar (abajo) se iluminan al usarse">' +
+    return '<svg class="tm-cc-backsvg" viewBox="46 104 112 158" role="img" aria-label="' + T('Parte de atrás del clarinete contrabajo (diagrama): la llave de registro (arriba) y el agujero del pulgar (abajo) se iluminan al usarse', 'Back of the contrabass clarinet (diagram): the register key (top) and the thumb hole (bottom) light up when used') + '">' +
       pkGrad() +
       '<g class="tm-cc-key" data-k="R">' +
         '<rect class="tm-cc-pk-pad" x="70" y="118" width="62" height="20" rx="10" transform="rotate(-6 101 128)"/>' +
@@ -74,12 +81,12 @@
   }
 
   var NAMES = {
-    R: 'registro', T: 'pulgar', A: 'La (garganta)', GS: 'Sol♯ (garganta)',
-    H1: 'agujero 1', H2: 'agujero 2', H3: 'agujero 3', H4: 'agujero 4', H5: 'agujero 5', H6: 'agujero 6',
-    EBBA: 'banana Mi♭/Si♭', SLI: 'deslizante Si/Fa♯',
-    LEB: 'Mi/Si (meñique izq.)', LFCS: 'Fa♯/Do♯ (meñique izq.)', CSGS: 'Do♯/Sol♯ (meñique izq.)', LAB: 'La♭/Mi♭ (meñique izq.)',
-    RFC: 'Fa/Do (meñique dcho.)', RAB: 'La♭/Mi♭ (meñique dcho.)',
-    REB: 'Mi/Si (meñique dcho.)', RFCS: 'Fa♯/Do♯ (meñique dcho.)', EBG: 'Mi♭ grave'
+    R: T('registro', 'register key'), T: T('pulgar', 'thumb'), A: T('La (garganta)', 'A (throat)'), GS: T('Sol♯ (garganta)', 'G♯ (throat)'),
+    H1: T('agujero 1', 'hole 1'), H2: T('agujero 2', 'hole 2'), H3: T('agujero 3', 'hole 3'), H4: T('agujero 4', 'hole 4'), H5: T('agujero 5', 'hole 5'), H6: T('agujero 6', 'hole 6'),
+    EBBA: T('banana Mi♭/Si♭', 'E♭/B♭ banana key'), SLI: T('deslizante Si/Fa♯', 'B/F♯ slider key'),
+    LEB: T('Mi/Si (meñique izq.)', 'E/B (left little finger)'), LFCS: T('Fa♯/Do♯ (meñique izq.)', 'F♯/C♯ (left little finger)'), CSGS: T('Do♯/Sol♯ (meñique izq.)', 'C♯/G♯ (left little finger)'), LAB: T('La♭/Mi♭ (meñique izq.)', 'A♭/E♭ (left little finger)'),
+    RFC: T('Fa/Do (meñique dcho.)', 'F/C (right little finger)'), RAB: T('La♭/Mi♭ (meñique dcho.)', 'A♭/E♭ (right little finger)'),
+    REB: T('Mi/Si (meñique dcho.)', 'E/B (right little finger)'), RFCS: T('Fa♯/Do♯ (meñique dcho.)', 'F♯/C♯ (right little finger)'), EBG: T('Mi♭ grave', 'low E♭')
   };
 
   var ALL6 = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
@@ -144,14 +151,14 @@
   function label(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
     if (!m) return n;
-    return m[1] + (m[2] ? '♯' : '') + SUB[m[3]];
+    return enNote(m[1]) + (m[2] ? '♯' : '') + SUB[m[3]];
   }
   function registro(n) {
     var i = ORDEN.indexOf(n);
-    if (i >= 0 && i <= ORDEN.indexOf('Fa#4')) return 'Chalumeau (grave)';
-    if (i <= ORDEN.indexOf('La#4')) return 'Garganta';
-    if (i <= ORDEN.indexOf('Do6')) return 'Clarín (medio)';
-    return 'Sobreagudo';
+    if (i >= 0 && i <= ORDEN.indexOf('Fa#4')) return T('Chalumeau (grave)', 'Chalumeau (low)');
+    if (i <= ORDEN.indexOf('La#4')) return T('Garganta', 'Throat');
+    if (i <= ORDEN.indexOf('Do6')) return T('Clarín (medio)', 'Clarion (middle)');
+    return T('Sobreagudo', 'Altissimo');
   }
   var LETTER = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
   var ES_FLAT = ['Do', 'Re♭', 'Re', 'Mi♭', 'Mi', 'Fa', 'Sol♭', 'Sol', 'La♭', 'La', 'Si♭', 'Si'];
@@ -164,7 +171,7 @@
   // El clarinete contrabajo en Si♭ suena una 16ª mayor (26 semitonos) por DEBAJO de lo escrito
   function suena(n) {
     var midi = midiOf(n) - 26;
-    return ES_FLAT[midi % 12] + SUB[String(Math.floor(midi / 12) - 1)];
+    return enNote(ES_FLAT[midi % 12]) + SUB[String(Math.floor(midi / 12) - 1)];
   }
   var AUDIO_BASE = '/assets/audio/clarinete-contrabajo/';
   function sampleFile(n) {
@@ -248,24 +255,24 @@
 
     wrap.innerHTML =
       '<div class="tm-cc-wrap">' +
-        '<div class="tm-cc-readout" id="' + uid + '_ro"><span class="tm-cc-hint">Elige una nota para ver su digitación</span></div>' +
+        '<div class="tm-cc-readout" id="' + uid + '_ro"><span class="tm-cc-hint">' + T('Elige una nota para ver su digitación', 'Choose a note to see its fingering') + '</span></div>' +
         '<div class="tm-cc-diagram">' +
           '<div class="tm-cc-photos">' +
             '<div class="tm-cc-photo tm-cc-front">' +
               '<picture><source type="image/webp" srcset="/assets/img/clarinete-contrabajo/digitacion-frente.webp">' +
-              '<img class="tm-cc-img" src="/assets/img/clarinete-contrabajo/digitacion-frente.jpg" width="' + FRONT_W + '" height="' + FRONT_H + '" loading="lazy" alt="Clarinete contrabajo en Si♭ visto de frente; los agujeros y llaves que se pulsan se iluminan en dorado"></picture>' +
-              '<svg class="tm-cc-svg" viewBox="0 0 ' + FRONT_W + ' ' + FRONT_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Digitación del clarinete contrabajo sobre una fotografía real (cara frontal)">' + frontSvg + '</svg>' +
+              '<img class="tm-cc-img" src="/assets/img/clarinete-contrabajo/digitacion-frente.jpg" width="' + FRONT_W + '" height="' + FRONT_H + '" loading="lazy" alt="' + T('Clarinete contrabajo en Si♭ visto de frente; los agujeros y llaves que se pulsan se iluminan en dorado', 'B♭ contrabass clarinet seen from the front; the holes and keys that are pressed light up in gold') + '"></picture>' +
+              '<svg class="tm-cc-svg" viewBox="0 0 ' + FRONT_W + ' ' + FRONT_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="' + T('Digitación del clarinete contrabajo sobre una fotografía real (cara frontal)', 'Contrabass clarinet fingering on a real photograph (front side)') + '">' + frontSvg + '</svg>' +
             '</div>' +
             '<div class="tm-cc-back">' +
               buildBack() +
-              '<p class="tm-cc-backcap"><strong>Parte de atrás</strong><br>el pulgar izquierdo tapa su agujero y aprieta la <strong>llave de registro</strong> (la 12ª).</p>' +
+              '<p class="tm-cc-backcap">' + T('<strong>Parte de atrás</strong><br>el pulgar izquierdo tapa su agujero y aprieta la <strong>llave de registro</strong> (la 12ª).', '<strong>Back</strong><br>the left thumb covers its hole and presses the <strong>register key</strong> (the 12th).') + '</p>' +
             '</div>' +
             '<div class="tm-cc-pinky">' +
               pinkyIzq + pinkyDer +
-              '<p class="tm-cc-pkcap">Los <strong>meñiques</strong>: racimos laterales que no se ven de frente.</p>' +
+              '<p class="tm-cc-pkcap">' + T('Los <strong>meñiques</strong>: racimos laterales que no se ven de frente.', 'The <strong>little fingers</strong>: side key clusters that cannot be seen from the front.') + '</p>' +
             '</div>' +
           '</div>' +
-          '<p class="tm-cc-credit">Foto del frente: clarinete contrabajo Selmer vía <a href="https://commons.wikimedia.org/wiki/File:Selmer_double_bass_clarinet.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Dorso y meñiques: diagrama propio.</p>' +
+          '<p class="tm-cc-credit">' + T('Foto del frente: clarinete contrabajo Selmer vía <a href="https://commons.wikimedia.org/wiki/File:Selmer_double_bass_clarinet.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Dorso y meñiques: diagrama propio.', 'Front photo: Selmer contrabass clarinet via <a href="https://commons.wikimedia.org/wiki/File:Selmer_double_bass_clarinet.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Back and little-finger keys: own diagram.') + '</p>' +
         '</div>' +
         '<div class="tm-cc-btns">' + btns + '</div>' +
       '</div>';
@@ -303,10 +310,10 @@
       });
       ro.innerHTML =
         '<div class="tm-cc-staff" id="' + uid + '_staff"></div>' +
-        '<div class="tm-cc-noterow"><span class="tm-cc-intl">' + label(n) + (FLAT[n] ? ' (' + FLAT[n] + ')' : '') + '</span>' +
-        '<button class="tm-cc-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
-        '<div class="tm-cc-reg">' + intl(n) + ' · ' + registro(n) + ' · suena ' + suena(n) + ' (16ª mayor abajo)</div>' +
-        '<div class="tm-cc-keysline">' + (nombres.length ? nombres.join(' · ') : 'al aire (nada pulsado)') + '</div>';
+        '<div class="tm-cc-noterow"><span class="tm-cc-intl">' + label(n) + (FLAT[n] ? ' (' + enNote(FLAT[n]) + ')' : '') + '</span>' +
+        '<button class="tm-cc-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
+        '<div class="tm-cc-reg">' + intl(n) + ' · ' + registro(n) + T(' · suena ', ' · sounds ') + suena(n) + T(' (16ª mayor abajo)', ' (major 16th lower)') + '</div>' +
+        '<div class="tm-cc-keysline">' + (nombres.length ? nombres.join(' · ') : T('al aire (nada pulsado)', 'open (nothing pressed)')) + '</div>';
       renderStaff(n);
       var pb = ro.querySelector('.tm-cc-play');
       if (pb) pb.addEventListener('click', function () { play(n); });

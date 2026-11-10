@@ -17,7 +17,9 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = os.path.join(os.path.dirname(__file__), '..')
 SRC  = os.path.join(ROOT, 'assets', 'img', 'corneta', 'instrumento.jpg')
-OUT  = os.path.join(ROOT, 'assets', 'img', 'corneta', 'palometa-dos-posiciones')
+EN = '--lang=en' in sys.argv or os.environ.get('TM_LANG') == 'en'
+OUT  = os.path.join(ROOT, 'assets', 'img', 'en', 'corneta', 'palometa-dos-posiciones') if EN else        os.path.join(ROOT, 'assets', 'img', 'corneta', 'palometa-dos-posiciones')
+if EN: os.makedirs(os.path.dirname(OUT), exist_ok=True)
 
 # --- coordenadas del motor (viewBox 651x649) ---
 PAL = (341, 361, 34)          # x, y, r
@@ -43,6 +45,7 @@ F_NOT = font(FB, 19)
 F_TAG = font(FB, 17)
 
 def panel(girada):
+    bomba_on = not girada  # la bomba (tubo extra) solo suena en posicion de do; girada, el aire la salta
     """Devuelve el recorte del mecanismo con la palometa dibujada en una posicion."""
     im = Image.open(SRC).convert('RGB').crop(CROP)
     w, h = im.size
@@ -55,7 +58,7 @@ def panel(girada):
 
     # --- bomba ---
     box = [bx-brx, by-bry, bx+brx, by+bry]
-    if girada:
+    if bomba_on:
         d.ellipse(box, fill=BLUE + (105,), outline=BLUE + (255,), width=7)
     else:
         # apagada: contorno discontinuo (a mano, PIL no tiene dash)
@@ -85,7 +88,7 @@ def panel(girada):
 
     # etiquetas dentro de la foto
     d2 = ImageDraw.Draw(im)
-    tag = 'girada' if girada else 'en do'
+    tag = ('turned' if girada else 'in C') if EN else ('girada' if girada else 'en do')
     tw = d2.textlength(tag, font=F_TAG)
     ty = py + pr + 10
     d2.rounded_rectangle([px-tw/2-11, ty, px+tw/2+11, ty+29], radius=7,
@@ -94,7 +97,7 @@ def panel(girada):
     bl = 'BOMBA'
     bw = d2.textlength(bl, font=F_TAG)
     d2.text((bx-bw/2, by-bry-27), bl, font=F_TAG,
-            fill=(255,255,255) if girada else BLUE)
+            fill=(255,255,255) if bomba_on else BLUE)
     return im
 
 PW, PH = (CROP[2]-CROP[0])*Z, (CROP[3]-CROP[1])*Z
@@ -105,11 +108,16 @@ H = M + TIT_H + PH + CAP_H + M
 img = Image.new('RGB', (W, H), CREAM)
 dr  = ImageDraw.Draw(img)
 
+PANELS_EN = [
+    (False, '1 · Palometa in C',  'The harmonics of C sound:\nthe air goes through the bomba', 'G₄ · C₅ · E₅ · G₅ · C₆ · D₆ · E₆'),
+    (True,  '2 · Palometa turned', 'The air skips the bomba:\nthe harmonics of D♭ sound', 'A♭₄ · D♭₅ · F₅ · A♭₅ · D♭₆ · E♭₆ · F₆'),
+]
 PANELS = [
     (False, '1 · Palometa en do',  'Suenan los armónicos de Do',      'Sol₄ · Do₅ · Mi₅ · Sol₅ · Do₆ · Re₆ · Mi₆'),
-    (True,  '2 · Palometa girada', 'El aire pasa por la bomba:\narmónicos de Re♭', 'La♭₄ · Re♭₅ · Fa₅ · La♭₅ · Re♭₆ · Mi♭₆ · Fa₆'),
+    (True,  '2 · Palometa girada', 'El aire se salta la bomba:\narmónicos de Re♭', 'La♭₄ · Re♭₅ · Fa₅ · La♭₅ · Re♭₆ · Mi♭₆ · Fa₆'),
 ]
 
+if EN: PANELS = PANELS_EN
 # Auto-ajuste: la lista de notas del 2.º panel es mas larga y se salia del borde.
 # Se busca el mayor tamano que quepa en AMBOS paneles (mismo tamano = consistencia visual).
 size = 19

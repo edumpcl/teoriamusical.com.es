@@ -12,13 +12,17 @@
  * La teoría se audita con tools/verificar-completar-compas.js.
  */
 const path = require('path');
+const EN = process.argv.includes('--lang=en');   // edicion inglesa: textos en ingles, salida en assets/img/en/...
+const TL = (es, en) => (EN ? en : es);
 const fs = require('fs');
 
 const ROOT = path.join(__dirname, '..');
 const ENGINE = 'assets/js/completar-compas-engine.js';
 const { cargarFicha, escalarUniforme } = require('./lib-ficha-verovio.js');
 /* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
-const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/compases/fichas');
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/' + (EN ? 'en/' : '') + 'compases/fichas');
+
+const TIT = { 1: TL('1. Falta una figura', '1. One note is missing'), 2: TL('2. Falta una figura o un silencio', '2. A note or a rest is missing'), 3: TL('3. Faltan varias figuras', '3. Several notes are missing') };
 
 /* Los lotes de la ficha: nivel, grupo, cuántos, semilla. El verificador los reutiliza. */
 const LOTES = [
@@ -57,29 +61,28 @@ const CSS = `
 `;
 
 function html(solucion) {
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE COMPASES</div>
-        <h1>Completar compases${solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">TEORIAMUSICAL.COM.ES &middot; ${TL('FICHA DE COMPASES', 'TIME SIGNATURES WORKSHEET')}</div>
+        <h1>${TL('Completar compases', 'Complete the measures')}${solucion ? '<span class="sol-tag">' + TL('SOLUCIONES', 'ANSWERS') + '</span>' : ''}</h1>
       </div>
       <img class="logo" src="${LOGO}" width="34" height="35" alt="">
     </div>
-    <p class="instr">A cada compás le falta algo en el sitio marcado con la línea roja. Escribe encima de la línea lo que falta. En la primera parte falta una figura; en la segunda, una figura o un silencio; en la tercera faltan varias figuras (vale cualquier combinación que sume lo que falta).</p>
-    ${solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    <p class="instr">${TL(`A cada compás le falta algo en el sitio marcado con la línea roja. Escribe encima de la línea lo que falta. En la primera parte falta una figura; en la segunda, una figura o un silencio; en la tercera faltan varias figuras (vale cualquier combinación que sume lo que falta).`, `Each measure is missing something where the red line is. Write above the line what is missing. In the first part one note is missing; in the second, a note or a rest; in the third, several notes are missing (any combination that adds up to what is missing is valid).`)}</p>
+    ${solucion ? '' : '<div class="datos"><span><b>' + TL('Nombre:', 'Name:') + '</b></span><span><b>' + TL('Curso:', 'Class:') + '</b></span><span><b>' + TL('Fecha:', 'Date:') + '</b></span></div>'}
   </div>
   <div id="cuerpo"></div>
-  <div class="pie"><span>Compases &middot; completar compases${solucion ? ' &middot; soluciones' : ''} &middot; teoriamusical.com.es/ejercicios/compases/</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${TL('Compases', 'Time signatures')} &middot; ${TL('completar compases', 'complete the measures')}${solucion ? ' &middot; ' + TL('soluciones', 'answers') : ''} &middot; ${TL('teoriamusical.com.es/ejercicios/compases/', 'teoriamusical.com.es/en/exercises/rhythm/time-signatures/')}</span><span>teoriamusical.com.es</span></div>
 </div></body></html>`;
 }
 
 /* Dentro de la página, con el motor cargado. */
-function montar({ LOTES, solucion }) {
+function montar({ LOTES, solucion, TIT }) {
   const T = window.tmCompletarCompasData;
   const cuerpo = document.getElementById('cuerpo');
-  const TIT = { 1: '1. Falta una figura', 2: '2. Falta una figura o un silencio', 3: '3. Faltan varias figuras' };
   let n = 0;
   LOTES.forEach(([nivel, grupo, cuantos, semilla]) => {
     const h = document.createElement('h2'); h.textContent = TIT[nivel]; cuerpo.appendChild(h);
@@ -103,7 +106,7 @@ function montar({ LOTES, solucion }) {
     const page = await browser.newPage({ deviceScaleFactor: 3 });
     await page.setViewportSize({ width: 850, height: 1200 });
     await cargarFicha(page, html(solucion), [ENGINE]);
-    const n = await page.evaluate(montar, { LOTES, solucion });
+    const n = await page.evaluate(montar, { LOTES, solucion, TIT });
     await page.evaluate('(' + escalarUniforme.toString() + ")('.rejilla', '.celda', 14, 0.45)");
     const nombre = 'ficha-completar-compases' + (solucion ? '-soluciones' : '');
     const pdfPath = path.join(OUT_DIR, nombre + '.pdf');

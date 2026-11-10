@@ -10,6 +10,14 @@
 (function () {
   'use strict';
 
+  // Inglés: la misma página sirve a <html lang="en"> (el español queda intacto).
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  // Nombre de nota en español -> letras (solo se muestra así en inglés; la lógica sigue con los nombres españoles).
+  const NOTE_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  const nm = s => EN ? String(s).replace(/Sol|Do|Re|Mi|Fa|La|Si/g, m => NOTE_EN[m]) : s;
+  const ordEn = n => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th');
+
   // Las 4 válvulas (se ENCIENDEN) sobre la FOTO (viewBox 760×1280). Coordenadas de
   // las palancas de dedo (1 arriba → 4 abajo). Pendiente de confirmar por especialista.
   var KEYS = [
@@ -46,16 +54,16 @@
   };
   function label(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
-    return m ? m[1] + (m[2] ? '♯' : '') + SUB[m[3]] : n;
+    return m ? nm(m[1] + (m[2] ? '♯' : '') + SUB[m[3]]) : n;
   }
   function registro(n) {
     var i = ORDEN.indexOf(n);
-    if (i <= ORDEN.indexOf('Si1')) return 'Registro grave';
-    if (i <= ORDEN.indexOf('Si2')) return 'Registro medio';
-    return 'Registro agudo';
+    if (i <= ORDEN.indexOf('Si1')) return T('Registro grave', 'Low register');
+    if (i <= ORDEN.indexOf('Si2')) return T('Registro medio', 'Middle register');
+    return T('Registro agudo', 'High register');
   }
   function combo(v) {
-    if (!v || !v.length) return 'al aire (sin válvulas)';
+    if (!v || !v.length) return T('al aire (sin válvulas)', 'open (no valves)');
     return v.map(function (k) { return k.slice(1); }).join('·');
   }
   var LETTER = { Do:'C', Re:'D', Mi:'E', Fa:'F', Sol:'G', La:'A', Si:'B' };
@@ -129,16 +137,16 @@
 
     wrap.innerHTML =
       '<div class="tm-tu-wrap">' +
-        '<div class="tm-tu-readout" id="' + uid + '_ro"><span class="tm-tu-hint">Elige una nota para ver su digitación</span></div>' +
+        '<div class="tm-tu-readout" id="' + uid + '_ro"><span class="tm-tu-hint">' + T('Elige una nota para ver su digitación', 'Choose a note to see its fingering') + '</span></div>' +
         '<div class="tm-tu-diagram">' +
           '<div class="tm-tu-photo">' +
             '<picture><source type="image/webp" srcset="/assets/img/tuba/instrumento.webp">' +
-            '<img class="tm-tu-img" src="/assets/img/tuba/instrumento.jpg" width="760" height="1280" loading="lazy" alt="Tuba en Do vertical con la campana arriba y las cuatro válvulas en el centro"></picture>' +
-            '<svg class="tm-tu-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagrama de digitación de la tuba sobre una fotografía real: se iluminan las válvulas que se pulsan">' +
+            '<img class="tm-tu-img" src="/assets/img/tuba/instrumento.jpg" width="760" height="1280" loading="lazy" alt="' + T('Tuba en Do vertical con la campana arriba y las cuatro válvulas en el centro', 'Upright C tuba with the bell at the top and the four valves in the center') + '"></picture>' +
+            '<svg class="tm-tu-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="' + T('Diagrama de digitación de la tuba sobre una fotografía real: se iluminan las válvulas que se pulsan', 'Tuba fingering diagram over a real photograph: the valves that are pressed light up') + '">' +
               keysSvg +
             '</svg>' +
           '</div>' +
-          '<p class="tm-tu-credit">Foto: Buffet Crampon vía <a href="https://commons.wikimedia.org/wiki/File:Tuba_Melton_Meinl_Weston.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0 · Audio: Sonatina Symphonic Orchestra</p>' +
+          '<p class="tm-tu-credit">' + T('Foto', 'Photo') + ': Buffet Crampon ' + T('vía', 'via') + ' <a href="https://commons.wikimedia.org/wiki/File:Tuba_Melton_Meinl_Weston.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0 · Audio: Sonatina Symphonic Orchestra</p>' +
         '</div>' +
         '<div class="tm-tu-btns">' + btns + '</div>' +
       '</div>';
@@ -175,10 +183,10 @@
       });
       ro.innerHTML =
         '<div class="tm-tu-staff" id="' + uid + '_staff"></div>' +
-        '<div class="tm-tu-noterow"><span class="tm-tu-intl">' + label(n) + (FLAT[n] ? ' (' + FLAT[n] + ')' : '') + '</span>' +
-        '<button class="tm-tu-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
+        '<div class="tm-tu-noterow"><span class="tm-tu-intl">' + label(n) + (FLAT[n] ? ' (' + nm(FLAT[n]) + ')' : '') + '</span>' +
+        '<button class="tm-tu-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
         '<div class="tm-tu-reg">' + intl(n) + ' · ' + registro(n) + '</div>' +
-        '<div class="tm-tu-keysline">Válvulas: ' + combo(v) + '</div>';
+        '<div class="tm-tu-keysline">' + T('Válvulas: ', 'Valves: ') + combo(v) + '</div>';
       renderStaff(n);
       var pb = ro.querySelector('.tm-tu-play');
       if (pb) pb.addEventListener('click', function () { play(n); });

@@ -9,6 +9,14 @@
 (function () {
   'use strict';
 
+  // Inglés: la misma página sirve a <html lang="en"> (el español queda intacto).
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  // Nombre de nota en español -> letras (solo se muestra así en inglés; la lógica sigue con los nombres españoles).
+  const NOTE_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  const nm = s => EN ? String(s).replace(/Sol|Do|Re|Mi|Fa|La|Si/g, m => NOTE_EN[m]) : s;
+  const ordEn = n => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th');
+
   // 4 pistones sobre la FOTO (viewBox 680×1089): 1·2·3 arriba, 4 lateral izquierdo.
   var KEYS = [
     { id: 'V1', x: 155, y: 293 },
@@ -42,16 +50,16 @@
   };
   function label(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
-    return m ? m[1] + (m[2] ? '♯' : '') + SUB[m[3]] : n;
+    return m ? nm(m[1] + (m[2] ? '♯' : '') + SUB[m[3]]) : n;
   }
   function registro(n) {
     var i = ORDEN.indexOf(n);
-    if (i <= ORDEN.indexOf('La#2')) return 'Registro grave';
-    if (i <= ORDEN.indexOf('La#3')) return 'Registro medio';
-    return 'Registro agudo';
+    if (i <= ORDEN.indexOf('La#2')) return T('Registro grave', 'Low register');
+    if (i <= ORDEN.indexOf('La#3')) return T('Registro medio', 'Middle register');
+    return T('Registro agudo', 'High register');
   }
   function combo(v) {
-    if (!v || !v.length) return 'al aire (sin pistones)';
+    if (!v || !v.length) return T('al aire (sin pistones)', 'open (no valves)');
     return v.map(function (k) { return k.slice(1); }).join('·');
   }
   var LETTER = { Do:'C', Re:'D', Mi:'E', Fa:'F', Sol:'G', La:'A', Si:'B' };
@@ -125,16 +133,16 @@
 
     wrap.innerHTML =
       '<div class="tm-bo-wrap">' +
-        '<div class="tm-bo-readout" id="' + uid + '_ro"><span class="tm-bo-hint">Elige una nota para ver su digitación</span></div>' +
+        '<div class="tm-bo-readout" id="' + uid + '_ro"><span class="tm-bo-hint">' + T('Elige una nota para ver su digitación', 'Choose a note to see its fingering') + '</span></div>' +
         '<div class="tm-bo-diagram">' +
           '<div class="tm-bo-photo">' +
             '<picture><source type="image/webp" srcset="/assets/img/bombardino/instrumento.webp">' +
-            '<img class="tm-bo-img" src="/assets/img/bombardino/instrumento.jpg" width="680" height="1089" loading="lazy" alt="Bombardino (eufonio) en Si bemol vertical, con la campana arriba, tres pistones en el centro y un cuarto pistón lateral"></picture>' +
-            '<svg class="tm-bo-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagrama de digitación del bombardino sobre una fotografía real: se iluminan los pistones que se pulsan">' +
+            '<img class="tm-bo-img" src="/assets/img/bombardino/instrumento.jpg" width="680" height="1089" loading="lazy" alt="' + T('Bombardino (eufonio) en Si bemol vertical, con la campana arriba, tres pistones en el centro y un cuarto pistón lateral', 'Upright B-flat euphonium (baritone horn) with the bell at the top, three valves in the center and a fourth valve at the side') + '"></picture>' +
+            '<svg class="tm-bo-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="' + T('Diagrama de digitación del bombardino sobre una fotografía real: se iluminan los pistones que se pulsan', 'Euphonium fingering diagram over a real photograph: the valves that are pressed light up') + '">' +
               keysSvg +
             '</svg>' +
           '</div>' +
-          '<p class="tm-bo-credit">Foto: Buffet Crampon / Besson vía <a href="https://commons.wikimedia.org/wiki/File:BC_Euphonium_ed1.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0 · Sonido: euphonium (MuseScore / Muse Sounds)</p>' +
+          '<p class="tm-bo-credit">' + T('Foto', 'Photo') + ': Buffet Crampon / Besson ' + T('vía', 'via') + ' <a href="https://commons.wikimedia.org/wiki/File:BC_Euphonium_ed1.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0 · ' + T('Sonido', 'Sound') + ': euphonium (MuseScore / Muse Sounds)</p>' +
         '</div>' +
         '<div class="tm-bo-btns">' + btns + '</div>' +
       '</div>';
@@ -171,10 +179,10 @@
       });
       ro.innerHTML =
         '<div class="tm-bo-staff" id="' + uid + '_staff"></div>' +
-        '<div class="tm-bo-noterow"><span class="tm-bo-intl">' + label(n) + (FLAT[n] ? ' (' + FLAT[n] + ')' : '') + '</span>' +
-        '<button class="tm-bo-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
+        '<div class="tm-bo-noterow"><span class="tm-bo-intl">' + label(n) + (FLAT[n] ? ' (' + nm(FLAT[n]) + ')' : '') + '</span>' +
+        '<button class="tm-bo-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
         '<div class="tm-bo-reg">' + intl(n) + ' · ' + registro(n) + '</div>' +
-        '<div class="tm-bo-keysline">Pistones: ' + combo(v) + '</div>';
+        '<div class="tm-bo-keysline">' + T('Pistones: ', 'Valves: ') + combo(v) + '</div>';
       renderStaff(n);
       var pb = ro.querySelector('.tm-bo-play');
       if (pb) pb.addEventListener('click', function () { play(n); });

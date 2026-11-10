@@ -22,7 +22,14 @@ const path = require('path');
 const fs = require('fs');
 
 const RAIZ = path.join(__dirname, '..');
-const OUT_DIR = path.join(RAIZ, 'assets/img/digitaciones/fichas');
+/* --lang=en (o TM_LANG=en): edicion inglesa; escribe en assets/img/en/... y traduce los textos. Sin la opcion, la salida es identica a la de siempre. */
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const T = (es, en) => (EN ? en : es);
+const OUT_DIR = path.join(RAIZ, 'assets/img', EN ? 'en' : '', 'digitaciones/fichas');
+const ORD_EN = (n) => n + (n % 100 >= 11 && n % 100 <= 13 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' }[n % 10] || 'th'));
+const ORD = (n) => (EN ? ORD_EN(n) : n + '.º');
+const LETRA_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+const enNota = (x) => (EN ? String(x).replace(/^(Sol|Do|Re|Mi|Fa|La|Si)/, (m) => LETRA_EN[m]) : x);
 
 const INSTRUMENTOS = {
   trompeta:   { transpone: -2, clef: 'sol', nombre: 'la trompeta en Si♭', corto: 'trompeta',
@@ -48,8 +55,22 @@ const INSTRUMENTOS = {
                 pagina: '/diccionario-musical/notas-del-trombon-bajo/', motor: 'tmTrombonBajoEngine', mm: 1.15 },
 };
 
-const SHARP = ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
-const FLAT = ['Do', 'Re♭', 'Re', 'Mi♭', 'Mi', 'Fa', 'Sol♭', 'Sol', 'La♭', 'La', 'Si♭', 'Si'];
+/* Nombres y paginas en ingles (solo con --lang=en). */
+const EN_INFO = {
+  trompeta: { nombre: 'the B♭ trumpet', corto: 'trumpet', pagina: '/en/music-dictionary/instruments/trumpet-notes/' },
+  fliscorno: { nombre: 'the B♭ flugelhorn', corto: 'flugelhorn', pagina: '/en/music-dictionary/instruments/flugelhorn-notes/' },
+  bombardino: { nombre: 'the euphonium', corto: 'euphonium', pagina: '/en/music-dictionary/instruments/euphonium-notes/' },
+  tuba: { nombre: 'the tuba', corto: 'tuba', pagina: '/en/music-dictionary/instruments/tuba-notes/' },
+  trompa: { nombre: 'the double horn in F/B♭', corto: 'horn', pagina: '/en/music-dictionary/instruments/horn-notes/' },
+  corneta: { nombre: 'the C/D♭ palometa corneta', de: 'of the C/D♭ palometa corneta', corto: 'corneta', pagina: '/en/music-dictionary/instruments/cornet-notes/' },
+  trombon: { nombre: 'the slide trombone (tenor, in B♭)', de: 'of the slide trombone (tenor, in B♭)', corto: 'trombone', pagina: '/en/music-dictionary/instruments/trombone-notes/' },
+  'trombon-bajo': { nombre: 'the bass trombone', de: 'of the bass trombone', corto: 'bass trombone', pagina: '/en/music-dictionary/instruments/bass-trombone-notes/' },
+};
+if (EN) Object.keys(EN_INFO).forEach((k) => Object.assign(INSTRUMENTOS[k], EN_INFO[k]));
+const CLAVE_EN = { sol: 'treble', fa: 'bass', solc: 'treble' };
+
+const SHARP = EN ? ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'] : ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
+const FLAT = EN ? ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'G♭', 'G', 'A♭', 'A', 'B♭', 'B'] : ['Do', 'Re♭', 'Re', 'Mi♭', 'Mi', 'Fa', 'Sol♭', 'Sol', 'La♭', 'La', 'Si♭', 'Si'];
 const SUB = { 0: '₀', 1: '₁', 2: '₂', 3: '₃', 4: '₄', 5: '₅', 6: '₆', 7: '₇' };
 const sub = (n) => String(n).split('').map((c) => SUB[c] || c).join('');
 
@@ -130,7 +151,7 @@ function datosCorneta(inst) {
   const caja = {};
   // eslint-disable-next-line no-eval
   eval(src.slice(ini, fin).replace('var NOTES', 'caja.NOTES'));
-  const filas = caja.NOTES.map((o) => ({ clave: o.n, clef: cfg.clef, lbl: o.lbl, serie: o.s, h: o.h, calante: !!o.calante }));
+  const filas = caja.NOTES.map((o) => ({ clave: o.n, clef: cfg.clef, lbl: enNota(o.lbl), serie: o.s, h: o.h, calante: !!o.calante }));
   pentagramasDe(inst, filas).forEach((p, i) => { filas[i].pent = p; });
   return { cfg, filas };
 }
@@ -241,11 +262,11 @@ function tablaHtml(filas, cfg, pistones, rellenar) {
   // En la de completar si, porque se rellena con los dos (dibujo y numeros).
   const anchos = rellenar ? (cfg.transpone ? [16, 28, 20, 23, 13] : [20, 28, 24, 28])
     : (cfg.transpone ? [18, 34, 28, 20] : [24, 40, 36]);
-  const cab = `<thead><tr><th style="width:${anchos[0]}%">Nota</th>`
-    + `<th style="width:${anchos[1]}%">Pentagrama<small>clave de ${cfg.clef}</small></th>`
-    + `<th style="width:${anchos[2]}%">Pistones<small>${Array.from({ length: pistones }, (_, i) => i + 1).join(' ')}</small></th>`
-    + (rellenar ? `<th style="width:${anchos[3]}%">Cuáles</th>` : '')
-    + (cfg.transpone ? `<th style="width:${anchos[rellenar ? 4 : 3]}%">Suena</th>` : '') + '</tr></thead>';
+  const cab = `<thead><tr><th style="width:${anchos[0]}%">${T('Nota', 'Note')}</th>`
+    + `<th style="width:${anchos[1]}%">${T('Pentagrama', 'Staff')}<small>${EN ? CLAVE_EN[cfg.clef] + ' clef' : 'clave de ' + cfg.clef}</small></th>`
+    + `<th style="width:${anchos[2]}%">${T('Pistones', 'Valves')}<small>${Array.from({ length: pistones }, (_, i) => i + 1).join(' ')}</small></th>`
+    + (rellenar ? `<th style="width:${anchos[3]}%">${T('Cuáles', 'Which')}</th>` : '')
+    + (cfg.transpone ? `<th style="width:${anchos[rellenar ? 4 : 3]}%">${T('Suena', 'Sounds')}</th>` : '') + '</tr></thead>';
   const tr = filas.map((f) => {
     const texto = f.nums.length === 0 ? 'al aire'
       : f.nums.length === 1 ? f.nums[0] + '.º'
@@ -265,11 +286,11 @@ function tablaHtml(filas, cfg, pistones, rellenar) {
 /* ---- trompa doble: dos hojas (clave de fa y clave de sol), cada una a dos columnas ---- */
 function tablaDobleHtml(filas, rellenar) {
   const rot = '1 2 3 4';
-  const cab = '<thead><tr><th style="width:14%">Nota</th>'
-    + '<th style="width:28%">Pentagrama</th>'
-    + `<th style="width:21%">Lado de Fa<small>pulgar pulsado</small><small>${rot}</small></th>`
-    + `<th style="width:21%">Lado de Si♭<small>pulgar suelto</small><small>${rot}</small></th>`
-    + '<th style="width:16%">Suena</th></tr></thead>';
+  const cab = `<thead><tr><th style="width:14%">${T('Nota', 'Note')}</th>`
+    + `<th style="width:28%">${T('Pentagrama', 'Staff')}</th>`
+    + `<th style="width:21%">${T('Lado de Fa', 'F side')}<small>${T('pulgar pulsado', 'thumb pressed')}</small><small>${rot}</small></th>`
+    + `<th style="width:21%">${T('Lado de Si♭', 'B♭ side')}<small>${T('pulgar suelto', 'thumb released')}</small><small>${rot}</small></th>`
+    + `<th style="width:16%">${T('Suena', 'Sounds')}</th></tr></thead>`;
   const dib = (l) => (l === null ? '<span class="na">—</span>' : l.map((on) => (on ? '●' : '○')).join(''));
   const tr = filas.map((f) => '<tr>'
     + `<td class="nota">${f.esc}${f.escBem ? `<small>${f.escBem}</small>` : ''}</td>`
@@ -283,10 +304,14 @@ function tablaDobleHtml(filas, rellenar) {
 
 function htmlDoble(inst, rellenar) {
   const { cfg, filas } = datos(inst);
-  const grupos = [['fa', 'Notas graves, en clave de fa'], ['sol', 'Notas agudas, en clave de sol']]
+  const grupos = [['fa', T('Notas graves, en clave de fa', 'Low notes, in bass clef')], ['sol', T('Notas agudas, en clave de sol', 'High notes, in treble clef')]]
     .map(([clef, rotulo]) => ({ rotulo, filas: filas.filter((f) => f.clef === clef) }));
-  const titulo = rellenar ? `Digitaciones de ${cfg.nombre}: complétalas` : `Digitaciones de ${cfg.nombre}`;
-  const instr = rellenar
+  const titulo = EN ? (rellenar ? `Fingerings for ${cfg.nombre}: fill them in` : `Fingerings for ${cfg.nombre}`)
+    : (rellenar ? `Digitaciones de ${cfg.nombre}: complétalas` : `Digitaciones de ${cfg.nombre}`);
+  const instr = EN ? (rellenar
+    ? 'Write which rotors must be pressed for each note, on the F side (thumb pressed) and on the B♭ side (thumb released): ● pressed, ○ released. If a note is not played on one side, draw a dash. The "Sounds" column is given as a hint.'
+    : `The ${filas.length} notes of the double horn, with their two fingerings. ● is a pressed rotor and ○ a released one; 1, 2 and 3 are the finger rotors and 4 is the thumb rotor, which switches sides. "—": that note is not played on that side.`)
+    : rellenar
     ? 'Escribe qué rotores hay que pulsar en cada nota, por el lado de Fa (pulgar pulsado) y por el de Si♭ (pulgar suelto): ● pulsado, ○ suelto. Si una nota no se toca por un lado, pon una raya. La columna «Suena» te la damos como pista.'
     : `Las ${filas.length} notas de la trompa doble, con sus dos digitaciones. ● es rotor pulsado y ○ suelto; 1, 2 y 3 son los de los dedos y 4 es el del pulgar, que cambia de lado. «—»: esa nota no se toca por ese lado.`;
   const hojas = grupos.map((g, i) => {
@@ -295,42 +320,43 @@ function htmlDoble(inst, rellenar) {
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORÍA MUSICAL · HOJA ${i + 1} DE ${grupos.length}</div>
-        <h1>${titulo}${rellenar ? '' : '<span class="sol-tag">referencia</span>'}</h1>
-        <p class="instr"><b>${g.rotulo}</b> (${g.filas.length} notas). ${instr}</p>
+        <div class="marca">${T('TEORÍA MUSICAL · HOJA', 'MUSIC THEORY · SHEET')} ${i + 1} ${T('DE', 'OF')} ${grupos.length}</div>
+        <h1>${titulo}${rellenar ? '' : `<span class="sol-tag">${T('referencia', 'reference')}</span>`}</h1>
+        <p class="instr"><b>${g.rotulo}</b> (${g.filas.length} ${T('notas', 'notes')}). ${instr}</p>
       </div>
       <img class="logo" src="${LOGO}" alt="">
     </div>
-    ${rellenar ? '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>' : ''}
+    ${rellenar ? `<div class="datos"><span><b>${T('Nombre:', 'Name:')}</b></span><span><b>${T('Curso:', 'Class:')}</b></span><span><b>${T('Fecha:', 'Date:')}</b></span></div>` : ''}
   </div>
   <div class="cols">
     <div style="flex:1">${tablaDobleHtml(g.filas.slice(0, corte), rellenar)}</div>
     <div style="flex:1">${tablaDobleHtml(g.filas.slice(corte), rellenar)}</div>
   </div>
   <div class="leyenda">
-    <p><b>Es un instrumento transpositor:</b> la trompa en Fa suena una <b>quinta justa más grave</b> de lo escrito. Un <b>Do₄ escrito</b> suena un <b>Fa₃</b>.</p>
-    <p><b>Fa♯ y Sol♭ son la misma nota</b>, solo cambia cómo se escribe según la tonalidad. Los subíndices son la octava. Es la digitación más afinada de cada lado; el intérprete elige la que suene mejor.</p>
+${EN ? `    <p><b>It is a transposing instrument:</b> the horn in F sounds a <b>perfect 5th lower</b> than written. A <b>written C₄</b> sounds an <b>F₃</b>.</p>
+    <p><b>F♯ and G♭ are the same note</b>, only the way it is written changes with the key. The subscripts are the octave. This is the best-in-tune fingering on each side; the player chooses whichever sounds best.</p>` : `    <p><b>Es un instrumento transpositor:</b> la trompa en Fa suena una <b>quinta justa más grave</b> de lo escrito. Un <b>Do₄ escrito</b> suena un <b>Fa₃</b>.</p>
+    <p><b>Fa♯ y Sol♭ son la misma nota</b>, solo cambia cómo se escribe según la tonalidad. Los subíndices son la octava. Es la digitación más afinada de cada lado; el intérprete elige la que suene mejor.</p>`}
   </div>
-  <div class="pie"><span>Digitaciones de ${cfg.corto}${rellenar ? ' · para completar' : ''} · teoriamusical.com.es${cfg.pagina}</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${T('Digitaciones de ' + cfg.corto, 'Fingerings: ' + cfg.corto)}${rellenar ? T(' · para completar', ' · to complete') : ''} · teoriamusical.com.es${cfg.pagina}</span><span>teoriamusical.com.es</span></div>
 </div>`;
   }).join('');
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS} .hoja { page-break-after: always; } .hoja.ultima { page-break-after: auto; } td.dib .na { color: #aaa; }</style></head><body>${hojas}</body></html>`;
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS} .hoja { page-break-after: always; } .hoja.ultima { page-break-after: auto; } td.dib .na { color: #aaa; }</style></head><body>${hojas}</body></html>`;
 }
 
 /* ---- trombones de vara: una hoja a dos columnas (posicion de la vara, armonico y, en el bajo, valvulas) ---- */
 const VALV_TXT = { F: 'F', Gb: 'G♭', both: 'F + G♭' };
 function tablaVaraHtml(filas, cfg, rellenar) {
   const anchos = cfg.valvulas ? [14, 24, 28, 17, 17] : [17, 30, 31, 22];
-  const cab = `<thead><tr><th style="width:${anchos[0]}%">Nota</th>`
-    + `<th style="width:${anchos[1]}%">Pentagrama</th>`
-    + `<th style="width:${anchos[2]}%">Posición<small style="letter-spacing:.08em">1 2 3 4 5 6 7</small></th>`
-    + `<th style="width:${anchos[3]}%">Armónico</th>`
-    + (cfg.valvulas ? `<th style="width:${anchos[4]}%">Válvulas</th>` : '') + '</tr></thead>';
+  const cab = `<thead><tr><th style="width:${anchos[0]}%">${T('Nota', 'Note')}</th>`
+    + `<th style="width:${anchos[1]}%">${T('Pentagrama', 'Staff')}</th>`
+    + `<th style="width:${anchos[2]}%">${T('Posición', 'Position')}<small style="letter-spacing:.08em">1 2 3 4 5 6 7</small></th>`
+    + `<th style="width:${anchos[3]}%">${T('Armónico', 'Harmonic')}</th>`
+    + (cfg.valvulas ? `<th style="width:${anchos[4]}%">${T('Válvulas', 'Valves')}</th>` : '') + '</tr></thead>';
   const tr = filas.map((f) => '<tr>'
     + `<td class="nota">${f.esc}${f.escBem ? `<small>${f.escBem}</small>` : ''}</td>`
     + `<td class="pent"><img src="${f.pent}" alt=""></td>`
     + (rellenar ? '<td class="dib hueco"></td><td class="hueco"></td>'
-      : `<td class="dib">${[1, 2, 3, 4, 5, 6, 7].map((k) => (k === f.pos ? '●' : '○')).join('')}</td><td>${f.harm ? f.harm + '.º' : '—'}</td>`)
+      : `<td class="dib">${[1, 2, 3, 4, 5, 6, 7].map((k) => (k === f.pos ? '●' : '○')).join('')}</td><td>${f.harm ? ORD(f.harm) : '—'}</td>`)
     + (cfg.valvulas ? `<td${rellenar ? ' class="hueco"' : ''}>${rellenar ? '' : (f.valves ? VALV_TXT[f.valves] : '—')}</td>` : '')
     + '</tr>');
   return `<table>${cab}<tbody>${tr.join('')}</tbody></table>`;
@@ -339,32 +365,36 @@ function tablaVaraHtml(filas, cfg, rellenar) {
 function htmlVara(inst, rellenar) {
   const { cfg, filas } = datos(inst);
   const corte = Math.ceil(filas.length / 2);
-  const titulo = rellenar ? `Posiciones ${cfg.de}: complétalas` : `Posiciones ${cfg.de}`;
-  const instr = rellenar
+  const titulo = EN ? (rellenar ? `Positions ${cfg.de}: fill them in` : `Positions ${cfg.de}`) : (rellenar ? `Posiciones ${cfg.de}: complétalas` : `Posiciones ${cfg.de}`);
+  const instr = EN ? (rellenar
+    ? `Write which slide position (1st to 7th) each note is played in: mark the position with a circle ● and write the harmonic${cfg.valvulas ? ' and, in the low register, which valves to use' : ''}. The notes are the written ones.`
+    : `The ${filas.length} notes of the usual range with their slide position. ● marks the position: 1st is the slide pulled in and 7th the most extended.`)
+    : rellenar
     ? `Escribe en qué posición de la vara (1.ª a 7.ª) se toca cada nota: marca con un círculo ● la posición y anota el armónico${cfg.valvulas ? ' y, en el registro grave, qué válvulas hay que usar' : ''}. Las notas son las escritas.`
     : `Las ${filas.length} notas del registro habitual con su posición de vara. ● marca la posición: la 1.ª es la vara recogida y la 7.ª, la más extendida.`;
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORÍA MUSICAL</div>
-        <h1>${titulo}${rellenar ? '' : '<span class="sol-tag">referencia</span>'}</h1>
+        <div class="marca">${T('TEORÍA MUSICAL', 'MUSIC THEORY')}</div>
+        <h1>${titulo}${rellenar ? '' : `<span class="sol-tag">${T('referencia', 'reference')}</span>`}</h1>
         <p class="instr">${instr}</p>
       </div>
       <img class="logo" src="${LOGO}" alt="">
     </div>
-    ${rellenar ? '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>' : ''}
+    ${rellenar ? `<div class="datos"><span><b>${T('Nombre:', 'Name:')}</b></span><span><b>${T('Curso:', 'Class:')}</b></span><span><b>${T('Fecha:', 'Date:')}</b></span></div>` : ''}
   </div>
   <div class="cols">
     <div style="flex:1">${tablaVaraHtml(filas.slice(0, corte), cfg, rellenar)}</div>
     <div style="flex:1">${tablaVaraHtml(filas.slice(corte), cfg, rellenar)}</div>
   </div>
   <div class="leyenda">
-    <p>Cada posición baja la nota un semitono. La nota concreta se elige además con el <b>armónico</b> (la posición de los labios): por eso la misma posición sirve para varias notas.${cfg.valvulas ? ' El registro grave del trombón bajo se toca con las <b>válvulas</b> (F, G♭ o las dos juntas, que dan Re).' : ''}</p>
-    <p><b>${cfg.valvulas ? 'El trombón bajo' : 'El trombón'} no transpone</b>: lo escrito es lo que suena. <b>Fa♯ y Sol♭ son la misma nota</b>; por eso las alteradas llevan los dos nombres. Los subíndices son la octava.</p>
+${EN ? `    <p>Each position lowers the note by a half step. The exact note is also chosen with the <b>harmonic</b> (the lip position): that is why the same position serves for several notes.${cfg.valvulas ? ' The low register of the bass trombone is played with the <b>valves</b> (F, G♭ or both together, which give D).' : ''}</p>
+    <p><b>The ${cfg.valvulas ? 'bass trombone' : 'trombone'} does not transpose</b>: what is written is what sounds. <b>F♯ and G♭ are the same note</b>; that is why the altered notes carry both names. The subscripts are the octave.</p>` : `    <p>Cada posición baja la nota un semitono. La nota concreta se elige además con el <b>armónico</b> (la posición de los labios): por eso la misma posición sirve para varias notas.${cfg.valvulas ? ' El registro grave del trombón bajo se toca con las <b>válvulas</b> (F, G♭ o las dos juntas, que dan Re).' : ''}</p>
+    <p><b>${cfg.valvulas ? 'El trombón bajo' : 'El trombón'} no transpone</b>: lo escrito es lo que suena. <b>Fa♯ y Sol♭ son la misma nota</b>; por eso las alteradas llevan los dos nombres. Los subíndices son la octava.</p>`}
   </div>
-  <div class="pie"><span>Posiciones del ${cfg.corto}${rellenar ? ' · para completar' : ''} · teoriamusical.com.es${cfg.pagina}</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${T('Posiciones del ' + cfg.corto, cfg.corto[0].toUpperCase() + cfg.corto.slice(1) + ' positions')}${rellenar ? T(' · para completar', ' · to complete') : ''} · teoriamusical.com.es${cfg.pagina}</span><span>teoriamusical.com.es</span></div>
 </div></body></html>`;
 }
 
@@ -372,18 +402,21 @@ function htmlVara(inst, rellenar) {
 function htmlCorneta(inst, rellenar) {
   const { cfg, filas } = datos(inst);
   const celda = (f) => `<td class="cor"><img src="${f.pent}" alt="">${rellenar
-    ? '<div class="nom hueco-nom">Nota: </div>'
-    : `<div class="nom">${f.lbl}${f.calante ? '<small>calante</small>' : ''}</div>`}</td>`;
+    ? `<div class="nom hueco-nom">${T('Nota', 'Note')}: </div>`
+    : `<div class="nom">${f.lbl}${f.calante ? `<small>${T('calante', 'flat')}</small>` : ''}</div>`}</td>`;
   const tr = [];
   for (let h = 3; h <= 10; h++) {
     const a = filas.find((f) => f.h === h && f.serie === 'do'), b = filas.find((f) => f.h === h && f.serie === 'reb');
-    tr.push(`<tr><td class="nota">${h}.º</td>${celda(a)}${celda(b)}</tr>`);
+    tr.push(`<tr><td class="nota">${ORD(h)}</td>${celda(a)}${celda(b)}</tr>`);
   }
-  const titulo = rellenar ? `Las notas ${cfg.de}: complétalas` : `Las notas ${cfg.de}`;
-  const instr = rellenar
+  const titulo = EN ? (rellenar ? `The notes ${cfg.de}: fill them in` : `The notes ${cfg.de}`) : (rellenar ? `Las notas ${cfg.de}: complétalas` : `Las notas ${cfg.de}`);
+  const instr = EN ? (rellenar
+    ? 'Write the name of each note (with its octave as a subscript, for example G₄). The two series alternate: each note is a half step from the one beside it. The reference sheet works as the answer key.'
+    : `The ${filas.length} notes of the palometa corneta: harmonics 3rd to 10th of each series. With the palometa in C you get the harmonics of C; turned, those of D♭.`)
+    : rellenar
     ? 'Escribe el nombre de cada nota (con su octava en subíndice, por ejemplo Sol₄). Las dos series se alternan: cada nota está a un semitono de la de al lado. La hoja de referencia hace de solucionario.'
     : `Las ${filas.length} notas de la corneta de palometa: los armónicos 3.º a 10.º de cada serie. Con la palometa en do suenan los armónicos de Do; girada, los de Re♭.`;
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}
   td.cor { text-align: center; padding: 1.2mm 2mm; }
   td.cor img { display: block; margin: 0 auto 1mm; }
   td.cor .nom { font-weight: bold; font-size: 11pt; }
@@ -395,20 +428,21 @@ function htmlCorneta(inst, rellenar) {
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORÍA MUSICAL</div>
-        <h1>${titulo}${rellenar ? '' : '<span class="sol-tag">referencia</span>'}</h1>
+        <div class="marca">${T('TEORÍA MUSICAL', 'MUSIC THEORY')}</div>
+        <h1>${titulo}${rellenar ? '' : `<span class="sol-tag">${T('referencia', 'reference')}</span>`}</h1>
         <p class="instr">${instr}</p>
       </div>
       <img class="logo" src="${LOGO}" alt="">
     </div>
-    ${rellenar ? '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>' : ''}
+    ${rellenar ? `<div class="datos"><span><b>${T('Nombre:', 'Name:')}</b></span><span><b>${T('Curso:', 'Class:')}</b></span><span><b>${T('Fecha:', 'Date:')}</b></span></div>` : ''}
   </div>
-  <table><thead><tr><th style="width:16%">Armónico</th><th>Palometa en do<small>serie de Do</small></th><th>Palometa girada<small>serie de Re♭</small></th></tr></thead><tbody>${tr.join('')}</tbody></table>
+  <table><thead><tr><th style="width:16%">${T('Armónico', 'Harmonic')}</th><th>${T('Palometa en do', 'Palometa in C')}<small>${T('serie de Do', 'C series')}</small></th><th>${T('Palometa girada', 'Palometa turned')}<small>${T('serie de Re♭', 'D♭ series')}</small></th></tr></thead><tbody>${tr.join('')}</tbody></table>
   <div class="leyenda">
-    <p>La corneta <b>no tiene pistones</b>: solo da los sonidos de la serie armónica de su tubo. La palometa (la llave) desvía el aire por la bomba y cambia de serie; el armónico se elige con los labios. El <b>7.º armónico</b> suena naturalmente bajo (<i>calante</i>) y apenas se usa.</p>
-    <p>La corneta se escribe en <b>clave de sol</b> y no transpone. Los subíndices son la octava.</p>
+${EN ? `    <p>The corneta <b>has no valves</b>: it only gives the sounds of the harmonic series of its tube. The palometa (the lever) diverts the air through the bomba and changes the series; the harmonic is chosen with the lips. The <b>7th harmonic</b> naturally sounds low (<i>flat</i>) and is hardly used.</p>
+    <p>The corneta is written in <b>treble clef</b> and does not transpose. The subscripts are the octave.</p>` : `    <p>La corneta <b>no tiene pistones</b>: solo da los sonidos de la serie armónica de su tubo. La palometa (la llave) desvía el aire por la bomba y cambia de serie; el armónico se elige con los labios. El <b>7.º armónico</b> suena naturalmente bajo (<i>calante</i>) y apenas se usa.</p>
+    <p>La corneta se escribe en <b>clave de sol</b> y no transpone. Los subíndices son la octava.</p>`}
   </div>
-  <div class="pie"><span>Notas ${cfg.de}${rellenar ? ' · para completar' : ''} · teoriamusical.com.es${cfg.pagina}</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${T('Notas ' + cfg.de, 'Notes ' + cfg.de)}${rellenar ? T(' · para completar', ' · to complete') : ''} · teoriamusical.com.es${cfg.pagina}</span><span>teoriamusical.com.es</span></div>
 </div></body></html>`;
 }
 
@@ -418,25 +452,29 @@ function html(inst, rellenar) {
   if (INSTRUMENTOS[inst].doble) return htmlDoble(inst, rellenar);
   const { cfg, filas, pistones } = datos(inst);
   const corte = Math.ceil(filas.length / 2);
-  const titulo = rellenar
+  const titulo = EN ? (rellenar ? `Fingerings for ${cfg.nombre}: fill them in` : `Fingerings for ${cfg.nombre}`)
+    : rellenar
     ? `Digitaciones de ${cfg.nombre}: complétalas`
     : `Digitaciones de ${cfg.nombre}`;
-  const instr = rellenar
+  const instr = EN ? (rellenar
+    ? 'Write which valves must be pressed for each note: first by drawing them (● pressed, ○ released) and then with their number.' + (cfg.transpone ? ' The "Sounds" column is given as a hint, because it is the hardest one.' : '')
+    : `The ${filas.length} notes of the usual range with their fingering. ● is a pressed valve and ○ a released one, in the order they lie under your fingers.`)
+    : rellenar
     ? 'Escribe qué pistones hay que pulsar en cada nota: primero dibujándolos (● pulsado, ○ suelto) y luego con su número. La columna «Suena» te la damos como pista, porque es la que más cuesta.'
     : `Las ${filas.length} notas del registro habitual con su digitación. ● es pistón pulsado y ○ suelto, en el orden en que los tienes bajo los dedos.`;
 
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}${filas.length > 34 ? '.hoja table th, .hoja table td { padding-top: .7mm; padding-bottom: .7mm; } .hoja table td.pent { padding-top: 0; padding-bottom: 0; }' : ''}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}${filas.length > 34 ? '.hoja table th, .hoja table td { padding-top: .7mm; padding-bottom: .7mm; } .hoja table td.pent { padding-top: 0; padding-bottom: 0; }' : ''}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORÍA MUSICAL</div>
-        <h1>${titulo}${rellenar ? '' : '<span class="sol-tag">referencia</span>'}</h1>
+        <div class="marca">${T('TEORÍA MUSICAL', 'MUSIC THEORY')}</div>
+        <h1>${titulo}${rellenar ? '' : `<span class="sol-tag">${T('referencia', 'reference')}</span>`}</h1>
         <p class="instr">${instr}</p>
       </div>
       <img class="logo" src="${LOGO}" alt="">
     </div>
-    ${rellenar ? '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>' : ''}
+    ${rellenar ? `<div class="datos"><span><b>${T('Nombre:', 'Name:')}</b></span><span><b>${T('Curso:', 'Class:')}</b></span><span><b>${T('Fecha:', 'Date:')}</b></span></div>` : ''}
   </div>
 
   <div class="cols">
@@ -445,12 +483,14 @@ function html(inst, rellenar) {
   </div>
 
   <div class="leyenda">
-    <p><b>«Al aire»</b> es sin pulsar ningún pistón: la nota sale solo con los labios, ajustando el armónico. Son las filas resaltadas${rellenar ? ' en la hoja de referencia' : ''}.</p>
+${EN ? `    <p><b>"Open"</b> means no valve pressed: the note comes from the lips alone, by adjusting the harmonic. These are the highlighted rows${rellenar ? ' on the reference sheet' : ''}.</p>
+    ${cfg.transpone ? `<p><b>It is a transposing instrument:</b> what you read and what sounds are not the same note. A <b>written C</b> sounds a <b>B♭</b>, a whole step lower. In a band this matters: your C is not the saxophone's C or the tuba's.</p>` : ''}
+    <p><b>F♯ and G♭ are the same note</b>, only the way it is written changes with the key. That is why the altered notes carry both names. The subscripts are the octave.</p>` : `    <p><b>«Al aire»</b> es sin pulsar ningún pistón: la nota sale solo con los labios, ajustando el armónico. Son las filas resaltadas${rellenar ? ' en la hoja de referencia' : ''}.</p>
     ${cfg.transpone ? `<p><b>Es un instrumento transpositor:</b> lo que lees y lo que suena no son la misma nota. Un <b>Do escrito</b> suena un <b>Si♭</b>, un tono por debajo. En una banda esto importa: tu Do no es el Do del saxofón ni el de la tuba.</p>` : ''}
-    <p><b>Fa♯ y Sol♭ son la misma nota</b>, solo cambia cómo se escribe según la tonalidad. Por eso las alteradas llevan los dos nombres. Los subíndices son la octava.</p>
+    <p><b>Fa♯ y Sol♭ son la misma nota</b>, solo cambia cómo se escribe según la tonalidad. Por eso las alteradas llevan los dos nombres. Los subíndices son la octava.</p>`}
   </div>
 
-  <div class="pie"><span>Digitaciones de ${cfg.corto}${rellenar ? ' · para completar' : ''} · teoriamusical.com.es${cfg.pagina}</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${T('Digitaciones de ' + cfg.corto, 'Fingerings: ' + cfg.corto)}${rellenar ? T(' · para completar', ' · to complete') : ''} · teoriamusical.com.es${cfg.pagina}</span><span>teoriamusical.com.es</span></div>
 </div></body></html>`;
 }
 
@@ -551,6 +591,7 @@ function ponerBloque(inst) {
 }
 
 if (require.main !== module) { module.exports = { html, datos }; return; }
+if (EN && process.argv.includes('--poner')) { console.error('--poner solo vale para la edicion española'); process.exit(1); }
 
 const { chromium } = require('playwright');
 const sharp = require('sharp');

@@ -12,6 +12,12 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  // Nombres de nota (Do Re Mi...) -> letras (C D E...) en la edicion inglesa
+  const NOTA_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  function enNote(s) { return EN ? s.replace(/Sol|Do|Re|Mi|Fa|La|Si/g, function (x) { return NOTA_EN[x]; }) : s; }
+
   /* Coordenadas sobre la FOTO (viewBox 1595x232 = pixeles de digitacion.jpg).
      Cabeza a la IZQUIERDA y pie a la DERECHA. Las senalo Eduardo sobre la imagen.
 
@@ -44,9 +50,9 @@
   }
 
   var NAMES = {
-    T: 'pulgar (Si)', Tb: 'pulgar (Si♭)', LI: 'índice izq.', LM: 'medio izq.', LA: 'anular izq.',
-    LG: 'Sol♯ (meñique izq.)', RI: 'índice dcho.', RM: 'medio dcho.', RA: 'anular dcho.',
-    Tr1: 'trino 1', Tr2: 'trino 2', REb: 'Mi♭ (meñique dcho.)'
+    T: T('pulgar (Si)', 'thumb (B)'), Tb: T('pulgar (Si♭)', 'thumb (B♭)'), LI: T('índice izq.', 'left index'), LM: T('medio izq.', 'left middle'), LA: T('anular izq.', 'left ring'),
+    LG: T('Sol♯ (meñique izq.)', 'G♯ (left little finger)'), RI: T('índice dcho.', 'right index'), RM: T('medio dcho.', 'right middle'), RA: T('anular dcho.', 'right ring'),
+    Tr1: T('trino 1', 'trill 1'), Tr2: T('trino 2', 'trill 2'), REb: T('Mi♭ (meñique dcho.)', 'E♭ (right little finger)')
   };
 
   // Digitaciones de la flauta (Boehm) sin las notas del pie: escritas Re4–Do7.
@@ -100,20 +106,20 @@
   function label(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
     if (!m) return n;
-    return m[1] + (m[2] ? '♯' : '') + SUB[m[3]];
+    return enNote(m[1]) + (m[2] ? '♯' : '') + SUB[m[3]];
   }
   function registro(n) {
     var o = parseInt(n.replace(/\D/g, ''), 10);
-    if (o <= 4) return 'Registro grave';
-    if (o === 5) return 'Registro medio';
-    if (o === 6) return 'Registro agudo';
-    return 'Registro agudo';
+    if (o <= 4) return T('Registro grave', 'Low register');
+    if (o === 5) return T('Registro medio', 'Middle register');
+    if (o === 6) return T('Registro agudo', 'High register');
+    return T('Registro agudo', 'High register');
   }
   // El flautín suena una octava POR ENCIMA de lo escrito
   function suena(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
     if (!m) return '';
-    return m[1] + (m[2] ? '♯' : '') + SUB[String(parseInt(m[3], 10) + 1)];
+    return enNote(m[1]) + (m[2] ? '♯' : '') + SUB[String(parseInt(m[3], 10) + 1)];
   }
 
   var AUDIO_BASE = '/assets/audio/flautin/';
@@ -206,7 +212,7 @@
     // Las dos llaves del PULGAR van en la cara oculta del tubo y no salen en la foto:
     // se dibujan aparte y se iluminan igual (data-k="T" y "Tb").
     function buildPulgar() {
-      return '<svg class="tm-fn-pulgarsvg" viewBox="0 0 260 118" role="img" aria-label="Cara oculta del flautín: las dos llaves del pulgar izquierdo se iluminan cuando hay que pulsarlas">' +
+      return '<svg class="tm-fn-pulgarsvg" viewBox="0 0 260 118" role="img" aria-label="' + T('Cara oculta del flautín: las dos llaves del pulgar izquierdo se iluminan cuando hay que pulsarlas', 'Hidden side of the piccolo: the two left thumb keys light up when they have to be pressed') + '">' +
         '<defs>' +
           '<linearGradient id="tmFnMet" x1="0" y1="0" x2="0" y2="1">' +
             '<stop offset="0" stop-color="#f2f3f6"/><stop offset=".5" stop-color="#c9ccd3"/><stop offset="1" stop-color="#9fa3ab"/>' +
@@ -229,9 +235,9 @@
         '<g class="tm-fn-key" data-k="Tb">' +
           '<rect class="tm-fn-th-pad" x="150" y="41" width="38" height="20" rx="10"/>' +
         '</g>' +
-        '<text class="tm-fn-thlab" x="109" y="88">Si</text>' +
-        '<text class="tm-fn-thlab" x="169" y="88">Si♭</text>' +
-        '<text class="tm-fn-thlab" x="130" y="110" style="font-size:11px;fill:#888">pulgar izquierdo</text>' +
+        '<text class="tm-fn-thlab" x="109" y="88">' + T('Si', 'B') + '</text>' +
+        '<text class="tm-fn-thlab" x="169" y="88">' + T('Si♭', 'B♭') + '</text>' +
+        '<text class="tm-fn-thlab" x="130" y="110" style="font-size:11px;fill:#888">' + T('pulgar izquierdo', 'left thumb') + '</text>' +
         '</svg>';
     }
 
@@ -241,20 +247,20 @@
 
     wrap.innerHTML =
       '<div class="tm-fn-wrap">' +
-        '<div class="tm-fn-readout" id="' + uid + '_ro"><span class="tm-fn-hint">Elige una nota para ver su digitación</span></div>' +
+        '<div class="tm-fn-readout" id="' + uid + '_ro"><span class="tm-fn-hint">' + T('Elige una nota para ver su digitación', 'Choose a note to see its fingering') + '</span></div>' +
         '<div class="tm-fn-diagram">' +
           '<div class="tm-fn-tira">' +
-            vista(0, FOTO.w, 'Digitación del flautín sobre una fotografía real: cabeza a la izquierda, pie a la derecha') +
+            vista(0, FOTO.w, T('Digitación del flautín sobre una fotografía real: cabeza a la izquierda, pie a la derecha', 'Piccolo fingering on a real photograph: headjoint on the left, end of the body on the right')) +
           '</div>' +
           '<div class="tm-fn-filas">' +
-            vista(760, 420, 'Mitad izquierda del mecanismo, ampliada', 4, 198) +
-            vista(1180, 415, 'Mitad derecha del mecanismo, ampliada', 4, 198) +
+            vista(760, 420, T('Mitad izquierda del mecanismo, ampliada', 'Left half of the mechanism, enlarged'), 4, 198) +
+            vista(1180, 415, T('Mitad derecha del mecanismo, ampliada', 'Right half of the mechanism, enlarged'), 4, 198) +
           '</div>' +
           '<div class="tm-fn-pulgar">' +
             buildPulgar() +
-            '<p class="tm-fn-pulgarcap"><strong>Por detrás.</strong> Las dos llaves del <strong>pulgar izquierdo</strong> van en la cara oculta del tubo, así que no salen en la foto y se dibujan aparte.</p>' +
+            '<p class="tm-fn-pulgarcap">' + T('<strong>Por detrás.</strong> Las dos llaves del <strong>pulgar izquierdo</strong> van en la cara oculta del tubo, así que no salen en la foto y se dibujan aparte.', '<strong>From behind.</strong> The two <strong>left thumb</strong> keys sit on the hidden side of the tube, so they do not show in the photo and are drawn separately.') + '</p>' +
           '</div>' +
-          '<p class="tm-fn-credit">Foto: flautín Yamaha YPC-81, Yamaha Corporation vía <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Piccolo_YPC-81.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Llaves del pulgar: diagrama propio.</p>' +
+          '<p class="tm-fn-credit">' + T('Foto: flautín Yamaha YPC-81, Yamaha Corporation vía <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Piccolo_YPC-81.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Llaves del pulgar: diagrama propio.', 'Photo: Yamaha YPC-81 piccolo, Yamaha Corporation via <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Piccolo_YPC-81.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Thumb keys: own diagram.') + '</p>' +
         '</div>' +
         '<div class="tm-fn-btns" id="' + uid + '_btns">' + btns + '</div>' +
       '</div>';
@@ -292,9 +298,9 @@
       });
       ro.innerHTML =
         '<div class="tm-fn-staff" id="' + uid + '_staff"></div>' +
-        '<div class="tm-fn-noterow"><span class="tm-fn-intl">' + label(n) + (FLAT[n] ? ' (' + FLAT[n] + ')' : '') + '</span>' +
-        '<button class="tm-fn-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
-        '<div class="tm-fn-reg">' + intl(n) + ' · ' + registro(n) + ' · suena ' + suena(n) + ' (octava aguda)</div>' +
+        '<div class="tm-fn-noterow"><span class="tm-fn-intl">' + label(n) + (FLAT[n] ? ' (' + enNote(FLAT[n]) + ')' : '') + '</span>' +
+        '<button class="tm-fn-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
+        '<div class="tm-fn-reg">' + intl(n) + ' · ' + registro(n) + T(' · suena ', ' · sounds ') + suena(n) + T(' (octava aguda)', ' (one octave higher)') + '</div>' +
         '<div class="tm-fn-keysline">' + (nombres.length ? nombres.join(' · ') : '—') + '</div>';
       renderStaff(n);
       var pb = ro.querySelector('.tm-fn-play');

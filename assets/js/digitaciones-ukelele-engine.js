@@ -8,10 +8,13 @@
    Uso: <div id="x"></div><script>tmUkeleleEngine('x');</script> */
 (function () {
   'use strict';
+  var EN = document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
 
   // Cuerdas al aire (MIDI real), i=0 -> 4ª (Sol, reentrante/aguda) ... i=3 -> 1ª (La)
   var OPEN = [67, 60, 64, 69];
-  var CUERDA_NOM = ['4ª (Sol)', '3ª (Do)', '2ª (Mi)', '1ª (La)'];
+  var CUERDA_NOM = EN ? ['4th (G)', '3rd (C)', '2nd (E)', '1st (A)'] :
+    ['4ª (Sol)', '3ª (Do)', '2ª (Mi)', '1ª (La)'];
   var NFRETS = 12;
 
   // --- Calibración de la FOTO del mástil, EN HORIZONTAL (viewBox 1090 x 250) ---
@@ -30,8 +33,10 @@
   }
 
   // --- Nombres de nota ---
-  var SHARP = ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
-  var FLAT  = ['Do', 'Re♭', 'Re', 'Mi♭', 'Mi', 'Fa', 'Sol♭', 'Sol', 'La♭', 'La', 'Si♭', 'Si'];
+  var SHARP = EN ? ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'] :
+    ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si'];
+  var FLAT  = EN ? ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'G♭', 'G', 'A♭', 'A', 'B♭', 'B'] :
+    ['Do', 'Re♭', 'Re', 'Mi♭', 'Mi', 'Fa', 'Sol♭', 'Sol', 'La♭', 'La', 'Si♭', 'Si'];
   var SUB = { '0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄', '5': '₅', '6': '₆', '7': '₇' };
   function sub(o) { return String(o).split('').map(function (c) { return SUB[c] || c; }).join(''); }
   function pc(m) { return ((m % 12) + 12) % 12; }
@@ -105,7 +110,7 @@
   function drawnMarkX(n) { return n === 0 ? DNUTX - 18 : DNUTX + (DEND - DNUTX) * markT(n); }
   function buildDrawn() {
     var by = DTOP - 10, bh = (DBOT - DTOP) + 20, mid = (DTOP + DBOT) / 2;
-    var s = '<svg class="tm-uk-drawn" viewBox="0 0 ' + DW + ' ' + DH + '" role="img" aria-label="Diapasón del ukelele dibujado en posición de tocar: la cejuela a la izquierda y las cuatro cuerdas (4ª Sol arriba, 1ª La abajo)">';
+    var s = '<svg class="tm-uk-drawn" viewBox="0 0 ' + DW + ' ' + DH + '" role="img" aria-label="' + T('Diapasón del ukelele dibujado en posición de tocar: la cejuela a la izquierda y las cuatro cuerdas (4ª Sol arriba, 1ª La abajo)', 'Drawn ukulele fretboard in playing position: the nut on the left and the four strings (4th G at the top, 1st A at the bottom)') + '">';
     s += '<rect x="' + DNUTX + '" y="' + by + '" width="' + (DEND - DNUTX) + '" height="' + bh + '" fill="#5a3a24"/>';
     // cejuela
     s += '<rect x="' + (DNUTX - 6) + '" y="' + by + '" width="6" height="' + bh + '" fill="#f5efe0"/>';
@@ -133,13 +138,13 @@
     }
     wrap.innerHTML =
       '<div class="tm-uk-wrap">' +
-        '<div class="tm-uk-readout" id="' + uid + '_ro"><span class="tm-uk-hint">Elige una nota para verla en el mástil, en tablatura y en el pentagrama</span></div>' +
+        '<div class="tm-uk-readout" id="' + uid + '_ro"><span class="tm-uk-hint">' + T('Elige una nota para verla en el mástil, en tablatura y en el pentagrama', 'Pick a note to see it on the fretboard, in tablature and on the staff') + '</span></div>' +
         '<div class="tm-uk-diagrams">' +
           '<div class="tm-uk-col"><div class="tm-uk-photo-wrap">' +
-            '<picture><source type="image/webp" srcset="/assets/img/ukelele/mastil.webp"><img class="tm-uk-photo" src="/assets/img/ukelele/mastil.jpg" alt="Mástil de un ukelele en posición de tocar, foto real"></picture>' +
+            '<picture><source type="image/webp" srcset="/assets/img/ukelele/mastil.webp"><img class="tm-uk-photo" src="/assets/img/ukelele/mastil.jpg" alt="' + T('Mástil de un ukelele en posición de tocar, foto real', 'Neck of a ukulele in playing position, real photo') + '"></picture>' +
             '<svg class="tm-uk-photo-ov" viewBox="0 0 ' + IMG_W + ' ' + IMG_H + '" preserveAspectRatio="xMidYMid meet" style="position:absolute;left:0;top:0;width:100%;height:100%;"><g class="tm-uk-pmarks"></g></svg>' +
-          '</div><div class="tm-uk-cap">Foto real</div></div>' +
-          '<div class="tm-uk-col">' + buildDrawn() + '<div class="tm-uk-cap">Diapasón</div></div>' +
+          '</div><div class="tm-uk-cap">' + T('Foto real', 'Real photo') + '</div></div>' +
+          '<div class="tm-uk-col">' + buildDrawn() + '<div class="tm-uk-cap">' + T('Diapasón', 'Fretboard') + '</div></div>' +
         '</div>' +
         '<div class="tm-uk-tabwrap"><div class="tm-uk-tab" id="' + uid + '_tab"></div></div>' +
         '<div class="tm-uk-btns">' + btns + '</div>' +
@@ -199,13 +204,13 @@
       });
       dov.innerHTML = ds;
       // lista de posiciones legible
-      var human = pos.map(function (p) { return p.fret === 0 ? (CUERDA_NOM[p.i] + ' al aire') : (CUERDA_NOM[p.i] + ' traste ' + p.fret); }).join(' · ');
+      var human = pos.map(function (p) { return p.fret === 0 ? (CUERDA_NOM[p.i] + T(' al aire', ' open')) : (CUERDA_NOM[p.i] + T(' traste ', ' fret ') + p.fret); }).join(' · ');
       ro.innerHTML =
         '<div class="tm-uk-staff" id="' + uid + '_staff"></div>' +
         '<div class="tm-uk-noterow"><span class="tm-uk-name">' + nameFull(m) + '</span>' +
-        '<button class="tm-uk-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
+        '<button class="tm-uk-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
         '<div class="tm-uk-sub">' + human + '</div>' +
-        '<div class="tm-uk-sub">El ukelele no transpone: suena tal como se escribe (clave de sol).</div>';
+        '<div class="tm-uk-sub">' + T('El ukelele no transpone: suena tal como se escribe (clave de sol).', 'The ukulele does not transpose: it sounds as written (treble clef).') + '</div>';
       tab.textContent = tabLines(pos);
       renderStaff(m);
       var pb = ro.querySelector('.tm-uk-play'); if (pb) pb.addEventListener('click', function () { play(m); });

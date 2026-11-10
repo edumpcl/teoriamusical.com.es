@@ -16,7 +16,11 @@ const path = require('path');
 const G = require('./gen-escalas-verovio.js');
 
 const { RAIZ, ESPACIO, PX_POR_UNIDAD, OPCIONES, hash, escAttr, quintasMayor, NOMBRE, LETRA_DE, preparar } = G;
-const SALIDA = 'assets/img/armaduras';
+/* Edicion inglesa: `--lang=en` (o TM_LANG=en) escribe en assets/img/en/armaduras con rotulos y alt en ingles;
+   la salida espanola no cambia. En ingles se lee la pagina espanola solo para localizar las imagenes (no se toca). */
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const SALIDA = EN ? 'assets/img/en/armaduras' : 'assets/img/armaduras';
+const NOM_EN = { fa: 'F', do: 'C', sol: 'G', re: 'D', la: 'A', mi: 'E', si: 'B' };
 
 /* teoria: posicion (paso diatonico absoluto, E4 = 30) de cada alteracion en clave de sol */
 const SOSTENIDOS = { nombres: ['fa', 'do', 'sol', 're', 'la', 'mi', 'si'], pasos: [38, 35, 39, 36, 33, 37, 34], glifo: 'E262', palabra: ['sostenido', 'sostenidos'], signo: '♯' };
@@ -61,7 +65,7 @@ function ajustar(svg, q, etiquetas, separar) {
   if (!etiquetas) return { svg: s, xs };
   const yLinea = Math.max(...[...s.matchAll(/<path d="M0 (\d+) L\d+ \d+"/g)].map((m) => Number(m[1])));
   const base = yLinea + 4.4 * ESPACIO;
-  const ts = xs.map((p, k) => `<text x="${Math.round(p.x + 85)}" y="${Math.round(base)}" fill="#1a1a1a">${t.nombres[k]}</text>`).join('');
+  const ts = xs.map((p, k) => `<text x="${Math.round(p.x + 85)}" y="${Math.round(base)}" fill="#1a1a1a">${EN ? NOM_EN[t.nombres[k]] + t.signo : t.nombres[k]}</text>`).join('');
   const grupo = `<g class="tm-etiquetas" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="300" text-anchor="middle">${ts}</g>`;
   const alto = Math.round(base + 300), altoExt = Math.round(alto / 25);
   s = s.replace(/(<svg class="definition-scale"[^>]*viewBox="0 0 \d+ )\d+(")/, `$1${alto}$2`).replace(/^(<svg viewBox="0 0 \d+ )\d+(")/, `$1${altoExt}$2`);
@@ -92,14 +96,15 @@ function verificar(svg, q, etiquetas, separar) {
   if (separar) acc.forEach((a, k) => { if (k && Math.round(a.x - acc[k - 1].x) !== SEPARACION) err.push('las alteraciones no estan equiespaciadas'); });
   // texto: solo los nombres rotulados
   const textos = (svg.match(/<text[^>]*>[^<]*<\/text>/g) || []).map((x) => x.replace(/<[^>]+>/g, ''));
-  const quiereT = etiquetas ? t.nombres.slice(0, n) : [];
+  const quiereT = etiquetas ? t.nombres.slice(0, n).map((x) => (EN ? NOM_EN[x] + t.signo : x)) : [];
   if (JSON.stringify(textos) !== JSON.stringify(quiereT)) err.push(`rotulos ${JSON.stringify(textos)}, previstos ${JSON.stringify(quiereT)}`);
   if (/color="#/.test(svg)) err.push('hay colores sin pedir');
   return err;
 }
 
 const palabra = (q) => (q > 0 ? SOSTENIDOS : BEMOLES).palabra[Math.abs(q) === 1 ? 0 : 1];
-const listaNombres = (q) => (q > 0 ? SOSTENIDOS : BEMOLES).nombres.slice(0, Math.abs(q)).map((x) => cap(x) + (q > 0 ? '♯' : '♭')).join(', ');
+const listaNombres = (q) => (q > 0 ? SOSTENIDOS : BEMOLES).nombres.slice(0, Math.abs(q)).map((x) => (EN ? NOM_EN[x] : cap(x)) + (q > 0 ? '♯' : '♭')).join(', ');
+const PALABRA_EN = (q) => (Math.abs(q) === 1 ? (q > 0 ? 'sharp' : 'flat') : (q > 0 ? 'sharps' : 'flats'));
 
 /* ---------- paginas ---------- */
 const CONJUNTOS = {
@@ -170,7 +175,11 @@ async function main() {
       const { svg } = ajustar(crudo, j.q, j.rotulos, j.rotulos);
       e.push(...verificar(svg, j.q, j.rotulos, j.rotulos));
       const lista = j.q ? `${Math.abs(j.q)} ${palabra(j.q)} (${listaNombres(j.q)})` : 'sin alteraciones';
-      j.alt = nombre === 'orden-armaduras'
+      j.alt = EN
+        ? (nombre === 'orden-armaduras'
+          ? `Key signature with ${Math.abs(j.q)} ${PALABRA_EN(j.q)} in treble clef: ${listaNombres(j.q)}. The name of each accidental is written below it.`
+          : `Key signature of ${j.titulo} in treble clef: ${j.q ? Math.abs(j.q) + ' ' + PALABRA_EN(j.q) + ' (' + listaNombres(j.q) + ')' : 'no accidentals'}.`)
+        : nombre === 'orden-armaduras'
         ? `Armadura con ${Math.abs(j.q)} ${palabra(j.q)} en clave de sol: ${listaNombres(j.q)}. Bajo cada alteración está escrito su nombre.`
         : `Armadura de ${j.titulo} en clave de sol: ${lista}.`;
       const listo = preparar(svg, j.alt);
@@ -185,6 +194,7 @@ async function main() {
   }
   if (fallos) { console.log(`\n${fallos} armadura(s) no pasan la verificacion: no se toca la pagina`); process.exit(1); }
 
+  if (poner && EN) { console.log('--poner no se usa con --lang=en: las paginas inglesas las monta tools/en/build.js'); process.exit(1); }
   if (poner) {
     for (const j of trabajos) {
       // la tabla muestra una tarjeta cada vez: sin «lazy» para que el cambio de tarjeta sea inmediato (son ~4 KB)

@@ -1,9 +1,10 @@
 """PDF imprimible del circulo de quintas: imagen centrada en A3 vertical @300ppp."""
-import os
+import os, sys
 from PIL import Image
 
-SRC = 'assets/img/tonalidades/circulo-de-quintas.png'
-OUT = 'assets/img/tonalidades/circulo-de-quintas.pdf'
+D = 'assets/img/en/tonalidades' if ('--lang=en' in sys.argv or os.environ.get('TM_LANG') == 'en') else 'assets/img/tonalidades'
+SRC = D + '/circulo-de-quintas.png'
+OUT = D + '/circulo-de-quintas.pdf'
 CREAM = (250, 247, 242)
 PAGE_W, PAGE_H = 3508, 4961   # A3 vertical @300ppp
 MARGIN = 120

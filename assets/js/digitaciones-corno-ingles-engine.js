@@ -9,6 +9,12 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  // Nombres de nota (Do Re Mi...) -> letras (C D E...) en la edicion inglesa
+  const NOTA_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  function enNote(s) { return EN ? s.replace(/Sol|Do|Re|Mi|Fa|La|Si/g, function (x) { return NOTA_EN[x]; }) : s; }
+
   // Elementos que se ENCIENDEN (data-k). El resto de la mecánica es decorativa (estática).
   // hole: 6 agujeros/platos (L1-L3 mano izq., R1-R3 mano der.). half: medio agujero sobre L1.
   // oct: llaves de octava. loop/spat: llaves de meñique y llave de Fa.
@@ -37,8 +43,8 @@
   var FOTOS = {
     sup: {
       img: 'digitacion-sup', w: 495, h: 1460,
-      titulo: 'Articulaci\u00f3n superior \u00b7 mano izquierda',
-      alt: 'Articulaci\u00f3n superior de un oboe vista de frente; las llaves que se pulsan se iluminan en dorado',
+      titulo: T('Articulaci\u00f3n superior \u00b7 mano izquierda', 'Upper joint \u00b7 left hand'),
+      alt: T('Articulaci\u00f3n superior de un oboe vista de frente; las llaves que se pulsan se iluminan en dorado', 'Upper joint of an oboe seen from the front; the keys that are pressed light up in gold'),
       k: {
         L1:  [251,  579, 26], L2: [248, 802, 26], L3: [248, 1021, 26],
         OCT2:[250,  648, 16], OCT3:[401, 514, 16],
@@ -47,8 +53,8 @@
     },
     inf: {
       img: 'digitacion-inf', w: 495, h: 1340,
-      titulo: 'Articulaci\u00f3n inferior \u00b7 mano derecha',
-      alt: 'Articulaci\u00f3n inferior de un oboe vista de frente; las llaves que se pulsan se iluminan en dorado',
+      titulo: T('Articulaci\u00f3n inferior \u00b7 mano derecha', 'Lower joint \u00b7 right hand'),
+      alt: T('Articulaci\u00f3n inferior de un oboe vista de frente; las llaves que se pulsan se iluminan en dorado', 'Lower joint of an oboe seen from the front; the keys that are pressed light up in gold'),
       k: {
         R1: [250,  77, 26], R2: [248, 187, 26], R3: [247, 387, 26],
         FK: [248, 298, 20],
@@ -108,15 +114,15 @@
   function label(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
     if (!m) return n;
-    return m[1] + (m[2] ? '♯' : '') + SUB[m[3]];
+    return enNote(m[1]) + (m[2] ? '♯' : '') + SUB[m[3]];
   }
   // Registros como en la página: grave Si♭3–Sol4, medio –Sol5, agudo –Re6, sobreagudo –Sol6.
   function registro(n) {
     var i = ORDEN.indexOf(n);
-    if (i >= 0 && i <= ORDEN.indexOf('Sol4')) return 'Registro grave';
-    if (i <= ORDEN.indexOf('Sol5')) return 'Registro medio';
-    if (i <= ORDEN.indexOf('Re6')) return 'Registro agudo';
-    return 'Registro sobreagudo';
+    if (i >= 0 && i <= ORDEN.indexOf('Sol4')) return T('Registro grave', 'Low register');
+    if (i <= ORDEN.indexOf('Sol5')) return T('Registro medio', 'Middle register');
+    if (i <= ORDEN.indexOf('Re6')) return T('Registro agudo', 'High register');
+    return T('Registro sobreagudo', 'Very high register');
   }
   // El corno inglés (en Fa) suena una quinta justa (7 semitonos) por debajo de lo escrito
   var ES_FLAT = ['Do', 'Re♭', 'Re', 'Mi♭', 'Mi', 'Fa', 'Sol♭', 'Sol', 'La♭', 'La', 'Si♭', 'Si'];
@@ -125,7 +131,7 @@
     if (!m) return '';
     var semis = { Do: 0, Re: 2, Mi: 4, Fa: 5, Sol: 7, La: 9, Si: 11 };
     var midi = semis[m[1]] + (m[2] ? 1 : 0) + (parseInt(m[3], 10) + 1) * 12 - 7;
-    return ES_FLAT[midi % 12] + SUB[String(Math.floor(midi / 12) - 1)];
+    return enNote(ES_FLAT[midi % 12]) + SUB[String(Math.floor(midi / 12) - 1)];
   }
   var LETTER = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
   var AUDIO_BASE = '/assets/audio/corno-ingles/';
@@ -232,7 +238,7 @@
 
   // La 1a llave de octava va en el pulgar izquierdo, por detras: no sale en la foto.
   function buildPulgar() {
-    return '<svg class="tm-ci-pulgarsvg" viewBox="0 0 200 120" role="img" aria-label="Cara oculta del oboe: la primera llave de octava, que acciona el pulgar izquierdo, se ilumina cuando hay que pulsarla">' +
+    return '<svg class="tm-ci-pulgarsvg" viewBox="0 0 200 120" role="img" aria-label="' + T('Cara oculta del oboe: la primera llave de octava, que acciona el pulgar izquierdo, se ilumina cuando hay que pulsarla', 'Hidden side of the oboe: the first octave key, worked by the left thumb, lights up when it has to be pressed') + '">' +
       '<defs>' +
         '<linearGradient id="tmCiMet" x1="0" y1="0" x2="1" y2="0">' +
           '<stop offset="0" stop-color="#c9ccd3"/><stop offset=".45" stop-color="#f2f3f6"/><stop offset="1" stop-color="#9fa3ab"/>' +
@@ -252,7 +258,7 @@
       '</g>' +
       // apoyo del pulgar (decorativo)
       '<rect x="78" y="82" width="44" height="24" rx="8" fill="#4a4340" stroke="#2b2624" stroke-width="1"/>' +
-      '<text class="tm-ci-thlab" x="100" y="118">pulgar izquierdo</text>' +
+      '<text class="tm-ci-thlab" x="100" y="118">' + T('pulgar izquierdo', 'left thumb') + '</text>' +
       '</svg>';
   }
 
@@ -269,16 +275,16 @@
 
     wrap.innerHTML =
       '<div class="tm-ci-wrap">' +
-        '<div class="tm-ci-readout" id="' + uid + '_ro"><span class="tm-ci-hint">Elige una nota para ver su digitaci\u00f3n</span></div>' +
+        '<div class="tm-ci-readout" id="' + uid + '_ro"><span class="tm-ci-hint">' + T('Elige una nota para ver su digitaci\u00f3n', 'Choose a note to see its fingering') + '</span></div>' +
         '<div class="tm-ci-diagram">' +
           '<div class="tm-ci-cols">' +
             ORDEN_FOTOS.map(function (n) { return columna(FOTOS[n]); }).join('') +
           '</div>' +
           '<div class="tm-ci-pulgar">' +
             buildPulgar() +
-            '<p class="tm-ci-pulgarcap"><strong>Por detr\u00e1s.</strong> La <strong>1.\u00aa llave de octava</strong> la acciona el <strong>pulgar izquierdo</strong> en la cara oculta del tubo, as\u00ed que no sale en las fotos y se dibuja aparte.</p>' +
+            '<p class="tm-ci-pulgarcap">' + T('<strong>Por detr\u00e1s.</strong> La <strong>1.\u00aa llave de octava</strong> la acciona el <strong>pulgar izquierdo</strong> en la cara oculta del tubo, as\u00ed que no sale en las fotos y se dibuja aparte.', '<strong>From behind.</strong> The <strong>1st octave key</strong> is worked by the <strong>left thumb</strong> on the hidden side of the tube, so it does not show in the photos and is drawn separately.') + '</p>' +
           '</div>' +
-          '<p class="tm-ci-credit"><strong>El corno ingl\u00e9s se digita igual que el oboe</strong> y lleva la misma mec\u00e1nica, as\u00ed que el diagrama muestra un <strong>oboe</strong>. Fotos: oboe Yamaha YOB-831, Yamaha Corporation v\u00eda <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Oboe_YOB-831.tif" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Llave de octava del pulgar: diagrama propio.</p>' +
+          '<p class="tm-ci-credit">' + T('<strong>El corno ingl\u00e9s se digita igual que el oboe</strong> y lleva la misma mec\u00e1nica, as\u00ed que el diagrama muestra un <strong>oboe</strong>. Fotos: oboe Yamaha YOB-831, Yamaha Corporation v\u00eda <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Oboe_YOB-831.tif" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Llave de octava del pulgar: diagrama propio.', '<strong>The English horn is fingered like the oboe</strong> and has the same mechanism, so the diagram shows an <strong>oboe</strong>. Photos: Yamaha YOB-831 oboe, Yamaha Corporation via <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Oboe_YOB-831.tif" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Thumb octave key: own diagram.') + '</p>' +
         '</div>' +
         '<div class="tm-ci-btns">' + btns + '</div>' +
       '</div>';
@@ -312,12 +318,12 @@
       if (data) data.keys.forEach(function (id) {
         wrap.querySelectorAll('.tm-ci-key[data-k="' + id + '"]').forEach(function (c) { c.classList.add('on'); });
       });
-      var estado = data ? '' : ' · <span class="tm-ci-prov">digitación por confirmar</span>';
+      var estado = data ? '' : ' · <span class="tm-ci-prov">' + T('digitación por confirmar', 'fingering to be confirmed') + '</span>';
       ro.innerHTML =
         '<div class="tm-ci-staff" id="' + uid + '_staff"></div>' +
-        '<div class="tm-ci-noterow"><span class="tm-ci-intl">' + label(n) + (FLAT[n] ? ' (' + FLAT[n] + ')' : '') + '</span>' +
-        '<button class="tm-ci-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
-        '<div class="tm-ci-reg">' + intl(n) + ' · ' + registro(n) + ' · suena ' + suena(n) + ' (5ª justa abajo)' + estado + '</div>';
+        '<div class="tm-ci-noterow"><span class="tm-ci-intl">' + label(n) + (FLAT[n] ? ' (' + enNote(FLAT[n]) + ')' : '') + '</span>' +
+        '<button class="tm-ci-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
+        '<div class="tm-ci-reg">' + intl(n) + ' · ' + registro(n) + T(' · suena ', ' · sounds ') + suena(n) + T(' (5ª justa abajo)', ' (perfect 5th lower)') + estado + '</div>';
       renderStaff(n);
       var pb = ro.querySelector('.tm-ci-play');
       if (pb) pb.addEventListener('click', function () { play(n); });

@@ -15,6 +15,8 @@
  * tools/verificar-que-compas-es.js.
  */
 const path = require('path');
+const EN = process.argv.includes('--lang=en');   // edicion inglesa: textos en ingles, salida en assets/img/en/...
+const TL = (es, en) => (EN ? en : es);
 const fs = require('fs');
 
 const ROOT = path.join(__dirname, '..');
@@ -23,7 +25,7 @@ const ENGINE2 = 'assets/js/grupos-valoracion-especial-engine.js';
 const ENGINE3 = 'assets/js/que-compas-es-engine.js';
 const { cargarFicha, escalarUniforme } = require('./lib-ficha-verovio.js');
 /* --salida=DIR escribe los PDF en otra carpeta (para revisarlos antes de sustituir los publicados). */
-const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/compases/fichas');
+const OUT_DIR = (process.argv.find(a => a.startsWith('--salida=')) || '').slice(9) || path.join(ROOT, 'assets/img/' + (EN ? 'en/' : '') + 'compases/fichas');
 
 /* Los lotes de la ficha: nivel, cuántos, semilla. El verificador los reutiliza. */
 const LOTES = [
@@ -63,24 +65,24 @@ const CSS = `
   .sol-tag { display: inline-block; background: #c0392b; color: #fff; font-size: 8.5pt; font-weight: bold; padding: 1px 7px; border-radius: 3px; vertical-align: middle; margin-left: 8px; }
 `;
 
-const TIT = { 1: '1. Fácil (un tiempo con grupo)', 2: '2. Medio (dos tiempos con grupo)', 3: '3. Difícil (todo el compás con grupos)' };
+const TIT = { 1: TL('1. Fácil (un tiempo con grupo)', '1. Easy (one beat with a group)'), 2: TL('2. Medio (dos tiempos con grupo)', '2. Medium (two beats with a group)'), 3: TL('3. Difícil (todo el compás con grupos)', '3. Hard (the whole measure made of groups)') };
 
 function html(solucion) {
-  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
+  return `<!DOCTYPE html><html lang="${EN ? 'en' : 'es'}"><head><meta charset="utf-8"><style>${CSS}</style></head><body>
 <div class="hoja">
   <div class="cab">
     <div class="cab-top">
       <div>
-        <div class="marca">TEORIAMUSICAL.COM.ES &middot; FICHA DE COMPASES</div>
-        <h1>¿Qué compás es?${solucion ? '<span class="sol-tag">SOLUCIONES</span>' : ''}</h1>
+        <div class="marca">TEORIAMUSICAL.COM.ES &middot; ${TL('FICHA DE COMPASES', 'TIME SIGNATURES WORKSHEET')}</div>
+        <h1>${TL('¿Qué compás es?', 'What time signature is it?')}${solucion ? '<span class="sol-tag">' + TL('SOLUCIONES', 'ANSWERS') + '</span>' : ''}</h1>
       </div>
       <img class="logo" src="${LOGO}" width="34" height="35" alt="">
     </div>
-    <p class="instr">Cada compás está escrito sin su cifra y lleno de grupos de valoración especial. Simplifica cada grupo a la figura que equivale y escribe en la casilla el compás que le corresponde. Un 4/4 siempre se puede escribir también como 2/2, y un 2/4 como 4/8: en los dos casos, ambas cifras son correctas.</p>
-    ${solucion ? '' : '<div class="datos"><span><b>Nombre:</b></span><span><b>Curso:</b></span><span><b>Fecha:</b></span></div>'}
+    <p class="instr">${TL(`Cada compás está escrito sin su cifra y lleno de grupos de valoración especial. Simplifica cada grupo a la figura que equivale y escribe en la casilla el compás que le corresponde. Un 4/4 siempre se puede escribir también como 2/2, y un 2/4 como 4/8: en los dos casos, ambas cifras son correctas.`, `Each measure is written without its time signature and is full of tuplets. Simplify each group to the note value it equals and write in the box the time signature that belongs to it. A 4/4 can always also be written as 2/2 (cut time), and a 2/4 as 4/8: in both cases, either time signature is correct.`)}</p>
+    ${solucion ? '' : '<div class="datos"><span><b>' + TL('Nombre:', 'Name:') + '</b></span><span><b>' + TL('Curso:', 'Class:') + '</b></span><span><b>' + TL('Fecha:', 'Date:') + '</b></span></div>'}
   </div>
   <div id="cuerpo"></div>
-  <div class="pie"><span>Compases &middot; ¿qué compás es?${solucion ? ' &middot; soluciones' : ''} &middot; teoriamusical.com.es/ejercicios/grupos-de-valoracion-especial/</span><span>teoriamusical.com.es</span></div>
+  <div class="pie"><span>${TL('Compases', 'Time signatures')} &middot; ${TL('¿qué compás es?', 'what time signature is it?')}${solucion ? ' &middot; ' + TL('soluciones', 'answers') : ''} &middot; ${TL('teoriamusical.com.es/ejercicios/grupos-de-valoracion-especial/', 'teoriamusical.com.es/en/exercises/rhythm/time-signatures/which-time-signature/')}</span><span>teoriamusical.com.es</span></div>
 </div></body></html>`;
 }
 

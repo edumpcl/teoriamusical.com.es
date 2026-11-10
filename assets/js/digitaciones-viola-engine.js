@@ -9,6 +9,8 @@
    Uso: <div id="x"></div><script>tmViolaEngine('x');</script> */
 (function () {
   'use strict';
+  var EN = document.documentElement.lang === 'en';
+  var T = function (es, en) { return EN ? en : es; };
 
   var SVG_W = 1071, SVG_H = 352;   // = píxeles de diagrama.jpg (VIOLA ENTERA horizontal, voluta izq., mentonera abajo)
   // Punto donde se pisa cada nota (x,y sobre la foto de la viola entero), de la cuerda al aire (n:0)
@@ -68,14 +70,15 @@
     {s:'La',n:11,x:437,y:131,nota:'Gs5',midi:80},
     {s:'La',n:12,x:454,y:131,nota:'A5',midi:81}
   ];
-  var CUERDA_NOM = { Do:'Do', Sol:'Sol', Re:'Re', La:'La' };
+  var CUERDA_NOM = EN ? { Do:'C', Sol:'G', Re:'D', La:'A' } :
+    { Do:'Do', Sol:'Sol', Re:'Re', La:'La' };
 
   // orden de botones: cromático por altura real (Sol₃…Si₅), sin duplicar las notas de solape
   var BYNOTE = {};
   PTS.forEach(function (p) { (BYNOTE[p.nota] = BYNOTE[p.nota] || []).push(p); });
   var ORDEN = Object.keys(BYNOTE).sort(function (a, b) { return BYNOTE[a][0].midi - BYNOTE[b][0].midi; });
 
-  var NM = {C:'Do',D:'Re',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'};
+  var NM = EN ? {C:'C',D:'D',E:'E',F:'F',G:'G',A:'A',B:'B'} : {C:'Do',D:'Re',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'};
   var SUB = {'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈'};
   function parse(f) { return /^([A-G])(s?)(\d)$/.exec(f); }
   function label(f) {   // 'Gs3' -> 'Sol♯₃'
@@ -146,24 +149,24 @@
 
     wrap.innerHTML =
       '<div class="tm-va-wrap">' +
-        '<div class="tm-va-readout" id="' + uid + '_ro"><span class="tm-va-hint">Elige una nota y verás dónde pisar la cuerda</span></div>' +
+        '<div class="tm-va-readout" id="' + uid + '_ro"><span class="tm-va-hint">' + T('Elige una nota y verás dónde pisar la cuerda', 'Pick a note and you will see where to press the string') + '</span></div>' +
         '<div class="tm-va-diagram">' +
           '<div class="tm-va-photo">' +
             '<picture><source type="image/webp" srcset="/assets/img/viola/diagrama.webp">' +
-            '<img class="tm-va-img" src="/assets/img/viola/diagrama.jpg" width="1071" height="352" loading="lazy" alt="Una viola entera vista de frente; sobre su diapasón se marca el punto exacto donde pisar cada nota, para ver a qué altura de la cuerda queda"></picture>' +
-            '<svg class="tm-va-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" preserveAspectRatio="none" role="img" aria-label="Sobre la foto de una viola entera se ilumina el punto del diapasón donde poner el dedo para cada nota">' +
+            '<img class="tm-va-img" src="/assets/img/viola/diagrama.jpg" width="1071" height="352" loading="lazy" alt="' + T('Una viola entera vista de frente; sobre su diapasón se marca el punto exacto donde pisar cada nota, para ver a qué altura de la cuerda queda', 'A whole viola seen from the front; the exact spot to press each note is marked on its fingerboard, to show how far along the string it falls') + '"></picture>' +
+            '<svg class="tm-va-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" preserveAspectRatio="none" role="img" aria-label="' + T('Sobre la foto de una viola entera se ilumina el punto del diapasón donde poner el dedo para cada nota', 'On the photo of a viola the spot on the fingerboard where the finger goes for each note lights up') + '">' +
               marks +
             '</svg>' +
           '</div>' +
-          '<div class="tm-va-cuerdas">Cuerdas (de arriba abajo): <strong>La · Re · Sol · Do</strong></div>' +
+          '<div class="tm-va-cuerdas">' + T('Cuerdas (de arriba abajo): <strong>La · Re · Sol · Do</strong>', 'Strings (top to bottom): <strong>A · D · G · C</strong>') + '</div>' +
           '<div class="tm-va-legend">' +
-            '<span class="tm-va-sw" style="background:#4da3ff"></span>cuerda al aire' +
-            '<span class="tm-va-sw" style="background:#ff9500"></span>dónde pisar · <em>la viola no tiene trastes: es el punto exacto</em>' +
+            '<span class="tm-va-sw" style="background:#4da3ff"></span>' + T('cuerda al aire', 'open string') +
+            '<span class="tm-va-sw" style="background:#ff9500"></span>' + T('dónde pisar · <em>la viola no tiene trastes: es el punto exacto</em>', 'where to press · <em>the viola has no frets: it is the exact spot</em>') +
           '</div>' +
-          '<div class="tm-va-modo" role="group" aria-label="Tipo de sonido">' +
-            '<button data-m="arco" class="sel">🎻 Arco</button><button data-m="pizz">Pizzicato</button>' +
+          '<div class="tm-va-modo" role="group" aria-label="' + T('Tipo de sonido', 'Type of sound') + '">' +
+            '<button data-m="arco" class="sel">' + T('🎻 Arco', '🎻 Bow') + '</button><button data-m="pizz">Pizzicato</button>' +
           '</div>' +
-          '<p class="tm-va-credit">Foto: Just plain Bill vía <a href="https://commons.wikimedia.org/wiki/File:Bratsche.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> (dominio público) · Sonido: viola de MuseScore / Muse Sounds</p>' +
+          '<p class="tm-va-credit">' + T('Foto: Just plain Bill vía ', 'Photo: Just plain Bill via ') + '<a href="https://commons.wikimedia.org/wiki/File:Bratsche.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>' + T(' (dominio público) · Sonido: viola de MuseScore / Muse Sounds', ' (public domain) · Sound: viola from MuseScore / Muse Sounds') + '</p>' +
         '</div>' +
         '<div class="tm-va-btns">' + btns + '</div>' +
       '</div>';
@@ -201,17 +204,17 @@
         if (g) g.classList.add('on');
       });
       var txt = sitios.map(function (p) {
-        return p.n === 0 ? 'cuerda <strong>' + CUERDA_NOM[p.s] + '</strong> al aire'
-                         : 'en la cuerda <strong>' + CUERDA_NOM[p.s] + '</strong> (donde marca el punto)';
-      }).join(' &nbsp;·&nbsp; o bien &nbsp;·&nbsp; ');
+        return p.n === 0 ? T('cuerda <strong>' + CUERDA_NOM[p.s] + '</strong> al aire', 'open <strong>' + CUERDA_NOM[p.s] + '</strong> string')
+                         : T('en la cuerda <strong>' + CUERDA_NOM[p.s] + '</strong> (donde marca el punto)', 'on the <strong>' + CUERDA_NOM[p.s] + '</strong> string (where the dot is)');
+      }).join(T(' &nbsp;·&nbsp; o bien &nbsp;·&nbsp; ', ' &nbsp;·&nbsp; or &nbsp;·&nbsp; '));
 
       ro.innerHTML =
         '<div class="tm-va-staff" id="' + uid + '_staff"></div>' +
         '<div class="tm-va-noterow"><span class="tm-va-intl">' + label(f) + '</span>' +
-        '<button class="tm-va-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
+        '<button class="tm-va-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
         '<div class="tm-va-donde">' + txt + '</div>' +
         (sitios.length > 1
-          ? '<div class="tm-va-multi">La misma nota en ' + sitios.length + ' sitios: al aire suena más brillante; pisada, más cálida y admite vibrato.</div>'
+          ? '<div class="tm-va-multi">' + T('La misma nota en ' + sitios.length + ' sitios: al aire suena más brillante; pisada, más cálida y admite vibrato.', 'The same note in ' + sitios.length + ' places: open it sounds brighter; fingered, it is warmer and allows vibrato.') + '</div>'
           : '');
       renderStaff(f);
       var pb = ro.querySelector('.tm-va-play');

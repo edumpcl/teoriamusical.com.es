@@ -5,6 +5,12 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  // Nombres de nota (Do Re Mi...) -> letras (C D E...) en la edicion inglesa
+  const NOTA_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  function enNote(s) { return EN ? s.replace(/Sol|Do|Re|Mi|Fa|La|Si/g, function (x) { return NOTA_EN[x]; }) : s; }
+
   /* Coordenadas sobre la FOTO (viewBox 3200x230 = pixeles de digitacion.jpg).
      Cabeza a la IZQUIERDA y pie a la DERECHA, que es como Yamaha publica sus fotos y
      como se dibujan las cartas de digitacion. Calibradas a mano sobre la imagen.
@@ -94,10 +100,10 @@
 
   function registro(nota) {
     var o = parseInt(nota.replace(/\D/g, ''), 10);
-    if (o <= 4) return 'Registro grave';
-    if (o === 5) return 'Registro medio';
-    if (o === 6) return 'Registro agudo';
-    return 'Registro sobreagudo';
+    if (o <= 4) return T('Registro grave', 'Low register');
+    if (o === 5) return T('Registro medio', 'Middle register');
+    if (o === 6) return T('Registro agudo', 'High register');
+    return T('Registro sobreagudo', 'Very high register');
   }
 
   /* Audio: nota (Do4, Do#4…) -> archivo del banco (C4, Cs4…) */
@@ -192,7 +198,7 @@
     // Las dos llaves del PULGAR van en la cara oculta del tubo y no salen en la foto:
     // se dibujan aparte y se iluminan igual (data-k="T" y "Tb").
     function buildPulgar() {
-      return '<svg class="tm-fl-pulgarsvg" viewBox="0 0 260 118" role="img" aria-label="Cara oculta de la flauta: las dos llaves del pulgar izquierdo se iluminan cuando hay que pulsarlas">' +
+      return '<svg class="tm-fl-pulgarsvg" viewBox="0 0 260 118" role="img" aria-label="' + T('Cara oculta de la flauta: las dos llaves del pulgar izquierdo se iluminan cuando hay que pulsarlas', 'Hidden side of the flute: the two left thumb keys light up when they have to be pressed') + '">' +
         '<defs>' +
           '<linearGradient id="tmFlMet" x1="0" y1="0" x2="0" y2="1">' +
             '<stop offset="0" stop-color="#f2f3f6"/><stop offset=".5" stop-color="#c9ccd3"/><stop offset="1" stop-color="#9fa3ab"/>' +
@@ -215,33 +221,33 @@
         '<g class="tm-fl-key" data-k="Tb">' +
           '<rect class="tm-fl-th-pad" x="150" y="41" width="38" height="20" rx="10"/>' +
         '</g>' +
-        '<text class="tm-fl-thlab" x="109" y="88">Si</text>' +
-        '<text class="tm-fl-thlab" x="169" y="88">Si♭</text>' +
-        '<text class="tm-fl-thlab" x="130" y="110" style="font-size:11px;fill:#888">pulgar izquierdo</text>' +
+        '<text class="tm-fl-thlab" x="109" y="88">' + T('Si', 'B') + '</text>' +
+        '<text class="tm-fl-thlab" x="169" y="88">' + T('Si♭', 'B♭') + '</text>' +
+        '<text class="tm-fl-thlab" x="130" y="110" style="font-size:11px;fill:#888">' + T('pulgar izquierdo', 'left thumb') + '</text>' +
         '</svg>';
     }
 
     var btns = ORDEN.map(function (n) {
       var hasData = !!FING[n];
-      return '<button class="tm-fl-btn' + (hasData ? '' : ' todo') + '" data-n="' + n + '">' + LABELS[n] + '</button>';
+      return '<button class="tm-fl-btn' + (hasData ? '' : ' todo') + '" data-n="' + n + '">' + enNote(LABELS[n]) + '</button>';
     }).join('');
 
     wrap.innerHTML =
       '<div class="tm-fl-wrap">' +
-        '<div class="tm-fl-readout" id="' + uid + '_ro"><span class="tm-fl-hint">Elige una nota para ver su digitación</span></div>' +
+        '<div class="tm-fl-readout" id="' + uid + '_ro"><span class="tm-fl-hint">' + T('Elige una nota para ver su digitación', 'Choose a note to see its fingering') + '</span></div>' +
         '<div class="tm-fl-diagram">' +
           '<div class="tm-fl-tira">' +
-            vista(0, FOTO.w, 'Digitación de la flauta sobre una fotografía real: cabeza a la izquierda, pie a la derecha') +
+            vista(0, FOTO.w, T('Digitación de la flauta sobre una fotografía real: cabeza a la izquierda, pie a la derecha', 'Flute fingering on a real photograph: headjoint on the left, footjoint on the right')) +
           '</div>' +
           '<div class="tm-fl-filas">' +
-            vista(1250, 975, 'Mitad izquierda del mecanismo, ampliada') +
-            vista(2225, 975, 'Mitad derecha del mecanismo y el pie, ampliada') +
+            vista(1250, 975, T('Mitad izquierda del mecanismo, ampliada', 'Left half of the mechanism, enlarged')) +
+            vista(2225, 975, T('Mitad derecha del mecanismo y el pie, ampliada', 'Right half of the mechanism and the footjoint, enlarged')) +
           '</div>' +
           '<div class="tm-fl-pulgar">' +
             buildPulgar() +
-            '<p class="tm-fl-pulgarcap"><strong>Por detrás.</strong> Las dos llaves del <strong>pulgar izquierdo</strong> van en la cara oculta del tubo, así que no salen en la foto y se dibujan aparte.</p>' +
+            '<p class="tm-fl-pulgarcap">' + T('<strong>Por detrás.</strong> Las dos llaves del <strong>pulgar izquierdo</strong> van en la cara oculta del tubo, así que no salen en la foto y se dibujan aparte.', '<strong>From behind.</strong> The two <strong>left thumb</strong> keys sit on the hidden side of the tube, so they do not show in the photo and are drawn separately.') + '</p>' +
           '</div>' +
-          '<p class="tm-fl-credit">Foto: flauta Yamaha YFL-372, Yamaha Corporation vía <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Flute_YFL-372.tif" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Llaves del pulgar: diagrama propio.</p>' +
+          '<p class="tm-fl-credit">' + T('Foto: flauta Yamaha YFL-372, Yamaha Corporation vía <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Flute_YFL-372.tif" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Llaves del pulgar: diagrama propio.', 'Photo: Yamaha YFL-372 flute, Yamaha Corporation via <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Flute_YFL-372.tif" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Thumb keys: own diagram.') + '</p>' +
         '</div>' +
         '<div class="tm-fl-btns" id="' + uid + '_btns">' + btns + '</div>' +
       '</div>';
@@ -280,8 +286,8 @@
       ro.innerHTML =
         '<div class="tm-fl-staff" id="' + uid + '_staff"></div>' +
         '<div class="tm-fl-noterow"><span class="tm-fl-intl">' + intl(n) + '</span>' +
-        '<button class="tm-fl-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
-        '<span class="tm-fl-reg">' + LABELS[n] + ' · ' + registro(n) + (data ? '' : ' · digitación por confirmar') + '</span>';
+        '<button class="tm-fl-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
+        '<span class="tm-fl-reg">' + enNote(LABELS[n]) + ' · ' + registro(n) + (data ? '' : T(' · digitación por confirmar', ' · fingering to be confirmed')) + '</span>';
       renderStaff(n);
       var pb = ro.querySelector('.tm-fl-play');
       if (pb) pb.addEventListener('click', function () { play(n); });

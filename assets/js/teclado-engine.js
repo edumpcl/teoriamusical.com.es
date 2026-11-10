@@ -4,12 +4,16 @@
 (function () {
   'use strict';
 
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+
   var ES = ['Do', 'Do♯/Re♭', 'Re', 'Re♯/Mi♭', 'Mi', 'Fa', 'Fa♯/Sol♭', 'Sol', 'Sol♯/La♭', 'La', 'La♯/Si♭', 'Si'];
-  var EN = ['C', 'C♯/D♭', 'D', 'D♯/E♭', 'E', 'F', 'F♯/G♭', 'G', 'G♯/A♭', 'A', 'A♯/B♭', 'B'];
+  var EN_NAMES = ['C', 'C♯/D♭', 'D', 'D♯/E♭', 'E', 'F', 'F♯/G♭', 'G', 'G♯/A♭', 'A', 'A♯/B♭', 'B'];
   var ES_WHITE = { 0: 'Do', 2: 'Re', 4: 'Mi', 5: 'Fa', 7: 'Sol', 9: 'La', 11: 'Si' };
+  var EN_WHITE = { 0: 'C', 2: 'D', 4: 'E', 5: 'F', 7: 'G', 9: 'A', 11: 'B' };
   var WHITE = { 0: 1, 2: 1, 4: 1, 5: 1, 7: 1, 9: 1, 11: 1 };
   var SUB = { '-': '₋', '0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄', '5': '₅', '6': '₆', '7': '₇', '8': '₈', '9': '₉' };
-  function sub(o) { return ('' + o).replace(/[-0-9]/g, function (d) { return SUB[d]; }); }
+  function sub(o) { if (EN) return '' + o; return ('' + o).replace(/[-0-9]/g, function (d) { return SUB[d]; }); }
 
   var MIDI_LO = 21, MIDI_HI = 108;           /* La0 .. Do8 */
   var WW = 23, WH = 128, BW = 13, BH = 80, LABELZONE = 30;
@@ -79,11 +83,11 @@
     }
     var SVG_W = whites.length * WW;
 
-    var svgParts = ['<svg class="tm-kbd-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" role="img" aria-label="Teclado de piano completo">'];
+    var svgParts = ['<svg class="tm-kbd-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" role="img" aria-label="' + T('Teclado de piano completo', 'Full piano keyboard') + '">'];
     whites.forEach(function (w) {
       var x = w.wi * WW;
       svgParts.push('<rect class="tm-wkey" data-m="' + w.m + '" x="' + x + '" y="0" width="' + (WW - 1) + '" height="' + WH + '" rx="2"></rect>');
-      svgParts.push('<text class="tm-klabel" x="' + (x + WW / 2) + '" y="' + (WH + 12) + '">' + ES_WHITE[w.s] + '</text>');
+      svgParts.push('<text class="tm-klabel" x="' + (x + WW / 2) + '" y="' + (WH + 12) + '">' + (EN ? EN_WHITE : ES_WHITE)[w.s] + '</text>');
       if (w.s === 0) {
         svgParts.push('<text class="tm-koct" x="' + (x + WW / 2) + '" y="' + (WH + 24) + '">' + w.oct + '</text>');
         if (w.m === 60) svgParts.push('<circle class="tm-kbd-mid" cx="' + (x + WW / 2) + '" cy="7" r="3.2"></circle>');
@@ -97,9 +101,9 @@
 
     wrap.innerHTML =
       '<div class="tm-kbd-wrap">' +
-        '<div class="tm-kbd-readout" id="' + uid + '_ro"><span class="tm-kbd-hint">Pulsa una tecla para oírla y ver su nota</span></div>' +
+        '<div class="tm-kbd-readout" id="' + uid + '_ro"><span class="tm-kbd-hint">' + T('Pulsa una tecla para oírla y ver su nota', 'Click a key to hear it and see its note') + '</span></div>' +
         '<div class="tm-kbd-svgwrap" id="' + uid + '_sw">' + svgParts.join('') + '</div>' +
-        '<div style="text-align:center"><button class="tm-kbd-btn" id="' + uid + '_toggle" type="button">Mostrar los nombres</button></div>' +
+        '<div style="text-align:center"><button class="tm-kbd-btn" id="' + uid + '_toggle" type="button">' + T('Mostrar los nombres', 'Show note names') + '</button></div>' +
       '</div>';
 
     var svgEl = wrap.querySelector('.tm-kbd-svg');
@@ -109,10 +113,17 @@
     function readout(m) {
       var s = ((m % 12) + 12) % 12, oct = Math.floor(m / 12) - 1, isW = !!WHITE[s];
       var note, eng;
-      if (isW) { note = ES[s] + sub(oct); eng = 'En inglés: ' + EN[s] + sub(oct); }
+      if (EN) {
+        /* en inglés la nota principal son las letras; debajo, el nombre en solfeo (Do-Re-Mi) */
+        if (isW) { note = EN_NAMES[s] + sub(oct); eng = 'Solfège (fixed do): ' + ES[s] + sub(oct); }
+        else {
+          var q = EN_NAMES[s].split('/'); note = q[0] + sub(oct) + ' / ' + q[1] + sub(oct);
+          eng = 'Solfège (fixed do): ' + ES[s];
+        }
+      } else if (isW) { note = ES[s] + sub(oct); eng = 'En inglés: ' + EN_NAMES[s] + sub(oct); }
       else {
         var p = ES[s].split('/'); note = p[0] + sub(oct) + ' / ' + p[1] + sub(oct);
-        eng = 'En inglés: ' + EN[s];
+        eng = 'En inglés: ' + EN_NAMES[s];
       }
       ro.innerHTML = '<span class="tm-kbd-note">' + note + '</span><span class="tm-kbd-sub">' + eng + '</span>';
     }
@@ -131,7 +142,7 @@
     var btn = document.getElementById(uid + '_toggle');
     btn.addEventListener('click', function () {
       var on = svgEl.classList.toggle('tm-show-names');
-      btn.textContent = on ? 'Ocultar los nombres' : 'Mostrar los nombres';
+      btn.textContent = on ? T('Ocultar los nombres', 'Hide note names') : T('Mostrar los nombres', 'Show note names');
     });
 
     /* centrar el Do central al cargar */

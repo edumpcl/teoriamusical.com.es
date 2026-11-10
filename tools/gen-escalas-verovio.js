@@ -20,7 +20,10 @@ const path = require('path');
 const Modos = require('./escalas-modos.js');
 
 const RAIZ = path.join(__dirname, '..');
-const SALIDA = 'assets/img/escalas';
+/* Edicion inglesa: `--lang=en` (o TM_LANG=en) escribe en assets/img/en/escalas con rotulos de grados y alt en ingles.
+   Sin la opcion la salida espanola es identica. La pagina espanola solo se lee para localizar las imagenes. */
+const EN = process.argv.includes('--lang=en') || process.env.TM_LANG === 'en';
+const SALIDA = EN ? 'assets/img/en/escalas' : 'assets/img/escalas';
 
 /* ======================= teoria ======================= */
 const LETRAS = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
@@ -495,6 +498,7 @@ const CONJUNTOS = {
  */
 const GRADOS_ROMANOS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
 const GRADOS_NOMBRES = ['Tónica', 'Supertónica', 'Mediante', 'Subdominante', 'Dominante', 'Superdominante', 'Sensible', 'Tónica'];
+const GRADOS_NOMBRES_EN = ['Tonic', 'Supertonic', 'Mediant', 'Subdominant', 'Dominant', 'Submediant', 'Leading tone', 'Tonic'];
 const ROTULOS = {
   grados(notas, altPrevio) {
     const err = [];
@@ -504,9 +508,11 @@ const ROTULOS = {
     const etiquetas = [];
     notas.forEach((n, k) => {
       etiquetas.push({ indice: k, texto: GRADOS_ROMANOS[k], color: '#8a5a00', family: 'Georgia, &quot;Times New Roman&quot;, serif', size: 360, dy: 150 });
-      etiquetas.push({ indice: k, texto: GRADOS_NOMBRES[k], color: '#1a1a1a', size: 250, dy: 600 });
+      etiquetas.push({ indice: k, texto: (EN ? GRADOS_NOMBRES_EN : GRADOS_NOMBRES)[k], color: '#1a1a1a', size: 250, dy: 600 });
     });
-    const alt = `Escala de Do mayor con sus siete grados rotulados: ${quiere.slice(0, 7).join(', ')} y ${quiere[7]}.`;
+    const quiereEn = GRADOS_ROMANOS.map((r, k) => `${r} ${GRADOS_NOMBRES_EN[k]}`);
+    const alt = EN ? `C major scale with its seven degrees labeled: ${quiereEn.slice(0, 7).join(', ')} and ${quiereEn[7]}.`
+      : `Escala de Do mayor con sus siete grados rotulados: ${quiere.slice(0, 7).join(', ')} y ${quiere[7]}.`;
     return { etiquetas, alt, err };
   },
 };
@@ -662,6 +668,7 @@ async function main() {
   }
   if (fallos) { console.log(`\n${fallos} escala(s) no pasan la verificacion: no se toca la pagina`); process.exit(1); }
 
+  if (poner && EN) { console.log('--poner no se usa con --lang=en: las paginas inglesas las monta tools/en/build.js'); process.exit(1); }
   if (poner) {
     for (const f of figuras) {
       const h = f.hecho;

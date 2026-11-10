@@ -10,6 +10,14 @@
 (function () {
   'use strict';
 
+  // Inglés: la misma página sirve a <html lang="en"> (el español queda intacto).
+  const EN = document.documentElement.lang === 'en';
+  const T = (es, en) => EN ? en : es;
+  // Nombre de nota en español -> letras (solo se muestra así en inglés; la lógica sigue con los nombres españoles).
+  const NOTE_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+  const nm = s => EN ? String(s).replace(/Sol|Do|Re|Mi|Fa|La|Si/g, m => NOTE_EN[m]) : s;
+  const ordEn = n => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th');
+
   var MP_X = 68, SLIDE_X0 = 105, SOCKET_X = 330;
   var SLIDE_Y1 = 122, SLIDE_Y2 = 136;
   var TIP_MIN = 130, TIP_STEP = 30;
@@ -49,7 +57,9 @@
   ];
   var FUND = { 1: 'Si♭', 2: 'La', 3: 'La♭', 4: 'Sol', 5: 'Fa♯', 6: 'Fa', 7: 'Mi' };
   var ORDINAL = { 1: '1ª', 2: '2ª', 3: '3ª', 4: '4ª', 5: '5ª', 6: '6ª', 7: '7ª' };
+  if (EN) ORDINAL = { 1: '1st', 2: '2nd', 3: '3rd', 4: '4th', 5: '5th', 6: '6th', 7: '7th' };
   var VTXT = { 'F': 'válvula F', 'Gb': 'válvula G♭', 'both': 'válvulas F + G♭ (dan Re)' };
+  if (EN) VTXT = { 'F': 'F valve', 'Gb': 'G♭ valve', 'both': 'F + G♭ valves (together they give D)' };
 
   var SUB = { '1': '₁', '2': '₂', '3': '₃', '4': '₄' };
   var FLAT = {
@@ -61,14 +71,14 @@
   function label(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
     if (!m) return n;
-    return m[1] + (m[2] ? '♯' : '') + SUB[m[3]];
+    return nm(m[1] + (m[2] ? '♯' : '') + SUB[m[3]]);
   }
   function registro(n) {
     var i = ORDEN.indexOf(n);
-    if (i <= ORDEN.indexOf('Re#2')) return 'Registro subgrave (con válvulas)';
-    if (i <= ORDEN.indexOf('Si2')) return 'Registro grave';
-    if (i <= ORDEN.indexOf('Si3')) return 'Registro medio';
-    return 'Registro agudo';
+    if (i <= ORDEN.indexOf('Re#2')) return T('Registro subgrave (con válvulas)', 'Extended low register (with valves)');
+    if (i <= ORDEN.indexOf('Si2')) return T('Registro grave', 'Low register');
+    if (i <= ORDEN.indexOf('Si3')) return T('Registro medio', 'Middle register');
+    return T('Registro agudo', 'High register');
   }
   var LETTER = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
   var AUDIO_BASE = '/assets/audio/trombon-bajo/';
@@ -142,12 +152,12 @@
     '<path d="M402 160 C480 168 540 164 580 150" stroke="url(#tmTbjBrass)" stroke-width="12" fill="none" stroke-linecap="round"/>' +
     '<path d="M574 138 C620 122 658 122 676 130 L676 176 C658 184 620 184 574 168 C584 158 584 148 574 138 Z" fill="url(#tmTbjBrass)" stroke="#7a5a08" stroke-width="1.2"/>' +
     '<ellipse cx="677" cy="153" rx="7" ry="24" fill="#c8960f" stroke="#7a5a08" stroke-width="1"/>' +
-    '<text class="tm-tbj-klab" x="68" y="100">Boquilla</text>' +
-    '<text class="tm-tbj-klab" x="677" y="115">Campana</text>' +
-    '<text class="tm-tbj-klab" x="378" y="30">Vara de afinación</text>' +
-    '<text class="tm-tbj-klab" x="217" y="165">Posición de la vara</text>' +
+    '<text class="tm-tbj-klab" x="68" y="100">' + T('Boquilla', 'Mouthpiece') + '</text>' +
+    '<text class="tm-tbj-klab" x="677" y="115">' + T('Campana', 'Bell') + '</text>' +
+    '<text class="tm-tbj-klab" x="378" y="30">' + T('Vara de afinación', 'Tuning slide') + '</text>' +
+    '<text class="tm-tbj-klab" x="217" y="165">' + T('Posición de la vara', 'Slide position') + '</text>' +
     // etiqueta de las válvulas
-    '<text class="tm-tbj-klab" x="118" y="40">Válvulas (gatillos)</text>';
+    '<text class="tm-tbj-klab" x="118" y="40">' + T('Válvulas (gatillos)', 'Valves (triggers)') + '</text>';
 
   // dos válvulas de pulgar (F y G♭) que se encienden
   var VALVES = [
@@ -186,8 +196,8 @@
 
     wrap.innerHTML =
       '<div class="tm-tbj-wrap">' +
-        '<div class="tm-tbj-readout" id="' + uid + '_ro"><span class="tm-tbj-hint">Elige una nota para ver su posición y válvulas</span></div>' +
-        '<div class="tm-tbj-diagram"><svg class="tm-tbj-svg" id="' + uid + '_svg" viewBox="0 0 700 220" role="img" aria-label="Diagrama de digitación del trombón bajo: boquilla fija a la izquierda, vara deslizante hacia la campana de la derecha, dos válvulas de pulgar (Fa y Sol bemol) arriba a la izquierda y una regla con las siete posiciones">' +
+        '<div class="tm-tbj-readout" id="' + uid + '_ro"><span class="tm-tbj-hint">' + T('Elige una nota para ver su posición y válvulas', 'Choose a note to see its position and valves') + '</span></div>' +
+        '<div class="tm-tbj-diagram"><svg class="tm-tbj-svg" id="' + uid + '_svg" viewBox="0 0 700 220" role="img" aria-label="' + T('Diagrama de digitación del trombón bajo: boquilla fija a la izquierda, vara deslizante hacia la campana de la derecha, dos válvulas de pulgar (Fa y Sol bemol) arriba a la izquierda y una regla con las siete posiciones', 'Bass trombone fingering diagram: mouthpiece fixed on the left, slide extending toward the bell on the right, two thumb valves (F and G-flat) at the top left and a ruler with the seven positions') + '">' +
           DECO_FIXED +
           valvesSvg() +
           '<g id="' + uid + '_slide">' +
@@ -250,13 +260,13 @@
       var data = FING[n];
       if (data) { setSlide(data.pos); setValves(data.valves || null); }
       var detail = data
-        ? ORDINAL[data.pos] + ' posición' + (data.valves ? ' · ' + VTXT[data.valves]
-            : (data.harm ? ' · armónico ' + data.harm + 'º sobre el ' + FUND[data.pos] : ''))
+        ? ORDINAL[data.pos] + T(' posición', ' position') + (data.valves ? ' · ' + VTXT[data.valves]
+            : (data.harm ? (EN ? ' · ' + ordEn(data.harm) + ' harmonic above ' + nm(FUND[data.pos]) : ' · armónico ' + data.harm + 'º sobre el ' + FUND[data.pos]) : ''))
         : '';
       ro.innerHTML =
         '<div class="tm-tbj-staff" id="' + uid + '_staff"></div>' +
-        '<div class="tm-tbj-noterow"><span class="tm-tbj-intl">' + label(n) + (FLAT[n] ? ' (' + FLAT[n] + ')' : '') + '</span>' +
-        '<button class="tm-tbj-play" type="button" aria-label="Reproducir la nota">▶</button></div>' +
+        '<div class="tm-tbj-noterow"><span class="tm-tbj-intl">' + label(n) + (FLAT[n] ? ' (' + nm(FLAT[n]) + ')' : '') + '</span>' +
+        '<button class="tm-tbj-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
         '<div class="tm-tbj-reg">' + intl(n) + ' · ' + registro(n) + '</div>' +
         '<div class="tm-tbj-keysline">' + detail + '</div>';
       renderStaff(n);
