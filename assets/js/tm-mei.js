@@ -103,23 +103,29 @@ function aMEI(fila) {
       return `<note xml:id="${id}" pname="${p.letra}" oct="${p.oct}" ${dur}${a ? ` accid="${a}"` : ''}${x.color ? ` color="${x.color}"` : ''}${x.oculta ? ' visible="false"' : ''}${x.plica ? ` stem.dir="${x.plica}"` : ''}${x.union ? ` tie="${x.union}"` : ''}>${articDe(x) ? `<artic artic="${articDe(x).tipo}" place="${articDe(x).lugar}"/>` : ''}</note>`;
     };
     // unidades: un evento suelto o un grupo con barra
-    const unidades = [];
+    const unidades = [], dentroDeBarra = new Set();
+    const abreTupla = (t) => `<tuplet num="${t.num}" numbase="${t.numbase}" num.visible="true" num.place="above" bracket.visible="${t.corchete === false ? 'false' : 'true'}" bracket.place="above">`;
     for (let j = 0; j < c.length;) {
       const e = c[j];
       if (e.barra === undefined) { unidades.push({ ini: j, fin: j, txt: evento(e, j) }); j++; continue; }
       let f = j; const grupo = [];
       while (f < c.length && c[f].barra === e.barra) { grupo.push(evento(c[f], f)); f++; }
-      unidades.push({ ini: j, fin: f - 1, txt: grupo.length > 1 ? `<beam>${grupo.join('')}</beam>` : grupo[0] });
+      // un tresillo DENTRO del grupo con barra (tresillo de semicorcheas + corchea, dos tresillos con una barra): va dentro del <beam>
+      const internas = tuplasDe(fila, i).filter((t) => t.ini >= j && t.fin <= f - 1 && !(t.ini === j && t.fin === f - 1)).sort((a, b) => b.ini - a.ini);
+      for (const t of internas) {
+        grupo.splice(t.ini - j, t.fin - t.ini + 1, abreTupla(t) + grupo.slice(t.ini - j, t.fin - j + 1).join('') + '</tuplet>');
+        dentroDeBarra.add(t);
+      }
+      unidades.push({ ini: j, fin: f - 1, txt: grupo.length > 1 || internas.length ? `<beam>${grupo.join('')}</beam>` : grupo[0] });
       j = f;
     }
     // tresillos: envuelven las unidades que cubren; no pueden partir un grupo con barra
     let cuerpo = unidades;
-    for (const t of tuplasDe(fila, i)) {
+    for (const t of tuplasDe(fila, i).filter((x) => !dentroDeBarra.has(x))) {
       const dentro = cuerpo.filter((u) => u.ini >= t.ini && u.fin <= t.fin && !u.envuelto);
       const parte = cuerpo.filter((u) => u.fin >= t.ini && u.ini <= t.fin);
       if (!dentro.length || dentro.length !== parte.length) throw new Error('el grupo de valoracion especial parte un grupo con barra');
-      const abre = `<tuplet num="${t.num}" numbase="${t.numbase}" num.visible="true" num.place="above" bracket.visible="${t.corchete === false ? 'false' : 'true'}" bracket.place="above">`;
-      const nuevo = { ini: dentro[0].ini, fin: dentro[dentro.length - 1].fin, txt: abre + dentro.map((u) => u.txt).join('') + '</tuplet>', envuelto: true };
+      const nuevo = { ini: dentro[0].ini, fin: dentro[dentro.length - 1].fin, txt: abreTupla(t) + dentro.map((u) => u.txt).join('') + '</tuplet>', envuelto: true };
       const pos = cuerpo.indexOf(dentro[0]);
       cuerpo = [...cuerpo.slice(0, pos), nuevo, ...cuerpo.slice(pos + dentro.length)];
     }

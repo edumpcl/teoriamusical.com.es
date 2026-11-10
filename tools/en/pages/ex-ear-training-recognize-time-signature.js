@@ -43,7 +43,7 @@ module.exports = dictionaryPage({
 <div class="tm-faq-item"><div class="tm-faq-q">How many times can I listen to each melody?</div><div class="tm-faq-a">Up to three times before answering, and you can answer while it plays. After answering, you can listen as many times as you like while you see it written out.</div></div>
 </div>
 
-<p>To train rhythm by ear from the very beginning, with quarter notes and quarter rests, there is the <a href="/ejercicios/auditivos/dictado-ritmico/">rhythmic dictation</a>, ordered by note values, which starts with <a href="/ejercicios/auditivos/dictado-ritmico/negras-y-silencios/">quarter notes and quarter rests</a>.</p>
+<p>To train rhythm by ear from the very beginning, with quarter notes and quarter rests, there is the <a href="/ejercicios/auditivos/dictado-ritmico/">rhythmic dictation</a>, where you choose the note values that appear; the first level uses <a href="/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn&amp;c=234">quarter notes and quarter rests</a>.</p>
 
 <p>Once you recognize the time signature easily, try naming the key too, as in the entrance exam for professional-level conservatories: <a href="/ejercicios/auditivos/compas-y-tonalidad/">time signature and key</a>.</p>
 

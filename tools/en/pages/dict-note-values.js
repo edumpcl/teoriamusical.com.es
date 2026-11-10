@@ -84,7 +84,7 @@ ${restRows}
 
 <h2>Note value exercises</h2>
 
-<p>To practice what is explained here, try the <a href="/ejercicios/figuras/">note value and rhythm exercises</a> with instant feedback and PDF worksheets: <a href="/ejercicios/figuras/identificar-figuras-y-silencios/">identify notes and rests</a>, <a href="/ejercicios/figuras/equivalencias-de-figuras/">equivalences between note values</a>, the <a href="/ejercicios/figuras/valor-de-las-figuras/">value of notes in each time signature</a> and <a href="/ejercicios/figuras/sumar-figuras-en-un-compas/">adding up the notes in a measure</a>. To recognize them by ear, try <a href="/ejercicios/auditivos/dictado-ritmico/">rhythmic dictation</a>, organized by note value: from the quarter note and its rest to the whole note and groups of two eighth notes.</p>
+<p>To practice what is explained here, try the <a href="/ejercicios/figuras/">note value and rhythm exercises</a> with instant feedback and PDF worksheets: <a href="/ejercicios/figuras/identificar-figuras-y-silencios/">identify notes and rests</a>, <a href="/ejercicios/figuras/equivalencias-de-figuras/">equivalences between note values</a>, the <a href="/ejercicios/figuras/valor-de-las-figuras/">value of notes in each time signature</a> and <a href="/ejercicios/figuras/sumar-figuras-en-un-compas/">adding up the notes in a measure</a>. To recognize them by ear, try <a href="/ejercicios/auditivos/dictado-ritmico/">rhythmic dictation</a>, where you choose the note values that appear: from the quarter note and its rest to the whole note, eighths, sixteenths and triplets.</p>
 
 <section class="tm-seccion">
 <div class="tm-seccion-inner">

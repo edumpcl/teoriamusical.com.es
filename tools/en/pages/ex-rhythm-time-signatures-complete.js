@@ -40,7 +40,7 @@ module.exports = dictionaryPage({
 
 <p>If you find it hard, first go through <a href="/ejercicios/figuras/valor-de-las-figuras/">the value of note values in each measure</a> and <a href="/ejercicios/figuras/sumar-figuras-en-un-compas/">adding up the note values in a measure</a>. To understand what a time signature says, there is the exercise on <a href="/ejercicios/compases/analizar-compas/">analyzing time signatures</a>, and the theory is on the page about <a href="/diccionario-musical/compases/">time signatures</a>. Once this goes well, <a href="/ejercicios/compases/reconocer-compas/">recognize the time signature</a> tests what you learned the other way around: working out the time signature from the written rhythm.</p>
 
-<p>And if you want to write rhythm by ear, with the same note cards, try the <a href="/ejercicios/auditivos/dictado-ritmico/negras-y-silencios/">rhythmic dictation</a>: you hear a rhythm of quarter notes and quarter rests and write it beat by beat.</p>
+<p>And if you want to write rhythm by ear, with the same note cards, try the <a href="/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn&amp;c=234">rhythmic dictation</a>: you hear a rhythm of quarter notes and quarter rests and write it beat by beat.</p>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

@@ -14,7 +14,7 @@ function grupoSolo(n, d, numbase) {
   return { compases: [Array.from({ length: n }, () => ev(d, { barra: 0 }))], tuplets: [{ c: 0, ini: 0, fin: n - 1, num: n, numbase }] };
 }
 const GRUPOS = [
-  ['grupo-tresillo', 3, '8', 2], ['grupo-dosillo', 2, '8', 3], ['grupo-cuatrillo', 4, '8', 6],
+  ['grupo-tresillo', 3, '8', 2], ['grupo-dosillo', 2, '8', 3], ['grupo-cuatrillo', 4, '16', 6],
   ['grupo-quintillo', 5, '16', 4], ['grupo-seisillo', 6, '16', 4], ['grupo-septillo', 7, '16', 4],
 ];
 const grupos = GRUPOS.map(([slug, n, d, nb]) => ({ slug, archivos: [slug + '.png'], carpeta: 'figuras', tipo: 'grupo', escala: 1.5, filas: [grupoSolo(n, d, nb)] }));

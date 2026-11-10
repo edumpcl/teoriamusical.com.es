@@ -183,6 +183,516 @@
       "source": "/diccionario-musical/tonalidades/escalas-mixolidia/",
       "destination": "/diccionario-musical/tonalidades/escalas-mayores/escalas-mayores-mixolidias/",
       "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/negras-y-silencios-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/negras-y-silencios-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/negras-y-silencios/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-negras-y-silencios-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-negras-y-silencios-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-negras-y-silencios/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-con-puntillo-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-con-puntillo-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-con-puntillo/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/redondas-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/redondas-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/redondas/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/negras-y-corcheas-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.cc&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/negras-y-corcheas-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.cc&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/negras-y-corcheas/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.cc&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-y-corcheas-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.cc.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-y-corcheas-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.cc.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-y-corcheas/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.cc.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-con-puntillo-y-corcheas-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.cc.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-con-puntillo-y-corcheas-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.cc.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-con-puntillo-y-corcheas/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.cc.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/redondas-y-corcheas-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.cc.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/redondas-y-corcheas-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.cc.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/redondas-y-corcheas/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.cc.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/negras-y-semicorcheas-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.cc.ss&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/negras-y-semicorcheas-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.cc.ss&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/negras-y-semicorcheas/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.cc.ss&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-y-semicorcheas-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.cc.ss.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-y-semicorcheas-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.cc.ss.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-y-semicorcheas/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.cc.ss.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-con-puntillo-y-semicorcheas-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.cc.ss.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-con-puntillo-y-semicorcheas-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.cc.ss.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-con-puntillo-y-semicorcheas/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.cc.ss.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/redondas-y-semicorcheas-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.cc.ss.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/redondas-y-semicorcheas-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.cc.ss.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/redondas-y-semicorcheas/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.cc.ss.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/negras-y-silencio-de-corchea-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.cc.scc&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/negras-y-silencio-de-corchea-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.cc.scc&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/negras-y-silencio-de-corchea/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.cc.scc&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/semicorcheas-y-silencio-de-corchea-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.cc.scc.ss&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/semicorcheas-y-silencio-de-corchea-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.cc.scc.ss&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/semicorcheas-y-silencio-de-corchea/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.cc.scc.ss&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-y-silencio-de-corchea-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.cc.scc.ss.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-y-silencio-de-corchea-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.cc.scc.ss.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-y-silencio-de-corchea/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.cc.scc.ss.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-con-puntillo-y-silencio-de-corchea-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.cc.scc.ss.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-con-puntillo-y-silencio-de-corchea-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.cc.scc.ss.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/blancas-con-puntillo-y-silencio-de-corchea/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.cc.scc.ss.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/redondas-y-silencio-de-corchea-que-ritmo-suena/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-ritmo-suena/?r=n.sn.cc.scc.ss.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/redondas-y-silencio-de-corchea-que-audio-es/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/que-audio-es/?r=n.sn.cc.scc.ss.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/ejercicios/auditivos/dictado-ritmico/redondas-y-silencio-de-corchea/",
+      "destination": "/ejercicios/auditivos/dictado-ritmico/escribir/?r=n.sn.cc.scc.ss.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/dotted-half-notes-and-eighth-rest-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.cc.scc.ss.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/dotted-half-notes-and-eighth-rest-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.cc.scc.ss.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/dotted-half-notes-and-eighth-rest/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.cc.scc.ss.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/dotted-half-notes-and-eighths-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.cc.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/dotted-half-notes-and-eighths-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.cc.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/dotted-half-notes-and-eighths/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.cc.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/dotted-half-notes-and-sixteenths-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.cc.ss.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/dotted-half-notes-and-sixteenths-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.cc.ss.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/dotted-half-notes-and-sixteenths/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.cc.ss.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/dotted-half-notes-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/dotted-half-notes-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/dotted-half-notes/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.b.sb.bp.sbp&c=34",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/half-notes-and-eighth-rest-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.cc.scc.ss.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/half-notes-and-eighth-rest-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.cc.scc.ss.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/half-notes-and-eighth-rest/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.cc.scc.ss.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/half-notes-and-eighths-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.cc.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/half-notes-and-eighths-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.cc.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/half-notes-and-eighths/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.cc.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/half-notes-and-sixteenths-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.cc.ss.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/half-notes-and-sixteenths-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.cc.ss.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/half-notes-and-sixteenths/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.cc.ss.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/half-notes-quarters-and-rests-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/half-notes-quarters-and-rests-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/half-notes-quarters-and-rests/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.b.sb&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/quarters-and-eighth-rest-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.cc.scc&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/quarters-and-eighth-rest-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.cc.scc&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/quarters-and-eighth-rest/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.cc.scc&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/quarters-and-eighths-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.cc&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/quarters-and-eighths-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.cc&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/quarters-and-eighths/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.cc&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/quarters-and-rests-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/quarters-and-rests-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/quarters-and-rests/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/quarters-and-sixteenths-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.cc.ss&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/quarters-and-sixteenths-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.cc.ss&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/quarters-and-sixteenths/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.cc.ss&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/sixteenths-and-eighth-rest-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.cc.scc.ss&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/sixteenths-and-eighth-rest-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.cc.scc.ss&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/sixteenths-and-eighth-rest/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.cc.scc.ss&c=234",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/whole-notes-and-eighth-rest-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.cc.scc.ss.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/whole-notes-and-eighth-rest-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.cc.scc.ss.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/whole-notes-and-eighth-rest/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.cc.scc.ss.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/whole-notes-and-eighths-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.cc.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/whole-notes-and-eighths-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.cc.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/whole-notes-and-eighths/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.cc.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/whole-notes-and-sixteenths-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.cc.ss.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/whole-notes-and-sixteenths-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.cc.ss.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/whole-notes-and-sixteenths/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.cc.ss.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/whole-notes-which-audio/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-audio/?r=n.sn.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/whole-notes-which-rhythm/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/which-rhythm/?r=n.sn.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
+    },
+    {
+      "source": "/en/exercises/ear-training/rhythm-dictation/whole-notes/",
+      "destination": "/en/exercises/ear-training/rhythm-dictation/write/?r=n.sn.b.sb.bp.sbp.r.sr&c=4",
+      "permanent": true
     }
   ],
   "rewrites": [
