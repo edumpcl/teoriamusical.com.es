@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'Orchestral timpani notes: which drum plays which note, the range of the five sizes (D2–C4), pedal types, the fine tuner and which mallets to use.',
   h1: 'Timpani Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['timbales-rango-engine'],
   body: `
 <p><strong>Timpani</strong> (also called <strong>kettledrums</strong>) are the pitched percussion instrument of the orchestra: they do not just make noise, they play notes. Each timpano is a bowl with a drumhead, and its note is changed with a <strong>pedal</strong> that tightens or loosens that head. A full set is <strong>five</strong> drums, and together they cover <strong>D2 to C4</strong>, almost two octaves. Timpani are not transposing instruments: the notes are written where they sound, usually in bass clef.</p>
 
@@ -16,12 +16,12 @@ module.exports = dictionaryPage({
 
 <h2>Which timpano does this note go on?</h2>
 
-<p>The Spanish page has an interactive diagram: choose any note in the range and the head of the drum it belongs on lights up over the photo of the full set, with the real sound. It is not available in English yet. The table below gives the same information.</p>
+<p>Pick any note in the range and the <strong>head</strong> of the drum it belongs on lights up over the photo of the full set. If it also fits on another drum, that head lights up with a dashed outline: the note fits there, but it does not sound as good. Below you can see where in its range the note falls. Press ▶ to hear the note.</p>
 
-<figure style="margin:18px auto;max-width:760px;text-align:center;">
-<picture><source type="image/webp" srcset="/assets/img/timbales/juego-de-cinco.webp"><img src="/assets/img/timbales/juego-de-cinco.jpg" width="960" height="494" loading="lazy" alt="A set of five concert timpani in an arc, from the smallest on the right to the largest on the left, each with its pedal" style="max-width:100%;height:auto;border:1px solid #e8e0cc;border-radius:8px;background:#fff;padding:8px"></picture>
-<figcaption style="font-size:.85rem;color:#686868;margin-top:6px">A set of five concert timpani. Standard ranges; they vary somewhat with the maker, model and head. If you need to tune for real, there is the <a href="/herramientas/afinador/timbales/">timpani tuner</a> with microphone.</figcaption>
-</figure>
+<div id="tmtimbales"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmTimbalesRango)tmTimbalesRango("tmtimbales");});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">Concert timpani, Berlin model. Photo by <a href="https://commons.wikimedia.org/wiki/File:Berliner_Pauken.jpg" rel="nofollow">Lefima GmbH</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>, via Wikimedia Commons. Standard ranges; they vary somewhat with the maker, model and head. Sound generated with MuseScore. If you need to tune for real, there is the <a href="/herramientas/afinador/timbales/">timpani tuner</a> with microphone.</p>
 
 <h2>The range of each timpano</h2>
 

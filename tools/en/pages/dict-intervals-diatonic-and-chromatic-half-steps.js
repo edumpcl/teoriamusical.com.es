@@ -10,8 +10,10 @@ module.exports = dictionaryPage({
   scripts: ['tm-piano-audio'],
   body: `<p>A <strong>diatonic half step</strong> (UK: diatonic semitone) is formed between two notes with <strong>different letter names</strong>, such as E–F or B–C. A <strong>chromatic half step</strong> is formed between two notes with the <strong>same letter name</strong> and a different accidental, such as C–C♯. Both measure exactly the same, one half step, but they are written and they work differently. This distinction is one of the keys to music notation and to the study of <a href="/diccionario-musical/intervalos/tono-y-semitono/">whole steps and half steps</a>: the diatonic half step is written as a minor 2nd and the chromatic half step as an augmented unison.</p>
 
-<!-- TODO-IMG: /assets/img/notacion/intervalos/semitono-cromatico-vs-diatonico.svg (C–C♯ chromatic vs C–D♭ diatonic, same sound written two ways) -->
-<p><strong>The same sound, two spellings:</strong> C–C♯ is a <strong>chromatic</strong> half step (same letter name) and C–D♭ is a <strong>diatonic</strong> one (different letter names).</p>
+<figure class="tm-staff">
+<img src="/assets/img/notacion/intervalos/semitono-cromatico-vs-diatonico.svg" width="480" height="193" alt="Difference between a chromatic and a diatonic half step: C–C sharp (same letter name, chromatic) versus C–D flat (different letter names, diatonic), the same sound written two ways" loading="lazy" decoding="async">
+<figcaption><strong>The same sound, two spellings:</strong> C–C♯ is a <strong>chromatic</strong> half step (same letter name) and C–D♭ is a <strong>diatonic</strong> one (different letter names).</figcaption>
+</figure>
 
 <div class="tm-table-wrap">
 <table class="tm-table">

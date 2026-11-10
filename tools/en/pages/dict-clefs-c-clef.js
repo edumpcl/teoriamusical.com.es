@@ -28,7 +28,15 @@ module.exports = dictionaryPage({
 </ol>
 <p>The last step decides whether it is right: <strong>the meeting point of the two curves must fall on the line of C</strong>. In the C clef on the 3rd line it falls on the 3rd line; in the one on the 4th line, on the fourth. If that point shifts, you have written a different clef.</p>
 
-<!-- TODO-IMG: printable PDF worksheet /assets/img/claves/ficha-dibujar-clave-de-do.pdf (preview /assets/img/claves/preview-ficha-clave-de-do.png/.webp) — practice sheet for tracing the C clef with decreasing help; its text is in Spanish, so it is left out of the English page. -->
+<h3>Printable worksheet: tracing the clef with decreasing help</h3>
+<p>For the youngest learners, reading the explanation is not enough: the clef has to be traced many times. This PDF worksheet takes the help away little by little — first the model, then the dotted clef to trace over, then with the dots farther and farther apart, then only the dot that marks the 3rd line, and finally the empty staff. The stroke is <strong>a single line</strong>, the one the pencil makes without being lifted.</p>
+
+<figure class="fig-sm">
+  <a href="/assets/img/claves/ficha-dibujar-clave-de-do.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/claves/preview-ficha-clave-de-do.webp"><img src="/assets/img/claves/preview-ficha-clave-de-do.png" width="300" height="127" loading="lazy" alt="Printable worksheet for learning to draw the C clef: staves with the dotted clef to trace over"></picture></a>
+</figure>
+
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/claves/ficha-dibujar-clave-de-do.pdf" target="_blank" rel="noopener">Download the worksheet as a PDF (A4)</a></p>
+<p>You may print and photocopy it freely for the classroom or for home. There are also the <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef worksheet</a> and the <a href="/diccionario-musical/claves-musicales/clave-de-fa/">bass clef worksheet</a>.</p>
 
 <h2>Notes in the C clef on the 3rd line: how to read them all</h2>
 <p>The most used position is the <strong>C clef on the 3rd line</strong> (alto clef), the viola's clef. The reference note is <strong>middle C</strong> on the 3rd line:</p>

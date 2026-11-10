@@ -24,7 +24,15 @@ module.exports = dictionaryPage({
 <div id="tmdin2"></div>
 
 <h2>Printable worksheets</h2>
-<p>The same exercises on paper, for class: the <strong>eight dynamic markings</strong> and four terms for change to match with their meaning, and <strong>six series</strong> of markings to number. Each sheet has its own solutions page. Generate as many sheets as you need, each with different markings and series, and print them straight from your browser.</p>
+<p>The same exercises on paper, for class: the <strong>eight dynamic markings</strong> and four terms for change to match with their meaning, and <strong>six series</strong> of markings to number. Everything on one side of A4, with a separate <strong>answer sheet</strong>.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/dinamica/fichas/ficha-dinamica.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/dinamica/fichas/preview-ficha-dinamica.webp"><img src="/assets/img/dinamica/fichas/preview-ficha-dinamica.png" width="300" height="424" loading="lazy" alt="Printable A4 worksheet on dynamics and dynamic markings"></picture></a>
+  <figcaption>A4 sheet with both parts: matching markings and ordering them.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/dinamica/fichas/ficha-dinamica.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/dinamica/fichas/ficha-dinamica-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>You can print and photocopy it freely for the classroom.</p>
+
+<p>Need more than one sheet? Generate <strong>more worksheets</strong> here, each with different markings and series, and print them straight from your browser.</p>
 <div id="tmfd"></div>
 
 <h2>Why is there no listening exercise?</h2>
@@ -64,7 +72,7 @@ module.exports = dictionaryPage({
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">Can I print worksheets?</div>
-      <div class="tm-faq-a">Yes. The worksheet generator on this page creates A4 sheets with two parts, matching each marking or term with its meaning and ordering markings, plus a solutions page. You can print as many as you like for class.</div>
+      <div class="tm-faq-a">Yes. The worksheet generator on this page creates A4 sheets with two parts, matching each marking or term with its meaning and ordering markings, plus an answer sheet. You can print as many as you like for class.</div>
     </div>
   </div>
 </div>

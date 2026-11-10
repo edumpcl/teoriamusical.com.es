@@ -20,6 +20,7 @@ module.exports = dictionaryPage({
   description: 'Which notes the Spanish corneta (bugle-type brass) can play: the two harmonic series switched by the palometa, its G4–F6 range and the cornet types.',
   h1: 'Cornet Notes: The Spanish Corneta',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
+  scripts: ['tm-pent-nota', 'digitaciones-corneta-engine'],
   body: `
 <p>The <strong>corneta</strong> is a <a href="/diccionario-musical/instrumentos-de-viento-metal/">brass instrument</a> with a very Spanish life: <strong>Holy Week</strong> processions and the <strong>military</strong>. It has a trait almost no other instrument has: <strong>it cannot play every note</strong>. It has no holes and none of the three valves of the trumpet, so it plays only the notes of the <a href="/diccionario-musical/serie-armonica/">harmonic series</a>, <em>doubled</em> thanks to a part called the <strong>palometa</strong>. This page shows exactly which notes it plays, why those and no others, and why that explains the sound of Spanish processional marches.</p>
 
@@ -84,7 +85,10 @@ module.exports = dictionaryPage({
 
 <p>The important point: the palometa <strong>does not add a note</strong>. It <strong>shifts the whole series</strong> by a half step. Turning it does not give you one extra pitch: it changes all the notes available at once.</p>
 
-<!-- TODO-IMG: /assets/img/corneta/palometa-dos-posiciones.png (and .webp): photo of the two palometa positions with Spanish labels ("Palometa en do", "Palometa girada", "Suenan los armónicos de Do"). It needs an English version. Note: the Spanish image and text say that in the turned position the air goes through the extra loop (bomba), which lengthens the tube, and that this gives the D♭ series. That is physically impossible: a longer tube gives a LOWER series. -->
+<figure style="margin:20px auto;max-width:520px;text-align:center;">
+<picture><source type="image/webp" srcset="/assets/img/corneta/palometa-dos-posiciones.webp"><img src="/assets/img/corneta/palometa-dos-posiciones.png" width="421" height="271" loading="lazy" alt="The two positions of the corneta palometa: on the left, in C, with the lever vertical and the air going through the bomba, giving the harmonics of C; on the right, turned, with the lever horizontal and the air skipping the bomba, giving the harmonics of D flat" style="max-width:100%;height:auto;border:1px solid #e8e0cc;border-radius:8px"></picture>
+<figcaption style="font-size:.85rem;color:#686868;margin-top:6px">The two positions of the palometa on the real instrument. Turned, the air skips the <strong>bomba</strong> (the tube is shorter) and the whole D♭ series sounds.</figcaption>
+</figure>
 
 <h2>The notes of the C/D♭ corneta</h2>
 
@@ -101,9 +105,23 @@ ${ROWS}
 
 <p>In total the range is <strong>G4 to F6</strong>, from the G on the second line of the treble staff (UK: stave) to a very high F, in <a href="/diccionario-musical/indice-acustico/">scientific pitch notation</a> (C4 is middle C). The <strong>7th harmonic</strong> is flat by about <strong>31 cents</strong> compared with the B♭ of the piano, almost a third of a half step, so it is unusable against a tempered instrument. That is not the player's fault: it is the <a href="/diccionario-musical/serie-armonica/">physics of the harmonic series</a>, and the same happens on the trumpet and the horn. Below the 3rd harmonic are the <strong>pedal</strong> C and D♭ (the fundamental of the tube, a C3 of about 131 Hz). They exist, but they are poor and hardly used.</p>
 
-<h3>The corneta has no fingering chart</h3>
+<h3>Try it: the corneta diagram</h3>
 
-<p>On a palometa corneta there are no fingerings: you only choose one of the <strong>two palometa positions</strong> and the <strong>harmonic</strong> you set with your lips. (The Spanish page has an interactive diagram that shows, for each note, its harmonic and the palometa position. It is not available in English yet.)</p>
+<p>On a palometa corneta there are no fingerings: you only choose one of the <strong>two palometa positions</strong> and the <strong>harmonic</strong> you set with your lips. Pick a note to see <strong>which harmonic it is</strong> and <strong>where the palometa goes</strong>: the lever turns to horizontal in the D♭ series. Notice that the two series <strong>alternate</strong> note by note.</p>
+
+<div id="tmcorneta"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmCornetaEngine)tmCornetaEngine("tmcorneta");});</script>
+
+<!-- FICHA-DIGITACIONES:inicio -->
+<h2>Printable worksheet (PDF)</h2>
+<p>The table of the 16 notes of the corneta, with their staff, on one side of A4 for the music stand. And a <strong>second sheet to fill in</strong>: the same staves with the note name left blank, to practice reading in treble clef. The reference sheet works as the answer key.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/digitaciones/fichas/ficha-digitaciones-corneta.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-corneta.webp"><img src="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-corneta.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet with the notes of the corneta and their staff"></picture></a>
+  <figcaption>A4 sheet with the 16 notes of the corneta.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/digitaciones/fichas/ficha-digitaciones-corneta.pdf" target="_blank" rel="noopener">Download the notes (PDF)</a>
+<a class="tm-btn" href="/assets/img/digitaciones/fichas/ficha-digitaciones-corneta-rellenar.pdf" target="_blank" rel="noopener">Download the fill-in sheet (PDF)</a></p>
+<!-- FICHA-DIGITACIONES:fin -->
 
 <h2>Why Holy Week marches sound like F minor</h2>
 

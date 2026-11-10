@@ -24,6 +24,14 @@ const pages = fs.readdirSync(PAGES).filter(f => f.endsWith('.js')).sort().map(f 
 ctx.linkMap = buildMap(pages);
 for (const pg of pages) if (pg.rewriteLinks) pg.main = rewrite(pg.main, ctx.linkMap);
 
+// English versions of images/PDFs live in assets/img/en/<same path as the Spanish one>. Any reference
+// to /assets/img/<path> on an English page is switched to /assets/img/en/<path> when that file exists.
+const swapImg = html => html.replace(/\/assets\/img\/([^\s"'<>),?#]+)(\?v=[0-9a-f]{8})?/g, (m, rest, v) => {
+  if (rest.startsWith('en/')) return m;
+  const en = 'assets/img/en/' + rest;
+  return fs.existsSync(path.join(ROOT, en)) ? '/' + en + (v ? '?v=' + assetV(en) : '') : m;
+});
+
 let changed = 0;
 const written = [];
 // The ad blocks are inserted afterwards by tools/insert_ads.py (like on every other page), so
@@ -38,7 +46,7 @@ const put = (p, s) => {
 const today = new Date().toISOString().slice(0, 10);
 const sitemap = [];
 for (const pg of pages) {
-  put(pg.path.replace(/^\//, '') + 'index.html', renderPage(pg, ctx));
+  put(pg.path.replace(/^\//, '') + 'index.html', swapImg(renderPage(pg, ctx)));
   if (pg.live !== false) sitemap.push(pg);
 }
 

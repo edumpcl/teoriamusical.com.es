@@ -32,7 +32,7 @@ module.exports = dictionaryPage({
   description: 'Euphonium notes and fingerings for the 4-valve B♭ euphonium: valves and harmonics, the 4th valve, bass clef vs treble clef, range and the baritone horn.',
   h1: 'Euphonium Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Instruments', '/diccionario-musical/familias-de-instrumentos/'], ['Brass Instruments', '/diccionario-musical/instrumentos-de-viento-metal/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-bombardino-engine'],
   body: `
 <p>The <strong>euphonium</strong> (in Spanish, <em>bombardino</em>) is the <strong>warm baritone of the brass family</strong>: a conical-bore instrument in <strong>B♭</strong>, related to the <a href="/diccionario-musical/notas-de-la-tuba/">tuba</a> but higher, with a round, singing sound. It is one of the leading voices of the <strong>concert band</strong>, especially in the Valencian tradition. Like the <a href="/diccionario-musical/notas-de-la-trompeta/">trumpet</a>, it picks a note by combining <strong>valves</strong> with the harmonics, but it sounds much lower and usually has <strong>four valves</strong>. In Spanish bands, and in many US bands, it is read at <strong>concert pitch in <a href="/diccionario-musical/claves-musicales/clave-de-fa/">bass clef</a></strong> (it does not transpose). This page gives its notes and fingerings.</p>
 
@@ -107,9 +107,27 @@ ${ROWS}
 </tbody></table></div>
 <p class="tm-nota-tabla"><strong>●</strong> means the valve is pressed and <strong>○</strong> released, in the order they are under the fingers (1st to 4th). "Open" means no valves: only the lips. Altered notes show their equivalent name below, because <strong>F♯ and G♭ are the same note</strong> and, depending on the key, you will see one or the other. The notes are written at concert pitch: this is also what sounds. For the treble-clef version, add a major 9th to each note.</p>
 
-<h3>The Spanish page has an interactive fingering diagram</h3>
+<h2>Euphonium fingerings</h2>
 
-<p>The Spanish edition shows a euphonium with its four valves that light up when you pick a note, with the note on the staff and a real euphonium sound. It is not available in English yet. As on all brass instruments, one combination serves several notes: the lips do the rest by adjusting the harmonic. To tune, use the <a href="/herramientas/afinador/bombardino/">euphonium tuner</a>.</p>
+<p>The diagram shows a euphonium with its <strong>four valves</strong> (three on top and the fourth at the side). When you pick a note, the ones you need to press light up (or none, if it is "open"). As on all brass instruments, one combination serves for several notes: the lips do the rest by adjusting the harmonic.</p>
+
+<p>Pick a note to see its fingering and the note on the staff.</p>
+
+<div id="tmbombardino"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmBombardinoEngine)tmBombardinoEngine("tmbombardino");});</script>
+
+<p>To tune, use the <a href="/herramientas/afinador/bombardino/">euphonium tuner</a>.</p>
+
+<!-- FICHA-DIGITACIONES:inicio -->
+<h2>Printable worksheet (PDF)</h2>
+<p>The same table on paper, on one side of A4 in two columns, for the music stand. And a <strong>second sheet to fill in</strong>: the 37 notes with the valves column left blank, so you can write the fingering yourself. The reference sheet works as the answer key.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/digitaciones/fichas/ficha-digitaciones-bombardino.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-bombardino.webp"><img src="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-bombardino.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet with the euphonium fingerings"></picture></a>
+  <figcaption>A4 sheet with the 37 notes and their fingering.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/digitaciones/fichas/ficha-digitaciones-bombardino.pdf" target="_blank" rel="noopener">Download the fingerings (PDF)</a>
+<a class="tm-btn" href="/assets/img/digitaciones/fichas/ficha-digitaciones-bombardino-rellenar.pdf" target="_blank" rel="noopener">Download the fill-in sheet (PDF)</a></p>
+<!-- FICHA-DIGITACIONES:fin -->
 
 <h2>Common mistakes when learning euphonium notes</h2>
 

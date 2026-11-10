@@ -5,7 +5,7 @@ module.exports = dictionaryPage({
   description: 'Free rhythm exercises: note values, time signatures, syncopation, off-beat notes, tuplets, phrase beginnings and endings. Instant answers, no sign-up.',
   h1: 'Rhythm Exercises',
   crumbs: [['Music Exercises', '/ejercicios/']],
-  body: `<p>Exercises to learn and practice <strong>rhythm</strong>, from the value of each note to the time signature of a whole measure. They are grouped in four blocks that follow a sensible order. Answers are checked right away, and most exercises have printable worksheets with solutions.</p>
+  body: `<p>Exercises to learn and practice <strong>rhythm</strong>, from the value of each note to the time signature of a whole measure. They are grouped in four blocks that follow a sensible order. Answers are checked right away, and most exercises have printable worksheets with answers.</p>
 
 <h2>The four blocks</h2>
 
@@ -78,7 +78,7 @@ module.exports = dictionaryPage({
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">Are there printable worksheets?</div>
-      <div class="tm-faq-a">Yes. Most exercises have worksheets with solutions, either as ready-made PDFs or generated in your browser, each with different questions, so you can print as many as you need for class.</div>
+      <div class="tm-faq-a">Yes. Most exercises have worksheets with answers, either as ready-made PDFs or generated in your browser, each with different questions, so you can print as many as you need for class.</div>
     </div>
   </div>
 </div>

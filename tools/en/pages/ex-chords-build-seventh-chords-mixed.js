@@ -34,7 +34,18 @@ module.exports = dictionaryPage({
 
 <p>If one of them gives you trouble, practice it on its own first. You can also <a href="/ejercicios/acordes/septimas-todas-las-posiciones/">practice recognizing them</a> instead of writing them.</p>
 
-<h2>Printable worksheets</h2>
+<!-- ficha-septimas -->
+<h2>Printable worksheet (PDF)</h2>
+<p>The same exercise on paper, for class: <strong>21 seventh chords</strong> (dominant, leading-tone or diminished, in any of their four positions), with the lowest note given, on one side of A4. The student writes the other three. With a separate <strong>answer sheet</strong>.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/acordes/fichas-septimas/ficha-escribir-septimas-mezcladas.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/acordes/fichas-septimas/preview-ficha-escribir-septimas-mezcladas.webp"><img src="/assets/img/acordes/fichas-septimas/preview-ficha-escribir-septimas-mezcladas.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet to write mixed seventh chords"></picture></a>
+  <figcaption>A4 sheet with 21 chords.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/acordes/fichas-septimas/ficha-escribir-septimas-mezcladas.pdf" target="_blank" rel="noopener">Download the worksheet (PDF, A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/acordes/fichas-septimas/ficha-escribir-septimas-mezcladas-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>You may print and photocopy it freely for the classroom.</p>
+<!-- /ficha-septimas -->
+
+<h2>More worksheets</h2>
 <p>Need more practice on paper? Generate as many <strong>worksheets</strong> as you like, each one with different chords, and print them straight from your browser.</p>
 <div id="tmfs"></div>
 <script>

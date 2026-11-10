@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'Alto clarinet notes: pitched in E♭, it sounds a major 6th below written. Range, the four registers and the Boehm fingerings it shares with the clarinet.',
   h1: 'Alto Clarinet Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-clarinete-alto-engine'],
   body: `
 <p>The <strong>alto clarinet</strong> is the <strong>alto voice</strong> of the clarinet family: the link between the <strong>soprano</strong> clarinets (the <a href="/diccionario-musical/notas-del-requinto/">E♭ clarinet</a> and the <a href="/diccionario-musical/notas-del-clarinete/">B♭ clarinet</a>) and the <a href="/diccionario-musical/notas-del-clarinete-bajo/">bass clarinet</a>. It is pitched <strong>in E♭</strong> and sounds a <strong>major 6th below</strong> the written note. With its <strong>curved neck</strong> and its <strong>upturned metal bell</strong> it looks like a small bass clarinet. It is mainly a <strong>concert band</strong> instrument and is rare in the orchestra; you will find it in large symphonic bands, in clarinet choirs and in contests such as the one in Valencia. This page gives its range, its registers and what it shares with the clarinet. Its fingerings are the clarinet's.</p>
 
@@ -66,9 +66,16 @@ module.exports = dictionaryPage({
 
 <p>And why is it so rarely seen? It is a <strong>relatively uncommon</strong> instrument. Many bands prefer to reinforce the low register directly with <strong>bass clarinets</strong>, so the alto's presence has declined compared with past decades. Even so, it keeps a place in <strong>symphonic bands</strong>, military bands and <strong>clarinet choirs</strong>, where it covers the alto voice.</p>
 
-<h3>The Spanish page has an interactive fingering diagram</h3>
+<h3>Alto clarinet fingerings</h3>
 
-<p>The Spanish edition shows the alto clarinet in a vertical diagram, with the curved neck and the bell, the keys that light up for each note, the note on the staff and a real alto clarinet sound. It is not available in English yet. The fingerings are those of the B♭ clarinet (Boehm system) plus the key for the low E♭: the written E3 fingering with the extra right little-finger key.</p>
+<p>Choose a note and you will see its fingering, the note on the staff and a <strong>real alto clarinet sound</strong>.</p>
+
+<div id="tmcalto"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmClarineteAltoEngine)tmClarineteAltoEngine("tmcalto");});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">Boehm-system fingerings (the same as the clarinet, from the official Yamaha chart) plus the low E♭ key. Sound generated with <a href="https://musescore.org/" rel="nofollow">Muse Sounds (MuseScore&nbsp;4)</a>.</p>
+
+<p>The fingerings are those of the B♭ clarinet (Boehm system) plus the key for the low E♭: the written E3 fingering with the extra right little-finger key.</p>
 
 <h2>Common mistakes when learning alto clarinet notes</h2>
 

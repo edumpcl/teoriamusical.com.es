@@ -36,6 +36,7 @@ module.exports = dictionaryPage({
   description: 'All guitar notes: the six open strings (E2 A2 D3 G3 B3 E4), a 6-string by 12-fret chart, how frets work, tab and why it sounds an octave lower.',
   h1: 'Guitar Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
+  scripts: ['tm-pent-nota', 'digitaciones-guitarra-engine'],
   body: `
 <p>The <strong>guitar</strong> is probably the instrument most people start music with. And it has a big advantage for learning where each note is: unlike the <a href="/diccionario-musical/notas-del-violin/">violin</a>, it <strong>has frets</strong>, so each note sits in a definite place and does not depend on your ear. Here is the <strong>complete chart of the six strings across the first twelve frets</strong>, how frets work, why the same note appears in several places, and how <strong>tablature</strong> works. It helps whether you read standard notation or not.</p>
 
@@ -102,9 +103,21 @@ ${STR2}
 ${TABLE}
 <p class="tm-nota-tabla">Read it as the guitar in playing position: the <strong>6th string</strong> (the thickest and lowest) on top and the <strong>1st</strong> at the bottom. Each fret raises the pitch by a <strong>half step</strong>, so at <strong>fret 12</strong> the open-string note returns an octave higher, which is why that column is marked. The frets with a dot (3, 5, 7, 9 and 12) are the ones with markers on the neck; they help you find your place without looking. Sharp notes show their flat equivalent below: <strong>F♯ and G♭ are the same key</strong>, only the spelling changes. The numbers are the octave: the E2 of the 6th string sounds two octaves below the E4 of the 1st. Careful: this is what <em>sounds</em>; on the score the guitar is written an octave higher.</p>
 
-<h3>The Spanish page has an interactive fretboard diagram</h3>
+<h3>Try it: the guitar diagram</h3>
 
-<p>The Spanish edition has an interactive diagram that shows any note on a real photo of the neck and on a drawn fretboard, writes it in tablature and on the staff, and plays it, from the open 6th string (E2) to fret 12 of the 1st string (E5). It is not available in English yet. Because <strong>one note lives in several places</strong> on the guitar, it lights up <strong>all of them</strong> at once. To tune, use the <a href="/herramientas/afinador/guitarra/">guitar tuner</a>.</p>
+<p>Pick a note and the diagram marks it <strong>on a real photo of the neck</strong> and on a <strong>drawn fretboard</strong>, writes it in <strong>tablature</strong> and on the <strong>staff</strong>, and <strong>plays</strong> it. It runs from the open 6th string (E2) to fret 12 of the 1st string (E5). Because <strong>one note lives in several places</strong> on the guitar, the diagram lights up <strong>all of them</strong> at once, so you see every way to play it at a glance. To tune, use the <a href="/herramientas/afinador/guitarra/">guitar tuner</a>.</p>
+
+<div id="tmguitarra"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmGuitarraEngine)tmGuitarraEngine("tmguitarra");});</script>
+
+<h2>Printable worksheet (PDF)</h2>
+<p>The same map on paper, landscape on one side of A4, to hang on the music stand or hand out in class. And a <strong>second sheet to fill in</strong>: the same grid left empty, with the open strings given, to fill in the notes one by one. The map sheet works as the answer key.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/guitarra/fichas/ficha-mastil-guitarra.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/guitarra/fichas/preview-ficha-mastil-guitarra.webp"><img src="/assets/img/guitarra/fichas/preview-ficha-mastil-guitarra.png" width="400" height="283" loading="lazy" alt="Printable PDF worksheet with the guitar fretboard map: six strings and twelve frets"></picture></a>
+  <figcaption>Landscape A4 sheet with the six strings and the first twelve frets.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/guitarra/fichas/ficha-mastil-guitarra.pdf" target="_blank" rel="noopener">Download the fretboard map (PDF)</a>
+<a class="tm-btn" href="/assets/img/guitarra/fichas/ficha-mastil-guitarra-rellenar.pdf" target="_blank" rel="noopener">Download the fill-in sheet (PDF)</a></p>
 
 <h2>Tablature: playing the guitar without reading standard notation</h2>
 

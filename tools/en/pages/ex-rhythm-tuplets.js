@@ -3,11 +3,11 @@ module.exports = dictionaryPage({
   path: '/en/exercises/rhythm/tuplets/',
   esPath: '/ejercicios/grupos-de-valoracion-especial/',
   title: 'Tuplet Exercises: Triplets, Duplets, Quadruplets, Sextuplets',
-  description: 'Free tuplet exercises: what simple note value each triplet, duplet, quadruplet and sextuplet equals. Three levels, worksheets with solutions.',
+  description: 'Free tuplet exercises: what simple note value each triplet, duplet, quadruplet and sextuplet equals. Three levels, worksheets with answers.',
   h1: 'Tuplet Exercises',
   crumbs: [['Music Exercises', '/ejercicios/']],
   scripts: ['tm-mei', 'tm-notacion', 'completar-compas-engine', 'grupos-valoracion-especial-engine', 'ficha-grupos-ve-engine'],
-  body: `<p>This exercise on <strong>tuplets</strong> (irregular groups) shows a triplet, a duplet, a quadruplet or a sextuplet written inside a measure, and you must say which simple note value the whole group equals. Three levels: easy (even rhythm), medium (with a rest) and hard (mixed rhythm inside the group). Answers are checked right away and you can generate printable worksheets with solutions.</p>
+  body: `<p>This exercise on <strong>tuplets</strong> (irregular groups) shows a triplet, a duplet, a quadruplet or a sextuplet written inside a measure, and you must say which simple note value the whole group equals. Three levels: easy (even rhythm), medium (with a rest) and hard (mixed rhythm inside the group). Answers are checked right away and you can generate printable worksheets with answers.</p>
 
 <div id="tmgv"></div>
 
@@ -31,8 +31,17 @@ module.exports = dictionaryPage({
 
 <p><strong>A note on the quadruplet.</strong> This site uses the convention of the Spanish-language tradition: a quadruplet is four notes in the place of six, which is the same as a duplet with each note subdivided, and it is typical of compound meters. Many English-language sources instead define a quadruplet as four notes in the time of three (4:3). When in doubt, look for a written ratio. The <a href="/diccionario-musical/grupos-de-valoracion-especial/">tuplet theory page</a> explains both readings; unlike the quintuplet and the septuplet, which depend on the context, the four groups here have a fixed equivalence in this exercise.</p>
 
-<h2>Printable worksheets</h2>
-<p>The same exercise on paper, for class: you can generate <strong>worksheets of eighteen measures</strong>, each with one tuplet, six from each level. The student writes the note value the marked group equals. Each sheet comes with its own solutions page. Generate as many sheets as you need, each with different measures, and print them straight from your browser.</p>
+<h2>Printable worksheet (PDF)</h2>
+<p>The same exercise on paper, for class: <strong>eighteen measures</strong> with one tuplet each, six from each level, on one A4 sheet. The student writes the note value the marked group equals. With a separate <strong>answer sheet</strong>.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/compases/fichas/ficha-grupos-valoracion-especial.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/compases/fichas/preview-ficha-grupos-valoracion-especial.webp"><img src="/assets/img/compases/fichas/preview-ficha-grupos-valoracion-especial.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet on tuplets"></picture></a>
+  <figcaption>A4 sheet with eighteen tuplets.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/compases/fichas/ficha-grupos-valoracion-especial.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/compases/fichas/ficha-grupos-valoracion-especial-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>You can print and photocopy it freely for class.</p>
+
+<h2>More worksheets</h2>
+<p>The same exercise on paper, for class: you can generate <strong>worksheets of eighteen measures</strong>, each with one tuplet, six from each level. The student writes the note value the marked group equals. Each sheet comes with its own answer sheet. Generate as many sheets as you need, each with different measures, and print them straight from your browser.</p>
 <div id="tmfg"></div>
 
 <h2>Before and after this exercise</h2>

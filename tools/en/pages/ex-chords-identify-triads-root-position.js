@@ -51,6 +51,18 @@ module.exports = dictionaryPage({
 
 <p>For the full theory of each triad, see the page on <a href="/diccionario-musical/acordes/acordes-triadas/">triads</a>, with the <a href="/diccionario-musical/acordes/acorde-disminuido/">diminished chord</a> and the <a href="/diccionario-musical/acordes/acorde-aumentado/">augmented chord</a>.</p>
 
+<!-- ficha-acordes -->
+<h2>Printable worksheet (PDF)</h2>
+<p>The same exercise on paper, for class: <strong>21 triads in root position</strong> on one side of A4, and under each one you write its type. With a separate <strong>answer sheet</strong>.</p>
+<p>It goes from easier to harder: first chords with natural notes in treble clef, then with sharps and flats and the bass clef coming in gradually, and finally a few with a double accidental.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/acordes/fichas/ficha-analizar-triadas-fundamental.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/acordes/fichas/preview-ficha-analizar-triadas-fundamental.webp"><img src="/assets/img/acordes/fichas/preview-ficha-analizar-triadas-fundamental.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet with 21 triads in root position to analyze"></picture></a>
+  <figcaption>A4 sheet with 21 triads in root position to analyze.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/acordes/fichas/ficha-analizar-triadas-fundamental.pdf" target="_blank" rel="noopener">Download the worksheet (PDF, A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/acordes/fichas/ficha-analizar-triadas-fundamental-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>You may print and photocopy it freely for the classroom. To practice in the other direction, see the worksheet to <a href="/ejercicios/acordes/construir-triadas/">write triads in root position</a>.</p>
+<!-- /ficha-acordes -->
+
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
 <div class="tm-seccion-cabecera">

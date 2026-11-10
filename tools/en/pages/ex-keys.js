@@ -99,6 +99,34 @@ module.exports = dictionaryPage({
 
 <p>If you need to review the theory first, read the pages on <a href="/diccionario-musical/tonalidades/tonalidades-y-armaduras/">keys and key signatures</a> and the <a href="/diccionario-musical/tonalidades/circulo-de-quintas/">circle of fifths</a>.</p>
 
+<!-- fichas-armaduras -->
+<h2>Key signature worksheets to print (PDF)</h2>
+<p>The same two skills as above, on paper and with an <strong>answer sheet</strong>: one worksheet to <strong>identify</strong> the key of a written key signature and another to <strong>write</strong> the key signature of a key you are given. Each sheet has <strong>21 exercises</strong> on a single side of A4, and everything goes from easier to harder:</p>
+<ul>
+  <li><strong>From few accidentals to many.</strong> They start with key signatures of one or two accidentals and end with those of six and seven.</li>
+  <li><strong>Treble clef first.</strong> The bass clef appears from the second third onward, once the mechanism has been picked up.</li>
+  <li><strong>Alternating major and minor.</strong> Each exercise says which of the two to give, so you have to go through the relative key.</li>
+</ul>
+
+<h3>Identify key signatures</h3>
+<p>The key signature is written out, and under it you note the key the exercise asks for: <em>Major:</em> or <em>minor:</em>.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/tonalidades/fichas/ficha-identificar-armaduras.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/tonalidades/fichas/preview-ficha-identificar-armaduras.webp"><img src="/assets/img/tonalidades/fichas/preview-ficha-identificar-armaduras.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet with 21 key signatures for identifying the major or minor key"></picture></a>
+  <figcaption>A4 sheet with 21 key signatures to identify.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/tonalidades/fichas/ficha-identificar-armaduras.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/tonalidades/fichas/ficha-identificar-armaduras-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+
+<h3>Write key signatures</h3>
+<p>The reverse exercise: you are given the name of the key (E♭ major, G minor…) and you draw its accidentals on the staff, in their order and in their place.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/tonalidades/fichas/ficha-escribir-armaduras.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/tonalidades/fichas/preview-ficha-escribir-armaduras.webp"><img src="/assets/img/tonalidades/fichas/preview-ficha-escribir-armaduras.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet for drawing the key signature of 21 keys"></picture></a>
+  <figcaption>A4 sheet with 21 keys whose key signature you have to write.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/tonalidades/fichas/ficha-escribir-armaduras.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/tonalidades/fichas/ficha-escribir-armaduras-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+
+<p>You can print and photocopy them freely for the classroom. Each answer sheet is the same worksheet with the answers in red, so it can be marked by laying one over the other. If you need to review the theory first, see the page on <a href="/diccionario-musical/tonalidades/tonalidades-y-armaduras/">keys and key signatures</a> and the <a href="/diccionario-musical/tonalidades/circulo-de-quintas/">circle of fifths</a>.</p>
+<!-- /fichas-armaduras -->
+
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
 <div class="tm-seccion-cabecera">

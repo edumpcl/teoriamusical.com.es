@@ -30,7 +30,15 @@ module.exports = dictionaryPage({
 <div id="tmtempo3"></div>
 
 <h2>Printable worksheets</h2>
-<p>The same exercises on paper, for class: <strong>twelve terms</strong> to match with their meaning (speed and agogics terms) and <strong>six series</strong> of speeds to number. Each sheet has its own solutions page. Generate as many sheets as you need, each with different terms and series, and print them straight from your browser.</p>
+<p>The same exercises on paper, for class: <strong>twelve terms</strong> to match with their meaning (speed and agogics terms) and <strong>six series</strong> of speeds to number. Everything on one side of A4, with a separate <strong>answer sheet</strong>.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/tempo/fichas/ficha-tempo.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/tempo/fichas/preview-ficha-tempo.webp"><img src="/assets/img/tempo/fichas/preview-ficha-tempo.png" width="300" height="424" loading="lazy" alt="Printable A4 worksheet on tempo and agogics"></picture></a>
+  <figcaption>A4 sheet with both parts: matching terms and ordering speeds.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/tempo/fichas/ficha-tempo.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/tempo/fichas/ficha-tempo-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>You can print and photocopy it freely for the classroom.</p>
+
+<p>Need more than one sheet? Generate <strong>more worksheets</strong> here, each with different terms and series, and print them straight from your browser.</p>
 <div id="tmft"></div>
 
 <h2>How to review before you start</h2>
@@ -74,7 +82,7 @@ module.exports = dictionaryPage({
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">Can I print worksheets?</div>
-      <div class="tm-faq-a">Yes. The worksheet generator on this page creates A4 sheets with two parts, matching each term with its meaning and ordering speeds, plus a solutions page. Each sheet has different terms, and you can print as many as you like for class.</div>
+      <div class="tm-faq-a">Yes. The worksheet generator on this page creates A4 sheets with two parts, matching each term with its meaning and ordering speeds, plus an answer sheet. Each sheet has different terms, and you can print as many as you like for class.</div>
     </div>
   </div>
 </div>

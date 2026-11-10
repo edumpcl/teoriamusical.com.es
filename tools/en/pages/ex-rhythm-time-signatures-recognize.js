@@ -50,8 +50,17 @@ module.exports = dictionaryPage({
 
 <p>If the written rhythm has no eighth notes to show that grouping (for example, a dotted half note filling the whole measure), there is no way to tell them apart just by looking at the rhythm: <strong>both time signatures are correct</strong>, and the exercise accepts both. Nothing is missing from your knowledge: the written rhythm simply gives no more information to choose between the two.</p>
 
-<h2>Printable worksheets</h2>
-<p>The same exercise on paper, for class: <strong>eighteen measures</strong> without a time signature, six simple, six compound and six mixed, on one A4 sheet. The student writes the time signature in the box. Each sheet comes with its own solutions page, including the cases where two time signatures are correct. Generate as many sheets as you need, each with different measures, and print them straight from your browser.</p>
+<h2>Printable worksheet (PDF)</h2>
+<p>The same exercise on paper, for class: <strong>eighteen measures</strong> without a time signature, six simple, six compound and six mixed, on one A4 sheet. The student writes the time signature in the box. With a separate <strong>answer sheet</strong>, including the cases where two time signatures are correct.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/compases/fichas/ficha-reconocer-compases.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/compases/fichas/preview-ficha-reconocer-compases.webp"><img src="/assets/img/compases/fichas/preview-ficha-reconocer-compases.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet to identify time signatures"></picture></a>
+  <figcaption>A4 sheet with eighteen measures without a time signature.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/compases/fichas/ficha-reconocer-compases.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/compases/fichas/ficha-reconocer-compases-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>You can print and photocopy it freely for class.</p>
+
+<h2>More worksheets</h2>
+<p>The same exercise on paper, for class: <strong>eighteen measures</strong> without a time signature, six simple, six compound and six mixed, on one A4 sheet. The student writes the time signature in the box. Each sheet comes with its own answer sheet, including the cases where two time signatures are correct. Generate as many sheets as you need, each with different measures, and print them straight from your browser.</p>
 <div id="tmfr"></div>
 
 <h2>Before this exercise</h2>

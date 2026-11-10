@@ -28,7 +28,7 @@ module.exports = dictionaryPage({
 
 <h2>Types of duplet</h2>
 <p>Any note value can take a duplet. Because it replaces <strong>three</strong> notes of its own kind, a duplet always equals a <strong>dotted</strong> note value:</p>
-<!-- TODO-IMG: /assets/img/notacion/compases/tipos-de-dosillo.svg (contains Spanish text) - shows three kinds of duplet: quarter-note duplet (two quarter notes), eighth-note duplet (two eighth notes) and sixteenth-note duplet (two sixteenth notes), each with its number 2 -->
+<figure class="tm-staff"><img src="/assets/img/notacion/compases/tipos-de-dosillo.svg" width="280" height="477" alt="Three types of duplet: quarter-note (two quarter notes), eighth-note (two eighth notes) and sixteenth-note (two sixteenth notes), each with its number 2" loading="lazy" decoding="async"><figcaption>Duplet of <strong>quarter notes</strong>, <strong>eighth notes</strong> and <strong>sixteenth notes</strong>.</figcaption></figure>
 <div class="tm-table-wrap">
 <table class="tm-table">
   <thead><tr><th>Duplet</th><th>It is...</th><th>Equals</th></tr></thead>

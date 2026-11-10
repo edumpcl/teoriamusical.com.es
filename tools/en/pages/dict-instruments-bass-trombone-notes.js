@@ -36,7 +36,7 @@ module.exports = dictionaryPage({
   description: 'Bass trombone notes: the 7 slide positions, the two thumb valves (F, G♭ and D together), how they fill the low gap, clef and a chart of 37 notes.',
   h1: 'Bass Trombone Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Instruments', '/diccionario-musical/familias-de-instrumentos/'], ['Brass Instruments', '/diccionario-musical/instrumentos-de-viento-metal/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-trombon-bajo-engine'],
   body: `
 <p>The <strong>bass trombone</strong> is the low sibling of the <a href="/diccionario-musical/notas-del-trombon/">tenor trombone</a>. It has the same <strong>slide</strong> and the same <strong>seven positions</strong>, but a wider tube, for a deeper and bigger sound, and it adds <strong>two thumb valves</strong> that open up the low register. It does not transpose: what is written is what sounds, in <a href="/diccionario-musical/claves-musicales/clave-de-fa/">bass clef</a>. This page gives its notes, with the slide position and the valves for each one.</p>
 
@@ -109,9 +109,27 @@ ${ROWS}
 </tbody></table></div>
 <p class="tm-nota-tabla"><strong>●</strong> marks the slide position: <strong>1st</strong> is the slide closed and <strong>7th</strong> the slide fully extended. The <strong>Harmonic</strong> column says which harmonic of the series gives the note, adjusted with the lips. The notes of the low register (B1 to E♭2) are played with the valves (F, G♭ or both together, which give D), and for them the harmonic is counted on the series of the valve. <strong>—</strong>: no valve. The bass trombone <strong>does not transpose</strong>: what is written is what sounds.</p>
 
-<h3>The Spanish page has an interactive diagram</h3>
+<h2>Bass trombone fingerings</h2>
 
-<p>The Spanish edition has a diagram with the slide on a ruler from 1 to 7 and the two valves, which light up when you choose a note, with the note on the staff and a real bass trombone sound. It is not available in English yet. To tune, use the <a href="/herramientas/afinador/trombon/">trombone tuner</a>. Note that it cannot read notes below about 40 Hz, which includes the lowest pedal tones of a bass trombone.</p>
+<p>The diagram shows the <strong>fixed mouthpiece</strong> on the left, the <strong>slide</strong> reaching toward the <strong>bell</strong> on the right, and the <strong>two valves</strong> (F and G♭) above. When you pick a note, the <strong>slide position</strong> is marked (ruler from 1 to 7) and the <strong>valves</strong> you need to press light up (if any are needed). Remember that one position serves for several notes: the lips do the rest by adjusting the harmonic.</p>
+
+<p>Pick a note to see its <strong>position and valves</strong>, the note on the staff and its <strong>real bass trombone sound</strong>.</p>
+
+<div id="tmtrombonbajo"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmTrombonBajoEngine)tmTrombonBajoEngine("tmtrombonbajo");});</script>
+
+<p>To tune, use the <a href="/herramientas/afinador/trombon/">trombone tuner</a>. Note that it cannot read notes below about 40 Hz, which includes the lowest pedal tones of a bass trombone.</p>
+
+<!-- FICHA-DIGITACIONES:inicio -->
+<h2>Printable worksheet (PDF)</h2>
+<p>The same table on paper, on one side of A4 in two columns, for the music stand. And a <strong>second sheet to fill in</strong>: the 37 notes with the slide position, harmonic and valves columns left blank, so you can write them yourself. The reference sheet works as the answer key.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/digitaciones/fichas/ficha-digitaciones-trombon-bajo.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-trombon-bajo.webp"><img src="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-trombon-bajo.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet with the slide positions of the bass trombone"></picture></a>
+  <figcaption>A4 sheet with the 37 notes and their slide position.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/digitaciones/fichas/ficha-digitaciones-trombon-bajo.pdf" target="_blank" rel="noopener">Download the positions (PDF)</a>
+<a class="tm-btn" href="/assets/img/digitaciones/fichas/ficha-digitaciones-trombon-bajo-rellenar.pdf" target="_blank" rel="noopener">Download the fill-in sheet (PDF)</a></p>
+<!-- FICHA-DIGITACIONES:fin -->
 
 <h2>Common mistakes when learning bass trombone notes</h2>
 

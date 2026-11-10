@@ -36,6 +36,7 @@ module.exports = dictionaryPage({
   description: 'Bass guitar notes: the four open strings (E1 A1 D2 G2), a 4-string by 12-fret chart, how frets work, tab, 5-string bass and why it sounds an octave lower.',
   h1: 'Bass Guitar Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
+  scripts: ['tm-pent-nota', 'digitaciones-bajo-engine'],
   body: `
 <p>The <strong>electric bass</strong> holds up almost all modern music: it is the bridge between <strong>rhythm</strong> and <strong>harmony</strong>. And it gives you a head start when you learn its notes, because, like the <a href="/diccionario-musical/notas-de-la-guitarra/">guitar</a>, it <strong>has frets</strong>: each note sits in a definite place. Here are its <strong>four strings</strong>, how frets work, why the same note appears in several places, and how <strong>tablature</strong> works. It helps whether you read standard notation or not.</p>
 
@@ -120,9 +121,12 @@ ${TABLE}
 
 <p>There is also the <strong>fretless bass</strong>: the same neck, but smooth, with no bars. It sounds more <strong>singing</strong> (<em>cantabile</em>) and allows <em>glissandos</em> and vibrato like the <a href="/diccionario-musical/notas-del-contrabajo/">double bass</a>, at the price that your ear, not the fret, decides the pitch.</p>
 
-<h3>The Spanish page has an interactive bass diagram</h3>
+<h3>Try it: the bass diagram</h3>
 
-<p>The Spanish edition has an interactive diagram that shows any note on a real photo of the neck and on a drawn fingerboard, writes it in tablature and on the staff, and plays it, from the open 4th string (E1) to fret 12 of the 1st (G3). It is not available in English yet. Because <strong>one note lives in several places</strong> on the bass, it lights up <strong>all of them</strong> at once. To tune, use the <a href="/herramientas/afinador/bajo/">bass tuner</a>.</p>
+<p>Pick a note and the diagram marks it <strong>on a real photo of the neck</strong> and on a <strong>drawn fingerboard</strong>, writes it in <strong>tablature</strong> and on the <strong>staff</strong>, and <strong>plays</strong> it. It runs from the open 4th string (E1) to fret 12 of the 1st string (G3). Because <strong>one note lives in several places</strong> on the bass, the diagram lights up <strong>all of them</strong> at once. To tune, use the <a href="/herramientas/afinador/bajo/">bass tuner</a>.</p>
+
+<div id="tmbajo"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmBajoEngine)tmBajoEngine("tmbajo");});</script>
 
 <h2>Tablature: playing the bass without reading standard notation</h2>
 

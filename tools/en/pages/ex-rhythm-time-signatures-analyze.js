@@ -162,6 +162,18 @@ module.exports = dictionaryPage({
 
 <p>The next step is <a href="/ejercicios/compases/completar-compas/">completing measures</a>: a measure is missing a note or a rest and you say which one. And to check that you really understand the time signature, <a href="/ejercicios/compases/reconocer-compas/">recognize the time signature</a> works the other way around: you see the written rhythm, without the time signature, and you work it out. All the exercises are in the <a href="/ejercicios/compases/">time signature exercises index</a>.</p>
 
+<!-- ficha-compases -->
+<h2>Time signature worksheet to print (PDF)</h2>
+<p>The same exercise on paper, for class: <strong>20 time signatures</strong> on one A4 sheet, with a column for each thing to work out (type, beats, subdivision, beat unit, subdivision unit and measure unit) and a separate <strong>answer sheet</strong>.</p>
+<p>The time signatures go from the common to the unusual: first the usual simple ones (2/4, 3/4, 4/4…), then the common compound ones (6/8, 9/8, 12/8…), and finally those with a rare denominator (2/1, 9/4, 9/16…), which are the ones that really force you to reason out the rule instead of recalling it from memory.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/compases/fichas/ficha-analizar-compases.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/compases/fichas/preview-ficha-analizar-compases.webp"><img src="/assets/img/compases/fichas/preview-ficha-analizar-compases.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet with 20 time signatures to analyze: type, beats, subdivision and units"></picture></a>
+  <figcaption>A4 sheet with 20 time signatures to analyze.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/compases/fichas/ficha-analizar-compases.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/compases/fichas/ficha-analizar-compases-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>You can print and photocopy it freely for class. The answer sheet is the same worksheet with the answers in red, so you check it by laying one over the other. Units are written with the note, not with its name: the reference table above works as a reminder while you fill it in.</p>
+<!-- /ficha-compases -->
+
 <p>The full theory is on the page about <a href="/diccionario-musical/compases/">time signatures</a>. The 2/2 in the table is <a href="/diccionario-musical/compases/compas-partido/">cut time (alla breve)</a>, which has its own page. The <a href="/herramientas/metronomo/">online metronome</a> helps you internalize the different kinds of meter.</p>
 
 <section class="tm-seccion">

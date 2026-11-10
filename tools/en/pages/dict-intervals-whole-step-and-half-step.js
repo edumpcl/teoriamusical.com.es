@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'How many half steps are in a whole step? A whole step is 2 half steps. Learn how to count them on piano and guitar, with charts and scale patterns.',
   h1: 'Whole Steps and Half Steps',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Intervals', '/diccionario-musical/intervalos/']],
-  scripts: ['tm-piano-audio'],
+  scripts: ['tm-piano-audio', 'tono-semitono-engine'],
   body: `<p>The <strong>half step</strong> (UK: semitone) is the smallest distance between two notes in Western equal temperament, equal to moving one key on the piano. The <strong>whole step</strong> (UK: tone) is two half steps joined together. These two ideas are the basis for building scales, <a href="/diccionario-musical/intervalos/intervalos-musicales/">intervals</a> and chords in Western music.</p>
 
 <ul>
@@ -51,7 +51,12 @@ module.exports = dictionaryPage({
 
 <p>The resulting pattern is <strong>W–W–H–W–W–W–H</strong> (W = whole step, H = half step). The two natural half steps of the major scale always fall between degrees 3–4 (E–F in C major) and 7–8 (B–C in C major).</p>
 
-<p>On a keyboard, the <strong>whole step</strong> C–D skips over one black key, and the <strong>natural half steps</strong> (E–F and B–C) are neighboring white keys with no black key between them. To count the distance between two notes, count the steps between the keys, black and white, as in the section below.</p>
+<h3 id="measure">Measure it yourself: the keyboard</h3>
+
+<p>On a keyboard, the <strong>whole step</strong> C–D skips over one black key, and the <strong>natural half steps</strong> (E–F and B–C) are neighboring white keys with no black key between them. Check it: <strong>press one key and then another</strong> and the page counts the steps between the two (each key, white or black, is one step) and converts them into whole steps and half steps. You can also try the example buttons.</p>
+
+<div id="tmtonosemi" style="min-height:300px;margin:18px 0"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmTonoSemitonoEngine)tmTonoSemitonoEngine("tmtonosemi");});</script>
 
 <h3 id="half-step">Half step</h3>
 

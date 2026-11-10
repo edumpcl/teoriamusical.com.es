@@ -9,7 +9,10 @@ module.exports = dictionaryPage({
   body: `
 <p>The <strong>circle of fifths</strong> is a diagram that arranges the 12 major keys in a circle, each one a <strong>perfect 5th</strong> away from the next. At a glance it shows how many <strong>sharps or flats</strong> each key signature has, which keys are neighbors and what the <strong>relative minor</strong> of each major key is. It is one of the most useful reference tools in music theory.</p>
 
-<!-- TODO-IMG: /assets/img/tonalidades/circulo-de-quintas.webp (+ .png and the PDF /assets/img/tonalidades/circulo-de-quintas.pdf): the circle-of-fifths diagram has Spanish note names (Do, Sol, Re…) and needs an English version. It shows the 12 major keys on the outer ring, the relative minors on the inner ring and each key signature written on a staff; the three bottom positions are enharmonic (B and C♭, F♯ and G♭, D♭ and C♯), covering 7 flats to 7 sharps. Caption: "The complete circle of fifths." -->
+<figure class="tm-staff">
+<picture><source type="image/webp" srcset="/assets/img/tonalidades/circulo-de-quintas.webp"><img src="/assets/img/tonalidades/circulo-de-quintas.png" width="680" height="704" alt="Circle of fifths diagram: the 12 major keys on the outer ring, their relative minors on the inner ring, and the key signature of each written on a staff; the three bottom positions are enharmonic (B and C flat, F sharp and G flat, D flat and C sharp), covering 7 flats to 7 sharps"></picture>
+<figcaption>The complete circle of fifths. <a href="/assets/img/tonalidades/circulo-de-quintas.pdf" target="_blank" rel="noopener">Download as PDF (A3)</a> to print or save it.</figcaption>
+</figure>
 
 <h2>How to read the circle of fifths</h2>
 

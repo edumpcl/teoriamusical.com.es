@@ -24,6 +24,23 @@ module.exports = dictionaryPage({
 
 <p>The theory is in the dictionary: <a href="/diccionario-musical/compases/">time signatures</a>, <a href="/diccionario-musical/compases/compas-simple-y-compuesto/">simple and compound meter</a> and <a href="/diccionario-musical/compases/unidad-de-tiempo-y-unidad-de-compas/">beat unit and measure unit</a>. To internalize the pulse of each meter, use the <a href="/herramientas/metronomo/">online metronome</a>.</p>
 
+<h2>Printable worksheets (PDF)</h2>
+
+<p>Each exercise has a one-sided A4 worksheet with its answer sheet, with the answers in red. You can print and photocopy them freely for class.</p>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead><tr><th>Worksheet</th><th>What it contains</th><th>Download</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Analyze time signatures</strong></td><td>20 time signatures with their six columns</td><td><a href="/assets/img/compases/fichas/ficha-analizar-compases.pdf" target="_blank" rel="noopener">Worksheet</a> · <a href="/assets/img/compases/fichas/ficha-analizar-compases-soluciones.pdf" target="_blank" rel="noopener">Answers</a></td></tr>
+    <tr><td><strong>Complete the measures</strong></td><td>18 measures with a gap to fill in</td><td><a href="/assets/img/compases/fichas/ficha-completar-compases.pdf" target="_blank" rel="noopener">Worksheet</a> · <a href="/assets/img/compases/fichas/ficha-completar-compases-soluciones.pdf" target="_blank" rel="noopener">Answers</a></td></tr>
+    <tr><td><strong>Identify the time signature</strong></td><td>18 measures without a time signature to work out</td><td><a href="/assets/img/compases/fichas/ficha-reconocer-compases.pdf" target="_blank" rel="noopener">Worksheet</a> · <a href="/assets/img/compases/fichas/ficha-reconocer-compases-soluciones.pdf" target="_blank" rel="noopener">Answers</a></td></tr>
+    <tr><td><strong>Syncopation</strong></td><td>17 excerpts to find the syncopation</td><td><a href="/assets/img/compases/fichas/ficha-sincopa.pdf" target="_blank" rel="noopener">Worksheet</a> · <a href="/assets/img/compases/fichas/ficha-sincopa-soluciones.pdf" target="_blank" rel="noopener">Answers</a></td></tr>
+    <tr><td><strong>Off-beat notes</strong></td><td>17 excerpts to find the off-beat note</td><td><a href="/assets/img/compases/fichas/ficha-contratiempo.pdf" target="_blank" rel="noopener">Worksheet</a> · <a href="/assets/img/compases/fichas/ficha-contratiempo-soluciones.pdf" target="_blank" rel="noopener">Answers</a></td></tr>
+  </tbody>
+</table>
+</div>
+
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
 <div class="tm-seccion-cabecera">

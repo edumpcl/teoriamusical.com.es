@@ -71,8 +71,28 @@ module.exports = dictionaryPage({
   });
 </script>
 
-<h2>5. Printable worksheets</h2>
-<p>Prefer paper? The <a href="/ejercicios/ejercicios-de-intervalos-en-pdf/">interval worksheet generator</a> creates a new sheet of thirds each time, to identify or to write, with an answer key. You can also pick exactly which intervals to practice in the <a href="/ejercicios/ejercicios-de-intervalos-musicales/a-medida/">custom interval quiz</a>.</p>
+<!-- ficha-intervalos -->
+<h2>5. Printable third worksheets (PDF)</h2>
+<p>The same two skills, on paper: one sheet to <strong>identify</strong> written thirds and another to <strong>write</strong> them. Each has <strong>42 melodic third intervals</strong> in treble clef spread over seven staves, starting with natural, ascending notes —the major and minor thirds that come out of the natural scale— and ending with sharps and flats and mixed directions. No exercise repeats the same two notes.</p>
+
+<h3>Identify thirds</h3>
+<p>Under each interval there is a line to write <strong>what kind of third it is and whether it ascends or descends</strong> (M3 ↑, m3 ↓…).</p>
+<figure class="tm-staff">
+  <a href="/assets/img/intervalos/fichas/ficha-analizar-intervalos-de-tercera.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/intervalos/fichas/preview-ficha-analizar-intervalos-de-tercera.webp"><img src="/assets/img/intervalos/fichas/preview-ficha-analizar-intervalos-de-tercera.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet with 42 melodic third intervals in treble clef to identify"></picture></a>
+  <figcaption>A4 sheet with 42 melodic thirds to identify.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/intervalos/fichas/ficha-analizar-intervalos-de-tercera.pdf" target="_blank" rel="noopener">Download the worksheet (PDF A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/intervalos/fichas/ficha-analizar-intervalos-de-tercera-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+
+<h3>Write thirds</h3>
+<p>The reverse exercise: the first note and the interval to form are given, and the student places the second note on the staff, with its accidental if it needs one.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/intervalos/fichas/ficha-escribir-intervalos-de-tercera.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/intervalos/fichas/preview-ficha-escribir-intervalos-de-tercera.webp"><img src="/assets/img/intervalos/fichas/preview-ficha-escribir-intervalos-de-tercera.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet to write 42 melodic third intervals in treble clef"></picture></a>
+  <figcaption>A4 sheet with 42 melodic thirds to write.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/intervalos/fichas/ficha-escribir-intervalos-de-tercera.pdf" target="_blank" rel="noopener">Download the worksheet (PDF A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/intervalos/fichas/ficha-escribir-intervalos-de-tercera-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+
+<p>You may print and photocopy them freely for the classroom. Each answer sheet is the same worksheet with the answers in red, so you correct by laying one over the other. The rest —including the sheets that mix several intervals— is in <a href="/ejercicios/ejercicios-de-intervalos-en-pdf/">interval worksheets in PDF</a>, and if you want new sheets every time or to practice on screen choosing the intervals, in the <a href="/ejercicios/ejercicios-de-intervalos-musicales/a-medida/">custom interval quiz</a>.</p>
+<!-- /ficha-intervalos -->
 
 <p><a href="/diccionario-musical/intervalos/intervalos-musicales/">Music dictionary: intervals →</a></p>
 <p><a href="/ejercicios/ejercicios-de-intervalos-musicales/segundas/">← Seconds</a></p>

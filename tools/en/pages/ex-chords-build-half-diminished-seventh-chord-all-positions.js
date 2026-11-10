@@ -37,7 +37,18 @@ module.exports = dictionaryPage({
 
 <p>Other positions of the half-diminished (leading-tone) seventh chord: <a href="/ejercicios/acordes/construir-septima-de-sensible/">root position</a>, <a href="/ejercicios/acordes/construir-septima-de-sensible-primera-inversion/">first inversion</a>, <a href="/ejercicios/acordes/construir-septima-de-sensible-segunda-inversion/">second inversion</a>, <a href="/ejercicios/acordes/construir-septima-de-sensible-tercera-inversion/">third inversion</a>. You can also <a href="/ejercicios/acordes/septimas-todas-las-posiciones/">practice recognizing them</a> (together with <a href="/ejercicios/acordes/construir-septima-de-dominante-todas-las-posiciones/">Dominant seventh</a> and <a href="/ejercicios/acordes/construir-septima-disminuida-todas-las-posiciones/">Diminished seventh</a> chords in the same position) or review the theory on the <a href="/diccionario-musical/acordes/acorde-de-septima-de-sensible/">half-diminished (leading-tone) seventh chord</a> page.</p>
 
-<h2>Printable worksheets</h2>
+<!-- ficha-septimas -->
+<h2>Printable worksheet (PDF)</h2>
+<p>The same exercise on paper, for class: <strong>21 chords</strong> of the leading-tone seventh, with the lowest note given, on one side of A4. The student writes the other three. With a separate <strong>answer sheet</strong>.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/acordes/fichas-septimas/ficha-escribir-septimas-sensible.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/acordes/fichas-septimas/preview-ficha-escribir-septimas-sensible.webp"><img src="/assets/img/acordes/fichas-septimas/preview-ficha-escribir-septimas-sensible.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet to write leading-tone seventh chords"></picture></a>
+  <figcaption>A4 sheet with 21 chords.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/acordes/fichas-septimas/ficha-escribir-septimas-sensible.pdf" target="_blank" rel="noopener">Download the worksheet (PDF, A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/acordes/fichas-septimas/ficha-escribir-septimas-sensible-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>You may print and photocopy it freely for the classroom.</p>
+<!-- /ficha-septimas -->
+
+<h2>More worksheets</h2>
 <p>Need more practice on paper? Generate as many <strong>worksheets</strong> as you like, each one with different chords, and print them straight from your browser.</p>
 <div id="tmfs"></div>
 <script>

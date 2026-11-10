@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'E♭ clarinet notes: pitched in E♭, it sounds a minor third above written. Written range E3–A6, its four registers and the Boehm fingerings it shares.',
   h1: 'E♭ Clarinet Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-requinto-engine'],
   body: `
 <p>The <strong>E♭ clarinet</strong> is the smallest and highest of the common clarinets, and a signature voice of the <strong>wind band</strong>. (In Spanish bands it is called the <strong>requinto</strong>, a name you will see on Spanish scores and pages.) It is played <strong>exactly like the ordinary clarinet</strong>, with the same Boehm-system fingering, but it is a <strong>transposing instrument</strong>: it sounds a <strong>minor 3rd above</strong> the written note, which gives it the bright, piercing top of the clarinet section. This page gives its notes, its registers and what it shares with the B♭ clarinet.</p>
 
@@ -66,9 +66,16 @@ module.exports = dictionaryPage({
 
 <p>Yes: <strong>the same Boehm system, the same fingerings, the same reading</strong> in treble clef. A clarinetist picks up an E♭ clarinet and plays; doubling on it is common in bands. The differences are physical: the tube is <strong>shorter</strong>, the reed and mouthpiece are smaller, and so everything sounds higher and is harder to tune and control (the embouchure is more delicate). But the finger map is identical to the one for the <a href="/diccionario-musical/notas-del-clarinete/">B♭ clarinet</a>.</p>
 
-<h3>The Spanish page has an interactive fingering diagram</h3>
+<h3>E♭ clarinet fingerings</h3>
 
-<p>The Spanish edition shows the fingerings in a vertical diagram, as the instrument is held (mouthpiece with reed at the top, body and bell below), with the keys that light up for each note, the written and sounding note on the staff and a real clarinet sound transposed to the E♭ clarinet's pitch. It is not available in English yet. The fingerings are those of the B♭ clarinet (Boehm system). To tune, use the <a href="/herramientas/afinador/requinto/">E♭ clarinet tuner</a>.</p>
+<p>Choose a note and you will see its fingering, the note on the staff and the <strong>sound</strong> at the real pitch of the E♭ clarinet.</p>
+
+<div id="tmrequinto"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmRequintoEngine)tmRequintoEngine("tmrequinto");});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">Boehm-system fingerings (the same as the clarinet, from the official Yamaha chart). The sound is generated from the clarinet sample bank adjusted to the real pitch of the E♭ clarinet: samples from the <a href="https://philharmonia.co.uk/resources/sound-samples/" rel="nofollow">Philharmonia Orchestra</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>). Want to tune up? Use the <a href="/herramientas/afinador/requinto/">E♭ clarinet tuner</a>.</p>
+
+<p>The fingerings are those of the B♭ clarinet (Boehm system).</p>
 
 <h2>Common mistakes when learning E♭ clarinet notes</h2>
 

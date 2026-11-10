@@ -37,11 +37,29 @@ module.exports = dictionaryPage({
 
 <p>The full theory, with staff examples, is in <a href="/diccionario-musical/compases/notas-a-contratiempo/">off-beat notes</a>.</p>
 
-<h2>Printable worksheets</h2>
-<p>The same exercise on paper, for class: you can generate <strong>more worksheets</strong>, each with different excerpts, and print them straight from your browser. The student circles the note that is off the beat, or ticks the "No off-beat" box. Each sheet comes with its own solutions page.</p>
+<h2>Printable worksheet (PDF)</h2>
+<p>The same exercise on paper, for class: <strong>seventeen rhythmic excerpts</strong> on one A4 sheet. The student circles the note they think is off the beat, or ticks the "No off-beat" box. With a separate <strong>answer sheet</strong>, with the note in red.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/compases/fichas/ficha-contratiempo.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/compases/fichas/preview-ficha-contratiempo.webp"><img src="/assets/img/compases/fichas/preview-ficha-contratiempo.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet for the off-beat exercise"></picture></a>
+  <figcaption>A4 sheet with seventeen rhythmic excerpts.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/compases/fichas/ficha-contratiempo.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/compases/fichas/ficha-contratiempo-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>You can print and photocopy it freely for class.</p>
+
+<h2>More worksheets</h2>
+<p>The same exercise on paper, for class: you can generate <strong>more worksheets</strong>, each with different excerpts, and print them straight from your browser. The student circles the note that is off the beat, or ticks the "No off-beat" box. Each sheet comes with its own answer sheet.</p>
 <div id="tmfc"></div>
 
-<h2>Hard mode worksheets</h2>
+<h2>Hard mode worksheet (PDF)</h2>
+<p>The advanced version on paper: <strong>ten excerpts</strong> of 2 measures, where there can be several off-beat notes at once, or none. The student circles every note they think is off the beat, or ticks the "No off-beat" box. With a separate <strong>answer sheet</strong>, with each note in red.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/compases/fichas/ficha-contratiempo-dificil.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/compases/fichas/preview-ficha-contratiempo-dificil.webp"><img src="/assets/img/compases/fichas/preview-ficha-contratiempo-dificil.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet for the off-beat exercise, hard level"></picture></a>
+  <figcaption>A4 sheet with ten excerpts of 2 measures.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/compases/fichas/ficha-contratiempo-dificil.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/compases/fichas/ficha-contratiempo-dificil-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>You can print and photocopy it freely for class.</p>
+
+<h2>More hard mode worksheets</h2>
 <p>The advanced version on paper: excerpts of 2 measures, where there can be several off-beat notes at once, or none. The student circles every off-beat note, or ticks "No off-beat". Generate as many sheets as you need, each with different excerpts.</p>
 <div id="tmfcd"></div>
 
@@ -74,7 +92,7 @@ module.exports = dictionaryPage({
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">Are there printable worksheets?</div>
-      <div class="tm-faq-a">Yes. You can generate as many different worksheets as you want directly in your browser, in a normal and a hard version, each with its own solutions page, and print them freely for class.</div>
+      <div class="tm-faq-a">Yes. You can generate as many different worksheets as you want directly in your browser, in a normal and a hard version, each with its own answer sheet, and print them freely for class.</div>
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">How is the hard mode different from the normal one?</div>

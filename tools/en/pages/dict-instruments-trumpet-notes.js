@@ -51,7 +51,7 @@ module.exports = dictionaryPage({
   description: 'B♭ trumpet notes: how the three valves and harmonics work, why it sounds a whole step lower than written, the F♯3–C6 range and a full fingering chart.',
   h1: 'Trumpet Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-trompeta-engine'],
   body: `
 <p>The <strong>trumpet</strong> is the bright, high voice of the <strong><a href="/diccionario-musical/instrumentos-de-viento-metal/">brass family</a></strong>, a leading instrument in the band, the orchestra and jazz alike. Unlike the woodwinds it has no holes: each note is chosen by combining <strong>three valves</strong> with the harmonic the player sets with the lips. The most common trumpet is the <strong>B♭ trumpet</strong>, a transposing instrument that sounds a <strong>whole step (UK: tone) lower</strong> than written. Below you will find its notes, written and sounding, and a complete fingering chart.</p>
 
@@ -137,7 +137,25 @@ ${rows}
 
 <h2>Trumpet fingerings</h2>
 
-<p>The Spanish page has an interactive diagram that lights up the valves for each note, shows the note on the staff and plays it (it is not available in English yet). Remember that one valve combination serves for several notes: the lips adjust the harmonic for the rest. If you want to tune up, use the <a href="/herramientas/afinador/trompeta/">trumpet tuner</a>.</p>
+<p>The diagram shows a trumpet with the <strong>mouthpiece on the left</strong>, the <strong>three valves</strong> in the middle and the <strong>bell on the right</strong>. When you pick a note, the valves you need to press light up in gold (or none, if it is "open"). Remember that one valve combination serves for several notes: the lips adjust the harmonic for the rest.</p>
+
+<p>Pick a note to see its fingering, the note on the staff and <strong>how it sounds</strong>.</p>
+
+<div id="tmtrompeta"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmTrompetaEngine)tmTrompetaEngine("tmtrompeta");});</script>
+
+<p>To tune, use the <a href="/herramientas/afinador/trompeta/">trumpet tuner</a>.</p>
+
+<!-- FICHA-DIGITACIONES:inicio -->
+<h2>Printable worksheet (PDF)</h2>
+<p>The same table on paper, on one side of A4 in two columns, for the music stand. And a <strong>second sheet to fill in</strong>: the 31 notes with the valves column left blank, so you can write the fingering yourself. The reference sheet works as the answer key.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/digitaciones/fichas/ficha-digitaciones-trompeta.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-trompeta.webp"><img src="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-trompeta.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet with the trumpet fingerings"></picture></a>
+  <figcaption>A4 sheet with the 31 notes and their fingering.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/digitaciones/fichas/ficha-digitaciones-trompeta.pdf" target="_blank" rel="noopener">Download the fingerings (PDF)</a>
+<a class="tm-btn" href="/assets/img/digitaciones/fichas/ficha-digitaciones-trompeta-rellenar.pdf" target="_blank" rel="noopener">Download the fill-in sheet (PDF)</a></p>
+<!-- FICHA-DIGITACIONES:fin -->
 
 <h2>Common mistakes when learning trumpet notes</h2>
 

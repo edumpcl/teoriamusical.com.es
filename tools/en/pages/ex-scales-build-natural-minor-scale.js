@@ -42,6 +42,18 @@ module.exports = dictionaryPage({
 
 <p>To lock these scales into your fingers, practice them with the <a href="/herramientas/metronomo/">online metronome</a> at 60-70% of your target tempo, raising it by 5 BPM each time you play three repetitions without mistakes. The <a href="/herramientas/afinador/">online tuner</a> lets you check your tuning before you start.</p>
 
+<!-- ficha-escala-tipo -->
+<h2>Printable worksheet (PDF)</h2>
+<p>The same exercise on paper, for class: eight natural minor scales to write without a key signature, with each accidental before its note. With a separate <strong>answer sheet</strong>, with the answers in red.</p>
+<p>It goes from easier to harder: first key signatures with few accidentals in treble clef, then more accidentals and the bass clef.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/escalas/fichas/ficha-escribir-escalas-menor-natural.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/escalas/fichas/preview-ficha-escribir-escalas-menor-natural.webp"><img src="/assets/img/escalas/fichas/preview-ficha-escribir-escalas-menor-natural.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet for writing natural minor scales"></picture></a>
+  <figcaption>A4 sheet for writing natural minor scales.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/escalas/fichas/ficha-escribir-escalas-menor-natural.pdf" target="_blank" rel="noopener">Download the worksheet (PDF A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/escalas/fichas/ficha-escribir-escalas-menor-natural-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>You may print and photocopy the worksheets freely for the classroom. There are also worksheets of this same type for <a href="/ejercicios/escalas/escalas-menores-natural/">identifying</a> and <a href="/ejercicios/escalas/construir-escala-menor-natural-con-armadura/">writing with a key signature</a>, and in the <a href="/ejercicios/escalas/#fichas">scales index</a> you can create custom worksheets, mixing whichever types you like.</p>
+<!-- /ficha-escala-tipo -->
+
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
 <div class="tm-seccion-cabecera">

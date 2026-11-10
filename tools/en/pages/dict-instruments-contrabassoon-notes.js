@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'Contrabassoon notes: written B♭1–D5, it sounds an octave lower, down to B♭0 (about 29 Hz). Registers, clefs, how it differs from the bassoon, and history.',
   h1: 'Contrabassoon Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-contrafagot-engine'],
   body: `
 <p>The <strong>contrabassoon</strong> (UK also: double bassoon) is the lowest voice of the orchestral woodwinds: a tube of almost <strong>six meters</strong> (about 19 feet) folded back on itself several times that reaches down to a sounding <strong>B♭0</strong>, a half step (UK: semitone) above the lowest note of the piano. It is an <strong>octave transposer</strong>: it is written like the bassoon and <strong>sounds an octave below</strong> the written note. This page gives its notes, registers and how it differs from the bassoon.</p>
 
@@ -56,7 +56,12 @@ module.exports = dictionaryPage({
 
 <p>Bassoonists play it and the hands sit the same way, but it is <strong>not simply a big bassoon</strong>. Its keywork and fingerings differ in places, and the folded tube has its own acoustics, so players use a fingering chart for their make of instrument. It also has a larger double reed than the bassoon, and it rests on the floor on an endpin, like a cello.</p>
 
-<p>The Spanish edition has an interactive fingering diagram with real contrabassoon sound. It is not available in English yet. To tune, use the <a href="/herramientas/afinador/contrafagot/">contrabassoon tuner</a>; note that it cannot read the lowest notes (below about 40 Hz sounding).</p>
+<p>Choose a note and you will see its fingering, the note on the staff (in its real reading clef) and a <strong>real contrabassoon sound</strong>.</p>
+
+<div id="tmcontrafagot"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmContrafagotEngine)tmContrafagotEngine("tmcontrafagot");});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">Fingerings from the official chart for Fox contrabassoons (Joseph Grimmer, 2018), decoded cell by cell. Sound: samples from the <a href="https://philharmonia.co.uk/resources/sound-samples/" rel="nofollow">Philharmonia Orchestra</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>). Want to tune up? Use the <a href="/herramientas/afinador/contrafagot/">contrabassoon tuner</a>. Note that it cannot read the lowest notes (below about 40 Hz sounding).</p>
 
 <h2>A little history and repertoire</h2>
 

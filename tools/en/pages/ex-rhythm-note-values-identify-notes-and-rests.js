@@ -35,7 +35,15 @@ module.exports = dictionaryPage({
 
 <p>A <strong>dot</strong> is a point to the right of the note or rest, and a <strong>double dot</strong> is two points in a row. To practice how much each one adds, see the exercise on <a href="/ejercicios/figuras/valor-de-las-figuras/">note values in each time signature</a>.</p>
 
-<p>There is more rhythm practice in <a href="/ejercicios/figuras/">note value and rhythm exercises</a>.</p>
+<h2>Printable worksheet (PDF)</h2>
+<p>The same exercise on paper, for class: <strong>24 mixed notes and rests</strong>, with and without dots, on one A4 sheet. The student writes under each symbol what it is. With a separate <strong>answer sheet</strong>, with the answers in red.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/figuras/fichas/ficha-identificar.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/figuras/fichas/preview-ficha-identificar.webp"><img src="/assets/img/figuras/fichas/preview-ficha-identificar.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet to identify notes and rests"></picture></a>
+  <figcaption>A4 sheet with 24 notes and rests to identify.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/figuras/fichas/ficha-identificar.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/figuras/fichas/ficha-identificar-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+
+<p>You can print and photocopy it freely for class. There is more rhythm practice in <a href="/ejercicios/figuras/">note value and rhythm exercises</a>.</p>
 
 <section class="tm-seccion">
 <div class="tm-seccion-inner">

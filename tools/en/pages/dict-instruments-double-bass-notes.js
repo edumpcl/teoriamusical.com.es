@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'Double bass notes: four strings E-A-D-G tuned in 4ths, why it sounds an octave lower than written, the five-string bass and the main playing techniques.',
   h1: 'Double Bass Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-contrabajo-engine'],
   body: `
 <p>The <strong>double bass</strong> (also called the contrabass, string bass or upright bass) is the deep giant of the bowed strings: the <strong>largest and lowest</strong> instrument of the family, so tall that it is played <strong>standing or on a high stool</strong>, resting on an <strong>endpin</strong>. It shares with the <a href="/diccionario-musical/notas-del-violonchelo/">cello</a> its upright posture and its lack of frets, but it has two features that set it apart in the orchestral string family: it is tuned in <strong>4ths</strong> (not 5ths), and it is a <strong>transposing instrument</strong>: it sounds an octave lower than written. This page gives its notes, how it is tuned and why one note can be played in several places.</p>
 
@@ -66,11 +66,16 @@ module.exports = dictionaryPage({
 
 <p>As on the cello, the bassist's hand covers <strong>little distance per position</strong> (about a whole step with the fingers in the low register), so the player <strong>shifts position</strong> constantly to move up the scale. In the high register the <strong>thumb position</strong> is used: the thumb rests on the strings like a movable nut to reach the highest notes.</p>
 
+<h3>Try it: the double bass diagram</h3>
+
+<p>Pick a note and the diagram shows on the double bass <strong>where to press the string</strong>, with its <strong>written name</strong>, the note that <strong>sounds</strong> (an octave lower) and its place on the staff, in bass clef. It runs from each open string up to its <strong>octave</strong>, bowed or pizzicato. Because it has no frets, <strong>one note lives in several places</strong>: the diagram lights up <strong>all of them</strong>, and the player chooses.</p>
+
+<div id="tmcontrabajo"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmContrabajoEngine)tmContrabajoEngine("tmcontrabajo");});</script>
+
 <h2>The same note in several places</h2>
 
 <p>Since there are no frets, <strong>the same note can be found in more than one place</strong>. The written <strong>A2</strong> (sounding A1) is played on the <strong>open A string</strong> or by going up the <strong>E string</strong>; the same goes for D3 and G3. It is the same note, but it does <strong>not sound the same</strong>: the open string is more <strong>open and powerful</strong> but allows no vibrato, while a stopped string sounds <strong>warmer</strong>. The player chooses.</p>
-
-<p>The Spanish edition has an interactive diagram on a photo of a double bass that lights up where to stop the string for each note, with real arco and pizzicato sound. It is not available in English yet.</p>
 
 <h2>The double bass in the orchestra, jazz and the band</h2>
 
@@ -104,7 +109,10 @@ module.exports = dictionaryPage({
 
 <p>Its parts are the same as those of the other bowed strings, starting with the <strong>endpin</strong> that rests on the floor: scroll, pegs, nut, fingerboard, f-holes, bridge, tailpiece and endpin.</p>
 
-<!-- TODO-IMG: /assets/img/contrabajo/partes.jpg (and .webp): photo of a double bass with its parts labeled in Spanish (voluta, clavijas, cejuela, diapasón, oídos o efes, puente, cordal, pica). It needs an English version of the labels. -->
+<figure style="margin:16px auto;max-width:300px;text-align:center;">
+<picture><source type="image/webp" srcset="/assets/img/contrabajo/partes.webp"><img src="/assets/img/contrabajo/partes.jpg" width="889" height="936" loading="lazy" alt="Diagram of a double bass with its parts labeled: scroll, pegs, nut, fingerboard, f-holes, bridge, tailpiece and endpin" style="max-width:100%;height:auto"></picture>
+<figcaption style="font-size:.85rem;color:#686868;margin-top:6px">The parts of the double bass. Photo by <a href="https://commons.wikimedia.org/wiki/File:AGK_bass1_full.jpg" rel="nofollow">AndrewKepert</a>, CC BY-SA 3.0.</figcaption>
+</figure>
 
 <h2>Common mistakes when learning double bass notes</h2>
 

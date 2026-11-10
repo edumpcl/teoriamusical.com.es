@@ -24,7 +24,15 @@ module.exports = dictionaryPage({
 <p>The complete explanation, with the chords of each cadence in C major, is on the page about <a href="/diccionario-musical/cadencias/">musical cadences</a>.</p>
 
 <h2>Printable worksheets</h2>
-<p>The same exercise on paper, for class: <strong>sixteen piano cadences</strong> per A4 sheet, four conclusive, four suspensive and eight mixed. The student ticks the box for the type of cadence. Each sheet has its own solutions page. Generate as many sheets as you need, each with different cadences, and print them straight from your browser.</p>
+<p>The same exercise on paper, for class: <strong>sixteen piano cadences</strong> per A4 sheet, four conclusive, four suspensive and eight mixed. The student ticks the box for the type of cadence. Everything on one side of A4, with a separate <strong>answer sheet</strong>.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/cadencias/fichas/ficha-cadencias.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/cadencias/fichas/preview-ficha-cadencias.webp"><img src="/assets/img/cadencias/fichas/preview-ficha-cadencias.png" width="300" height="424" loading="lazy" alt="Printable A4 worksheet for recognizing musical cadences"></picture></a>
+  <figcaption>A4 sheet with sixteen piano cadences.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/cadencias/fichas/ficha-cadencias.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/cadencias/fichas/ficha-cadencias-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>It is designed for working without a computer, as a class exercise, homework or review. You can print and photocopy it freely for the classroom.</p>
+
+<p>Need more than one sheet? Generate <strong>more worksheets</strong> here, each with different cadences, and print them straight from your browser.</p>
 <div id="tmcf"></div>
 
 <h2>Before this exercise</h2>

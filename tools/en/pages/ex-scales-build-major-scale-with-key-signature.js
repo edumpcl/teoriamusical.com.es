@@ -33,6 +33,18 @@ module.exports = dictionaryPage({
 </table>
 </div>
 
+<!-- ficha-escala-tipo -->
+<h2>Printable worksheet (PDF)</h2>
+<p>The same exercise on paper, for class: eight natural major scales to write with a key signature: first the key signature, then the scale, with only the accidentals that depart from it. With a separate <strong>answer sheet</strong>, with the answers in red.</p>
+<p>It goes from easier to harder: first key signatures with few accidentals in treble clef, then more accidentals and the bass clef.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/escalas/fichas/ficha-escribir-con-armadura-escalas-mayor.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/escalas/fichas/preview-ficha-escribir-con-armadura-escalas-mayor.webp"><img src="/assets/img/escalas/fichas/preview-ficha-escribir-con-armadura-escalas-mayor.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet for writing natural major scales with a key signature"></picture></a>
+  <figcaption>A4 sheet for writing natural major scales with a key signature.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/escalas/fichas/ficha-escribir-con-armadura-escalas-mayor.pdf" target="_blank" rel="noopener">Download the worksheet (PDF A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/escalas/fichas/ficha-escribir-con-armadura-escalas-mayor-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>You may print and photocopy the worksheets freely for the classroom. There are also worksheets of this same type for <a href="/ejercicios/escalas/escalas-mayores/">identifying</a> and <a href="/ejercicios/escalas/construir-escala-mayor/">writing</a>, and in the <a href="/ejercicios/escalas/#fichas">scales index</a> you can create custom worksheets, mixing whichever types you like.</p>
+<!-- /ficha-escala-tipo -->
+
 <h2>Frequently Asked Questions</h2>
 <div class="tm-faq-list">
 <div class="tm-faq-item"><div class="tm-faq-q">What is the key signature of a major scale?</div><div class="tm-faq-a">It is the set of sharps or flats written at the start of the staff, next to the clef, which affect those notes throughout the piece. Each major key has its own, following the circle of fifths.</div></div>

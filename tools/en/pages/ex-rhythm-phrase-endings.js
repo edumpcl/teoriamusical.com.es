@@ -7,7 +7,7 @@ module.exports = dictionaryPage({
   h1: 'Phrase Endings on a Strong or Weak Beat',
   crumbs: [['Music Exercises', '/ejercicios/']],
   scripts: ['tm-mei', 'tm-notacion', 'completar-compas-engine', 'tipo-de-comienzo-engine', 'tipo-de-final-engine', 'ficha-final-frase-engine'],
-  body: `<p>In this exercise you see the end of a melody (the last two measures, with their key signature and time signature) and you have to say whether it ends on a <strong>strong beat</strong> or on a <strong>weak beat</strong>. In Spanish-language teaching these are called <em>íctico</em> and <em>posíctico</em>; in English they are often called a masculine ending and a feminine ending. Three levels, instant answers and printable worksheets with solutions.</p>
+  body: `<p>In this exercise you see the end of a melody (the last two measures, with their key signature and time signature) and you have to say whether it ends on a <strong>strong beat</strong> or on a <strong>weak beat</strong>. In Spanish-language teaching these are called <em>íctico</em> and <em>posíctico</em>; in English they are often called a masculine ending and a feminine ending. Three levels, instant answers and printable worksheets with answers.</p>
 
 <p>Look at the last measure, the one that ends at the double bar line: on which beat does the last note start? How long it lasts does not matter.</p>
 
@@ -23,8 +23,17 @@ module.exports = dictionaryPage({
 
 <p>For example, in 4/4 a half note that starts on beat 3 is an ending on a weak beat even though it lasts two beats, and an eighth note on beat 1 followed by rests is an ending on a strong beat. From the medium level on, the last measure can be incomplete (it makes up for a pickup at the beginning): its strong beat is still the first one, at the start of that measure. The full explanation is on <a href="/diccionario-musical/la-frase-musical/final-tiempo-fuerte-y-debil/">phrase endings on a strong or weak beat</a>.</p>
 
-<h2>Printable worksheets</h2>
-<p>The same exercise on paper, for class: you can generate <strong>worksheets of eighteen melody endings</strong>, six from each level, with three of each type at each level. The student ticks the matching box. Each sheet comes with its own solutions page. Generate as many sheets as you need, each with different melodies, and print them straight from your browser.</p>
+<h2>Printable worksheet (PDF)</h2>
+<p>The same exercise on paper, for class: <strong>eighteen melody endings</strong>, six from each level, on one A4 sheet, with three of each type at each level. The student ticks the matching box. With a separate <strong>answer sheet</strong>.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/final/fichas/ficha-final-frase.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/final/fichas/preview-ficha-final-frase.webp"><img src="/assets/img/final/fichas/preview-ficha-final-frase.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet to tell phrase endings on a strong beat and on a weak beat apart"></picture></a>
+  <figcaption>A4 sheet with eighteen melody endings.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/final/fichas/ficha-final-frase.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/final/fichas/ficha-final-frase-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>It is designed for working without a computer, as classwork, homework or review. You can print and photocopy it freely for class.</p>
+
+<h2>More worksheets</h2>
+<p>The same exercise on paper, for class: you can generate <strong>worksheets of eighteen melody endings</strong>, six from each level, with three of each type at each level. The student ticks the matching box. Each sheet comes with its own answer sheet. Generate as many sheets as you need, each with different melodies, and print them straight from your browser.</p>
 <div id="tmff"></div>
 
 <h2>Before and after this exercise</h2>

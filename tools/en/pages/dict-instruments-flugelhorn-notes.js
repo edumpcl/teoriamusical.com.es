@@ -51,7 +51,7 @@ module.exports = dictionaryPage({
   description: 'B♭ flugelhorn notes: same three-valve fingerings as the trumpet, why it sounds a whole step lower, its mellow tone, F♯3–C6 range and a full chart.',
   h1: 'Flugelhorn Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-fliscorno-engine'],
   body: `
 <p>The <strong>flugelhorn</strong> is the mellow cousin of the <a href="/diccionario-musical/notas-de-la-trompeta/">trumpet</a>. You play it <strong>exactly the same way</strong>: the same three valves, the same B♭ pitch, the same transposition. But it sounds much <strong>rounder, darker and more velvety</strong>. It is a beloved voice in the <strong>band</strong> and a favorite of <strong>jazz</strong> soloists. Below you will find its notes, written and sounding, and a complete fingering chart.</p>
 
@@ -138,7 +138,25 @@ ${rows}
 
 <h2>Flugelhorn fingerings</h2>
 
-<p>The Spanish page has an interactive diagram that lights up the valves for each note, shows the note on the staff and plays a flugelhorn sound; it is not available in English yet. As on the trumpet, one valve combination serves for several notes: the lips adjust the harmonic. If you want to tune up, use the <a href="/herramientas/afinador/fliscorno/">flugelhorn tuner</a>.</p>
+<p>The diagram shows a flugelhorn with the <strong>mouthpiece on the left</strong>, the <strong>three valves</strong> in the middle and the <strong>wide bell on the right</strong>. When you pick a note, the valves you need to press light up in gold (or none, if it is "open"). As on the trumpet, one valve combination serves for several notes: the lips do the rest by adjusting the harmonic.</p>
+
+<p>Pick a note to see its fingering, the note on the staff and its <strong>real flugelhorn sound</strong>.</p>
+
+<div id="tmfliscorno"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmFliscornoEngine)tmFliscornoEngine("tmfliscorno");});</script>
+
+<p>To tune, use the <a href="/herramientas/afinador/fliscorno/">flugelhorn tuner</a>.</p>
+
+<!-- FICHA-DIGITACIONES:inicio -->
+<h2>Printable worksheet (PDF)</h2>
+<p>The same table on paper, on one side of A4 in two columns, for the music stand. And a <strong>second sheet to fill in</strong>: the 31 notes with the valves column left blank, so you can write the fingering yourself. The reference sheet works as the answer key.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/digitaciones/fichas/ficha-digitaciones-fliscorno.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-fliscorno.webp"><img src="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-fliscorno.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet with the flugelhorn fingerings"></picture></a>
+  <figcaption>A4 sheet with the 31 notes and their fingering.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/digitaciones/fichas/ficha-digitaciones-fliscorno.pdf" target="_blank" rel="noopener">Download the fingerings (PDF)</a>
+<a class="tm-btn" href="/assets/img/digitaciones/fichas/ficha-digitaciones-fliscorno-rellenar.pdf" target="_blank" rel="noopener">Download the fill-in sheet (PDF)</a></p>
+<!-- FICHA-DIGITACIONES:fin -->
 
 <h2>Common mistakes when learning flugelhorn notes</h2>
 

@@ -10,7 +10,7 @@ module.exports = dictionaryPage({
   scripts: [],
   body: `<p>Quizzes to identify and build seventh chords on the staff.</p>
 
-<p>One step beyond the <a href="/ejercicios/acordes/triadas/">triad</a>: a fourth note is added, one more third above the fifth, and the result is a seventh chord. Here you work on three of the most common types in classical tonal practice: the <strong>dominant seventh</strong>, the <strong>half-diminished</strong> (leading-tone) <strong>seventh</strong> and the <strong>diminished seventh</strong>. With four notes, each chord has <strong>root position and three inversions</strong> (not two, as the triad has).</p>
+<p>One step beyond the <a href="/ejercicios/acordes/triadas/">triad</a>: a fourth note is added, one more third above the fifth, and the result is a seventh chord. Here you work on three of the most common types in classical tonal practice: the <strong>dominant seventh</strong>, the <strong>half-diminished</strong> (leading-tone) <strong>seventh</strong> and the <strong>diminished seventh</strong>. The other two types, the <a href="/diccionario-musical/acordes/acorde-de-septima-mayor/">major seventh</a> and the <a href="/diccionario-musical/acordes/acorde-de-septima-menor/">minor seventh</a>, are explained in the dictionary. With four notes, each chord has <strong>root position and three inversions</strong> (not two, as the triad has).</p>
 
 <style>
 .tm-ruta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 16px 0 24px; }

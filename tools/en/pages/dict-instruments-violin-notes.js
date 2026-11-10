@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'Violin notes: the four strings (G3, D4, A4, E5) tuned in perfect 5ths, first-position fingering, positions, and why the violin has no frets.',
   h1: 'Violin Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-violin-engine'],
   body: `
 <p>The <strong>violin</strong> is the high voice of the <strong>bowed strings</strong> and the most numerous instrument in the orchestra. Its notes have a peculiarity that almost no other instrument shares: they are <strong>not marked anywhere</strong>. There are no keys as on the <a href="/diccionario-musical/notas-del-piano/">piano</a>, no frets as on the guitar and no keys as on the <a href="/diccionario-musical/notas-de-la-flauta-travesera/">flute</a>: there are <strong>four strings</strong> and an ear. On this page you will find its notes, how it is tuned and where each note falls in first position.</p>
 
@@ -92,7 +92,12 @@ module.exports = dictionaryPage({
 </tbody>
 </table></div>
 
-<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">The Spanish page has an interactive diagram that marks, on a photograph of the violin, where to press each note up to the octave of each string (G3 to E6), with bowed and pizzicato sound; it is not available in English yet. To tune, use the <a href="/herramientas/afinador/violin/">violin tuner</a>.</p>
+<h3>Try it: the violin diagram</h3>
+
+<p>Pick a note and the diagram shows on the violin <strong>where to press the string</strong> and at what point along its length, with its sound and its place on the staff. It runs from each open string up to its <strong>octave</strong> (more than two octaves in all, from G3 to E6), with every sharp and flat, and you can hear the notes <strong>bowed or pizzicato</strong>. Because the violin has no frets, <strong>one note lives in several places</strong>: the diagram lights up <strong>all of them</strong>, and the player chooses. To tune, use the <a href="/herramientas/afinador/violin/">violin tuner</a>.</p>
+
+<div id="tmviolin"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmViolinEngine)tmViolinEngine("tmviolin");});</script>
 
 <h2>The same note in several places</h2>
 

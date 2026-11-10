@@ -39,7 +39,15 @@ module.exports = dictionaryPage({
 
 <p>A trick for compound meters is to <strong>count in eighth notes</strong>: each beat is three. In the 6/8 example, the quarter note is 2 eighth notes, the eighth note is 1 and the dotted quarter note is 3: in total 6 eighth notes, which is two beats. To review the value of each note in each time signature, there is the exercise on <a href="/ejercicios/figuras/valor-de-las-figuras/">note values</a>.</p>
 
-<p>There are more rhythm exercises in <a href="/ejercicios/figuras/">note value and rhythm exercises</a>, and to practice time signatures, the <a href="/ejercicios/compases/analizar-compas/">analyze time signatures</a> exercise.</p>
+<h2>Printable worksheet (PDF)</h2>
+<p>The same exercise on paper: <strong>12 excerpts</strong> to add up, six in simple and six in compound time signatures, on one A4 sheet. With a separate <strong>answer sheet</strong>, with the answers in red.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/figuras/fichas/ficha-sumar.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/figuras/fichas/preview-ficha-sumar.webp"><img src="/assets/img/figuras/fichas/preview-ficha-sumar.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet to add up the notes in a measure"></picture></a>
+  <figcaption>A4 sheet with 12 excerpts to add up in simple and compound time signatures.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/figuras/fichas/ficha-sumar.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/figuras/fichas/ficha-sumar-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+
+<p>You can print and photocopy it freely for class. There are more rhythm exercises in <a href="/ejercicios/figuras/">note value and rhythm exercises</a>, and to practice time signatures, the <a href="/ejercicios/compases/analizar-compas/">analyze time signatures</a> exercise.</p>
 
 <section class="tm-seccion">
 <div class="tm-seccion-inner">

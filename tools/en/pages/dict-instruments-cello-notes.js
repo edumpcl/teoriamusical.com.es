@@ -6,13 +6,13 @@ module.exports = dictionaryPage({
   description: 'Cello notes: the four strings (C2, G2, D3, A3) tuned in 5ths, why it reads bass, tenor and treble clef, the endpin, positions and thumb position.',
   h1: 'Cello Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-violonchelo-engine'],
   body: `
 <p>The <strong>cello</strong> (short for <em>violoncello</em>) is the deep, singing voice of the bowed strings: like a <a href="/diccionario-musical/notas-de-la-viola/">viola</a> but <strong>an octave lower</strong>, and so large that it is played <strong>seated</strong>, with the instrument standing on the floor between the knees on a metal <strong>endpin</strong>. It shares the essentials with the violin and the viola (<strong>four strings</strong> tuned in 5ths, no frets, played with a bow), but it sounds in the bass and tenor range, which is why it is read mainly in <strong>bass clef</strong>. On this page you will find its notes, how it is tuned and how the hand moves along the neck.</p>
 
 <figure style="margin:18px auto;max-width:250px;text-align:center;">
 <picture><source type="image/webp" srcset="/assets/img/violonchelo/instrumento.webp"><img src="/assets/img/violonchelo/instrumento.jpg" width="403" height="669" loading="lazy" alt="A cello seen from the front and from the side, with the endpin coming out at the bottom" style="max-width:100%;height:auto;border:1px solid #e8e0cc;border-radius:8px;background:#fff;padding:8px"></picture>
-<figcaption style="font-size:.85rem;color:#686868;margin-top:6px">A cello, front and side. Photo by <a href="https://commons.wikimedia.org/wiki/File:Cello_front_side.png" rel="nofollow">Georg Feitscher</a>, <a href="https://creativecommons.org/licenses/by/3.0/" rel="nofollow">CC BY 3.0</a>, via Wikimedia Commons. The Spanish page has an interactive fingerboard diagram with real cello sound; it is not available in English yet.</figcaption>
+<figcaption style="font-size:.85rem;color:#686868;margin-top:6px">A cello, front and side. Photo by <a href="https://commons.wikimedia.org/wiki/File:Cello_front_side.png" rel="nofollow">Georg Feitscher</a>, <a href="https://creativecommons.org/licenses/by/3.0/" rel="nofollow">CC BY 3.0</a>, via Wikimedia Commons.</figcaption>
 </figure>
 
 <div class="tm-table-wrap"><table class="tm-table">
@@ -62,6 +62,13 @@ module.exports = dictionaryPage({
 
 <p>And there is a technique of the cello's own: <strong>thumb position</strong>. In the high register the thumb leaves its place behind the neck and rests <strong>across the strings</strong> as a movable "capo", acting as a new nut. It is what lets the cello reach very high notes, well beyond the octave of the open strings (A4 on the A string).</p>
 
+<h3>Try it: the cello diagram</h3>
+
+<p>Pick a note and the diagram shows on the cello <strong>where to press the string</strong> and at what point along its length, with its sound and its place on the staff (in bass clef). It runs from each open string up to its <strong>octave</strong> (from C2 to A4), with every sharp and flat, and you can hear it <strong>bowed or pizzicato</strong>. Because it has no frets, <strong>one note lives in several places</strong>: the diagram lights up <strong>all of them</strong>, and the player chooses.</p>
+
+<div id="tmviolonchelo"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmCelloEngine)tmCelloEngine("tmviolonchelo");});</script>
+
 <h2>The same note in several places</h2>
 
 <p>Because the strings overlap, <strong>G2</strong> can be played on the <strong>open G string</strong> or higher up on the <strong>C string</strong>; the same goes for D3 and A3. It is the same pitch, but it <strong>does not sound the same</strong>: open, the string is <strong>brighter and more powerful</strong> but allows no vibrato; stopped, it sounds <strong>warmer</strong> and more even with its neighbors. Choosing where to play a note is a <strong>musical decision</strong>: the player picks whichever the passage asks for.</p>
@@ -98,7 +105,10 @@ module.exports = dictionaryPage({
 
 <p>It helps to know the names of the parts, above all the <strong>endpin</strong>, which tells a cello from a violin at first sight:</p>
 
-<!-- TODO-IMG: /assets/img/violonchelo/partes.jpg (and .webp): diagram of a cello with the parts labeled in Spanish (voluta, clavijas, cejuela, diapasón, oídos o efes, puente, cordal, pica). It needs an English version of the labels. -->
+<figure style="margin:16px auto;max-width:300px;text-align:center;">
+<picture><source type="image/webp" srcset="/assets/img/violonchelo/partes.webp"><img src="/assets/img/violonchelo/partes.jpg" width="829" height="916" loading="lazy" alt="Diagram of a cello with its parts labeled: scroll, pegs, nut, fingerboard, f-holes, bridge, tailpiece and endpin" style="max-width:100%;height:auto"></picture>
+<figcaption style="font-size:.85rem;color:#686868;margin-top:6px">The parts of the cello. Photo by <a href="https://commons.wikimedia.org/wiki/File:Cello_front_side.png" rel="nofollow">Georg Feitscher</a>, CC BY 3.0.</figcaption>
+</figure>
 
 <ul>
   <li><strong>Scroll and pegs:</strong> the top end; the pegs tighten the strings to tune them.</li>

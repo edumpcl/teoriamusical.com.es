@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'Tuba notes and fingerings for the 4-valve tuba in C: how valves and harmonics work, the 4th valve, range, and tubas in C, B♭, E♭ and F.',
   h1: 'Tuba Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Instruments', '/diccionario-musical/familias-de-instrumentos/'], ['Brass Instruments', '/diccionario-musical/instrumentos-de-viento-metal/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-tuba-engine'],
   body: `
 <p>The <strong>tuba</strong> is the lowest of the <strong>brass instruments</strong>: the foundation that the harmony of the <strong>concert band</strong> and the <strong>orchestra</strong> rests on. Like the <a href="/diccionario-musical/notas-de-la-trompeta/">trumpet</a>, it picks a note by combining <strong>valves</strong> with the <strong>harmonics</strong> produced by the lips, but it sounds much lower and usually has <strong>four valves</strong>. Tubas are built in <strong>C</strong>, <strong>B♭</strong>, <strong>E♭</strong> and <strong>F</strong>. This page shows the fingerings of the <strong>tuba in C</strong>, which is read at concert pitch in <a href="/diccionario-musical/claves-musicales/clave-de-fa/">bass clef</a> (it does not transpose), so the note you read is the note you hear.</p>
 
@@ -116,6 +116,24 @@ module.exports = dictionaryPage({
 <h2>Tuba fingerings</h2>
 
 <p>The table above gives the valve combination for each note, from E1 to B3. Remember that one combination serves several notes: the lips pick the harmonic, and the valves lower it. As on the rest of the brass family, many notes share the same fingering. The tuba in B♭, E♭ or F uses different fingerings from the ones shown here.</p>
+
+<p>The diagram shows a tuba with its <strong>four valves</strong> in the middle. When you pick a note, the valves you need to press light up (or none, if it is "open"). As on the whole brass family, one combination serves for several notes: the lips do the rest by adjusting the harmonic.</p>
+
+<p>Pick a note to see its fingering, the note on the staff and its <strong>real tuba sound</strong>.</p>
+
+<div id="tmtuba"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmTubaEngine)tmTubaEngine("tmtuba");});</script>
+
+<!-- FICHA-DIGITACIONES:inicio -->
+<h2>Printable worksheet (PDF)</h2>
+<p>The same table on paper, on one side of A4 in two columns, for the music stand. And a <strong>second sheet to fill in</strong>: the 38 notes with the valves column left blank, so you can write the fingering yourself. The reference sheet works as the answer key.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/digitaciones/fichas/ficha-digitaciones-tuba.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-tuba.webp"><img src="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-tuba.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet with the tuba fingerings"></picture></a>
+  <figcaption>A4 sheet with the 38 notes and their fingering.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/digitaciones/fichas/ficha-digitaciones-tuba.pdf" target="_blank" rel="noopener">Download the fingerings (PDF)</a>
+<a class="tm-btn" href="/assets/img/digitaciones/fichas/ficha-digitaciones-tuba-rellenar.pdf" target="_blank" rel="noopener">Download the fill-in sheet (PDF)</a></p>
+<!-- FICHA-DIGITACIONES:fin -->
 
 <h2>Common mistakes when learning tuba notes</h2>
 

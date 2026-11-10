@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'English horn (UK: cor anglais) notes: pitched in F, it sounds a perfect 5th below written. Range B3–G6, registers and the oboe fingerings it shares.',
   h1: 'English Horn Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-corno-ingles-engine'],
   body: `
 <p>The <strong>English horn</strong> (UK: <strong>cor anglais</strong>) is the <strong>alto of the oboe family</strong>: longer than the oboe, with a curved <strong>bocal</strong>, a pear-shaped bell (the <strong>piriform</strong> bell) and an unmistakable melancholy voice. It is pitched <strong>in F</strong>, so it sounds a <strong>perfect 5th below</strong> the written note, and it is fingered <strong>exactly like the oboe</strong>. This page gives its notes, its registers and what it shares with the oboe.</p>
 
@@ -74,7 +74,14 @@ module.exports = dictionaryPage({
 
 <h2>English horn fingerings</h2>
 
-<p>The English horn is <strong>an oboe in F</strong>: it has the same Conservatoire mechanism and is fingered the same way, with six finger holes (1–3 for the left hand, 4–6 for the right), the octave keys and the little-finger clusters of each hand. The Spanish edition shows this on photographs of an oboe, with the keys lighting up for each note and real English horn sound. It is not available in English yet. To tune, use the <a href="/herramientas/afinador/corno-ingles/">English horn tuner</a>.</p>
+<p>The English horn is <strong>an oboe in F</strong>: it has the same Conservatoire mechanism and is fingered the same way, with six finger holes (1–3 for the left hand, 4–6 for the right), the octave keys and the little-finger clusters of each hand.</p>
+
+<p>Choose a note and you will see its fingering, the note on the staff and a <strong>real English horn sound</strong> (a perfect 5th below written).</p>
+
+<div id="tmcorno"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmCornoInglesEngine)tmCornoInglesEngine("tmcorno");});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">Conservatoire-system fingerings (the same as the oboe, checked against the charts by Cdang on Wikimedia Commons). Sound: samples from the <a href="https://philharmonia.co.uk/resources/sound-samples/" rel="nofollow">Philharmonia Orchestra</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>). Want to tune up? Use the <a href="/herramientas/afinador/corno-ingles/">English horn tuner</a>.</p>
 
 <h2>Common mistakes when learning English horn notes</h2>
 

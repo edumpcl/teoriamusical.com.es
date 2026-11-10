@@ -33,10 +33,10 @@ module.exports = dictionaryPage({
     <tr><th>Position</th><th>Figured bass</th><th>Intervals above the bass</th><th>Notes in B half-diminished 7th (C major)</th></tr>
   </thead>
   <tbody>
-    <tr><td>Root position</td><td>7</td><td>m3 · d5 · m7</td><td>B–D–F–A</td></tr>
-    <tr><td>First inversion</td><td>6/5</td><td>m3 · P5 · M6</td><td>D–F–A–B</td></tr>
-    <tr><td>Second inversion</td><td>4/3</td><td>M3 · A4 · M6</td><td>F–A–B–D</td></tr>
-    <tr><td>Third inversion</td><td>4/2</td><td>M2 · P4 · m6</td><td>A–B–D–F</td></tr>
+    <tr><td>Root position</td><td>7 5̄</td><td>m3 · d5 · m7</td><td>B–D–F–A</td></tr>
+    <tr><td>First inversion</td><td>+6 5</td><td>m3 · P5 · M6</td><td>D–F–A–B</td></tr>
+    <tr><td>Second inversion</td><td>+4 3</td><td>M3 · A4 · M6</td><td>F–A–B–D</td></tr>
+    <tr><td>Third inversion</td><td>4 +2</td><td>M2 · P4 · m6</td><td>A–B–D–F</td></tr>
   </tbody>
 </table></div>
 
@@ -46,10 +46,21 @@ module.exports = dictionaryPage({
 
 <div class="tm-img-grid-4">
 <figure data-tm-chord-notes="B D F A"><img src="/assets/img/notacion/acordes-septimas/sen-fundamental-acorde.svg" width="260" height="122" alt="Leading-tone seventh chord in root position" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-fundamental-par1.svg" width="260" height="153" alt="Minor seventh of the leading-tone seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-fundamental-par2.svg" width="260" height="153" alt="Diminished fifth of the leading-tone seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-fundamental-par3.svg" width="260" height="153" alt="Minor third of the leading-tone seventh chord" loading="lazy" decoding="async"></figure>
 </div>
-<!-- TODO-IMG: /assets/img/notacion/acordes-septimas/sen-fundamental-par1.svg, -par2, -par3 (and the same for sen-1a-, sen-2a-, sen-3a-): intervals above the bass with Spanish labels. The sen-*-cifrado-1..4.svg figured-bass examples use the Spanish "+" convention. -->
 
-<p>The figured bass is 7. It is the same in every key.</p>
+<h3>Figured bass</h3>
+
+<div class="tm-img-grid-4">
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-fundamental-cifrado-1.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in root position, example 1" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-fundamental-cifrado-2.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in root position, example 2" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-fundamental-cifrado-3.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in root position, example 3" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-fundamental-cifrado-4.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in root position, example 4" loading="lazy" decoding="async"></figure>
+</div>
+
+<p>The figured bass is 7 and a slashed 5: the 7 says that the distance between the outer notes is a seventh, and the slashed 5 says that the fifth is diminished. It is the same in every key.</p>
 
 <h2 id="first-inversion">First inversion</h2>
 
@@ -57,9 +68,21 @@ module.exports = dictionaryPage({
 
 <div class="tm-img-grid-4">
 <figure data-tm-chord-notes="D F A B"><img src="/assets/img/notacion/acordes-septimas/sen-1a-acorde.svg" width="260" height="122" alt="Leading-tone seventh chord in first inversion" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-1a-par1.svg" width="260" height="153" alt="Major sixth in the first inversion of the leading-tone seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-1a-par2.svg" width="260" height="153" alt="Perfect fifth in the first inversion of the leading-tone seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-1a-par3.svg" width="260" height="153" alt="Minor third in the first inversion of the leading-tone seventh chord" loading="lazy" decoding="async"></figure>
 </div>
 
-<p>The figured bass is 6/5. It looks like the <a href="/diccionario-musical/acordes/acorde-de-septima-de-dominante/#first-inversion">dominant seventh in first inversion</a>, but there the 5th is diminished and here it is perfect. It is the same in every key.</p>
+<h3>Figured bass</h3>
+
+<div class="tm-img-grid-4">
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-1a-cifrado-1.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in first inversion, example 1" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-1a-cifrado-2.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in first inversion, example 2" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-1a-cifrado-3.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in first inversion, example 3" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-1a-cifrado-4.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in first inversion, example 4" loading="lazy" decoding="async"></figure>
+</div>
+
+<p>The figured bass is +6 and 5: the +6 says that the sixth is the leading tone; the 5 is added to tell it apart from the <a href="/diccionario-musical/acordes/acorde-de-septima-de-dominante/#second-inversion">dominant seventh in second inversion</a>. It is the same in every key.</p>
 
 <h2 id="second-inversion">Second inversion</h2>
 
@@ -67,9 +90,21 @@ module.exports = dictionaryPage({
 
 <div class="tm-img-grid-4">
 <figure data-tm-chord-notes="F A B D"><img src="/assets/img/notacion/acordes-septimas/sen-2a-acorde.svg" width="260" height="122" alt="Leading-tone seventh chord in second inversion" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-2a-par1.svg" width="260" height="153" alt="Major sixth in the second inversion of the leading-tone seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-2a-par2.svg" width="260" height="153" alt="Augmented fourth in the second inversion of the leading-tone seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-2a-par3.svg" width="260" height="153" alt="Major third in the second inversion of the leading-tone seventh chord" loading="lazy" decoding="async"></figure>
 </div>
 
-<p>The figured bass is 4/3, the same as the <a href="/diccionario-musical/acordes/acorde-de-septima-de-dominante/#second-inversion">dominant seventh in second inversion</a>; the difference is in the intervals above the bass (here a major 3rd and an augmented 4th). It is the same in every key.</p>
+<h3>Figured bass</h3>
+
+<div class="tm-img-grid-4">
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-2a-cifrado-1.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in second inversion, example 1" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-2a-cifrado-2.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in second inversion, example 2" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-2a-cifrado-3.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in second inversion, example 3" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-2a-cifrado-4.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in second inversion, example 4" loading="lazy" decoding="async"></figure>
+</div>
+
+<p>The figured bass is +4 and 3: the +4 says that the fourth is the leading tone; the 3 is added to tell it apart from the <a href="/diccionario-musical/acordes/acorde-de-septima-de-dominante/#third-inversion">dominant seventh in third inversion</a>. It is the same in every key.</p>
 
 <h2 id="third-inversion">Third inversion</h2>
 
@@ -77,9 +112,21 @@ module.exports = dictionaryPage({
 
 <div class="tm-img-grid-4">
 <figure data-tm-chord-notes="A B D F"><img src="/assets/img/notacion/acordes-septimas/sen-3a-acorde.svg" width="260" height="122" alt="Leading-tone seventh chord in third inversion" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-3a-par1.svg" width="260" height="153" alt="Minor sixth in the third inversion of the leading-tone seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-3a-par2.svg" width="260" height="153" alt="Perfect fourth in the third inversion of the leading-tone seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-3a-par3.svg" width="260" height="153" alt="Major second in the third inversion of the leading-tone seventh chord" loading="lazy" decoding="async"></figure>
 </div>
 
-<p>The figured bass is 4/2. It is the same in every key.</p>
+<h3>Figured bass</h3>
+
+<div class="tm-img-grid-4">
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-3a-cifrado-1.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in third inversion, example 1" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-3a-cifrado-2.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in third inversion, example 2" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-3a-cifrado-3.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in third inversion, example 3" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/sen-3a-cifrado-4.svg" width="260" height="193" alt="Figured bass of the leading-tone seventh chord in third inversion, example 4" loading="lazy" decoding="async"></figure>
+</div>
+
+<p>The figured bass is 4 and +2: the 4 gives the distance of a fourth and the +2 says that the second is the leading tone. It is the same in every key.</p>
 
 <p>To practice this chord there is an exercise on <a href="/ejercicios/acordes/construir-septima-de-sensible/">building the leading-tone seventh</a> (in its four positions) and another on <a href="/ejercicios/acordes/septimas-en-fundamental/">recognizing it</a> next to the dominant seventh and the diminished seventh.</p>
 
@@ -100,7 +147,7 @@ module.exports = dictionaryPage({
 </div>
 <div class="tm-faq-item">
 <div class="tm-faq-q">How many inversions does it have?</div>
-<div class="tm-faq-a">Three, in addition to root position: first (6/5), second (4/3) and third (4/2).</div>
+<div class="tm-faq-a">Three, in addition to root position: first (+6 and 5), second (+4 and 3) and third (4 and +2). Each inversion carries an extra number in the figured bass to tell it apart from the dominant seventh chord.</div>
 </div>
 <div class="tm-faq-item">
 <div class="tm-faq-q">What are the notes of the leading-tone seventh chord in C major?</div>

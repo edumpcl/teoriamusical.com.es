@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'Ukulele notes: the four strings (G4, C4, E4, A4), why the tuning is re-entrant (high G), how frets work, tablature and the four ukulele sizes.',
   h1: 'Ukulele Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-ukelele-engine'],
   body: `
 <p>The <strong>ukulele</strong> is one of the friendliest instruments to start on: four soft strings, a small neck and, once you know where the notes are, it sounds good. But it hides a <strong>surprise</strong> that confuses almost everyone at first: its tuning is <strong>re-entrant</strong>, which means the strings <strong>do not go from low to high</strong>. This page gives you its <strong>four strings</strong>, that peculiarity explained, how frets work, the types of ukulele and how tablature reads.</p>
 
@@ -88,7 +88,12 @@ module.exports = dictionaryPage({
 
 <p>At the 12th fret the open note repeats one octave higher. The <strong>position dots</strong> on a ukulele fingerboard are usually at frets <strong>5, 7 and 10</strong>, with a double dot at 12. This differs from the guitar, which has them at 3, 5, 7 and 9 (and 12).</p>
 
-<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">The Spanish page has an interactive diagram that marks each note on a real photograph of the neck and on a drawn fingerboard, with tablature, staff and sound; it is not available in English yet. To tune, use the <a href="/herramientas/afinador/ukelele/">ukulele tuner</a>.</p>
+<h3>Try it: the ukulele diagram</h3>
+
+<p>Pick a note and the diagram marks it <strong>on a real photo of the neck</strong> and on a <strong>drawn fingerboard</strong>, writes it in <strong>tablature</strong> and on the <strong>staff</strong>, and <strong>plays</strong> it. It runs from C4 (the open 3rd string, the lowest note) to fret 12 of the 1st string (A5). Because one note <strong>lives in several places</strong>, the diagram lights up <strong>all of them</strong> at once. To tune, use the <a href="/herramientas/afinador/ukelele/">ukulele tuner</a>.</p>
+
+<div id="tmukelele"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmUkeleleEngine)tmUkeleleEngine("tmukelele");});</script>
 
 <h2>Ukulele tablature</h2>
 

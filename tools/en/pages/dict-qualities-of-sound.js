@@ -7,7 +7,7 @@ module.exports = dictionaryPage({
   h1: 'The Qualities of Sound',
   crumbs: [['Music Dictionary', '/diccionario-musical/']],
   articleClass: 'tm-article tm-article--wide',
-  scripts: ['tm-piano-audio'],
+  scripts: ['timbre-datos', 'timbre-engine', 'tm-piano-audio'],
   body: `<p>Musical sound has <strong>four qualities</strong> that define it completely: <strong>pitch</strong>, <strong>duration</strong>, <strong>intensity</strong> and <strong>timbre</strong>. Each one answers to a physical property of the vibration and is shown in a different way in the score.</p>
 
 <h2>What is musical sound?</h2>
@@ -65,6 +65,13 @@ module.exports = dictionaryPage({
 <h3>The same note on different instruments</h3>
 
 <p>A musical sound is not a single frequency. The instrument produces a <strong>fundamental</strong> (the sound that gives the note its name; here, A4 at 440 Hz) and several <strong>harmonics</strong>, which are multiples of that frequency (880, 1,320, 1,760 Hz…). What changes from one instrument to another is <strong>how much energy each harmonic carries</strong>, and that balance is the timbre. A clarinet, for example, strengthens the odd-numbered harmonics in its low register, while a trumpet has many strong harmonics. How this series is produced is explained on the page about the <a href="/diccionario-musical/serie-armonica/">harmonic series</a>.</p>
+
+<p>Press an instrument: you will hear the same A4 and see its harmonics, measured on our own samples.</p>
+
+<div id="tmtimbre" style="min-height:430px;margin:18px 0"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmTimbreEngine)tmTimbreEngine("tmtimbre");});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">These are five specific recordings, not “the” timbre of each instrument: another note, another dynamic or another player would change the balance. Sound: piano from the Salamander Grand Piano samples by Alexander Holm (<a href="https://creativecommons.org/licenses/by/3.0/" rel="nofollow">CC BY 3.0</a>); flute, oboe and clarinet from the <a href="https://philharmonia.co.uk/resources/sound-samples/" rel="nofollow">Philharmonia Orchestra</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>); trumpet from the <a href="https://member.keymusician.com/Member/FluidR3_GM/index.html" rel="nofollow">FluidR3 GM</a> bank by Frank Wen, in the <em>MuseScore_General</em> adaptation by S. Christian Collins (MIT license).</p>
 
 <h2>How to tell the four qualities apart</h2>
 

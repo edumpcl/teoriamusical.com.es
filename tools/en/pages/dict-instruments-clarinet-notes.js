@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'B♭ clarinet notes: it sounds a whole step below written. Range E3–A6, the four registers, why it overblows a 12th, and the Boehm system it uses.',
   h1: 'Clarinet Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-clarinete-engine'],
   body: `
 <p>The <strong>clarinet</strong> is the <strong>single-reed</strong> woodwind of the orchestra and the classic <strong>transposing instrument</strong>. The usual clarinet is pitched <strong>in B♭</strong> and sounds a <strong>whole step (UK: tone) below</strong> the written note. This page gives its notes, its four registers (chalumeau, throat, clarion and altissimo) and what makes the clarinet different from the flute, oboe and bassoon: it overblows at the <strong>12th</strong>, not at the octave.</p>
 
@@ -102,7 +102,12 @@ module.exports = dictionaryPage({
 
 <p>The modern conservatory clarinet uses the <strong>Boehm system</strong>: 17 keys and 6 rings, with six finger holes (1–3 for the left hand, 4–6 for the right), two <strong>throat keys</strong> (A and G♯), the little-finger clusters of each hand and, on the back, the left thumb hole and the <strong>register key</strong>. Each note is a specific combination of these, and the same pattern repeats a 12th higher with the register key.</p>
 
-<p>The Spanish edition has an interactive diagram on a real photograph of a clarinet, with the keys that light up for each note and a real clarinet sound. It is not available in English yet. In the meantime you can tune with the <a href="/herramientas/afinador/clarinete/">clarinet tuner</a>.</p>
+<p>Choose a note and you will see its fingering, the note on the staff and a <strong>real clarinet sound</strong> (the real pitch, a whole step below written).</p>
+
+<div id="tmclarinete"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmClarineteEngine)tmClarineteEngine("tmclarinete");});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">Diagram over a real photograph of a Yamaha clarinet. Standard Boehm-system fingerings from the official <a href="https://www.yamaha.com/en/musical_instrument_guide/common/images/clarinet/fingering.pdf" rel="nofollow">Yamaha chart (Musical Instrument Guide)</a>. Sound: samples from the <a href="https://philharmonia.co.uk/resources/sound-samples/" rel="nofollow">Philharmonia Orchestra</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>). Want to tune up? Use the <a href="/herramientas/afinador/clarinete/">clarinet tuner</a>.</p>
 
 <h2>The clarinet family</h2>
 

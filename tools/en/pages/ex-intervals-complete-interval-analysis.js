@@ -62,7 +62,7 @@ module.exports = dictionaryPage({
 
 <p>If you would rather limit the challenge to certain intervals instead of all of them, use the <a href="/ejercicios/ejercicios-de-intervalos-musicales/a-medida/">custom interval quiz</a>, where you choose which ones appear.</p>
 
-<p>The paper version of this challenge is the <a href="/ejercicios/ejercicios-de-intervalos-en-pdf/">interval worksheet generator</a>, which makes printable sheets of 2nd to 8th intervals mixed together, with an answer key.</p>
+<p>The paper version of this challenge is the <a href="/assets/img/intervalos/fichas/ficha-analizar-intervalos-de-2a-a-8a.pdf" target="_blank" rel="noopener">2nd-to-8th interval worksheet</a>, with its 42 mixed intervals and its <a href="/assets/img/intervalos/fichas/ficha-analizar-intervalos-de-2a-a-8a-soluciones.pdf" target="_blank" rel="noopener">answer sheet</a>; the rest is in <a href="/ejercicios/ejercicios-de-intervalos-en-pdf/">interval worksheets in PDF</a>, where the generator makes new sheets of 2nd to 8th intervals mixed together, with an answer key.</p>
 
 <p>To train your ear as well, use the <a href="/herramientas/afinador/">reference tones of the online tuner</a> and compare the sound of each interval with a pure tone. The <a href="/herramientas/metronomo/">online metronome</a> helps you build sight-reading speed.</p>
 

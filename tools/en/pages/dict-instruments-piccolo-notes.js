@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'Piccolo notes: it sounds an octave higher than written (D4–C7 written, D5–C8 sounding), its registers and the flute fingerings it shares, no foot joint.',
   h1: 'Piccolo Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-flautin-engine'],
   body: `
 <p>The <strong>piccolo</strong> is the highest voice of the whole orchestra: a flute of half the size that <strong>sounds an octave higher than written</strong>. Its fingerings are the same as the concert flute's, with one important difference: the piccolo <strong>has no foot joint</strong>. Below you will find its written and sounding range, its registers and how it compares with the flute.</p>
 
@@ -74,7 +74,14 @@ module.exports = dictionaryPage({
 
 <h2>Piccolo fingerings</h2>
 
-<p>The keys have the same names as on the flute: index, middle and ring fingers of each hand, the <strong>G♯</strong> lever, the <strong>E♭</strong> key and the two <strong>trill</strong> keys between the hands, plus the two left-thumb keys (B and B♭). The Spanish page has an interactive diagram with a photo of a real piccolo that lights up the keys for each note and shows the written note and the real octave that sounds; it is not available in English yet. To tune up, use the <a href="/herramientas/afinador/flautin/">piccolo tuner</a>.</p>
+<p>The keys have the same names as on the flute: index, middle and ring fingers of each hand, the <strong>G♯</strong> lever, the <strong>E♭</strong> key and the two <strong>trill</strong> keys between the hands, plus the two left-thumb keys (B and B♭).</p>
+
+<p>Choose a note and you will see its fingering, the note on the staff and a <strong>real piccolo sound</strong> (an octave above written).</p>
+
+<div id="tmflautin"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmFlautinEngine)tmFlautinEngine("tmflautin");});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">Boehm-system fingerings (the same as the flute). Sound: samples from the <a href="https://github.com/peastman/sso" rel="nofollow">Sonatina Symphonic Orchestra</a> (CC Sampling Plus). Want to tune up? Use the <a href="/herramientas/afinador/flautin/">piccolo tuner</a>.</p>
 
 <h2>Common mistakes when learning piccolo notes</h2>
 

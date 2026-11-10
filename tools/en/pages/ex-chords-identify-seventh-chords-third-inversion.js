@@ -36,7 +36,18 @@ module.exports = dictionaryPage({
 
 <p>Other positions: <a href="/ejercicios/acordes/septimas-en-fundamental/">Root position</a>, <a href="/ejercicios/acordes/septimas-en-primera-inversion/">First inversion</a>, <a href="/ejercicios/acordes/septimas-en-segunda-inversion/">Second inversion</a>, <a href="/ejercicios/acordes/septimas-todas-las-posiciones/">All positions</a>. To practice writing them instead of recognizing them, try <a href="/ejercicios/acordes/construir-septima-de-dominante-tercera-inversion/">building seventh chords</a>. For the full theory, see the pages on the <a href="/diccionario-musical/acordes/acorde-de-septima-de-dominante/">dominant seventh</a>, the <a href="/diccionario-musical/acordes/acorde-de-septima-de-sensible/">half-diminished seventh</a> and the <a href="/diccionario-musical/acordes/acorde-de-septima-disminuida/">diminished seventh</a>.</p>
 
-<h2>Printable worksheets</h2>
+<!-- ficha-septimas -->
+<h2>Printable worksheet (PDF)</h2>
+<p>The same exercise on paper, for class: <strong>21 seventh chords</strong> in third inversion, mixing dominant, leading-tone and diminished, on one side of A4. The student writes the type. With a separate <strong>answer sheet</strong>.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/acordes/fichas-septimas/ficha-analizar-septimas-tercera-inversion.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/acordes/fichas-septimas/preview-ficha-analizar-septimas-tercera-inversion.webp"><img src="/assets/img/acordes/fichas-septimas/preview-ficha-analizar-septimas-tercera-inversion.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet to identify seventh chords in third inversion"></picture></a>
+  <figcaption>A4 sheet with 21 chords.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/acordes/fichas-septimas/ficha-analizar-septimas-tercera-inversion.pdf" target="_blank" rel="noopener">Download the worksheet (PDF, A4)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/acordes/fichas-septimas/ficha-analizar-septimas-tercera-inversion-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>You may print and photocopy it freely for the classroom.</p>
+<!-- /ficha-septimas -->
+
+<h2>More worksheets</h2>
 <p>Need more practice on paper? Generate as many <strong>worksheets</strong> as you like, each one with different chords, and print them straight from your browser.</p>
 <div id="tmfs"></div>
 <script>

@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'French horn notes for the double horn in F/B♭: fingerings for both sides, the thumb valve, transposition (sounds a 5th lower), range and stopped horn.',
   h1: 'Horn Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Instruments', '/diccionario-musical/familias-de-instrumentos/'], ['Brass Instruments', '/diccionario-musical/instrumentos-de-viento-metal/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-trompa-engine'],
   body: `
 <p>The <strong>horn</strong> (also called the <strong>French horn</strong>) is the warm, noble voice of the <strong>brass family</strong>, with a round tone that makes it essential in the <strong>orchestra</strong> and the <strong>concert band</strong>. The left hand works the <strong>rotary valves</strong> while the right hand rests inside the bell. Most players use a <strong>double horn in F/B♭</strong>: two instruments in one, switched with the <strong>thumb valve</strong>. The horn is a <strong>transposing instrument</strong>: the horn in F sounds a <strong>perfect 5th below</strong> the written note. On this page you will find its notes, written and sounding, and a complete fingering table for <strong>both sides</strong> of the double horn.</p>
 
@@ -71,7 +71,7 @@ module.exports = dictionaryPage({
 
 <p>In practice, <strong>almost every note can be played on both sides</strong>, with different fingerings. The sounding note is the same; only the tubing changes. The player chooses the side that is more <strong>in tune or more secure</strong> in each passage; as a general rule, <strong>F side in the low register, B♭ side in the high register</strong>. The choice varies from player to player, so the table below shows both fingerings for every note.</p>
 
-<p><strong>About the thumb:</strong> this table follows the layout in which the thumb valve is <strong>pressed for the F side</strong> and <strong>up for the B♭ side</strong> (the layout of the Spanish edition of this page). The opposite layout also exists, depending on the maker and on the country, so check how your horn is set up before you rely on the thumb column.</p>
+<p><strong>About the thumb:</strong> this table follows the layout in which the thumb valve is <strong>pressed for the F side</strong> and <strong>up for the B♭ side</strong> (the layout used on this page). The opposite layout also exists, depending on the maker and on the country, so check how your horn is set up before you rely on the thumb column.</p>
 
 <h2>Is the horn a transposing instrument? The horn in F</h2>
 
@@ -179,6 +179,24 @@ module.exports = dictionaryPage({
 <h2>Horn fingerings</h2>
 
 <p>The table above gives, for every written note, the recommended fingering on the <strong>F side</strong> (thumb pressed) and on the <strong>B♭ side</strong> (thumb up): <strong>T</strong> is the thumb rotor and <strong>1, 2, 3</strong> are the finger rotors; “open” means no rotor at all. Some low notes can only be played on one side, shown with a dash on the other. The sounding pitch is in the last column.</p>
+
+<p>The diagram shows <strong>two horns</strong>: the one on the left with the <strong>fingering for the F side</strong> (thumb pressed) and the one on the right for the <strong>B♭ side</strong> (thumb up). When you pick a note, the <strong>rotary valves</strong> you need to press light up (<strong>T</strong> = thumb/change valve, <strong>1·2·3</strong> = fingers), or none if it is "open". Some low notes can only be played on one side; in that case the other diagram is dimmed.</p>
+
+<p>Pick a note to see its <strong>two fingerings</strong>, the note on the staff and its <strong>sound</strong>.</p>
+
+<div id="tmtrompa"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmTrompaEngine)tmTrompaEngine("tmtrompa");});</script>
+
+<!-- FICHA-DIGITACIONES:inicio -->
+<h2>Printable worksheet (PDF)</h2>
+<p>The same table on paper, on <strong>two A4 sheets</strong> (the low notes in bass clef, the high notes in treble clef), with the two fingerings of each note: F side and B♭ side. And another <strong>two sheets to fill in</strong>: the 49 notes with the rotor columns left blank, so you can write the fingering yourself. The reference sheets work as the answer key.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/digitaciones/fichas/ficha-digitaciones-trompa.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-trompa.webp"><img src="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-trompa.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet with the double horn fingerings, F side and B♭ side"></picture></a>
+  <figcaption>First of two sheets: the low notes of the horn with their two fingerings.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/digitaciones/fichas/ficha-digitaciones-trompa.pdf" target="_blank" rel="noopener">Download the fingerings (PDF, 2 sheets)</a>
+<a class="tm-btn" href="/assets/img/digitaciones/fichas/ficha-digitaciones-trompa-rellenar.pdf" target="_blank" rel="noopener">Download the fill-in sheets (PDF, 2 sheets)</a></p>
+<!-- FICHA-DIGITACIONES:fin -->
 
 <h2>Common mistakes when learning the horn notes</h2>
 

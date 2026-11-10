@@ -190,12 +190,12 @@
 
 <h2>Which timpano does this note go on?</h2>
 
-<p>The Spanish page has an interactive diagram: choose any note in the range and the head of the drum it belongs on lights up over the photo of the full set, with the real sound. It is not available in English yet. The table below gives the same information.</p>
+<p>Pick any note in the range and the <strong>head</strong> of the drum it belongs on lights up over the photo of the full set. If it also fits on another drum, that head lights up with a dashed outline: the note fits there, but it does not sound as good. Below you can see where in its range the note falls. Press ▶ to hear the note.</p>
 
-<figure style="margin:18px auto;max-width:760px;text-align:center;">
-<picture><source type="image/webp" srcset="/assets/img/timbales/juego-de-cinco.webp"><img src="/assets/img/timbales/juego-de-cinco.jpg" width="960" height="494" loading="lazy" alt="A set of five concert timpani in an arc, from the smallest on the right to the largest on the left, each with its pedal" style="max-width:100%;height:auto;border:1px solid #e8e0cc;border-radius:8px;background:#fff;padding:8px"></picture>
-<figcaption style="font-size:.85rem;color:#686868;margin-top:6px">A set of five concert timpani. Standard ranges; they vary somewhat with the maker, model and head. If you need to tune for real, there is the <a href="/en/tools/tuner/timpani/">timpani tuner</a> with microphone.</figcaption>
-</figure>
+<div id="tmtimbales"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmTimbalesRango)tmTimbalesRango("tmtimbales");});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">Concert timpani, Berlin model. Photo by <a href="https://commons.wikimedia.org/wiki/File:Berliner_Pauken.jpg" rel="nofollow">Lefima GmbH</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>, via Wikimedia Commons. Standard ranges; they vary somewhat with the maker, model and head. Sound generated with MuseScore. If you need to tune for real, there is the <a href="/en/tools/tuner/timpani/">timpani tuner</a> with microphone.</p>
 
 <div class="tm-ad">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="9764000798" data-ad-format="auto" data-full-width-responsive="true"></ins>
@@ -327,7 +327,7 @@
 
   </article>
 </div>
-
+<script src="/assets/js/timbales-rango-engine.js?v=79abe1e1" defer></script>
 </main>
 
 <footer class="tm-site-footer">

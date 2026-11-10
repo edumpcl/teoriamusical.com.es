@@ -46,10 +46,21 @@ module.exports = dictionaryPage({
 
 <div class="tm-img-grid-4">
 <figure data-tm-chord-notes="B D F A♭"><img src="/assets/img/notacion/acordes-septimas/dis-fundamental-acorde.svg" width="260" height="122" alt="Diminished seventh chord in root position" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-fundamental-par1.svg" width="260" height="153" alt="Diminished seventh of the diminished seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-fundamental-par2.svg" width="260" height="153" alt="Diminished fifth of the diminished seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-fundamental-par3.svg" width="260" height="153" alt="Minor third of the diminished seventh chord" loading="lazy" decoding="async"></figure>
 </div>
-<!-- TODO-IMG: /assets/img/notacion/acordes-septimas/dis-fundamental-par1.svg, -par2, -par3 (and the same for dis-1a-, dis-2a-, dis-3a-): intervals above the bass with Spanish labels. The dis-*-cifrado-1..4.svg figured-bass examples use the Spanish convention. -->
 
-<p>The figured bass is 7. Because the seventh is diminished it needs a flat or a natural sign in some keys, so the sign varies with the key.</p>
+<h3>Figured bass</h3>
+
+<div class="tm-img-grid-4">
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-fundamental-cifrado-1.svg" width="260" height="193" alt="Figured bass of the diminished seventh chord in root position, example 1" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-fundamental-cifrado-2.svg" width="260" height="193" alt="Figured bass of the diminished seventh chord in root position, example 2" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-fundamental-cifrado-3.svg" width="260" height="193" alt="Figured bass of the diminished seventh chord in root position, example 3" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-fundamental-cifrado-4.svg" width="260" height="193" alt="Figured bass of the diminished seventh chord in root position, example 4" loading="lazy" decoding="async"></figure>
+</div>
+
+<p>The figured bass is a slashed 7 and a slashed 5: the slashed 7 says that the seventh is diminished and the slashed 5 says that the fifth is diminished. It is the same in every key.</p>
 
 <h2 id="first-inversion">First inversion</h2>
 
@@ -57,9 +68,21 @@ module.exports = dictionaryPage({
 
 <div class="tm-img-grid-4">
 <figure data-tm-chord-notes="D F A♭ B"><img src="/assets/img/notacion/acordes-septimas/dis-1a-acorde.svg" width="260" height="122" alt="Diminished seventh chord in first inversion" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-1a-par1.svg" width="260" height="153" alt="Major sixth in the first inversion of the diminished seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-1a-par2.svg" width="260" height="153" alt="Diminished fifth in the first inversion of the diminished seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-1a-par3.svg" width="260" height="153" alt="Minor third in the first inversion of the diminished seventh chord" loading="lazy" decoding="async"></figure>
 </div>
 
-<p>The figured bass is 6/5. The leading tone is the 6th above the bass.</p>
+<h3>Figured bass</h3>
+
+<div class="tm-img-grid-4">
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-1a-cifrado-1.svg" width="260" height="193" alt="Figured bass of the diminished seventh chord in first inversion, example 1" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-1a-cifrado-2.svg" width="260" height="193" alt="Figured bass of the diminished seventh chord in first inversion, example 2" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-1a-cifrado-3.svg" width="260" height="193" alt="Figured bass of the diminished seventh chord in first inversion, example 3" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-1a-cifrado-4.svg" width="260" height="193" alt="Figured bass of the diminished seventh chord in first inversion, example 4" loading="lazy" decoding="async"></figure>
+</div>
+
+<p>The figured bass is +6 and a slashed 5: the +6 says that the leading tone is a sixth above the bass and the slashed 5 says that the fifth is diminished. It is the same in every key.</p>
 
 <h2 id="second-inversion">Second inversion</h2>
 
@@ -67,9 +90,21 @@ module.exports = dictionaryPage({
 
 <div class="tm-img-grid-4">
 <figure data-tm-chord-notes="F A♭ B D"><img src="/assets/img/notacion/acordes-septimas/dis-2a-acorde.svg" width="260" height="122" alt="Diminished seventh chord in second inversion" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-2a-par1.svg" width="260" height="153" alt="Major sixth in the second inversion of the diminished seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-2a-par2.svg" width="260" height="153" alt="Augmented fourth in the second inversion of the diminished seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-2a-par3.svg" width="260" height="153" alt="Minor third in the second inversion of the diminished seventh chord" loading="lazy" decoding="async"></figure>
 </div>
 
-<p>The figured bass is 4/3, with an accidental on the 3rd where the key requires one. It varies with the key.</p>
+<h3>Figured bass</h3>
+
+<div class="tm-img-grid-4">
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-2a-cifrado-1.svg" width="260" height="193" alt="Figured bass of the diminished seventh chord in second inversion, example 1" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-2a-cifrado-2.svg" width="260" height="193" alt="Figured bass of the diminished seventh chord in second inversion, example 2" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-2a-cifrado-3.svg" width="260" height="193" alt="Figured bass of the diminished seventh chord in second inversion, example 3" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-2a-cifrado-4.svg" width="260" height="193" alt="Figured bass of the diminished seventh chord in second inversion, example 4" loading="lazy" decoding="async"></figure>
+</div>
+
+<p>The figured bass is +4 and the corresponding accidental on the 3: the +4 says that the fourth is the leading tone, and the 3 with whatever accidental the key requires gives the third. The figured bass varies with the key.</p>
 
 <h2 id="third-inversion">Third inversion</h2>
 
@@ -77,9 +112,21 @@ module.exports = dictionaryPage({
 
 <div class="tm-img-grid-4">
 <figure><img src="/assets/img/notacion/acordes-septimas/dis-3a-acorde.svg" width="260" height="122" alt="Diminished seventh chord in third inversion" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-3a-par1.svg" width="260" height="153" alt="Major sixth in the third inversion of the diminished seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-3a-par2.svg" width="260" height="153" alt="Augmented fourth in the third inversion of the diminished seventh chord" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-3a-par3.svg" width="260" height="153" alt="Augmented second in the third inversion of the diminished seventh chord" loading="lazy" decoding="async"></figure>
 </div>
 
-<p>The figured bass is 4/2, with an accidental on the 2nd where the key requires one: the augmented 2nd (A♭–B) is the interval that shows this chord is built on the leading tone.</p>
+<h3>Figured bass</h3>
+
+<div class="tm-img-grid-4">
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-3a-cifrado-1.svg" width="260" height="159" alt="Figured bass of the diminished seventh chord in third inversion, example 1" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-3a-cifrado-2.svg" width="260" height="159" alt="Figured bass of the diminished seventh chord in third inversion, example 2" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-3a-cifrado-3.svg" width="260" height="159" alt="Figured bass of the diminished seventh chord in third inversion, example 3" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/acordes-septimas/dis-3a-cifrado-4.svg" width="260" height="159" alt="Figured bass of the diminished seventh chord in third inversion, example 4" loading="lazy" decoding="async"></figure>
+</div>
+
+<p>The figured bass is +2: the +2 says that the second is the leading tone. It is the same in every key.</p>
 
 <section class="tm-seccion">
 <div class="tm-seccion-inner">

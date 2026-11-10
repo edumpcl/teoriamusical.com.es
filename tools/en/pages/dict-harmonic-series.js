@@ -6,6 +6,7 @@ module.exports = dictionaryPage({
   description: 'What the harmonic series and overtones are: where intervals and chords come from, how they shape timbre, and how brass, winds and strings use them.',
   h1: 'The Harmonic Series',
   crumbs: [['Music Dictionary', '/diccionario-musical/']],
+  scripts: ['serie-armonica-engine'],
   body: `<p>The <strong>harmonic series</strong> is one of the foundations of all music: it explains where <strong>intervals</strong> come from, why each instrument has its own <strong>timbre</strong>, and how the <a href="/diccionario-musical/notas-de-la-trompeta/">trumpet</a>, the <a href="/diccionario-musical/notas-del-clarinete/">clarinet</a> or the harmonics of a string work.</p>
 
 <h2>What is a harmonic?</h2>
@@ -23,7 +24,16 @@ module.exports = dictionaryPage({
 <figcaption style="font-size:.85rem;color:#686868;margin-top:6px">The first 16 harmonics of C2. The intervals narrow as we go up. The ones with a <strong>filled notehead</strong> (7th, 11th, 13th and 14th) do not fit our tuning: they are the “in-between-the-keys” notes.</figcaption>
 </figure>
 
-<!-- NEEDS ENGINE serie-armonica-engine: the Spanish page has an interactive harmonic explorer here (div id="tmarmonicos") that plays each harmonic, shows the vibrating string, plays the whole series and all harmonics at once. Omitted until the engine is adapted to English. -->
+<h2>Listen to the harmonic series</h2>
+
+<p>This is the heart of the page. Press each harmonic to hear it and see it on the staff; you will also see the <strong>string vibrating</strong> in that number of parts. With the buttons you can play <strong>the whole series</strong> from low to high, or sound <strong>all the harmonics at once</strong>, which is basically what a timbre is.</p>
+
+<div id="tmarmonicos"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmSerieArmonicaEngine)tmSerieArmonicaEngine("tmarmonicos");});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">The harmonics are synthesized from their exact frequencies (multiples of C2). The explorer uses your browser's sound; it does not need a microphone.</p>
+
+
 
 <h2>The harmonic series, harmonic by harmonic</h2>
 

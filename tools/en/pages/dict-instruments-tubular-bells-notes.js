@@ -8,7 +8,7 @@ module.exports = dictionaryPage({
   description: 'Tubular bells (chimes): 18 tubes from C4 to F5, no transposition, why the pitch you hear is not in the sound, the damper pedal and how they are played.',
   h1: 'Tubular Bells Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['laminas-engine'],
   body: `
 <p><strong>Tubular bells</strong> (also called <strong>chimes</strong>) are the pitched percussion instrument that imitates the sound of church bells: a row of <strong>metal tubes</strong> hanging from a frame, struck near the top with a mallet of rawhide or similar material.</p>
 
@@ -16,12 +16,12 @@ module.exports = dictionaryPage({
 
 <h2>The range: the eighteen notes</h2>
 
-<p>The tubes are arranged like a keyboard, as the bars are on the other pitched percussion instruments: the natural notes in front and the accidentals in a second row behind. The Spanish page has an interactive diagram that plays each tube (it is not available in English yet).</p>
+<p>The tubes are arranged like a keyboard, as the bars are on the other pitched percussion instruments: the natural notes in front and the accidentals in a second row behind. Pick one and listen to it.</p>
 
-<figure style="margin:18px auto;max-width:560px;text-align:center;">
-<picture><source type="image/webp" srcset="/assets/img/campanas/teclado.webp"><img src="/assets/img/campanas/teclado.jpg" width="665" height="341" loading="lazy" alt="A set of tubular bells in a conservatory: chromed tubes hanging in two rows from a frame" style="max-width:100%;height:auto;border:1px solid #e8e0cc;border-radius:8px;background:#fff;padding:8px"></picture>
-<figcaption style="font-size:.85rem;color:#686868;margin-top:6px">A conservatory set of tubular bells: eighteen tubes, C4 to F5. Photo by Eduardo Escrig.</figcaption>
-</figure>
+<div id="tmcamp"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmLaminas)tmLaminas("tmcamp",{nombre:'tubular bells', art:'The', pieza:'the tube', igual:'Tubular bells <strong>sound where they are written</strong>: the tube for {n} sounds {n}.', audio:'/assets/audio/campanas/', escrito:[60,77], trans:0, inicial:65, alt:'A set of eighteen tubular bells, with the naturals in front and the accidentals behind', foto:{"base":"/assets/img/campanas/teclado","w":665,"h":341,"ventanas":[[0,665]]}, marcas:{"60":{"cx":85.2,"cy":161.9,"rx":16.6,"ry":31.5,"ang":0.0},"61":{"cx":138.7,"cy":41.1,"rx":16.6,"ry":31.5,"ang":0.0},"62":{"cx":126.9,"cy":165,"rx":16.6,"ry":31.5,"ang":0.0},"63":{"cx":181,"cy":44.2,"rx":16.6,"ry":31.5,"ang":0.0},"64":{"cx":171.7,"cy":165,"rx":16.6,"ry":31.5,"ang":0.0},"65":{"cx":209,"cy":163.7,"rx":16.6,"ry":31.5,"ang":0.0},"66":{"cx":265,"cy":40.5,"rx":16.6,"ry":31.5,"ang":0.0},"67":{"cx":253.2,"cy":165,"rx":16.6,"ry":31.5,"ang":0.0},"68":{"cx":307.9,"cy":38.6,"rx":16.6,"ry":31.5,"ang":0.0},"69":{"cx":303,"cy":167.5,"rx":16.6,"ry":31.5,"ang":0.0},"70":{"cx":349,"cy":40.5,"rx":16.6,"ry":31.5,"ang":0.0},"71":{"cx":344,"cy":166.8,"rx":16.6,"ry":31.5,"ang":0.0},"72":{"cx":388.8,"cy":165,"rx":16.6,"ry":31.5,"ang":0.0},"73":{"cx":441.1,"cy":39.8,"rx":16.6,"ry":31.5,"ang":0.0},"74":{"cx":439.2,"cy":163.7,"rx":16.6,"ry":31.5,"ang":0.0},"75":{"cx":492.1,"cy":35.5,"rx":16.6,"ry":31.5,"ang":0.0},"76":{"cx":489,"cy":165.6,"rx":16.6,"ry":31.5,"ang":0.0},"77":{"cx":537.5,"cy":164.4,"rx":16.6,"ry":31.5,"ang":0.0}}});});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">A conservatory set of tubular bells: eighteen tubes, C4 to F5. The marks are on the <strong>crown</strong>, which is where the tube is struck. Photo by Eduardo Escrig. Sound generated with MuseScore.</p>
 
 <div class="tm-table-wrap"><table class="tm-table">
 <caption style="caption-side:top;text-align:left;font-weight:600;padding:0 0 8px">The 18 tubes, from lowest to highest</caption>

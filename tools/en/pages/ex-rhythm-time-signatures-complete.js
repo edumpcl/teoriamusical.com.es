@@ -23,8 +23,17 @@ module.exports = dictionaryPage({
 
 <p>The measures are generated from real rhythms, grouped by beats: eighth notes are beamed by beat, and long note values start where they are actually written (a half note in 4/4 goes on beat 1 or beat 3). When several notes are missing, <strong>there can be more than one correct answer</strong>: any combination that exactly fills the missing duration is accepted, even if the score had it written another way. The feedback also shows how it was written.</p>
 
-<h2>Printable worksheets</h2>
-<p>The same exercise on paper, for class: <strong>eighteen measures</strong> with the gap marked, six from each level, on one A4 sheet. The student writes what is missing above the line. Each sheet comes with its own solutions page, with the missing part in red. Generate as many sheets as you need, each with different measures, and print them straight from your browser.</p>
+<h2>Printable worksheet (PDF)</h2>
+<p>The same exercise on paper, for class: <strong>eighteen measures</strong> with the gap marked, six from each level, on one A4 sheet. The student writes what is missing above the line. With a separate <strong>answer sheet</strong>, with the missing part in red.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/compases/fichas/ficha-completar-compases.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/compases/fichas/preview-ficha-completar-compases.webp"><img src="/assets/img/compases/fichas/preview-ficha-completar-compases.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet to complete measures"></picture></a>
+  <figcaption>A4 sheet with eighteen measures to complete.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/compases/fichas/ficha-completar-compases.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/compases/fichas/ficha-completar-compases-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+<p>You can print and photocopy it freely for class.</p>
+
+<h2>More worksheets</h2>
+<p>The same exercise on paper, for class: <strong>eighteen measures</strong> with the gap marked, six from each level, on one A4 sheet. The student writes what is missing above the line. Each sheet comes with its own answer sheet, with the missing part in red. Generate as many sheets as you need, each with different measures, and print them straight from your browser.</p>
 <div id="tmfc"></div>
 
 <h2>Before this exercise</h2>

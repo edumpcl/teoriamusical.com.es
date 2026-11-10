@@ -24,7 +24,15 @@ module.exports = dictionaryPage({
 
 <p>For example, in <strong>3/4</strong>, a quarter note tied to an eighth note of the same pitch sounds as a single note of 1 + ½ = <strong>1½ beats</strong>. If the two notes were different, the curve would be a slur and the first note would still last <strong>1 beat</strong>. In <strong>6/8</strong> the same quarter note tied to an eighth note would last ⅔ + ⅓ = <strong>1 beat</strong>, because there the beat is the dotted quarter note.</p>
 
-<p>There are more rhythm exercises in <a href="/ejercicios/figuras/">note value and rhythm exercises</a>.</p>
+<h2>Printable worksheet (PDF)</h2>
+<p>The same exercise on paper: <strong>12 curved lines</strong>, six in simple and six in compound time signatures, on one A4 sheet. With a separate <strong>answer sheet</strong>, with the answers in red.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/figuras/fichas/ficha-ligaduras.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/figuras/fichas/preview-ficha-ligaduras.webp"><img src="/assets/img/figuras/fichas/preview-ficha-ligaduras.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet on ties and slurs"></picture></a>
+  <figcaption>A4 sheet with 12 ties and slurs.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/figuras/fichas/ficha-ligaduras.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/figuras/fichas/ficha-ligaduras-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+
+<p>You can print and photocopy it freely for class. There are more rhythm exercises in <a href="/ejercicios/figuras/">note value and rhythm exercises</a>.</p>
 
 <section class="tm-seccion">
 <div class="tm-seccion-inner">

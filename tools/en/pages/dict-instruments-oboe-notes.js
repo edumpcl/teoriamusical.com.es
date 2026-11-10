@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'Oboe notes: a C instrument that does not transpose, range B♭3–G6 by register, the double reed, the key system and why it gives the tuning A.',
   h1: 'Oboe Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-oboe-engine'],
   body: `
 <p>The <strong>oboe</strong> is the <strong>soprano of the double-reed family</strong> among the woodwinds. It is pitched in <strong>C</strong> and <strong>does not transpose</strong>, and it is the instrument that gives the <strong>tuning A</strong> to the whole orchestra. Below you will find its range register by register, how the sound is made and how its keywork is organized.</p>
 
@@ -63,7 +63,14 @@ module.exports = dictionaryPage({
 
 <h2>Oboe fingerings</h2>
 
-<p>Each note comes from a <strong>specific combination of keys and plates</strong>. The oboe has six main tone holes (1–3 for the left hand, 4–6 for the right), the <strong>octave keys</strong>, a <strong>fork F key</strong> between holes 5 and 6 and the little-finger clusters of each hand. A "half hole" is not a separate key but the first hole covered only halfway. The Spanish page has an interactive diagram with real photos of an oboe that lights up the keys for every note from B♭3 to G6 and plays a real oboe sound; it is not available in English yet. If you want to tune up, use the <a href="/herramientas/afinador/oboe/">oboe tuner</a>.</p>
+<p>Each note comes from a <strong>specific combination of keys and plates</strong>. The oboe has six main tone holes (1–3 for the left hand, 4–6 for the right), the <strong>octave keys</strong>, a <strong>fork F key</strong> between holes 5 and 6 and the little-finger clusters of each hand. A "half hole" is not a separate key but the first hole covered only halfway.</p>
+
+<p>The diagram covers the <strong>oboe fingerings from B♭3 to G6</strong>: choose a note and you will see its fingering, the note on the staff and a <strong>real oboe sound</strong>.</p>
+
+<div id="tmoboe"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmOboeEngine)tmOboeEngine("tmoboe");});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">Sound: samples from the <a href="https://philharmonia.co.uk/resources/sound-samples/" rel="nofollow">Philharmonia Orchestra</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>). Want to tune up? Use the <a href="/herramientas/afinador/oboe/">oboe tuner</a>.</p>
 
 <h2>Common mistakes when learning oboe notes</h2>
 

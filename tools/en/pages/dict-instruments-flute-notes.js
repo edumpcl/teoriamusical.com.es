@@ -6,6 +6,7 @@ module.exports = dictionaryPage({
   description: 'The concert flute is a C instrument that does not transpose. Its range (C4–C7), the four registers, how the sound is made, the Boehm system and fingerings.',
   h1: 'Flute Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
+  scripts: ['tm-pent-nota', 'digitaciones-flauta-engine'],
   body: `
 <p>The <strong>flute</strong> (the concert or transverse flute) is a <strong>woodwind</strong> held sideways. It sounds when the player blows across the hole of the <strong>embouchure</strong> (it has no reed). Its music is read in <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef</a> and uses the same seven note names as always: <a href="/diccionario-musical/nombres-de-las-notas-musicales/">C, D, E, F, G, A, B</a>. What is special about the flute is <strong>how each note is produced</strong>: with a <strong>fingering</strong> of the Boehm system.</p>
 
@@ -66,7 +67,14 @@ module.exports = dictionaryPage({
 
 <p>The keys are arranged like this. The <strong>left hand</strong> uses the index, middle and ring fingers, plus the <strong>G♯</strong> lever with the little finger and two thumb keys (<strong>B</strong> and <strong>B♭</strong>). Between the two hands are the two <strong>trill keys</strong>. The <strong>right hand</strong> uses the index, middle and ring fingers, and the little finger works the <strong>E♭</strong> key and the two <strong>foot joint</strong> keys, C♯ and C.</p>
 
-<p>The Spanish page has an interactive diagram with a real photo of a flute that lights up the keys for each note in the full range (C4–C7). It is not available in English yet. In the meantime, tune your notes with our <a href="/herramientas/afinador/flauta/">flute tuner</a>, and if you are starting to read treble clef, practice with the <a href="/ejercicios/identificar-notas/clave-de-sol/">note reading exercises</a>.</p>
+<p>Choose a note and you will see which keys are pressed on the flute:</p>
+
+<div id="tmflauta"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmFlautaEngine)tmFlautaEngine("tmflauta");});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">The diagram covers the whole range of the flute (C4–C7) with its regular fingering. Alternative fingerings for some notes will be added later. Sound: samples from the <a href="https://philharmonia.co.uk/resources/sound-samples/" rel="nofollow">Philharmonia Orchestra</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>).</p>
+
+<p>You can tune your notes with our <a href="/herramientas/afinador/flauta/">flute tuner</a>, and if you are starting to read treble clef, practice with the <a href="/ejercicios/identificar-notas/clave-de-sol/">note reading exercises</a>.</p>
 
 <h2>Common mistakes when learning flute notes</h2>
 

@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'Viola notes: the four strings (C3, G3, D4, A4) tuned in 5ths, why it reads alto clef, first-position notes and why one note has several places.',
   h1: 'Viola Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-viola-engine'],
   body: `
 <p>The <strong>viola</strong> is the alto voice of the bowed strings: like a slightly larger <a href="/diccionario-musical/notas-del-violin/">violin</a> pitched a <strong>perfect 5th lower</strong>, with a darker, more velvety tone. It shares the essentials with the violin (<strong>four strings</strong>, no frets, played with a bow) but has two features of its own: a <strong>low C string</strong> that the violin does not have and, above all, its <strong>alto clef</strong>, which hardly any other orchestral instrument reads every day. On this page you will find its notes, how it is tuned and where each note falls on the fingerboard.</p>
 
@@ -80,6 +80,13 @@ module.exports = dictionaryPage({
 
 <p>This is not a law: by moving the fingers you get whatever sharps and flats are missing, and to go higher you <strong>change position</strong> (the hand moves up toward the bridge). The octave of each open string falls exactly at the <strong>middle of the vibrating string</strong>, a point that can be located with certainty (the octave of A4 is A5). Above that, in the upper positions, the notes get so close together that the hand must be very precise.</p>
 
+<h3>Try it: the viola diagram</h3>
+
+<p>Pick a note and the diagram shows on the viola <strong>where to press the string</strong> and at what point along its length, with its sound and its place on the staff (in alto clef). It runs from each open string up to its <strong>octave</strong> (from C3 to A5), with every sharp and flat, and you can hear it <strong>bowed or pizzicato</strong>. Because it has no frets, <strong>one note lives in several places</strong>: the diagram lights up <strong>all of them</strong>, and the player chooses.</p>
+
+<div id="tmviola"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmViolaEngine)tmViolaEngine("tmviola");});</script>
+
 <h2>The same note in several places</h2>
 
 <p>Because the strings overlap, <strong>G3</strong> can be played on the <strong>open G string</strong> or with the <strong>4th finger on the C string</strong>; the same goes for D4 and A4. It is the same pitch, but it <strong>does not sound the same</strong>:</p>
@@ -113,7 +120,10 @@ module.exports = dictionaryPage({
 
 <p>Although this page is about the notes, it helps to know the names of the parts, because they come up constantly when talking about the instrument:</p>
 
-<!-- TODO-IMG: /assets/img/viola/partes.jpg (and .webp): photo of a viola with the parts labeled in Spanish (voluta, clavijero, cejuela, mástil, diapasón, oídos (efes), puente, cordal, mentonera). It needs an English version of the labels. -->
+<figure style="margin:16px auto;max-width:320px;text-align:center;">
+<picture><source type="image/webp" srcset="/assets/img/viola/partes.webp"><img src="/assets/img/viola/partes.jpg" width="853" height="1069" loading="lazy" alt="Diagram of a viola with its parts labeled: scroll, pegbox, nut, neck, fingerboard, f-holes, bridge, tailpiece and chinrest" style="max-width:100%;height:auto"></picture>
+<figcaption style="font-size:.85rem;color:#686868;margin-top:6px">The parts of the viola. Photo by <a href="https://commons.wikimedia.org/wiki/File:Bratsche.jpg" rel="nofollow">Just plain Bill</a>, public domain.</figcaption>
+</figure>
 
 <ul>
   <li><strong>Scroll and pegbox:</strong> the top end; the pegbox holds the <strong>pegs</strong>, which tighten the strings to tune them.</li>

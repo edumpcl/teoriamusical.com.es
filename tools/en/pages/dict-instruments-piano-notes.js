@@ -38,7 +38,7 @@ module.exports = dictionaryPage({
   description: 'Where the notes are on the piano keyboard: the white and black key pattern, the trick of the 2 and 3 black-key groups, middle C, octaves and the 88 keys.',
   h1: 'Piano Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['teclado-engine'],
   body: `
 <p>On the piano, the <strong>notes</strong> are the same <strong>seven</strong> as on any instrument: <strong>C, D, E, F, G, A and B</strong>. What changes is <strong>where they are placed</strong>. The keyboard repeats one pattern of <strong>12 keys</strong> (7 white and 5 black) over and over, so once you learn that pattern you know the whole piano.</p>
 
@@ -55,7 +55,12 @@ ${keyboardSvg()}
 <figcaption style="font-size:.85rem;color:#686868;margin-top:6px">One octave of the keyboard, from middle C (C4) to C5. Each black key has two names: the sharp of the white key on its left and the flat of the white key on its right. The two keys highlighted in yellow, C and F, are the ones you can find from the black-key groups.</figcaption>
 </figure>
 
-<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">The Spanish page has an interactive 88-key keyboard that plays each key (Salamander Grand Piano samples by Alexander Holm, CC BY 3.0); it is not available in English yet.</p>
+<p>Try the <strong>full piano</strong> (88 keys, from A0 to C8): press any key to <strong>hear it</strong> and see its name and octave, or press “Show note names” to see them all. It starts centered on middle C; scroll it sideways to travel along the whole keyboard.</p>
+
+<div id="tmteclado"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmTecladoEngine)tmTecladoEngine("tmteclado");});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">Sound: Salamander Grand Piano samples by Alexander Holm, licensed <a href="https://creativecommons.org/licenses/by/3.0/" rel="nofollow noopener">CC BY 3.0</a>.</p>
 
 <div class="tm-table-wrap"><table class="tm-table">
 <caption style="caption-side:top;text-align:left;font-weight:600;padding:0 0 8px">The piano at a glance</caption>

@@ -339,10 +339,12 @@ ${fig('12a-justa', 'Second example of a perfect 12th interval', 'Perfect 12th')}
 
 <h2 id="download-interval-chart">Download the interval chart</h2>
 <p>Here is the complete chart at a glance, ready to save on your phone, share with students or print in large format.</p>
-<!-- TODO-IMG: /assets/img/intervalos/tabla-de-intervalos-musicales.png (+ -900.webp, .pdf): the downloadable chart has Spanish text; an English version is needed -->
-<p><em>[Downloadable chart image and PDF to come.]</em></p>
+<figure data-tm-noplay>
+<a href="/assets/img/intervalos/tabla-de-intervalos-musicales.png?v=2" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/intervalos/tabla-de-intervalos-musicales-900.webp?v=2"><img src="/assets/img/intervalos/tabla-de-intervalos-musicales-900.png?v=2" width="900" height="1273" loading="lazy" alt="Table of musical intervals: each interval from the perfect unison to the perfect octave with its distance in half steps and an example from C on the staff"></picture></a>
+<figcaption>Table of musical intervals with the half steps and an example from C for each interval. Download it as a <a href="/assets/img/intervalos/tabla-de-intervalos-musicales.png?v=2" target="_blank" rel="noopener">PNG image</a> (to save or share) or as a <a href="/assets/img/intervalos/tabla-de-intervalos-musicales.pdf?v=2" target="_blank" rel="noopener">PDF to print on A3</a>.</figcaption>
+</figure>
 
-<p>Prefer to practice on paper? There are <a href="/ejercicios/ejercicios-de-intervalos-en-pdf/">interval exercises with solutions in PDF</a>, ready to print.</p>
+<p>Prefer to practice on paper? There are <a href="/ejercicios/ejercicios-de-intervalos-en-pdf/">interval exercises with answers in PDF</a>, ready to print.</p>
 
 <h2>More about intervals</h2>
 <div class="tm-grid-diccionario">

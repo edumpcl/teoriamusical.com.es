@@ -29,7 +29,7 @@ module.exports = dictionaryPage({
   description: 'Trombone notes and the 7 slide positions, with a chart of all 31 notes from E2 to B♭4, the F-attachment (trigger), bass clef and why it does not transpose.',
   h1: 'Trombone Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Instruments', '/diccionario-musical/familias-de-instrumentos/'], ['Brass Instruments', '/diccionario-musical/instrumentos-de-viento-metal/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-trombon-engine'],
   body: `
 <p>The <strong>trombone</strong> is the one common brass instrument that changes notes mainly with a <strong>slide</strong> instead of valves. It is also one of the few brass instruments that <strong>does not transpose</strong> in most traditions: the note on the page is the note that sounds, and the part is usually written in <a href="/diccionario-musical/claves-musicales/clave-de-fa/">bass clef</a>. This page gives the slide positions, the range, the role of the F-attachment (the trigger) and a chart of all the notes from E2 to B♭4.</p>
 
@@ -127,9 +127,27 @@ ${ROWS}
 </tbody></table></div>
 <p class="tm-nota-tabla"><strong>●</strong> marks the slide position: <strong>1st</strong> is the slide closed and <strong>7th</strong> the slide fully extended; each position lowers the note by about a half step. The <strong>Harmonic</strong> column says which harmonic of that position gives the note; the player adjusts it with the lips. Altered notes show their enharmonic name below, because <strong>F♯ and G♭ are the same note</strong> and you will see one or the other depending on the key. The notes of the chart are at concert pitch. The trombone does <strong>not transpose</strong> in bass clef: what is written is what sounds.</p>
 
-<h3>The Spanish page has an interactive slide diagram</h3>
+<h2>Trombone slide positions</h2>
 
-<p>The Spanish edition shows a trombone whose slide moves to the position of the note you pick, with the note on the staff and a real trombone sound. It is not available in English yet. To tune, use the <a href="/herramientas/afinador/trombon/">trombone tuner</a>.</p>
+<p>The diagram shows a trombone with the <strong>mouthpiece and slide</strong> on the left (the slide gets longer or shorter depending on the note) and the <strong>fixed bell</strong> on the right. Below it, a ruler marks the <strong>active position</strong> from 1 to 7. Remember that, as on the trumpet, one position can give several notes: the lips do the rest by adjusting the harmonic.</p>
+
+<p>Pick a note to see its slide position, the note on the staff and its <strong>real trombone sound</strong>.</p>
+
+<div id="tmtrombon"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmTrombonEngine)tmTrombonEngine("tmtrombon");});</script>
+
+<p>To tune, use the <a href="/herramientas/afinador/trombon/">trombone tuner</a>.</p>
+
+<!-- FICHA-DIGITACIONES:inicio -->
+<h2>Printable worksheet (PDF)</h2>
+<p>The same table on paper, on one side of A4 in two columns, for the music stand. And a <strong>second sheet to fill in</strong>: the 31 notes with the slide position and harmonic columns left blank, so you can write them yourself. The reference sheet works as the answer key.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/digitaciones/fichas/ficha-digitaciones-trombon.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-trombon.webp"><img src="/assets/img/digitaciones/fichas/preview-ficha-digitaciones-trombon.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet with the slide positions of the trombone"></picture></a>
+  <figcaption>A4 sheet with the 31 notes and their slide position.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/digitaciones/fichas/ficha-digitaciones-trombon.pdf" target="_blank" rel="noopener">Download the positions (PDF)</a>
+<a class="tm-btn" href="/assets/img/digitaciones/fichas/ficha-digitaciones-trombon-rellenar.pdf" target="_blank" rel="noopener">Download the fill-in sheet (PDF)</a></p>
+<!-- FICHA-DIGITACIONES:fin -->
 
 <h2>Common mistakes when learning trombone notes</h2>
 

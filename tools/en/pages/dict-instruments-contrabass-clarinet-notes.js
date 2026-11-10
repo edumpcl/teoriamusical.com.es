@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'Contrabass clarinet notes: pitched in B♭, it sounds a major 16th (two octaves and a whole step) below written. Range, registers and fingerings.',
   h1: 'Contrabass Clarinet Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-clarinete-contrabajo-engine'],
   body: `
 <p>The <strong>contrabass clarinet</strong> is the lowest voice of the clarinet family: a huge tube, twice as long as the <a href="/diccionario-musical/notas-del-clarinete-bajo/">bass clarinet's</a>, that sounds <strong>an octave below</strong> it. It is still an instrument <strong>in B♭</strong>, but it sounds a <strong>major 16th below</strong> the written note (two octaves plus a whole step; UK: tone). It is rare and impressive, found in large concert bands and wind orchestras, where it reinforces the bottom of the sound alongside the tuba, the <a href="/diccionario-musical/notas-del-contrafagot/">contrabassoon</a> and the double bass. Its fingerings are the clarinet's.</p>
 
@@ -83,7 +83,14 @@ module.exports = dictionaryPage({
 
 <p>The fingerings are the clarinet's (Boehm system): six finger holes with rings, the throat keys, the register key and thumb hole on the back, and the little-finger clusters, with the extra key for the <strong>low E♭</strong>. The pattern repeats a 12th higher with the register key, as on the clarinet.</p>
 
-<p>The Spanish edition shows an interactive vertical diagram with real contrabass clarinet sound. It is not available in English yet. For the fingering logic and the rest of the family, see <a href="/diccionario-musical/notas-del-clarinete/">clarinet notes</a>. Note that the contrabass clarinet sounds far below what the <a href="/herramientas/afinador/clarinete/">clarinet tuner</a> can read (it works from about 40 Hz up), so tune it by ear against another instrument, or use the tuner with the notes in the upper part of its range.</p>
+<p>Choose a note and you will see its fingering, the note on the staff and a <strong>real contrabass clarinet sound</strong>.</p>
+
+<div id="tmccontra"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmClarineteContrabajoEngine)tmClarineteContrabajoEngine("tmccontra");});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">Boehm-system fingerings (the same as the clarinet, from the official Yamaha chart) plus the low E♭ key. Sound generated with <a href="https://musescore.org/" rel="nofollow">Muse Sounds (MuseScore&nbsp;4)</a>.</p>
+
+<p>For the fingering logic and the rest of the family, see <a href="/diccionario-musical/notas-del-clarinete/">clarinet notes</a>. Note that the contrabass clarinet sounds far below what the <a href="/herramientas/afinador/clarinete/">clarinet tuner</a> can read (it works from about 40 Hz up), so tune it by ear against another instrument, or use the tuner with the notes in the upper part of its range.</p>
 
 <h2>Common mistakes when learning contrabass clarinet notes</h2>
 

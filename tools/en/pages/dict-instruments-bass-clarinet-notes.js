@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'Bass clarinet notes: pitched in B♭, it sounds a major 9th below written. Range (written E♭3–A6), the four registers and the Boehm fingerings it shares.',
   h1: 'Bass Clarinet Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-clarinete-bajo-engine'],
   body: `
 <p>The <strong>bass clarinet</strong> is the low voice of the clarinet family: a tube twice as long as the clarinet's, with a metal <strong>curved neck</strong> and an <strong>upturned metal bell</strong> that give it its unmistakable "wooden saxophone" silhouette. It is still an instrument <strong>in B♭</strong>, but it sounds a <strong>major 9th below</strong> the written note (an octave plus a whole step; UK: tone). This page gives its notes, its registers and what it shares with the clarinet. Its fingerings are the clarinet's.</p>
 
@@ -58,9 +58,16 @@ module.exports = dictionaryPage({
 
 <p>Yes: the same <strong>Boehm system</strong>, the same fingerings and the same treble-clef reading. Any clarinetist can double on it, just as a flutist doubles on piccolo or an oboist on English horn. The differences are physical: the mouthpiece sits on a metal <strong>curved neck</strong>, the body (usually grenadilla wood) is much longer, the <strong>metal bell</strong> turns upward and forward, it is played <strong>seated or on a floor peg</strong>, and it adds the key for the <strong>low E♭</strong> beside the right little finger. The reed, as on the whole family, is a <strong>single reed</strong>, but much larger than the one for the B♭ clarinet.</p>
 
-<h3>The Spanish page has an interactive fingering diagram</h3>
+<h3>Bass clarinet fingerings</h3>
 
-<p>The Spanish edition shows the bass clarinet in a vertical diagram, with the curved neck at the top and the metal bell at the bottom, the keys that light up for each note, the written and sounding note on the staff and a real bass clarinet sound. It is not available in English yet. The fingerings are those of the B♭ clarinet (Boehm system) plus the key for the low E♭. To tune, use the <a href="/herramientas/afinador/clarinete-bajo/">bass clarinet tuner</a>.</p>
+<p>Choose a note and you will see its fingering, the note on the staff and a <strong>real bass clarinet sound</strong>.</p>
+
+<div id="tmcbajo"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmClarineteBajoEngine)tmClarineteBajoEngine("tmcbajo");});</script>
+
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">Boehm-system fingerings (the same as the clarinet, from the official Yamaha chart) plus the low E♭ key. Sound: samples from the <a href="https://philharmonia.co.uk/resources/sound-samples/" rel="nofollow">Philharmonia Orchestra</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>). Want to tune up? Use the <a href="/herramientas/afinador/clarinete-bajo/">bass clarinet tuner</a>.</p>
+
+<p>The fingerings are those of the B♭ clarinet (Boehm system) plus the key for the low E♭.</p>
 
 <h2>Common mistakes when learning bass clarinet notes</h2>
 

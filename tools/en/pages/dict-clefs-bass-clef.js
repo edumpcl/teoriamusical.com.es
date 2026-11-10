@@ -32,7 +32,15 @@ module.exports = dictionaryPage({
 </ol>
 <p>The last step is the one that matters: <strong>the two dots must hug the 4th line</strong>. If they end up around the 3rd line, what you wrote is an F clef on the 3rd line (baritone clef) and every note changes its name.</p>
 
-<!-- TODO-IMG: printable PDF worksheet /assets/img/claves/ficha-dibujar-clave-de-fa.pdf (preview /assets/img/claves/preview-ficha-clave-de-fa.png/.webp) — practice sheet for tracing the bass clef with decreasing help; its text is in Spanish, so it is left out of the English page. -->
+<h3>Printable worksheet: tracing the clef with decreasing help</h3>
+<p>For the youngest learners, reading the explanation is not enough: the clef has to be traced many times. This PDF worksheet takes the help away little by little — first the model, then the dotted clef to trace over, then with the dots farther and farther apart, then only the dot that marks the 4th line, and finally the empty staff. The stroke is <strong>a single line</strong>, the one the pencil makes without being lifted.</p>
+
+<figure class="fig-sm">
+  <a href="/assets/img/claves/ficha-dibujar-clave-de-fa.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/claves/preview-ficha-clave-de-fa.webp"><img src="/assets/img/claves/preview-ficha-clave-de-fa.png" width="300" height="127" loading="lazy" alt="Printable worksheet for learning to draw the bass clef: staves with the dotted clef to trace over"></picture></a>
+</figure>
+
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/claves/ficha-dibujar-clave-de-fa.pdf" target="_blank" rel="noopener">Download the worksheet as a PDF (A4)</a></p>
+<p>You may print and photocopy it freely for the classroom or for home. There are also the <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef worksheet</a> and the <a href="/diccionario-musical/claves-musicales/clave-de-do/">C clef worksheet</a>.</p>
 
 <h2>Notes in the bass clef: how to read them all</h2>
 <p>The reference note is <strong>F</strong> on the 4th line. From there, every note in the bass clef is read by counting up or down from that position. It is the clef of the cello, double bass, the left hand of the piano and the electric bass:</p>
@@ -44,7 +52,10 @@ module.exports = dictionaryPage({
 
 <p>In the bass clef, the <strong>lines</strong>, from bottom to top, are <strong>G, B, D, F and A</strong>, and the <strong>spaces</strong>, from bottom to top, are <strong>A, C, E and G</strong>.</p>
 
-<!-- TODO-IMG: /assets/img/notacion/claves/notas-clave-fa-piano.png (.webp) — staff with the nine bass clef notes (G2 to A3) and, below, the same notes lit on a piano keyboard, with middle C marked on the right. The raster image carries Spanish note names; it needs an English version. -->
+<figure>
+<picture><source srcset="/assets/img/notacion/claves/notas-clave-fa-piano.webp" type="image/webp"><img src="/assets/img/notacion/claves/notas-clave-fa-piano.png" width="720" height="430" alt="Notes in the bass clef: a staff with the nine notes of the clef (G, A, B, C, D, E, F, G, A) and, below, the same notes lit up on the piano keyboard, from G₂ to A₃, with Middle C marked on the right." loading="lazy" decoding="async"></picture>
+<figcaption>The same nine notes on the piano: G₂ to A₃, played with the left hand. Middle C sits just to the right.</figcaption>
+</figure>
 
 <div class="tm-table-wrap">
 <table class="tm-table">

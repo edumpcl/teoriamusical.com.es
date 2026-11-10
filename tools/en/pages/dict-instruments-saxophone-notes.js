@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'Saxophone notes: one fingering for soprano, alto, tenor and baritone, how much each transposes, the written range B♭3–F♯6 and the octave key.',
   h1: 'Saxophone Notes',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Notes on the Instruments', '/diccionario-musical/notas-en-los-instrumentos/']],
-  scripts: [],
+  scripts: ['tm-pent-nota', 'digitaciones-saxofon-engine'],
   body: `
 <p>The <strong>saxophone</strong> has a unique advantage for the learner: its four members in the band and the orchestra, <strong>soprano, alto, tenor and baritone</strong>, are played <strong>exactly the same way</strong>. Same fingering, same writing in <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef</a>; the only thing that changes is <strong>how much each one transposes</strong>. On this page you will find their notes, the transposition of each one and how the family is organized.</p>
 
@@ -82,9 +82,12 @@ module.exports = dictionaryPage({
 
 <h2>Saxophone fingerings</h2>
 
-<p>The Spanish edition has an interactive fingering diagram built over a real photograph of an alto saxophone, with a selector for the member of the family and real saxophone sound. It is not available in English yet. The fingering is the same for soprano, alto, tenor and baritone: choosing another member changes the sounding note, not the fingers. To tune, use the <a href="/herramientas/afinador/saxofon/">saxophone tuner</a>.</p>
+<p>The diagram is a <strong>real photo</strong> of an alto saxophone seen <strong>from the front</strong>: mouthpiece at the top and bell at the lower right. One detail is confusing at first: because you are looking at it from the front, <strong>your left hand appears on the right of the image</strong>. That is where the first three <strong>pearls</strong> (finger buttons), the <strong>palm keys</strong> and the <strong>left little-finger cluster</strong> (G♯ and the low notes) are. The right hand is on the left of the image, with the <strong>side keys</strong> and the <strong>E♭</strong> and <strong>C</strong> keys of the little finger. The six mother-of-pearl buttons are <strong>numbered 1 to 6</strong>, three per hand. The <strong>octave key</strong> cannot be seen from the front: the <strong>left thumb</strong> presses it <strong>from behind</strong>, which is why it is shown in the small diagram beside the photo. First choose the <strong>member of the family</strong> (it changes the photo and the real note that sounds, not the fingers) and then a note: you will see its fingering lit on the photo, the note on the staff and how it sounds. The alto and the tenor have their own photograph; the soprano and the baritone show the alto, because all four are fingered exactly the same way.</p>
 
-<p>The top note of the standard range, <strong>F♯6</strong>, deserves a comment: it is played with the F6 fingering plus the <strong>high-F♯ key</strong>, but there are other fingerings for it, used in fast passages and as a gateway to the altissimo register, so players learn more than one.</p>
+<div id="tmsaxofon"></div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.tmSaxofonEngine)tmSaxofonEngine("tmsaxofon");});</script>
+
+<p>The top note of the standard range, <strong>F♯6</strong>, deserves a comment: it is played with the F6 fingering plus the <strong>high-F♯ key</strong>, but there are other fingerings for it, used in fast passages and as a gateway to the altissimo register, so players learn more than one. To tune, use the <a href="/herramientas/afinador/saxofon/">saxophone tuner</a>.</p>
 
 <h2>Common mistakes when learning saxophone notes</h2>
 

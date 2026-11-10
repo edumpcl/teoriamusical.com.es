@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'What each instrument is called in Italian, French, German and Spanish, with score abbreviations and the false friends that cause confusion.',
   h1: 'Instrument Names in Other Languages',
   crumbs: [['Music Dictionary', '/diccionario-musical/']],
-  scripts: [],
+  scripts: ['idiomas-instrumentos'],
   body: `
 <p>Someone hands you a part and the label says <strong>"Posaune"</strong>, <strong>"campanelli"</strong> or <strong>"cor"</strong>. You can read the music, but first you need to know one simple thing: <strong>which instrument is this part for?</strong> This page answers exactly that, in the languages in which scores are most often published.</p>
 
@@ -16,10 +16,19 @@ module.exports = dictionaryPage({
 
 <p>American and British English differ on a few names. This page gives the American name first and marks the British one: <em>English horn (UK: cor anglais)</em>. The unqualified names (flute, oboe, clarinet and so on) are the same in both.</p>
 
-<!-- NEEDS ENGINE idiomas-instrumentos: the Spanish page has a live search box that finds an instrument by name in any language and highlights the matching column. Left out until the script is supported. -->
 <h2>Instrument names in five languages</h2>
 
 <p>Find the English name in the first column and read across. The Spanish column is there because Spanish-speaking readers often meet scores with Spanish part names (a few of them, such as <em>requinto</em>, <em>lira</em> and <em>corneta</em>, are used only in Spanish and Latin American bands).</p>
+
+<h3>Search an instrument in any language</h3>
+
+<p>Type the name as you read it on the page, in any of the five languages (Spanish included). You do not need accents or capital letters, and the start of the word is enough: the cell where it matched is highlighted in yellow, and that tells you which language your score is in.</p>
+
+<div class="tm-idi-buscador">
+<label class="sr-only" for="tm-idi-campo">Search for an instrument in any language</label>
+<input type="search" id="tm-idi-campo" class="tm-idi-campo" autocomplete="off" placeholder="Posaune, campanelli, cor anglais, Pauken…">
+<p class="tm-idi-cuenta" id="tm-idi-cuenta" role="status" aria-live="polite"></p>
+</div>
 
 <div class="tm-idi-grupo">
 <h3>Woodwinds</h3>

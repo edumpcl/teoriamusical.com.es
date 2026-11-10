@@ -49,10 +49,8 @@ module.exports = dictionaryPage({
 
 <p>To invert a simple interval, the first note stays fixed and the second note moves one octave in the opposite direction to the interval: if the interval is ascending, the second note drops an octave; if it is descending, the second note rises an octave. (The same result comes from moving the lower note up an octave.)</p>
 
-<!-- TODO-IMG: /assets/img/notacion/intervalos/inversion-simple-1.svg -->
-<p><em>[Figure to come: Inversion of a simple interval: the second note drops an octave.]</em></p>
-<!-- TODO-IMG: /assets/img/notacion/intervalos/inversion-simple-2.svg -->
-<p><em>[Figure to come: Second example of the inversion of a simple interval.]</em></p>
+<figure><img src="/assets/img/notacion/intervalos/inversion-simple-1.svg" width="480" height="159" alt="Inversion of a simple interval: the second note moves down one octave" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/intervalos/inversion-simple-2.svg" width="480" height="165" alt="Second example of the inversion of a simple interval" loading="lazy" decoding="async"></figure>
 
 <h3>How to check that the inversion is correct</h3>
 
@@ -70,10 +68,8 @@ module.exports = dictionaryPage({
 
 <p>To invert a compound interval, the first note stays fixed and the second note moves three octaves (a 22nd) in the opposite direction: if the interval is ascending, the second note drops a 22nd; if it is descending, the second note rises a 22nd.</p>
 
-<!-- TODO-IMG: /assets/img/notacion/intervalos/inversion-compuesto-1.svg -->
-<p><em>[Figure to come: Inversion of a compound interval: the second note drops three octaves (a 22nd).]</em></p>
-<!-- TODO-IMG: /assets/img/notacion/intervalos/inversion-compuesto-2.svg -->
-<p><em>[Figure to come: Second example of the inversion of a compound interval.]</em></p>
+<figure><img src="/assets/img/notacion/intervalos/inversion-compuesto-1.svg" width="480" height="197" alt="Inversion of a compound interval: the second note moves down three octaves (22nd)" loading="lazy" decoding="async"></figure>
+<figure><img src="/assets/img/notacion/intervalos/inversion-compuesto-2.svg" width="480" height="202" alt="Second example of the inversion of a compound interval" loading="lazy" decoding="async"></figure>
 
 <h3>How to check that the inversion is correct</h3>
 

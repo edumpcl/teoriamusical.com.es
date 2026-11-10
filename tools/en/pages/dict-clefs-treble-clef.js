@@ -34,7 +34,15 @@ module.exports = dictionaryPage({
 </ol>
 <p>The most common mistake is closing the loop on the 1st or the 3rd line. If that happens, what you wrote is no longer a G clef on the 2nd line: always check that detail before moving on.</p>
 
-<!-- TODO-IMG: printable PDF worksheet /assets/img/claves/ficha-dibujar-clave-de-sol.pdf (preview /assets/img/claves/preview-ficha-clave-de-sol.png/.webp) — practice sheet for tracing the treble clef with decreasing help; its text is in Spanish, so it is left out of the English page. -->
+<h3>Printable worksheet: tracing the clef with decreasing help</h3>
+<p>For the youngest learners, reading the explanation is not enough: the clef has to be traced many times. This PDF worksheet takes the help away little by little — first the model, then the dotted clef to trace over, then with the dots farther and farther apart, then only the dot that marks the 2nd line, and finally the empty staff for drawing it on its own. The stroke is <strong>a single line</strong>, the one the pencil makes without being lifted: in printed scores the clef looks thicker because it is engraved.</p>
+
+<figure class="fig-sm">
+  <a href="/assets/img/claves/ficha-dibujar-clave-de-sol.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/claves/preview-ficha-clave-de-sol.webp"><img src="/assets/img/claves/preview-ficha-clave-de-sol.png" width="300" height="127" loading="lazy" alt="Printable worksheet for learning to draw the treble clef: staves with the dotted clef to trace over"></picture></a>
+</figure>
+
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/claves/ficha-dibujar-clave-de-sol.pdf" target="_blank" rel="noopener">Download the worksheet as a PDF (A4)</a></p>
+<p>You may print and photocopy it freely for the classroom or for home. There are also the <a href="/diccionario-musical/claves-musicales/clave-de-fa/">bass clef worksheet</a> and the <a href="/diccionario-musical/claves-musicales/clave-de-do/">C clef worksheet</a>.</p>
 
 <h2>Notes in the treble clef: how to read them all</h2>
 <p>The reference note is <strong>G</strong> on the 2nd line. From there, every note in the treble clef is read by going up or down from that position, in musical alphabetical order (C–D–E–F–G–A–B):</p>

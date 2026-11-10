@@ -57,7 +57,15 @@ module.exports = dictionaryPage({
 </table>
 </div>
 
-<p>The theory is in <a href="/diccionario-musical/figuras-musicales/">note values</a>, and there is more practice in <a href="/ejercicios/figuras/">note value and rhythm exercises</a>.</p>
+<h2>Printable worksheet (PDF)</h2>
+<p>The same exercise on paper: <strong>18 questions</strong> on one A4 sheet, nine of "how many fit?" and nine of "which note is it?". With a separate <strong>answer sheet</strong>, with the answers in red.</p>
+<figure class="tm-staff">
+  <a href="/assets/img/figuras/fichas/ficha-equivalencias.pdf" target="_blank" rel="noopener"><picture><source type="image/webp" srcset="/assets/img/figuras/fichas/preview-ficha-equivalencias.webp"><img src="/assets/img/figuras/fichas/preview-ficha-equivalencias.png" width="300" height="424" loading="lazy" alt="Printable PDF worksheet on note value equivalences"></picture></a>
+  <figcaption>A4 sheet with 18 questions on note value equivalences.</figcaption>
+</figure>
+<p><a class="tm-btn tm-btn-dorado" href="/assets/img/figuras/fichas/ficha-equivalencias.pdf" target="_blank" rel="noopener">Download the worksheet (A4 PDF)</a> <a class="tm-btn tm-btn-secondary" href="/assets/img/figuras/fichas/ficha-equivalencias-soluciones.pdf" target="_blank" rel="noopener">Answers</a></p>
+
+<p>You can print and photocopy it freely for class. The theory is in <a href="/diccionario-musical/figuras-musicales/">note values</a>, and there is more practice in <a href="/ejercicios/figuras/">note value and rhythm exercises</a>.</p>
 
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
