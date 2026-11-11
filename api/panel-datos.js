@@ -1,11 +1,14 @@
 /**
  * /panel/datos-vivo/  ->  datos de Search Console, AdSense y GA4 EN VIVO.
  *
- * DOS MODOS:
+ * TRES MODOS:
  *   ?modo=serie&desde=YYYY-MM-DD      una fila por dia (lo que pinta las curvas)
  *   ?modo=desglose&desde=&hasta=      los repartos del rango elegido: por que
  *                                     consulta, que pagina, que pais, que
  *                                     dispositivo, que unidad de anuncio...
+ *   ?modo=bing                        Bing Webmaster Tools (clave de API): tráfico diario,
+ *                                     semanas ES/EN, consultas y rastreo. Va aparte: no
+ *                                     depende del rango del panel.
  *
  * POR QUE EXISTE: el panel es una pagina estatica y no puede hablar con Google
  * por si misma sin meter credenciales en el navegador. Esta funcion se ejecuta
@@ -37,6 +40,7 @@
  *   ADSENSE_CLIENT_ID       de tools/adsense-token.json
  *   ADSENSE_CLIENT_SECRET   de tools/adsense-token.json
  *   ADSENSE_REFRESH_TOKEN   de tools/adsense-token.json
+ *   BING_API_KEY            clave de Bing Webmaster (Configuración > Acceso a API); 32 caracteres
  * AdSense va por OAuth de usuario y no por cuenta de servicio porque AdSense no
  * admite cuentas de servicio (comprobado en su dia).
  */
@@ -344,6 +348,74 @@ async function modoDesglose(ini, fin, errores) {
   return { gsc: gscD, adsense: adsD, ga4: ga4D };
 }
 
+/* ---------- modo bing: Bing Webmaster Tools (clave de API, sin OAuth) ---------- */
+
+const BING = 'https://ssl.bing.com/webmaster/api.svc/json/';
+
+async function bing(ep) {
+  const clave = (process.env.BING_API_KEY || '').trim();
+  if (!clave) throw new Error('falta BING_API_KEY');
+  const r = await json(BING + ep + '?apikey=' + encodeURIComponent(clave)
+    + '&siteUrl=' + encodeURIComponent(SITIO));
+  return r.d || [];
+}
+
+/** Bing da las fechas como "/Date(1794096000000)/". */
+const fechaBing = (r) => new Date(Number(/-?\d+/.exec(r.Date)[0])).toISOString().slice(0, 10);
+
+async function modoBing(errores) {
+  const [trafico, paginas, consultas, rastreo] = await Promise.all([
+    bing('GetRankAndTrafficStats'),
+    bing('GetPageStats'),
+    bing('GetQueryStats'),
+    bing('GetCrawlStats').catch(() => []),
+  ]);
+
+  // Tráfico total, diario (sin posición): los últimos 120 días.
+  const diario = trafico.map((r) => ({ d: fechaBing(r), c: r.Clicks, i: r.Impressions }))
+    .sort((a, b) => (a.d < b.d ? -1 : 1)).slice(-120);
+
+  // Páginas, por semanas: castellano frente a inglés (/en/). La posición se pondera por impresiones.
+  const semanas = {};
+  for (const r of paginas) {
+    const d = fechaBing(r);
+    const w = semanas[d] || (semanas[d] = {
+      d, es: { c: 0, i: 0, pp: 0 }, en: { c: 0, i: 0, pp: 0 },
+    });
+    const ruta = String(r.Query || '').replace(/^https?:\/\/[^/]+/, '');
+    const x = ruta.indexOf('/en/') === 0 ? w.en : w.es;
+    x.c += r.Clicks; x.i += r.Impressions;
+    x.pp += num(r.AvgImpressionPosition) * r.Impressions;
+  }
+  const porSemana = Object.values(semanas).sort((a, b) => (a.d < b.d ? -1 : 1)).slice(-16).map((w) => ({
+    d: w.d,
+    es: { c: w.es.c, i: w.es.i, p: w.es.i ? red(w.es.pp / w.es.i, 1) : null },
+    en: { c: w.en.c, i: w.en.i, p: w.en.i ? red(w.en.pp / w.en.i, 1) : null },
+  }));
+
+  // Consultas: las 4 últimas semanas, sumadas.
+  const fechas = Array.from(new Set(consultas.map(fechaBing))).sort().slice(-4);
+  const acum = {};
+  for (const r of consultas) {
+    if (fechas.indexOf(fechaBing(r)) < 0) continue;
+    const a = acum[r.Query] || (acum[r.Query] = { q: r.Query, c: 0, i: 0, pp: 0 });
+    a.c += r.Clicks; a.i += r.Impressions; a.pp += num(r.AvgImpressionPosition) * r.Impressions;
+  }
+  const lista = Object.values(acum).sort((a, b) => b.c - a.c || b.i - a.i).slice(0, 15)
+    .map((a) => ({ q: a.q, c: a.c, i: a.i, p: a.i ? red(a.pp / a.i, 1) : null }));
+
+  const ult = rastreo.slice().sort((a, b) => (fechaBing(a) < fechaBing(b) ? -1 : 1)).pop();
+  return {
+    bing: {
+      diario, semanas: porSemana, consultas: lista, semanas_consultas: fechas,
+      rastreo: ult ? {
+        d: fechaBing(ult), paginas: ult.CrawledPages, ok: ult.Code2xx, r301: ult.Code301,
+        e4xx: ult.Code4xx, errores: ult.CrawlErrors,
+      } : null,
+    },
+  };
+}
+
 /* ---------- la funcion ---------- */
 
 module.exports = async (req, res) => {
@@ -364,9 +436,15 @@ module.exports = async (req, res) => {
   const errores = {};
   let cuerpo;
   try {
-    cuerpo = q.modo === 'desglose'
-      ? await modoDesglose(ini, fin, errores)
-      : await modoSerie(ini, fin, errores);
+    if (q.modo === 'bing') {
+      // Aparte y a prueba de fallos: si Bing no responde, el panel sigue igual.
+      try { cuerpo = await modoBing(errores); }
+      catch (e) { errores.bing = String((e && e.message) || e).slice(0, 300); cuerpo = { bing: null }; }
+    } else {
+      cuerpo = q.modo === 'desglose'
+        ? await modoDesglose(ini, fin, errores)
+        : await modoSerie(ini, fin, errores);
+    }
   } catch (e) {
     res.status(500).json({ error: String((e && e.message) || e).slice(0, 300) });
     return;
@@ -374,7 +452,7 @@ module.exports = async (req, res) => {
 
   res.status(200).json(Object.assign({
     generado: new Date().toISOString(),
-    modo: q.modo === 'desglose' ? 'desglose' : 'serie',
+    modo: q.modo === 'desglose' ? 'desglose' : (q.modo === 'bing' ? 'bing' : 'serie'),
     desde: ini,
     hasta_pedido: fin,
     errores: Object.keys(errores).length ? errores : null,

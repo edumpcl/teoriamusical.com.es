@@ -18,6 +18,7 @@
   --gsc:#1d5f9c;  --gsc-wash:#e3edf7;
   --ga4:#7a4396;  --ga4-wash:#f0e8f6;
   --ads:#1b7148;  --ads-wash:#e4f0e9;
+  --bing:#0b7a75; --bing-wash:#e0f1f0;
   /* Trios de reparto (donuts). NO elegidos a ojo: salen de buscar el menor
      giro de tono dentro de cada familia que pasa el validador de paletas
      (banda de luminosidad, croma minimo, separacion para daltonismo y
@@ -39,6 +40,7 @@
   --gsc:#6aa9e0;  --gsc-wash:#16242f;
   --ga4:#bb90d8;  --ga4-wash:#241a2c;
   --ads:#5cbf8a;  --ads-wash:#16271f;
+  --bing:#4fc6bf; --bing-wash:#132a29;
   --gsc-1:#27629a; --gsc-2:#3da0ca; --gsc-3:#646cfc;
   --ga4-1:#ab7fc4; --ga4-2:#6936c8; --ga4-3:#b62899;
   --ads-1:#0d7146; --ads-2:#48a30e; --ads-3:#15a8ab;
@@ -55,6 +57,7 @@
   --gsc:#6aa9e0;  --gsc-wash:#16242f;
   --ga4:#bb90d8;  --ga4-wash:#241a2c;
   --ads:#5cbf8a;  --ads-wash:#16271f;
+  --bing:#4fc6bf; --bing-wash:#132a29;
   --gsc-1:#27629a; --gsc-2:#3da0ca; --gsc-3:#646cfc;
   --ga4-1:#ab7fc4; --ga4-2:#6936c8; --ga4-3:#b62899;
   --ads-1:#0d7146; --ads-2:#48a30e; --ads-3:#15a8ab;
@@ -111,6 +114,7 @@ h1,h2,h3{ margin:0; text-wrap:balance; } p{ margin:0; }
 .f-gsc{ color:var(--gsc); background:var(--gsc-wash); }
 .f-ga4{ color:var(--ga4); background:var(--ga4-wash); }
 .f-ads{ color:var(--ads); background:var(--ads-wash); }
+.f-bing{ color:var(--bing); background:var(--bing-wash); }
 .f-mix{ color:var(--ink-2); background:var(--surface-2); }
 
 .sub{ margin:18px 0 10px; font-size:11px; font-weight:700; letter-spacing:.1em;
@@ -138,7 +142,7 @@ svg{ display:block; width:100%; height:auto; overflow:visible; }
 .brow .t span{ font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:12px; white-space:nowrap; }
 .track{ height:7px; background:var(--surface-2); border-radius:99px; overflow:hidden; }
 .fill{ height:100%; border-radius:99px; background:var(--accent); }
-.fill.c-gsc{ background:var(--gsc); } .fill.c-ga4{ background:var(--ga4); } .fill.c-ads{ background:var(--ads); }
+.fill.c-gsc{ background:var(--gsc); } .fill.c-ga4{ background:var(--ga4); } .fill.c-ads{ background:var(--ads); } .fill.c-bing{ background:var(--bing); }
 
 .donut{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
 .donut svg{ width:132px; height:132px; flex:none; }
@@ -588,6 +592,22 @@ function montar(){
   </div>
 
   <div class="sec">
+    ${cabecera("Búsqueda en Bing","Bing Webmaster","f-bing",
+      "Lo mismo que Search Console, pero en Bing (y Copilot). Datos de la API de Bing Webmaster Tools. Es poco volumen: sirve para tendencias, no para cifras absolutas. <b>No sigue el selector de fechas</b>: compara siempre los últimos 28 días con los 28 anteriores.")}
+    <div class="aviso" id="avisoBing" hidden></div>
+    <div class="kpis" id="kBing"></div>
+    <div class="sub">Evolución y reparto</div>
+    <div class="cols">
+      ${tarjeta("gBClics","Clics por día","Bing","f-bing","GetRankAndTrafficStats")}
+      ${tarjeta("tBSemanas","Castellano frente a inglés","Bing","f-bing","GetPageStats, por semanas","",
+        "Las páginas llegan agrupadas por semanas. Hasta que Bing indexe <code>/en/</code>, el inglés saldrá a cero.")}
+      ${tarjeta("tBConsultas","Qué buscan","Bing","f-bing","GetQueryStats, últimas 4 semanas","",
+        "Las 15 con más clics en las últimas 4 semanas completas.")}
+      ${tarjeta("tBRastreo","Cómo rastrea Bing","Bing","f-bing","GetCrawlStats")}
+    </div>
+  </div>
+
+  <div class="sec">
     ${cabecera("De dónde sale el cambio","Search Console","f-gsc",
       "Se calcula solo, comparando con el periodo anterior: cuántos clics vienen de aparecer más veces y cuántos de que te pulsen más cuando apareces.")}
     <div class="card"><div id="descomp"></div><p class="pie" id="pieDescomp"></p></div>
@@ -683,6 +703,7 @@ function pintarTodo(){
   pintarDescomp(A,B);
   barrasMeses(editorial?250:205);
   pintarDesglose();
+  pintarBing();
 }
 
 function pintarDescomp(A,B){
@@ -899,6 +920,64 @@ function pintarFicha(){
     +'</b>, GA4 <b>'+bonita(META.ga4)+'</b>.';
 }
 
+/* ---- Bing: aparte del selector de fechas (llega por semanas y es poco volumen) ---- */
+let BING=null, errBing=null;
+function sumaBing(d,ini,fin){ let c=0,i=0; for(const x of d) if(x.d>=ini&&x.d<=fin){ c+=x.c; i+=x.i; } return {c,i}; }
+function pintarBing(){
+  const k=$("kBing"); if(!k) return;
+  if(!BING){
+    const msg=errBing?esc(errBing):"Consultando a Bing…";
+    k.innerHTML='<p class="vacio">'+msg+'</p>';
+    ["gBClics","tBSemanas","tBConsultas","tBRastreo"].forEach(id=>{ const n=$(id); if(n) n.innerHTML=""; });
+    return;
+  }
+  const editorial=document.body.dataset.modo==="editorial";
+  const d=BING.diario, fin=d[d.length-1].d;
+  const a=sumaBing(d,masDias(fin,-27),fin), b=sumaBing(d,masDias(fin,-55),masDias(fin,-28));
+  const ctr=x=>x.i?x.c/x.i*100:null;
+  const sw=BING.semanas, ult4=sw.slice(-4), ant4=sw.slice(-8,-4);
+  const suma=(arr,k2,m)=>arr.reduce((t,w)=>t+w[k2][m],0);
+  pintarKpis("kBing",[
+    ["Clics (28 días)",          ent(a.c), delta(a.c,b.c), false, ent(b.c)],
+    ["Impresiones (28 días)",    ent(a.i), delta(a.i,b.i), false, ent(b.i)],
+    ["CTR",                      ctr(a)!=null?pct(ctr(a)):"—", delta(ctr(a),ctr(b)), false, ctr(b)!=null?pct(ctr(b)):"—"],
+    ["Clics en inglés (4 sem.)", ent(suma(ult4,"en","c")), delta(suma(ult4,"en","c"),suma(ant4,"en","c")), false, ent(suma(ant4,"en","c"))]
+  ]);
+
+  // Días raros: más de 5 veces la mediana de impresiones. Se avisa en vez de callarlo.
+  const orden=d.map(x=>x.i).sort((p,q)=>p-q), med=orden[Math.floor(orden.length/2)]||1;
+  const raros=d.filter(x=>x.d>=masDias(fin,-55)&&x.i>5*med);
+  const av=$("avisoBing");
+  if(raros.length){ av.hidden=false;
+    av.textContent="Ojo con las impresiones: "+raros.map(x=>corta(x.d)+" ("+ent(x.i)+")").join(", ")
+      +" se salen de lo normal (mediana: "+ent(med)+" al día). Suele ser una aparición puntual de una consulta, no crecimiento sostenido."; }
+  else av.hidden=true;
+
+  serieDiaria($("gBClics"),d.slice(-90).map(x=>({d:x.d,v:x.c})),v=>ent(v),editorial?190:150,"var(--bing)");
+  tabla($("tBSemanas"),
+    [{t:"Semana"},{t:"Clics ES",num:1},{t:"Clics EN",num:1}],
+    sw.slice().reverse().slice(0,8).map(w=>[corta(w.d),nf.format(w.es.c),nf.format(w.en.c)]),6);
+  tabla($("tBConsultas"),
+    [{t:"Consulta"},{t:"Clics",num:1},{t:"Impr.",num:1},{t:"Pos.",num:1}],
+    BING.consultas.map(f=>[esc(f.q),nf.format(f.c),nf.format(f.i),f.p!=null?n1.format(f.p):"—"]));
+  const r=BING.rastreo;
+  $("tBRastreo").innerHTML = r
+    ? '<div class="kpis" style="grid-template-columns:repeat(2,1fr)">'
+      +[["Rastreadas",r.paginas],["Correctas (2xx)",r.ok],["Redirecciones (301)",r.r301],["Con error 4xx",r.e4xx]].map(f=>
+        '<div class="kpi"><div class="k">'+f[0]+'</div><div class="v mono">'+nf.format(f[1])+'</div></div>').join("")+'</div>'
+      +'<p class="pie">Última lectura: '+bonita(r.d)+'. Errores totales: '+nf.format(r.errores)+'.</p>'
+    : '<p class="vacio">Sin datos de rastreo.</p>';
+}
+async function pedirBing(){
+  try{
+    const j=await pedirJson("datos-vivo/?modo=bing");
+    if(j.errores&&j.errores.bing){ errBing="Bing no ha respondido ("+j.errores.bing+")."; console.warn("panel · bing:",j.errores.bing); }
+    else if(j.bing&&j.bing.diario&&j.bing.diario.length){ BING=j.bing; errBing=null; }
+    else errBing="Bing no ha devuelto datos.";
+  }catch(e){ errBing="No se ha podido consultar a Bing ("+e.message+")."; console.warn("panel · bing:",e); }
+  pintarBing();
+}
+
 async function cargar(){
   try{
     const j=await pedirJson("datos.json?v="+Date.now());
@@ -924,6 +1003,7 @@ async function cargar(){
     else { $("cargando").textContent="No se han podido cargar los datos: "+e; return; }
   }
   pintarFicha();
+  pedirBing();
 }
 cargar();
 
