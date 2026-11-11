@@ -34,8 +34,8 @@ module.exports = dictionaryPage({
 <p>The <strong>trombone</strong> is the one common brass instrument that changes notes mainly with a <strong>slide</strong> instead of valves. It is also one of the few brass instruments that <strong>does not transpose</strong> in most traditions: the note on the page is the note that sounds, and the part is usually written in <a href="/diccionario-musical/claves-musicales/clave-de-fa/">bass clef</a>. This page gives the slide positions, the range, the role of the F-attachment (the trigger) and a chart of all the notes from E2 to B♭4.</p>
 
 <figure style="margin:18px auto;text-align:center;">
-<picture><source type="image/webp" srcset="/assets/img/trombon/instrumento.webp"><img src="/assets/img/trombon/instrumento.jpg" width="560" height="136" loading="lazy" alt="A brass tenor trombone with the slide extended, the mouthpiece on the left, the bell on the right and the F-attachment (a rotary valve) next to the bell" style="max-width:100%;height:auto;border:1px solid #e8e0cc;border-radius:8px;background:#fff;padding:8px"></picture>
-<figcaption style="font-size:.85rem;color:#686868;margin-top:6px">A tenor trombone with an F-attachment (the lever next to the bell). Photo by <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Tenor_trombone_YSL-891Z_(re-crop).jpg" rel="nofollow">Yamaha Corporation</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>, via Wikimedia Commons.</figcaption>
+<picture><source type="image/webp" srcset="/assets/img/trombon/instrumento.webp"><img src="/assets/img/trombon/instrumento.jpg" width="560" height="126" loading="lazy" alt="A brass tenor trombone with the slide closed: the mouthpiece in the middle, the bell toward the right and, left of the mouthpiece, the F-attachment (the silver rotary valve with its extra loop of tubing)" style="max-width:100%;height:auto;border:1px solid #e8e0cc;border-radius:8px;background:#fff;padding:8px"></picture>
+<figcaption style="font-size:.85rem;color:#686868;margin-top:6px">A tenor trombone with an F-attachment (the silver rotary valve next to the mouthpiece, with its extra loop of tubing). Photo by <a href="https://commons.wikimedia.org/wiki/File:Yamaha_Tenor_trombone_YSL-882OR.tif" rel="nofollow">Yamaha Corporation</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>, via Wikimedia Commons.</figcaption>
 </figure>
 
 <div class="tm-table-wrap"><table class="tm-table">
@@ -112,7 +112,7 @@ module.exports = dictionaryPage({
   <li><strong>Alternate positions.</strong> This is the most frequent use. Many notes that need a long 6th or 7th position in the normal mode can be played with the trigger in a shorter position. The trigger positions are farther apart, so they are not simply "the same positions". This allows fast passages and shorter slide movements.</li>
 </ul>
 
-<p>The F-attachment is standard on advanced and orchestral tenor trombones, and student models often do not have it. The chart on this page shows the <strong>standard positions</strong> (without the trigger), the base you need to master before learning the alternates. The <a href="/diccionario-musical/notas-del-trombon-bajo/">bass trombone</a> goes further: it has two valves and a wider bore.</p>
+<p>The F-attachment is standard on advanced and orchestral tenor trombones, and student models often do not have it. The interactive diagram on this page starts with the <strong>standard positions</strong> (without the trigger), the base you need to master; the <em>With F attachment</em> button also shows the four low notes it adds and, for every note that can be played with it too, both ways: the normal position and the trigger one. The most common alternates (those that avoid 6th and 7th position) are highlighted. Notice that with the trigger the positions are farther apart and there are only <strong>six</strong>: the tube is longer, so each semitone needs more slide. The <a href="/diccionario-musical/notas-del-trombon-bajo/">bass trombone</a> goes further: it has two valves and a wider bore.</p>
 
 <h2>The trombone in the band, the orchestra and jazz</h2>
 
@@ -136,7 +136,7 @@ ${ROWS}
 <div id="tmtrombon"></div>
 <script>document.addEventListener("DOMContentLoaded",function(){if(window.tmTrombonEngine)tmTrombonEngine("tmtrombon");});</script>
 
-<p>To tune, use the <a href="/herramientas/afinador/trombon/">trombone tuner</a>.</p>
+<p class="tm-embed-cap" style="font-size:.9rem;color:#686868">Sound: samples from the <a href="https://philharmonia.co.uk/resources/sound-samples/" rel="nofollow">Philharmonia Orchestra</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="nofollow">CC BY-SA 3.0</a>); the four low F-attachment notes (C2 to E♭2), from the <a href="https://github.com/peastman/sso" rel="nofollow">Sonatina Symphonic Orchestra</a> (CC Sampling Plus). To tune, use the <a href="/herramientas/afinador/trombon/">trombone tuner</a>.</p>
 
 <!-- FICHA-DIGITACIONES:inicio -->
 <h2>Printable worksheet (PDF)</h2>

@@ -18,10 +18,16 @@
   const nm = s => EN ? String(s).replace(/Sol|Do|Re|Mi|Fa|La|Si/g, m => NOTE_EN[m]) : s;
   const ordEn = n => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th');
 
-  var MP_X = 68, SLIDE_X0 = 105, SOCKET_X = 330;
-  var SLIDE_Y1 = 122, SLIDE_Y2 = 136;
-  var TIP_MIN = 130, TIP_STEP = 30;
-  function tipX(pos) { return TIP_MIN + (pos - 1) * TIP_STEP; }
+  /* El diagrama es la FOTO REAL en dos capas, como en el tenor (tools/gen_trombon_vara.py bajo): el cuerpo, con los tubos
+     interiores a la vista, y la vara exterior recortada, que se desliza. GEO sale de ese script (píxeles del lienzo): vara =
+     [x, y, ancho, alto] en 1.ª posición; pend = inclinación de los tubos; pos = lo que sale la vara en cada posición (0, 86,
+     177, 274, 377, 485 y 600 mm reales); punta = el extremo del codo. rotor: centro y radio de cada rotor en la foto (el de
+     Fa es el primero que encuentra el aire al salir de la vara: el de abajo a la derecha; el otro, el de Sol♭). */
+  var GEO = { W: 2268, H: 682, vara: [581.0, 268.0, 902, 179], pend: 0.0653,
+    pos: [0.0, 107.4, 221.3, 341.9, 469.7, 605.0, 748.4], punta: [1480.0, 373.5],
+    rotor: { F: [374, 337, 27], Gb: [322, 284, 27] } };
+  var IMG = '/assets/img/trombon-bajo/';
+  var pct = function (v, total) { return (v / total * 100).toFixed(3) + '%'; };
 
   // Nota escrita -> { pos: 1-7, harm: armónico (solo notas al aire), valves: null|'F'|'Gb'|'both' }
   var FING = {
@@ -104,17 +110,22 @@
     '.tm-tbj-reg{font-size:.9rem;color:#666;margin-top:2px;}',
     '.tm-tbj-keysline{font-size:.88rem;color:#8b6914;margin-top:4px;}',
     '.tm-tbj-hint{font-size:1.02rem;color:#686868;font-weight:600;}',
-    '.tm-tbj-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:6px;display:flex;justify-content:center;}',
-    '.tm-tbj-svg{display:block;max-width:600px;width:100%;height:auto;margin:0 auto;}',
-    '.tm-tbj-tick{fill:#e9eaee;stroke:#8f9199;stroke-width:1.4;}',
-    '.tm-tbj-tick.on{fill:#8b6914;stroke:#6b5010;}',
-    '.tm-tbj-ticklab{font-family:Arial,Helvetica,sans-serif;font-size:11px;fill:#777;text-anchor:middle;}',
-    '.tm-tbj-ticklab.on{fill:#8b6914;font-weight:bold;}',
-    '.tm-tbj-valve .v-cap{fill:#e9eaee;stroke:#8f9199;stroke-width:1.6;transition:all .15s;}',
-    '.tm-tbj-valve.on .v-cap{fill:#ff9500;stroke:#c9730a;filter:drop-shadow(0 0 5px #ff9500);}',
-    '.tm-tbj-valve .v-num{font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:bold;fill:#777;text-anchor:middle;dominant-baseline:central;}',
-    '.tm-tbj-valve.on .v-num{fill:#3a2b00;}',
-    '.tm-tbj-klab{font-family:Arial,Helvetica,sans-serif;font-size:11px;fill:#555;text-anchor:middle;}',
+    '.tm-tbj-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:6px;}',
+    '.tm-tbj-foto{max-width:900px;margin:0 auto;overflow:hidden;}',
+    '.tm-tbj-lienzo{position:relative;width:100%;aspect-ratio:' + GEO.W + '/' + GEO.H + ';margin-bottom:-4%;}',   // al lienzo le sobra blanco por abajo
+    '.tm-tbj-lienzo img{display:block;width:100%;height:auto;max-width:none;}',
+    '.tm-tbj-vara{position:absolute;transition:left .55s cubic-bezier(.3,.1,.2,1),top .55s cubic-bezier(.3,.1,.2,1);}',
+    '.tm-tbj-marca{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:#f1efe8;border:1.5px solid #8f9199;color:#555;font:700 13px/23px Arial,Helvetica,sans-serif;text-align:center;transition:background .3s,color .3s,transform .3s;}',
+    '.tm-tbj-marca.on{background:#8b6914;border-color:#6b5010;color:#fff;transform:scale(1.25);}',
+    // los rotores: un aro sobre cada uno, que se enciende, y su nombre debajo
+    '.tm-tbj-rotor{position:absolute;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);border:2px solid transparent;transition:all .2s;}',
+    '.tm-tbj-rotor.on{border-color:#c9730a;background:rgba(255,149,0,.55);box-shadow:0 0 10px 3px rgba(255,149,0,.8);}',
+    '.tm-tbj-rnom{position:absolute;transform:translate(-50%,0);padding:1px 7px;border-radius:999px;background:#f1efe8;border:1.5px solid #8f9199;color:#555;font:700 12px/18px Arial,Helvetica,sans-serif;white-space:nowrap;transition:all .2s;}',
+    '.tm-tbj-rnom.on{background:#ff9500;border-color:#c9730a;color:#3a2b00;}',
+    '.tm-tbj-credito{font-size:.75rem;color:#777;text-align:center;margin:4px 0 0;}',
+    '.tm-tbj-credito a{color:inherit;}',
+    '@media(max-width:600px){.tm-tbj-marca{width:16px;height:16px;margin:-8px 0 0 -8px;font-size:9.5px;line-height:13.5px;border-width:1px;}.tm-tbj-rnom{font-size:9.5px;line-height:13px;padding:0 4px;border-width:1px;}}',
+    '@media(prefers-reduced-motion:reduce){.tm-tbj-vara{transition:none;}}',
     '.tm-tbj-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}',
     '.tm-tbj-btn{min-width:44px;padding:9px 11px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}',
     '.tm-tbj-btn:hover{background:#fdf8ee;border-color:#8b6914;}',
@@ -134,51 +145,20 @@
     document.head.appendChild(s);
   }
 
-  var TUBE_MIDY = (SLIDE_Y1 + SLIDE_Y2) / 2;
-  var DECO_FIXED =
-    '<defs><linearGradient id="tmTbjBrass" x1="0" y1="0" x2="0" y2="1">' +
-      '<stop offset="0" stop-color="#f4d06a"/><stop offset="0.4" stop-color="#d9a520"/>' +
-      '<stop offset="0.75" stop-color="#b8860b"/><stop offset="1" stop-color="#7a5a08"/>' +
-    '</linearGradient></defs>' +
-    '<circle cx="' + MP_X + '" cy="' + TUBE_MIDY + '" r="11" fill="#c8b060" stroke="#7a5a08" stroke-width="1.4"/>' +
-    '<circle cx="' + MP_X + '" cy="' + TUBE_MIDY + '" r="5" fill="#5e2432"/>' +
-    '<rect x="' + (MP_X + 9) + '" y="' + (TUBE_MIDY - 4) + '" width="' + (SLIDE_X0 - MP_X - 9) + '" height="8" rx="4" fill="url(#tmTbjBrass)" stroke="#7a5a08" stroke-width="1"/>' +
-    '<line x1="' + SLIDE_X0 + '" y1="' + SLIDE_Y1 + '" x2="' + SOCKET_X + '" y2="' + SLIDE_Y1 + '" stroke="#cfd0d6" stroke-width="4" stroke-linecap="round" stroke-dasharray="1,5"/>' +
-    '<line x1="' + SLIDE_X0 + '" y1="' + SLIDE_Y2 + '" x2="' + SOCKET_X + '" y2="' + SLIDE_Y2 + '" stroke="#cfd0d6" stroke-width="4" stroke-linecap="round" stroke-dasharray="1,5"/>' +
-    '<rect x="' + SOCKET_X + '" y="118" width="26" height="30" rx="6" fill="url(#tmTbjBrass)" stroke="#7a5a08" stroke-width="1.2"/>' +
-    '<path d="M356 120 C380 110 390 90 390 66 C390 48 380 40 366 40" stroke="url(#tmTbjBrass)" stroke-width="11" fill="none" stroke-linecap="round"/>' +
-    '<path d="M366 40 L366 128" stroke="url(#tmTbjBrass)" stroke-width="11" fill="none" stroke-linecap="round"/>' +
-    '<path d="M366 128 C366 150 380 160 402 160" stroke="url(#tmTbjBrass)" stroke-width="11" fill="none" stroke-linecap="round"/>' +
-    '<path d="M402 160 C480 168 540 164 580 150" stroke="url(#tmTbjBrass)" stroke-width="12" fill="none" stroke-linecap="round"/>' +
-    '<path d="M574 138 C620 122 658 122 676 130 L676 176 C658 184 620 184 574 168 C584 158 584 148 574 138 Z" fill="url(#tmTbjBrass)" stroke="#7a5a08" stroke-width="1.2"/>' +
-    '<ellipse cx="677" cy="153" rx="7" ry="24" fill="#c8960f" stroke="#7a5a08" stroke-width="1"/>' +
-    '<text class="tm-tbj-klab" x="68" y="100">' + T('Boquilla', 'Mouthpiece') + '</text>' +
-    '<text class="tm-tbj-klab" x="677" y="115">' + T('Campana', 'Bell') + '</text>' +
-    '<text class="tm-tbj-klab" x="378" y="30">' + T('Vara de afinación', 'Tuning slide') + '</text>' +
-    '<text class="tm-tbj-klab" x="217" y="165">' + T('Posición de la vara', 'Slide position') + '</text>' +
-    // etiqueta de las válvulas
-    '<text class="tm-tbj-klab" x="118" y="40">' + T('Válvulas (gatillos)', 'Valves (triggers)') + '</text>';
-
-  // dos válvulas de pulgar (F y G♭) que se encienden
-  var VALVES = [
-    { id: 'F',  x: 96,  label: 'F' },
-    { id: 'Gb', x: 140, label: 'G♭' }
-  ];
-  function valvesSvg() {
+  var VALVES = [{ id: 'Gb', label: T('Sol♭', 'G♭'), dx: -78 }, { id: 'F', label: T('Fa', 'F'), dx: 30 }];
+  function valvulas() {
     return VALVES.map(function (v) {
-      return '<g class="tm-tbj-valve" data-v="' + v.id + '">' +
-        '<circle class="v-cap" cx="' + v.x + '" cy="60" r="14"/>' +
-        '<text class="v-num" x="' + v.x + '" y="60">' + v.label + '</text></g>';
+      var c = GEO.rotor[v.id];
+      return '<span class="tm-tbj-rotor tm-tbj-valve" data-v="' + v.id + '" style="left:' + pct(c[0], GEO.W) + ';top:' + pct(c[1], GEO.H) + ';width:' + pct(2 * c[2], GEO.W) + '"></span>' +
+        '<span class="tm-tbj-rnom tm-tbj-valve" data-v="' + v.id + '" style="left:' + pct(c[0] + v.dx, GEO.W) + ';top:' + pct(425, GEO.H) + '">' + v.label + '</span>';
     }).join('');
   }
-
-  function ruler() {
+  /* Los números de las 7 posiciones, debajo de donde queda la punta de la vara en cada una */
+  function marcas() {
     var out = '';
     for (var p = 1; p <= 7; p++) {
-      var x = tipX(p);
-      out += '<g class="tm-tbj-tickgrp" data-pos="' + p + '">' +
-        '<circle class="tm-tbj-tick" cx="' + x + '" cy="185" r="9"/>' +
-        '<text class="tm-tbj-ticklab" x="' + x + '" y="204">' + p + '</text></g>';
+      var d = GEO.pos[p - 1];
+      out += '<span class="tm-tbj-marca" data-pos="' + p + '" style="left:' + pct(GEO.punta[0] + d - 34, GEO.W) + ';top:' + pct(GEO.punta[1] + d * GEO.pend + 112, GEO.H) + '">' + p + '</span>';
     }
     return out;
   }
@@ -197,35 +177,24 @@
     wrap.innerHTML =
       '<div class="tm-tbj-wrap">' +
         '<div class="tm-tbj-readout" id="' + uid + '_ro"><span class="tm-tbj-hint">' + T('Elige una nota para ver su posición y válvulas', 'Choose a note to see its position and valves') + '</span></div>' +
-        '<div class="tm-tbj-diagram"><svg class="tm-tbj-svg" id="' + uid + '_svg" viewBox="0 0 700 220" role="img" aria-label="' + T('Diagrama de digitación del trombón bajo: boquilla fija a la izquierda, vara deslizante hacia la campana de la derecha, dos válvulas de pulgar (Fa y Sol bemol) arriba a la izquierda y una regla con las siete posiciones', 'Bass trombone fingering diagram: mouthpiece fixed on the left, slide extending toward the bell on the right, two thumb valves (F and G-flat) at the top left and a ruler with the seven positions') + '">' +
-          DECO_FIXED +
-          valvesSvg() +
-          '<g id="' + uid + '_slide">' +
-            '<line id="' + uid + '_tubeTop" x1="' + SLIDE_X0 + '" y1="' + SLIDE_Y1 + '" x2="' + SLIDE_X0 + '" y2="' + SLIDE_Y1 + '" stroke="url(#tmTbjBrass)" stroke-width="8" stroke-linecap="round"/>' +
-            '<line id="' + uid + '_tubeBot" x1="' + SLIDE_X0 + '" y1="' + SLIDE_Y2 + '" x2="' + SLIDE_X0 + '" y2="' + SLIDE_Y2 + '" stroke="url(#tmTbjBrass)" stroke-width="8" stroke-linecap="round"/>' +
-            '<rect id="' + uid + '_cap" x="' + (SLIDE_X0 - 5) + '" y="114" width="10" height="30" rx="5" fill="url(#tmTbjBrass)" stroke="#7a5a08" stroke-width="1.2"/>' +
-          '</g>' +
-          ruler() +
-        '</svg></div>' +
+        '<div class="tm-tbj-diagram"><div class="tm-tbj-foto"><div class="tm-tbj-lienzo" role="img" aria-label="' + T('Foto de un trombón bajo: la vara se desliza hasta la posición de la nota elegida, de la 1.ª (recogida) a la 7.ª (extendida del todo), y los dos rotores (Fa y Sol bemol) se iluminan cuando la nota los usa; debajo, los números de las siete posiciones', 'Photo of a bass trombone: the slide moves to the position of the chosen note, from 1st (closed) to 7th (fully extended), and the two rotary valves (F and G flat) light up when the note uses them; below, the numbers of the seven positions') + '">' +
+          '<picture><source type="image/webp" srcset="' + IMG + 'vara-cuerpo.webp"><img src="' + IMG + 'vara-cuerpo.jpg" width="' + GEO.W + '" height="' + GEO.H + '" alt="" decoding="async"></picture>' +
+          '<picture class="tm-tbj-vara" id="' + uid + '_vara" style="width:' + pct(GEO.vara[2], GEO.W) + '"><source type="image/webp" srcset="' + IMG + 'vara-movil.webp"><img src="' + IMG + 'vara-movil.png" width="' + GEO.vara[2] + '" height="' + GEO.vara[3] + '" alt="" decoding="async"></picture>' +
+          valvulas() + marcas() +
+        '</div></div>' +
+        '<p class="tm-tbj-credito">' + T('Foto: ', 'Photo: ') + '<a href="https://commons.wikimedia.org/wiki/File:Yamaha_Bass_trombone_YBL-822_G_horizontal.tif" rel="nofollow">Yamaha Corporation</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>' + T(' (vara separada y movida)', ' (slide cut out and moved)') + '</p></div>' +
         '<div class="tm-tbj-btns">' + btns + '</div>' +
       '</div>';
 
     var ro = document.getElementById(uid + '_ro');
     var audio = new Audio();
-    var tubeTop = document.getElementById(uid + '_tubeTop');
-    var tubeBot = document.getElementById(uid + '_tubeBot');
-    var cap = document.getElementById(uid + '_cap');
+    var vara = document.getElementById(uid + '_vara');
 
     function setSlide(pos) {
-      var x = tipX(pos);
-      tubeTop.setAttribute('x2', x);
-      tubeBot.setAttribute('x2', x);
-      cap.setAttribute('x', x - 5);
-      wrap.querySelectorAll('.tm-tbj-tickgrp').forEach(function (g) {
-        var on = parseInt(g.dataset.pos, 10) === pos;
-        g.querySelector('.tm-tbj-tick').classList.toggle('on', on);
-        g.querySelector('.tm-tbj-ticklab').classList.toggle('on', on);
-      });
+      var d = GEO.pos[pos - 1];
+      vara.style.left = pct(GEO.vara[0] + d, GEO.W);
+      vara.style.top = pct(GEO.vara[1] + d * GEO.pend, GEO.H);
+      wrap.querySelectorAll('.tm-tbj-marca').forEach(function (m) { m.classList.toggle('on', parseInt(m.dataset.pos, 10) === pos); });
     }
     function setValves(v) {
       var onF = v === 'F' || v === 'both';
