@@ -1,8 +1,12 @@
-/* Diagrama de digitaciones del fagot (sistema alemán/Heckel) — interactivo.
-   Fagot horizontal propio: caña y tudel a la izquierda, culata a la derecha y
-   campana volviendo hacia la izquierda (los dos tubos paralelos). Llave plateada =
-   abierta, llave dorada = pulsada. Los pulgares (9 llaves el izquierdo, 3 dibujadas
-   del derecho) van entre los dos tubos; los meñiques, bajo el tubo grave.
+/* Diagrama de digitaciones del fagot (sistema alemán/Heckel) — interactivo, sobre FOTO REAL (nov-2026; antes, un
+   dibujo): las dos caras del instrumento, la delantera (agujeros y meñiques) y la trasera (los dos pulgares), y sobre
+   cada llave un aro que se enciende cuando se pulsa.
+   Foto: «FoxBassoon.jpg», Gregory F. Maxwell, Wikimedia Commons, licencia GFDL 1.2 (solo esa): la página lleva el
+   crédito, el enlace al texto de la licencia (/licencias/gfdl-1.2.txt) y el aviso de que está modificada (recortada a la
+   zona de llaves, x 330-1250 e y 2150-3880 del original de 2000x4575, y con las llaves marcadas); la versión
+   modificada queda bajo la misma licencia.
+   Cada llave se localizó con el esquema rotulado de Commons «Standard Bassoon Fingering Keys Diagram.png» (pulgar
+   izquierdo, pulgar derecho, dedos izquierdos y dedos derechos), comparando forma y posición con la foto.
    Uso: <div id="x"></div><script>tmFagotEngine('x');</script>
    Datos verificados contra la carta oficial de Fox Products ("Let's Play Bassoon",
    Hugo Fox, págs. 14-20), decodificada del PDF celda a celda; es la carta base de
@@ -20,41 +24,40 @@
   const NOTA_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
   function enNote(s) { return EN ? s.replace(/Sol|Do|Re|Mi|Fa|La|Si/g, function (x) { return NOTA_EN[x]; }) : s; }
 
-  // Elementos que se ENCIENDEN (data-k). El resto del dibujo es decorativo.
-  // Diagrama vertical fiel a la silueta real: tudel y campana arriba, culata
-  // (junta doble, la pieza más gruesa) abajo. Mano izquierda en la junta del
-  // ala (agujeros 1-3), mano derecha en la culata (agujeros 4-6).
+  // Llaves que se ENCIENDEN (data-k): centro (x, y) y radios (rx, ry) sobre el recorte de la foto (920 x 1730).
+  // Cara DELANTERA = el fagot de la izquierda de la foto; cara TRASERA (pulgares) = el de la derecha.
   var KEYS = [
-    // Pulgar izquierdo (lado derecho del tubo, junta del ala, cerca de la culata)
-    { id: 'W',   sh: 'small', x: 255, y: 340 },  // llave de piano (whisper)
-    { id: 'HD',  sh: 'oct',   x: 255, y: 361 },  // llave aguda de Re
-    { id: 'HC',  sh: 'oct',   x: 255, y: 382 },  // llave aguda de Do
-    { id: 'HA',  sh: 'oct',   x: 255, y: 403 },  // llave aguda de La
-    { id: 'LD',  sh: 'touch', x: 255, y: 424 },  // Re grave
-    { id: 'LC',  sh: 'touch', x: 255, y: 445 },  // Do grave
-    { id: 'LB',  sh: 'touch', x: 255, y: 466 },  // Si grave
-    { id: 'LBB', sh: 'touch', x: 255, y: 487 },  // Si♭ grave
-    { id: 'CS',  sh: 'oct',   x: 255, y: 508 },  // Do♯ (pulgar izq.)
-    // Pulgar derecho (lado derecho del tubo, en la culata)
-    { id: 'BB',  sh: 'loop',  x: 258, y: 540 },  // Si♭ (pulgar dcho.)
-    { id: 'LE',  sh: 'pan',   x: 258, y: 575 },  // Mi grave («pancake»)
-    { id: 'FS',  sh: 'oct',   x: 258, y: 610 },  // Fa♯ (pulgar dcho.)
-    // Agujeros del tubo (mano izq. 1-3 junta del ala, mano dcha. 4-6 culata)
-    { id: 'H1',  sh: 'hole',  x: 220, y: 355 },
-    { id: 'H1h', sh: 'half',  x: 220, y: 355 },  // medio agujero sobre el 1
-    { id: 'H2',  sh: 'hole',  x: 220, y: 390 },
-    { id: 'H3',  sh: 'hole',  x: 220, y: 425 },
-    { id: 'H4',  sh: 'hole',  x: 220, y: 545 },
-    { id: 'H5',  sh: 'hole',  x: 220, y: 575 },
-    { id: 'G6',  sh: 'hole',  x: 220, y: 605, r: 10 },  // plato del 6 (Sol)
-    // Meñiques y frontales (lado izquierdo del tubo)
-    { id: 'TRC', sh: 'tiny',  x: 182, y: 522 },  // trino de Do♯ (mano dcha.)
-    { id: 'EBR', sh: 'spat',  x: 182, y: 450 },  // Mi♭ de resonancia (meñique izq.)
-    { id: 'LCS', sh: 'spat',  x: 182, y: 475 },  // Do♯ grave (meñique izq.)
-    { id: 'FK',  sh: 'loop',  x: 182, y: 613 },  // llave de Fa (meñique dcho.)
-    { id: 'AB',  sh: 'loop',  x: 182, y: 636 }   // Sol♯/La♭ (meñique dcho.)
+    // Pulgar izquierdo (cara trasera, junta del ala): de arriba abajo, Re agudo, Do agudo, La agudo, Do♯ y piano
+    { id: 'HD',  x: 708, y: 150, rx: 26, ry: 22 },
+    { id: 'HC',  x: 726, y: 182, rx: 26, ry: 20 },
+    { id: 'HA',  x: 722, y: 224, rx: 46, ry: 22 },
+    { id: 'CS',  x: 708, y: 260, rx: 34, ry: 20 },
+    { id: 'W',   x: 701, y: 300, rx: 24, ry: 18 },
+    // Pulgar izquierdo (cara trasera, junta larga): Do grave (el plato), Si y Si♭ (las dos varillas) y Re (la espátula larga)
+    { id: 'LC',  x: 586, y: 150, rx: 26, ry: 28 },
+    { id: 'LB',  x: 615, y: 159, rx: 16, ry: 26 },
+    { id: 'LBB', x: 649, y: 159, rx: 16, ry: 26 },
+    { id: 'LD',  x: 592, y: 230, rx: 18, ry: 50 },
+    // Pulgar derecho (cara trasera, culata): Si♭ (el arco), Mi grave (el plato grande) y Fa♯
+    { id: 'BB',  x: 716, y: 1102, rx: 60, ry: 20 },
+    { id: 'LE',  x: 722, y: 1170, rx: 50, ry: 46 },
+    { id: 'FS',  x: 748, y: 1242, rx: 30, ry: 26 },
+    // Agujeros (cara delantera): mano izquierda 1-3 en la junta del ala, mano derecha 4-5 y plato de Sol en la culata
+    { id: 'H1',  x: 262, y: 215, rx: 26, ry: 26 },
+    { id: 'H1h', x: 262, y: 215, rx: 26, ry: 26, half: true },  // medio agujero sobre el 1
+    { id: 'H2',  x: 260, y: 355, rx: 30, ry: 30 },
+    { id: 'H3',  x: 260, y: 472, rx: 36, ry: 36 },
+    { id: 'H4',  x: 241, y: 1169, rx: 26, ry: 26 },
+    { id: 'H5',  x: 246, y: 1327, rx: 32, ry: 32 },
+    { id: 'G6',  x: 215, y: 1437, rx: 52, ry: 24 },  // plato del 6 (Sol)
+    // Meñiques y trino (cara delantera)
+    { id: 'TRC', x: 204, y: 1106, rx: 30, ry: 22 },  // trino de Do♯ (mano dcha.)
+    { id: 'EBR', x: 330, y: 480, rx: 42, ry: 22 },   // Mi♭ de resonancia (meñique izq.): el plato de arriba
+    { id: 'LCS', x: 338, y: 547, rx: 40, ry: 22 },   // Do♯ grave (meñique izq.): el de abajo
+    { id: 'FK',  x: 135, y: 1462, rx: 34, ry: 24 },  // llave de Fa (meñique dcho.): el plato de arriba
+    { id: 'AB',  x: 129, y: 1531, rx: 36, ry: 24 }   // Sol♯/La♭ (meñique dcho.): el de abajo
   ];
-  var SVG_W = 420, SVG_H = 690;
+  var FOTO_W = 920, FOTO_H = 1730, IMG = '/assets/img/fagot/';
 
   // Nombres para el desglose de la digitación en el marcador
   var NAMES = {
@@ -149,6 +152,7 @@
 
   var LETTER = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
   var AUDIO_BASE = '/assets/audio/fagot/';
+  var AUDIO_V = '2'; // bumpear al cambiar cualquier fichero de audio (los mp3 se sirven con caché de un año). v2 (nov-2026): las 45 notas igualadas a -20 dB de sonoridad
   function sampleFile(n) {
     var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n);
     return m ? LETTER[m[1]] + (m[2] ? 's' : '') + m[3] : null;
@@ -170,17 +174,19 @@
     '.tm-fg-reg{font-size:.9rem;color:#666;margin-top:2px;}',
     '.tm-fg-keysline{font-size:.88rem;color:#8b6914;margin-top:4px;}',
     '.tm-fg-hint{font-size:1.02rem;color:#686868;font-weight:600;}',
-    '.tm-fg-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:6px;display:flex;justify-content:center;}',
-    '.tm-fg-svg{display:block;max-width:300px;width:100%;height:auto;margin:0 auto;}',
-    '.tm-fg-key .k-pad{fill:#e9eaee;stroke:#8f9199;stroke-width:1.5;}',
-    '.tm-fg-key.on .k-pad{fill:#8b6914;stroke:#6b5010;}',
-    '.tm-fg-key .k-ring{fill:none;stroke:#8f9199;stroke-width:1.2;}',
-    '.tm-fg-key.on .k-ring{stroke:#e8dcc0;}',
-    '.tm-fg-half .k-pad{fill:transparent;stroke:none;}',
-    '.tm-fg-half.on .k-pad{fill:#8b6914;}',
-    '.tm-fg-klab{font-family:Arial,Helvetica,sans-serif;font-size:11px;fill:#555;text-anchor:middle;}',
-    '.tm-fg-klab2{font-family:Arial,Helvetica,sans-serif;font-size:9px;fill:#777;text-anchor:middle;}',
-    '.tm-fg-grp{font-family:Arial,Helvetica,sans-serif;font-size:12px;fill:#8b6914;text-anchor:middle;font-weight:bold;}',
+    '.tm-fg-diagram{background:#fff;border:1px solid #e8e0cc;border-radius:8px;padding:6px;}',
+    '.tm-fg-foto{position:relative;max-width:360px;margin:0 auto;aspect-ratio:' + FOTO_W + '/' + FOTO_H + ';}',
+    '.tm-fg-foto img{display:block;width:100%;height:auto;}',
+    '.tm-fg-svg{position:absolute;inset:0;width:100%;height:100%;}',
+    '.tm-fg-caras{display:grid;grid-template-columns:1fr 1fr;max-width:360px;margin:0 auto 2px;font-size:.78rem;font-weight:700;color:#7a5c0f;text-align:center;line-height:1.2;}',
+    '.tm-fg-key .k-pad{fill:transparent;stroke:transparent;stroke-width:5;transition:fill .15s,stroke .15s;}',
+    '.tm-fg-key.on .k-pad{fill:rgba(255,128,0,.8);stroke:#7a3a00;stroke-width:6;filter:drop-shadow(0 0 12px #ff9500);}',   // opaco y con borde oscuro: sobre la llave plateada, un naranja suave parece dorado y no se distingue
+    '.tm-fg-credito{font-size:.75rem;color:#777;text-align:center;margin:4px 0 0;}',
+    '.tm-fg-credito a{color:inherit;}',
+    // en pantallas anchas, la foto a la izquierda y la nota con los botones a la derecha: la foto es alta
+    '@media(min-width:760px){.tm-fg-wrap{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);grid-template-rows:auto 1fr;column-gap:16px;align-items:start;}.tm-fg-cuerpo{display:contents;}.tm-fg-col{grid-column:1;grid-row:1 / span 2;}.tm-fg-readout{grid-column:2;grid-row:1;}.tm-fg-btns{grid-column:2;grid-row:2;margin-top:0!important;}}',
+    // en el móvil, la foto y los botones lado a lado, para ver la digitación sin tener que bajar
+    '@media(max-width:759px){.tm-fg-cuerpo{display:grid;grid-template-columns:minmax(0,46%) minmax(0,1fr);gap:8px;align-items:start;}.tm-fg-col{position:sticky;top:76px;}.tm-fg-btns{margin-top:0!important;gap:5px!important;}.tm-fg-btn{min-width:0!important;padding:8px 4px!important;font-size:.85rem;flex:1 0 28%;}.tm-fg-caras{font-size:.62rem;}.tm-fg-credito{font-size:.62rem;}}',
     '.tm-fg-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}',
     '.tm-fg-btn{min-width:46px;padding:10px 12px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}',
     '.tm-fg-btn:hover{background:#fdf8ee;border-color:#8b6914;}',
@@ -199,112 +205,10 @@
     document.head.appendChild(s);
   }
 
-  // Dibujo estático: silueta real del fagot, un único tubo cónico doblado
-  // internamente (campana arriba, tudel curvo saliendo hacia el lateral,
-  // culata gruesa abajo), anillas, ejes de mecánica y etiquetas.
-  var DECO =
-    '<defs><linearGradient id="tmFgWood" x1="0" y1="0" x2="0" y2="1">' +
-      '<stop offset="0" stop-color="#7d4e28"/><stop offset="0.3" stop-color="#5a3418"/>' +
-      '<stop offset="0.6" stop-color="#3f2210"/><stop offset="1" stop-color="#2a1408"/>' +
-    '</linearGradient></defs>' +
-    // campana (arriba): abocinado + anillo metálico + resalte del hueco
-    '<path d="M197 110 C190 88 178 60 163 34 L277 34 C262 60 250 88 243 110 Z" fill="url(#tmFgWood)" stroke="#1c0f06" stroke-width="1"/>' +
-    '<ellipse cx="220" cy="34" rx="57" ry="11" fill="#17100a" stroke="#0d0805" stroke-width="1"/>' +
-    '<ellipse cx="220" cy="34" rx="40" ry="7" fill="#4a3020"/>' +
-    '<rect x="203" y="98" width="34" height="16" rx="2.5" fill="#d7d8dc" stroke="#9a9ca3" stroke-width="0.8"/>' +
-    // junta larga (tubo entre campana y ala) y junta del ala + culata: un único
-    // tubo cónico (más estrecho arriba, más grueso hacia la culata)
-    '<path d="M197 110 L195 330 L191 520 L184 640 L256 640 L249 520 L245 330 L243 110 Z" fill="url(#tmFgWood)" stroke="#1c0f06" stroke-width="1"/>' +
-    '<line x1="208" y1="115" x2="200" y2="635" stroke="#96684044" stroke-width="1.4"/>' +
-    // anillas de las uniones (campana/junta larga, junta larga/ala, ala/culata)
-    '<rect x="207" y="100" width="26" height="18" rx="3" fill="#d7d8dc" stroke="#9a9ca3" stroke-width="0.8"/>' +
-    '<rect x="196" y="320" width="48" height="20" rx="3" fill="#d7d8dc" stroke="#9a9ca3" stroke-width="0.8"/>' +
-    '<rect x="192" y="510" width="56" height="20" rx="3" fill="#d7d8dc" stroke="#9a9ca3" stroke-width="0.8"/>' +
-    // remate y anilla metálica de la culata (la pieza más gruesa, abajo)
-    '<path d="M184 640 L256 640 L250 662 L190 662 Z" fill="url(#tmFgWood)" stroke="#1c0f06" stroke-width="1"/>' +
-    '<ellipse cx="220" cy="662" rx="32" ry="7" fill="#d7d8dc" stroke="#9a9ca3" stroke-width="0.8"/>' +
-    // tudel curvo (metal) con la caña en la punta
-    '<path d="M220 330 C204 309 176 294 156 269 C144 253 135 244 127 234" stroke="#c9cbd0" stroke-width="7" fill="none" stroke-linecap="round"/>' +
-    '<path d="M126 232 L152 253 L142 271 L116 250 Z" fill="#d9b26a" stroke="#a8843e" stroke-width="1"/>' +
-    '<rect x="94" y="197" width="16" height="10" rx="2" fill="#7a3040" stroke="#5e2432" stroke-width="1" transform="rotate(52 102 202)"/>' +
-    '<path d="M116 250 L96 220" stroke="#d9b26a" stroke-width="6" stroke-linecap="round"/>' +
-    // ejes de mecánica: varillas largas donde pivotan las llaves de los pulgares
-    '<line x1="246" y1="336" x2="246" y2="512" stroke="#b9bbc1" stroke-width="1.6"/>' +
-    '<line x1="249" y1="533" x2="249" y2="616" stroke="#b9bbc1" stroke-width="1.6"/>' +
-    // varillas cortas hacia las llaves de los meñiques
-    '<line x1="196" y1="450" x2="182" y2="450" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    '<line x1="195" y1="475" x2="182" y2="475" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    '<line x1="189" y1="522" x2="182" y2="522" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    '<line x1="187" y1="613" x2="182" y2="613" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    '<line x1="186" y1="636" x2="182" y2="636" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    // muletilla (apoyo de la mano derecha en la culata): decorativa, no es una llave
-    '<line x1="254" y1="612" x2="279" y2="607" stroke="#b9bbc1" stroke-width="1.3"/>' +
-    '<path d="M280 605 C293 604 301 613 298 623 C296 630 287 633 279 629 C283 624 285 618 283 612 C282 609 281 607 280 605 Z" fill="#2a2a2a" stroke="#151515" stroke-width="1"/>' +
-    '<circle cx="281" cy="606" r="2" fill="#9a9ca3"/>' +
-    // etiquetas
-    '<text class="tm-fg-klab" x="220" y="16">' + T('Campana', 'Bell') + '</text>' +
-    '<text class="tm-fg-klab" x="85" y="188">' + T('Caña', 'Reed') + '</text>' +
-    '<text class="tm-fg-klab" x="85" y="200">' + T('y tudel', 'and bocal') + '</text>' +
-    '<text class="tm-fg-klab" x="305" y="585">' + T('Culata', 'Boot joint') + '</text>' +
-    '<text class="tm-fg-klab2" x="292" y="646">' + T('Muletilla', 'Hand rest') + '</text>' +
-    '<text class="tm-fg-grp" x="255" y="332">' + T('Pulgar izquierdo', 'Left thumb') + '</text>' +
-    '<text class="tm-fg-grp" x="258" y="530">' + T('Pulgar derecho', 'Right thumb') + '</text>' +
-    '<text class="tm-fg-klab2" x="279" y="343">' + T('piano', 'whisper') + '</text>' +
-    '<text class="tm-fg-klab2" x="279" y="364">' + T('Re', 'D') + '</text>' +
-    '<text class="tm-fg-klab2" x="279" y="385">' + T('Do', 'C') + '</text>' +
-    '<text class="tm-fg-klab2" x="279" y="406">' + T('La', 'A') + '</text>' +
-    '<text class="tm-fg-klab2" x="279" y="427">' + T('Re', 'D') + '</text>' +
-    '<text class="tm-fg-klab2" x="279" y="448">' + T('Do', 'C') + '</text>' +
-    '<text class="tm-fg-klab2" x="279" y="469">' + T('Si', 'B') + '</text>' +
-    '<text class="tm-fg-klab2" x="279" y="490">' + T('Si♭', 'B♭') + '</text>' +
-    '<text class="tm-fg-klab2" x="279" y="511">' + T('Do♯', 'C♯') + '</text>' +
-    '<text class="tm-fg-klab2" x="282" y="543">' + T('Si♭', 'B♭') + '</text>' +
-    '<text class="tm-fg-klab2" x="282" y="578">' + T('Mi', 'E') + '</text>' +
-    '<text class="tm-fg-klab2" x="282" y="613">' + T('Fa♯', 'F♯') + '</text>' +
-    '<text class="tm-fg-klab" style="fill:#e8dcc0" x="238" y="359">1</text><text class="tm-fg-klab" style="fill:#e8dcc0" x="238" y="394">2</text><text class="tm-fg-klab" style="fill:#e8dcc0" x="238" y="429">3</text>' +
-    '<text class="tm-fg-klab" style="fill:#e8dcc0" x="238" y="549">4</text><text class="tm-fg-klab" style="fill:#e8dcc0" x="238" y="579">5</text><text class="tm-fg-klab" style="fill:#e8dcc0" x="238" y="609">6</text>' +
-    '<text class="tm-fg-klab" x="170" y="525">' + T('tr', 'tr') + '</text>' +
-    '<text class="tm-fg-grp" x="140" y="390">' + T('Mano', 'Left') + '</text>' +
-    '<text class="tm-fg-grp" x="140" y="403">' + T('izquierda', 'hand') + '</text>' +
-    '<text class="tm-fg-grp" x="140" y="573">' + T('Mano', 'Right') + '</text>' +
-    '<text class="tm-fg-grp" x="140" y="586">' + T('derecha', 'hand') + '</text>' +
-    '<text class="tm-fg-klab" x="160" y="500">' + T('Meñique izq.', 'Left pinky') + '</text>' +
-    '<text class="tm-fg-klab" x="150" y="650">' + T('Meñique dcho.', 'Right pinky') + '</text>';
-
   function keyShape(k) {
-    if (k.sh === 'half') {
-      // semicírculo superior del agujero 1; invisible salvo cuando está .on
-      return '<g class="tm-fg-key tm-fg-half" data-k="' + k.id + '">' +
-        '<path class="k-pad" d="M' + (k.x - 9) + ' ' + k.y + ' A9 9 0 0 1 ' + (k.x + 9) + ' ' + k.y + ' Z"/></g>';
-    }
-    var open = '<g class="tm-fg-key" data-k="' + k.id + '">', close = '</g>';
-    if (k.sh === 'oct') {
-      return open + '<ellipse class="k-pad" cx="' + k.x + '" cy="' + k.y + '" rx="5.5" ry="8"/>' + close;
-    }
-    if (k.sh === 'small') {
-      return open + '<circle class="k-pad" cx="' + k.x + '" cy="' + k.y + '" r="7"/>' + close;
-    }
-    if (k.sh === 'touch') {
-      return open + '<rect class="k-pad" x="' + (k.x - 7.5) + '" y="' + (k.y - 9) + '" width="15" height="18" rx="5"/>' + close;
-    }
-    if (k.sh === 'pan') {
-      return open + '<circle class="k-pad" cx="' + k.x + '" cy="' + k.y + '" r="10"/>' +
-        '<circle class="k-ring" cx="' + k.x + '" cy="' + k.y + '" r="4"/>' + close;
-    }
-    if (k.sh === 'loop') {
-      return open + '<ellipse class="k-pad" cx="' + k.x + '" cy="' + k.y + '" rx="8" ry="6"/>' + close;
-    }
-    if (k.sh === 'tiny') {
-      return open + '<ellipse class="k-pad" cx="' + k.x + '" cy="' + k.y + '" rx="5" ry="4"/>' + close;
-    }
-    if (k.sh === 'spat') {
-      return open + '<rect class="k-pad" x="' + (k.x - 7.5) + '" y="' + (k.y - 4) + '" width="15" height="8" rx="4"/>' + close;
-    }
-    // hole: plato con anillo decorativo
-    var r = k.r || 9;
-    return open +
-      '<circle class="k-pad" cx="' + k.x + '" cy="' + k.y + '" r="' + r + '"/>' +
-      '<circle class="k-ring" cx="' + k.x + '" cy="' + k.y + '" r="4"/>' + close;
+    if (k.half)   // medio agujero: solo la mitad de arriba del agujero 1
+      return '<g class="tm-fg-key" data-k="' + k.id + '"><path class="k-pad" d="M' + (k.x - k.rx) + ' ' + k.y + ' A' + k.rx + ' ' + k.ry + ' 0 0 1 ' + (k.x + k.rx) + ' ' + k.y + ' Z"/></g>';
+    return '<g class="tm-fg-key" data-k="' + k.id + '"><ellipse class="k-pad" cx="' + k.x + '" cy="' + k.y + '" rx="' + k.rx + '" ry="' + k.ry + '"/></g>';
   }
 
   function tmFagotEngine(containerId) {
@@ -318,13 +222,17 @@
       return '<button class="tm-fg-btn" data-n="' + n + '">' + label(n) + '</button>';
     }).join('');
 
+    var foto =
+      '<div class="tm-fg-diagram">' +
+        '<div class="tm-fg-caras"><span>' + T('Por delante', 'Front') + '<br>' + T('(dedos)', '(fingers)') + '</span><span>' + T('Por detrás', 'Back') + '<br>' + T('(pulgares)', '(thumbs)') + '</span></div>' +
+        '<div class="tm-fg-foto"><picture><source type="image/webp" srcset="' + IMG + 'llaves.webp"><img src="' + IMG + 'llaves.jpg" width="552" height="1038" alt="" decoding="async"></picture>' +
+        '<svg class="tm-fg-svg" viewBox="0 0 ' + FOTO_W + ' ' + FOTO_H + '" role="img" aria-label="' + T('Foto de un fagot por sus dos caras: a la izquierda, la delantera, con los agujeros y las llaves de los meñiques; a la derecha, la trasera, con las llaves de los dos pulgares. Las llaves y agujeros que se tapan para la nota elegida se iluminan en naranja', 'Photo of a bassoon from both sides: on the left the front, with the tone holes and the little-finger keys; on the right the back, with the keys for both thumbs. The keys and holes closed for the chosen note light up in orange') + '">' + keysSvg + '</svg></div>' +
+        '<p class="tm-fg-credito">' + T('Foto: ', 'Photo: ') + '<a href="https://commons.wikimedia.org/wiki/File:FoxBassoon.jpg" rel="nofollow">Gregory F. Maxwell</a>, ' + T('licencia ', 'licensed under the ') + '<a href="/licencias/gfdl-1.2.txt" rel="license">GFDL 1.2</a>' + T('. Modificada: recortada y con las llaves marcadas; esta versión, bajo la misma licencia.', '. Modified: cropped, with the keys marked; this version is under the same licence.') + '</p>' +
+      '</div>';
     wrap.innerHTML =
       '<div class="tm-fg-wrap">' +
         '<div class="tm-fg-readout" id="' + uid + '_ro"><span class="tm-fg-hint">' + T('Elige una nota para ver su digitación', 'Choose a note to see its fingering') + '</span></div>' +
-        '<div class="tm-fg-diagram"><svg class="tm-fg-svg" viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" role="img" aria-label="' + T('Diagrama de digitación del fagot: instrumento vertical con la campana arriba, el tudel y la caña saliendo hacia el lateral y la culata (la parte más gruesa) abajo; las llaves pulsadas se muestran en dorado', 'Bassoon fingering diagram: vertical instrument with the bell at the top, the bocal and reed going off to the side and the boot joint (the thickest part) at the bottom; the keys that are pressed are shown in gold') + '">' +
-          DECO + keysSvg +
-        '</svg></div>' +
-        '<div class="tm-fg-btns">' + btns + '</div>' +
+        '<div class="tm-fg-cuerpo"><div class="tm-fg-col">' + foto + '</div><div class="tm-fg-btns">' + btns + '</div></div>' +
       '</div>';
 
     var svg = wrap.querySelector('.tm-fg-svg');
@@ -335,7 +243,7 @@
       var f = sampleFile(n);
       if (!f) return;
       try { audio.pause(); } catch (e) {}
-      audio.src = AUDIO_BASE + f + '.mp3';
+      audio.src = AUDIO_BASE + f + '.mp3?v=' + AUDIO_V;
       audio.currentTime = 0;
       var pr = audio.play();
       if (pr && pr.catch) pr.catch(function () {});
