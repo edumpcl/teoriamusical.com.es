@@ -158,6 +158,10 @@ count = 0
 skipped = 0
 for fp in walk():
     rel = os.path.relpath(fp, ROOT).replace(os.sep, '/')
+    # La edición inglesa tiene sus propias imágenes, con etiquetas en inglés (tools/en/gen-og-badge.py). Si este script
+    # las regenera, salen con la etiqueta española («TEORÍA MUSICAL»): pasó en la revisión semanal del 16-11-2026.
+    if rel.startswith('en/'):
+        continue
     if rel in SKIP:
         skipped += 1
         continue
