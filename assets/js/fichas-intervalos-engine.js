@@ -332,7 +332,10 @@
     '.tm-fg-loupe{position:fixed;display:none;pointer-events:none;z-index:9999;background:#fdfcf9;border:2px solid #333;border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,.35);transform:translate(-50%,calc(-100% - 18px));}',
     '.tm-fg-loupe::after{content:"";position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);border:11px solid transparent;border-top-color:#333;border-bottom:none;}',
     '.tm-fg-loupe::before{content:"";position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-top-color:#fdfcf9;border-bottom:none;z-index:1;}',
+    // ancho fijo: si no, la lupa toma el sitio que queda hasta el borde derecho y se encoge cerca de él (Eduardo, nov-2026)
+    '.tm-fg-loupe{width:min(260px,calc(100vw - 16px));box-sizing:border-box;}',
     '.tm-fg-loupe-staff{line-height:0;}',
+    '.tm-fg-loupe-staff svg{display:block;width:100%;height:auto;}',
     '.tm-fg-dir{background:#f5f2ea;border-radius:6px;padding:11px 14px;text-align:center;font-size:1rem;color:#1a1a2e;margin-bottom:6px;}',
     '.tm-fg-fb{display:none;margin-top:10px;padding:12px;border-radius:6px;font-weight:600;font-size:.92rem;}',
     '.tm-fg-fb.ver{display:block;}',
@@ -581,8 +584,9 @@
     }
 
     function engancharStaff(div, e) {
-      div.addEventListener('click', function (ev) {
-        if (pr.corregido) return;
+      // la nota se pone al SOLTAR el botón (no con 'click'): así también funciona arrastrar con el ratón buscando la línea
+      div.addEventListener('mouseup', function (ev) {
+        if (pr.corregido || ev.button !== 0) return;
         var y = (ev.changedTouches || ev.touches) ? (ev.changedTouches || ev.touches)[0].clientY : ev.clientY;
         pr.fila = posicionDeY(div, y);
         ocultarLupa();
@@ -592,6 +596,25 @@
         if (!pr.corregido) mostrarLupa(div, e, ev.clientX, ev.clientY);
       });
       div.addEventListener('mouseleave', ocultarLupa);
+      // arrastrar con el ratón sobre el pentagrama no debe seleccionar el texto de la página (Eduardo, nov-2026)
+      div.style.userSelect = 'none'; div.style.webkitUserSelect = 'none';
+      // En el móvil, como en los ejercicios de construir intervalos: la lupa sale al poner el dedo y lo sigue, y la nota
+      // se coloca al levantarlo (antes la nota caía directamente donde tocaba el dedo, sin ver dónde iba)
+      var tocar = function (ev) {
+        if (pr.corregido) return;
+        ev.preventDefault();
+        var t = ev.touches[0];
+        mostrarLupa(div, e, t.clientX, t.clientY);
+      };
+      div.addEventListener('touchstart', tocar, { passive: false });
+      div.addEventListener('touchmove', tocar, { passive: false });
+      div.addEventListener('touchend', function (ev) {
+        if (pr.corregido) return;
+        ev.preventDefault();   // sin el clic que el navegador simula después: la nota se pone aquí
+        pr.fila = posicionDeY(div, ev.changedTouches[0].clientY);
+        ocultarLupa();
+        window.tmNotacion.trasPintar(pintarPractica);   // INP
+      }, { passive: false });
     }
 
     function pintarPractica() {

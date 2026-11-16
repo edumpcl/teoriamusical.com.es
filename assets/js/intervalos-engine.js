@@ -175,7 +175,10 @@
     '.tm-iv-wrap .tm-iv-loupe{position:fixed;display:none;pointer-events:none;z-index:9999;background:#fdfcf9;border:2px solid #333;border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,0.35);transform:translate(-50%,calc(-100% - 18px));}',
     '.tm-iv-wrap .tm-iv-loupe::after{content:"";position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);border:11px solid transparent;border-top-color:#333;border-bottom:none;}',
     '.tm-iv-wrap .tm-iv-loupe::before{content:"";position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-top-color:#fdfcf9;border-bottom:none;z-index:1;}',
-    '.tm-iv-wrap .tm-iv-loupe-staff{line-height:0;}'
+    // ancho fijo: si no, la lupa toma el sitio que queda hasta el borde derecho y se encoge cerca de él (Eduardo, nov-2026)
+    '.tm-iv-wrap .tm-iv-loupe{width:min(260px,calc(100vw - 16px));box-sizing:border-box;}',
+    '.tm-iv-wrap .tm-iv-loupe-staff{line-height:0;}',
+    '.tm-iv-wrap .tm-iv-loupe-staff svg{display:block;width:100%;height:auto;}'
   ].join('');
 
   function injectCSS() {
@@ -570,6 +573,8 @@
         var elLstaff = document.getElementById(uid + '_lstaff');
         var lastLoupeKey = null;
         elNotDiv.style.cursor = 'crosshair';
+        // arrastrar con el ratón para buscar la nota no debe seleccionar el texto de la página (Eduardo, nov-2026)
+        elNotDiv.style.userSelect = 'none'; elNotDiv.style.webkitUserSelect = 'none';
 
         function calcStep(clientY) { return pasoEn(elNotDiv, clientY); }
 
@@ -620,7 +625,9 @@
           if (hintEl) hintEl.textContent = T('Pulsa de nuevo para cambiar la nota', 'Tap again to change the note');
         };
 
-        elNotDiv.addEventListener('click', window.tmNotacion.diferido(onConstruirStaffInteract));
+        // la nota se pone al SOLTAR el botón (no con 'click'): así también funciona arrastrar con el ratón buscando la línea,
+        // como el dedo en el móvil; un arrastre no cuenta como clic para el navegador (Eduardo, nov-2026)
+        elNotDiv.addEventListener('mouseup', function (e) { if (e.button === 0) window.tmNotacion.diferido(onConstruirStaffInteract)(e); });
         elNotDiv.addEventListener('mousemove', function(e) { showLoupe(e.clientX, e.clientY); });
         elNotDiv.addEventListener('mouseleave', hideLoupe);
         elNotDiv.addEventListener('touchstart', function(e) {
