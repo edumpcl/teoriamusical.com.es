@@ -129,7 +129,7 @@ ${ROWS}
 
 <h2>Trombone slide positions</h2>
 
-<p>The diagram shows a trombone with the <strong>mouthpiece and slide</strong> on the left (the slide gets longer or shorter depending on the note) and the <strong>fixed bell</strong> on the right. Below it, a ruler marks the <strong>active position</strong> from 1 to 7. Remember that, as on the trumpet, one position can give several notes: the lips do the rest by adjusting the harmonic.</p>
+<p>The diagram is a <strong>real photo</strong> of the trombone: when you choose a note, the <strong>slide</strong> moves to its position, at the real distance of each one, and the number of the <strong>position</strong> (1 to 7) lights up under the tip. With the <em>With F attachment</em> button, the rotary valve lights up too and you get the trigger positions. Remember that, as on the trumpet, one position can give several notes: the lips do the rest by adjusting the harmonic.</p>
 
 <p>Pick a note to see its slide position, the note on the staff and its <strong>real trombone sound</strong>.</p>
 

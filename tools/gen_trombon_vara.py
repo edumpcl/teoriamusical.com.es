@@ -33,7 +33,7 @@ FOTOS = {
                          campana=(1700, 1795, 203.2), escala=0.5),
     # File:Yamaha Bass trombone YBL-822 G horizontal.tif (1490x472): trombón bajo con dos rotores. Foto más pequeña: sin reducir.
     'bajo': dict(carpeta='trombon-bajo', salida='vara', x_arriba=575, x_abajo=561, puente=(568, 602), x_libre=900, cromo=(530, 249, 272),
-                 campana=(800, 852, 241.3), escala=1.0),
+                 campana=(800, 852, 241.3), escala=1.0, recorrido=1.08),   # con la válvula de Fa, la 6.ª queda más allá de la 7.ª normal
 }
 
 
@@ -95,7 +95,7 @@ def main(nombre, origen):
     # perfil cromado: el del casquillo plateado de la vara interior (una columna de la foto)
     perfil = im[F['cromo'][1]:F['cromo'][2], F['cromo'][0]].copy()
     largo = septima * F.get('recorrido', 1.0)   # lo máximo que sale la vara
-    FIN_INTERIOR = int(min(X_ARRIBA + largo + 90, xs2_max - 120))
+    FIN_INTERIOR = int(min(X_ARRIBA + largo + 90, W - 2))   # hasta donde llega la vara en la posición más larga (no solo hasta el final del trombón en la foto)
     g_int = grosor * 0.80
     for k0, k1, x_ini in ((0, 1, X_ARRIBA - 3), (2, 3, X_ABAJO - 3)):
         for x in range(x_ini, FIN_INTERIOR):

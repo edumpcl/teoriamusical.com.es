@@ -54,12 +54,12 @@ const INSTRUMENTOS = {
   trompa:     { pagina: 'diccionario-musical/notas-de-la-trompa',     transpone: -7,  doble: true, nombre: 'la trompa doble en Fa/Si♭' },
   // Trombones de VARA: no hay pistones; la nota se elige con la posicion de la vara (1.ª a 7.ª) y el armonico
   // de los labios. No transponen (lo escrito es lo que suena, clave de fa). El bajo anade dos valvulas.
-  trombon:      { pagina: 'diccionario-musical/notas-del-trombon',      transpone: 0, vara: true, clave: 'fa', nombre: 'trombón de varas (tenor, en Si♭)',
+  trombon:      { pagina: 'diccionario-musical/notas-del-trombon',      transpone: 0, vara: true, transpositor: true, clave: 'fa', nombre: 'trombón de varas (tenor, en Si♭)',
                   antes: /<h2>Las posiciones del trombón<\/h2>/ },
   // Corneta de palometa (Do/Re♭): sin pistones; 16 notas = armonicos 3.º a 10.º de dos series (Do y Re♭). La tabla
   // REEMPLAZA a la que ya tenia la pagina (la misma, sin pentagramas): armonico x serie, con la nota dibujada.
   corneta:    { pagina: 'diccionario-musical/notas-de-la-corneta',    transpone: 0, corneta: true, clave: 'solc', nombre: 'la corneta Do/Re♭' },
-  'trombon-bajo': { pagina: 'diccionario-musical/notas-del-trombon-bajo', transpone: 0, vara: true, valvulas: true, clave: 'fa', nombre: 'trombón bajo' },
+  'trombon-bajo': { pagina: 'diccionario-musical/notas-del-trombon-bajo', transpone: 0, vara: true, valvulas: true, transpositor: true, nombreT: 'válvula de Fa', clave: 'fa', nombre: 'trombón bajo' },
 };
 
 const OCULTO = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap';
@@ -180,8 +180,11 @@ function tablaDoble(inst) {
 function leerVara(inst) {
   const src = fs.readFileSync(path.join(RAIZ, 'assets/js/digitaciones-' + inst + '-engine.js'), 'utf8');
   const caja = {};
-  for (const [nom, re] of [['FING', /var FING = \{[\s\S]*?\n  \};/], ['ORDEN', /var ORDEN = \[[\s\S]*?\];/], ['FUND', /var FUND = \{[^}]*\};/]]) {
+  const opcional = { REC_T: 1, GRAVES_T: 1, FUND_T: 1 };
+  for (const [nom, re] of [['FING', /var FING = \{[\s\S]*?\n  \};/], ['ORDEN', /var ORDEN = \[[\s\S]*?\];/], ['FUND', /var FUND = \{[^}]*\};/],
+    ['REC_T', /var REC_T = \{[^}]*\};/], ['GRAVES_T', /var GRAVES_T = \[[^\]]*\];/], ['FUND_T', /var FUND_T = \{[^}]*\};/]]) {
     const m = src.match(re);
+    if (!m && opcional[nom]) continue;
     if (!m) throw new Error(`${inst}: no encuentro ${nom} en el motor`);
     // eslint-disable-next-line no-eval
     eval(m[0].replace('var ' + nom, 'caja.' + nom));
@@ -190,36 +193,59 @@ function leerVara(inst) {
 }
 const VALV_TXT = { F: 'F', Gb: 'G♭', both: 'F + G♭' };
 
+/* Con transpositor (tenor): el tubo de Fa, seis posiciones. La posición más cercana que da la nota, con el mismo cálculo
+   que el motor (fundamental Fa1 = MIDI 29 en 1.ª, un semitono menos por posición; armónicos 2.º-6.º y 8.º). */
+const ARM_T = { 2: 12, 3: 19, 4: 24, 5: 28, 6: 31, 8: 36 };
+function altTranspositor(clave) {
+  const midi = aMidi(clave);
+  for (let pos = 1; pos <= 6; pos++) for (const h in ARM_T) if (29 - (pos - 1) + ARM_T[h] === midi) return { pos, harm: +h };
+  return null;
+}
+
 function tablaVara(inst) {
   const cfg = INSTRUMENTOS[inst];
-  const { FING, ORDEN, FUND } = leerVara(inst);
-  const filas = ORDEN.map((clave) => {
-    const d = FING[clave];
+  const { FING, ORDEN, FUND, REC_T, GRAVES_T, FUND_T } = leerVara(inst);
+  // Tenor con transpositor (Eduardo, nov-2026): las notas graves que solo salen con él van delante, y en las de uso
+  // corriente (REC_T del motor) se añade su posición con transpositor debajo de la normal. Solo las habituales: todas
+  // las posibles están en el diagrama.
+  const conT = cfg.transpositor && REC_T && GRAVES_T;
+  const lista = conT ? GRAVES_T.concat(ORDEN) : ORDEN;
+  const filas = lista.map((clave) => {
+    const soloT = conT && GRAVES_T.indexOf(clave) >= 0;
+    const alt = conT && REC_T[clave] ? altTranspositor(clave) : null;
+    if (conT && REC_T[clave] && !alt) throw new Error(`${inst}: ${clave} no sale con transpositor`);
+    const d = soloT ? { pos: alt.pos, harm: alt.harm } : FING[clave];
     const midi = aMidi(clave);
     const [esc, escBem] = nombre(midi);
-    const dib = [1, 2, 3, 4, 5, 6, 7].map((k) => (k === d.pos ? '<b class="tm-dg-on">●</b>' : '<span class="tm-dg-off">○</span>')).join('');
-    const arm = d.harm ? `${d.harm}.º` : '<span class="tm-dg-na">—</span>';
-    const texto = `${d.pos}.ª posición`
+    // La posición, con su número (Eduardo, nov-2026: los siete círculos ○○○●○○○ no cabían en el móvil)
+    const conQue = cfg.nombreT || 'transpositor';   // el transpositor del tenor; en el bajo, su válvula de Fa
+    const dib = `<b class="tm-dg-pos${soloT ? ' tm-dg-t' : ''}">${d.pos}.ª</b>`
+      + (soloT ? `<small class="tm-dg-t">con<br>${conQue}</small>` : alt ? `<small class="tm-dg-t">o ${alt.pos}.ª con<br>${conQue}</small>` : '');
+    // En el bajo, armónico y válvulas van en la misma columna: cada nota usa una cosa u otra
+    const arm = d.harm ? `${d.harm}.º` : d.valves ? `<span class="tm-dg-valv">${VALV_TXT[d.valves]}</span>` : '<span class="tm-dg-na">—</span>';
+    const texto = `${d.pos}.ª posición${soloT ? ' con ' + (cfg.nombreT || 'transpositor') : ''}`
       + (d.valves ? `, con ${d.valves === 'both' ? 'las dos válvulas (F y G♭, que juntas dan Re)' : 'la válvula ' + VALV_TXT[d.valves]}` : '')
-      + (d.harm ? `, ${d.harm}.º armónico sobre el ${FUND[d.pos]}` : '');
+      + (d.harm ? `, ${d.harm}.º armónico sobre el ${(soloT ? FUND_T : FUND)[d.pos]}` : '')
+      + (alt && !soloT ? `; o ${alt.pos}.ª posición con ${cfg.nombreT || 'transpositor'}, ${alt.harm}.º armónico sobre el ${FUND_T[alt.pos]}` : '');
     return '<tr>'
       + `<th scope="row">${esc}${escBem ? `<small>${escBem}</small>` : ''}</th>`
       + `<td class="tm-dg-pent">${pentagrama(clave, cfg.clave)}</td>`
-      + `<td class="tm-dg-dib">${dib}<span style="${OCULTO}">${texto}</span></td>`
+      + `<td>${dib}<span style="${OCULTO}">${texto}</span></td>`   // sin tm-dg-dib: esa letra monoespaciada y espaciada es para los dibujos de pistones
       + `<td class="tm-dg-suena">${arm}</td>`
-      + (cfg.valvulas ? `<td class="tm-dg-suena">${d.valves ? VALV_TXT[d.valves] : '<span class="tm-dg-na">—</span>'}</td>` : '')
       + '</tr>';
   });
-  const cab = '<abbr title="1.ª posición: la vara recogida">1</abbr> 2 3 4 5 6 <abbr title="7.ª posición: la vara más extendida">7</abbr>';
   return [MARCA_INI,
     '<div class="tm-table-wrap">',
-    '<table class="tm-table tm-digitaciones">',
+    '<table class="tm-table tm-digitaciones tm-dg-vara">',
     `<caption style="caption-side:top;text-align:left;font-weight:600;padding:0 0 8px">Todas las posiciones del ${cfg.nombre}: ${filas.length} notas</caption>`,
-    `<thead><tr><th scope="col">Nota escrita</th><th scope="col">En el pentagrama<small>clave de fa</small></th><th scope="col">Posición de la vara<small>${cab}</small></th><th scope="col">Armónico</th>${cfg.valvulas ? '<th scope="col">Válvulas</th>' : ''}</tr></thead>`,
+    `<thead><tr><th scope="col">Nota<small>escrita = real</small></th><th scope="col">Pentagrama<small>clave de fa</small></th><th scope="col">Posición<small>de la vara</small></th><th scope="col">${cfg.valvulas ? 'Armónico<small>o válvulas</small>' : 'Armónico'}</th></tr></thead>`,
     '<tbody>', filas.join('\n'), '</tbody></table></div>',
-    `<p class="tm-nota-tabla"><strong>●</strong> marca la posición de la vara: la <strong>1.ª</strong> es la vara recogida y la <strong>7.ª</strong>, la más extendida; cada posición baja la nota un semitono. La columna <strong>Armónico</strong> dice con cuál de los armónicos de esa posición se toca la nota, ajustándolo con los labios${cfg.valvulas ? '. Las notas del registro grave se tocan con las <strong>válvulas</strong> del trombón bajo (F, G♭ o las dos a la vez, que dan Re), y por eso no llevan armónico' : ''}. <strong>—</strong>: no hay dato.</p>`,
+    `<p class="tm-nota-tabla">La <strong>posición</strong> dice dónde va la vara: la <strong>1.ª</strong> es la vara recogida y la <strong>7.ª</strong>, la más extendida; cada posición baja la nota un semitono. El <strong>armónico</strong> dice con cuál de los armónicos de esa posición se toca la nota, ajustándolo con los labios${cfg.valvulas ? '. Las notas del registro grave se tocan con las <strong>válvulas</strong> del trombón bajo (F, G♭ o las dos a la vez, que dan Re): en esa columna sale la válvula en lugar del armónico' : ''}. <strong>—</strong>: no hay dato.</p>`,
+    conT ? (cfg.nombreT
+      ? `<p class="tm-nota-tabla">En <strong style="color:#9a4a00">naranja</strong>, la posición alternativa con la <strong>${cfg.nombreT}</strong> de las notas en las que se usa a menudo, porque ahorra la 6.ª y la 7.ª. Con esa válvula hay seis posiciones, más separadas que las normales. El resto de alternativas, en el diagrama de abajo.</p>`
+      : `<p class="tm-nota-tabla">En <strong style="color:#9a4a00">naranja</strong>, lo que se toca con el <strong>transpositor</strong> pulsado: las ${GRAVES_T.length} notas graves de arriba, que solo existen con él, y la posición alternativa de las notas en las que se usa a menudo, porque ahorra la 6.ª y la 7.ª. Con transpositor hay seis posiciones, más separadas que las normales. El resto de alternativas, en el diagrama de abajo.</p>`) : '',
     `<p class="tm-nota-tabla">${cfg.valvulas ? 'El trombón bajo' : 'El trombón'} <strong>no transpone</strong>: lo escrito es lo que suena.</p>`,
-    MARCA_FIN].join('\n');
+    MARCA_FIN].filter(Boolean).join('\n');
 }
 
 /* ---- corneta ---- */
@@ -321,6 +347,18 @@ const CSS = `
 .tm-dg-corneta strong { display: block; }
 .tm-dg-pent { padding: 2px 6px; }
 .tm-nota-tabla { font-size: .94rem; }
+/* Trombones: la posición de la vara con su número, y en el móvil la tabla cabe sin desplazarse de lado */
+.tm-dg-pos { color: var(--brand); font-size: 1.1em; }
+.tm-dg-valv { color: var(--brand); font-weight: 600; }
+.tm-dg-vara .tm-dg-t { color: #9a4a00; }
+.tm-dg-vara small.tm-dg-t { opacity: 1; font-weight: 600; line-height: 1.15; margin-top: 2px; }
+.tm-dg-vara thead small { letter-spacing: normal; }
+@media (max-width: 600px) {
+  .tm-dg-vara th, .tm-dg-vara td { padding: 4px 5px; }
+  .tm-dg-vara thead th { font-size: .82rem; }
+  .tm-dg-vara .tm-dg-pent img { width: 66px; height: auto; }
+  .tm-dg-vara caption { white-space: normal; }
+}
 `;
 
 function poner(inst) {

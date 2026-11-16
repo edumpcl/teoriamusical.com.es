@@ -151,8 +151,8 @@
     '.tm-tb-ops button.t[aria-pressed="true"]{border-color:#c9730a;background:#ffe2b8;}',
     '.tm-tb-credito{font-size:.75rem;color:#777;text-align:center;margin:4px 0 0;}',
     '.tm-tb-credito a{color:inherit;}',
-    // en el móvil se recorta la bomba de afinación (el 15 % de la izquierda): lo que importa, la vara, se ve más grande
-    '@media(max-width:600px){.tm-tb-lienzo{width:117.6%;margin-left:-17.6%;}.tm-tb-marca{width:16px;height:16px;margin:-8px 0 0 -8px;font-size:9.5px;line-height:13.5px;border-width:1px;}}',
+    // en el móvil se ve el trombón entero (Eduardo: recortar la bomba de afinación lo dejaba «cortado»)
+    '@media(max-width:600px){.tm-tb-foto{padding-right:10px;}.tm-tb-marca{width:16px;height:16px;margin:-8px 0 0 -8px;font-size:9.5px;line-height:13.5px;border-width:1px;}}',
     '@media(prefers-reduced-motion:reduce){.tm-tb-vara{transition:none;}}',
     '.tm-tb-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}',
     '.tm-tb-btn{min-width:46px;padding:10px 12px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}',

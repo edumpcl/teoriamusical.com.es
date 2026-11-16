@@ -23,10 +23,17 @@
      [x, y, ancho, alto] en 1.ª posición; pend = inclinación de los tubos; pos = lo que sale la vara en cada posición (0, 86,
      177, 274, 377, 485 y 600 mm reales); punta = el extremo del codo. rotor: centro y radio de cada rotor en la foto (el de
      Fa es el primero que encuentra el aire al salir de la vara: el de abajo a la derecha; el otro, el de Sol♭). */
-  var GEO = { W: 2268, H: 682, vara: [581.0, 268.0, 902, 179], pend: 0.0653,
+  var GEO = { W: 2328, H: 686, vara: [581.0, 268.0, 902, 179], pend: 0.0653,
     pos: [0.0, 107.4, 221.3, 341.9, 469.7, 605.0, 748.4], punta: [1480.0, 373.5],
     rotor: { F: [374, 337, 27], Gb: [322, 284, 27] } };
+  /* Con válvulas el tubo es más largo y cada semitono pide más vara: con la de Fa (una cuarta más grave) las distancias
+     se multiplican por 2^(5/12) y solo caben SEIS posiciones; con las dos (F + G♭ = Re, una sexta menor más grave), por
+     2^(8/12) y caben CINCO. Así se ve la vara donde va de verdad. */
+  GEO.posF = GEO.pos.slice(0, 6).map(function (d) { return d * Math.pow(2, 5 / 12); });
+  GEO.posD = GEO.pos.slice(0, 5).map(function (d) { return d * Math.pow(2, 8 / 12); });
+  var distancias = function (v) { return v === 'both' ? GEO.posD : v === 'F' ? GEO.posF : GEO.pos; };
   var IMG = '/assets/img/trombon-bajo/';
+  var IMG_V = '?v=2';   // subir al regenerar las capas (las imágenes se sirven con caché de un año). v2: lienzo más ancho para la válvula de Fa
   var pct = function (v, total) { return (v / total * 100).toFixed(3) + '%'; };
 
   // Nota escrita -> { pos: 1-7, harm: armónico (solo notas al aire), valves: null|'F'|'Gb'|'both' }
@@ -62,6 +69,22 @@
     'Fa#4', 'Sol4', 'Sol#4', 'La4', 'La#4'
   ];
   var FUND = { 1: 'Si♭', 2: 'La', 3: 'La♭', 4: 'Sol', 5: 'Fa♯', 6: 'Fa', 7: 'Mi' };
+  /* Alternativas con la válvula de Fa (Eduardo, nov-2026, como el transpositor del tenor): el tubo en Fa, seis posiciones.
+     ALT_T (se calcula abajo) las da TODAS desde la serie armónica de cada posición; REC_T son las de uso corriente, las
+     que ahorran la 6.ª y la 7.ª (la tabla de la página solo enseña estas). GRAVES_T: vacía, porque el grave del bajo ya
+     lleva sus válvulas en FING. */
+  var REC_T = { 'Mi2': 1, 'Fa2': 1, 'Si2': 1, 'Do3': 1 };
+  var GRAVES_T = [];
+  var FUND_T = { 1: 'Fa', 2: 'Mi', 3: 'Mi♭', 4: 'Re', 5: 'Re♭', 6: 'Do' };
+  var SEMIS = { Do: 0, Re: 2, Mi: 4, Fa: 5, Sol: 7, La: 9, Si: 11 };
+  var ARM = { 2: 12, 3: 19, 4: 24, 5: 28, 6: 31, 8: 36 };
+  function midiDe(n) { var m = /^(Do|Re|Mi|Fa|Sol|La|Si)(#?)(\d)$/.exec(n); return 12 * (+m[3] + 1) + SEMIS[m[1]] + (m[2] ? 1 : 0); }
+  var ALT_T = {};
+  ORDEN.forEach(function (n) {
+    if (FING[n].valves) return;   // el grave ya se toca con válvulas
+    var mi = midiDe(n);
+    for (var pos = 1; pos <= 6 && !ALT_T[n]; pos++) for (var h in ARM) if (29 - (pos - 1) + ARM[h] === mi) { ALT_T[n] = { pos: pos, harm: +h }; break; }
+  });
   var ORDINAL = { 1: '1ª', 2: '2ª', 3: '3ª', 4: '4ª', 5: '5ª', 6: '6ª', 7: '7ª' };
   if (EN) ORDINAL = { 1: '1st', 2: '2nd', 3: '3rd', 4: '4th', 5: '5th', 6: '6th', 7: '7th' };
   var VTXT = { 'F': 'válvula F', 'Gb': 'válvula G♭', 'both': 'válvulas F + G♭ (dan Re)' };
@@ -122,9 +145,23 @@
     '.tm-tbj-rotor.on{border-color:#c9730a;background:rgba(255,149,0,.55);box-shadow:0 0 10px 3px rgba(255,149,0,.8);}',
     '.tm-tbj-rnom{position:absolute;transform:translate(-50%,0);padding:1px 7px;border-radius:999px;background:#f1efe8;border:1.5px solid #8f9199;color:#555;font:700 12px/18px Arial,Helvetica,sans-serif;white-space:nowrap;transition:all .2s;}',
     '.tm-tbj-rnom.on{background:#ff9500;border-color:#c9730a;color:#3a2b00;}',
+    '.tm-tbj-marca.f,.tm-tbj-marca.d{background:#fff3df;border-color:#c9930a;color:#7a4a00;}',
+    '.tm-tbj-marca.f.on,.tm-tbj-marca.d.on{background:#ff9500;border-color:#c9730a;color:#3a2b00;}',
+    '.tm-tbj-marca[hidden]{display:none;}',
+    '.tm-tbj-modo{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:12px;}',
+    '.tm-tbj-modo button{font:inherit;font-size:.9rem;font-weight:700;padding:9px 14px;border-radius:999px;border:2px solid #d8d0b8;background:#fff;color:#1a1a2e;cursor:pointer;}',
+    '.tm-tbj-modo button[aria-pressed="true"]{border-color:#8b6914;background:#8b6914;color:#fff;}',
+    '.tm-tbj-nota{font-size:.85rem;color:#666;text-align:center;margin:8px 0 0;min-height:1.3em;}',
+    '.tm-tbj-btn.rec{border-color:#c9930a;background:#fff3df;}',
+    '.tm-tbj-btn.rec.sel{background:#8b6914;color:#fff;border-color:#8b6914;}',
+    '.tm-tbj-btn.alt{border:1.5px dashed #c9930a;}',
+    '.tm-tbj-ops{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:8px;}',
+    '.tm-tbj-ops button{font:inherit;font-size:.85rem;font-weight:600;padding:6px 12px;border-radius:999px;border:1.5px solid #d8d0b8;background:#fff;color:#1a1a2e;cursor:pointer;}',
+    '.tm-tbj-ops button[aria-pressed="true"]{border-color:#8b6914;background:#fdf3dc;}',
+    '.tm-tbj-ops button.t[aria-pressed="true"]{border-color:#c9730a;background:#ffe2b8;}',
     '.tm-tbj-credito{font-size:.75rem;color:#777;text-align:center;margin:4px 0 0;}',
     '.tm-tbj-credito a{color:inherit;}',
-    '@media(max-width:600px){.tm-tbj-marca{width:16px;height:16px;margin:-8px 0 0 -8px;font-size:9.5px;line-height:13.5px;border-width:1px;}.tm-tbj-rnom{font-size:9.5px;line-height:13px;padding:0 4px;border-width:1px;}}',
+    '@media(max-width:600px){.tm-tbj-foto{padding-right:10px;}.tm-tbj-marca{width:16px;height:16px;margin:-8px 0 0 -8px;font-size:9.5px;line-height:13.5px;border-width:1px;}.tm-tbj-rnom{font-size:9.5px;line-height:13px;padding:0 4px;border-width:1px;}}',
     '@media(prefers-reduced-motion:reduce){.tm-tbj-vara{transition:none;}}',
     '.tm-tbj-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}',
     '.tm-tbj-btn{min-width:44px;padding:9px 11px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}',
@@ -153,13 +190,15 @@
         '<span class="tm-tbj-rnom tm-tbj-valve" data-v="' + v.id + '" style="left:' + pct(c[0] + v.dx, GEO.W) + ';top:' + pct(425, GEO.H) + '">' + v.label + '</span>';
     }).join('');
   }
-  /* Los números de las 7 posiciones, debajo de donde queda la punta de la vara en cada una */
+  /* Los números de las posiciones, debajo de donde queda la punta de la vara en cada una: siete sin válvulas, seis con
+     la de Fa (f) y cinco con las dos (d); solo se ve el juego que corresponde a la nota */
   function marcas() {
     var out = '';
-    for (var p = 1; p <= 7; p++) {
-      var d = GEO.pos[p - 1];
-      out += '<span class="tm-tbj-marca" data-pos="' + p + '" style="left:' + pct(GEO.punta[0] + d - 34, GEO.W) + ';top:' + pct(GEO.punta[1] + d * GEO.pend + 112, GEO.H) + '">' + p + '</span>';
-    }
+    [[GEO.pos, ''], [GEO.posF, ' f'], [GEO.posD, ' d']].forEach(function (juego) {
+      juego[0].forEach(function (d, k) {
+        out += '<span class="tm-tbj-marca' + juego[1] + '" data-pos="' + (k + 1) + '"' + (juego[1] ? ' hidden' : '') + ' style="left:' + pct(GEO.punta[0] + d - 34, GEO.W) + ';top:' + pct(GEO.punta[1] + d * GEO.pend + 112, GEO.H) + '">' + (k + 1) + '</span>';
+      });
+    });
     return out;
   }
 
@@ -173,16 +212,21 @@
       var val = FING[n] && FING[n].valves ? ' val' : '';
       return '<button class="tm-tbj-btn' + val + '" data-n="' + n + '">' + label(n) + '</button>';
     }).join('');
+    var conT = false, actual = null;
 
     wrap.innerHTML =
       '<div class="tm-tbj-wrap">' +
         '<div class="tm-tbj-readout" id="' + uid + '_ro"><span class="tm-tbj-hint">' + T('Elige una nota para ver su posición y válvulas', 'Choose a note to see its position and valves') + '</span></div>' +
         '<div class="tm-tbj-diagram"><div class="tm-tbj-foto"><div class="tm-tbj-lienzo" role="img" aria-label="' + T('Foto de un trombón bajo: la vara se desliza hasta la posición de la nota elegida, de la 1.ª (recogida) a la 7.ª (extendida del todo), y los dos rotores (Fa y Sol bemol) se iluminan cuando la nota los usa; debajo, los números de las siete posiciones', 'Photo of a bass trombone: the slide moves to the position of the chosen note, from 1st (closed) to 7th (fully extended), and the two rotary valves (F and G flat) light up when the note uses them; below, the numbers of the seven positions') + '">' +
-          '<picture><source type="image/webp" srcset="' + IMG + 'vara-cuerpo.webp"><img src="' + IMG + 'vara-cuerpo.jpg" width="' + GEO.W + '" height="' + GEO.H + '" alt="" decoding="async"></picture>' +
-          '<picture class="tm-tbj-vara" id="' + uid + '_vara" style="width:' + pct(GEO.vara[2], GEO.W) + '"><source type="image/webp" srcset="' + IMG + 'vara-movil.webp"><img src="' + IMG + 'vara-movil.png" width="' + GEO.vara[2] + '" height="' + GEO.vara[3] + '" alt="" decoding="async"></picture>' +
+          '<picture><source type="image/webp" srcset="' + IMG + 'vara-cuerpo.webp' + IMG_V + '"><img src="' + IMG + 'vara-cuerpo.jpg' + IMG_V + '" width="' + GEO.W + '" height="' + GEO.H + '" alt="" decoding="async"></picture>' +
+          '<picture class="tm-tbj-vara" id="' + uid + '_vara" style="width:' + pct(GEO.vara[2], GEO.W) + '"><source type="image/webp" srcset="' + IMG + 'vara-movil.webp' + IMG_V + '"><img src="' + IMG + 'vara-movil.png' + IMG_V + '" width="' + GEO.vara[2] + '" height="' + GEO.vara[3] + '" alt="" decoding="async"></picture>' +
           valvulas() + marcas() +
         '</div></div>' +
         '<p class="tm-tbj-credito">' + T('Foto: ', 'Photo: ') + '<a href="https://commons.wikimedia.org/wiki/File:Yamaha_Bass_trombone_YBL-822_G_horizontal.tif" rel="nofollow">Yamaha Corporation</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="nofollow">CC BY-SA 4.0</a>' + T(' (vara separada y movida)', ' (slide cut out and moved)') + '</p></div>' +
+        '<div class="tm-tbj-modo" role="group" aria-label="' + T('Válvula de Fa', 'F valve') + '">' +
+          '<button type="button" data-t="0" aria-pressed="true">' + T('Posiciones básicas', 'Basic positions') + '</button>' +
+          '<button type="button" data-t="1" aria-pressed="false">' + T('Alternativas con válvula de Fa', 'F-valve alternates') + '</button></div>' +
+        '<p class="tm-tbj-nota" id="' + uid + '_nota"></p>' +
         '<div class="tm-tbj-btns">' + btns + '</div>' +
       '</div>';
 
@@ -190,11 +234,32 @@
     var audio = new Audio();
     var vara = document.getElementById(uid + '_vara');
 
-    function setSlide(pos) {
-      var d = GEO.pos[pos - 1];
+    /* v: las válvulas pulsadas (null, 'F' o 'both'): cambian la distancia de cada posición y qué números se ven */
+    function setSlide(pos, v) {
+      var d = distancias(v)[pos - 1], juego = v === 'both' ? 'd' : v === 'F' ? 'f' : '';
       vara.style.left = pct(GEO.vara[0] + d, GEO.W);
       vara.style.top = pct(GEO.vara[1] + d * GEO.pend, GEO.H);
-      wrap.querySelectorAll('.tm-tbj-marca').forEach(function (m) { m.classList.toggle('on', parseInt(m.dataset.pos, 10) === pos); });
+      wrap.querySelectorAll('.tm-tbj-marca').forEach(function (m) {
+        var suyo = juego ? m.classList.contains(juego) : !m.classList.contains('f') && !m.classList.contains('d');
+        m.hidden = !suyo;
+        m.classList.toggle('on', suyo && parseInt(m.dataset.pos, 10) === pos);
+      });
+    }
+    /* La digitación de una nota: con las alternativas activadas, las habituales salen ya con la válvula de Fa */
+    function digit(n, opc) {
+      var v = conT && ALT_T[n];
+      if (v && (opc === 'valv' || (!opc && REC_T[n]))) return { pos: v.pos, harm: v.harm, valves: 'F', alt: true };
+      return FING[n];
+    }
+    function modo(con) {
+      conT = con;
+      wrap.querySelectorAll('.tm-tbj-modo button').forEach(function (b) { b.setAttribute('aria-pressed', String((b.dataset.t === '1') === con)); });
+      wrap.querySelectorAll('.tm-tbj-btn').forEach(function (b) {
+        b.classList.toggle('rec', con && !!REC_T[b.dataset.n]);
+        b.classList.toggle('alt', con && !!ALT_T[b.dataset.n] && !REC_T[b.dataset.n]);
+      });
+      document.getElementById(uid + '_nota').textContent = con ? T('En naranja, las notas que se suelen tocar con la válvula de Fa, porque ahorra la 6.ª y la 7.ª posición. Con borde discontinuo, las que también se pueden tocar con ella: al elegirlas ves las dos formas. Con la válvula de Fa hay seis posiciones, más separadas.', 'In orange, the notes usually played with the F valve, because it avoids 6th and 7th position. With a dashed border, the notes that can also be played with it: choose one to see both ways. With the F valve there are six positions, farther apart.') : '';
+      if (actual) pick(actual, wrap.querySelector('.tm-tbj-btn[data-n="' + actual + '"]'), true);
     }
     function setValves(v) {
       var onF = v === 'F' || v === 'both';
@@ -223,28 +288,36 @@
       if (window.tmPentNota) tmPentNota(el, 'bass', vn.key);
     }
 
-    function pick(n, btn) {
+    function pick(n, btn, callado, opc) {
+      actual = n;
       wrap.querySelectorAll('.tm-tbj-btn').forEach(function (b) { b.classList.remove('sel'); });
       if (btn) btn.classList.add('sel');
-      var data = FING[n];
-      if (data) { setSlide(data.pos); setValves(data.valves || null); }
-      var detail = data
-        ? ORDINAL[data.pos] + T(' posición', ' position') + (data.valves ? ' · ' + VTXT[data.valves]
-            : (data.harm ? (EN ? ' · ' + ordEn(data.harm) + ' harmonic above ' + nm(FUND[data.pos]) : ' · armónico ' + data.harm + 'º sobre el ' + FUND[data.pos]) : ''))
-        : '';
+      var data = digit(n, opc);
+      if (data) { setSlide(data.pos, data.valves || null); setValves(data.valves || null); }
+      var detail = !data ? '' : data.alt
+        ? ORDINAL[data.pos] + T(' posición', ' position') + ' · ' + VTXT.F + (EN ? ' · ' + ordEn(data.harm) + ' harmonic above ' + nm(FUND_T[data.pos]) : ' · armónico ' + data.harm + 'º sobre el ' + FUND_T[data.pos])
+        : ORDINAL[data.pos] + T(' posición', ' position') + (data.valves ? ' · ' + VTXT[data.valves]
+            : (data.harm ? (EN ? ' · ' + ordEn(data.harm) + ' harmonic above ' + nm(FUND[data.pos]) : ' · armónico ' + data.harm + 'º sobre el ' + FUND[data.pos]) : ''));
+      // con las alternativas, si la nota se puede tocar de las dos formas, se elige cuál ver
+      var ops = '';
+      if (conT && ALT_T[n]) ops = '<div class="tm-tbj-ops" role="group" aria-label="' + T('Forma de tocarla', 'Way to play it') + '">' +
+        '<button type="button" data-o="normal" aria-pressed="' + !data.alt + '">' + T('Sin válvula: ', 'No valve: ') + ORDINAL[FING[n].pos] + '</button>' +
+        '<button type="button" class="t" data-o="valv" aria-pressed="' + !!data.alt + '">' + T('Con válvula de Fa: ', 'F valve: ') + ORDINAL[ALT_T[n].pos] + (REC_T[n] ? T(' (habitual)', ' (usual)') : '') + '</button></div>';
       ro.innerHTML =
         '<div class="tm-tbj-staff" id="' + uid + '_staff"></div>' +
         '<div class="tm-tbj-noterow"><span class="tm-tbj-intl">' + label(n) + (FLAT[n] ? ' (' + nm(FLAT[n]) + ')' : '') + '</span>' +
         '<button class="tm-tbj-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
         '<div class="tm-tbj-reg">' + intl(n) + ' · ' + registro(n) + '</div>' +
-        '<div class="tm-tbj-keysline">' + detail + '</div>';
+        '<div class="tm-tbj-keysline">' + detail + '</div>' + ops;
+      ro.querySelectorAll('.tm-tbj-ops button').forEach(function (b) { b.addEventListener('click', function () { pick(n, btn, true, b.dataset.o); }); });
       renderStaff(n);
       var pb = ro.querySelector('.tm-tbj-play');
       if (pb) pb.addEventListener('click', function () { play(n); });
-      play(n);
+      if (!callado) play(n);
     }
 
-    setSlide(1); setValves(null);
+    setSlide(1, null); setValves(null);
+    wrap.querySelectorAll('.tm-tbj-modo button').forEach(function (b) { b.addEventListener('click', function () { modo(b.dataset.t === '1'); }); });
     wrap.querySelectorAll('.tm-tbj-btn').forEach(function (btn) {
       btn.addEventListener('click', function () { pick(btn.dataset.n, btn); });
     });

@@ -111,7 +111,7 @@ ${ROWS}
 
 <h2>Bass trombone fingerings</h2>
 
-<p>The diagram shows the <strong>fixed mouthpiece</strong> on the left, the <strong>slide</strong> reaching toward the <strong>bell</strong> on the right, and the <strong>two valves</strong> (F and G♭) above. When you pick a note, the <strong>slide position</strong> is marked (ruler from 1 to 7) and the <strong>valves</strong> you need to press light up (if any are needed). Remember that one position serves for several notes: the lips do the rest by adjusting the harmonic.</p>
+<p>The diagram is a <strong>real photo</strong> of the bass trombone: when you pick a note, the <strong>slide</strong> moves to its position, at the real distance of each one, the number of the <strong>position</strong> (1 to 7) lights up under the tip and, if the note needs them, the <strong>rotary valves</strong> you have to press light up (F, G♭ or both). With valves the tube is longer, so the positions are farther apart: six with the F valve and five with both. The <em>F-valve alternates</em> button also shows the other way to play the notes that can be played with it. Remember that one position serves for several notes: the lips do the rest by adjusting the harmonic.</p>
 
 <p>Pick a note to see its <strong>position and valves</strong>, the note on the staff and its <strong>real bass trombone sound</strong>.</p>
 
