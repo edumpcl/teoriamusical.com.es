@@ -1,5 +1,5 @@
 {
-  "comprobado": "2026-11-09",
+  "comprobado": "2026-11-16",
   "conciertos": [
     {
       "id": "bsmm-2026-11-03",
@@ -9909,6 +9909,148 @@
         {
           "texto": "Web de la Banda-Escola de Música de Beade (próximas actuacións)",
           "url": "http://bandabeade.com/"
+        }
+      ]
+    },
+    {
+      "id": "centro-musical-paternense-2026-11-20",
+      "agrupacion": "Centro Musical Paternense",
+      "titulo": "Concierto de Santa Cecilia",
+      "fecha": "2026-11-20",
+      "hora": "22:00",
+      "lugar": "Gran Teatro Antonio Ferrandis",
+      "ciudad": "Paterna",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda"
+        }
+      ]
+    },
+    {
+      "id": "corporacion-musical-la-pobla-de-vallbona-2026-11-21",
+      "agrupacion": "Corporación Musical La Pobla de Vallbona",
+      "titulo": "Concierto de Santa Cecilia",
+      "fecha": "2026-11-21",
+      "hora": "19:00",
+      "lugar": "Casa de la Cultura",
+      "ciudad": "La Pobla de Vallbona",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda"
+        }
+      ]
+    },
+    {
+      "id": "asociacion-musical-barrio-del-cristo-2026-11-21",
+      "agrupacion": "Asociación Musical Barrio del Cristo",
+      "titulo": "Concierto de Santa Cecilia",
+      "fecha": "2026-11-21",
+      "hora": "20:00",
+      "lugar": "Salón de Actos de la Mancomunidad",
+      "ciudad": "Barrio del Cristo",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda"
+        }
+      ]
+    },
+    {
+      "id": "escola-musical-la-nova-olleria-2026-11-28",
+      "agrupacion": "Agrupación Escola Musical «La Nova» de L'Olleria",
+      "titulo": "Concierto de Santa Cecilia",
+      "fecha": "2026-11-28",
+      "hora": "19:30",
+      "lugar": "Teatro-Cine Goya",
+      "ciudad": "L'Olleria",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda"
+        }
+      ]
+    },
+    {
+      "id": "la-constancia-moixent-2026-12-05",
+      "agrupacion": "Sociedad Musical La Constància de Moixent",
+      "titulo": "Concierto de Santa Cecilia",
+      "fecha": "2026-12-05",
+      "hora": "18:00",
+      "lugar": "Auditorio Municipal Gabriel Aracil",
+      "ciudad": "Moixent",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda"
+        }
+      ]
+    },
+    {
+      "id": "agrupacion-musical-santa-cecilia-grao-2026-11-22",
+      "agrupacion": "Agrupación Musical Santa Cecilia del Grao",
+      "titulo": "Concierto de Santa Cecilia (temporada 2026-2027)",
+      "fecha": "2026-11-22",
+      "hora": "12:00",
+      "ciudad": "València",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "programa": "Actuación del Coro de la agrupación, presentación de «Orfeo» como figura del año, bienvenida a los nuevos músicos y cierre con la Banda Sinfónica de la agrupación.",
+      "entrada": "Gratis, con invitación",
+      "nota": "La página oficial no indica la sala: confirma el lugar con la agrupación.",
+      "fuentes": [
+        {
+          "texto": "Ayuntamiento de València",
+          "url": "https://www.valencia.es/web/guest/w/concierto-de-santa-cecilia-agrupaci%C3%B3n-musical-santa-cecilia-del-grao"
+        }
+      ]
+    },
+    {
+      "id": "bsma-festival-bandas-alicante-2026-11-22-manana",
+      "agrupacion": "Banda Sinfónica Municipal de Alicante (Festival de Bandas de Alicante, sesión de mañana)",
+      "titulo": "XXVII Festival de Bandas de Alicante",
+      "fecha": "2026-11-22",
+      "hora": "11:00",
+      "lugar": "ADDA, Auditorio de la Diputación de Alicante",
+      "ciudad": "Alicante",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "banda",
+      "entrada": "Entrada libre, mediante invitación",
+      "nota": "La web del ADDA no indica las bandas participantes ni el programa.",
+      "fuentes": [
+        {
+          "texto": "ADDA",
+          "url": "https://addaalicante.es/concierto/banda-sinfonica-municipal-de-alicante-bsma-festival-bandas-de-alicante/"
+        }
+      ]
+    },
+    {
+      "id": "bsma-festival-bandas-alicante-2026-11-22-tarde",
+      "agrupacion": "Banda Sinfónica Municipal de Alicante (Festival de Bandas de Alicante, sesión de tarde)",
+      "titulo": "XXVII Festival de Bandas de Alicante",
+      "fecha": "2026-11-22",
+      "hora": "17:30",
+      "lugar": "ADDA, Auditorio de la Diputación de Alicante",
+      "ciudad": "Alicante",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "banda",
+      "entrada": "Entrada libre, mediante invitación",
+      "nota": "La web del ADDA no indica las bandas participantes ni el programa.",
+      "fuentes": [
+        {
+          "texto": "ADDA",
+          "url": "https://addaalicante.es/concierto/banda-sinfonica-municipal-de-alicante-bsma-festival-bandas-de-alicante-2/"
         }
       ]
     }

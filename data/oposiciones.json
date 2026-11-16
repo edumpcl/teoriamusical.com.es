@@ -1,5 +1,5 @@
 {
-  "comprobado": "2026-11-09",
+  "comprobado": "2026-11-16",
   "convocatorias": [
     {
       "id": "real-filharmonia-2026",
@@ -623,6 +623,79 @@
         }
       ],
       "nota_plazo": "10 días hábiles desde el día siguiente a la publicación en el DOGC (viernes 30/10/2026): del lunes 2 al viernes 13 de noviembre. Contrastado con el boletín."
+    },
+    {
+      "id": "banda-jaen-bolsas-2026",
+      "entidad": "Ayuntamiento de Jaén (Patronato Municipal de Cultura, Turismo, Fiestas y Patrimonio Histórico)",
+      "titulo": "Bolsas de trabajo de músicos instrumentistas de la Banda Municipal de Música de Jaén",
+      "tipo": "banda",
+      "instrumentos": [
+        "flauta",
+        "oboe",
+        "clarinete",
+        "fagot",
+        "saxofón",
+        "trompa",
+        "trompeta",
+        "trombón",
+        "tuba",
+        "bombardino",
+        "percusión"
+      ],
+      "comunidad": "Andalucía",
+      "plazas": "Bolsas de trabajo por especialidad instrumental (11 especialidades), Grupo A, subgrupo A2",
+      "acceso": "Concurso-oposición libre",
+      "inicio": "2026-10-26",
+      "fin": "2026-11-23",
+      "requisitos": "Título Superior de Música (LOGSE o LOE) o Grado en Enseñanzas Artísticas Superiores en la especialidad, o título equivalente.",
+      "tasa": "30 € (exentas las personas con discapacidad igual o superior al 33 % y otros supuestos de las bases; bonificación del 50 % a familias numerosas)",
+      "fuentes": [
+        {
+          "texto": "BOP de Jaén del 23/10/2026 (edicto 2026/4974)",
+          "url": "https://bop.dipujaen.es/descargarws.dip?fechaBoletin=2026-10-23&numeroEdicto=4974&boletinSuplemento=0&ejercicioBop=2026&tipo=bop&anioExpedienteEdicto=2026"
+        },
+        {
+          "texto": "Sede electrónica del Ayuntamiento de Jaén",
+          "url": "https://sede.aytojaen.es/sta/CarpetaPublic/doEvent?APP_CODE=STA&PAGE_CODE=CATALOGO&DETALLE=6269026880717913305011"
+        }
+      ],
+      "nota_plazo": "20 días hábiles desde el día siguiente a la publicación en el BOP de Jaén del 23/10/2026 (Base V). Contrastado con el boletín; el lunes 2 de noviembre fue festivo en Andalucía (traslado de Todos los Santos), así que el último día es el lunes 23/11."
+    },
+    {
+      "id": "igualada-bolsas-2026",
+      "entidad": "Ayuntamiento de Igualada (Organisme Autònom Municipal d'Ensenyaments Artístics)",
+      "titulo": "Bolsas de profesorado de la Escola Municipal de Música / Conservatori de Grau Mitjà d'Igualada",
+      "tipo": "docencia",
+      "instrumentos": [
+        "piano",
+        "guitarra",
+        "batería",
+        "viento madera",
+        "canto coral",
+        "musicoterapia"
+      ],
+      "comunidad": "Cataluña",
+      "plazas": "5 bolsas de trabajo de personal laboral temporal: musicoterapia y atención a la diversidad, viento madera y canto coral (en inglés), guitarra, piano y batería",
+      "acceso": "Oposición",
+      "inicio": "2026-11-04",
+      "fin": "2026-11-23",
+      "requisitos": "Titulación exigida en cada anexo y certificado de catalán de nivel C1 (o superar la prueba). En la plaza de viento madera y canto coral, también inglés C1.",
+      "tasa": "Las bases no indican ninguna tasa",
+      "fuentes": [
+        {
+          "texto": "Anuncio del DOGC del 03/11/2026 (CVE-DOGC-B-26301013-2026)",
+          "url": "https://portaldogc.gencat.cat/utilsEADOP/AppJava/PdfProviderServlet?versionId=2178207&type=01&language=es_ES"
+        },
+        {
+          "texto": "Bases en el BOP de Barcelona del 27/10/2026 (CVE 202610158976)",
+          "url": "https://bop.diba.cat/anunci/descarrega-pdf/4006966"
+        },
+        {
+          "texto": "Plataforma Igualada Convoca",
+          "url": "https://igualada.convoca.online"
+        }
+      ],
+      "nota_plazo": "20 días naturales desde el día siguiente a la última publicación (el DOGC del 03/11/2026): del 4 al 23/11, ambos incluidos. Contrastado con el boletín."
     }
   ],
   "anunciadas": [
