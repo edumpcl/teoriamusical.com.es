@@ -61,6 +61,7 @@
 <script src="/assets/js/tm-mei.js?v=72fe601f" defer></script>
 <script src="/assets/js/tm-notacion.js?v=e5bb258a" defer></script>
 <script src="/assets/js/armaduras-engine.js?v=9f2c1cf1" defer></script>
+<script src="/assets/js/relativos-engine.js?v=ef9d23f4" defer></script>
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LearningResource","name":"Ejercicios de Tonalidades y Armaduras","description":"Ejercicios de tonalidades y armaduras: test online para identificar cualquier tonalidad mayor y menor por su armadura, y fichas en PDF con soluciones para imprimir.","url":"https://www.teoriamusical.com.es/ejercicios/tonalidades/","educationalLevel":"beginner","inLanguage":"es","isAccessibleForFree":true,"teaches":"Identificar tonalidades y armaduras: relacionar el número de sostenidos o bemoles con la tónica mayor o menor correspondiente.","datePublished":"2026-04-17","dateModified":"2026-09-10","provider":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es"}}
@@ -329,6 +330,16 @@
 <script>
   document.addEventListener("DOMContentLoaded", function(){
     tmArDibujar("tmdib_dibujar");
+  });
+</script>
+
+<h2 id="h-relativo-mayor-y-relativo-menor">Relativo mayor y relativo menor</h2>
+<p>La pregunta corta de los exámenes: <em>¿cuál es el relativo menor de La M?</em> o <em>¿cuál es el relativo mayor de Sol m?</em> Elige la nota y su alteración. El relativo menor está una <strong>3ª menor por debajo</strong> del mayor (y el mayor, una 3ª menor por encima del menor); al corregir aparece la armadura que comparten.</p>
+
+<div id="tmrel"></div>
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    tmRelativos("tmrel");
   });
 </script>
 

@@ -198,6 +198,8 @@ ${BUTTONS}
 
 ${CARDS}
 
+<p><strong>Practice:</strong> in the <a href="/ejercicios/tonalidades/">keys and key signatures exercises</a> you identify and write key signatures and answer the short exam question: the relative major or minor of a key.</p>
+
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
 <div class="tm-seccion-cabecera">

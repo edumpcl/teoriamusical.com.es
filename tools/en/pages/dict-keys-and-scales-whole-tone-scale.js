@@ -76,6 +76,8 @@ ${rows}
 ${figs}
 </div>
 
+<p><strong>Practice:</strong> in the exercise <a href="/ejercicios/escalas/construir-escala-hexatona/">build the whole-tone scale</a> you write the scale from any tonic on the staff.</p>
+
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
 <div class="tm-seccion-cabecera">

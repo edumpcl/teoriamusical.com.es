@@ -9,7 +9,8 @@
   var TIPO_EN = {
     'Mayor': 'major', 'Menor Natural': 'natural minor', 'Menor Armónica': 'harmonic minor', 'Menor Melódica': 'melodic minor',
     'Menor Dórica': 'Dorian', 'Mixolidia': 'Mixolydian', 'Mayor Mixta Principal': 'harmonic major', 'Mayor Mixta Secundaria': 'melodic major',
-    'Cromática (ascendente)': 'chromatic (ascending)', 'Cromática (descendente)': 'chromatic (descending)'
+    'Cromática (ascendente)': 'chromatic (ascending)', 'Cromática (descendente)': 'chromatic (descending)',
+    'Hexátona': 'whole-tone'
   };
   var UI_EN = {
     'Escalas Mayores': 'major scales', 'la Escala Cromática': 'the chromatic scale', 'la Escala Menor Natural': 'the natural minor scale',
@@ -17,7 +18,10 @@
     'la Escala Mixolidia': 'the Mixolydian scale', 'la Escala Mayor Mixta Principal': 'the harmonic major scale', 'la Escala Mayor Mixta Secundaria': 'the melodic major scale',
     'Elige el nivel de dificultad': 'Choose a difficulty level', 'Elige el sentido': 'Choose the direction',
     'Ascendente': 'Ascending', 'Descendente': 'Descending', 'Mezcladas': 'Mixed',
-    'Con sostenidos': 'With sharps', 'Con bemoles': 'With flats', 'Las dos, al azar': 'Both, at random'
+    'Con sostenidos': 'With sharps', 'Con bemoles': 'With flats', 'Las dos, al azar': 'Both, at random',
+    'la Escala Hexátona': 'the whole-tone scale', 'Elige la tónica': 'Choose the tonic',
+    'Tónica natural': 'Natural tonic', 'Tónica alterada': 'Altered tonic', 'Mezcladas (las 12)': 'Mixed (all 12)',
+    'Do, Re, Mi, Fa, Sol, La, Si': 'C, D, E, F, G, A, B', 'Do♯, Mi♭, Fa♯, La♭, Si♭': 'C♯, E♭, F♯, A♭, B♭', 'Cualquier tónica': 'Any tonic'
   };
   function ui(s) { return EN && UI_EN[s] ? UI_EN[s] : s; }
   /* 'Sol♯ Menor Melódica' -> 'G♯ melodic minor' */
@@ -205,11 +209,11 @@
     '.tm-ec-wrap .tm-tool-edit{font-size:.82rem;padding:8px 12px;border:1px solid #d8d0b8;background:#f5f2ea;cursor:pointer;border-radius:6px;font-family:inherit;color:#555;transition:.15s;}',
     '.tm-ec-wrap .tm-tool-edit:hover{border-color:#8b6914;color:#8b6914;}',
     '.tm-ec-wrap .tm-note-count{font-size:.82rem;color:#666;margin:4px 0 0;text-align:center;}',
-    '.tm-ec-wrap .tm-iv-loupe{position:fixed;display:none;pointer-events:none;z-index:9999;background:#fdfcf9;border:2px solid #333;border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,0.35);transform:translate(-50%,calc(-100% - 18px));max-width:calc(100vw - 16px);}',
+    '.tm-ec-wrap .tm-iv-loupe{position:fixed;display:none;pointer-events:none;z-index:9999;background:#fdfcf9;border:2px solid #333;border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,0.35);transform:translate(-50%,calc(-100% - 18px));width:min(300px,calc(100vw - 16px));box-sizing:border-box;}',   /* ancho fijo: si no, se encoge cerca del borde derecho */
     '.tm-ec-wrap .tm-iv-loupe::after{content:"";position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);border:11px solid transparent;border-top-color:#333;border-bottom:none;}',
     '.tm-ec-wrap .tm-iv-loupe::before{content:"";position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-top-color:#fdfcf9;border-bottom:none;z-index:1;}',
     '.tm-ec-wrap .tm-iv-loupe-staff{line-height:0;}',
-    '.tm-ec-wrap .tm-iv-loupe-staff svg{display:block;max-width:100%;height:auto;}',
+    '.tm-ec-wrap .tm-iv-loupe-staff svg{display:block;max-width:100%;height:auto;margin-left:auto;margin-right:auto;}',
     '@media(max-width:500px){.tm-ec-wrap .tm-iv-modes{flex-direction:column;align-items:center;}.tm-ec-wrap .tm-iv-mode-btn{width:100%;max-width:220px;}}'
   ].join('');
 
@@ -332,7 +336,8 @@
       if (!pool.length) pool = SCALES; /* salvaguarda: nunca quedarse sin fondo */
       cQ = pool[Math.floor(Math.random() * pool.length)];
       /* las secuencias (15 notas asc+desc) necesitan un pentagrama más ancho */
-      if (cQ.seq) { vW = 940; vSW = 900; } else { vW = SVG_W; vSW = STAVE_W; }
+      /* (la hexátona, de 7 notas, cabe en el ancho normal: en el móvil el pentagrama sale más grande) */
+      if (cQ.seq && cQ.seq.length > 8) { vW = 940; vSW = 900; } else { vW = SVG_W; vSW = STAVE_W; }
     }
 
     function sortedByPitch(arr) {
@@ -354,9 +359,20 @@
       elNot.style.height = SVG_H + 'px';
       /* en modo secuencia se respeta el orden de colocación (asc + desc) */
       var sorted = isSeq() ? placedNotes.slice() : sortedByPitch(placedNotes);
-      var res = window.tmNotacion.dibujarAAncho(elNot, { clave: 'sol', compases: [eventos(sorted, isSeq())] }, vSW - 20, { escala: 1.0, id: uid, alt: T('Pentagrama donde se escribe la escala', 'Staff where the scale is written') });
+      /* el ancho máximo es el que hay de verdad: en el móvil las notas se juntan en lugar de dibujarse a 900 px y encogerse
+         (la cromática y la melódica salían a ~3 px entre líneas; Eduardo, nov-2026) */
+      var disponible = Math.max(200, elNot.parentNode.clientWidth - 12);
+      var res = window.tmNotacion.dibujarAAncho(elNot, { clave: 'sol', compases: [eventos(sorted, isSeq())] }, Math.min(vSW - 20, disponible), { escala: 1.0, id: uid, alt: T('Pentagrama donde se escribe la escala', 'Staff where the scale is written') });
       var svg = res.elemento;
+      /* Si ni con las notas juntas cabe (15 redondas en un móvil), se dibuja a tamaño normal y el pentagrama se desplaza de lado:
+         al escribir se va solo a la última nota; al corregir vuelve al principio y se puede deslizar con el dedo. */
+      var elWrap = document.getElementById(uid + '_wrap');
+      var desborda = res.ancho * 0.8 > disponible;   /* si basta con encoger hasta un 20 %, se encoge (dibujarAAncho ya lo ha hecho) */
+      if (desborda) { svg.style.width = res.ancho + 'px'; svg.style.maxWidth = 'none'; }
       svg.style.display = 'block'; svg.style.margin = Math.round(TOPE - window.tmNotacion.geometria(svg).lineas[0]) + 'px auto 0';
+      elWrap.style.overflowX = desborda ? 'auto' : '';
+      elWrap.style.touchAction = (desborda && answered) ? 'pan-x' : '';
+      if (desborda) elWrap.scrollLeft = answered ? 0 : elWrap.scrollWidth;
       currentSvg = svg;
     }
 
@@ -379,7 +395,7 @@
       var ev = eventos(all, seqL);
       all.forEach(function (p, i) { if (p._hover) ev[i].color = '#8b6914'; });
       var shown = ev.slice(seqL ? Math.max(0, all.length - 8) : 0);
-      elLstaff.style.height = '92px';
+      elLstaff.style.height = '150px';   /* cabe todo el registro del ejercicio: de Do3 (3 líneas adicionales abajo) a Si5 (Eduardo, nov-2026) */
       window.tmNotacion.dibujarAlineado(elLstaff, { clave: 'sol', compases: [shown] }, { escala: 1.0, separacion: 0.25, top: 34, id: uid + 'l', alt: '' });
     }
 
@@ -460,9 +476,10 @@
       elWrap.addEventListener('mousedown', startAction);
       elWrap.addEventListener('mousemove', function (e) { if (isDragging) updatePreview(e); });
       window.addEventListener('mouseup', endAction);
-      elWrap.addEventListener('touchstart', function (e) { e.preventDefault(); startAction(e); }, { passive: false });
-      elWrap.addEventListener('touchmove',  function (e) { e.preventDefault(); updatePreview(e); }, { passive: false });
-      elWrap.addEventListener('touchend',   function (e) { e.preventDefault(); endAction(); }, { passive: false });
+      /* ya corregido, el dedo desliza el pentagrama (si es más ancho que la pantalla) en lugar de escribir */
+      elWrap.addEventListener('touchstart', function (e) { if (answered) return; e.preventDefault(); startAction(e); }, { passive: false });
+      elWrap.addEventListener('touchmove',  function (e) { if (answered) return; e.preventDefault(); updatePreview(e); }, { passive: false });
+      elWrap.addEventListener('touchend',   function (e) { if (answered) return; e.preventDefault(); endAction(); }, { passive: false });
     }
 
     function updateBtn() {
@@ -478,8 +495,24 @@
       answered = true;
 
       var expected = parseScale(cQ);
-      var ok;
-      if (isSeq()) {
+      var ok, otraOrtografia = false;
+      if (cQ.tonos) {
+        /* Escala hexátona (de tonos enteros): 6 notas en 7 letras, así que siempre se salta una letra y cada libro se salta una distinta.
+           Vale cualquier ortografía que empiece y acabe en la tónica escrita, con cada nota un tono por encima de la anterior y sin
+           repetir letra (cada paso avanza una o dos letras). */
+        var pl = placedNotes.slice(), t0 = expected[0];
+        var diaN = function (p) { return p.oct * 7 + VF_NAMES.indexOf(p.vfn); };
+        var semN = function (p) { return pitchVal(p) + p.acc; };
+        ok = pl.length === expected.length
+          && pl[0].vfn === t0.vfn && pl[0].acc === t0.acc
+          && pl[pl.length - 1].vfn === t0.vfn && pl[pl.length - 1].acc === t0.acc
+          && pl.every(function (p, i) {
+            if (!i) return true;
+            var dl = diaN(p) - diaN(pl[i - 1]);
+            return (dl === 1 || dl === 2) && semN(p) - semN(pl[i - 1]) === 2;
+          });
+        otraOrtografia = ok && pl.some(function (p, i) { return p.vfn !== expected[i].vfn; });
+      } else if (isSeq()) {
         /* Secuencia: importa el orden de colocación y en qué punto exacto se
            sube (o baja) de octava, pero NO en qué octava concreta se empiece
            — la misma escala vale empezando en cualquier registro. Se compara
@@ -506,16 +539,22 @@
       elBtn.style.display = 'none';
       document.getElementById(uid + '_nxt').className = 'tm-nxt tm-show';
 
-      var scaleLbl = expected.map(function (e) {
-        var i = VF_NAMES.indexOf(e.vfn);
-        return (EN ? 'CDEFGAB'.charAt(i) : NOTE_NAMES[i]) + ACC_SYM[String(e.acc)];
-      }).join(' — ');
+      var etiqueta = function (lista) {
+        return lista.map(function (e) {
+          var i = VF_NAMES.indexOf(e.vfn);
+          return (EN ? 'CDEFGAB'.charAt(i) : NOTE_NAMES[i]) + ACC_SYM[String(e.acc)];
+        }).join(' — ');
+      };
+      var scaleLbl = etiqueta(expected);
 
       var elFb = document.getElementById(uid + '_fb');
       if (ok) {
         score++;
+        drawStaff();   /* ya corregido: si el pentagrama es más ancho que la pantalla, vuelve al principio y se puede deslizar */
         elFb.className = 'tm-fb tm-ok tm-show';
-        elFb.innerHTML = '<strong>' + T('✓ \xa1Correcto!', '✓ Correct!') + '</strong> ' + scaleLbl + '.';
+        elFb.innerHTML = '<strong>' + T('✓ \xa1Correcto!', '✓ Correct!') + '</strong> ' + (otraOrtografia
+          ? etiqueta(placedNotes) + '. ' + T('Tambi\xe9n se escribe: ', 'It is also spelled: ') + scaleLbl
+          : scaleLbl) + '.';
       } else {
         placedNotes = expected.slice();
         drawStaff();

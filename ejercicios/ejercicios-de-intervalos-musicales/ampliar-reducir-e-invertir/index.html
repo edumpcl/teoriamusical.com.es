@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ampliar, Reducir e Invertir Intervalos | Ejercicios</title>
+<meta name="description" content="Ejercicios para ampliar intervalos simples a compuestos, reducir compuestos a simples e invertir intervalos escribiendo la nota en el pentagrama.">
+<link rel="canonical" href="https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/ampliar-reducir-e-invertir/">
+<!--i18n--><link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/ampliar-reducir-e-invertir/">
+<link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/exercises/intervals/widen-narrow-and-invert-intervals/">
+<link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/ampliar-reducir-e-invertir/"><!--/i18n-->
+<meta property="og:title" content="Ampliar, Reducir e Invertir Intervalos | Ejercicios">
+<meta property="og:description" content="Ejercicios para ampliar intervalos simples a compuestos, reducir compuestos a simples e invertir intervalos escribiendo la nota en el pentagrama.">
+<meta property="og:image" content="https://www.teoriamusical.com.es/assets/img/og-pages/og-ejercicios-ejercicios-de-intervalos-musicales-ampliar-reducir-e-invertir.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/ampliar-reducir-e-invertir/">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Teoría Musical">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ampliar, Reducir e Invertir Intervalos | Ejercicios">
+<meta name="twitter:description" content="Ejercicios para ampliar intervalos simples a compuestos, reducir compuestos a simples e invertir intervalos escribiendo la nota en el pentagrama.">
+<meta name="twitter:image" content="https://www.teoriamusical.com.es/assets/img/og-pages/og-ejercicios-ejercicios-de-intervalos-musicales-ampliar-reducir-e-invertir.png">
+<link rel="icon" href="/assets/img/favicon.png" type="image/png">
+
+<!-- Google Search Console verification -->
+<meta name="google-site-verification" content="-bWygyA80PPsmSsmf6FQ_oZs6YeGjN95HzprqD07fos">
+
+<!-- Google Consent Mode v2 — defaults denied until user consents -->
+<script>
+  window['googlefc'] = window['googlefc'] || {};
+  window['googlefc'].controlledMessagingFunction = function(m){ m.proceed(false); };
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage':            'denied',
+    'ad_user_data':          'denied',
+    'ad_personalization':    'denied',
+    'analytics_storage':     'denied',
+    'functionality_storage': 'granted',
+    'security_storage':      'granted',
+    'wait_for_update':       500
+  });
+  try {
+    var m = document.cookie.match('(?:^|; )tm_cookie_consent=([^;]*)');
+    if (m) {
+      var p = JSON.parse(decodeURIComponent(m[1]));
+      gtag('consent', 'update', {
+        analytics_storage:  p.analytics   ? 'granted' : 'denied',
+        ad_storage:         p.advertising ? 'granted' : 'denied',
+        ad_user_data:       p.advertising ? 'granted' : 'denied',
+        ad_personalization: p.advertising ? 'granted' : 'denied'
+      });
+    }
+  } catch (e) {}
+</script>
+
+<link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/style.css?v=1757c21e">
+
+<script src="/assets/js/tm-mei.js?v=72fe601f" defer></script>
+<script src="/assets/js/tm-notacion.js?v=e5bb258a" defer></script>
+<script src="/assets/js/transformar-intervalos-engine.js?v=fd6b978e" defer></script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LearningResource","name":"Ejercicios de ampliar, reducir e invertir intervalos","description":"Ejercicios para ampliar intervalos simples a compuestos, reducir compuestos a simples e invertir intervalos escribiendo la nota en el pentagrama.","url":"https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/ampliar-reducir-e-invertir/","educationalLevel":"beginner","inLanguage":"es","isAccessibleForFree":true,"datePublished":"2026-04-17","dateModified":"2026-05-29","provider":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es"},"teaches":["Ampliación de intervalos","Reducción de intervalos","Inversión de intervalos"]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://www.teoriamusical.com.es/"},{"@type":"ListItem","position":2,"name":"Ejercicios","item":"https://www.teoriamusical.com.es/ejercicios/"},{"@type":"ListItem","position":3,"name":"Ejercicios de Intervalos Musicales","item":"https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/"},{"@type":"ListItem","position":4,"name":"Ampliar, reducir e invertir","item":"https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/ampliar-reducir-e-invertir/"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué es ampliar un intervalo?","acceptedAnswer":{"@type":"Answer","text":"Ampliar un intervalo es hacerlo una octava más grande: la segunda nota se aleja una octava de la primera (sube si el intervalo es ascendente y baja si es descendente). El número aumenta en 7 y la especie no cambia: una 3ª mayor ampliada es una 10ª mayor."}},{"@type":"Question","name":"¿Qué es reducir un intervalo?","acceptedAnswer":{"@type":"Answer","text":"Reducir un intervalo es convertir un intervalo compuesto en simple: la segunda nota se acerca una octava a la primera. El número disminuye en 7 y la especie se conserva: una 12ª justa reducida es una 5ª justa."}},{"@type":"Question","name":"¿Cómo se invierte un intervalo?","acceptedAnswer":{"@type":"Answer","text":"Se deja fija la primera nota y la segunda se mueve una octava en sentido contrario al del intervalo. Los números del intervalo y de su inversión suman 9, y la especie se complementa: mayor y menor, aumentada y disminuida, justa y justa. Una 3ª mayor ascendente invertida es una 6ª menor descendente."}},{"@type":"Question","name":"¿Cambia la alteración de la nota al ampliar, reducir o invertir?","acceptedAnswer":{"@type":"Answer","text":"No. Las tres operaciones solo cambian la octava de la segunda nota: la nota sigue siendo la misma, con su sostenido o su bemol. Lo que cambia es el número del intervalo y, en la inversión, también su especie."}}]}
+</script>
+</head>
+<body class="tm-page">
+<a class="tm-skip" href="#main">Saltar al contenido</a>
+
+<!-- Cookie consent (RGPD) -->
+<div id="tm-cookie-overlay" role="dialog" aria-modal="true" aria-labelledby="tm-cookie-title">
+  <div id="tm-cookie-modal">
+    <div id="tm-cookie-icon" aria-hidden="true">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="18.5" stroke="#b8860b" stroke-width="1.5" fill="#faf8f4"/>
+        <circle cx="14" cy="15" r="2.2" fill="#b8860b"/>
+        <circle cx="24" cy="13" r="1.7" fill="#b8860b"/>
+        <circle cx="27" cy="24" r="2.2" fill="#b8860b"/>
+        <circle cx="16" cy="26" r="1.7" fill="#b8860b"/>
+        <circle cx="21" cy="20" r="1.1" fill="#b8860b"/>
+      </svg>
+    </div>
+    <h2 id="tm-cookie-title">Usamos cookies</h2>
+    <p id="tm-cookie-desc">
+      Utilizamos cookies propias —necesarias para el funcionamiento del sitio— y de
+      terceros para análisis del tráfico y publicidad. Puedes aceptarlas, rechazar las
+      opcionales o configurarlas según tus preferencias.
+      <a href="/politica-de-cookies/" id="tm-privacy-link" rel="noopener noreferrer">Política de cookies</a>.
+    </p>
+    <div id="tm-cookie-panel" hidden>
+      <div class="tm-toggle-row">
+        <div class="tm-toggle-info">
+          <strong>Necesarias</strong>
+          <span>Imprescindibles para el funcionamiento del sitio. No se pueden desactivar.</span>
+        </div>
+        <div class="tm-toggle-wrap tm-toggle-forced">
+          <input type="checkbox" id="tm-chk-necessary" checked disabled>
+          <label for="tm-chk-necessary" class="tm-switch-label"></label>
+        </div>
+      </div>
+      <div class="tm-toggle-row">
+        <div class="tm-toggle-info">
+          <strong>Analíticas</strong>
+          <span>Miden el tráfico y el comportamiento de navegación (Google Analytics 4).</span>
+        </div>
+        <div class="tm-toggle-wrap">
+          <input type="checkbox" id="tm-chk-analytics">
+          <label for="tm-chk-analytics" class="tm-switch-label"></label>
+        </div>
+      </div>
+      <div class="tm-toggle-row">
+        <div class="tm-toggle-info">
+          <strong>Publicitarias</strong>
+          <span>Permiten mostrar anuncios relevantes según tus intereses (Google AdSense).</span>
+        </div>
+        <div class="tm-toggle-wrap">
+          <input type="checkbox" id="tm-chk-advertising">
+          <label for="tm-chk-advertising" class="tm-switch-label"></label>
+        </div>
+      </div>
+    </div>
+    <div id="tm-cookie-actions">
+      <button id="tm-btn-accept"    class="tm-btn tm-btn-primary">Aceptar todo</button>
+      <button id="tm-btn-necessary" class="tm-btn tm-btn-secondary">Solo necesarias</button>
+      <button id="tm-btn-configure" class="tm-btn tm-btn-link">Configurar</button>
+      <button id="tm-btn-save"      class="tm-btn tm-btn-primary" hidden>Guardar preferencias</button>
+    </div>
+  </div>
+</div>
+<button id="tm-cookie-trigger" aria-label="Gestionar cookies" title="Gestionar cookies" hidden>
+  <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="20" cy="20" r="18.5" stroke="currentColor" stroke-width="2" fill="none"/>
+    <circle cx="14" cy="15" r="2.2" fill="currentColor"/>
+    <circle cx="24" cy="13" r="1.7" fill="currentColor"/>
+    <circle cx="27" cy="24" r="2.2" fill="currentColor"/>
+    <circle cx="16" cy="26" r="1.7" fill="currentColor"/>
+    <circle cx="21" cy="20" r="1.1" fill="currentColor"/>
+  </svg>
+</button>
+<script src="/assets/js/consent.js?v=bf8ddf19" defer></script>
+
+<header class="tm-site-header">
+  <div class="tm-container tm-header-inner">
+    <a class="tm-brand" href="/">
+      <span class="tm-brand-mark"><img src="/assets/img/favicon-32.png" width="32" height="32" alt=""></span>
+      <span class="tm-brand-text">Teoría Musical</span>
+    </a>
+    <button class="tm-nav-toggle" aria-label="Menú" aria-expanded="false" aria-controls="tm-nav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="tm-nav" class="tm-nav" aria-label="Principal">
+      <ul class="tm-nav-list">
+        <li><a href="/" class="">Inicio</a></li>
+        <li><a href="/diccionario-musical/" class="">Diccionario Musical</a></li>
+        <li><a href="/ejercicios/" class="is-active">Ejercicios</a></li>
+        <li><a href="/juegos/" class="">Juegos</a></li>
+        <li class="tm-has-sub"><a href="/herramientas/" class="">Herramientas</a>
+        <ul class="tm-subnav">
+          <li><a href="/herramientas/metronomo/">Metrónomo</a></li>
+          <li><a href="/herramientas/afinador/">Afinador</a></li>
+        </ul>
+      </li>
+        <li class="tm-has-sub"><a href="/agenda/" class="">Agenda</a>
+        <ul class="tm-subnav">
+          <li><a href="/agenda-conciertos-bandas-orquestas/">Agenda de conciertos</a></li>
+          <li><a href="/oposiciones-de-musica/">Oposiciones de música</a></li>
+        </ul>
+        </li>
+        <li><a href="/blog/" class="">Blog</a></li>
+        <li><a href="/tecnico-especialista-en-laboratorio/" class="">Laboratorio</a></li>
+        <li class="tm-lang"><a href="/en/exercises/intervals/widen-narrow-and-invert-intervals/" hreflang="en" lang="en" title="View this page in English">English</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="tm-main">
+  
+  <nav class="tm-breadcrumb" aria-label="Migas">
+    <div class="tm-container">
+      <a href="/">Inicio</a><span class="tm-crumb-sep">›</span><a href="/ejercicios/">Ejercicios Musicales</a><span class="tm-crumb-sep">›</span><a href="/ejercicios/ejercicios-de-intervalos-musicales/">Ejercicios de Intervalos Musicales</a><span class="tm-crumb-sep">›</span><span aria-current="page">Ampliar, Reducir e Invertir</span>
+    </div>
+  </nav>
+  
+
+<div class="tm-container tm-article-wrap">
+  <article class="tm-article">
+    
+
+<h1>Ampliar, reducir e invertir intervalos</h1>
+<p>Las tres operaciones mueven una nota del intervalo una octava. En los tres ejercicios se da un intervalo escrito; en el compás siguiente aparece su primera nota y hay que escribir la segunda, igual que en los exámenes de lenguaje musical. Como en las páginas de teoría de la web, <strong>la primera nota se queda fija y se mueve la segunda</strong>.</p>
+
+<h2>Qué hay que hacer en cada caso</h2>
+<div class="tm-table-wrap">
+<table>
+<thead><tr><th>Operación</th><th>Intervalo ascendente</th><th>Intervalo descendente</th><th>Qué cambia</th></tr></thead>
+<tbody>
+<tr><td><strong>Ampliar</strong></td><td>La segunda nota sube una octava</td><td>La segunda nota baja una octava</td><td>Simple → compuesto: el número suma 7 y la especie se conserva (3ª M → 10ª M)</td></tr>
+<tr><td><strong>Reducir</strong></td><td>La segunda nota baja una octava</td><td>La segunda nota sube una octava</td><td>Compuesto → simple: el número resta 7 y la especie se conserva (10ª M → 3ª M)</td></tr>
+<tr><td><strong>Invertir</strong></td><td>La segunda nota baja una octava</td><td>La segunda nota sube una octava</td><td>Los números suman 9 y la especie se complementa (3ª M ascendente → 6ª m descendente)</td></tr>
+</tbody>
+</table>
+</div>
+<p>La alteración de la nota no cambia al moverla de octava, pero en el ejercicio <strong>hay que escribirla</strong>, como en clase: elige ♭, ♮ o ♯ antes de colocar la nota (en cada pregunta los botones empiezan en ♮). Las explicaciones completas, con ejemplos en el pentagrama, están en <a href="/diccionario-musical/intervalos/ampliacion-reduccion-de-intervalos/">ampliación y reducción de intervalos</a> y en <a href="/diccionario-musical/intervalos/inversion/">inversión de intervalos</a>.</p>
+
+<div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+
+<h2>Ampliar intervalos</h2>
+<p>Se da un intervalo simple. Escribe la segunda nota una octava más lejos para que quede compuesto: una 4ª justa pasa a ser una 11ª justa.</p>
+<div id="tmti_amp"></div>
+
+<h2>Reducir intervalos</h2>
+<p>Se da un intervalo compuesto. Acerca la segunda nota una octava para que quede simple: una 13ª menor pasa a ser una 6ª menor.</p>
+<div id="tmti_red"></div>
+
+<h2>Invertir intervalos</h2>
+<p>Se da un intervalo simple. Mueve la segunda nota una octava en sentido contrario: la 2ª pasa a 7ª, la 3ª a 6ª, la 4ª a 5ª, y la especie cambia (mayor ↔ menor, aumentada ↔ disminuida; la justa sigue siendo justa).</p>
+<div id="tmti_inv"></div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    tmTransformarIv("tmti_amp", { op: "ampliar" });
+    tmTransformarIv("tmti_red", { op: "reducir" });
+    tmTransformarIv("tmti_inv", { op: "invertir" });
+  });
+</script>
+
+<p><strong>Cómo usar los ejercicios:</strong> elige la alteración con los botones y pasa el ratón (o el dedo) por el pentagrama y la lupa enseña la nota que vas a poner; al soltar se coloca en el segundo compás. Puedes cambiar la nota o la alteración tantas veces como quieras antes de pulsar <em>Comprobar</em>. Al corregir aparece la nota correcta en verde y el nombre de los dos intervalos.</p>
+
+<p>Para practicar antes el nombre de los intervalos, prueba el <a href="/ejercicios/ejercicios-de-intervalos-musicales/analisis-completo-de-intervalos/">análisis completo de intervalos</a>; para escribirlos desde una nota, los ejercicios de <a href="/ejercicios/ejercicios-de-intervalos-musicales/terceras/">construir terceras</a>, <a href="/ejercicios/ejercicios-de-intervalos-musicales/quintas/">quintas</a> y el resto de la <a href="/ejercicios/ejercicios-de-intervalos-musicales/">sección de intervalos</a>.</p>
+
+<div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+
+<section class="tm-seccion">
+<div class="tm-seccion-inner">
+<div class="tm-seccion-cabecera">
+<h2 class="tm-seccion-titulo">Preguntas <span>Frecuentes</span></h2>
+</div>
+<div>
+<div class="tm-faq-list">
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Qué es ampliar un intervalo?</div>
+      <div class="tm-faq-a">Ampliar un intervalo es hacerlo una octava más grande: la segunda nota se aleja una octava de la primera (sube si el intervalo es ascendente y baja si es descendente). El número aumenta en 7 y la especie no cambia: una 3ª mayor ampliada es una 10ª mayor.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Qué es reducir un intervalo?</div>
+      <div class="tm-faq-a">Reducir un intervalo es convertir un intervalo compuesto en simple: la segunda nota se acerca una octava a la primera. El número disminuye en 7 y la especie se conserva: una 12ª justa reducida es una 5ª justa.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Cómo se invierte un intervalo?</div>
+      <div class="tm-faq-a">Se deja fija la primera nota y la segunda se mueve una octava en sentido contrario al del intervalo. Los números del intervalo y de su inversión suman 9, y la especie se complementa: mayor y menor, aumentada y disminuida, justa y justa. Una 3ª mayor ascendente invertida es una 6ª menor descendente.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Cambia la alteración de la nota al ampliar, reducir o invertir?</div>
+      <div class="tm-faq-a">No. Las tres operaciones solo cambian la octava de la segunda nota: la nota sigue siendo la misma, con su sostenido o su bemol. Lo que cambia es el número del intervalo y, en la inversión, también su especie.</div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+</article>
+  
+</div>
+
+</main>
+
+<footer class="tm-site-footer">
+  <div class="tm-container tm-footer-inner">
+    <div class="tm-footer-col">
+      <h3>Teoría Musical</h3>
+      <p>Música desde sus fundamentos: diccionario, ejercicios interactivos y herramientas gratuitas.</p>
+    </div>
+    <div class="tm-footer-col">
+      <h3>Secciones</h3>
+      <ul>
+        <li><a href="/diccionario-musical/">Diccionario Musical</a></li>
+        <li><a href="/ejercicios/">Ejercicios Musicales</a></li>
+        <li class="tm-has-sub"><a href="/herramientas/">Herramientas</a>
+        <ul class="tm-subnav">
+          <li><a href="/herramientas/metronomo/">Metrónomo</a></li>
+          <li><a href="/herramientas/afinador/">Afinador</a></li>
+        </ul>
+      </li>
+        <li class="tm-has-sub"><a href="/agenda/">Agenda</a>
+        <ul class="tm-subnav">
+          <li><a href="/agenda-conciertos-bandas-orquestas/">Agenda de conciertos</a></li>
+          <li><a href="/oposiciones-de-musica/">Oposiciones de música</a></li>
+        </ul>
+        </li>
+        <li><a href="/blog/">Blog</a></li>
+      </ul>
+    </div>
+    <div class="tm-footer-col">
+      <h3>Información</h3>
+      <ul>
+        <li><a href="/sobre-mi/">Sobre mí</a></li><li><a href="/contacto/">Contacto</a></li>
+        <li><a href="/aviso-legal/">Aviso legal</a></li>
+        <li><a href="/politica-de-privacidad/">Política de privacidad</a></li>
+        <li><a href="/politica-de-cookies/">Política de cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="tm-footer-bottom">
+    <p>© <span id="tm-year"></span> Teoría Musical — Eduardo Escrig Zomeño. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js?v=f956c6dc" defer></script>
+</body>
+</html>
+

@@ -1150,6 +1150,11 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/terceras/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/terceras/"/>
   </url>
+  <url><loc>https://www.teoriamusical.com.es/en/exercises/intervals/widen-narrow-and-invert-intervals/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/exercises/intervals/widen-narrow-and-invert-intervals/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/ampliar-reducir-e-invertir/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/ampliar-reducir-e-invertir/"/>
+  </url>
   <url><loc>https://www.teoriamusical.com.es/en/exercises/intervals/</loc><lastmod>2026-11-05</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/exercises/intervals/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/ejercicios/ejercicios-de-intervalos-musicales/"/>
@@ -1431,6 +1436,11 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/exercises/scales/build-natural-minor-scale/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-menor-natural/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-menor-natural/"/>
+  </url>
+  <url><loc>https://www.teoriamusical.com.es/en/exercises/scales/build-whole-tone-scale/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/exercises/scales/build-whole-tone-scale/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-hexatona/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-hexatona/"/>
   </url>
   <url><loc>https://www.teoriamusical.com.es/en/exercises/scales/identify-all-scales/</loc><lastmod>2026-11-05</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/exercises/scales/identify-all-scales/"/>

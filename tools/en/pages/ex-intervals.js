@@ -49,6 +49,14 @@ module.exports = dictionaryPage({
   <a href="/ejercicios/ejercicios-de-intervalos-musicales/octavas/">8th Octaves</a>
 </div>
 
+<h2>3. Transforming intervals</h2>
+<div>
+  <a href="/ejercicios/ejercicios-de-intervalos-musicales/ampliar-reducir-e-invertir/">
+    <h3>Widen, narrow and invert</h3>
+    <p>You get a written interval and write its second note widened to a compound interval, narrowed to a simple one or inverted, as in an exam.</p>
+  </a>
+</div>
+
 <h2>Choose your own intervals</h2>
 <p>Only 3rds and 5ths? From the 2nd to the 6th, which is as far as your class has gone? In the custom quiz you tick the intervals that appear and practice just those, on screen or on a printable sheet.</p>
 <p><a href="/ejercicios/ejercicios-de-intervalos-musicales/a-medida/">Open the custom interval quiz</a></p>

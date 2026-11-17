@@ -191,6 +191,8 @@ module.exports = dictionaryPage({
 </div>
 <p>See also the <a href="/diccionario-musical/intervalos/inversion/">inversion of intervals</a>: a related operation that changes the number and quality of the interval by moving one note an octave.</p>
 
+<p><strong>Practice:</strong> in the <a href="/ejercicios/ejercicios-de-intervalos-musicales/ampliar-reducir-e-invertir/">widen, narrow and invert intervals exercises</a> you get a written interval and write its second note on the staff, with the first note fixed as on this page.</p>
+
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
 <div class="tm-seccion-cabecera">

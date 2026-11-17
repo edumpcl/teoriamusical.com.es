@@ -77,6 +77,8 @@ module.exports = dictionaryPage({
 
 <p>For the full chart of intervals with their half steps and qualities, see <a href="/diccionario-musical/intervalos/intervalos-musicales/">musical intervals</a>.</p>
 
+<p><strong>Practice:</strong> in the <a href="/ejercicios/ejercicios-de-intervalos-musicales/ampliar-reducir-e-invertir/">widen, narrow and invert intervals exercises</a> you get a written interval and write its inversion on the staff, keeping the first note fixed.</p>
+
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
 <div class="tm-seccion-cabecera">

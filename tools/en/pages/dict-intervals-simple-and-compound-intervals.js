@@ -53,6 +53,8 @@ module.exports = dictionaryPage({
 
 <p>The <strong>octave</strong> marks the limit: every interval up to and including the 8th is simple, and only from the 9th upward do we speak of compound intervals. To review how intervals are counted and named, see the page on <a href="/diccionario-musical/intervalos/intervalos-musicales/">musical intervals</a>.</p>
 
+<p><strong>Practice:</strong> in the <a href="/ejercicios/ejercicios-de-intervalos-musicales/ampliar-reducir-e-invertir/">widening and narrowing exercises</a> you turn simple intervals into compound ones and back by writing the note on the staff.</p>
+
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
 <div class="tm-seccion-cabecera">

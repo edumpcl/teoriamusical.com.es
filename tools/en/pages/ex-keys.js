@@ -6,7 +6,7 @@ module.exports = dictionaryPage({
   description: 'Free key signature quiz: identify any major or minor key from its sharps or flats, and write key signatures on the staff. Free, no sign-up.',
   h1: 'Key Signatures',
   crumbs: [['Music Exercises', '/ejercicios/']],
-  scripts: ['tm-mei', 'tm-notacion', 'armaduras-engine'],
+  scripts: ['tm-mei', 'tm-notacion', 'armaduras-engine', 'relativos-engine'],
   body: `<h2 id="h-recognize-any-key-at-a-glance">Recognize any key at a glance</h2>
 
 <p>Being able to name the key of a piece just by looking at the sharps or flats at the start of the staff (the <strong>key signature</strong>) saves a lot of guessing. Once you know the trick, you do not need to analyze a single note.</p>
@@ -88,6 +88,16 @@ module.exports = dictionaryPage({
 <script>
   document.addEventListener("DOMContentLoaded", function(){
     tmArDibujar("tmdib_dibujar");
+  });
+</script>
+
+<h2 id="h-relativo-mayor-y-relativo-menor">Relative major and relative minor</h2>
+<p>The short exam question: <em>what is the relative minor of A major?</em> or <em>what is the relative major of G minor?</em> Choose the note and its accidental. The relative minor is a <strong>minor 3rd below</strong> the major (and the major is a minor 3rd above the minor); the correction shows the key signature they share.</p>
+
+<div id="tmrel"></div>
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    tmRelativos("tmrel");
   });
 </script>
 
