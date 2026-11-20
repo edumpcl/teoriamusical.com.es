@@ -36,8 +36,8 @@ module.exports = {
     <div class="tm-hero-derecha">
       <div class="tm-hero-card">
         <p class="tm-hero-card-label">★ New in English</p>
-        <h2 class="tm-hero-card-titulo">Dictionary, metronome and 31 tuners</h2>
-        <p class="tm-hero-card-desc">The site started in Spanish. Each section is being rewritten in English, not machine-translated. The exercises and the games are next; for now they are in Spanish only.</p>
+        <h2 class="tm-hero-card-titulo">Dictionary, exercises, games and tools</h2>
+        <p class="tm-hero-card-desc">The site started in Spanish. Each section is being rewritten in English, not machine-translated. The music dictionary, the exercises, the games, the metronome and the 31 tuners are already available in English.</p>
       </div>
     </div>
   </div>
