@@ -8,10 +8,21 @@ module.exports = dictionaryPage({
   crumbs: [['Music Exercises', '/ejercicios/']],
   articleClass: 'tm-article tm-article--wide',
   scripts: [],
-  body: `<p>A learning path for musical intervals, from counting positions on the staff to a complete analysis.</p>
+  body: `<style>
+.tm-ruta{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:14px 0 26px;}
+.tm-ruta a{display:block;padding:14px 16px;border:1px solid #e8e0cc;border-radius:10px;background:#fff;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s;}
+.tm-ruta a:hover,.tm-ruta a:focus-visible{border-color:#8b6914;box-shadow:0 4px 14px rgba(0,0,0,.07);}
+.tm-ruta h3{margin:0 0 4px;font-size:1.05rem;color:#8b6914;}
+.tm-ruta a:hover h3{text-decoration:underline;}
+.tm-ruta p{margin:0;font-size:.88rem;line-height:1.45;color:#555;}
+.tm-ruta--num{grid-template-columns:repeat(auto-fill,minmax(96px,1fr));}
+.tm-ruta--num a{text-align:center;padding:12px 8px;font-weight:700;color:#8b6914;}
+.tm-ruta--num a span{display:block;font-size:1.4rem;line-height:1.1;}
+</style>
+<p>A learning path for musical intervals, from counting positions on the staff to a complete analysis.</p>
 
 <h2>1. The theory foundations</h2>
-<div>
+<div class="tm-ruta">
   <a href="/ejercicios/ejercicios-de-intervalos-musicales/distancia/">
     <h3>Distance (number)</h3>
     <p>Basic counting of lines and spaces on the staff.</p>
@@ -39,18 +50,18 @@ module.exports = dictionaryPage({
 </div>
 
 <h2>2. Practice by number</h2>
-<div>
-  <a href="/ejercicios/ejercicios-de-intervalos-musicales/segundas/">2nd Seconds</a>
-  <a href="/ejercicios/ejercicios-de-intervalos-musicales/terceras/">3rd Thirds</a>
-  <a href="/ejercicios/ejercicios-de-intervalos-musicales/cuartas/">4th Fourths</a>
-  <a href="/ejercicios/ejercicios-de-intervalos-musicales/quintas/">5th Fifths</a>
-  <a href="/ejercicios/ejercicios-de-intervalos-musicales/sextas/">6th Sixths</a>
-  <a href="/ejercicios/ejercicios-de-intervalos-musicales/septimas/">7th Sevenths</a>
-  <a href="/ejercicios/ejercicios-de-intervalos-musicales/octavas/">8th Octaves</a>
+<div class="tm-ruta tm-ruta--num">
+  <a href="/ejercicios/ejercicios-de-intervalos-musicales/segundas/"><span>2nd</span>Seconds</a>
+  <a href="/ejercicios/ejercicios-de-intervalos-musicales/terceras/"><span>3rd</span>Thirds</a>
+  <a href="/ejercicios/ejercicios-de-intervalos-musicales/cuartas/"><span>4th</span>Fourths</a>
+  <a href="/ejercicios/ejercicios-de-intervalos-musicales/quintas/"><span>5th</span>Fifths</a>
+  <a href="/ejercicios/ejercicios-de-intervalos-musicales/sextas/"><span>6th</span>Sixths</a>
+  <a href="/ejercicios/ejercicios-de-intervalos-musicales/septimas/"><span>7th</span>Sevenths</a>
+  <a href="/ejercicios/ejercicios-de-intervalos-musicales/octavas/"><span>8th</span>Octaves</a>
 </div>
 
 <h2>3. Transforming intervals</h2>
-<div>
+<div class="tm-ruta">
   <a href="/ejercicios/ejercicios-de-intervalos-musicales/ampliar-reducir-e-invertir/">
     <h3>Widen, narrow and invert</h3>
     <p>You get a written interval and write its second note widened to a compound interval, narrowed to a simple one or inverted, as in an exam.</p>
@@ -59,15 +70,15 @@ module.exports = dictionaryPage({
 
 <h2>Choose your own intervals</h2>
 <p>Only 3rds and 5ths? From the 2nd to the 6th, which is as far as your class has gone? In the custom quiz you tick the intervals that appear and practice just those, on screen or on a printable sheet.</p>
-<p><a href="/ejercicios/ejercicios-de-intervalos-musicales/a-medida/">Open the custom interval quiz</a></p>
+<p><a class="tm-btn tm-btn-dorado" href="/ejercicios/ejercicios-de-intervalos-musicales/a-medida/">Open the custom interval quiz</a></p>
 
 <h2>The final challenge</h2>
 <p>Have you passed all the levels above? Prove it in the complete test: number, quality and arrangement at the same time.</p>
-<p><a href="/ejercicios/ejercicios-de-intervalos-musicales/analisis-completo-de-intervalos/">Start the complete analysis</a></p>
+<p><a class="tm-btn tm-btn-dorado" href="/ejercicios/ejercicios-de-intervalos-musicales/analisis-completo-de-intervalos/">Start the complete analysis</a></p>
 
 <h2>For working on paper</h2>
 <p>The same skills, without a screen: 26 A4 worksheets with 42 melodic intervals each (one interval at a time, or mixed by level, from 2nd and 3rd up to all seven together), plus a generator that makes new sheets, each with an answer key.</p>
-<p><a href="/ejercicios/ejercicios-de-intervalos-en-pdf/">Go to the interval worksheets</a></p>
+<p><a class="tm-btn tm-btn-dorado" href="/ejercicios/ejercicios-de-intervalos-en-pdf/">Go to the interval worksheets</a></p>
 
 <p>To train your ear as well, use the <a href="/herramientas/afinador/">reference tones of the online tuner</a> and compare the sound of each interval with a pure tone. The <a href="/herramientas/metronomo/">online metronome</a> helps you build sight-reading speed.</p>
 

@@ -196,12 +196,23 @@
   <article class="tm-article tm-article--wide">
     
 
-<h1>Academia de intervalos</h1>
-<p>Ruta de aprendizaje de intervalos musicales</p>
+<style>
+.tm-ruta{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:14px 0 26px;}
+.tm-ruta a{display:block;padding:14px 16px;border:1px solid #e8e0cc;border-radius:10px;background:#fff;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s;}
+.tm-ruta a:hover,.tm-ruta a:focus-visible{border-color:#8b6914;box-shadow:0 4px 14px rgba(0,0,0,.07);}
+.tm-ruta h3{margin:0 0 4px;font-size:1.05rem;color:#8b6914;}
+.tm-ruta a:hover h3{text-decoration:underline;}
+.tm-ruta p{margin:0;font-size:.88rem;line-height:1.45;color:#555;}
+.tm-ruta--num{grid-template-columns:repeat(auto-fill,minmax(96px,1fr));}
+.tm-ruta--num a{text-align:center;padding:12px 8px;font-weight:700;color:#8b6914;}
+.tm-ruta--num a span{display:block;font-size:1.4rem;line-height:1.1;}
+</style>
+<h1>Ejercicios de intervalos musicales</h1>
+<p><strong>Academia de intervalos</strong>: ruta de aprendizaje paso a paso, de los fundamentos a la práctica.</p>
 
   
   <h2>1. Los fundamentos teóricos</h2>
-  <div>
+  <div class="tm-ruta">
     <a href="/ejercicios/ejercicios-de-intervalos-musicales/distancia/">
       <h3>Distancia (Número)</h3>
       <p>Conteo básico de líneas y espacios en el pentagrama.</p>
@@ -234,18 +245,18 @@
 </div>
 
 <h2>2. Práctica por grados</h2>
-  <div>
-    <a href="/ejercicios/ejercicios-de-intervalos-musicales/segundas/">2ª Segundas</a>
-    <a href="/ejercicios/ejercicios-de-intervalos-musicales/terceras/">3ª Terceras</a>
-    <a href="/ejercicios/ejercicios-de-intervalos-musicales/cuartas/">4ª Cuartas</a>
-    <a href="/ejercicios/ejercicios-de-intervalos-musicales/quintas/">5ª Quintas</a>
-    <a href="/ejercicios/ejercicios-de-intervalos-musicales/sextas/">6ª Sextas</a>
-    <a href="/ejercicios/ejercicios-de-intervalos-musicales/septimas/">7ª Séptimas</a>
-    <a href="/ejercicios/ejercicios-de-intervalos-musicales/octavas/">8ª Octavas</a>
+  <div class="tm-ruta tm-ruta--num">
+    <a href="/ejercicios/ejercicios-de-intervalos-musicales/segundas/"><span>2ª</span>Segundas</a>
+    <a href="/ejercicios/ejercicios-de-intervalos-musicales/terceras/"><span>3ª</span>Terceras</a>
+    <a href="/ejercicios/ejercicios-de-intervalos-musicales/cuartas/"><span>4ª</span>Cuartas</a>
+    <a href="/ejercicios/ejercicios-de-intervalos-musicales/quintas/"><span>5ª</span>Quintas</a>
+    <a href="/ejercicios/ejercicios-de-intervalos-musicales/sextas/"><span>6ª</span>Sextas</a>
+    <a href="/ejercicios/ejercicios-de-intervalos-musicales/septimas/"><span>7ª</span>Séptimas</a>
+    <a href="/ejercicios/ejercicios-de-intervalos-musicales/octavas/"><span>8ª</span>Octavas</a>
   </div>
 
   <h2>3. Transformar intervalos</h2>
-  <div>
+  <div class="tm-ruta">
     <a href="/ejercicios/ejercicios-de-intervalos-musicales/ampliar-reducir-e-invertir/">
       <h3>Ampliar, reducir e invertir</h3>
       <p>Se da un intervalo escrito y se escribe su segunda nota ampliada a compuesto, reducida a simple o invertida, como en los exámenes.</p>
@@ -255,15 +266,15 @@
   
   <h2>Elige tú los intervalos</h2>
     <p>¿Solo terceras y quintas? ¿De la segunda a la sexta, que es lo dado hasta ahora? En el test a medida se marcan los intervalos que entran y se practica solo eso, en pantalla o en una hoja para imprimir.</p>
-    <p><a href="/ejercicios/ejercicios-de-intervalos-musicales/a-medida/">Abrir el test de intervalos a medida</a></p>
+    <p><a class="tm-btn tm-btn-dorado" href="/ejercicios/ejercicios-de-intervalos-musicales/a-medida/">Abrir el test de intervalos a medida</a></p>
 
   <h2>El gran reto final</h2>
     <p>¿Has superado todos los niveles anteriores? Demuéstralo en el test integral: número, tipo y disposición al mismo tiempo.</p>
-    <p><a href="/ejercicios/ejercicios-de-intervalos-musicales/analisis-completo-de-intervalos/">Iniciar análisis completo</a></p>
+    <p><a class="tm-btn tm-btn-dorado" href="/ejercicios/ejercicios-de-intervalos-musicales/analisis-completo-de-intervalos/">Iniciar análisis completo</a></p>
 
   <h2>Para trabajar en papel</h2>
     <p>Las mismas destrezas, sin pantalla: veintiséis fichas A4 con 42 intervalos melódicos cada una —de un solo intervalo o mezcladas por niveles, de 2ª y 3ª hasta las siete a la vez— y su hoja de soluciones para corregir.</p>
-    <p><a href="/ejercicios/ejercicios-de-intervalos-en-pdf/">Descargar los ejercicios de intervalos en PDF</a></p>
+    <p><a class="tm-btn tm-btn-dorado" href="/ejercicios/ejercicios-de-intervalos-en-pdf/">Descargar los ejercicios de intervalos en PDF</a></p>
 
 <p>Para reforzar el reconocimiento auditivo, los <a href="/herramientas/afinador/">tonos de referencia del afinador</a> permiten comparar el sonido de cada intervalo con el tono puro. El <a href="/herramientas/metronomo/">metrónomo online</a> ayuda a trabajar la velocidad de lectura a vista.</p>
 
