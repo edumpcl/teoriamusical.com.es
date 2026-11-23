@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Inserta las 2 unidades de AdSense manual en las paginas del sitio.
+"""Inserta las 2 unidades de AdSense manual en las paginas del sitio
+(y una 3.a a mitad de articulo SOLO en las secciones de AD_MEDIO_SECCION).
 
   Ad 1 (TM - Tras intro)      -> antes del 2o <h2> de contenido (tras la
                                  primera seccion). Fallback: tras el <p> de intro.
@@ -57,6 +58,17 @@ SLOT_END_SECCION = [
     ("en/", "6104169415", "TM - Fin de articulo - EN"),
 ]
 
+# Unidad 3 OPCIONAL (a mitad de articulo), solo para las secciones listadas aqui.
+# Las paginas largas (biografias de /compositores/: 7.000+ palabras con fuentes)
+# dejaban un tramo muy largo sin anuncio entre la unidad 1 y la 2 (plan A4 de la
+# palanca RPM: densidad baja). Es OPT-IN: ninguna pagina fuera de estos prefijos
+# cambia. Va en el <h2> de primer nivel mas cercano al punto medio entre las
+# otras dos, respetando MIN_SEP con ambas. Slot vacio = se usa SLOT_INTRO y el
+# script avisa; crear en AdSense "TM - Medio - compositores" para atribuir ingresos.
+AD_MEDIO_SECCION = [
+    ("compositores/", "", "TM - Medio - compositores"),
+]
+
 _avisados = set()
 
 
@@ -73,6 +85,21 @@ def slot_end(rel):
                       "SLOT_END_SECCION; se usa la unidad generica." % nombre)
             return SLOT_END
     return SLOT_END
+
+
+def slot_medio(rel):
+    """Slot de la unidad 3 (mitad de articulo) o None si la seccion no la lleva."""
+    ruta = rel.replace(os.sep, "/")
+    for prefijo, slot, nombre in AD_MEDIO_SECCION:
+        if ruta.startswith(prefijo):
+            if slot:
+                return slot
+            if nombre not in _avisados:
+                _avisados.add(nombre)
+                print("AVISO: falta el data-ad-slot de '%s' en "
+                      "AD_MEDIO_SECCION; se usa la unidad generica." % nombre)
+            return SLOT_INTRO
+    return None
 
 
 def slot_intro(rel):
@@ -248,7 +275,22 @@ def anclaje_ad2(region, pos_ad1):
 GRID_RE = re.compile(r'ej-cards|tm-grid|tm-hero|tm-card')
 
 
-def process(html, permitir_rejilla=False, slot1=SLOT_INTRO, slot2=SLOT_END):
+def anclaje_medio(region, pos1, pos2):
+    """Donde va la unidad 3 (opcional): el <h2> de primer nivel mas cercano al
+    punto medio entre la 1 y la 2, a MIN_SEP o mas de ambas. None si no hay."""
+    if pos1 is None:
+        return None
+    fin = pos2 if pos2 is not None else len(region)
+    objetivo = (pos1 + fin) / 2
+    cand = [p for p in toplevel_content_h2(region)
+            if p - pos1 >= MIN_SEP and fin - p >= MIN_SEP]
+    if not cand:
+        return None
+    return min(cand, key=lambda p: abs(p - objetivo))
+
+
+def process(html, permitir_rejilla=False, slot1=SLOT_INTRO, slot2=SLOT_END,
+            slot3=None):
     """Reconcilia y auto-corrige: SIEMPRE limpia primero y reinserta donde toca,
     asi se arreglan colocaciones viejas mal hechas. Devuelve (nuevo_html, estado).
 
@@ -296,13 +338,20 @@ def process(html, permitir_rejilla=False, slot1=SLOT_INTRO, slot2=SLOT_END):
         pos2, ad2 = ancla2
         inserts.append((art_start + pos2, ad_block(slot2)))
     else:
-        ad2 = "fin"
+        pos2, ad2 = None, "fin"
         inserts.append((art_end, ad_block(slot2)))
+
+    ad3 = ""
+    if slot3:
+        pos3 = anclaje_medio(region, pos1, pos2)
+        if pos3 is not None:
+            inserts.append((art_start + pos3, ad_block(slot3)))
+            ad3 = "+medio"
 
     for pos, text in sorted(inserts, key=lambda x: x[0], reverse=True):
         html = html[:pos] + text + html[pos:]
 
-    etiqueta = ad1 + "+" + ad2
+    etiqueta = ad1 + "+" + ad2 + ad3
     if html == original:
         return html, "ok-igual(" + etiqueta + ")"
     return html, "ok(" + etiqueta + ")"
@@ -335,7 +384,8 @@ def main():
         with open(path, "r", encoding="utf-8") as f:
             html = f.read()
         new, status = process(html, permitir_rejilla=rel in INCLUDE_RELPATHS,
-                              slot1=slot_intro(rel), slot2=slot_end(rel))
+                              slot1=slot_intro(rel), slot2=slot_end(rel),
+                              slot3=slot_medio(rel))
         counts[status.split("(")[0]] = counts.get(status.split("(")[0], 0) + 1
         if new != html:
             print("%-14s %s" % (status, rel))
