@@ -1,5 +1,5 @@
 {
-  "comprobado": "2026-11-16",
+  "comprobado": "2026-11-23",
   "conciertos": [
     {
       "id": "bsmm-2026-11-03",
@@ -10051,6 +10051,96 @@
         {
           "texto": "ADDA",
           "url": "https://addaalicante.es/concierto/banda-sinfonica-municipal-de-alicante-bsma-festival-bandas-de-alicante-2/"
+        }
+      ]
+    },
+    {
+      "id": "union-artistica-musical-montroi-2026-11-28",
+      "agrupacion": "Unión Artística Musical de Montroi",
+      "titulo": "Concierto de la Banda Sinfónica",
+      "fecha": "2026-11-28",
+      "hora": "19:00",
+      "lugar": "Musical (C/ Ausiàs March, 43)",
+      "ciudad": "Montroi",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda/concierto-banda-sinfonica-union-artistica-musical-de-montroi/?occurrence=2026-11-28"
+        }
+      ]
+    },
+    {
+      "id": "sociedad-musical-la-nova-xativa-2026-11-28",
+      "agrupacion": "Sociedad Musical La Nova de Xàtiva",
+      "titulo": "Concierto de Santa Cecilia",
+      "fecha": "2026-11-28",
+      "hora": "19:00",
+      "lugar": "Gran Teatro de Xàtiva",
+      "ciudad": "Xàtiva",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "sociedad",
+      "fuentes": [
+        {
+          "texto": "Agenda de la FSMCV",
+          "url": "https://fsmcv.org/agenda/concierto-santa-cecilia-sociedad-musical-la-nova-de-xativa/?occurrence=2026-11-28"
+        }
+      ]
+    },
+    {
+      "id": "adda-2026-12-16",
+      "agrupacion": "ADDA Simfònica",
+      "titulo": "Romeo & Julieta",
+      "fecha": "2026-12-16",
+      "hora": "20:00",
+      "lugar": "Auditorio ADDA",
+      "ciudad": "Alicante",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "orquesta",
+      "programa": "Dirige Josep Vicent. Chaikovski, Bernstein y Prokófiev.",
+      "nota": "Concierto benéfico con el Rotary Club Alicante Lucentum Puerto, a beneficio de ISABIAL.",
+      "fuentes": [
+        {
+          "texto": "ADDA",
+          "url": "https://addaalicante.es/concierto/adda-simfonica-alicantejosep-vicentromeo-julieta/"
+        }
+      ]
+    },
+    {
+      "id": "orquesta-filarmonica-ua-2026-12-17",
+      "agrupacion": "Orquesta Filarmónica y Coral de la Universidad de Alicante",
+      "titulo": "Concierto de Navidad",
+      "fecha": "2026-12-17",
+      "hora": "20:00",
+      "lugar": "Auditorio ADDA",
+      "ciudad": "Alicante",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "orquesta",
+      "programa": "Con obras de Strauss, Tchaikovsky, Bach, Haendel, Mozart o Borodin. Concertino: Antonio García Egea; director invitado: Alejandro Muñoz; director de la Coral UA: Shlomo Rodríguez.",
+      "fuentes": [
+        {
+          "texto": "ADDA",
+          "url": "https://addaalicante.es/concierto/orquesta-filarmonica-y-coral-de-la-universidad-de-alicante-concierto-de-navidad/"
+        }
+      ]
+    },
+    {
+      "id": "adda-2026-12-23",
+      "agrupacion": "ADDA Simfònica",
+      "titulo": "Navidad de cine",
+      "fecha": "2026-12-23",
+      "hora": "19:00",
+      "lugar": "Auditorio ADDA",
+      "ciudad": "Alicante",
+      "comunidad": "Comunidad Valenciana",
+      "tipo": "orquesta",
+      "programa": "Dirige Josep Vicent. Bandas sonoras de Williams, Zimmer, Rota y Korngold.",
+      "nota": "Concierto benéfico a favor de la Asociación Parkinson Alicante.",
+      "fuentes": [
+        {
+          "texto": "ADDA",
+          "url": "https://addaalicante.es/concierto/adda-simfonica-alicantejosep-vicentnavidaddecine/"
         }
       ]
     }

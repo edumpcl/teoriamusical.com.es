@@ -1,5 +1,5 @@
 {
-  "comprobado": "2026-11-16",
+  "comprobado": "2026-11-23",
   "convocatorias": [
     {
       "id": "real-filharmonia-2026",
@@ -696,6 +696,151 @@
         }
       ],
       "nota_plazo": "20 días naturales desde el día siguiente a la última publicación (el DOGC del 03/11/2026): del 4 al 23/11, ambos incluidos. Contrastado con el boletín."
+    },
+    {
+      "id": "banda-provincial-guadalajara-2026",
+      "entidad": "Diputación Provincial de Guadalajara (Banda Provincial)",
+      "titulo": "5 plazas de músico/a de la Banda Provincial de Guadalajara: percusión, trompa, saxofón tenor, oboe y trompeta",
+      "tipo": "banda",
+      "instrumentos": [
+        "percusión",
+        "trompa",
+        "saxofón",
+        "oboe",
+        "trompeta"
+      ],
+      "comunidad": "Castilla-La Mancha",
+      "plazas": "5 plazas de personal laboral fijo, una por especialidad: percusión, trompa, saxofón tenor, oboe y trompeta",
+      "acceso": "Concurso-oposición libre",
+      "inicio": "2026-10-28",
+      "fin": "2026-11-25",
+      "requisitos": "Titulación y requisitos de cada especialidad en las bases específicas del BOP.",
+      "tasa": "Consulta la tasa en las bases del BOP",
+      "fuentes": [
+        {
+          "texto": "Extracto en el BOE del 27/10/2026 (BOE-A-2026-22488)",
+          "url": "https://www.boe.es/boe/dias/2026/10/27/pdfs/BOE-A-2026-22488.pdf"
+        },
+        {
+          "texto": "Bases en el BOP de Guadalajara núm. 201, del 21/10/2026 (sede de la Diputación)",
+          "url": "https://dguadalajara.sedelectronica.es"
+        }
+      ],
+      "nota_plazo": "20 días hábiles desde el día siguiente a la publicación en el BOE (27/10/2026), con el lunes 2 de noviembre festivo en Castilla-La Mancha: el último día es el miércoles 25/11. Contrastado con el BOE."
+    },
+    {
+      "id": "barakaldo-clarinete-trompeta-2026",
+      "entidad": "Ayuntamiento de Barakaldo (Bizkaia)",
+      "titulo": "2 plazas de músico/a de la Banda Municipal de Barakaldo: clarinete y trompeta",
+      "tipo": "banda",
+      "instrumentos": [
+        "clarinete",
+        "trompeta"
+      ],
+      "comunidad": "País Vasco",
+      "plazas": "2 plazas de funcionario de carrera (Administración Especial, Cometidos Especiales, grupo A2): clarinete y trompeta",
+      "acceso": "Concurso-oposición libre",
+      "inicio": "2026-10-30",
+      "fin": "2026-11-26",
+      "requisitos": "Titulado/a de Grado Medio o Grado Profesional de Música en la especialidad (o haber abonado los derechos para obtenerlo). Perfil lingüístico B2 sin fecha de preceptividad.",
+      "tasa": "15 € (exención para familia numerosa y monoparentales con renta inferior a 15.000 €, según las bases)",
+      "fuentes": [
+        {
+          "texto": "Extracto en el BOE del 29/10/2026 (BOE-A-2026-22653)",
+          "url": "https://www.boe.es/boe/dias/2026/10/29/pdfs/BOE-A-2026-22653.pdf"
+        },
+        {
+          "texto": "Bases en el BOB núm. 204 del 23/10/2026",
+          "url": "http://www.bizkaia.eus/lehendakaritza/Bao_bob/2026/10/23/II-5440_cas.pdf"
+        }
+      ],
+      "nota_plazo": "20 días hábiles desde el día siguiente a la publicación en el BOE (29/10/2026): del 30 de octubre al jueves 26/11. Contrastado con el BOE."
+    },
+    {
+      "id": "orquesta-granada-violin-violonchelo-2026",
+      "entidad": "Consorcio Granada para la Música (Orquesta Ciudad de Granada)",
+      "titulo": "Violín tutti y violonchelo tutti de la Orquesta Ciudad de Granada",
+      "tipo": "orquesta",
+      "instrumentos": [
+        "violín",
+        "violonchelo"
+      ],
+      "comunidad": "Andalucía",
+      "plazas": "2 plazas de personal músico de personal laboral fijo, turno libre: violín tutti y violonchelo tutti",
+      "acceso": "Oposición libre",
+      "inicio": "2026-10-27",
+      "fin": "2026-11-24",
+      "requisitos": "Requisitos de las bases del BOP de Granada.",
+      "tasa": "Consulta la tasa en las bases del BOP",
+      "fuentes": [
+        {
+          "texto": "Extracto en el BOE del 26/10/2026 (BOE-A-2026-22362)",
+          "url": "https://www.boe.es/boe/dias/2026/10/26/pdfs/BOE-A-2026-22362.pdf"
+        },
+        {
+          "texto": "Bases en el BOP de Granada núm. 202 del 19/10/2026 (violonchelo tutti)",
+          "url": "https://bop.dipgra.es/publica/buscador-anuncios/anuncio/Bases-para-la-seleccion-y-contratacion-de-personal-musico-de-la-Orquesta-Ciudad-de-Granada-Violonchelo-Tutti/"
+        },
+        {
+          "texto": "Bases en el BOP de Granada (violín tutti)",
+          "url": "https://bop.dipgra.es/publica/buscador-anuncios/anuncio/Bases-para-la-seleccion-y-contratacion-de-personal-musico-de-la-Orquesta-Ciudad-de-Granada-Violin-Tutti-00001/"
+        }
+      ],
+      "nota_plazo": "20 días hábiles desde el día siguiente a la publicación en el BOE (26/10/2026), con el lunes 2 de noviembre festivo en Andalucía: el último día es el martes 24/11. Contrastado con el BOE."
+    },
+    {
+      "id": "molina-segura-percusion-2026",
+      "entidad": "Ayuntamiento de Molina de Segura (Murcia)",
+      "titulo": "Bolsa extraordinaria de profesor/a de percusión, Conservatorio Municipal",
+      "tipo": "docencia",
+      "instrumentos": [
+        "percusión"
+      ],
+      "comunidad": "Región de Murcia",
+      "plazas": "Bolsa de trabajo extraordinaria (nombramientos interinos y contratos laborales temporales), Administración Especial, Técnica Media, A2",
+      "acceso": "Oposición libre",
+      "inicio": "2026-11-12",
+      "fin": "2026-11-25",
+      "requisitos": "Título Superior de Música, especialidad Percusión, o equivalente.",
+      "tasa": "26,25 € (con exenciones en las bases)",
+      "fuentes": [
+        {
+          "texto": "Edicto en el BORM núm. 261 del 11/11/2026 (anuncio 5543)",
+          "url": "https://www.borm.es/services/anuncio/ano/2026/numero/5543/pdf"
+        },
+        {
+          "texto": "Bases en la sede electrónica de Molina de Segura",
+          "url": "https://sedeelectronica.molinadesegura.es/wp-content/uploads/sites/4/2026/11/Bases_firmadas.pdf"
+        }
+      ],
+      "nota_plazo": "10 días hábiles desde el día siguiente a la publicación en el BORM (11/11/2026): del 12 al miércoles 25/11. Contrastado con el boletín."
+    },
+    {
+      "id": "tui-piano-composicion-2026",
+      "entidad": "Ayuntamiento de Tui (Pontevedra)",
+      "titulo": "Profesor/a de piano-composición, escuela de música (30 horas semanales)",
+      "tipo": "docencia",
+      "instrumentos": [
+        "piano"
+      ],
+      "comunidad": "Galicia",
+      "plazas": "1 plaza de personal laboral fijo a tiempo parcial (30 horas semanales), oposición libre, con lista de reserva",
+      "acceso": "Oposición libre",
+      "inicio": "2026-10-30",
+      "fin": "2026-11-26",
+      "requisitos": "Requisitos de las bases (BOP de Pontevedra del 10/06/2026, rectificadas el 16/10/2026).",
+      "tasa": "Consulta la tasa en las bases del BOP",
+      "fuentes": [
+        {
+          "texto": "Extracto en el BOE del 29/10/2026 (BOE-A-2026-22657)",
+          "url": "https://www.boe.es/boe/dias/2026/10/29/pdfs/BOE-A-2026-22657.pdf"
+        },
+        {
+          "texto": "Anuncio de la convocatoria en el DOG núm. 201 del 22/10/2026",
+          "url": "https://www.xunta.gal/dog/Publicados/2026/20261022/AnuncioL255-191026-0002_es.html"
+        }
+      ],
+      "nota_plazo": "20 días hábiles desde el día siguiente a la publicación en el BOE (29/10/2026): del 30 de octubre al jueves 26/11. Contrastado con el BOE."
     }
   ],
   "anunciadas": [
