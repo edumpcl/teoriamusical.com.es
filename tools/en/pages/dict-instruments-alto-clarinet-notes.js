@@ -30,6 +30,7 @@ module.exports = dictionaryPage({
 <h2>Does the alto clarinet transpose? The major 6th</h2>
 
 <p>Yes. It is pitched <strong>in E♭</strong>, so a written <strong>C4</strong> sounds <strong>E♭3</strong>: a <strong>major 6th below</strong>. It is written in <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef</a> like every clarinet, so that the player <strong>reads and fingers exactly the same</strong> and only changes instrument. All the notes on this page are <strong>written notes</strong> unless it says "sounding".</p>
+<p>To see <strong>all the transposing instruments</strong> side by side and try the converter from written to sounding pitch, see the table of <a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a>.</p>
 
 <p>The clarinet family has <strong>several instruments in E♭ and in B♭</strong>; these are the most common. Notice that the E♭ clarinet (Spanish <em>requinto</em>) transposes <em>upward</em> because it is small, while the alto, which is larger, transposes <em>downward</em>:</p>
 

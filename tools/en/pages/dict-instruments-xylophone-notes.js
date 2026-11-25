@@ -15,6 +15,7 @@ module.exports = dictionaryPage({
 <h2>Which note really sounds</h2>
 
 <p>Pick a written note to see which note really comes out, with its sound. The matching bar lights up on the keyboard.</p>
+<p>To see <strong>all the transposing instruments</strong> side by side and try the converter from written to sounding pitch, see the table of <a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a>.</p>
 
 <p>A written C5 on the xylophone sounds C6. The rule is the same for every note: the part is written in treble clef, and the instrument sounds an octave above it.</p>
 

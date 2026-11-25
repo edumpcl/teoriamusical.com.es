@@ -78,7 +78,7 @@ module.exports = dictionaryPage({
 
 <p>In orchestral and band scores, the instruments usually appear grouped in a <strong>conventional order</strong>, which can vary with the ensemble and the work. In an orchestral score, the woodwinds are usually placed above the brass and percussion, while the strings normally occupy the bottom. Knowing the families helps you find each instrument in the score.</p>
 
-<p>Within each family, the instruments usually follow a <strong>standard order related to their register</strong>, from highest to lowest: for example, in the woodwinds, piccolo, flute, oboe, clarinet and bassoon. And each family has its own writing habits: many brass and several woodwind instruments are <strong>transposing instruments</strong>, and unpitched percussion uses its own <a href="/diccionario-musical/instrumentos-de-percusion-no-afinada/">percussion clef</a>. To see how each instrument is read, see <a href="/diccionario-musical/notas-en-los-instrumentos/">the notes on each instrument</a>.</p>
+<p>Within each family, the instruments usually follow a <strong>standard order related to their register</strong>, from highest to lowest: for example, in the woodwinds, piccolo, flute, oboe, clarinet and bassoon. And each family has its own writing habits: many brass and several woodwind instruments are <strong><a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a></strong>, and unpitched percussion uses its own <a href="/diccionario-musical/instrumentos-de-percusion-no-afinada/">percussion clef</a>. To see how each instrument is read, see <a href="/diccionario-musical/notas-en-los-instrumentos/">the notes on each instrument</a>.</p>
 
 <h2>In summary</h2>
 

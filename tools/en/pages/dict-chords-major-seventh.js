@@ -7,7 +7,7 @@ module.exports = dictionaryPage({
   h1: 'Major Seventh Chord',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Chords', '/diccionario-musical/acordes/']],
   articleAttrs: 'data-tm-chords',
-  scripts: ['tm-piano-audio'],
+  scripts: ['tm-piano-audio', 'tm-mei', 'tm-notacion', 'explorador-septimas-engine'],
   body: `
 <p>The <strong>major seventh chord</strong> (symbol <strong>Cmaj7</strong>) is a four-note chord: a <a href="/diccionario-musical/acordes/acorde-perfecto-mayor/">major triad</a> with a <strong>major 7th</strong> added on top. Its sound is <strong>bright, sweet and "floating"</strong>, very typical of jazz, bossa nova and pop. It is one of the five <a href="/diccionario-musical/acordes/acordes-de-septima/">seventh chords</a>.</p>
 
@@ -31,6 +31,10 @@ module.exports = dictionaryPage({
 </div>
 <p>The key to its color is the <strong>major 7th</strong> (C–B), only a half step (UK: semitone) below the octave. This sets it apart from the <a href="/diccionario-musical/acordes/acorde-de-septima-de-dominante/">dominant seventh chord</a>, which has a <em>minor</em> 7th (B♭) and sounds tense. The major seventh, in contrast, is stable and bright.</p>
 
+<h2>Explore the major seventh chord on any note</h2>
+<p>Choose the root and the position to see how it is written on the staff: each note has the color of its function (root, 3rd, 5th and 7th) and you can hear it as a block chord or as an arpeggio.</p>
+<div class="tm-xs" data-tipo="maj7" data-fijo></div>
+
 <h2>Major seventh chord symbols</h2>
 <div class="tm-table-wrap">
 <table class="tm-table">
@@ -39,6 +43,30 @@ module.exports = dictionaryPage({
     <tr><td>C major seventh</td><td><strong>Cmaj7</strong> · CM7 · C△7 · Cma7</td></tr>
     <tr><td>G major seventh</td><td>Gmaj7</td></tr>
     <tr><td>F major seventh</td><td>Fmaj7</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>The major seventh chord on every note</h2>
+<p>Every major seventh chord has the same structure (major 3rd, perfect 5th and major 7th); only the starting note changes. This table lists the 14 most common ones with their chord symbol and correctly spelled notes. Chords that start on an altered note are spelled with sharps or flats according to the root: <strong>C♯maj7</strong> and <strong>D♭maj7</strong>, or <strong>F♯maj7</strong> and <strong>G♭maj7</strong>, sound the same but are written differently.</p>
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead><tr><th>Symbol</th><th>Chord</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Cmaj7</strong></td><td>C major seventh</td><td>C – E – G – B</td></tr>
+    <tr><td><strong>C♯maj7</strong></td><td>C♯ major seventh</td><td>C♯ – E♯ – G♯ – B♯</td></tr>
+    <tr><td><strong>D♭maj7</strong></td><td>D♭ major seventh</td><td>D♭ – F – A♭ – C</td></tr>
+    <tr><td><strong>Dmaj7</strong></td><td>D major seventh</td><td>D – F♯ – A – C♯</td></tr>
+    <tr><td><strong>E♭maj7</strong></td><td>E♭ major seventh</td><td>E♭ – G – B♭ – D</td></tr>
+    <tr><td><strong>Emaj7</strong></td><td>E major seventh</td><td>E – G♯ – B – D♯</td></tr>
+    <tr><td><strong>Fmaj7</strong></td><td>F major seventh</td><td>F – A – C – E</td></tr>
+    <tr><td><strong>F♯maj7</strong></td><td>F♯ major seventh</td><td>F♯ – A♯ – C♯ – E♯</td></tr>
+    <tr><td><strong>G♭maj7</strong></td><td>G♭ major seventh</td><td>G♭ – B♭ – D♭ – F</td></tr>
+    <tr><td><strong>Gmaj7</strong></td><td>G major seventh</td><td>G – B – D – F♯</td></tr>
+    <tr><td><strong>A♭maj7</strong></td><td>A♭ major seventh</td><td>A♭ – C – E♭ – G</td></tr>
+    <tr><td><strong>Amaj7</strong></td><td>A major seventh</td><td>A – C♯ – E – G♯</td></tr>
+    <tr><td><strong>B♭maj7</strong></td><td>B♭ major seventh</td><td>B♭ – D – F – A</td></tr>
+    <tr><td><strong>Bmaj7</strong></td><td>B major seventh</td><td>B – D♯ – F♯ – A♯</td></tr>
   </tbody>
 </table>
 </div>

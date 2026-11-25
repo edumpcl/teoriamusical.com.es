@@ -98,6 +98,7 @@ module.exports = dictionaryPage({
 <h2>Is the flugelhorn a transposing instrument? The B♭</h2>
 
 <p>Yes, like the trumpet and the clarinet: it is <strong>in B♭</strong> and sounds a <strong>major 2nd below</strong> the written note. A written <strong>C4</strong> sounds <strong>B♭3</strong>. It is written in <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef</a>. Every note name on this page is the <strong>written</strong> note unless it says "sounds".</p>
+<p>To see <strong>all the transposing instruments</strong> side by side and try the converter from written to sounding pitch, see the table of <a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a>.</p>
 
 <div class="tm-table-wrap"><table class="tm-table">
 <thead><tr><th>Written note</th><th>Sounding pitch</th></tr></thead>

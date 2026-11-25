@@ -7,7 +7,7 @@ module.exports = dictionaryPage({
   h1: 'Diminished Chord',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Chords', '/diccionario-musical/acordes/']],
   articleAttrs: 'data-tm-chords',
-  scripts: ['tm-piano-audio'],
+  scripts: ['tm-piano-audio', 'tm-mei', 'tm-notacion', 'explorador-septimas-engine'],
   body: `
 <p>The <strong>diminished chord</strong> is a <a href="/diccionario-musical/acordes/acordes-triadas/">triad</a> with a <strong>tense, unstable</strong> sound. It is built with a <strong>minor 3rd</strong> and a <strong>diminished 5th</strong> above the root, which means <strong>two minor thirds stacked</strong>. The diminished 5th (a half step (UK: semitone) narrower than a perfect 5th) gives it a restless character that tends to resolve. It is one of the <a href="/diccionario-musical/acordes/acordes-triadas/">four types of triad</a>, together with the <a href="/diccionario-musical/acordes/acorde-perfecto-mayor/">major</a>, the <a href="/diccionario-musical/acordes/acorde-perfecto-menor/">minor</a> and the <a href="/diccionario-musical/acordes/acorde-aumentado/">augmented</a> triads.</p>
 
@@ -33,6 +33,10 @@ module.exports = dictionaryPage({
 </div>
 
 <p>Compared with the <a href="/diccionario-musical/acordes/acorde-perfecto-menor/">minor triad</a> (C–E♭–G), the diminished chord is identical except that the <strong>fifth is lowered a half step</strong> (G♭ instead of G). That diminished 5th is the famous <em>tritone</em>, the most tense interval in tonal music.</p>
+
+<h2>Explore the diminished chord on any note</h2>
+<p>Choose the root and the position to see how it is written on the staff: each note has the color of its function (root, 3rd and 5th) and you can hear it as a block chord or as an arpeggio.</p>
+<div class="tm-xs" data-familia="triada" data-tipo="dim" data-fijo></div>
 
 <h2>Diminished chord symbol</h2>
 <p>In lead-sheet chord symbols the diminished chord is written with the sign <strong>"°"</strong> (a small circle) or the abbreviation <strong>"dim"</strong>; "(♭5)" is also seen, though "m(♭5)" is more common in jazz. So the diminished chord on C is written <strong>C°</strong>, <em>Cdim</em> or <em>Cm(♭5)</em>. The table below gives the symbols for all twelve.</p>

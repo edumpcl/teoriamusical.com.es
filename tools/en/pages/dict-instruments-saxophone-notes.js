@@ -42,6 +42,7 @@ module.exports = dictionaryPage({
 </table></div>
 
 <p>Notice the pattern: the saxophones <strong>in B♭</strong> (soprano and tenor) and the ones <strong>in E♭</strong> (alto and baritone) alternate, and each pair is an octave apart. It is the same transposition logic you saw with the <a href="/diccionario-musical/notas-del-clarinete/">clarinet</a> and the <a href="/diccionario-musical/notas-del-clarinete-bajo/">bass clarinet</a>. The sounding ranges follow from the written range B♭3–F♯6 minus each transposition.</p>
+<p>To see <strong>all the transposing instruments</strong> side by side and try the converter from written to sounding pitch, see the table of <a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a>.</p>
 
 <h2>How do the four saxophones differ?</h2>
 
@@ -130,6 +131,10 @@ module.exports = dictionaryPage({
     <div class="tm-faq-item">
       <div class="tm-faq-q">Are all saxophones played the same way?</div>
       <div class="tm-faq-a">Yes: soprano, alto, tenor and baritone share exactly the same fingering and the same writing in treble clef. A saxophonist can move from one to another without relearning the fingers; the only thing that changes is the transposition, that is, the real note that sounds.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">Is the saxophone a transposing instrument?</div>
+      <div class="tm-faq-a">Yes. The four saxophones used in bands and orchestras are all transposing instruments: the written note is not the note that sounds. The soprano and the tenor are pitched in B♭ and the alto and the baritone in E♭, so all of them read in treble clef but each sounds at a different distance from what is written. To play with other instruments you have to transpose the part; the next question gives the distance for each one.</div>
     </div>
     <div class="tm-faq-item">
       <div class="tm-faq-q">How much does each saxophone transpose?</div>

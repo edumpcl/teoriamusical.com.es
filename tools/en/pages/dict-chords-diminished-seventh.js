@@ -7,7 +7,7 @@ module.exports = dictionaryPage({
   h1: 'Diminished Seventh Chord',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Chords', '/diccionario-musical/acordes/']],
   articleAttrs: 'data-tm-chords',
-  scripts: ['tm-piano-audio'],
+  scripts: ['tm-piano-audio', 'tm-mei', 'tm-notacion', 'explorador-septimas-engine'],
   body: `
 <p>The <strong>diminished seventh chord</strong> is a four-note chord built on the seventh degree (the leading tone; UK: leading note) of the minor key, or of the major key with a lowered sixth degree. It is made of three minor thirds stacked on top of each other. It is the most tense of the <a href="/diccionario-musical/acordes/acordes-de-septima/">seventh chords</a>. For background, see the pages on <a href="/diccionario-musical/nombres-de-los-grados-de-la-escala/">scale degrees</a> and <a href="/diccionario-musical/intervalos/intervalos-musicales/">musical intervals</a>.</p>
 
@@ -39,6 +39,10 @@ module.exports = dictionaryPage({
     <tr><td>Diminished seventh (vii°7)</td><td>Minor (3 half steps)</td><td>Diminished (6)</td><td>Diminished (9)</td><td>Harmonic minor key (degree VII)</td></tr>
   </tbody>
 </table></div>
+
+<h2>Explore the diminished seventh chord on any note</h2>
+<p>Choose the root and the position to see how it is written on the staff: each note has the color of its function (root, 3rd, 5th and 7th) and you can hear it as a block chord or as an arpeggio.</p>
+<div class="tm-xs" data-tipo="o7" data-fijo></div>
 
 <h2 id="root-position">Root position</h2>
 

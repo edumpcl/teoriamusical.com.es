@@ -19,7 +19,7 @@
 
   <!-- Acordes -->
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/</loc><lastmod>2026-06-11</lastmod></url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acordes-de-septima/</loc><lastmod>2026-06-11</lastmod>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acordes-de-septima/</loc><lastmod>2026-11-24</lastmod>
   
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/acordes/septima-dominante.svg</image:loc></image:image>
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/acordes/septima-mayor.svg</image:loc></image:image>
@@ -100,15 +100,15 @@
   
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/acordes/triada-disminuida.svg</image:loc></image:image>
   </url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-mayor/</loc><lastmod>2026-06-17</lastmod>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-mayor/</loc><lastmod>2026-11-24</lastmod>
   
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/acordes/septima-mayor.svg</image:loc></image:image>
   </url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-menor/</loc><lastmod>2026-06-17</lastmod>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-menor/</loc><lastmod>2026-11-24</lastmod>
   
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/acordes/septima-menor.svg</image:loc></image:image>
   </url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-de-dominante/</loc><lastmod>2026-06-19</lastmod>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-de-dominante/</loc><lastmod>2026-11-24</lastmod>
   
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/acordes-septimas/dom-fundamental-acorde.svg</image:loc></image:image>
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/acordes-septimas/dom-fundamental-par1.svg</image:loc></image:image>
@@ -143,7 +143,7 @@
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/acordes-septimas/dom-3a-cifrado-3.svg</image:loc></image:image>
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/acordes-septimas/dom-3a-cifrado-4.svg</image:loc></image:image>
   </url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-de-sensible/</loc><lastmod>2026-05-29</lastmod>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-de-sensible/</loc><lastmod>2026-11-24</lastmod>
   
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/acordes-septimas/sen-fundamental-acorde.svg</image:loc></image:image>
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/acordes-septimas/sen-fundamental-par1.svg</image:loc></image:image>
@@ -178,7 +178,7 @@
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/acordes-septimas/sen-3a-cifrado-3.svg</image:loc></image:image>
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/acordes-septimas/sen-3a-cifrado-4.svg</image:loc></image:image>
   </url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-disminuida/</loc><lastmod>2026-05-29</lastmod>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/acordes/acorde-de-septima-disminuida/</loc><lastmod>2026-11-24</lastmod>
   
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/acordes-septimas/dis-fundamental-acorde.svg</image:loc></image:image>
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/acordes-septimas/dis-fundamental-par1.svg</image:loc></image:image>
@@ -257,6 +257,7 @@
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/tesituras/flauta-tesitura-agudo.svg</image:loc></image:image>
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/tesituras/flauta-tesitura-sobreagudo.svg</image:loc></image:image>
   </url>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/instrumentos-transpositores/</loc><lastmod>2026-11-24</lastmod></url>
   <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-oboe/</loc><lastmod>2026-07-07</lastmod>
   
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/oboe/instrumento.jpg</image:loc></image:image>
@@ -336,7 +337,7 @@
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/tesituras/contrafagot-tesitura-agudo.svg</image:loc></image:image>
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/notacion/tesituras/contrafagot-tesitura-sobreagudo.svg</image:loc></image:image>
   </url>
-  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-saxofon/</loc><lastmod>2026-07-09</lastmod>
+  <url><loc>https://www.teoriamusical.com.es/diccionario-musical/notas-del-saxofon/</loc><lastmod>2026-11-24</lastmod>
   
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/saxofon/instrumento.jpg</image:loc></image:image>
     <image:image><image:loc>https://www.teoriamusical.com.es/assets/img/saxofon/familia.jpg</image:loc></image:image>

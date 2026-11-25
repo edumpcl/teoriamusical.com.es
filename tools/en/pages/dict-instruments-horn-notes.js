@@ -76,6 +76,7 @@ module.exports = dictionaryPage({
 <h2>Is the horn a transposing instrument? The horn in F</h2>
 
 <p>The standard horn is <strong>in F</strong> and transposes: it sounds a <strong>perfect 5th below</strong> the written note. A written <strong>C4</strong> sounds <strong>F3</strong>. Every note name in the table on this page is a <strong>written note</strong>. Low notes are written in <a href="/diccionario-musical/claves-musicales/clave-de-fa/">bass clef</a> and the rest in <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef</a>.</p>
+<p>To see <strong>all the transposing instruments</strong> side by side and try the converter from written to sounding pitch, see the table of <a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a>.</p>
 
 <div class="tm-table-wrap"><table class="tm-table">
 <thead><tr><th>Written note</th><th>Sounding pitch</th></tr></thead>

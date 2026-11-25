@@ -7,7 +7,7 @@ module.exports = dictionaryPage({
   h1: 'Augmented Chord',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Chords', '/diccionario-musical/acordes/']],
   articleAttrs: 'data-tm-chords',
-  scripts: ['tm-piano-audio'],
+  scripts: ['tm-piano-audio', 'tm-mei', 'tm-notacion', 'explorador-septimas-engine'],
   body: `
 <p>The <strong>augmented chord</strong> is a <a href="/diccionario-musical/acordes/acordes-triadas/">triad</a> with a <strong>tense, unstable and mysterious</strong> sound. It is built with a <strong>major 3rd</strong> and an <strong>augmented 5th</strong> above the root, which means <strong>two major thirds stacked</strong>. The augmented 5th (a half step (UK: semitone) wider than a perfect 5th) takes away the sense of rest and makes the chord "ask" to resolve. It is one of the <a href="/diccionario-musical/acordes/acordes-triadas/">four types of triad</a>, together with the <a href="/diccionario-musical/acordes/acorde-perfecto-mayor/">major</a>, the <a href="/diccionario-musical/acordes/acorde-perfecto-menor/">minor</a> and the <a href="/diccionario-musical/acordes/acorde-disminuido/">diminished</a> triads.</p>
 
@@ -33,6 +33,10 @@ module.exports = dictionaryPage({
 </div>
 
 <p>Compared with the <a href="/diccionario-musical/acordes/acorde-perfecto-mayor/">major triad</a> (C–E–G), the augmented chord is identical except that the <strong>fifth is raised a half step</strong> (G♯ instead of G). That small change completely transforms its character.</p>
+
+<h2>Explore the augmented chord on any note</h2>
+<p>Choose the root and the position to see how it is written on the staff: each note has the color of its function (root, 3rd and 5th) and you can hear it as a block chord or as an arpeggio.</p>
+<div class="tm-xs" data-familia="triada" data-tipo="aug" data-fijo></div>
 
 <h2>Augmented chord symbol</h2>
 <p>In lead-sheet chord symbols the augmented chord is written with a <strong>"+"</strong> sign or the abbreviation <strong>"aug"</strong>; a "(♯5)" or "(5+)" is also seen. So the augmented chord on C is written <strong>C+</strong>, <em>Caug</em> or <em>C(♯5)</em>. The table below gives the symbols for all twelve.</p>

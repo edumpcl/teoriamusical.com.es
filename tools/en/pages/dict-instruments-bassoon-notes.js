@@ -30,6 +30,7 @@ module.exports = dictionaryPage({
 <h2>Does the bassoon transpose? Which clef does it read?</h2>
 
 <p>No: the written note is the one that sounds. The bassoon usually reads in <a href="/diccionario-musical/claves-musicales/clave-de-fa/">bass clef</a>. When the music climbs into the upper register it is written in <a href="/diccionario-musical/claves-musicales/clave-de-do/">tenor clef</a> (the C clef on the fourth line), and in the highest register sometimes in treble clef, to avoid a pile of ledger lines. Why three clefs? Because the range is more than three octaves. Written in bass clef alone, an E♭5 would need five ledger lines, which is almost unreadable. By changing clef, each register falls inside the staff (UK: stave). That is why bassoonists learn to read fluently in all three.</p>
+<p>To see <strong>all the transposing instruments</strong> side by side and try the converter from written to sounding pitch, see the table of <a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a>.</p>
 
 <h2>Range and registers</h2>
 

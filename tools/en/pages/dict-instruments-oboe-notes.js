@@ -30,6 +30,7 @@ module.exports = dictionaryPage({
 <h2>Does the oboe transpose?</h2>
 
 <p>No. The oboe is a <strong>C instrument</strong> and <strong>non-transposing</strong>: the note you read on the score is exactly the one that sounds. It always reads in <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef</a>. Because its pitch is steady and its tone is penetrating, the oboe plays the <strong>A4</strong> to which the orchestra tunes before the concert.</p>
+<p>To see <strong>all the transposing instruments</strong> side by side and try the converter from written to sounding pitch, see the table of <a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a>.</p>
 
 <h2>Range and registers</h2>
 

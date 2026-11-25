@@ -30,6 +30,7 @@ module.exports = dictionaryPage({
 <h2>Does the bass clarinet transpose? The major 9th</h2>
 
 <p>Yes, and it is the most striking case in the family. It is <strong>in B♭</strong> like the ordinary clarinet, but because the tube is twice as long it sounds <strong>an octave</strong> lower than the usual clarinet transposition: in total, a <strong>major 9th below</strong> the written note. A written <strong>C4</strong> sounds <strong>B♭2</strong>. In the usual notation (the "French" one, also used in Spain and in most of the English-speaking world) it is written in <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef</a>, like the clarinet, so the clarinetist <strong>reads and fingers exactly the same</strong> on both instruments, and the tube takes care of the rest. All the notes on this page are <strong>written notes</strong> unless it says "sounding".</p>
+<p>To see <strong>all the transposing instruments</strong> side by side and try the converter from written to sounding pitch, see the table of <a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a>.</p>
 
 <p>Some older scores, especially German ones (Wagner, for example), write the bass clarinet in <a href="/diccionario-musical/claves-musicales/clave-de-fa/">bass clef</a>, where it sounds a <strong>major 2nd</strong> below the written note. If you see a bass-clef part, check which convention the score uses before transposing.</p>
 

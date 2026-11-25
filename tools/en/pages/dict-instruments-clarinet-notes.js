@@ -30,6 +30,7 @@ module.exports = dictionaryPage({
 <h2>Does the clarinet transpose? What does "in B♭" mean?</h2>
 
 <p>Yes. When a clarinetist reads and fingers a <strong>C</strong>, a <strong>B♭</strong> sounds: the instrument <strong>sounds a whole step below the written note</strong>, and that is why it is called a clarinet "in B♭". To sound the same pitch as a piano, the part is written a whole step higher. It is always read in <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef</a>. Orchestras also use the clarinet <strong>in A</strong>, which sounds a minor 3rd below the written note. This page is about the B♭ clarinet, the one used in bands, schools and conservatories. All the notes below are <strong>written notes</strong> unless it says "sounding".</p>
+<p>To see <strong>all the transposing instruments</strong> side by side and try the converter from written to sounding pitch, see the table of <a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a>.</p>
 
 <div class="tm-table-wrap"><table class="tm-table">
 <thead><tr><th>Written note</th><th>Sounding note</th></tr></thead>

@@ -30,6 +30,7 @@ module.exports = dictionaryPage({
 <h2>Does the contrabassoon transpose? The octave</h2>
 
 <p>Yes, and it is the only transposing member of the bassoon family. The <a href="/diccionario-musical/notas-del-fagot/">bassoon</a> sounds exactly what is written; the contrabassoon is written the same way (in <a href="/diccionario-musical/claves-musicales/clave-de-fa/">bass clef</a>, with the same note names) but <strong>sounds an octave lower</strong>. It is the simplest transposition possible: the bassoonist reads the same notes and the note name does not change, it just drops an octave. A written <strong>C4</strong> sounds <strong>C3</strong>. All the notes below are <strong>written notes</strong> unless it says "sounding".</p>
+<p>To see <strong>all the transposing instruments</strong> side by side and try the converter from written to sounding pitch, see the table of <a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a>.</p>
 
 <div class="tm-table-wrap"><table class="tm-table">
 <thead><tr><th>Instrument</th><th>A written C4 sounds…</th></tr></thead>

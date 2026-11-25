@@ -81,6 +81,7 @@ module.exports = dictionaryPage({
 <h2>Is the trombone a transposing instrument?</h2>
 
 <p>It depends on the tradition, but usually it is not:</p>
+<p>To see <strong>all the transposing instruments</strong> side by side and try the converter from written to sounding pitch, see the table of <a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a>.</p>
 
 <ul>
   <li><strong>Bass clef (or tenor clef), concert pitch.</strong> In orchestras, concert bands and Spanish bands, the tenor trombone is written exactly as it sounds. It is <strong>not</strong> a transposing instrument. This is different from the <a href="/diccionario-musical/notas-de-la-trompeta/">trumpet</a> or the <a href="/diccionario-musical/notas-del-fliscorno/">flugelhorn</a>, which are in B♭ and sound a whole step (UK: tone) below the written note. Trombone parts are read in bass clef, like the <a href="/diccionario-musical/notas-del-fagot/">bassoon</a> or the cello, and move to <strong>tenor clef</strong> (a C clef on the fourth line) when the music stays high, to avoid many ledger lines. The chart on this page stays in bass clef.</li>

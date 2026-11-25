@@ -7,7 +7,7 @@ module.exports = dictionaryPage({
   h1: 'Minor Seventh Chord',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Chords', '/diccionario-musical/acordes/']],
   articleAttrs: 'data-tm-chords',
-  scripts: ['tm-piano-audio'],
+  scripts: ['tm-piano-audio', 'tm-mei', 'tm-notacion', 'explorador-septimas-engine'],
   body: `
 <p>The <strong>minor seventh chord</strong> (symbol <strong>Cm7</strong>) is a four-note chord: a <a href="/diccionario-musical/acordes/acorde-perfecto-menor/">minor triad</a> with a <strong>minor 7th</strong> added on top. Its sound is <strong>dark but soft and stable</strong> (it is not a chord of tension), and it is one of the most characteristic sounds of jazz, pop and bossa nova. It is one of the five <a href="/diccionario-musical/acordes/acordes-de-septima/">seventh chords</a>.</p>
 
@@ -30,6 +30,10 @@ module.exports = dictionaryPage({
 </table>
 </div>
 <p>It differs from the <a href="/diccionario-musical/acordes/acorde-de-septima-de-dominante/">dominant seventh chord</a> in the <strong>third</strong> (minor instead of major), and from the <a href="/diccionario-musical/acordes/acorde-de-septima-de-sensible/">half-diminished (leading-tone seventh) chord</a> in the <strong>fifth</strong> (perfect instead of diminished).</p>
+
+<h2>Explore the minor seventh chord on any note</h2>
+<p>Choose the root and the position to see how it is written on the staff: each note has the color of its function (root, 3rd, 5th and 7th) and you can hear it as a block chord or as an arpeggio.</p>
+<div class="tm-xs" data-tipo="m7" data-fijo></div>
 
 <h2>Minor seventh chord symbols</h2>
 <div class="tm-table-wrap">

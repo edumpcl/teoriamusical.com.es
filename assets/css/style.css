@@ -1366,3 +1366,14 @@ figcaption, .wp-element-caption {
 .tm-fam-galeria--cuadro { grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); }
 .tm-fam-galeria--cuadro .tm-fam-foto { height: auto; aspect-ratio: 1 / 1; }
 .tm-fam-galeria--cuadro .tm-fam-foto img { width: 100%; height: 100%; max-height: none; object-fit: cover; }
+
+/* Tabla en tarjetas SIN imagen: en escritorio, cabecera que parte y la armadura bajo la tonalidad; en movil, una sola columna con el titulo en la primera celda y cada dato con su etiqueta. Ver instrumentos-transpositores. */
+.tm-table--sin-img th { white-space: normal; }
+.tm-table--sin-img .tm-arm { display: block; color: var(--text-muted); font-size: .92em; }
+@media (max-width: 640px) {
+  .tm-table.tm-table--tarjetas.tm-table--sin-img tr { grid-template-columns: minmax(0, 1fr); row-gap: .1rem; }
+  .tm-table.tm-table--tarjetas.tm-table--sin-img td { grid-column: 1; }
+  .tm-table--sin-img .tm-arm { display: inline; }
+  .tm-table--sin-img .tm-arm::before { content: '('; }
+  .tm-table--sin-img .tm-arm::after { content: ')'; }
+}

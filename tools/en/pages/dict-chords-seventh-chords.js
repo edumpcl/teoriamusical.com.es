@@ -7,7 +7,7 @@ module.exports = dictionaryPage({
   h1: 'Seventh Chords',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Chords', '/diccionario-musical/acordes/']],
   articleAttrs: 'data-tm-chords',
-  scripts: ['tm-piano-audio'],
+  scripts: ['tm-piano-audio', 'tm-mei', 'tm-notacion', 'explorador-septimas-engine'],
   body: `
 <p>A <strong>seventh chord</strong> is a <strong>four-note chord</strong> made by adding one more third on top of a <a href="/diccionario-musical/acordes/acordes-triadas/">triad</a>: the top note lies a <strong>seventh</strong> above the root. Its notes are therefore the <strong>root, 3rd, 5th and 7th</strong>. Seventh chords add more color and tension than triads, and they are the basis of tonal harmony and, above all, of jazz.</p>
 
@@ -49,6 +49,10 @@ module.exports = dictionaryPage({
 <h3>5. Diminished seventh (C°7)</h3>
 <p>A diminished triad with a diminished seventh. It is <strong>symmetrical</strong> (all minor thirds) and the most tense of all; it is widely used as a passing chord and to modulate. You will find how it works and its inversions on the page about the <a href="/diccionario-musical/acordes/acorde-de-septima-disminuida/">diminished seventh chord</a>.</p>
 <figure class="tm-staff"><img src="/assets/img/notacion/acordes/septima-disminuida.svg" width="220" height="122" alt="Diminished seventh chord on C on the staff: C, E flat, G flat, B double flat" loading="lazy" decoding="async"><figcaption>Diminished seventh: C E♭ G♭ B𝄫 (C°7).</figcaption></figure>
+
+<h2>The five seventh chords on the staff, note by note</h2>
+<p>Choose the chord type, the root and the position to see how it is written on the staff: each note has the color of its function (root, 3rd, 5th and 7th) and you can hear it as a block chord or as an arpeggio. Start with the <strong>dominant seventh</strong> and compare it with the other types.</p>
+<div class="tm-xs" data-tipo="7"></div>
 
 <h2>How seventh chords are written</h2>
 

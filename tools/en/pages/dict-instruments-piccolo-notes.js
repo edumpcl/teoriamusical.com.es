@@ -31,6 +31,7 @@ module.exports = dictionaryPage({
 <h2>Does the piccolo transpose?</h2>
 
 <p>Yes, in the simplest possible way: <strong>by an octave</strong>. It is pitched in C, so a written C sounds as a C, only <strong>one octave higher</strong>. It is written this way to save ledger lines: if its part were written at sounding pitch, it would live permanently above the staff (UK: stave). It reads in <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef</a>, and it is the exact mirror image of the contrabassoon, which sounds an octave <em>below</em> what is written (see the <a href="/diccionario-musical/notas-del-fagot/">bassoon</a> page).</p>
+<p>To see <strong>all the transposing instruments</strong> side by side and try the converter from written to sounding pitch, see the table of <a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a>.</p>
 
 <h2>Range and registers</h2>
 

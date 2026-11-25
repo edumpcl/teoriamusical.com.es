@@ -26,6 +26,8 @@ module.exports = dictionaryPage({
 
 <h2>Guides by instrument</h2>
 
+<p>One more thing worth knowing: on some instruments the <em>written</em> note is not the one that <em>sounds</em>. These are the <a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a> (clarinet, trumpet, saxophone, horn…), and you can find their full table and a converter to see it on the staff.</p>
+
 <p>These are the guides available, grouped by family and ordered roughly from highest to lowest. We will keep expanding the section. Where an instrument transposes, each guide says which note is written and which one sounds.</p>
 
 <h3>Woodwinds</h3>

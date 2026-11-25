@@ -7,7 +7,7 @@ module.exports = dictionaryPage({
   h1: 'Minor Triad',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Chords', '/diccionario-musical/acordes/']],
   articleAttrs: 'data-tm-chords',
-  scripts: ['tm-piano-audio'],
+  scripts: ['tm-piano-audio', 'tm-mei', 'tm-notacion', 'explorador-septimas-engine'],
   body: `
 <p>The <strong>minor triad</strong> (also called the minor chord) is a stable <a href="/diccionario-musical/acordes/acordes-triadas/">triad</a> with a <strong>dark, melancholic or sad</strong> sound. It is built from a <strong>minor 3rd</strong> and a <strong>perfect 5th</strong> above the root. It is the counterpart of the <a href="/diccionario-musical/acordes/acorde-perfecto-mayor/">major triad</a>: both share the perfect 5th, but in the minor triad the 3rd is one half step (UK: semitone) lower. It is one of the <a href="/diccionario-musical/acordes/acordes-triadas/">four types of triad</a>, along with the major, <a href="/diccionario-musical/acordes/acorde-aumentado/">augmented</a> and <a href="/diccionario-musical/acordes/acorde-disminuido/">diminished</a> triads.</p>
 
@@ -49,6 +49,10 @@ module.exports = dictionaryPage({
 </table>
 </div>
 
+<h2>Explore the minor chord on any note</h2>
+<p>Choose the root and the position to see how it is written on the staff: each note has the color of its function (root, 3rd and 5th) and you can hear it as a block chord or as an arpeggio.</p>
+<div class="tm-xs" data-familia="triada" data-tipo="m" data-fijo></div>
+
 <h2>Chord symbol for the minor triad</h2>
 <p>In <strong>lead-sheet chord symbols</strong>, a minor chord is written with the <strong>letter of its root followed by a lowercase "m"</strong>. A minus sign ("−") is also used:</p>
 <div class="tm-table-wrap">
@@ -61,6 +65,29 @@ module.exports = dictionaryPage({
     <tr><td>A minor</td><td>Am</td></tr>
     <tr><td>E minor</td><td>Em</td></tr>
     <tr><td>D minor</td><td>Dm</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>The minor chords on every note</h2>
+<p>Every minor chord is built the same way (minor 3rd and perfect 5th above the root); only the starting note changes. This table lists the most common ones with their chord symbol and correctly spelled notes. <strong>G♭ minor</strong> needs a double flat (B♭♭) and is usually replaced by its enharmonic, <strong>F♯ minor</strong>.</p>
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead><tr><th>Symbol</th><th>Chord</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Cm</strong></td><td>C minor</td><td>C – E♭ – G</td></tr>
+    <tr><td><strong>C♯m</strong></td><td>C♯ minor</td><td>C♯ – E – G♯</td></tr>
+    <tr><td><strong>D♭m</strong></td><td>D♭ minor</td><td>D♭ – F♭ – A♭</td></tr>
+    <tr><td><strong>Dm</strong></td><td>D minor</td><td>D – F – A</td></tr>
+    <tr><td><strong>E♭m</strong></td><td>E♭ minor</td><td>E♭ – G♭ – B♭</td></tr>
+    <tr><td><strong>Em</strong></td><td>E minor</td><td>E – G – B</td></tr>
+    <tr><td><strong>Fm</strong></td><td>F minor</td><td>F – A♭ – C</td></tr>
+    <tr><td><strong>F♯m</strong></td><td>F♯ minor</td><td>F♯ – A – C♯</td></tr>
+    <tr><td><strong>Gm</strong></td><td>G minor</td><td>G – B♭ – D</td></tr>
+    <tr><td><strong>A♭m</strong></td><td>A♭ minor</td><td>A♭ – C♭ – E♭</td></tr>
+    <tr><td><strong>Am</strong></td><td>A minor</td><td>A – C – E</td></tr>
+    <tr><td><strong>B♭m</strong></td><td>B♭ minor</td><td>B♭ – D♭ – F</td></tr>
+    <tr><td><strong>Bm</strong></td><td>B minor</td><td>B – D – F♯</td></tr>
   </tbody>
 </table>
 </div>

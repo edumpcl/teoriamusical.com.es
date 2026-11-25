@@ -11,7 +11,7 @@ module.exports = dictionaryPage({
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Chords', '/diccionario-musical/acordes/']],
   articleClass: 'tm-article tm-article--wide',
   articleAttrs: 'data-tm-chords',
-  scripts: ['tm-piano-audio'],
+  scripts: ['tm-piano-audio', 'tm-mei', 'tm-notacion', 'explorador-septimas-engine'],
   body: `
 <p>Triads are three-note chords built from stacked thirds. This page presents the four types in root position, their inversions and their figured-bass numerals. To review intervals first, see the page on <a href="/diccionario-musical/intervalos/intervalos-musicales/">musical intervals</a>.</p>
 ${figSm('ejemplo-triada', 122, 'Example of a triad on the staff: C, E and G')}
@@ -122,6 +122,10 @@ ${fig3('', [
   ['inv2-sexta', 220, 122, 'Sixth above the bass: G and E'],
   ['inv2-cuarta', 220, 122, 'Fourth above the bass: G and C'],
 ])}
+
+<h2>The four triads on the staff, note by note</h2>
+<p>Choose the chord type, the root and the position to see how it is written on the staff: each note has the color of its function (root, 3rd and 5th) and you can hear it as a block chord or as an arpeggio. Try the inversions too.</p>
+<div class="tm-xs" data-familia="triada" data-tipo="M"></div>
 
 <h2 id="figured-bass">Figured bass for triads</h2>
 <p>Figured bass is the shorthand of numerals written under the bass note that tells you which chord to play above it. For triads only three cases matter:</p>

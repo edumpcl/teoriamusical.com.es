@@ -7,7 +7,7 @@ module.exports = dictionaryPage({
   h1: 'Dominant Seventh Chord',
   crumbs: [['Music Dictionary', '/diccionario-musical/'], ['Chords', '/diccionario-musical/acordes/']],
   articleAttrs: 'data-tm-chords',
-  scripts: ['tm-piano-audio'],
+  scripts: ['tm-piano-audio', 'tm-mei', 'tm-notacion', 'explorador-septimas-engine'],
   body: `
 <p>The <strong>dominant seventh chord</strong> is a four-note chord built on the fifth degree (the dominant) of the scale. It is made of a major 3rd, a perfect 5th and a minor 7th above the root. It is the most important of the <a href="/diccionario-musical/acordes/acordes-de-septima/">seventh chords</a>. For background, see the pages on <a href="/diccionario-musical/nombres-de-los-grados-de-la-escala/">scale degrees</a> and <a href="/diccionario-musical/intervalos/intervalos-musicales/">musical intervals</a>.</p>
 
@@ -37,6 +37,10 @@ module.exports = dictionaryPage({
     <tr><td>Third inversion</td><td>+4</td><td>M2 · A4 · M6</td><td>F–G–B–D</td></tr>
   </tbody>
 </table></div>
+
+<h2>Explore the dominant seventh chord on any note</h2>
+<p>Choose the root and the position to see how it is written on the staff: each note has the color of its function (root, 3rd, 5th and 7th) and you can hear it as a block chord or as an arpeggio.</p>
+<div class="tm-xs" data-tipo="7" data-fijo></div>
 
 <h2 id="root-position">Root position</h2>
 

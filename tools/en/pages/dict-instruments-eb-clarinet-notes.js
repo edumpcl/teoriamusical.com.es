@@ -31,6 +31,7 @@ module.exports = dictionaryPage({
 <h2>Does the E♭ clarinet transpose? The minor 3rd</h2>
 
 <p>Yes, and in the opposite direction to its lower relatives: while the <a href="/diccionario-musical/notas-del-clarinete/">B♭ clarinet</a> sounds <em>below</em> the written note, the E♭ clarinet, being smaller, sounds <strong>above</strong> it, by a <strong>minor 3rd</strong> (three half steps; UK: semitones). A written <strong>C4</strong> sounds <strong>E♭4</strong>. It is written in <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef</a>, like the clarinet, so the clarinetist <strong>reads and fingers exactly the same</strong> on both instruments. All the notes on this page are <strong>written notes</strong>.</p>
+<p>To see <strong>all the transposing instruments</strong> side by side and try the converter from written to sounding pitch, see the table of <a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a>.</p>
 
 <div class="tm-table-wrap"><table class="tm-table">
 <thead><tr><th>Instrument</th><th>A written C4 sounds…</th></tr></thead>

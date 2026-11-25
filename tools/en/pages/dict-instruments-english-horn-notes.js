@@ -31,6 +31,7 @@ module.exports = dictionaryPage({
 <h2>Does the English horn transpose? What does "in F" mean?</h2>
 
 <p>Yes: it transposes by a <strong>perfect 5th</strong>. When the player reads and fingers a <strong>C</strong>, the <strong>F</strong> a perfect 5th below sounds. It is written this way so that an oboist can switch instruments <strong>using the same fingerings</strong>: the same fingering that gives a written C on the oboe gives a written C here, although the longer tube turns it into a sounding F. It is always read in <a href="/diccionario-musical/claves-musicales/clave-de-sol/">treble clef</a>. All the notes below are <strong>written notes</strong> unless it says "sounding".</p>
+<p>To see <strong>all the transposing instruments</strong> side by side and try the converter from written to sounding pitch, see the table of <a href="/diccionario-musical/instrumentos-transpositores/">transposing instruments</a>.</p>
 
 <div class="tm-table-wrap"><table class="tm-table">
 <thead><tr><th>Written note</th><th>Sounding note</th></tr></thead>
