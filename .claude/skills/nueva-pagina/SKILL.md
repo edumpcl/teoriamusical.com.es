@@ -46,6 +46,7 @@ El config admite: `dir, title, desc, h1, breadcrumb[{name,url}], body|bodyFile, 
 - `node tools/validate_jsonld.js <ruta>/index.html` → "All JSON-LD blocks are valid."
 
 ## 7. Versionar y comprobar
+- `node tools/build-search-index.js` → reconstruye el índice del buscador interno (assets/search/indice-es.json y -en.json) para que la página nueva salga en las búsquedas; también actualiza las versiones de buscador.js y main.js. Va ANTES de `version_assets`.
 - `node tools/version_assets.cjs` (actualiza los `?v=` de CSS/JS).
 - Sirve en localhost (`python -m http.server 8000`) y verifica con Playwright:
   - H1 correcto, **0 imágenes rotas** (haz scroll para forzar lazy-load).

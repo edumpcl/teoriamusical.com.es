@@ -240,6 +240,20 @@ figure.tm-staff img { display: inline-block; }
   .tm-nav-list a.is-active::after { display: none; }
 }
 
+/* ---------- Buscador interno: lupa de la cabecera (es un enlace a /buscar/; buscador.js se carga al pulsarla) ---------- */
+.tm-buscar-btn {
+  display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 2rem; height: 2rem; border-radius: 50%; color: var(--text);
+}
+.tm-buscar-btn svg { width: 19px; height: 19px; }
+.tm-buscar-btn:hover { color: var(--brand); background: var(--bg-alt); text-decoration: none; }
+.tm-buscar-btn:focus-visible { outline: 3px solid #1f5fa6; outline-offset: 2px; }
+@media (min-width: 861px) { .tm-nav { margin-left: auto; } }
+@media (max-width: 860px) { .tm-buscar-btn { order: 1; margin-left: auto; } .tm-nav-toggle { order: 2; } }
+/* con la lupa cabe un poco menos: el menú se compacta antes (hasta 1199 px) y más aún por debajo de 1060 px, para que no salte a dos filas */
+@media (min-width: 861px) and (max-width: 1199px) { .tm-nav-list { gap: 1.05rem; } .tm-nav-list a { font-size: .92rem; } }
+@media (min-width: 861px) and (max-width: 1060px) { .tm-nav-list { gap: .7rem; } .tm-nav-list a { font-size: .88rem; } .tm-brand { font-size: 1.2rem; } .tm-header-inner { gap: .6rem; } }
+
 /* ---------- Subnav dropdown ---------- */
 .tm-has-sub { position: relative; }
 .tm-subnav {

@@ -40,6 +40,7 @@ module.exports = function dictionaryPage(p) {
     path: p.path,
     esPath: p.esPath,
     lastmod: p.dateModified || '2026-11-05',
+    live: p.noindex ? false : undefined,   // páginas que no deben indexarse (p. ej. la de resultados del buscador): noindex y fuera del sitemap
     rewriteLinks: true,
     styles: p.styles || [],
     title: p.title,

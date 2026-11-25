@@ -251,6 +251,7 @@ ${COOKIE_BANNER}
 ${navHtml(page.path, NAV)}${switcher}
       </ul>
     </nav>
+    <a class="tm-buscar-btn" href="/en/search/" data-tm-buscar aria-label="Search the site" title="Search (press /)"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
   </div>
 </header>
 

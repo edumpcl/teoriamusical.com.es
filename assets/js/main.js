@@ -28,6 +28,33 @@
     });
   }
 
+  // Buscador interno: la lupa de la cabecera (es un enlace a /buscar/, así que sin JS también funciona) abre la ventana de búsqueda.
+  // buscador.js y el índice solo se descargan al usarlo; BUSCADOR_V lo actualiza tools/build-search-index.js.
+  var BUSCADOR_V = '28660f5d';
+  function conBuscador(fn) {
+    if (window.tmBuscador) return fn();
+    var s = document.createElement('script');
+    s.src = '/assets/js/buscador.js?v=' + BUSCADOR_V;
+    s.onload = fn;
+    document.head.appendChild(s);
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('[data-tm-buscar]') : null;
+    if (!a || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    var pagina = document.getElementById('tmbuscar'), caja = pagina && pagina.querySelector('.tm-bq-in');
+    if (caja) { caja.focus(); return; }   // en la página de resultados la lupa lleva a la caja
+    conBuscador(function () { window.tmBuscador.abrir(); });
+  });
+  document.addEventListener('keydown', function (e) {
+    var t = e.target, escribiendo = t && (t.isContentEditable || /^(input|textarea|select)$/i.test(t.tagName));
+    var atajo = (e.key === '/' && !escribiendo && !e.ctrlKey && !e.metaKey && !e.altKey) || ((e.ctrlKey || e.metaKey) && !e.altKey && e.key.toLowerCase() === 'k');
+    if (!atajo) return;
+    if (document.getElementById('tmbuscar')) return;   // en la página de resultados el cuadro ya está a la vista
+    e.preventDefault();
+    conBuscador(function () { window.tmBuscador.abrir(); });
+  });
+
   // Auto-generated TOC if a .tm-toc-placeholder exists
   var tocHolders = document.querySelectorAll('.tm-toc-placeholder');
   if (tocHolders.length) {
