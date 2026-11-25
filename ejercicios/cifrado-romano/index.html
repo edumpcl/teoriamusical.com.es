@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ejercicios de Cifrado Romano: Identificar y Construir</title>
+<meta name="description" content="Practica el cifrado romano online: identifica el cifrado de un acorde o escríbelo en el pentagrama. Tríadas y séptimas, inversiones, mayor y menor.">
+<link rel="canonical" href="https://www.teoriamusical.com.es/ejercicios/cifrado-romano/">
+<!--i18n--><link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/ejercicios/cifrado-romano/">
+<link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/exercises/roman-numerals/">
+<link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/ejercicios/cifrado-romano/"><!--/i18n-->
+<meta property="og:title" content="Ejercicios de Cifrado Romano: Identificar y Construir">
+<meta property="og:description" content="Practica el cifrado romano online: identifica el cifrado de un acorde o escríbelo en el pentagrama. Tríadas y séptimas, inversiones, mayor y menor.">
+<meta property="og:image" content="https://www.teoriamusical.com.es/assets/img/og-pages/og-ejercicios-cifrado-romano.png">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.teoriamusical.com.es/ejercicios/cifrado-romano/">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Teoría Musical">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ejercicios de Cifrado Romano: Identificar y Construir">
+<meta name="twitter:description" content="Practica el cifrado romano online: identifica el cifrado de un acorde o escríbelo en el pentagrama. Tríadas y séptimas, inversiones, mayor y menor.">
+<meta name="twitter:image" content="https://www.teoriamusical.com.es/assets/img/og-pages/og-ejercicios-cifrado-romano.png">
+<link rel="icon" href="/assets/img/favicon.png" type="image/png">
+
+<!-- Google Search Console verification -->
+<meta name="google-site-verification" content="-bWygyA80PPsmSsmf6FQ_oZs6YeGjN95HzprqD07fos">
+
+<!-- Google Consent Mode v2 — defaults denied until user consents -->
+<script>
+  window['googlefc'] = window['googlefc'] || {};
+  window['googlefc'].controlledMessagingFunction = function(m){ m.proceed(false); };
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage':            'denied',
+    'ad_user_data':          'denied',
+    'ad_personalization':    'denied',
+    'analytics_storage':     'denied',
+    'functionality_storage': 'granted',
+    'security_storage':      'granted',
+    'wait_for_update':       500
+  });
+  try {
+    var m = document.cookie.match('(?:^|; )tm_cookie_consent=([^;]*)');
+    if (m) {
+      var p = JSON.parse(decodeURIComponent(m[1]));
+      gtag('consent', 'update', {
+        analytics_storage:  p.analytics   ? 'granted' : 'denied',
+        ad_storage:         p.advertising ? 'granted' : 'denied',
+        ad_user_data:       p.advertising ? 'granted' : 'denied',
+        ad_personalization: p.advertising ? 'granted' : 'denied'
+      });
+    }
+  } catch (e) {}
+</script>
+
+<link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/style.css?v=950f1629">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Ejercicios de cifrado romano","description":"Practica el cifrado romano online: identifica el cifrado de un acorde o escríbelo en el pentagrama. Tríadas y séptimas, inversiones, mayor y menor.","url":"https://www.teoriamusical.com.es/ejercicios/cifrado-romano/","inLanguage":"es","isAccessibleForFree":true,"image":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-pages/og-ejercicios-cifrado-romano.png"},"author":{"@type":"Person","name":"Eduardo Escrig Zomeño","url":"https://www.teoriamusical.com.es/sobre-mi/"},"datePublished":"2026-11-25","dateModified":"2026-11-25","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.teoriamusical.com.es/ejercicios/cifrado-romano/"},"publisher":{"@type":"Organization","name":"Teoría Musical","url":"https://www.teoriamusical.com.es","logo":{"@type":"ImageObject","url":"https://www.teoriamusical.com.es/assets/img/og-diccionario.png"}}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://www.teoriamusical.com.es/"},{"@type":"ListItem","position":2,"name":"Ejercicios","item":"https://www.teoriamusical.com.es/ejercicios/"},{"@type":"ListItem","position":3,"name":"Ejercicios de cifrado romano","item":"https://www.teoriamusical.com.es/ejercicios/cifrado-romano/"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Por qué el número romano se escribe siempre en mayúscula?","acceptedAnswer":{"@type":"Answer","text":"Porque el número romano solo dice sobre qué grado está construido el acorde. Que el acorde sea mayor, menor o disminuido lo da la tonalidad y se ve en las notas, y lo que lo distingue en el cifrado son las cifras (por ejemplo el + de la sensible o el 5 tachado de la quinta disminuida)."}},{"@type":"Question","name":"¿Qué significa el signo + en el cifrado?","acceptedAnswer":{"@type":"Answer","text":"El + marca la sensible, la nota que está un semitono por debajo de la tónica. En el V es la tercera del acorde (cifra +), en el VII es la fundamental, y en las inversiones el + va junto a la cifra de la nota que sea la sensible: por ejemplo +6 o +4."}},{"@type":"Question","name":"¿Qué es un número tachado?","acceptedAnswer":{"@type":"Answer","text":"Un número tachado indica un intervalo disminuido, como el 5 tachado de la quinta disminuida del acorde de VII. Los números tachados se reservan para los acordes disminuidos y no se usan en los demás."}},{"@type":"Question","name":"¿Por qué no se pregunta el III grado?","acceptedAnswer":{"@type":"Answer","text":"Porque su calidad depende del contexto: en una tonalidad menor es mayor con la escala natural y aumentado con la escala armónica. Un ejercicio no debe tener dos respuestas válidas, así que el III grado se estudia aparte."}},{"@type":"Question","name":"¿Qué diferencia hay entre el cifrado romano y el cifrado americano?","acceptedAnswer":{"@type":"Answer","text":"El cifrado romano habla de grados y depende de la tonalidad: V7 es la séptima de dominante en cualquier tono. El cifrado americano (C, Am, G7) nombra el acorde por su fundamental y no depende de la tonalidad. El romano es el que se usa para analizar la función de cada acorde."}}]}
+</script>
+</head>
+<body class="tm-page">
+<a class="tm-skip" href="#main">Saltar al contenido</a>
+
+<!-- Cookie consent (RGPD) -->
+<div id="tm-cookie-overlay" role="dialog" aria-modal="true" aria-labelledby="tm-cookie-title">
+  <div id="tm-cookie-modal">
+    <div id="tm-cookie-icon" aria-hidden="true">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="18.5" stroke="#b8860b" stroke-width="1.5" fill="#faf8f4"/>
+        <circle cx="14" cy="15" r="2.2" fill="#b8860b"/>
+        <circle cx="24" cy="13" r="1.7" fill="#b8860b"/>
+        <circle cx="27" cy="24" r="2.2" fill="#b8860b"/>
+        <circle cx="16" cy="26" r="1.7" fill="#b8860b"/>
+        <circle cx="21" cy="20" r="1.1" fill="#b8860b"/>
+      </svg>
+    </div>
+    <h2 id="tm-cookie-title">Usamos cookies</h2>
+    <p id="tm-cookie-desc">
+      Utilizamos cookies propias —necesarias para el funcionamiento del sitio— y de
+      terceros para análisis del tráfico y publicidad. Puedes aceptarlas, rechazar las
+      opcionales o configurarlas según tus preferencias.
+      <a href="/politica-de-cookies/" id="tm-privacy-link" rel="noopener noreferrer">Política de cookies</a>.
+    </p>
+    <div id="tm-cookie-panel" hidden>
+      <div class="tm-toggle-row">
+        <div class="tm-toggle-info">
+          <strong>Necesarias</strong>
+          <span>Imprescindibles para el funcionamiento del sitio. No se pueden desactivar.</span>
+        </div>
+        <div class="tm-toggle-wrap tm-toggle-forced">
+          <input type="checkbox" id="tm-chk-necessary" checked disabled>
+          <label for="tm-chk-necessary" class="tm-switch-label"></label>
+        </div>
+      </div>
+      <div class="tm-toggle-row">
+        <div class="tm-toggle-info">
+          <strong>Analíticas</strong>
+          <span>Miden el tráfico y el comportamiento de navegación (Google Analytics 4).</span>
+        </div>
+        <div class="tm-toggle-wrap">
+          <input type="checkbox" id="tm-chk-analytics">
+          <label for="tm-chk-analytics" class="tm-switch-label"></label>
+        </div>
+      </div>
+      <div class="tm-toggle-row">
+        <div class="tm-toggle-info">
+          <strong>Publicitarias</strong>
+          <span>Permiten mostrar anuncios relevantes según tus intereses (Google AdSense).</span>
+        </div>
+        <div class="tm-toggle-wrap">
+          <input type="checkbox" id="tm-chk-advertising">
+          <label for="tm-chk-advertising" class="tm-switch-label"></label>
+        </div>
+      </div>
+    </div>
+    <div id="tm-cookie-actions">
+      <button id="tm-btn-accept"    class="tm-btn tm-btn-primary">Aceptar todo</button>
+      <button id="tm-btn-necessary" class="tm-btn tm-btn-secondary">Solo necesarias</button>
+      <button id="tm-btn-configure" class="tm-btn tm-btn-link">Configurar</button>
+      <button id="tm-btn-save"      class="tm-btn tm-btn-primary" hidden>Guardar preferencias</button>
+    </div>
+  </div>
+</div>
+<button id="tm-cookie-trigger" aria-label="Gestionar cookies" title="Gestionar cookies" hidden>
+  <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="20" cy="20" r="18.5" stroke="currentColor" stroke-width="2" fill="none"/>
+    <circle cx="14" cy="15" r="2.2" fill="currentColor"/>
+    <circle cx="24" cy="13" r="1.7" fill="currentColor"/>
+    <circle cx="27" cy="24" r="2.2" fill="currentColor"/>
+    <circle cx="16" cy="26" r="1.7" fill="currentColor"/>
+    <circle cx="21" cy="20" r="1.1" fill="currentColor"/>
+  </svg>
+</button>
+<script src="/assets/js/consent.js?v=bf8ddf19" defer></script>
+
+<header class="tm-site-header">
+  <div class="tm-container tm-header-inner">
+    <a class="tm-brand" href="/">
+      <span class="tm-brand-mark"><img src="/assets/img/favicon-32.png" width="32" height="32" alt=""></span>
+      <span class="tm-brand-text">Teoría Musical</span>
+    </a>
+    <button class="tm-nav-toggle" aria-label="Menú" aria-expanded="false" aria-controls="tm-nav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="tm-nav" class="tm-nav" aria-label="Principal">
+      <ul class="tm-nav-list">
+        <li><a href="/" class="">Inicio</a></li>
+        <li><a href="/diccionario-musical/" class="">Diccionario Musical</a></li>
+        <li><a href="/ejercicios/" class="is-active">Ejercicios</a></li>
+        <li><a href="/juegos/" class="">Juegos</a></li>
+        <li class="tm-has-sub"><a href="/herramientas/" class="">Herramientas</a>
+        <ul class="tm-subnav">
+          <li><a href="/herramientas/metronomo/">Metrónomo</a></li>
+          <li><a href="/herramientas/afinador/">Afinador</a></li>
+        </ul>
+      </li>
+        <li class="tm-has-sub"><a href="/agenda/" class="">Agenda</a>
+        <ul class="tm-subnav">
+          <li><a href="/agenda-conciertos-bandas-orquestas/">Agenda de conciertos</a></li>
+          <li><a href="/oposiciones-de-musica/">Oposiciones de música</a></li>
+        </ul>
+        </li>
+        <li><a href="/blog/" class="">Blog</a></li>
+        <li><a href="/tecnico-especialista-en-laboratorio/" class="">Laboratorio</a></li>
+        <li class="tm-lang"><a href="/en/exercises/roman-numerals/" hreflang="en" lang="en" title="View this page in English">English</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="tm-main">
+
+  <nav class="tm-breadcrumb" aria-label="Migas">
+    <div class="tm-container">
+      <a href="/">Inicio</a><span class="tm-crumb-sep">›</span><a href="/ejercicios/">Ejercicios</a><span class="tm-crumb-sep">›</span><span aria-current="page">Ejercicios de cifrado romano</span>
+    </div>
+  </nav>
+
+<header class="tm-page-header"><div class="tm-container"><h1>Ejercicios de cifrado romano</h1></div></header>
+<div class="tm-container tm-article-wrap">
+  <article class="tm-article">
+
+<p>En este ejercicio practicas el <strong>cifrado romano</strong>: la forma de escribir cada acorde con el número romano de su <a href="/diccionario-musical/nombres-de-los-grados-de-la-escala/">grado</a> en la tonalidad, seguido de las <strong>cifras</strong> que indican su posición y sus notas especiales. Tienes dos ejercicios en uno: <strong>identificar</strong> el cifrado de un acorde escrito, o <strong>construir</strong> el acorde a partir de su cifrado. Los niveles avanzan por tipo de acorde: tríadas en estado fundamental, tríadas invertidas, séptimas en estado fundamental, séptimas invertidas y todo mezclado.</p>
+
+<div id="tmcr"></div>
+
+<h2>Cómo se escribe el cifrado romano</h2>
+
+<p>El cifrado de un acorde tiene dos partes: <strong>el número romano</strong>, que dice sobre qué grado está construido, y <strong>las cifras</strong>, apiladas a su derecha, que dicen qué notas hay sobre el bajo. Se leen así:</p>
+
+<ul>
+  <li><strong>El número romano se escribe siempre en mayúscula</strong> (I a VII) y es el grado de la escala sobre el que se construye el acorde. Si el acorde es mayor, menor o disminuido lo dice la tonalidad y se ve en las notas, no en el signo del número.</li>
+  <li><strong>Sin cifra</strong> es una tríada en estado fundamental. <strong>6</strong> es la primera inversión y <strong>6/4</strong> la segunda. Las séptimas llevan la cifra <strong>7</strong> y sus inversiones <strong>6/5</strong>, <strong>4/3</strong> y <strong>4/2</strong> (en el método del sitio se cifran de otra manera, como verás más abajo).</li>
+  <li><strong>El signo +</strong> marca la <strong>sensible</strong>: la nota que está un semitono por debajo de la tónica. En el V es la tercera del acorde; en el VII es la fundamental.</li>
+  <li><strong>Un número tachado</strong> es un intervalo <strong>disminuido</strong>. El 5 tachado indica la quinta disminuida, y los números tachados se reservan para los acordes disminuidos.</li>
+</ul>
+
+<p>Para repasar cómo se forman los acordes, mira los <a href="/diccionario-musical/acordes/acordes-triadas/">acordes tríadas</a> y los <a href="/diccionario-musical/acordes/acordes-de-septima/">acordes de séptima</a>, donde se explica su cifrado con las imágenes.</p>
+
+<h3>Los acordes de Do mayor</h3>
+
+<p>Sobre cada grado de la escala mayor se construye una tríada. En estado fundamental, el I, el II, el IV y el VI no llevan cifra; el V lleva el <strong>+</strong> de la sensible y el VII el <strong>5 tachado</strong> de su quinta disminuida:</p>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead><tr><th>Cifrado</th><th>Notas</th><th>Acorde</th></tr></thead>
+  <tbody>
+    <tr><td><span class="tm-cr-rom">I</span></td><td>Do – Mi – Sol</td><td>tríada mayor</td></tr>
+    <tr><td><span class="tm-cr-rom">II</span></td><td>Re – Fa – La</td><td>tríada menor</td></tr>
+    <tr><td><span class="tm-cr-rom">IV</span></td><td>Fa – La – Do</td><td>tríada mayor</td></tr>
+    <tr><td><span class="tm-cr-rom">V</span><span class="tm-cr-fig"><span>+</span></span></td><td>Sol – Si – Re</td><td>tríada mayor</td></tr>
+    <tr><td><span class="tm-cr-rom">VI</span></td><td>La – Do – Mi</td><td>tríada menor</td></tr>
+    <tr><td><span class="tm-cr-rom">VII</span><span class="tm-cr-fig"><span class="tm-cr-t">5</span></span></td><td>Si – Re – Fa</td><td>tríada disminuida</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>En tonalidad menor: la sensible</h3>
+
+<p>En las tonalidades menores el cifrado se hace con la escala menor <strong>armónica</strong>: el 7.º grado sube un semitono, para tener <strong>sensible</strong>. Por eso el <strong>V</strong> es mayor y el <strong>VII</strong> es disminuido, aunque la armadura no lleve esa alteración. En La menor la sensible es el Sol♯, y en el II grado la quinta ya es disminuida. Estos son los acordes de La menor:</p>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead><tr><th>Cifrado</th><th>Notas</th><th>Acorde</th></tr></thead>
+  <tbody>
+    <tr><td><span class="tm-cr-rom">I</span></td><td>La – Do – Mi</td><td>tríada menor</td></tr>
+    <tr><td><span class="tm-cr-rom">II</span><span class="tm-cr-fig"><span class="tm-cr-t">5</span></span></td><td>Si – Re – Fa</td><td>tríada disminuida</td></tr>
+    <tr><td><span class="tm-cr-rom">IV</span></td><td>Re – Fa – La</td><td>tríada menor</td></tr>
+    <tr><td><span class="tm-cr-rom">V</span><span class="tm-cr-fig"><span>+</span></span></td><td>Mi – Sol♯ – Si</td><td>tríada mayor</td></tr>
+    <tr><td><span class="tm-cr-rom">VI</span></td><td>Fa – La – Do</td><td>tríada mayor</td></tr>
+    <tr><td><span class="tm-cr-rom">VII</span><span class="tm-cr-fig"><span class="tm-cr-t">5</span></span></td><td>Sol♯ – Si – Re</td><td>tríada disminuida</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>El <strong>III grado no se pregunta</strong>: según el contexto es mayor o aumentado, y un ejercicio con dos respuestas posibles no sería justo. Puedes repasar la <a href="/diccionario-musical/tonalidades/escalas-menores/escalas-menores-armonicas/">escala menor armónica</a> en su página.</p>
+
+<h3>Las tríadas invertidas</h3>
+
+<p>En las inversiones, las cifras dicen qué intervalos hay sobre el bajo. La primera inversión se cifra con un <strong>6</strong> y la segunda con <strong>6/4</strong>, y la sensible se marca con el <strong>+</strong> en la nota que ocupe. Ejemplos en Do mayor:</p>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead><tr><th>Acorde</th><th>Cifrado</th><th>Notas</th></tr></thead>
+  <tbody>
+    <tr><td>I · 1.ª inversión</td><td><span class="tm-cr-rom">I</span><span class="tm-cr-fig"><span>6</span></span></td><td>Mi – Sol – Do</td></tr>
+    <tr><td>I · 2.ª inversión</td><td><span class="tm-cr-rom">I</span><span class="tm-cr-fig"><span>6</span><span>4</span></span></td><td>Sol – Do – Mi</td></tr>
+    <tr><td>V · 1.ª inversión</td><td><span class="tm-cr-rom">V</span><span class="tm-cr-fig"><span>6</span></span></td><td>Si – Re – Sol</td></tr>
+    <tr><td>V · 2.ª inversión</td><td><span class="tm-cr-rom">V</span><span class="tm-cr-fig"><span>+6</span><span>4</span></span></td><td>Re – Sol – Si</td></tr>
+    <tr><td>VII · 1.ª inversión</td><td><span class="tm-cr-rom">VII</span><span class="tm-cr-fig"><span>+6</span><span>3</span></span></td><td>Re – Fa – Si</td></tr>
+    <tr><td>VII · 2.ª inversión</td><td><span class="tm-cr-rom">VII</span><span class="tm-cr-fig"><span>6</span><span>+4</span></span></td><td>Fa – Si – Re</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Fíjate en la primera inversión del VII: el <strong>+6</strong> dice que la sensible está a distancia de sexta del bajo, y el <strong>3</strong> de abajo lo distingue de la segunda inversión de la séptima de dominante.</p>
+
+<h3>Las séptimas que aparecen en el ejercicio</h3>
+
+<p>Los niveles con séptimas incluyen las tres que se cifran en el método del sitio: la <strong>séptima de dominante</strong> (sobre el V), la <strong>séptima de sensible</strong> (sobre el VII de una tonalidad mayor) y la <strong>séptima disminuida</strong> (sobre el VII de una tonalidad menor). Su cifrado es igual en cualquier tonalidad. Con la séptima de sensible de Do mayor y la de dominante:</p>
+
+<div class="tm-table-wrap">
+<table class="tm-table">
+  <thead><tr><th>Acorde</th><th>Cifrado</th><th>Notas</th></tr></thead>
+  <tbody>
+    <tr><td>V7 · estado fundamental</td><td><span class="tm-cr-rom">V</span><span class="tm-cr-fig"><span>7</span><span>+</span></span></td><td>Sol – Si – Re – Fa</td></tr>
+    <tr><td>V7 · 1.ª inversión</td><td><span class="tm-cr-rom">V</span><span class="tm-cr-fig"><span>6</span><span class="tm-cr-t">5</span></span></td><td>Si – Re – Fa – Sol</td></tr>
+    <tr><td>V7 · 2.ª inversión</td><td><span class="tm-cr-rom">V</span><span class="tm-cr-fig"><span>+6</span></span></td><td>Re – Fa – Sol – Si</td></tr>
+    <tr><td>V7 · 3.ª inversión</td><td><span class="tm-cr-rom">V</span><span class="tm-cr-fig"><span>+4</span></span></td><td>Fa – Sol – Si – Re</td></tr>
+    <tr><td>VII7 · estado fundamental</td><td><span class="tm-cr-rom">VII</span><span class="tm-cr-fig"><span>7</span><span class="tm-cr-t">5</span></span></td><td>Si – Re – Fa – La</td></tr>
+    <tr><td>VII7 · 1.ª inversión</td><td><span class="tm-cr-rom">VII</span><span class="tm-cr-fig"><span>+6</span><span>5</span></span></td><td>Re – Fa – La – Si</td></tr>
+    <tr><td>VII7 · 2.ª inversión</td><td><span class="tm-cr-rom">VII</span><span class="tm-cr-fig"><span>+4</span><span>3</span></span></td><td>Fa – La – Si – Re</td></tr>
+    <tr><td>VII7 · 3.ª inversión</td><td><span class="tm-cr-rom">VII</span><span class="tm-cr-fig"><span>4</span><span>+2</span></span></td><td>La – Si – Re – Fa</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>La séptima disminuida lleva sus propias cifras: el 7 y el 5 tachados, el +6 y 5 tachado, el +4 y ♭3, y el +2. Las tienes explicadas en <a href="/diccionario-musical/acordes/acorde-de-septima-de-dominante/">séptima de dominante</a>, <a href="/diccionario-musical/acordes/acorde-de-septima-de-sensible/">séptima de sensible</a> y <a href="/diccionario-musical/acordes/acorde-de-septima-disminuida/">séptima disminuida</a>.</p>
+
+<div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="3473898651" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+
+<h2>Antes y después de este ejercicio</h2>
+
+<p>Conviene saber <a href="/diccionario-musical/nombres-de-los-grados-de-la-escala/">los grados de la escala</a> y construir <a href="/diccionario-musical/acordes/acordes-triadas/">acordes tríadas</a>. Para ver qué papel hace cada acorde dentro de la tonalidad, sigue con el ejercicio de <a href="/ejercicios/funciones-tonales/">funciones tonales</a> y con el de <a href="/ejercicios/cadencias/">cadencias</a>. Si quieres ejercicios de enlaces a cuatro voces, tienes las <a href="/blog/armonia/">prácticas de armonía</a>.</p>
+
+<script src="/assets/js/tm-piano-audio.js?v=5d4cdd02" defer></script>
+<script src="/assets/js/tm-mei.js?v=72fe601f" defer></script>
+<script src="/assets/js/tm-notacion.js?v=ae62911d" defer></script>
+<script src="/assets/js/cifrado-romano-engine.js?v=5f3e3fc3" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.tmCifradoRomano) tmCifradoRomano('tmcr');
+  });
+</script>
+<section class="tm-seccion">
+<div class="tm-seccion-inner">
+<div class="tm-seccion-cabecera">
+<h2 class="tm-seccion-titulo">Preguntas <span>Frecuentes</span></h2>
+</div>
+<div>
+<div class="tm-faq-list">
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Por qué el número romano se escribe siempre en mayúscula?</div>
+      <div class="tm-faq-a">Porque el número romano solo dice sobre qué grado está construido el acorde. Que el acorde sea mayor, menor o disminuido lo da la tonalidad y se ve en las notas, y lo que lo distingue en el cifrado son las cifras (por ejemplo el + de la sensible o el 5 tachado de la quinta disminuida).</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Qué significa el signo + en el cifrado?</div>
+      <div class="tm-faq-a">El + marca la sensible, la nota que está un semitono por debajo de la tónica. En el V es la tercera del acorde (cifra +), en el VII es la fundamental, y en las inversiones el + va junto a la cifra de la nota que sea la sensible: por ejemplo +6 o +4.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Qué es un número tachado?</div>
+      <div class="tm-faq-a">Un número tachado indica un intervalo disminuido, como el 5 tachado de la quinta disminuida del acorde de VII. Los números tachados se reservan para los acordes disminuidos y no se usan en los demás.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Por qué no se pregunta el III grado?</div>
+      <div class="tm-faq-a">Porque su calidad depende del contexto: en una tonalidad menor es mayor con la escala natural y aumentado con la escala armónica. Un ejercicio no debe tener dos respuestas válidas, así que el III grado se estudia aparte.</div>
+    </div>
+    <div class="tm-faq-item">
+      <div class="tm-faq-q">¿Qué diferencia hay entre el cifrado romano y el cifrado americano?</div>
+      <div class="tm-faq-a">El cifrado romano habla de grados y depende de la tonalidad: V7 es la séptima de dominante en cualquier tono. El cifrado americano (C, Am, G7) nombra el acorde por su fundamental y no depende de la tonalidad. El romano es el que se usa para analizar la función de cada acorde.</div>
+    </div>
+  </div>
+</div>
+</div>
+</section><div class="tm-ad">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1186627650857489" data-ad-slot="2439863051" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+
+</article>
+
+<aside class="tm-related">
+  <h2>Páginas relacionadas</h2>
+  <ul>
+    <li><a href="/ejercicios/funciones-tonales/">Funciones tonales: ejercicio</a></li>
+    <li><a href="/ejercicios/cadencias/">Cadencias: ejercicio</a></li>
+    <li><a href="/diccionario-musical/nombres-de-los-grados-de-la-escala/">Los grados de la escala</a></li>
+    <li><a href="/diccionario-musical/acordes/acordes-triadas/">Acordes tríadas</a></li>
+    <li><a href="/diccionario-musical/acordes/acordes-de-septima/">Acordes de séptima</a></li>
+    <li><a href="/blog/armonia/">Armonía: prácticas de enlaces</a></li>
+    <li><a href="/ejercicios/">Todos los ejercicios</a></li>
+  </ul>
+</aside>
+</div>
+
+</main>
+
+<footer class="tm-site-footer">
+  <div class="tm-container tm-footer-inner">
+    <div class="tm-footer-col">
+      <h3>Teoría Musical</h3>
+      <p>Música desde sus fundamentos: diccionario, ejercicios interactivos y herramientas gratuitas.</p>
+    </div>
+    <div class="tm-footer-col">
+      <h3>Secciones</h3>
+      <ul>
+        <li><a href="/diccionario-musical/">Diccionario Musical</a></li>
+        <li><a href="/ejercicios/">Ejercicios Musicales</a></li>
+        <li class="tm-has-sub"><a href="/herramientas/">Herramientas</a>
+        <ul class="tm-subnav">
+          <li><a href="/herramientas/metronomo/">Metrónomo</a></li>
+          <li><a href="/herramientas/afinador/">Afinador</a></li>
+        </ul>
+      </li>
+        <li class="tm-has-sub"><a href="/agenda/">Agenda</a>
+        <ul class="tm-subnav">
+          <li><a href="/agenda-conciertos-bandas-orquestas/">Agenda de conciertos</a></li>
+          <li><a href="/oposiciones-de-musica/">Oposiciones de música</a></li>
+        </ul>
+        </li>
+        <li><a href="/blog/">Blog</a></li>
+      </ul>
+    </div>
+    <div class="tm-footer-col">
+      <h3>Información</h3>
+      <ul>
+        <li><a href="/sobre-mi/">Sobre mí</a></li><li><a href="/contacto/">Contacto</a></li>
+        <li><a href="/aviso-legal/">Aviso legal</a></li>
+        <li><a href="/politica-de-privacidad/">Política de privacidad</a></li>
+        <li><a href="/politica-de-cookies/">Política de cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="tm-footer-bottom">
+    <p>© <span id="tm-year"></span> Teoría Musical — Eduardo Escrig Zomeño. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js?v=f956c6dc" defer></script>
+</body>
+</html>

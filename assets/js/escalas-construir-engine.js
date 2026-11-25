@@ -141,9 +141,13 @@
     });
   }
 
-  var SVG_W = 520, SVG_H = 160, STAVE_W = 480, TOPE = 40;   /* TOPE: altura (px) de la línea superior del pentagrama dentro del dibujo */
+  var SVG_W = 520, SVG_H = 172, STAVE_W = 480, TOPE = 52;   /* TOPE: altura (px) de la línea superior del pentagrama dentro del dibujo */
 
+  /* Registro ampliado por arriba (hasta mi6) y por abajo hasta do3: más sitio del que hace falta para poder equivocarse. */
   var ROWS = [
+    { vfn:'e', n:2, oct:6, line:-3   },
+    { vfn:'d', n:1, oct:6, line:-2.5 },
+    { vfn:'c', n:0, oct:6, line:-2   },
     { vfn:'b', n:6, oct:5, line:-1.5 },
     { vfn:'a', n:5, oct:5, line:-1   },
     { vfn:'g', n:4, oct:5, line:-0.5 },
@@ -212,7 +216,7 @@
     '.tm-ec-wrap .tm-iv-loupe{position:fixed;display:none;pointer-events:none;z-index:9999;background:#fdfcf9;border:2px solid #333;border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,0.35);transform:translate(-50%,calc(-100% - 18px));width:min(300px,calc(100vw - 16px));box-sizing:border-box;}',   /* ancho fijo: si no, se encoge cerca del borde derecho */
     '.tm-ec-wrap .tm-iv-loupe::after{content:"";position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);border:11px solid transparent;border-top-color:#333;border-bottom:none;}',
     '.tm-ec-wrap .tm-iv-loupe::before{content:"";position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-top-color:#fdfcf9;border-bottom:none;z-index:1;}',
-    '.tm-ec-wrap .tm-iv-loupe-staff{line-height:0;}',
+    '.tm-ec-wrap .tm-iv-loupe-staff{line-height:0;display:flow-root;overflow:hidden;}',
     '.tm-ec-wrap .tm-iv-loupe-staff svg{display:block;max-width:100%;height:auto;margin-left:auto;margin-right:auto;}',
     '@media(max-width:500px){.tm-ec-wrap .tm-iv-modes{flex-direction:column;align-items:center;}.tm-ec-wrap .tm-iv-mode-btn{width:100%;max-width:220px;}}'
   ].join('');
@@ -395,8 +399,12 @@
       var ev = eventos(all, seqL);
       all.forEach(function (p, i) { if (p._hover) ev[i].color = '#8b6914'; });
       var shown = ev.slice(seqL ? Math.max(0, all.length - 8) : 0);
-      elLstaff.style.height = '150px';   /* cabe todo el registro del ejercicio: de Do3 (3 líneas adicionales abajo) a Si5 (Eduardo, nov-2026) */
-      window.tmNotacion.dibujarAlineado(elLstaff, { clave: 'sol', compases: [shown] }, { escala: 1.0, separacion: 0.25, top: 34, id: uid + 'l', alt: '' });
+      /* la lupa AUMENTA (~1,8 veces); si hay muchas notas y no cabe en pantalla, baja la escala hasta que quepa. Cabe todo el registro: de mi6 a do3 */
+      var filaL = { clave: 'sol', compases: [shown] };
+      var LG = window.tmNotacion.lupaAjustada(filaL, 1.0, ROWS[0].line, ROWS[ROWS.length - 1].line, { separacion: 0.2, noLineal: 0.25, margenIzq: 10 });
+      elLstaff.style.width = 'auto'; elLstaff.style.height = LG.alto + 'px';
+      var rl = window.tmNotacion.dibujarAlineado(elLstaff, filaL, { escala: LG.escala, separacion: 0.2, noLineal: 0.25, margenIzq: 10, top: LG.top, id: uid + 'l', alt: '' });
+      rl.elemento.style.maxWidth = 'none';
     }
 
     /* La fila bajo el puntero, medida sobre el pentagrama dibujado */
@@ -405,9 +413,9 @@
       return { sr: sr, top: g.lineas[0], sp: (g.lineas[4] - g.lineas[0]) / 4 };
     }
     function getRow(clientY) {
-      if (!currentSvg) return ROWS[9];
+      if (!currentSvg) return ROWS[12];
       var m = medida();
-      if (!m.sr.width) return ROWS[9];
+      if (!m.sr.width) return ROWS[12];
       var L = (clientY - m.sr.top - m.top) / m.sp;
       var idx = Math.round((L - ROWS[0].line) * 2);
       return ROWS[Math.max(0, Math.min(ROWS.length - 1, idx))];

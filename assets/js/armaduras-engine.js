@@ -31,7 +31,11 @@
     { vex: "Cb", maj: "Dob Mayor",  min: "Lab menor",  seq: ["b/4/b","e/5/b","a/4/b","d/5/b","g/4/b","c/5/b","f/4/b"] }
   ];
 
+  /* Registro ampliado: do6 … do4 (las armaduras reales van de sol5 a mi4), con más sitio del que hace falta para poder equivocarse. */
   var LANES = [
+    { pitch: "c/6", line: -2 },
+    { pitch: "b/5", line: -1.5 },
+    { pitch: "a/5", line: -1 },
     { pitch: "g/5", line: -0.5 },
     { pitch: "f/5", line: 0 },
     { pitch: "e/5", line: 0.5 },
@@ -41,7 +45,9 @@
     { pitch: "a/4", line: 2.5 },
     { pitch: "g/4", line: 3 },
     { pitch: "f/4", line: 3.5 },
-    { pitch: "e/4", line: 4 }
+    { pitch: "e/4", line: 4 },
+    { pitch: "d/4", line: 4.5 },
+    { pitch: "c/4", line: 5 }
   ];
 
   /* Verovio se carga bajo demanda: el motor arranca cuando ya está. */
@@ -136,7 +142,7 @@
     '.tmdib-wrap .tm-loupe{position:fixed;display:none;pointer-events:none;z-index:9999;background:#fdfcf9;border:2px solid #333;border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,0.35);transform:translate(-50%,calc(-100% - 18px));}',
     '.tmdib-wrap .tm-loupe::after{content:"";position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);border:11px solid transparent;border-top-color:#333;border-bottom:none;}',
     '.tmdib-wrap .tm-loupe::before{content:"";position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-top-color:#fdfcf9;border-bottom:none;z-index:1;}',
-    '.tmdib-wrap .tm-loupe-staff{line-height:0;}'
+    '.tmdib-wrap .tm-loupe-staff{line-height:0;display:flow-root;overflow:hidden;}'
   ].join('');
 
   function injectCSS(id, css) {
@@ -408,7 +414,7 @@
     function yDeLinea(line) { var g = geom(); return g.top + line * g.sp; }
 
     function renderM() {
-      elNotac.style.height = '120px';
+      elNotac.style.height = '145px';
       var containerW = elNotac.offsetWidth || elWrap.offsetWidth;
       if (!containerW) containerW = Math.min(window.innerWidth - 60, 500);
       var totalW = Math.min(Math.max(containerW, 200), 500);
@@ -424,11 +430,14 @@
       var key = userDrawing.join(',') + '|' + pitch + accType;
       if (key === lastLoupeKey) return;
       lastLoupeKey = key;
-      elLstaff.style.height = '90px';
       var libres = userDrawing.map(function (s) { return aLibre(s); });
       libres.push(aLibre(pitch + '/' + accType));
-      window.tmNotacion.dibujarAlineado(elLstaff, { clave: 'sol', armaduraLibre: libres, compases: [[]] },
-        { escala: 1.0, separacion: 0.25, top: 32, id: 'arl', alt: '' });
+      /* la lupa AUMENTA (~1,8 veces el pentagrama); con muchas alteraciones que no caben en pantalla, baja la escala hasta que quepa */
+      var filaL = { clave: 'sol', armaduraLibre: libres, compases: [[]] };
+      var LG = window.tmNotacion.lupaAjustada(filaL, 1.25, LANES[0].line, LANES[LANES.length - 1].line, { separacion: 0.2, noLineal: 0.25, margenIzq: 10 });
+      elLstaff.style.width = 'auto'; elLstaff.style.height = LG.alto + 'px';
+      var rl = window.tmNotacion.dibujarAlineado(elLstaff, filaL, { escala: LG.escala, separacion: 0.2, noLineal: 0.25, margenIzq: 10, top: LG.top, id: 'arl', alt: '' });
+      rl.elemento.style.maxWidth = 'none';
       /* la alteración en preview, en dorado (Verovio no colorea las de una armadura: se tiñe en el SVG) */
       var acc = elLstaff.querySelectorAll('.keySig .keyAccid');
       if (acc.length) {

@@ -177,7 +177,7 @@
     '.tm-iv-wrap .tm-iv-loupe::before{content:"";position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-top-color:#fdfcf9;border-bottom:none;z-index:1;}',
     // ancho fijo: si no, la lupa toma el sitio que queda hasta el borde derecho y se encoge cerca de él (Eduardo, nov-2026)
     '.tm-iv-wrap .tm-iv-loupe{width:min(260px,calc(100vw - 16px));box-sizing:border-box;}',
-    '.tm-iv-wrap .tm-iv-loupe-staff{line-height:0;}',
+    '.tm-iv-wrap .tm-iv-loupe-staff{line-height:0;display:flow-root;overflow:hidden;}',
     '.tm-iv-wrap .tm-iv-loupe-staff svg{display:block;width:100%;height:auto;}'
   ].join('');
 
@@ -230,25 +230,13 @@
     var ACC_DISPLAY = {'-2':T('bb','\u266d\u266d'),'-1':'♭','0':'','1':'♯','2':'×'};
     function noteLabel(n, a) { return NOTE_NAMES_ES[n] + (ACC_DISPLAY[String(a)] || ''); }
 
-    /* Posiciones del pentagrama de Do4 (grave) a Sol5 (agudo) */
-    var CS_ROWS = [
-      {vfn:'b',n:6,oct:5,lbl:'Si⁵', ln:false,ldg:true},
-      {vfn:'a',n:5,oct:5,lbl:'La⁵', ln:true, ldg:true},
-      {vfn:'g',n:4,oct:5,lbl:'Sol⁵',ln:false,ldg:false},
-      {vfn:'f',n:3,oct:5,lbl:'Fa⁵', ln:true, ldg:false},
-      {vfn:'e',n:2,oct:5,lbl:'Mi⁵', ln:false,ldg:false},
-      {vfn:'d',n:1,oct:5,lbl:'Re⁵', ln:true, ldg:false},
-      {vfn:'c',n:0,oct:5,lbl:'Do⁵', ln:false,ldg:false},
-      {vfn:'b',n:6,oct:4,lbl:'Si⁴', ln:true, ldg:false},
-      {vfn:'a',n:5,oct:4,lbl:'La⁴', ln:false,ldg:false},
-      {vfn:'g',n:4,oct:4,lbl:'Sol⁴',ln:true, ldg:false},
-      {vfn:'f',n:3,oct:4,lbl:'Fa⁴', ln:false,ldg:false},
-      {vfn:'e',n:2,oct:4,lbl:'Mi⁴', ln:true, ldg:false},
-      {vfn:'d',n:1,oct:4,lbl:'Re⁴', ln:false,ldg:false},
-      {vfn:'c',n:0,oct:4,lbl:'Do⁴', ln:false,ldg:true},
-      {vfn:'b',n:6,oct:3,lbl:'Si³', ln:false,ldg:false},
-      {vfn:'a',n:5,oct:3,lbl:'La³', ln:true, ldg:true}
-    ];
+    /* Filas del pentagrama, de mi6 (6 medias líneas por encima de la línea superior) a fa3 (14 por debajo): registro ampliado, con más sitio
+       del que hace falta para que el alumno pueda equivocarse. El índice es el paso de pasoEn() + 6. */
+    var CS_ROWS = (function () {
+      var L = ['c', 'd', 'e', 'f', 'g', 'a', 'b'], r = [];
+      for (var s = -6; s <= 14; s++) { var q = 38 - s; r.push({ vfn: L[q % 7], n: q % 7, oct: Math.floor(q / 7) }); }
+      return r;
+    })();
 
     function keysForDiff() {
       var k = Object.keys(DEFS);
@@ -498,7 +486,7 @@
       var sr = svg.getBoundingClientRect(), g = tmNotacion.geometria(svg);
       if (!g.lineas) return 0;
       var sp = (g.lineas[4] - g.lineas[0]) / 4;
-      return Math.max(-3, Math.min(12, Math.round((clientY - sr.top - g.lineas[0]) / (sp / 2))));
+      return Math.max(-6, Math.min(14, Math.round((clientY - sr.top - g.lineas[0]) / (sp / 2))));
     }
 
     function drawConstruirPreview(vfn, oct, acc) {
@@ -582,13 +570,15 @@
           var key = cQ.n1 + '_' + (cQ.a1 || 0) + '|' + vfn + oct + acc;
           if (key === lastLoupeKey) return;
           lastLoupeKey = key;
-          elLstaff.style.height = '104px';
-          dibujarIv(elLstaff, [[claveMEI(VF_NAMES[cQ.n1], cQ.a1 || 0, 4)], [{ key: claveMEI(vfn, acc, oct), color: '#8b6914' }]], 40, { id: uid + 'l', escala: 0.95 });
+          var LG = tmNotacion.lupaGeom(1.0, -3, 7);   // la lupa AUMENTA: ~1,8 veces el pentagrama
+          elLstaff.style.width = 'auto'; elLstaff.style.height = LG.alto + 'px';
+          var rl = dibujarIv(elLstaff, [[claveMEI(VF_NAMES[cQ.n1], cQ.a1 || 0, 4)], [{ key: claveMEI(vfn, acc, oct), color: '#8b6914' }]], LG.top, { id: uid + 'l', escala: LG.escala, separacion: 0.15, noLineal: 0.25, margenIzq: 10 });
+          rl.elemento.style.maxWidth = 'none'; rl.elemento.style.width = rl.ancho + 'px';   // la regla CSS de este motor lo estira al 100%
         }
 
         function showLoupe(clientX, clientY) {
           if (answered) return;
-          var rd = CS_ROWS[calcStep(clientY) + 3];
+          var rd = CS_ROWS[calcStep(clientY) + 6];
           elLoupe.style.transform = '';
           elLoupe.style.left = clientX + 'px';
           elLoupe.style.top  = clientY + 'px';
@@ -616,7 +606,7 @@
           var clientY = (e.changedTouches || e.touches)
             ? (e.changedTouches || e.touches)[0].clientY
             : e.clientY;
-          var rd = CS_ROWS[calcStep(clientY) + 3];
+          var rd = CS_ROWS[calcStep(clientY) + 6];
           sel.construirNote = rd;
           sel.ans = rd.n + '_' + rd.oct + '_' + sel.acc;
           drawConstruirPreview(rd.vfn, rd.oct, sel.acc);

@@ -102,6 +102,7 @@ module.exports = dictionaryPage({
 <h2>Practice harmonic functions</h2>
 
 <p>To recognize functions at a glance, practice with the exercise <a href="/ejercicios/funciones-tonales/"><strong>Which harmonic function does this chord have?</strong></a>: chords written in seven keys, with substitutes, inversions and the dominant seventh, and an instant explanation of each answer.</p>
+<p>Once you recognize the functions, learn to label chords with Roman numerals in the <a href="/ejercicios/cifrado-romano/">Roman numerals</a> exercise.</p>
 
 <h2>Common mistakes</h2>
 

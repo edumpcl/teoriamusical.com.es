@@ -81,7 +81,7 @@
     '.tm-iv-wrap .tm-iv-loupe{position:fixed;display:none;pointer-events:none;z-index:9999;background:#fdfcf9;border:2px solid #333;border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,0.35);transform:translate(-50%,calc(-100% - 18px));}',
     '.tm-iv-wrap .tm-iv-loupe::after{content:"";position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);border:11px solid transparent;border-top-color:#333;border-bottom:none;}',
     '.tm-iv-wrap .tm-iv-loupe::before{content:"";position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-top-color:#fdfcf9;border-bottom:none;z-index:1;}',
-    '.tm-iv-wrap .tm-iv-loupe-staff{line-height:0;}',
+    '.tm-iv-wrap .tm-iv-loupe-staff{line-height:0;display:flow-root;overflow:hidden;}',
     /* Construir triadas */
     '.tm-iv-wrap .tm-construir-q{text-align:center;font-size:1.05rem;margin:10px 0;}',
     '.tm-iv-wrap .tm-staff-construir{position:relative;background:#fdfcf9;border:1px solid #e8e0cc;border-radius:8px;margin:15px 0;cursor:crosshair;user-select:none;touch-action:none;overflow:hidden;}',
@@ -365,22 +365,13 @@
     var ACC_SYM = {'-2':'♭♭','-1':'♭','0':'','1':'♯','2':'♯♯'};
 
 
-    /* Staff positions G5 → B3, each 5px apart in SVG space */
-    var ROWS = [
-      {vfn:'g',n:4,oct:5,line:-0.5},
-      {vfn:'f',n:3,oct:5,line: 0  },
-      {vfn:'e',n:2,oct:5,line: 0.5},
-      {vfn:'d',n:1,oct:5,line: 1  },
-      {vfn:'c',n:0,oct:5,line: 1.5},
-      {vfn:'b',n:6,oct:4,line: 2  },
-      {vfn:'a',n:5,oct:4,line: 2.5},
-      {vfn:'g',n:4,oct:4,line: 3  },
-      {vfn:'f',n:3,oct:4,line: 3.5},
-      {vfn:'e',n:2,oct:4,line: 4  },
-      {vfn:'d',n:1,oct:4,line: 4.5},
-      {vfn:'c',n:0,oct:4,line: 5  },
-      {vfn:'b',n:6,oct:3,line: 5.5}
-    ];
+    /* Filas del pentagrama, de do6 a sol3 (la línea es la posición desde la línea superior: fa5 = 0). Registro ampliado: dejamos más sitio
+       del que hace falta para que el alumno pueda equivocarse. */
+    var ROWS = (function () {
+      var L = ['c', 'd', 'e', 'f', 'g', 'a', 'b'], r = [];
+      for (var p = 42; p >= 25; p--) r.push({ vfn: L[p % 7], n: p % 7, oct: Math.floor(p / 7), line: -0.5 + (39 - p) * 0.5 });
+      return r;
+    })();
 
     var totalQ = PREGUNTAS_POR_TEST;
     var currentQ, score, maxAlt, cQ, answered, placedNotes, activeTool, lastLoupeKey, currentSvg;
@@ -517,7 +508,7 @@
     function drawStaff() {
       var elNot = document.getElementById(uid+'_not');
       if (!elNot) return;
-      elNot.style.height = '170px';
+      elNot.style.height = '195px';
       var allNotes = [{vfn:cQ.bass.vfn,oct:cQ.bass.oct,acc:cQ.bass.a}];
       placedNotes.forEach(function(p){ allNotes.push({vfn:p.vfn,oct:p.oct,acc:p.acc}); });
       allNotes.sort(function(a,b){
@@ -542,18 +533,20 @@
       all.sort(function(a,b){
         return (a.oct*12+NS[VF_NAMES.indexOf(a.vfn)]+a.acc)-(b.oct*12+NS[VF_NAMES.indexOf(b.vfn)]+b.acc);
       });
-      elLstaff.style.width = (placedNotes.length > 0 ? '240px' : '200px'); elLstaff.style.height = '120px';
-      tmNotacion.dibujarAlineado(elLstaff, filaAcorde(all.map(function(n){
+      var LG = tmNotacion.lupaGeom(1.5, ROWS[0].line, ROWS[ROWS.length - 1].line);   /* la lupa AUMENTA: ~1,8 veces el pentagrama */
+      elLstaff.style.width = 'auto'; elLstaff.style.height = LG.alto + 'px';
+      var rl = tmNotacion.dibujarAlineado(elLstaff, filaAcorde(all.map(function(n){
         var k = claveMEI(n.vfn, n.acc, n.oct);
         return n.pre ? { key: k, color: '#8b6914' } : k;
-      })), { escala: 1.4, separacion: 0.5, top: 42, id: uid + 'l', alt: '' });
+      })), { escala: LG.escala, separacion: 0.15, noLineal: 0.25, top: LG.top, margenIzq: 10, id: uid + 'l', alt: '' });
+      rl.elemento.style.maxWidth = 'none';
     }
 
     /* ---- Map screen Y to ROWS index ---- */
     function getRow(clientY) {
-      if (!currentSvg) return ROWS[7];
+      if (!currentSvg) return ROWS[10];
       var sr = currentSvg.getBoundingClientRect(), g = tmNotacion.geometria(currentSvg);
-      if (!sr.width || !g.lineas) return ROWS[7];
+      if (!sr.width || !g.lineas) return ROWS[10];
       var sp = (g.lineas[4] - g.lineas[0]) / 4;               /* px entre líneas */
       var L = (clientY - sr.top - g.lineas[0]) / sp;          /* posición en líneas desde la superior */
       /* Row 0 (G5) está media línea por encima de la línea superior */

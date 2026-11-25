@@ -216,7 +216,31 @@
     return function () { var yo = this, args = arguments; trasPintar(function () { fn.apply(yo, args); }); };
   }
 
+  /**
+   * Medidas de la LUPA de los ejercicios de escribir notas: una lupa de verdad, unas 1,8 veces el tamaño del pentagrama (1,55 en pantallas
+   * estrechas, para que no se salga). Devuelve { escala, top, alto }: la escala de dibujo, los px de la línea superior al borde del
+   * recuadro y la altura que necesita para enseñar todo el registro, desde `lineaAlta` hasta `lineaBaja` (en líneas desde la superior del
+   * pentagrama: -2 es el do6; 6,5 es el sol3). Entre línea y línea hay 11 px por unidad de escala.
+   */
+  function lupaDe(escala, lineaAlta, lineaBaja) {   // medidas para una escala de lupa dada
+    var sp = 11 * escala;
+    var top = Math.ceil((Math.max(0, -lineaAlta) + 0.95) * sp);
+    return { escala: escala, top: top, alto: Math.ceil(top + (lineaBaja + 0.95) * sp) };
+  }
+  function lupaGeom(escalaPentagrama, lineaAlta, lineaBaja) {
+    var estrecho = typeof window !== 'undefined' && window.innerWidth < 520;
+    return lupaDe(Math.round(escalaPentagrama * (estrecho ? 1.55 : 1.8) * 100) / 100, lineaAlta, lineaBaja);
+  }
+  /** Lo mismo, pero si el dibujo (con muchas notas) a esa escala no cabe en `maxAncho` px, se baja la escala hasta que quepa (sin bajar de la del pentagrama). */
+  function lupaAjustada(fila, escalaPentagrama, lineaAlta, lineaBaja, opciones, maxAncho) {
+    var g = lupaGeom(escalaPentagrama, lineaAlta, lineaBaja), esc = g.escala;
+    var tope = maxAncho || Math.min(560, (typeof window !== 'undefined' ? window.innerWidth : 600) - 48);
+    while (esc > escalaPentagrama + 0.01 && svgSync(fila, Object.assign({ id: 'lupa-medida' }, opciones, { escala: esc })).ancho > tope) esc = Math.round((esc - 0.1) * 100) / 100;
+    return lupaDe(esc, lineaAlta, lineaBaja);
+  }
+
   raiz.tmNotacion = {
+    lupaGeom: lupaGeom, lupaDe: lupaDe, lupaAjustada: lupaAjustada,
     trasPintar: trasPintar, diferido: diferido,
     listo: listo, cargado: function () { return !!toolkit; }, mei: mei,
     svg: svg, svgSync: svgSync, dibujar: dibujar, dibujarSync: dibujarSync, dibujarAlineado: dibujarAlineado, dibujarAAncho: dibujarAAncho, dibujarEscala: dibujarEscala, compases: compases, geometria: geometria, VERSION: VERSION

@@ -282,7 +282,7 @@ h3{margin:0;font:400 20px var(--display)}
 <div class="lupa" id="lupa" hidden><div id="lupaStaff"></div></div>
 
 <script src="/assets/js/tm-mei.js?v=72fe601f"></script>
-<script src="/assets/js/tm-notacion.js?v=e5bb258a"></script>
+<script src="/assets/js/tm-notacion.js?v=ae62911d"></script>
 <script>
 'use strict';
 
@@ -316,7 +316,8 @@ const DIF = [
   { lbl: 'Medium',   especies: null,                        maxAlt: 1, time: 20000, id: 'medio' },
   { lbl: 'Hard', especies: null,                        maxAlt: 2, time: 15000, id: 'dificil' }
 ];
-const D_MIN = 26, D_MAX = 41, D_LINEA_SUP = 38;   // La3, Si5 y Fa5 (la línea superior)
+const D_MIN = 26, D_MAX = 41, D_LINEA_SUP = 38;   // La3, Si5 y Fa5 (la línea superior): el registro de las PREGUNTAS
+const UI_MIN = 24, UI_MAX = 44;                    // Fa3 y Mi6: lo que se puede tocar (más sitio del que hace falta, para poder equivocarse)
 const pasoDe = d => D_LINEA_SUP - d;               // 0 = línea superior, de media en media línea hacia abajo
 const T = '︎';   // tras ♭ ♯ ♮: que se vean como texto y no como emoji de color (Lilita no los tiene)
 const ACC_TXT = { '-2': '♭' + T + '♭' + T, '-1': '♭' + T, '0': '', '1': '♯' + T, '2': '×' };
@@ -369,10 +370,10 @@ const VERDE = '#238a4c', ROJO = '#c93a2d', AZUL = '#2f6fe4';
    propia alteración. Con la línea superior siempre a 62 px, para saber qué fila se toca. */
 function drawStaff(notas) {
   const el = document.getElementById('staffBox');
-  el.style.height = '200px'; el.style.width = '100%';
+  el.style.height = '215px'; el.style.width = '100%';
   const compases = notas.map(n => [{ notas: [n.color ? { key: claveMEI(n), color: n.color } : claveMEI(n)], d: 'w' }]);
   window.tmNotacion.dibujarAlineado(el, { pentagramas: [{ clave: 'sol', compases }] },
-    { escala: 1.5, separacion: 0.3, top: 56, id: 'futbol', alt: 'Treble clef staff: ' + notas.map(nombreNota).join(', ') });
+    { escala: 1.5, separacion: 0.3, top: 66, id: 'futbol', alt: 'Treble clef staff: ' + notas.map(nombreNota).join(', ') });
 }
 
 /* ============================================================
@@ -1349,7 +1350,7 @@ function elegirAcc(a) {
 }
 function colocar(d) {
   if (S.answered || S.state !== 'play') return;
-  S.sel = clamp(d, D_MIN, D_MAX);
+  S.sel = clamp(d, UI_MIN, UI_MAX);
   drawStaff([S.pase.desde, { d: S.sel, a: S.acc, color: AZUL }]);
   $('#btnChutar').disabled = false;
   $('#hint').textContent = 'Tap another line or space to change it.';
@@ -1728,7 +1729,7 @@ function pasoEn(clientY) {   // 0 = línea superior, de media en media línea; n
   const sr = svg.getBoundingClientRect(), g = window.tmNotacion.geometria(svg);
   if (!g.lineas) return null;
   const sp = (g.lineas[4] - g.lineas[0]) / 4;
-  return clamp(Math.round((clientY - sr.top - g.lineas[0]) / (sp / 2)), pasoDe(D_MAX), pasoDe(D_MIN));
+  return clamp(Math.round((clientY - sr.top - g.lineas[0]) / (sp / 2)), pasoDe(UI_MAX), pasoDe(UI_MIN));
 }
 let lupaClave = '';
 function verLupa(x, y) {
@@ -1739,9 +1740,12 @@ function verLupa(x, y) {
   lupa.style.transform = ''; lupa.style.left = x + 'px'; lupa.style.top = y + 'px'; lupa.hidden = false;
   const clave = n.d + ':' + n.a;
   if (clave !== lupaClave) {
-    lupaClave = clave; lupaStaff.style.height = '104px';
+    const LG = window.tmNotacion.lupaGeom(1.5, pasoDe(UI_MAX) / 2, pasoDe(UI_MIN) / 2);   // la lupa AUMENTA: ~1,8 veces el pentagrama
+    lupaClave = clave; lupaStaff.style.height = LG.alto + 'px'; lupaStaff.style.width = 'auto'; lupaStaff.style.display = 'flow-root'; lupaStaff.style.overflow = 'hidden';
     const compases = [[{ notas: [claveMEI(S.pase.desde)], d: 'w' }], [{ notas: [{ key: claveMEI(n), color: AZUL }], d: 'w' }]];
-    window.tmNotacion.dibujarAlineado(lupaStaff, { pentagramas: [{ clave: 'sol', compases }] }, { escala: 0.95, separacion: 0.25, top: 40, id: 'futbolLupa', alt: '' });
+    window.tmNotacion.dibujarAlineado(lupaStaff, { pentagramas: [{ clave: 'sol', compases }] }, { escala: LG.escala, separacion: 0.15, noLineal: 0.25, top: LG.top, margenIzq: 10, id: 'futbolLupa', alt: '' });
+    const sv = lupaStaff.querySelector('svg');
+    if (sv) sv.style.maxWidth = 'none';
   }
   const r = lupa.getBoundingClientRect(), pad = 8;
   if (r.left < pad) lupa.style.left = (x - r.left + pad) + 'px';

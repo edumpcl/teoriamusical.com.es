@@ -90,7 +90,7 @@
     '.tm-iv-wrap .tm-iv-loupe{position:fixed;display:none;pointer-events:none;z-index:9999;background:#fdfcf9;border:2px solid #333;border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,0.35);transform:translate(-50%,calc(-100% - 18px));}',
     '.tm-iv-wrap .tm-iv-loupe::after{content:"";position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);border:11px solid transparent;border-top-color:#333;border-bottom:none;}',
     '.tm-iv-wrap .tm-iv-loupe::before{content:"";position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-top-color:#fdfcf9;border-bottom:none;z-index:1;}',
-    '.tm-iv-wrap .tm-iv-loupe-staff{line-height:0;}',
+    '.tm-iv-wrap .tm-iv-loupe-staff{line-height:0;display:flow-root;overflow:hidden;}',
     '.tm-iv-wrap .tm-construir-q{text-align:center;font-size:1.05rem;margin:10px 0;}',
     '.tm-iv-wrap .tm-staff-construir{position:relative;background:#fdfcf9;border:1px solid #e8e0cc;border-radius:8px;margin:15px 0;cursor:crosshair;user-select:none;touch-action:none;overflow:hidden;}',
     '.tm-iv-wrap .tm-staff-construir.tm-answered{cursor:default;}',
@@ -402,7 +402,9 @@
       { vfn: 'e', n: 2, oct: 4, line:  4   },
       { vfn: 'd', n: 1, oct: 4, line:  4.5 },
       { vfn: 'c', n: 0, oct: 4, line:  5   },
-      { vfn: 'b', n: 6, oct: 3, line:  5.5 }
+      { vfn: 'b', n: 6, oct: 3, line:  5.5 },
+      { vfn: 'a', n: 5, oct: 3, line:  6   },
+      { vfn: 'g', n: 4, oct: 3, line:  6.5 }
     ];
 
     var totalQ = PREGUNTAS_POR_TEST;
@@ -519,7 +521,7 @@
     function drawStaff() {
       var elNot = document.getElementById(uid + '_not');
       if (!elNot) return;
-      elNot.style.height = '180px';
+      elNot.style.height = '190px';
       var allNotes = [{ vfn: cQ.bass.vfn, oct: cQ.bass.oct, acc: cQ.bass.a }];
       placedNotes.forEach(function (p) { allNotes.push({ vfn: p.vfn, oct: p.oct, acc: p.acc }); });
       allNotes.sort(function (a, b) { return (a.oct * 12 + NS[VF_NAMES.indexOf(a.vfn)]) - (b.oct * 12 + NS[VF_NAMES.indexOf(b.vfn)]); });
@@ -540,11 +542,13 @@
       placedNotes.forEach(function (p) { all.push({ vfn: p.vfn, oct: p.oct, acc: p.acc, pre: false }); });
       all.push({ vfn: row.vfn, oct: row.oct, acc: activeTool, pre: true });
       all.sort(function (a, b) { return (a.oct * 12 + NS[VF_NAMES.indexOf(a.vfn)] + a.acc) - (b.oct * 12 + NS[VF_NAMES.indexOf(b.vfn)] + b.acc); });
-      elLstaff.style.width = (placedNotes.length > 0 ? '260px' : '200px'); elLstaff.style.height = '140px';
-      tmNotacion.dibujarAlineado(elLstaff, filaAcorde(all.map(function (n) {
+      var LG = tmNotacion.lupaGeom(1.5, ROWS[0].line, ROWS[ROWS.length - 1].line);   // la lupa AUMENTA: ~1,8 veces el pentagrama
+      elLstaff.style.width = 'auto'; elLstaff.style.height = LG.alto + 'px';
+      var rl = tmNotacion.dibujarAlineado(elLstaff, filaAcorde(all.map(function (n) {
         var k = claveMEI(n.vfn, n.acc, n.oct);
         return n.pre ? { key: k, color: '#8b6914' } : k;
-      })), { escala: 1.4, separacion: 0.5, top: 44, id: uid + 'l', alt: '' });
+      })), { escala: LG.escala, separacion: 0.15, noLineal: 0.25, top: LG.top, margenIzq: 10, id: uid + 'l', alt: '' });
+      rl.elemento.style.maxWidth = 'none';
     }
 
     /* La fila bajo el puntero, medida sobre el pentagrama dibujado (px entre líneas y posición de la línea superior). */

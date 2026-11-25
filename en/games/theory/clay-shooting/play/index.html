@@ -299,7 +299,7 @@ h3{margin:0;font:400 20px var(--display)}
 <div class="lupa" id="lupa" hidden><div id="lupaStaff"></div></div>
 
 <script src="/assets/js/tm-mei.js?v=72fe601f"></script>
-<script src="/assets/js/tm-notacion.js?v=e5bb258a"></script>
+<script src="/assets/js/tm-notacion.js?v=ae62911d"></script>
 <script src="/assets/js/escalas-construir-data.js?v=7e4b0464"></script>
 <script>
 'use strict';
@@ -324,6 +324,7 @@ function accNum(s) { return s === '##' ? 2 : s === '#' ? 1 : s === 'b' ? -1 : s 
 function pitchVal(p) { return p.oct * 12 + NS[VF_NAMES.indexOf(p.vfn)]; }
 /* filas del pentagrama de colocación (clave de sol, de Si5 a Do3), en líneas desde la superior */
 const ROWS = [
+  { vfn: 'e', oct: 6, line: -3 }, { vfn: 'd', oct: 6, line: -2.5 }, { vfn: 'c', oct: 6, line: -2 },
   { vfn: 'b', oct: 5, line: -1.5 }, { vfn: 'a', oct: 5, line: -1 }, { vfn: 'g', oct: 5, line: -0.5 },
   { vfn: 'f', oct: 5, line: 0 }, { vfn: 'e', oct: 5, line: 0.5 }, { vfn: 'd', oct: 5, line: 1 },
   { vfn: 'c', oct: 5, line: 1.5 }, { vfn: 'b', oct: 4, line: 2 }, { vfn: 'a', oct: 4, line: 2.5 },
@@ -1836,11 +1837,11 @@ function verLupa(x, y, row) {
   lupa.style.transform = ''; lupa.style.left = x + 'px'; lupa.style.top = y + 'px'; lupa.hidden = false;
   const clave = S.fase + '|' + S.acc.length + '|' + S.notas.length + '|' + row.vfn + row.oct + '|' + S.tool;
   if (clave !== lupaClave) {
-    const k = Math.max(1.3, (S.escala || 1) * 1.25);   // amplía: siempre más grande que el pentagrama de debajo
-    lupaClave = clave; lupaStaff.style.height = Math.round(108 * k) + 'px';
+    const LG = window.tmNotacion.lupaGeom(S.escala || 1, ROWS[0].line, ROWS[ROWS.length - 1].line), k = LG.escala;   // la lupa AUMENTA: ~1,8 veces el pentagrama
+    lupaClave = clave; lupaStaff.style.height = LG.alto + 'px'; lupaStaff.style.width = 'auto'; lupaStaff.style.display = 'flow-root'; lupaStaff.style.overflow = 'hidden';
     if (S.fase === 'arm') {
       const libres = S.acc.map(libre).concat([libre({ vfn: row.vfn, oct: row.oct, acc: S.tool })]);
-      window.tmNotacion.dibujarAlineado(lupaStaff, { clave: 'sol', armaduraLibre: libres, compases: [[]] }, { escala: k, separacion: 0.25, top: Math.round(36 * k), id: 'platoLupa', alt: '' });
+      window.tmNotacion.dibujarAlineado(lupaStaff, { clave: 'sol', armaduraLibre: libres, compases: [[]] }, { escala: k, separacion: 0.1, noLineal: 0.25, top: LG.top, margenIzq: 10, id: 'platoLupa', alt: '' });
       const ks = lupaStaff.querySelectorAll('.keySig .keyAccid');
       if (ks.length) { const u = ks[ks.length - 1]; u.setAttribute('fill', AZUL); u.querySelectorAll('*').forEach(z => z.setAttribute('fill', AZUL)); }
     } else {
@@ -1850,7 +1851,7 @@ function verLupa(x, y, row) {
          se calculan con la lista completa, por si alguna viene de antes en el compás */
       const i = todas.indexOf(prev), ev = eventos(todas);
       const trozo = esSeq() ? ev.slice(Math.max(0, i - 2), i + 1) : ev.slice(Math.max(0, i - 1), i + 2);
-      window.tmNotacion.dibujarAlineado(lupaStaff, { clave: 'sol', armadura: S.arm.acc === '#' ? S.arm.n : -S.arm.n, compases: [trozo] }, { escala: k, separacion: 0.25, noLineal: 0.5, top: Math.round(36 * k), id: 'platoLupa', alt: '' });
+      window.tmNotacion.dibujarAlineado(lupaStaff, { clave: 'sol', armadura: S.arm.acc === '#' ? S.arm.n : -S.arm.n, compases: [trozo] }, { escala: k, separacion: 0.15, noLineal: 0.3, top: LG.top, margenIzq: 10, id: 'platoLupa', alt: '' });
     }
     const sv = lupaStaff.querySelector('svg');
     if (sv) sv.style.maxWidth = 'none';   // a su tamaño: la lupa se ajusta al dibujo y no al revés

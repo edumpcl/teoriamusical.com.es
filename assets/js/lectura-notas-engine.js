@@ -87,7 +87,7 @@
     '.tm-iv-wrap .tm-iv-loupe{position:fixed;display:none;pointer-events:none;z-index:9999;background:#fdfcf9;border:2px solid #333;border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,0.35);transform:translate(-50%,calc(-100% - 18px));}',
     '.tm-iv-wrap .tm-iv-loupe::after{content:"";position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);border:11px solid transparent;border-top-color:#333;border-bottom:none;}',
     '.tm-iv-wrap .tm-iv-loupe::before{content:"";position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-top-color:#fdfcf9;border-bottom:none;z-index:1;}',
-    '.tm-iv-wrap .tm-iv-loupe-staff{line-height:0;}'
+    '.tm-iv-wrap .tm-iv-loupe-staff{line-height:0;display:flow-root;overflow:hidden;}'
   ].join('');
 
   /* ---- Dibujo con Verovio (tm-mei.js + tm-notacion.js) ---- */
@@ -346,7 +346,7 @@
       var clave = pickClave();
       var top = TOPLINE[clave.id];
       var rows = [];
-      for (var L = -1.5; L <= 5.5001; L += 0.5) {
+      for (var L = -3; L <= 7.0001; L += 0.5) {   // registro ampliado: 3 líneas por encima y por debajo del pentagrama
         var idx = top - Math.round(L * 2);
         rows.push({ line: L, idx: idx, vfn: vfnOf(idx), oct: octOf(idx) });
       }
@@ -371,8 +371,10 @@
       var key = cQ.clave.id + '|' + row.idx;
       if (key === lastLoupeKey) return;
       lastLoupeKey = key;
-      elL.style.width = "200px"; elL.style.height = "125px";
-      dibujarPentagrama(elL, filaNota(cQ.clave, row.idx, DORADO), { escala: 1.5, separacion: 0.4, top: 38, id: uid + 'l', alt: '' });
+      var LG = tmNotacion.lupaGeom(1.5, cQ.rows[0].line, cQ.rows[cQ.rows.length - 1].line);   // la lupa AUMENTA: ~1,8 veces el pentagrama
+      elL.style.width = 'auto'; elL.style.height = LG.alto + 'px';
+      var rl = dibujarPentagrama(elL, filaNota(cQ.clave, row.idx, DORADO), { escala: LG.escala, separacion: 0.15, noLineal: 0.25, margenIzq: 10, top: LG.top, id: uid + 'l', alt: '' });
+      rl.elemento.style.maxWidth = 'none';
     }
 
     function updateBtn() {
@@ -417,9 +419,9 @@
 
     function drawStaff() {
       var el = document.getElementById(uid + '_not');
-      el.style.height = '150px';
+      el.style.height = '205px';
       var r =dibujarPentagrama(el, filaNota(cQ.clave, placed ? placed.idx : null, placed ? (placedStyle ? placedStyle.fillStyle : DORADO) : null), {
-        escala: 1.5, separacion: 0.5, top: 38, id: uid,
+        escala: 1.5, separacion: 0.5, top: 62, id: uid,
         alt: T('Pentagrama en ' + claveLc(cQ.clave) + (placed ? ' con tu nota colocada' : ' vacío'), 'Staff in ' + claveLc(cQ.clave) + (placed ? ' with your note placed' : ' (empty)'))
       });
       currentSvg = r.elemento;

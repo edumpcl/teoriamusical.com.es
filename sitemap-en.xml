@@ -1357,6 +1357,11 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/ejercicios/grupos-de-valoracion-especial/"/>
   </url>
   <url><loc>https://www.teoriamusical.com.es/en/exercises/rhythm/</loc><lastmod>2026-11-05</lastmod></url>
+  <url><loc>https://www.teoriamusical.com.es/en/exercises/roman-numerals/</loc><lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/exercises/roman-numerals/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/ejercicios/cifrado-romano/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.teoriamusical.com.es/ejercicios/cifrado-romano/"/>
+  </url>
   <url><loc>https://www.teoriamusical.com.es/en/exercises/scales/build-chromatic-scale/</loc><lastmod>2026-11-05</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.teoriamusical.com.es/en/exercises/scales/build-chromatic-scale/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.teoriamusical.com.es/ejercicios/escalas/construir-escala-cromatica/"/>

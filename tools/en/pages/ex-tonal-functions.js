@@ -41,7 +41,7 @@ module.exports = dictionaryPage({
 
 <h2>Before this exercise</h2>
 
-<p>It helps to know the <a href="/diccionario-musical/nombres-de-los-grados-de-la-escala/">degrees of the scale</a> and how to build <a href="/diccionario-musical/acordes/acordes-triadas/">triads</a>. After this exercise, practice with the <a href="/ejercicios/cadencias/">cadence exercises</a>, which combine these functions two at a time.</p>
+<p>It helps to know the <a href="/diccionario-musical/nombres-de-los-grados-de-la-escala/">degrees of the scale</a> and how to build <a href="/diccionario-musical/acordes/acordes-triadas/">triads</a>. After this exercise, practice with the <a href="/ejercicios/cadencias/">cadence exercises</a>, which combine these functions two at a time. To go one step further in analysis, also practice <a href="/ejercicios/cifrado-romano/">Roman numerals</a>.</p>
 <section class="tm-seccion">
 <div class="tm-seccion-inner">
 <div class="tm-seccion-cabecera">

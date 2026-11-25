@@ -48,9 +48,11 @@
   function accNum(s)   { return s === '##' ? 2 : s === '#' ? 1 : s === 'b' ? -1 : s === 'bb' ? -2 : 0; }
   function pitchVal(p) { return p.oct * 12 + NS[VF_NAMES.indexOf(p.vfn)]; }
 
-  var SVG_W = 520, SVG_H = 160, TOPE = 40;   /* TOPE: altura (px) de la línea superior del pentagrama dentro del dibujo */
+  var SVG_W = 520, SVG_H = 172, TOPE = 52;   /* TOPE: altura (px) de la línea superior del pentagrama dentro del dibujo */
 
+  /* Registro ampliado por arriba (hasta mi6): más sitio del que hace falta para poder equivocarse. */
   var ROWS = [
+    { vfn:'e', oct:6, line:-3   }, { vfn:'d', oct:6, line:-2.5 }, { vfn:'c', oct:6, line:-2   },
     { vfn:'b', oct:5, line:-1.5 }, { vfn:'a', oct:5, line:-1   }, { vfn:'g', oct:5, line:-0.5 },
     { vfn:'f', oct:5, line: 0   }, { vfn:'e', oct:5, line: 0.5 }, { vfn:'d', oct:5, line: 1   },
     { vfn:'c', oct:5, line: 1.5 }, { vfn:'b', oct:4, line: 2   }, { vfn:'a', oct:4, line: 2.5 },
@@ -210,7 +212,7 @@
     '.tm-esa-wrap .tm-iv-loupe{position:fixed;display:none;pointer-events:none;z-index:9999;background:#fdfcf9;border:2px solid #333;border-radius:12px;padding:6px 8px;box-shadow:0 8px 28px rgba(0,0,0,0.35);transform:translate(-50%,calc(-100% - 18px));max-width:calc(100vw - 16px);}',
     '.tm-esa-wrap .tm-iv-loupe::after{content:"";position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);border:11px solid transparent;border-top-color:#333;border-bottom:none;}',
     '.tm-esa-wrap .tm-iv-loupe::before{content:"";position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-top-color:#fdfcf9;border-bottom:none;z-index:1;}',
-    '.tm-esa-wrap .tm-iv-loupe-staff{line-height:0;}',
+    '.tm-esa-wrap .tm-iv-loupe-staff{line-height:0;display:flow-root;overflow:hidden;}',
     '.tm-esa-wrap .tm-iv-loupe-staff svg{display:block;max-width:100%;height:auto;}',
     '@media(max-width:500px){.tm-esa-wrap .tm-iv-modes{flex-direction:column;align-items:center;}.tm-esa-wrap .tm-iv-mode-btn{width:100%;max-width:220px;}}'
   ].join('');
@@ -406,11 +408,18 @@
       var k = phase + '|' + placedAcc.length + '|' + placedNotes.length + '|' + row.vfn + row.oct + activeTool;
       if (k === lastLoupeKey) return;
       lastLoupeKey = k;
-      elL.style.height = '92px';
+      /* la lupa AUMENTA (~1,8 veces); con muchas notas que no caben en pantalla, baja la escala hasta que quepa */
+      function lupaDe(fila) {
+        var LG = window.tmNotacion.lupaAjustada(fila, 1.0, ROWS[0].line, ROWS[ROWS.length - 1].line, { separacion: 0.2, noLineal: 0.25, margenIzq: 10 });
+        elL.style.width = 'auto'; elL.style.height = LG.alto + 'px';
+        var r = window.tmNotacion.dibujarAlineado(elL, fila, { escala: LG.escala, separacion: 0.2, noLineal: 0.25, margenIzq: 10, top: LG.top, id: uid + 'l', alt: '' });
+        r.elemento.style.maxWidth = 'none';
+        return r;
+      }
       if (phase === 'arm') {
         var libres = placedAcc.map(function (p) { return libre(p); });
         libres.push(libre({ vfn: row.vfn, oct: row.oct, acc: activeTool }));
-        window.tmNotacion.dibujarAlineado(elL, { clave: 'sol', armaduraLibre: libres, compases: [[]] }, { escala: 1.0, separacion: 0.25, top: 34, id: uid + 'l', alt: '' });
+        lupaDe({ clave: 'sol', armaduraLibre: libres, compases: [[]] });
         /* la alteración en preview, en dorado (Verovio no colorea las de una armadura: se tiñe en el SVG) */
         var kacc = elL.querySelectorAll('.keySig .keyAccid');
         if (kacc.length) {
@@ -424,7 +433,7 @@
         if (seqMode() && all.length > 8) all = all.slice(all.length - 8);
         var ev = eventos(all);
         all.forEach(function (p, i) { if (p._h) ev[i].color = '#8b6914'; });
-        window.tmNotacion.dibujarAlineado(elL, { clave: 'sol', armadura: arm.acc === '#' ? arm.n : -arm.n, compases: [ev] }, { escala: 1.0, separacion: 0.25, top: 34, id: uid + 'l', alt: '' });
+        lupaDe({ clave: 'sol', armadura: arm.acc === '#' ? arm.n : -arm.n, compases: [ev] });
       }
     }
 
@@ -434,9 +443,9 @@
       return { sr: sr, top: g.lineas[0], sp: (g.lineas[4] - g.lineas[0]) / 4 };
     }
     function getRow(clientY) {
-      if (!currentSvg) return ROWS[10];
+      if (!currentSvg) return ROWS[13];
       var m = medida();
-      if (!m.sr.width) return ROWS[10];
+      if (!m.sr.width) return ROWS[13];
       var L = (clientY - m.sr.top - m.top) / m.sp;
       var idx = Math.round((L - ROWS[0].line) * 2);
       return ROWS[Math.max(0, Math.min(ROWS.length - 1, idx))];

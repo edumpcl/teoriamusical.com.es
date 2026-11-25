@@ -310,7 +310,7 @@ h3{margin:0;font:400 20px var(--display)}
 <div class="lupa" id="lupa" hidden><div id="lupaStaff"></div></div>
 
 <script src="/assets/js/tm-mei.js?v=72fe601f"></script>
-<script src="/assets/js/tm-notacion.js?v=e5bb258a"></script>
+<script src="/assets/js/tm-notacion.js?v=ae62911d"></script>
 <script>
 'use strict';
 
@@ -375,13 +375,8 @@ const invRoles = inv => inv === 'fundamental' ? ['3.ª', '5.ª'] : inv === '1a' 
 const notaTxt = e => NOMBRES[e.n] + ACC_SYM[String(e.a)];
 function claveMEI(vfn, acc, oct) { return vfn + (acc === 2 ? '##' : acc === 1 ? '#' : acc === -1 ? 'b' : acc === -2 ? 'bb' : '') + '/' + oct; }
 function pitchVal(p) { return p.oct * 12 + NS[VF_NAMES.indexOf(p.vfn)] + (p.acc || 0); }
-/* filas del pentagrama de colocación (clave de sol, de Sol5 a Si3), como en el ejercicio */
-const ROWS = [
-  { vfn: 'g', oct: 5, line: -0.5 }, { vfn: 'f', oct: 5, line: 0 }, { vfn: 'e', oct: 5, line: 0.5 }, { vfn: 'd', oct: 5, line: 1 },
-  { vfn: 'c', oct: 5, line: 1.5 }, { vfn: 'b', oct: 4, line: 2 }, { vfn: 'a', oct: 4, line: 2.5 }, { vfn: 'g', oct: 4, line: 3 },
-  { vfn: 'f', oct: 4, line: 3.5 }, { vfn: 'e', oct: 4, line: 4 }, { vfn: 'd', oct: 4, line: 4.5 }, { vfn: 'c', oct: 4, line: 5 },
-  { vfn: 'b', oct: 3, line: 5.5 }
-];
+/* filas del pentagrama de colocación (clave de sol, de do6 a sol3): más sitio del que hace falta, para poder equivocarse */
+const ROWS = (() => { const L = ['c', 'd', 'e', 'f', 'g', 'a', 'b'], r = []; for (let p = 42; p >= 25; p--) r.push({ vfn: L[p % 7], oct: Math.floor(p / 7), line: -0.5 + (39 - p) * 0.5 }); return r; })();
 const VERDE = '#238a4c', ROJO = '#c93a2d', AZUL = '#2f6fe4';
 
 /* ============================================================
@@ -1869,12 +1864,12 @@ function verLupa(x, y, row) {
     const esBajo = row.vfn === b.q.bass.vfn && row.oct === b.q.bass.oct;
     if (!esBajo) todas.push({ vfn: row.vfn, oct: row.oct, acc: S.tool, color: AZUL });
     todas.sort((p, q) => pitchVal(p) - pitchVal(q));
-    const k = 1.9;   // ampliación: misma proporción de alto y margen que la lupa de Tiro al plato
-    lupaStaff.style.height = Math.round(108 * k) + 'px'; lupaStaff.style.width = '300px'; lupaStaff.style.overflow = 'hidden';
+    const LG = window.tmNotacion.lupaGeom(1.5, ROWS[0].line, ROWS[ROWS.length - 1].line), k = LG.escala;   // la lupa AUMENTA: ~1,8 veces el pentagrama
+    lupaStaff.style.height = LG.alto + 'px'; lupaStaff.style.width = 'auto'; lupaStaff.style.overflow = 'hidden'; lupaStaff.style.display = 'flow-root';
     window.tmNotacion.dibujarAlineado(lupaStaff, filaAcorde(todas.map(n => n.color ? { key: claveMEI(n.vfn, n.acc, n.oct), color: n.color } : claveMEI(n.vfn, n.acc, n.oct))),
-      { escala: k, separacion: 0.5, top: Math.round(36 * k), id: 'billarLupa', alt: '' });
+      { escala: k, separacion: 0.15, noLineal: 0.25, top: LG.top, margenIzq: 10, id: 'billarLupa', alt: '' });
     const sv = lupaStaff.querySelector('svg');
-    if (sv) { sv.style.maxWidth = 'none'; lupaStaff.style.height = Math.ceil(sv.getBoundingClientRect().height) + 'px'; }   // la lupa, del alto del dibujo
+    if (sv) sv.style.maxWidth = 'none';
   }
   const r = lupa.getBoundingClientRect(), pad = 8;
   if (r.left < pad) lupa.style.left = (x - r.left + pad) + 'px';
