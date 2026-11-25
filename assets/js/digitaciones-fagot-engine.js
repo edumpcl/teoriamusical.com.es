@@ -181,12 +181,18 @@
     '.tm-fg-caras{display:grid;grid-template-columns:1fr 1fr;max-width:360px;margin:0 auto 2px;font-size:.78rem;font-weight:700;color:#7a5c0f;text-align:center;line-height:1.2;}',
     '.tm-fg-key .k-pad{fill:transparent;stroke:transparent;stroke-width:5;transition:fill .15s,stroke .15s;}',
     '.tm-fg-key.on .k-pad{fill:rgba(255,128,0,.8);stroke:#7a3a00;stroke-width:6;filter:drop-shadow(0 0 12px #ff9500);}',   // opaco y con borde oscuro: sobre la llave plateada, un naranja suave parece dorado y no se distingue
-    '.tm-fg-credito{font-size:.75rem;color:#777;text-align:center;margin:4px 0 0;}',
+    '.tm-fg-credito{font-size:.75rem;color:#777;text-align:center;margin:10px 0 0;}',
+    // como en el resto de instrumentos: la nota arriba, la foto debajo y los botones debajo de la foto (Eduardo, nov-2026)
+    // la foto se adapta a la altura de la pantalla: la nota, la foto y los botones caben a la vez
+    '.tm-fg-diagram{max-width:270px;max-width:clamp(150px,calc((100vh - 400px) * .53),280px);margin:0 auto;}',
+    // recuadro compacto: el pentagrama a la izquierda y el nombre, el ▶ y las llaves a la derecha (la mitad de alto)
+    '.tm-fg-readout.tm-fg-lleno{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:4px 14px;text-align:left;padding:8px 12px;}',
+    '.tm-fg-lleno .tm-fg-staff{min-height:0;}',
+    '.tm-fg-lleno .tm-fg-staff img{width:auto;height:auto;max-height:96px;}',
+    '.tm-fg-lleno .tm-fg-noterow{justify-content:flex-start;}',
+    // en el móvil, la nota y la foto se quedan fijas arriba y los botones pasan por debajo: siempre se ven las tres cosas
+    '@media(max-width:600px){.tm-fg-panel{position:sticky;top:70px;z-index:3;background:#fff;padding-bottom:6px;}.tm-fg-readout{margin-bottom:6px;}.tm-fg-lleno .tm-fg-staff img{max-height:78px;}.tm-fg-intl{font-size:1.25rem;}.tm-fg-reg{font-size:.78rem;}.tm-fg-keysline{font-size:.74rem;}.tm-fg-diagram{max-width:190px;max-width:clamp(130px,calc((100svh - 300px) * .45),210px);padding:4px;}.tm-fg-caras{font-size:.62rem;}.tm-fg-credito{font-size:.6rem;}.tm-fg-btns{gap:6px!important;}.tm-fg-btn{padding:9px 8px!important;}}',
     '.tm-fg-credito a{color:inherit;}',
-    // en pantallas anchas, la foto a la izquierda y la nota con los botones a la derecha: la foto es alta
-    '@media(min-width:760px){.tm-fg-wrap{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);grid-template-rows:auto 1fr;column-gap:16px;align-items:start;}.tm-fg-cuerpo{display:contents;}.tm-fg-col{grid-column:1;grid-row:1 / span 2;}.tm-fg-readout{grid-column:2;grid-row:1;}.tm-fg-btns{grid-column:2;grid-row:2;margin-top:0!important;}}',
-    // en el móvil, la foto y los botones lado a lado, para ver la digitación sin tener que bajar
-    '@media(max-width:759px){.tm-fg-cuerpo{display:grid;grid-template-columns:minmax(0,46%) minmax(0,1fr);gap:8px;align-items:start;}.tm-fg-col{position:sticky;top:76px;}.tm-fg-btns{margin-top:0!important;gap:5px!important;}.tm-fg-btn{min-width:0!important;padding:8px 4px!important;font-size:.85rem;flex:1 0 28%;}.tm-fg-caras{font-size:.62rem;}.tm-fg-credito{font-size:.62rem;}}',
     '.tm-fg-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}',
     '.tm-fg-btn{min-width:46px;padding:10px 12px;border:1px solid #d8d0b8;background:#f5f2ea;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}',
     '.tm-fg-btn:hover{background:#fdf8ee;border-color:#8b6914;}',
@@ -227,15 +233,24 @@
         '<div class="tm-fg-caras"><span>' + T('Por delante', 'Front') + '<br>' + T('(dedos)', '(fingers)') + '</span><span>' + T('Por detrás', 'Back') + '<br>' + T('(pulgares)', '(thumbs)') + '</span></div>' +
         '<div class="tm-fg-foto"><picture><source type="image/webp" srcset="' + IMG + 'llaves.webp"><img src="' + IMG + 'llaves.jpg" width="552" height="1038" alt="" decoding="async"></picture>' +
         '<svg class="tm-fg-svg" viewBox="0 0 ' + FOTO_W + ' ' + FOTO_H + '" role="img" aria-label="' + T('Foto de un fagot por sus dos caras: a la izquierda, la delantera, con los agujeros y las llaves de los meñiques; a la derecha, la trasera, con las llaves de los dos pulgares. Las llaves y agujeros que se tapan para la nota elegida se iluminan en naranja', 'Photo of a bassoon from both sides: on the left the front, with the tone holes and the little-finger keys; on the right the back, with the keys for both thumbs. The keys and holes closed for the chosen note light up in orange') + '">' + keysSvg + '</svg></div>' +
-        '<p class="tm-fg-credito">' + T('Foto: ', 'Photo: ') + '<a href="https://commons.wikimedia.org/wiki/File:FoxBassoon.jpg" rel="nofollow">Gregory F. Maxwell</a>, ' + T('licencia ', 'licensed under the ') + '<a href="/licencias/gfdl-1.2.txt" rel="license">GFDL 1.2</a>' + T('. Modificada: recortada y con las llaves marcadas; esta versión, bajo la misma licencia.', '. Modified: cropped, with the keys marked; this version is under the same licence.') + '</p>' +
       '</div>';
+    /* el crédito de la foto va debajo de los botones: dentro del recuadro de la foto ocupaba siete líneas y la dejaba diminuta */
+    var credito = '<p class="tm-fg-credito">' + T('Foto: ', 'Photo: ') + '<a href="https://commons.wikimedia.org/wiki/File:FoxBassoon.jpg" rel="nofollow">Gregory F. Maxwell</a>, ' + T('licencia ', 'licensed under the ') + '<a href="/licencias/gfdl-1.2.txt" rel="license">GFDL 1.2</a>' + T('. Modificada: recortada y con las llaves marcadas; esta versión, bajo la misma licencia.', '. Modified: cropped, with the keys marked; this version is under the same licence.') + '</p>';
     wrap.innerHTML =
       '<div class="tm-fg-wrap">' +
-        '<div class="tm-fg-readout" id="' + uid + '_ro"><span class="tm-fg-hint">' + T('Elige una nota para ver su digitación', 'Choose a note to see its fingering') + '</span></div>' +
-        '<div class="tm-fg-cuerpo"><div class="tm-fg-col">' + foto + '</div><div class="tm-fg-btns">' + btns + '</div></div>' +
+        '<div class="tm-fg-panel">' +
+          '<div class="tm-fg-readout" id="' + uid + '_ro"><span class="tm-fg-hint">' + T('Elige una nota para ver su digitación', 'Choose a note to see its fingering') + '</span></div>' +
+          '<div class="tm-fg-col">' + foto + '</div>' +
+        '</div>' +
+        '<div class="tm-fg-btns">' + btns + '</div>' +
+        credito +
       '</div>';
 
     var svg = wrap.querySelector('.tm-fg-svg');
+    /* el panel fijo del móvil se queda justo debajo de la barra de la web, mida lo que mida */
+    var panel = wrap.querySelector('.tm-fg-panel'), cabecera = document.querySelector('.tm-site-header');
+    function ajustarPanel() { if (cabecera) panel.style.top = cabecera.offsetHeight + 'px'; }
+    ajustarPanel(); window.addEventListener('resize', ajustarPanel);
     var ro = document.getElementById(uid + '_ro');
     var audio = new Audio();
 
@@ -268,13 +283,19 @@
         var c = svg.querySelector('.tm-fg-key[data-k="' + id + '"]'); if (c) c.classList.add('on');
         if (NAMES[id]) nombres.push(NAMES[id]);
       });
+      ro.className = 'tm-fg-readout tm-fg-lleno';
       ro.innerHTML =
-        '<div class="tm-fg-staff" id="' + uid + '_staff"></div>' +
+        '<div class="tm-fg-staff" id="' + uid + '_staff"></div><div class="tm-fg-info">' +
         '<div class="tm-fg-noterow"><span class="tm-fg-intl">' + label(n) + (FLAT[n] ? ' (' + enNote(FLAT[n]) + ')' : '') + '</span>' +
         '<button class="tm-fg-play" type="button" aria-label="' + T('Reproducir la nota', 'Play the note') + '">▶</button></div>' +
         '<div class="tm-fg-reg">' + intl(n) + ' · ' + registro(n) + T(' · clave de ' + CLAVE_ES[claveDe(n)], ' · ' + CLAVE_EN[claveDe(n)]) + '</div>' +
-        '<div class="tm-fg-keysline">' + (nombres.length ? nombres.join(' · ') : '—') + '</div>';
+        '<div class="tm-fg-keysline">' + (nombres.length ? nombres.join(' · ') : '—') + '</div></div>';
       renderStaff(n);
+      /* en el móvil, si el panel (nota + foto) aún no está fijo arriba, se sube hasta él para que se vean la nota y la digitación */
+      if (window.matchMedia && window.matchMedia('(max-width:600px)').matches) {
+        var arriba = cabecera ? cabecera.offsetHeight : 0, top = panel.getBoundingClientRect().top;
+        if (Math.abs(top - arriba) > 2) window.scrollBy({ top: top - arriba, behavior: 'smooth' });
+      }
       var pb = ro.querySelector('.tm-fg-play');
       if (pb) pb.addEventListener('click', function () { play(n); });
       play(n);
